@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:blockly="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment android:name="com.google.blockly.android.WorkspaceFragment"
+              android:id="@+id/blockly_workspace"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/blockly_toolbox_ui"
+        />
+
+    <fragment android:name="com.google.blockly.android.FlyoutFragment"
+              android:id="@+id/blockly_trash_ui"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              blockly:scrollOrientation="horizontal"
+              blockly:closeable="true"
+              tools:ignore="MissingPrefix"/>
+
+
+    <LinearLayout
+        android:id="@+id/category_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        blockly:labelRotation="start"
+        blockly:scrollOrientation="horizontal"
+        tools:ignore="MissingPrefix"
+        android:orientation="horizontal"
+        android:weightSum="720">
+
+        <fragment android:name="com.google.blockly.android.CategorySelectorFragment"
+            android:id="@+id/blockly_categories"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="340" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/code_btn"
+            android:id="@+id/code"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="85"></androidx.appcompat.widget.AppCompatButton>
+
+        <Button
+            android:background="@drawable/serial_btn"
+            android:id="@+id/serial"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="85"></Button>
+
+        <Button
+            android:background="@drawable/upload_btn"
+            android:id="@+id/upload"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="85"></Button>
+    </LinearLayout>
+
+
+
+
+
+    <fragment android:name="com.google.blockly.android.FlyoutFragment"
+              android:id="@+id/blockly_toolbox_ui"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentRight="true"
+              android:layout_below="@id/category_block"
+              blockly:scrollOrientation="vertical"
+              blockly:closeable="true"
+              tools:ignore="MissingPrefix">
+
+
+    </fragment>
+
+
+    <LinearLayout android:id="@+id/blockly_overlay_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
+
+        <com.google.blockly.android.ui.TrashCanView
+            android:id="@+id/blockly_trash_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/translucent"
+            android:padding="2dp"/>
+
+        <ImageButton android:id="@+id/blockly_zoom_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/translucent"
+            android:padding="2dp"
+            android:visibility="invisible"
+            android:src="@drawable/zoom_in"/>
+
+        <ImageButton android:id="@+id/blockly_zoom_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/translucent"
+            android:padding="2dp"
+            android:visibility="invisible"
+            android:src="@drawable/zoom_out"/>
+
+        <ImageButton android:id="@+id/blockly_center_view_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/translucent"
+            android:padding="2dp"
+            android:visibility="invisible"
+            android:src="@drawable/reset_view"/>
+    </LinearLayout>
+</RelativeLayout>
