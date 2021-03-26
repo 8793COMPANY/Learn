@@ -23,45 +23,47 @@
               tools:ignore="MissingPrefix"/>
 
 
-    <LinearLayout
-        android:id="@+id/category_block"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        blockly:labelRotation="start"
-        blockly:scrollOrientation="horizontal"
-        tools:ignore="MissingPrefix"
-        android:orientation="horizontal"
-        android:weightSum="720">
 
-        <fragment android:name="com.google.blockly.android.CategorySelectorFragment"
-            android:id="@+id/blockly_categories"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="340" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:background="@drawable/code_btn"
-            android:id="@+id/code"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="85"></androidx.appcompat.widget.AppCompatButton>
+        <LinearLayout
+            android:id="@+id/category_block"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            blockly:labelRotation="start"
+            blockly:layout_constraintEnd_toEndOf="parent"
+            blockly:layout_constraintStart_toStartOf="parent"
+            blockly:layout_constraintTop_toTopOf="parent"
+            blockly:scrollOrientation="horizontal"
+            tools:ignore="MissingPrefix">
 
-        <Button
-            android:background="@drawable/serial_btn"
-            android:id="@+id/serial"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="85"></Button>
+            <fragment
+                android:id="@+id/blockly_categories"
+                android:name="com.google.blockly.android.CategorySelectorFragment"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="match_parent" />
 
-        <Button
-            android:background="@drawable/upload_btn"
-            android:id="@+id/upload"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="85"></Button>
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/code"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/code_btn"></androidx.appcompat.widget.AppCompatButton>
 
+            <Button
+                android:id="@+id/serial"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/serial_btn"></Button>
+
+            <Button
+                android:id="@+id/upload"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/upload_btn"></Button>
+        </LinearLayout>
 
 
 
@@ -97,14 +99,15 @@
             android:background="@color/translucent"
             android:padding="2dp"/>
 
-        <ImageButton android:id="@+id/blockly_zoom_in_button"
+        <ImageButton
+            android:id="@+id/blockly_zoom_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@color/translucent"
             android:padding="2dp"
-            android:visibility="invisible"
-            android:src="@drawable/zoom_in"/>
+            android:src="@drawable/zoom_in"
+            android:visibility="invisible" />
 
         <ImageButton android:id="@+id/blockly_zoom_out_button"
             android:layout_width="wrap_content"

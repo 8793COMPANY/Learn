@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.OrientationHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -83,6 +84,11 @@ public class CategoryView extends RelativeLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mCategoryTabs = (CategoryTabs) findViewById(R.id.category_tabs);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
+        mCategoryTabs.addItemDecoration(dividerItemDecoration);
+
         mCategoryTabs.setCallback(mCallback);
         mCategoryTabs.setOrientation(mScrollOrientation);
         mCategoryTabs.setLabelRotation(mLabelRotation);
