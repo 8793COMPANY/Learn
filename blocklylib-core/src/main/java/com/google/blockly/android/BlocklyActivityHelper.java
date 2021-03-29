@@ -162,9 +162,9 @@ public class BlocklyActivityHelper {
         onCreateMutatorListener();
 
         onConfigureTrashIcon();
-        onConfigureZoomInButton();
+/*        onConfigureZoomInButton();
         onConfigureZoomOutButton();
-        onConfigureCenterViewButton();
+        onConfigureCenterViewButton();*/
     }
 
 
@@ -544,7 +544,7 @@ public class BlocklyActivityHelper {
      * <p/>
      * This is called from the constructor after {@link #mController} is initialized.
      */
-    protected void onConfigureZoomInButton() {
+/*    protected void onConfigureZoomInButton() {
         View zoomInButton = mActivity.findViewById(R.id.blockly_zoom_in_button);
         if (zoomInButton != null) {
             zoomInButton.setOnClickListener(new View.OnClickListener() {
@@ -557,7 +557,7 @@ public class BlocklyActivityHelper {
             zoomInButton.setVisibility(zoomBehavior.isButtonEnabled()? View.VISIBLE : View.GONE);
             zoomInButton.setVisibility(View.GONE);
         }
-    }
+    }*/
 
     /**
      * This method finds and configures {@link R.id#blockly_zoom_out_button} from the view hierarchy
@@ -566,7 +566,7 @@ public class BlocklyActivityHelper {
      * <p/>
      * This is called from the constructor after {@link #mController} is initialized.
      */
-    protected void onConfigureZoomOutButton() {
+/*    protected void onConfigureZoomOutButton() {
         View zoomOutButton = mActivity.findViewById(R.id.blockly_zoom_out_button);
         if (zoomOutButton != null) {
             zoomOutButton.setOnClickListener(new View.OnClickListener() {
@@ -579,7 +579,7 @@ public class BlocklyActivityHelper {
             zoomOutButton.setVisibility(zoomBehavior.isButtonEnabled()? View.VISIBLE : View.GONE);
             zoomOutButton.setVisibility(View.GONE);
         }
-    }
+    }*/
 
     public void ZoomOut() {
 
@@ -592,7 +592,7 @@ public class BlocklyActivityHelper {
      * <p/>
      * This is called from the constructor after {@link #mController} is initialized.
      */
-    protected void onConfigureCenterViewButton() {
+/*    protected void onConfigureCenterViewButton() {
         View recenterButton = mActivity.findViewById(R.id.blockly_center_view_button);
         if (recenterButton != null) {
             recenterButton.setOnClickListener(new View.OnClickListener() {
@@ -605,7 +605,7 @@ public class BlocklyActivityHelper {
             recenterButton.setVisibility(zoomBehavior.isFixed()? View.GONE : View.VISIBLE);
             recenterButton.setVisibility(View.GONE);
         }
-    }
+    }*/
 
     /**
      * Constructs a {@link BlocklyController.VariableCallback} for handling user requests to change
