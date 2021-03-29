@@ -17,6 +17,7 @@ package com.learn4;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -594,7 +595,7 @@ public class MainActivity extends BlocklySectionsActivity {
             @Override
             public void onClick(View v) {
                 setInitLine();
-                code_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                code_view.setBackgroundColor(Color.parseColor("#f78f43"));
             }
         });
 
@@ -602,7 +603,7 @@ public class MainActivity extends BlocklySectionsActivity {
             @Override
             public void onClick(View v) {
                 setInitLine();
-                serial_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
                 Log.e("serial","click");
             }
         });
@@ -612,7 +613,7 @@ public class MainActivity extends BlocklySectionsActivity {
             @Override
             public void onClick(View v) {
                 setInitLine();
-                upload_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                upload_view.setBackgroundColor(Color.parseColor("#f78f43"));
                 if (getController().getWorkspace().hasBlocks()) {
                     mBlocklyActivityHelper.requestCodeGeneration(
                             getBlockGeneratorLanguage(),
