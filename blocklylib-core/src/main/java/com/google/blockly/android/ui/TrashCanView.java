@@ -70,9 +70,9 @@ public class TrashCanView extends AppCompatImageView {
         try {
             //noinspection ResourceType
             setDefaultIcon(a.getResourceId(
-                    R.styleable.TrashCanView_defaultIcon, R.drawable.blockly_trash));
+                    R.styleable.TrashCanView_defaultIcon, R.drawable.workspace_trash_can));
             setOnHoverIcon(a.getResourceId(
-                    R.styleable.TrashCanView_onHoverIcon, R.drawable.blockly_trash_open));
+                    R.styleable.TrashCanView_onHoverIcon, R.drawable.workspace_trash_can_close));
         } finally {
             a.recycle();
         }
