@@ -303,7 +303,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI {
             bgColor = getBackgroundColor(maybeColor);
         }
 
-        mBgDrawable.setColor(bgColor);
+        mBgDrawable.setColor(Color.parseColor("#fff4db"));
         mBgDrawable.setAlpha(mBgAlpha);
         mFlyoutView.setBackground(mBgDrawable);
     }
