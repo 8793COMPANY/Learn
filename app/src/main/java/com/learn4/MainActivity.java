@@ -372,9 +372,6 @@ public class MainActivity extends BlocklySectionsActivity {
         }
 
 
-
-
-
     }
 
     @Override
@@ -583,15 +580,7 @@ public class MainActivity extends BlocklySectionsActivity {
         Log.e("oncreate","contentview");
 
 
-        Button button = mGeneratedFrameLayout.findViewById(R.id.upload);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getController().getWorkspace().hasBlocks()) {
-                    onRunCode();
-                }
-            }
-        });
+
 //
 //        Button zoomOut =mGeneratedFrameLayout.findViewById(R.id.serial);
 //        zoomOut.setOnClickListener(new View.OnClickListener() {

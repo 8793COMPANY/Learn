@@ -20,16 +20,22 @@ import android.content.res.TypedArray;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Point;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -65,7 +71,7 @@ public class CategoryTabs extends RecyclerView {
     public static final int HORIZONTAL = OrientationHelper.HORIZONTAL;
     public static final int VERTICAL = OrientationHelper.VERTICAL;
 
-    int [] image = {R.drawable.setup_btn,R.drawable.loop_btn, R.drawable.method_btn,R.drawable.etc_btn};
+    int [] image = {R.drawable.setup_btn,R.drawable.loop_btn, R.drawable.method_btn,R.drawable.etc_btn, R.drawable.code_btn, R.drawable.serial_btn, R.drawable.upload_btn};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -100,7 +106,14 @@ public class CategoryTabs extends RecyclerView {
 
         mLayoutManager = new LinearLayoutManager(context);
         setLayoutManager(mLayoutManager);
-        mAdapter = new CategoryAdapter();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+
+        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
+        mAdapter = new CategoryAdapter(((int)((size.x /1280.0) * 738) /4));
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
 
@@ -220,7 +233,7 @@ public class CategoryTabs extends RecyclerView {
     }
 
     public int getTabCount() {
-        return mCategories.size();
+        return 4;
     }
 
     private void onCategoryClicked(BlocklyCategory category) {
@@ -242,9 +255,17 @@ public class CategoryTabs extends RecyclerView {
     }
 
     public class CategoryAdapter extends RecyclerView.Adapter<TabLabelHolder> {
+
+        int width = 0;
+
+        public CategoryAdapter(int width){
+            this.width =width;
+            Log.e("width 확인",this.width+"");
+        }
+
         @Override
         public int getItemCount() {
-            return 4;
+            return  getTabCount();
         }
 
         @Override
@@ -266,6 +287,11 @@ public class CategoryTabs extends RecyclerView {
             mLabelAdapter.onBindLabel(holder.mLabel, category, tabPosition);
             mLabelAdapter.onSelectionChanged(holder.mLabel, category, tabPosition, isSelected);
             holder.mCategory = category;
+
+           // ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
+         //   layoutParams.width=100;
+         //   holder.itemView.requestLayout();
+
             holder.mLabel.setBackgroundResource(image[tabPosition]);
             //holder.mRotator.setChildRotation(mLabelRotation);
             holder.mRotator.setTag(holder);  // For getTabLabelHolder() and deselection
@@ -280,11 +306,18 @@ public class CategoryTabs extends RecyclerView {
                             Log.e("mlist","not null");
                             mListener.onItemClick(label,tabPosition);
                         }
-
                     }
 
                 }
             });
+            ViewGroup.LayoutParams layoutParams =new LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT);
+            holder.itemView.setLayoutParams(layoutParams);
+            holder.itemView.requestLayout();
+//            ViewGroup.LayoutParams params =holder.mLabel.getLayoutParams();
+//            params.width = 1000;
+//            params.height = 50;
+//            holder.mLabel.setLayoutParams(params);
+//            holder.itemView.requestLayout();
         }
 
         @Override

@@ -18,19 +18,30 @@ package com.google.blockly.android;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.OrientationHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.CategorySelectorUI;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.Rotation;
 import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.BlocklyCategory;
+import com.google.blockly.model.DefaultBlocks;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Creates a set of tabs of Blockly categories. The set of categories should be provided by
@@ -48,6 +59,34 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
 
     protected int mScrollOrientation = OrientationHelper.HORIZONTAL;
     protected @Rotation.Enum int mLabelRotation = Rotation.NONE;
+
+    static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
+            DefaultBlocks.COLOR_BLOCKS_PATH,
+            DefaultBlocks.LOGIC_BLOCKS_PATH,
+            DefaultBlocks.LOOP_BLOCKS_PATH,
+            DefaultBlocks.MATH_BLOCKS_PATH,
+            DefaultBlocks.TEXT_BLOCKS_PATH,
+            DefaultBlocks.VARIABLE_BLOCKS_PATH,
+            "turtle/turtle_blocks.json"
+    );
+
+
+    static final List<String> TURTLE_BLOCK_GENERATORS = Arrays.asList(
+            "turtle/generators.js"
+    );
+
+
+
+  /*  public void get_ports() {
+        PeripheralManager manager = PeripheralManager.getInstance();
+        List<String> deviceList = manager.getUartDeviceList();
+        if (deviceList.isEmpty()) {
+            Log.i(TAG, "No UART port available on this device.");
+        } else {
+            Log.i(TAG, "List of available devices: " + deviceList);
+            System.out.println(deviceList);
+        }
+    }*/
 
 
     @Override
@@ -75,9 +114,20 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
                 ? R.layout.default_category_start : R.layout.default_category_horizontal;
         mCategoryView = (CategoryView) inflater.inflate(layout, null);
         mCategoryView.setLabelRotation(Rotation.CLOCKWISE);
-        mCategoryView.setScrollOrientation(OrientationHelper.HORIZONTAL);
+
+//        BlocklyActivityHelper blocklyActivityHelper =  new BlocklyActivityHelper(
+//                (AppCompatActivity) getActivity(), getChildFragmentManager());;
+//        blocklyActivityHelper.requestCodeGeneration(
+//                DefaultBlocks.LANGUAGE_DEFINITION,
+//                TURTLE_BLOCK_DEFINITIONS,
+//                TURTLE_BLOCK_GENERATORS,
+//                getCodeGenerationCallback());
+
+
         return mCategoryView;
     }
+
+
 
     public void setContents(BlocklyCategory rootCategory) {
         mCategoryView.setContents(rootCategory);
