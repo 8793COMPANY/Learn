@@ -56,7 +56,7 @@ public class WorkspaceFragment extends Fragment {
     private VirtualWorkspaceView mVirtualWorkspaceView;
     private WorkspaceView mWorkspaceView;
 
-    private boolean mDrawGrid = true;
+    private boolean mDrawGrid = false;
     private int mGridColor;
     private int mGridSpacing;
     private int mGridDotRadius;
