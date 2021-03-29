@@ -104,6 +104,8 @@ public class CategoryTabs extends RecyclerView {
         super(context, attrs, style);
 
 
+
+
         mLayoutManager = new LinearLayoutManager(context);
         setLayoutManager(mLayoutManager);
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

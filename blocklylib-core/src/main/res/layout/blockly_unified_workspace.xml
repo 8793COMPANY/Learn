@@ -100,7 +100,7 @@
                         android:weightSum="542">
 
                         <Button
-                            android:id="@+id/button2"
+                            android:id="@+id/button_4"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="168"
@@ -115,7 +115,7 @@
 
 
                         <Button
-                            android:id="@+id/button3"
+                            android:id="@+id/button_5"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="168"
@@ -127,6 +127,7 @@
                             android:background="@drawable/divider"></View>
 
                         <Button
+                            android:id="@+id/button_6"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="168"
@@ -162,6 +163,7 @@
                         android:layout_weight="3"></View>
 
                     <View
+                        android:id="@+id/indicator_0"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
@@ -169,6 +171,7 @@
 
 
                     <View
+                        android:id="@+id/indicator_1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"
@@ -177,6 +180,7 @@
 
 
                     <View
+                        android:id="@+id/indicator_2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
@@ -184,24 +188,28 @@
 
 
                     <View
+                        android:id="@+id/indicator_3"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
 
                     <View
+                        android:id="@+id/indicator_4"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
 
                     <View
+                        android:id="@+id/indicator_5"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
 
                     <View
+                        android:id="@+id/indicator_6"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
