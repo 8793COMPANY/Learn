@@ -17,6 +17,8 @@ android {
         }
     }
 
+
+
     packagingOptions {
       // Suppress file collision error from hamcrest-core and hamcrest-integration JARs.
       exclude 'LICENSE.txt'
@@ -31,12 +33,14 @@ android {
     publishNonDefault false
 }
 
+
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.annotation:annotation:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.akexorcist:round-corner-progress-bar:2.1.1'
 }
 
 task sourcesJar(type: Jar) {

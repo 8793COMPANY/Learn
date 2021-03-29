@@ -87,13 +87,15 @@ public class CategoryView extends RelativeLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mCategoryTabs = (CategoryTabs) findViewById(R.id.category_tabs);
+//
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider2));
+        mCategoryTabs.addItemDecoration(dividerItemDecoration);
 
-      //  DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
-     //   dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
-     //   mCategoryTabs.addItemDecoration(dividerItemDecoration);
-
-
-        mCategoryTabs.addItemDecoration(new DividerItemDecoration(getContext(), 0));
+//        mCategoryTabs.addItemDecoration(new MyDecoration(getContext()));
+//
+//
+//        mCategoryTabs.addItemDecoration(new DividerItemDecoration(getContext(), 0));
 
         // 리사이클러뷰 - 왼쪽, 오른쪽 여백 설정
        // RecyclerDecoration recyclerDecoration = new RecyclerDecoration(-6);

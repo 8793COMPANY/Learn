@@ -112,8 +112,8 @@ public class CategoryTabs extends RecyclerView {
         display.getSize(size);
 
 
-        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
-        mAdapter = new CategoryAdapter(((int)((size.x /1280.0) * 738) /4));
+//        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
+        mAdapter = new CategoryAdapter((int)((size.x /1280.0) * 175));
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
 

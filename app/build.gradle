@@ -36,4 +36,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation project(':blocklylib-vertical')
     implementation 'dev.dworks.libs:volleyplus:+'
+
 }

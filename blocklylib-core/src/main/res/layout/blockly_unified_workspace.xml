@@ -49,80 +49,174 @@
             app:layout_constraintDimensionRatio="5:0.5"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1"
-
             >
 
-
-            <fragment
-                android:id="@+id/blockly_categories"
-                android:name="com.google.blockly.android.CategorySelectorFragment"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center_vertical"
-                blockly:layout_constraintBottom_toBottomOf="parent"
-                blockly:layout_constraintEnd_toEndOf="parent"
-                blockly:layout_constraintStart_toStartOf="parent"
-                blockly:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintDimensionRatio="738:98"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.57"
-                app:layout_constraintHorizontal_bias="0" />
-
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_constraintDimensionRatio="542:98"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent="0.43"
-                blockly:layout_constraintBottom_toBottomOf="parent"
-                blockly:layout_constraintEnd_toEndOf="parent"
-                blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
-                blockly:layout_constraintTop_toTopOf="parent"
-                android:weightSum="542">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="114"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="8"></LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="98"
+                    android:orientation="horizontal"
+                    android:weightSum="1280">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="8"></View>
+
+
+                    <fragment
+                        android:id="@+id/blockly_categories"
+                        android:name="com.google.blockly.android.CategorySelectorFragment"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="727" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="542"
+                        android:orientation="horizontal"
+                        app:layout_constraintDimensionRatio="542:98"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintWidth_default="percent"
+                        app:layout_constraintWidth_percent="0.43"
+                        blockly:layout_constraintBottom_toBottomOf="parent"
+                        blockly:layout_constraintEnd_toEndOf="parent"
+                        blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
+                        blockly:layout_constraintTop_toTopOf="parent"
+                        android:weightSum="542">
+
+                        <Button
+                            android:id="@+id/button2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="168"
+                            android:background="@drawable/code_btn"
+                            ></Button>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="16"
+                            android:background="@drawable/divider"></View>
+
+
+                        <Button
+                            android:id="@+id/button3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="168"
+                            android:background="@drawable/serial_btn"></Button>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="16"
+                            android:background="@drawable/divider"></View>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="168"
+                            android:background="@drawable/upload_btn"
+                            ></Button>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="7"></View>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
                 <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="16"
-                    android:background="@drawable/divider"></View>
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="4"></View>
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="168"
-                    android:background="@drawable/code_btn"
-                  ></Button>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="4"
+                    android:orientation="horizontal"
+                    android:weightSum="1280">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="16"
-                    android:background="@drawable/divider"></View>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"></View>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"></View>
 
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="168"
-                    android:background="@drawable/serial_btn"></Button>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="16"
-                    android:background="@drawable/divider"></View>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="168"
-                    android:background="@drawable/upload_btn"
-                  ></Button>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"
+                        android:background="#f78f43"></View>
 
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"></View>
+
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"></View>
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"></View>
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"></View>
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="182"></View>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"></View>
+
+
+                </LinearLayout>
             </LinearLayout>
+
+
+
 
 
 
