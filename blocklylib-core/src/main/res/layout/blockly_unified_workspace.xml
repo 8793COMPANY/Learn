@@ -33,7 +33,7 @@
 
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/category_block"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -100,7 +100,7 @@
                         android:weightSum="542">
 
                         <Button
-                            android:id="@+id/button2"
+                            android:id="@+id/code_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="168"
@@ -115,11 +115,12 @@
 
 
                         <Button
-                            android:id="@+id/button3"
+                            android:id="@+id/serial_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="168"
                             android:background="@drawable/serial_btn"></Button>
+
                         <View
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -127,6 +128,7 @@
                             android:background="@drawable/divider"></View>
 
                         <Button
+                            android:id="@+id/upload_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="168"
@@ -162,6 +164,7 @@
                         android:layout_weight="3"></View>
 
                     <View
+                        android:id="@+id/setup_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
@@ -169,6 +172,7 @@
 
 
                     <View
+                        android:id="@+id/loop_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"
@@ -177,6 +181,7 @@
 
 
                     <View
+                        android:id="@+id/method_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
@@ -184,24 +189,28 @@
 
 
                     <View
+                        android:id="@+id/etc_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
 
                     <View
+                        android:id="@+id/code_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
 
                     <View
+                        android:id="@+id/serial_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
 
                     <View
+                        android:id="@+id/upload_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
@@ -220,7 +229,7 @@
 
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
     <fragment

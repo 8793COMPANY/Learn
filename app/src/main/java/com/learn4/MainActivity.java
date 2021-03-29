@@ -86,6 +86,7 @@ public class MainActivity extends BlocklySectionsActivity {
     private String mNoErrorText;
     private Boolean initial=true;
     private EditText editURL;
+    View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
     String TARGET_BASE_PATH;
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
@@ -227,8 +228,8 @@ public class MainActivity extends BlocklySectionsActivity {
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         if(deviceList.isEmpty()){
-            mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-            mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
+//            mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+//            mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
         }
         else {
             Boolean value = OpenUSB();
@@ -578,6 +579,52 @@ public class MainActivity extends BlocklySectionsActivity {
         View root = getLayoutInflater().inflate(R.layout.split_content, null);
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
         Log.e("oncreate","contentview");
+        View blockly_workspace = root.findViewById(R.id.blockly_workspace);
+
+        setupView(blockly_workspace);
+
+        Button code_btn = (Button) blockly_workspace.findViewById(R.id.code_btn);
+        Button serial_btn =(Button) blockly_workspace.findViewById(R.id.serial_btn);
+        Button upload_btn = (Button) blockly_workspace.findViewById(R.id.upload_btn);
+
+
+
+
+        code_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInitLine();
+                code_view.setBackgroundColor(getResources().getColor(R.color.underline));
+            }
+        });
+
+        serial_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInitLine();
+                serial_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                Log.e("serial","click");
+            }
+        });
+
+
+        upload_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInitLine();
+                upload_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                if (getController().getWorkspace().hasBlocks()) {
+                    mBlocklyActivityHelper.requestCodeGeneration(
+                            getBlockGeneratorLanguage(),
+                            getBlockDefinitionsJsonPaths(),
+                            getGeneratorsJsPaths(),
+                            getCodeGenerationCallback());
+                }
+
+            }
+        });
+
+
 
 
 
@@ -609,6 +656,26 @@ public class MainActivity extends BlocklySectionsActivity {
         mTurtleWebview.loadUrl("file:///android_asset/turtle/turtle.html");
 */
         return root;
+    }
+
+    void setupView(View view){
+        setup_view = view.findViewById(R.id.setup_view);
+        loop_view = view.findViewById(R.id.loop_view);
+        method_view = view.findViewById(R.id.method_view);
+        etc_view = view.findViewById(R.id.etc_view);
+        code_view = view.findViewById(R.id.code_view);
+        serial_view = view.findViewById(R.id.serial_view);
+        upload_view = view.findViewById(R.id.upload_view);
+    }
+
+    void setInitLine(){
+        setup_view.setBackgroundColor(getResources().getColor(R.color.white));
+        loop_view.setBackgroundColor(getResources().getColor(R.color.white));
+        method_view.setBackgroundColor(getResources().getColor(R.color.white));
+        etc_view.setBackgroundColor(getResources().getColor(R.color.white));
+        code_view.setBackgroundColor(getResources().getColor(R.color.white));
+        serial_view.setBackgroundColor(getResources().getColor(R.color.white));
+        upload_view.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
 
