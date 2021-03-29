@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.OrientationHelper;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -45,6 +47,8 @@ public class CategoryView extends RelativeLayout {
 
     protected BlocklyCategory mRootCategory;
     protected BlocklyCategory mCurrentCategory;
+
+    BlocklyActivityHelper mBlocklyActivityHelper;
 
 
 
@@ -83,6 +87,18 @@ public class CategoryView extends RelativeLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mCategoryTabs = (CategoryTabs) findViewById(R.id.category_tabs);
+
+      //  DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
+     //   dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider));
+     //   mCategoryTabs.addItemDecoration(dividerItemDecoration);
+
+
+        mCategoryTabs.addItemDecoration(new DividerItemDecoration(getContext(), 0));
+
+        // 리사이클러뷰 - 왼쪽, 오른쪽 여백 설정
+       // RecyclerDecoration recyclerDecoration = new RecyclerDecoration(-6);
+    //    mCategoryTabs.addItemDecoration(recyclerDecoration);
+
         mCategoryTabs.setCallback(mCallback);
         mCategoryTabs.setOrientation(mScrollOrientation);
         mCategoryTabs.setLabelRotation(mLabelRotation);
@@ -107,6 +123,11 @@ public class CategoryView extends RelativeLayout {
      * @param topLevelCategory The top-level category in the toolbox.
      */
     public void setContents(@Nullable final BlocklyCategory topLevelCategory) {
+
+//        if (mBlocklyActivityHelper == null) {
+//            throw new IllegalStateException("BlocklyActivityHelper is null. "
+//                    + "onCreateActivityHelper must return a instance.");
+//        }
         mRootCategory = topLevelCategory;
         if (topLevelCategory == null) {
             reset();

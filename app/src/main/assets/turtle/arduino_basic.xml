@@ -137,10 +137,21 @@
         </block>-->
     </category>
 
-<!--    <category name="Variables" colour="330">-->
+    <category name="Variables" colour="330">
 
-<!--       -->
-<!--    </category>-->
+
+
+    </category>
+
+
+    <category name="Serial" colour="330">
+
+    </category>
+
+
+    <category name="upload" colour="330">
+
+    </category>
 
 <!--    <category name="IO" colour="230">-->
 <!--        <block type="base_logic_list"></block>-->
@@ -199,92 +210,92 @@
 <!--                </shadow>-->
 <!--            </value>-->
 <!--        </block>&ndash;&gt;-->
-<!--        <block type="dc_motor">-->
-<!--            <field name="channel">1</field>-->
-<!--            <value name="speed">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">255</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="lcd">-->
-<!--            <value name="text">-->
-<!--                <block type="text">-->
-<!--                    <field name="TEXT">Hello World</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <field name="line_number">0</field>-->
-<!--            <value name="character_number">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">0</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="clear_lcd"></block>-->
-<!--        <block type="bluetooth_sensor">-->
-<!--            <value name="baud">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">115200</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="sonar_sensor">-->
-<!--            <value name="trig">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">11</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="echo">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">12</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="remote_sensor">-->
-<!--            <value name="tsop">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">15</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="servo">-->
-<!--            <value name="channel">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="angle">-->
-<!--                <block type="math_number" id="116">-->
-<!--                    <field name="NUM">45</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="inout_tone_pin">-->
-<!--            <value name="PIN">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">A1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="NUM">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">440</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="inout_notone_pin">-->
-<!--            <value name="PIN">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">A1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
-<!--        <block type="turtle_move_internal">-->
-<!--            <field name="VALUE">100</field>-->
-<!--            <field name="DIR">moveForward</field>-->
-<!--        </block>-->
-<!--        <block type="turtle_turn_internal">-->
-<!--            <field name="VALUE">90</field>-->
-<!--        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="dc_motor">&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="channel">1</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="speed">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="NUM">255</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="lcd">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="text">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="TEXT">Hello World</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="line_number">0</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="character_number">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="NUM">0</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="clear_lcd"></block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="bluetooth_sensor">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="baud">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="NUM">115200</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="sonar_sensor">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="trig">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="PIN">11</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="echo">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="PIN">12</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="remote_sensor">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="tsop">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="PIN">15</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="servo">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="channel">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="PIN">1</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="angle">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="math_number" id="116">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="NUM">45</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="inout_tone_pin">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="PIN">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="PIN">A1</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="NUM">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="NUM">440</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="inout_notone_pin">&ndash;&gt;-->
+<!--&lt;!&ndash;            <value name="PIN">&ndash;&gt;-->
+<!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="PIN">A1</field>&ndash;&gt;-->
+<!--&lt;!&ndash;                </block>&ndash;&gt;-->
+<!--&lt;!&ndash;            </value>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="turtle_move_internal">&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="VALUE">100</field>&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="DIR">moveForward</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;-->
+<!--&lt;!&ndash;        <block type="turtle_turn_internal">&ndash;&gt;-->
+<!--&lt;!&ndash;            <field name="VALUE">90</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        </block>&ndash;&gt;&ndash;&gt;-->
 <!--    </category>-->
 
 </toolbox>
