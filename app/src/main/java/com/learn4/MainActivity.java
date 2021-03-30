@@ -752,6 +752,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onClickTest(int pos) {
         Log.e("main create",pos+"");
+        //여기서 버튼 underline 바뀌는 코드 작성하면 됨
         if (pos ==0){
 
         }else if (pos ==1){
