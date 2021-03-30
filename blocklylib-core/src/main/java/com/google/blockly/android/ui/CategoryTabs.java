@@ -37,6 +37,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import com.google.blockly.android.ui.CategoryData;
 import android.widget.TextView;
 
 import com.google.blockly.android.AbstractBlocklyActivity;
@@ -70,6 +71,8 @@ public class CategoryTabs extends RecyclerView {
 
     public static final int HORIZONTAL = OrientationHelper.HORIZONTAL;
     public static final int VERTICAL = OrientationHelper.VERTICAL;
+
+    public static CategoryData categoryData = CategoryData.getInstance();
 
     int [] image = {R.drawable.setup_btn,R.drawable.loop_btn, R.drawable.method_btn,R.drawable.etc_btn, R.drawable.code_btn, R.drawable.serial_btn, R.drawable.upload_btn};
 
@@ -211,6 +214,7 @@ public class CategoryTabs extends RecyclerView {
                 // Update style. Don't use notifyItemChanged(..), due to a resulting UI flash.
                 mLabelAdapter.onSelectionChanged(
                         vh.mLabel, vh.mCategory, vh.getAdapterPosition(), false);
+                        categoryData.setSelection(false);
             }
         }
         mCurrentCategory = category;
@@ -223,6 +227,7 @@ public class CategoryTabs extends RecyclerView {
                 Log.e("@vh","not null");
                 mLabelAdapter.onSelectionChanged(
                         vh.mLabel, vh.mCategory, vh.getAdapterPosition(), true);
+                        categoryData.setSelection(true);
             }
         }
     }
@@ -280,6 +285,7 @@ public class CategoryTabs extends RecyclerView {
 
         @Override
         public void onBindViewHolder(TabLabelHolder holder, final int tabPosition) {
+            BusProvider.getInstance().register(this);
             final BlocklyCategory category = mCategories.get(tabPosition);
             boolean isSelected = (category == mCurrentCategory);
             Log.e("tabPosition",tabPosition+"");
@@ -297,10 +303,13 @@ public class CategoryTabs extends RecyclerView {
             holder.mLabel.setBackgroundResource(image[tabPosition]);
             //holder.mRotator.setChildRotation(mLabelRotation);
             holder.mRotator.setTag(holder);  // For getTabLabelHolder() and deselection
+
             holder.mLabel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View label) {
                     Log.e("tabposi",tabPosition+"");
+                    categoryData.setPosition(tabPosition);
+                    BusProvider.getInstance().post(new PushEvent(tabPosition));
                     onCategoryClicked(category);
                     if (tabPosition == 6){
                         Log.e("들어옴","ㅅㅎ");
@@ -312,6 +321,7 @@ public class CategoryTabs extends RecyclerView {
 
                 }
             });
+
             ViewGroup.LayoutParams layoutParams =new LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT);
             holder.itemView.setLayoutParams(layoutParams);
             holder.itemView.requestLayout();
