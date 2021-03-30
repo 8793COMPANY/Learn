@@ -17,13 +17,20 @@ package com.learn4;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.Point;
+
+import com.google.blockly.android.ui.BusProvider;
+import com.google.blockly.android.ui.CategoryData;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +42,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.MotionEventCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,10 +57,13 @@ import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
 
 import com.google.blockly.android.ui.CategoryView;
+import com.google.blockly.android.ui.CategoryTabs;
+import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
 import com.physicaloid.lib.Boards;
 import com.physicaloid.lib.Physicaloid;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,6 +102,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private Boolean initial=true;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
+    CategoryData categoryData;
     String TARGET_BASE_PATH;
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
@@ -581,12 +593,21 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mCategoryView.setItemClick(this);
     }
 
+    @Subscribe
+    public void FinishLoad(PushEvent mPushEvent) {
+        // 이벤트가 발생한뒤 수행할 작업
+        setLineForOtherCategoryTabs(mPushEvent.getPos());
+    }
+
     @Override
     protected View onCreateContentView(int parentId) {
         View root = getLayoutInflater().inflate(R.layout.split_content, null);
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
         Log.e("oncreate","contentview");
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
+
+        categoryData = CategoryData.getInstance();
+        BusProvider.getInstance().register(this);
 
         setupView(blockly_workspace);
 
@@ -600,16 +621,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                categoryData.setPosition(4);
                 setInitLine();
-                code_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                code_view.setBackgroundColor(Color.parseColor("#f78f43"));
             }
         });
 
         serial_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                categoryData.setPosition(5);
                 setInitLine();
-                serial_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
                 Log.e("serial","click");
             }
         });
@@ -618,8 +641,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                categoryData.setPosition(6);
                 setInitLine();
-                upload_view.setBackgroundColor(getResources().getColor(R.color.underline));
+                upload_view.setBackgroundColor(Color.parseColor("#f78f43"));
                 if (getController().getWorkspace().hasBlocks()) {
                     mBlocklyActivityHelper.requestCodeGeneration(
                             getBlockGeneratorLanguage(),
@@ -630,8 +654,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             }
         });
-
-
 
 
 
@@ -689,6 +711,32 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_view.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
+    public void setLineForOtherCategoryTabs(int position) {
+        switch (position) {
+            case 0:
+                categoryData.setPosition(position);
+                setInitLine();
+                setup_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                break;
+            case 1:
+                categoryData.setPosition(position);
+                setInitLine();
+                loop_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                break;
+            case 2:
+                categoryData.setPosition(position);
+                setInitLine();
+                method_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                break;
+            case 3:
+                categoryData.setPosition(position);
+                setInitLine();
+                etc_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                break;
+            default:
+                break;
+        }
+    }
 
     @Override
     public void onClearWorkspace() {
