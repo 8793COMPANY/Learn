@@ -267,7 +267,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.e("test","asdasdasOnCreate");
         onCreateActivityRootView();
         mBlocklyActivityHelper = onCreateActivityHelper();
         if (mBlocklyActivityHelper == null) {

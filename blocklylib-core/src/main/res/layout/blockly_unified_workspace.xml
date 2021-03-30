@@ -175,8 +175,7 @@
                         android:id="@+id/loop_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"
-                        android:background="#f78f43"></View>
+                        android:layout_weight="182"></View>
 
 
 

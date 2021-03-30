@@ -35,6 +35,7 @@ import com.google.blockly.android.codegen.LanguageDefinition;
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.BlockListUI;
 import com.google.blockly.android.ui.BlockViewFactory;
+import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.DefaultVariableCallback;
 import com.google.blockly.android.ui.MutatorFragment;
 import com.google.blockly.android.ui.WorkspaceHelper;
@@ -122,6 +123,11 @@ public class BlocklyActivityHelper {
     public BlocklyActivityHelper(AppCompatActivity activity) {
         this(activity, activity.getSupportFragmentManager());
         mController.zoomOut();
+    }
+
+
+    public CategoryView getmCategoryView(){
+        return mCategoryFragment.mCategoryView;
     }
 
     /**

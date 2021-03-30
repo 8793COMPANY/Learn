@@ -17,7 +17,6 @@ package com.learn4;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Point;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
@@ -45,10 +44,11 @@ import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.blockly.android.AbstractBlocklyActivity;
 import com.google.blockly.android.BlocklySectionsActivity;
-import com.google.blockly.android.ZoomBehavior;
+import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
-import com.google.blockly.android.ui.CategoryTabs;
+
+import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
 import com.physicaloid.lib.Boards;
@@ -72,7 +72,7 @@ import java.util.List;
 /**
  * Demo app with the Blockly Games turtle game in a webview.
  */
-public class MainActivity extends BlocklySectionsActivity {
+public class MainActivity extends BlocklySectionsActivity implements TabItemClick {
 
 
     private static final String TAG = "TurtleActivity";
@@ -84,6 +84,10 @@ public class MainActivity extends BlocklySectionsActivity {
     private FrameLayout mGeneratedFrameLayout;
     private String mNoCodeText;
     private String mNoErrorText;
+    private CategoryView mCategoryView;
+
+
+
     private Boolean initial=true;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
@@ -572,6 +576,9 @@ public class MainActivity extends BlocklySectionsActivity {
         BlocklyController controller = getController();
         controller.recenterWorkspace();
         controller.zoomOut();
+
+        this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
+        mCategoryView.setItemClick(this);
     }
 
     @Override
@@ -655,6 +662,10 @@ public class MainActivity extends BlocklySectionsActivity {
         }
         mTurtleWebview.loadUrl("file:///android_asset/turtle/turtle.html");
 */
+
+
+
+
         return root;
     }
 
@@ -735,5 +746,20 @@ public class MainActivity extends BlocklySectionsActivity {
         }
         // TODO : 컴파일러 세팅
         return "http://13.124.237.59:5000 ";
+    }
+
+
+    @Override
+    public void onClickTest(int pos) {
+        Log.e("main create",pos+"");
+        if (pos ==0){
+
+        }else if (pos ==1){
+
+        }else if (pos == 2){
+
+        }else{
+
+        }
     }
 }

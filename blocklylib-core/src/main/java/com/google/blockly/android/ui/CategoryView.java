@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.OrientationHelper;
 import android.util.AttributeSet;
@@ -29,6 +28,7 @@ import android.widget.RelativeLayout;
 
 import com.google.blockly.android.BlocklyActivityHelper;
 import com.google.blockly.android.R;
+import com.google.blockly.android.TabItemClick;
 import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.utils.ColorUtils;
 
@@ -49,6 +49,16 @@ public class CategoryView extends RelativeLayout {
     protected BlocklyCategory mCurrentCategory;
 
     BlocklyActivityHelper mBlocklyActivityHelper;
+
+
+
+
+    private TabItemClick itemClick;
+
+
+    public void setItemClick(TabItemClick itemClick){
+        this.itemClick = itemClick;
+    }
 
 
 
@@ -145,7 +155,7 @@ public class CategoryView extends RelativeLayout {
             @Override
             public void onItemClick(View v, int pos) {
                 Log.e("hi~","zz");
-
+                itemClick.onClickTest(pos);
             }
         });
     }

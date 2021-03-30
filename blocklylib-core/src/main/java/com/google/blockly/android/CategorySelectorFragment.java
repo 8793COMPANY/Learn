@@ -53,6 +53,12 @@ import java.util.List;
 public class CategorySelectorFragment extends Fragment implements CategorySelectorUI {
     private static final String TAG = "CategorySelectorFragment";
 
+
+
+
+
+
+
     protected CategoryView mCategoryView;
     protected WorkspaceHelper mHelper;
     protected BlocklyController mController;
@@ -144,4 +150,6 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
     public void setCategoryCallback(CategorySelectorUI.Callback categoryCallback) {
         mCategoryView.setCallback(categoryCallback);
     }
+
+
 }

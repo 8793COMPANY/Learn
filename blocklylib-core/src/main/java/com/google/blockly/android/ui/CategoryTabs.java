@@ -300,24 +300,20 @@ public class CategoryTabs extends RecyclerView {
                 public void onClick(View label) {
                     Log.e("tabposi",tabPosition+"");
                     onCategoryClicked(category);
-                    if (tabPosition == 6){
                         Log.e("들어옴","ㅅㅎ");
                         if (mListener != null){
                             Log.e("mlist","not null");
                             mListener.onItemClick(label,tabPosition);
                         }
-                    }
+
 
                 }
             });
+
             ViewGroup.LayoutParams layoutParams =new LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT);
             holder.itemView.setLayoutParams(layoutParams);
             holder.itemView.requestLayout();
-//            ViewGroup.LayoutParams params =holder.mLabel.getLayoutParams();
-//            params.width = 1000;
-//            params.height = 50;
-//            holder.mLabel.setLayoutParams(params);
-//            holder.itemView.requestLayout();
+
         }
 
         @Override

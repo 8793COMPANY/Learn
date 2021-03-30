@@ -55,6 +55,8 @@ public abstract class BlocklySectionsActivity extends AbstractBlocklyActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.e("작동","작동");
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
 
             boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
