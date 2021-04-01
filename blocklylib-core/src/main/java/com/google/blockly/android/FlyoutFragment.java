@@ -87,8 +87,10 @@ import com.google.blockly.utils.ColorUtils;
  * @attr ref com.google.blockly.R.styleable#ToolboxFragment_rotateTabs
  */
 // TODO(#9): Attribute and arguments to set the tab background.
-public class FlyoutFragment extends Fragment implements BlockListUI {
+public class FlyoutFragment extends Fragment implements BlockListUI{
     private static final String TAG = "FlyoutFragment";
+
+
 
     public static final int DEFAULT_BLOCKS_BACKGROUND_ALPHA = 0xBB;
     public static final int DEFAULT_BLOCKS_BACKGROUND_COLOR = Color.LTGRAY;
@@ -114,6 +116,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI {
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(context, attrs, savedInstanceState);
+
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.BlocklyFlyout,
@@ -147,26 +150,6 @@ public class FlyoutFragment extends Fragment implements BlockListUI {
                 ? R.layout.default_flyout_start : R.layout.default_flyout_bottom;
         mFlyoutView = inflater.inflate(layout, null);
 
-
-
-        RelativeLayout relativeLayout = mFlyoutView.findViewById(R.id.toolbox_view);
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                FlyoutController mFlyoutController = new FlyoutController(mController);
-//                mFlyoutController.closeToolbox();
-//                mFlyoutView.setVisibility(View.GONE);
-                //mFlyoutView.setVisibility(View.GONE);
-//                setCurrentCategory(null);
-//                final CategoryTabs mCategoryTabs = new CategoryTabs(getContext());
-//                Log.e("getCurrent",getCurrentCategory().getCategoryName()+"");
-//                mCategoryTabs.setSelectedCategory(getCurrentCategory());
-                ////mRecyclerHelper.reset();
-//                closeUi();
-//                updateCategoryColors(null);
-                Log.e("click","click");
-            }
-        });
 
         RecyclerView recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);
         recyclerView.setPivotX(0);
@@ -317,4 +300,6 @@ public class FlyoutFragment extends Fragment implements BlockListUI {
     protected int getBackgroundColor(int categoryColor) {
         return ColorUtils.blendRGB(categoryColor, Color.WHITE, BLOCKS_BACKGROUND_LIGHTNESS);
     }
+
+
 }

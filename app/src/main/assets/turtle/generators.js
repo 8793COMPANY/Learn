@@ -38,25 +38,17 @@ Blockly.JavaScript['turtle_turn_internal'] = function(block) {
 
 Blockly.JavaScript['set_leds'] = function (block) {
  var value1 = block.getFieldValue('VALUE1');
- var value2 = block.getFieldValue('VALUE2');
+ var value2 = block.getFieldValue('VALUE2');``````````````````````````
  var value3 = block.getFieldValue('VALUE3');
 
     return 'pinMode(11, OUTPUT);\npinMode(12, OUTPUT);\npinMode(13, OUTPUT);\ndigitalWrite(11,'+value1+');\ndigitalWrite(12,'+value2+');\ndigitalWrite(13,'+value3+');\n';
 };
 
 Blockly.JavaScript['test'] = function (block) {
-// var value_pin = block.getFieldValue('PIN');
-//  var value_num = block.getFieldValue('VALUE1');
-//var value1 = block.getFieldValue('VALUE1');
- var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
-//   var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
-//   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "VALUE1", Blockly.JavaScript.ORDER_ATOMIC);
-//    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
-//    var value_num = Blockly.JavaScript.valueToCode(block, "VALUE1", Blockly.JavaScript.ORDER_ATOMIC);
-//    var code = "pinMode("+value_pin+", OUTPUT);\n digitalWrite(" + value_pin + ", " + value_num + ");\n";
-
-   return 'pinMode(' + value_pin  + ', '+value_num+');\n';
+   var code = "\npinMode(" + value_pin + ", " + value_num + ");\n";
+   return code;
 };
 
 Blockly.JavaScript['set_led'] = function (block) {
@@ -65,7 +57,7 @@ Blockly.JavaScript['set_led'] = function (block) {
 
 //    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
 
-    return 'pinMode(12,'+value1+');\n';
+    return '\npinMode(13,'+value1+');\n';
 };
 
 Blockly.JavaScript['dc_motor'] = function(block) {
@@ -188,7 +180,7 @@ Blockly.JavaScript['inout_notone_pin'] = function(block) {
 Blockly.JavaScript['inout_digital_write'] = function(block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
-   var code = "pinMode("+value_pin+", OUTPUT);\n digitalWrite(" + value_pin + ", " + value_num + ");\n";
+   var code = "digitalWrite(" + value_pin + ", " + value_num + ");\n";
    return code;
  };
 
@@ -230,6 +222,11 @@ Blockly.JavaScript['base_pins_list'] = function() {
 };
 
 Blockly.JavaScript['base_logic_list'] = function() {
+  var dropdown_value = this.getFieldValue('LOGIC');
+  return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['base_output_list'] = function() {
   var dropdown_value = this.getFieldValue('LOGIC');
   return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
 };
