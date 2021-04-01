@@ -18,31 +18,29 @@ package com.learn4;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.Point;
 
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.view.MotionEventCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -57,7 +55,6 @@ import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
 
 import com.google.blockly.android.ui.CategoryView;
-import com.google.blockly.android.ui.CategoryTabs;
 import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
@@ -97,11 +94,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private String mNoErrorText;
     private CategoryView mCategoryView;
 
-
-
     private Boolean initial=true;
+    Boolean compileCheck = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
+    LinearLayout blockly_monitor;
+    String code = "",current_tag ="";
+    TextView monitor_text;
     CategoryData categoryData;
     String TARGET_BASE_PATH;
     Physicaloid mPhysicaloid = new Physicaloid(this);
@@ -136,7 +135,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-//                            mGeneratedTextView.setText(generatedCode);
+                            code = generatedCode;
 //                            updateTextMinWidth();
                         }
                     });
@@ -144,6 +143,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     if(generatedCode.contains("alert")) {
                         String[] alert = generatedCode.split("!!");
                         Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
+                        code = generatedCode;
+//                        Log.e("generated",generatedCode);
                     }
                     else {
 
@@ -160,8 +161,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         // try {
                         //  get_ports();
                         System.out.println(generatedCode);
+//                        Log.e("generated",generatedCode);
+                        code = generatedCode;
                         create_file(generatedCode,"code.ino");
-                        remotecompile("code.ino", getCompiler());
+//
+                        if (compileCheck) {
+                            Log.e("generated", "컴파컴파");
+                            remotecompile("code.ino", getCompiler());
+                            compileCheck = false;
+                        }
+
+
                         //  execute_shell("ls");
 
 
@@ -241,6 +251,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             };
 
     public void upload_code(String file){
+
+        Log.e("generated", "업로드드");
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         if(deviceList.isEmpty()){
@@ -253,6 +265,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (value) {
                 Toast.makeText(getApplicationContext(), "Compilation Success, Uploading", Toast.LENGTH_LONG).show();
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+//                Log.e("generated",code);
                 Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
             }
             else {
@@ -264,7 +277,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         //Toast.makeText(getApplicationContext(), "Check if Program uploaded ", Toast.LENGTH_LONG).show();
 
     }
-
+    
     public Boolean OpenUSB() {
         if(initial) {
             initial = false;
@@ -277,6 +290,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void remotecompile(String filename, String url) {
+
+        Log.e("generated", "리모트 전");
 
 
         SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, url,
@@ -294,6 +309,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             //     mGeneratedErrorTextView.setVisibility(View.GONE);
                             //       mGeneratedErrorTextView.setText("");
                             create_file(response, "out.hex");
+                            Log.e("generated", "리모트 안");
                             upload_code("/data/data/com.learn4/out.hex");
                         }
                         //System.out.println(response);
@@ -591,12 +607,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
+
     }
 
     @Subscribe
     public void FinishLoad(PushEvent mPushEvent) {
         // 이벤트가 발생한뒤 수행할 작업
         setLineForOtherCategoryTabs(mPushEvent.getPos());
+        blockly_monitor.setVisibility(View.GONE);
     }
 
     @Override
@@ -606,6 +624,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("oncreate","contentview");
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
 
+        blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
+        monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
+
         categoryData = CategoryData.getInstance();
         BusProvider.getInstance().register(this);
 
@@ -614,22 +635,41 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Button code_btn = (Button) blockly_workspace.findViewById(R.id.code_btn);
         Button serial_btn =(Button) blockly_workspace.findViewById(R.id.serial_btn);
         Button upload_btn = (Button) blockly_workspace.findViewById(R.id.upload_btn);
+        View blockly_toolbox_ui = blockly_workspace.findViewById(R.id.blockly_toolbox_ui);
 
 
 
+//        BlocklyCategory currCategory = mCategorySelectorUi.getCurrentCategory();
 
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setMonitor(code_btn.getTag().toString());
+                mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(4);
                 setInitLine();
                 code_view.setBackgroundColor(Color.parseColor("#f78f43"));
+
+                if (getController().getWorkspace().hasBlocks()) {
+                    mBlocklyActivityHelper.requestCodeGeneration(
+                            getBlockGeneratorLanguage(),
+                            getBlockDefinitionsJsonPaths(),
+                            getGeneratorsJsPaths(),
+                            getCodeGenerationCallback());
+                }
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    monitor_text.setText(code);
+                }, 1000);
             }
         });
 
         serial_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setMonitor(serial_btn.getTag().toString());
+                mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(5);
                 setInitLine();
                 serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
@@ -641,10 +681,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(6);
                 setInitLine();
                 upload_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                compileCheck = true;
                 if (getController().getWorkspace().hasBlocks()) {
+                    Log.e("??","들어옴");
                     mBlocklyActivityHelper.requestCodeGeneration(
                             getBlockGeneratorLanguage(),
                             getBlockDefinitionsJsonPaths(),
@@ -670,25 +713,22 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
-//        mGeneratedTextView = (TextView) root.findViewById(R.id.generated_code);
-        //    mGeneratedErrorTextView = (TextView) root.findViewById(R.id.generated_error);
-//        updateTextMinWidth();
-
-//        mNoErrorText = mGeneratedErrorTextView.getText().toString();
-//        mNoCodeText = mGeneratedTextView.getText().toString(); // Capture initial value.
-      /*  mTurtleWebview = (WebView) root.findViewById(R.id.turtle_runtime);
-        mTurtleWebview.getSettings().setJavaScriptEnabled(true);
-        mTurtleWebview.setWebChromeClient(new WebChromeClient());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(true);
-        }
-        mTurtleWebview.loadUrl("file:///android_asset/turtle/turtle.html");
-*/
-
-
-
-
         return root;
+    }
+
+    void setMonitor(String tag){
+        if (current_tag.equals(tag)){
+            Log.e("tag","같음");
+            if (blockly_monitor.getVisibility()==View.GONE){
+                blockly_monitor.setVisibility(View.VISIBLE);
+            }else{
+                blockly_monitor.setVisibility(View.GONE);
+            }
+        }else{
+            Log.e("tag","다름");
+            blockly_monitor.setVisibility(View.VISIBLE);
+        }
+        current_tag = tag;
     }
 
     void setupView(View view){
@@ -800,6 +840,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onClickTest(int pos) {
         Log.e("main create",pos+"");
+//        blockly_monitor.setVisibility(View.GONE);
         //여기서 버튼 underline 바뀌는 코드 작성하면 됨
         if (pos ==0){
 

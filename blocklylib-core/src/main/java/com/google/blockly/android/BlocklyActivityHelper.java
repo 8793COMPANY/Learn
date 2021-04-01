@@ -33,6 +33,7 @@ import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.codegen.CodeGeneratorManager;
 import com.google.blockly.android.codegen.LanguageDefinition;
 import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.control.FlyoutController;
 import com.google.blockly.android.ui.BlockListUI;
 import com.google.blockly.android.ui.BlockViewFactory;
 import com.google.blockly.android.ui.CategoryView;
@@ -78,7 +79,7 @@ import java.util.Map;
 public class BlocklyActivityHelper {
     private static final String TAG = "BlocklyActivityHelper";
 
-    protected AppCompatActivity mActivity;
+    public AppCompatActivity mActivity;
 
     protected WorkspaceHelper mWorkspaceHelper;
     protected BlockViewFactory mBlockViewFactory;
@@ -129,6 +130,11 @@ public class BlocklyActivityHelper {
     public CategoryView getmCategoryView(){
         return mCategoryFragment.mCategoryView;
     }
+
+    public boolean getFlyoutController(){
+        return mController.closeFlyouts();
+    }
+
 
     /**
      * Creates the activity helper and initializes Blockly. Must be called during

@@ -417,25 +417,22 @@
     "message0": "pinMode %1 value %2 ",
     "inputsInline": true,
     "args0": [
-
       {
         "type": "input_value",
         "name": "PIN",
         "check": "Number"
       },
-
       {
         "type": "input_value",
         "name": "VALUE1",
         "check": "String"
       }
-
     ],
+    "colour": 120,
+    "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 220,
-    "tooltip": "Set LEDS",
-    "helpUrl": "http://www.example.com/"
+    "tooltip": ""
   },
 
   {
@@ -649,7 +646,7 @@
 
   {
     "type": "inout_digital_write",
-    "message0": "DigitalWrite on pin %1 value %2",
+    "message0": "DigitalWrite %1 value %2",
     "args0": [
       {
         "type": "input_value",

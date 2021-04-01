@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/blockly_toolbox_ui"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="-3dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <fragment
         android:id="@+id/blockly_trash_ui"
@@ -100,6 +100,7 @@
                         android:weightSum="542">
 
                         <Button
+                            android:tag="code"
                             android:id="@+id/code_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -115,6 +116,7 @@
 
 
                         <Button
+                            android:tag="serial"
                             android:id="@+id/serial_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -128,6 +130,7 @@
                             android:background="@drawable/divider"></View>
 
                         <Button
+                            android:tag="upload"
                             android:id="@+id/upload_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -230,6 +233,30 @@
 
         </LinearLayout>
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/blockly_monitor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/category_block"
+        android:layout_alignParentRight="true"
+        android:background="#fff4d9"
+        app:layout_constraintDimensionRatio="614:606"
+        app:layout_constraintWidth_percent="0.5"
+        blockly:layout_constraintEnd_toEndOf="@+id/blockly_workspace"
+        blockly:layout_constraintTop_toBottomOf="@+id/category_block"
+        blockly:scrollOrientation="vertical"
+        tools:ignore="MissingPrefix">
+
+        <TextView
+            android:id="@+id/monitor_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="테스트 테스트 테스트"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
 
     <fragment
         android:id="@+id/blockly_toolbox_ui"
@@ -244,32 +271,32 @@
         blockly:layout_constraintTop_toBottomOf="@+id/category_block"
         blockly:scrollOrientation="vertical"
         tools:ignore="MissingPrefix">
-
-
     </fragment>
+
 
 
     <LinearLayout
         android:id="@+id/blockly_overlay_buttons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        app:layout_constraintDimensionRatio="68:88"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintWidth_percent="0.075"
         android:orientation="vertical"
         blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         blockly:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
-
-
+        app:layout_constraintHorizontal_bias="0.03"
         blockly:layout_constraintStart_toStartOf="parent">
 
         <com.google.blockly.android.ui.TrashCanView
             android:id="@+id/blockly_trash_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/translucent"
             android:padding="2dp" />
-        
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

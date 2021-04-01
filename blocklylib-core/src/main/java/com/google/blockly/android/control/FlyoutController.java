@@ -141,6 +141,7 @@ public class FlyoutController {
     public void setToolboxUiComponents(CategorySelectorUI categoryFragment,
                                        BlockListUI toolbox) {
         mCategorySelectorUi = categoryFragment;
+        Log.e("categoryFragment",mCategorySelectorUi.toString());
         mToolbox = toolbox;
         if (mToolbox == null) {
             return;
@@ -273,6 +274,7 @@ public class FlyoutController {
         if (mToolbox != null) {
             if (category != null) {
                 mToolbox.setCurrentCategory(category);
+                Log.e("category",category.toString()+"");
             } else {
                 mToolbox.closeUi();
             }
