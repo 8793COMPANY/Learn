@@ -59,7 +59,7 @@ public abstract class BlocklySectionsActivity extends AbstractBlocklyActivity
         Log.e("작동","작동");
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
 
-            boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
+            boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", false);
             if (isFirstRun) {
                 copyFileOrDir(""); // Code to run once
                 //try {

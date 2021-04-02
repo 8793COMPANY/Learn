@@ -164,13 +164,14 @@
                     <View
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="3"></View>
+                        android:layout_weight="4"></View>
+
 
                     <View
                         android:id="@+id/setup_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="180"></View>
 
 
 
@@ -178,7 +179,7 @@
                         android:id="@+id/loop_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="180"></View>
 
 
 
@@ -186,7 +187,7 @@
                         android:id="@+id/method_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="180"></View>
 
 
 
@@ -194,21 +195,21 @@
                         android:id="@+id/etc_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="179"></View>
 
 
                     <View
                         android:id="@+id/code_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="184"></View>
 
 
                     <View
                         android:id="@+id/serial_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="184"></View>
 
 
                     <View
@@ -217,10 +218,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"></View>
+
 
 
                 </LinearLayout>
@@ -248,11 +246,12 @@
         blockly:scrollOrientation="vertical"
         tools:ignore="MissingPrefix">
 
+
+
         <TextView
             android:id="@+id/monitor_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="테스트 테스트 테스트"
             android:textColor="#000000" />
 
     </LinearLayout>

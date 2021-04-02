@@ -19,13 +19,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 
+import com.android.volley.misc.AsyncTask;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
+
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -75,6 +79,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -99,10 +104,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
     LinearLayout blockly_monitor;
-    String code = "",current_tag ="";
+    String code = "",current_tag ="", serial_code="";
     TextView monitor_text;
     CategoryData categoryData;
     String TARGET_BASE_PATH;
+    UsbDevice bigBoard;
+    ProgressDialog customProgressDialog;
+
+
+    byte[] buffer = new byte[1024];  // buffer store for the stream
+    int bytes; // bytes returned from read()
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
@@ -160,7 +171,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         // mPhysicaloid.upload(Boards.ARDUINO_UNO, "/storage/emulated/0/code/Blink.hex");
                         // try {
                         //  get_ports();
-                        System.out.println(generatedCode);
+//                        System.out.println(generatedCode);
 //                        Log.e("generated",generatedCode);
                         code = generatedCode;
                         create_file(generatedCode,"code.ino");
@@ -169,6 +180,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             Log.e("generated", "컴파컴파");
                             remotecompile("code.ino", getCompiler());
                             compileCheck = false;
+                            customProgressDialog.dismiss();
                         }
 
 
@@ -250,14 +262,50 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
             };
 
+    public void read_code() {
+        Log.e("generated", "리드");
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+
+        if(deviceList.isEmpty()){
+            Log.e("generated : ", "isempty 디바이스 리스트");
+        }
+        else {
+            Set<String> keys = deviceList.keySet();
+            for (String key : keys) {
+                bigBoard = deviceList.get(key);
+            }
+        }
+
+        try {
+            mPhysicaloid.open(9600, bigBoard);
+            byte[] buf = new byte[256];
+            mPhysicaloid.read(buf, buf.length);
+            String str = new String(buf);
+            Log.e("str",str);
+            monitor_text.setText(str);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void serial_write(String str){
+        if(mPhysicaloid.open()) {
+            byte[] buf = str.getBytes();
+            mPhysicaloid.write(buf, buf.length);
+            mPhysicaloid.close();
+        }
+    }
+
     public void upload_code(String file){
 
         Log.e("generated", "업로드드");
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         if(deviceList.isEmpty()){
-//            mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-//            mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
+            Log.e("generated : ", "isempty 디바이스 리스트");
         }
         else {
             Boolean value = OpenUSB();
@@ -277,7 +325,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         //Toast.makeText(getApplicationContext(), "Check if Program uploaded ", Toast.LENGTH_LONG).show();
 
     }
-    
+
     public Boolean OpenUSB() {
         if(initial) {
             initial = false;
@@ -635,11 +683,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Button code_btn = (Button) blockly_workspace.findViewById(R.id.code_btn);
         Button serial_btn =(Button) blockly_workspace.findViewById(R.id.serial_btn);
         Button upload_btn = (Button) blockly_workspace.findViewById(R.id.upload_btn);
-        View blockly_toolbox_ui = blockly_workspace.findViewById(R.id.blockly_toolbox_ui);
 
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.setContentView(R.layout.dialog_progress);
 
+        //로딩창을 투명하게
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-//        BlocklyCategory currCategory = mCategorySelectorUi.getCurrentCategory();
 
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -657,23 +707,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             getGeneratorsJsPaths(),
                             getCodeGenerationCallback());
                 }
-
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    monitor_text.setText(code);
-                }, 1000);
+//
+//                Handler handler = new Handler();
+//                handler.postDelayed(() -> {
+//                    monitor_text.setText(code);
+//                }, 1000);
             }
         });
 
         serial_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                monitor_text.setText("");
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    read_code();
+                    Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
+                    //monitor_text.setText(serial_code);
+                }, 100);
                 setMonitor(serial_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(5);
                 setInitLine();
                 serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
-                Log.e("serial","click");
             }
         });
 
@@ -681,6 +737,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                customProgressDialog.show();
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(6);
                 setInitLine();
@@ -699,35 +756,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
 
-
-//
-//        Button zoomOut =mGeneratedFrameLayout.findViewById(R.id.serial);
-//        zoomOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                BlocklyController controller = getController();
-//                controller.recenterWorkspace();
-//                controller.zoomOut();
-//            }
-//        });
-
-
-
         return root;
     }
 
     void setMonitor(String tag){
         if (current_tag.equals(tag)){
-            Log.e("tag","같음");
-            if (blockly_monitor.getVisibility()==View.GONE){
+            if (blockly_monitor.getVisibility()==View.GONE)
                 blockly_monitor.setVisibility(View.VISIBLE);
-            }else{
+            else
                 blockly_monitor.setVisibility(View.GONE);
-            }
         }else{
-            Log.e("tag","다름");
             blockly_monitor.setVisibility(View.VISIBLE);
         }
+
         current_tag = tag;
     }
 

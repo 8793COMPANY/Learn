@@ -328,7 +328,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
             if (!mUserLearnedDrawer) {
-                mDrawerLayout.openDrawer(mNavigationDrawer);
+                // 초기 렉쳐 드로어 2
+                //mDrawerLayout.openDrawer(mNavigationDrawer);
             }
         }
     }
@@ -574,7 +575,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
 
         mNavigationDrawer = onCreateAppNavigationDrawer();
         if (mNavigationDrawer != null) {
-            setupAppNaviagtionDrawer();
+            // 초기 렉쳐 드로어
+            //setupAppNaviagtionDrawer();
         }
     }
 

@@ -50,6 +50,22 @@
             </value>-->
 
         </block>
+
+        <block type="serial_print">
+            <value name="baud">
+                <block type="math_number">
+                    <field name="NUM">9600</field>
+                </block>
+            </value>
+            <value name="text">
+                <block type="text">
+                    <field name="TEXT"></field>
+                </block>
+            </value>
+        </block>
+        <block type="text">
+            <field name="TEXT"></field>
+        </block>
         <!--
         <block type="controls_if"></block>
         <block type="controls_ifelse"></block>
