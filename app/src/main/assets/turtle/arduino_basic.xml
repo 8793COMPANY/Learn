@@ -63,6 +63,20 @@
                 </block>
             </value>
         </block>
+
+
+        <block type="serial_println">
+            <value name="baud">
+                <block type="math_number">
+                    <field name="NUM">9600</field>
+                </block>
+            </value>
+            <value name="text">
+                <block type="text">
+                    <field name="TEXT"></field>
+                </block>
+            </value>
+        </block>
         <block type="text">
             <field name="TEXT"></field>
         </block>
@@ -141,6 +155,37 @@
                 </block>
             </value>
         </block>
+
+        <block type="inout_digital_read">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
+
+        <block type="inout_analog_write">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+        </block>
+        <block type="inout_analog_read">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
+
 
         <!--
         <block type="text">

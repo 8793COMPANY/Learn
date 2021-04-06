@@ -212,9 +212,18 @@ Blockly.JavaScript['serial_print'] = function(block) {
    var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
    var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
-   var code = "Serial.println("+value_text+");\n";
+   var code = "Serial.print("+value_text+");\n";
    return code;
  };
+
+
+ Blockly.JavaScript['serial_println'] = function(block) {
+    var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
+    var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
+    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
+    var code = "Serial.println("+value_text+");\n";
+    return code;
+  };
 
 Blockly.JavaScript['base_pins_list'] = function() {
   var dropdown_value = this.getFieldValue('PIN');

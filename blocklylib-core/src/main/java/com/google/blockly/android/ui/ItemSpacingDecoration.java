@@ -36,8 +36,8 @@ public class ItemSpacingDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(
             Rect outRect, View child, RecyclerView parent, RecyclerView.State state) {
-        int itemPosition = parent.getChildAdapterPosition(child);
-        int bottomMargin = (itemPosition == (mAdapter.getItemCount() - 1)) ? mBlockMargin : 0;
-        outRect.set(mBlockMargin, mBlockMargin, mBlockMargin, bottomMargin);
+//        int itemPosition = parent.getChildAdapterPosition(child);
+//        int bottomMargin = (itemPosition == (mAdapter.getItemCount() - 1)) ? mBlockMargin : 0;
+//        outRect.set(mBlockMargin, mBlockMargin, mBlockMargin, bottomMargin);
     }
 }

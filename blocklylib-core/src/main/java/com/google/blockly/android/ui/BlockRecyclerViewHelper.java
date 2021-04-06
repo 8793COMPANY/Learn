@@ -16,6 +16,7 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -263,11 +264,19 @@ public class BlockRecyclerViewHelper {
                     bg.setTouchHandler(mTouchHandler);
                 }
 
-
-                holder.mContainer.addView(bg, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                holder.mContainer.addView(bg, layoutParams);
+                holder.mContainer.setForegroundGravity(0);
+
+                holder.mContainer.setScaleX(0.7f);
+                holder.mContainer.setScaleY(0.7f);
+                holder.mContainer.setPivotX(0);
+                holder.mContainer.setPivotY(0);
                 holder.bg = bg;
+
             } else if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BUTTON) {
                 BlocklyCategory.ButtonItem bItem = (BlocklyCategory.ButtonItem) item;
                 final String action = bItem.getAction();

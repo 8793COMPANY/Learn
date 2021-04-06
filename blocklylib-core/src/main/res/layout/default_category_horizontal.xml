@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:overScrollMode="never"
   />
 
 </com.google.blockly.android.ui.CategoryView>

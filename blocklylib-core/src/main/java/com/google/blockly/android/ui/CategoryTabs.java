@@ -118,7 +118,7 @@ public class CategoryTabs extends RecyclerView {
 
 
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
-        mAdapter = new CategoryAdapter((int)((size.x /1280.0) * 175));
+        mAdapter = new CategoryAdapter(size.x /1280.0);
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
 
@@ -263,9 +263,9 @@ public class CategoryTabs extends RecyclerView {
 
     public class CategoryAdapter extends RecyclerView.Adapter<TabLabelHolder> {
 
-        int width = 0;
+        double width = 0;
 
-        public CategoryAdapter(int width){
+        public CategoryAdapter(double width){
             this.width =width;
             Log.e("width 확인",this.width+"");
         }
@@ -320,10 +320,16 @@ public class CategoryTabs extends RecyclerView {
 
                 }
             });
+            if (tabPosition == 0){
+                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 177), ViewGroup.LayoutParams.MATCH_PARENT);
+                holder.itemView.setLayoutParams(layoutParams);
+                holder.itemView.requestLayout();
+            }else{
+                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 176), ViewGroup.LayoutParams.MATCH_PARENT);
+                holder.itemView.setLayoutParams(layoutParams);
+                holder.itemView.requestLayout();
+            }
 
-            ViewGroup.LayoutParams layoutParams =new LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT);
-            holder.itemView.setLayoutParams(layoutParams);
-            holder.itemView.requestLayout();
 
         }
 

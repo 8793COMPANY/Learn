@@ -152,6 +152,7 @@ public class Block extends Observable<Block.Observer> {
         mStyle = definition.getStyleJson();
         mColor = definition.getColor();
 
+
         reshape(definition.createInputList(factory),
                 definition.createOutputConnection(),
                 definition.createPreviousConnection(),

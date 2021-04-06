@@ -137,6 +137,35 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     private final Handler mHandler = new Handler();
+    public void read_code() {
+        Log.e("generated", "리드");
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+
+        if(deviceList.isEmpty()){
+            Log.e("generated : ", "isempty 디바이스 리스트");
+        }
+        else {
+            Set<String> keys = deviceList.keySet();
+            for (String key : keys) {
+                bigBoard = deviceList.get(key);
+            }
+        }
+
+        try {
+            mPhysicaloid.open(9600, bigBoard);
+            byte[] buf = new byte[256];
+            mPhysicaloid.read(buf, buf.length);
+            String str = new String(buf);
+            Log.e("str",str);
+            monitor_text.setText(str);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     //private WebView mTurtleWebview;
     private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new CodeGenerationRequest.CodeGeneratorCallback() {
@@ -175,7 +204,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                        Log.e("generated",generatedCode);
                         code = generatedCode;
                         create_file(generatedCode,"code.ino");
-//
+                        Log.e("!@","nono");
                         if (compileCheck) {
                             Log.e("generated", "컴파컴파");
                             remotecompile("code.ino", getCompiler());
@@ -262,35 +291,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
             };
 
-    public void read_code() {
-        Log.e("generated", "리드");
-        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
-        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
-
-        if(deviceList.isEmpty()){
-            Log.e("generated : ", "isempty 디바이스 리스트");
-        }
-        else {
-            Set<String> keys = deviceList.keySet();
-            for (String key : keys) {
-                bigBoard = deviceList.get(key);
-            }
-        }
-
-        try {
-            mPhysicaloid.open(9600, bigBoard);
-            byte[] buf = new byte[256];
-            mPhysicaloid.read(buf, buf.length);
-            String str = new String(buf);
-            Log.e("str",str);
-            monitor_text.setText(str);
-        }catch (NullPointerException e){
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
     public void serial_write(String str){
         if(mPhysicaloid.open()) {
             byte[] buf = str.getBytes();
@@ -338,6 +338,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void remotecompile(String filename, String url) {
+        Log.e("filename",filename);
 
         Log.e("generated", "리모트 전");
 
@@ -694,6 +695,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                monitor_text.setText("");
+                Log.e("code_btn","click");
                 setMonitor(code_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(4);
@@ -707,11 +710,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             getGeneratorsJsPaths(),
                             getCodeGenerationCallback());
                 }
-//
-//                Handler handler = new Handler();
-//                handler.postDelayed(() -> {
-//                    monitor_text.setText(code);
-//                }, 1000);
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    monitor_text.setText(code);
+                }, 1000);
             }
         });
 
@@ -723,8 +726,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 handler.postDelayed(() -> {
                     read_code();
                     Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
-                    //monitor_text.setText(serial_code);
+                    monitor_text.setText(serial_code);
+                    Log.e("serial_code",serial_code);
                 }, 100);
+//                read_code();
                 setMonitor(serial_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(5);
@@ -737,6 +742,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("upload_btn","click");
                 customProgressDialog.show();
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(6);
@@ -865,14 +871,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public String getCompiler() {
+        Log.e("??","ddddd");
         JSONObject obj = null;
         String url = null;
-        try {
-            obj = new JSONObject(loadJSONFromFile());
-            url = obj.get("url").toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            obj = new JSONObject(loadJSONFromFile());
+//            url = obj.get("url").toString();
+//            Log.e("dg","zzz");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            Log.e("hi","hi");
+//            Log.e("getCompiler Error",e.toString());
+//        }
         // TODO : 컴파일러 세팅
         return "http://13.124.237.59:5000 ";
     }

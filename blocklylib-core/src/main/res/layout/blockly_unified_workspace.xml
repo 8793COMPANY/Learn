@@ -161,17 +161,13 @@
                     android:orientation="horizontal"
                     android:weightSum="1280">
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4"></View>
 
 
                     <View
                         android:id="@+id/setup_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="180"></View>
+                        android:layout_weight="183"></View>
 
 
 
@@ -179,7 +175,7 @@
                         android:id="@+id/loop_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="180"></View>
+                        android:layout_weight="182"></View>
 
 
 
@@ -187,7 +183,7 @@
                         android:id="@+id/method_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="180"></View>
+                        android:layout_weight="182"></View>
 
 
 
@@ -195,7 +191,7 @@
                         android:id="@+id/etc_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="179"></View>
+                        android:layout_weight="182"></View>
 
 
                     <View
@@ -217,8 +213,6 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="182"></View>
-
-
 
 
                 </LinearLayout>

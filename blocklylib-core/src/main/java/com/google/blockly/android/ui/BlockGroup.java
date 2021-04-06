@@ -16,6 +16,7 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -92,6 +93,7 @@ public class BlockGroup extends NonPropagatingViewGroup {
             }
             mNextBlockVerticalOffset += childBlockView.getNextBlockVerticalOffset();
         }
+
         setMeasuredDimension(width, height);
     }
 
@@ -118,6 +120,7 @@ public class BlockGroup extends NonPropagatingViewGroup {
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
             BlockView childBlockView = (BlockView) child;
+
 
             int w = child.getMeasuredWidth();
             int cl = rtl ? x - margin - w : x + margin;

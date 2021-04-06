@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.blockly.android.control.BlocklyController;
@@ -102,7 +103,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     protected int mBgAlpha = DEFAULT_BLOCKS_BACKGROUND_ALPHA;
     protected int mBgColor = DEFAULT_BLOCKS_BACKGROUND_COLOR;
 
-    protected View mFlyoutView;
+    protected View mFlyoutView, mainView;
     protected BlocklyController mController;
     protected WorkspaceHelper mHelper;
 
@@ -112,6 +113,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     protected FlyoutCallback mViewCallback = null;
     protected BlockRecyclerViewHelper mRecyclerHelper;
     protected final ColorDrawable mBgDrawable = new ColorDrawable(mBgColor);
+    LinearLayout linearLayout;
 
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
@@ -148,14 +150,20 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
 
         int layout = mScrollOrientation == OrientationHelper.VERTICAL
                 ? R.layout.default_flyout_start : R.layout.default_flyout_bottom;
+
+//        int layout2 = R.layout.blockly_unified_workspace;
+//        mainView = inflater.inflate(layout2, null);
+//
+//        linearLayout = mainView.findViewById(R.id.blockly_monitor);
+
         mFlyoutView = inflater.inflate(layout, null);
 
 
         RecyclerView recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);
         recyclerView.setPivotX(0);
         recyclerView.setPivotY(0);
-        recyclerView.setScaleX(0.7f);
-        recyclerView.setScaleY(0.7f);
+//        recyclerView.setScaleX(0.7f);
+//        recyclerView.setScaleY(0.7f);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext());
         mRecyclerHelper.setScrollOrientation(mScrollOrientation);
@@ -255,8 +263,10 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         if (!isCloseable() || mFlyoutView.getVisibility() == View.GONE) {
             return false;
         }
+
         mRecyclerHelper.setCurrentCategory(null);
         mFlyoutView.setVisibility(View.GONE);
+//        linearLayout.setVisibility(View.GONE);
         updateCategoryColors(null);
         return true;
     }
