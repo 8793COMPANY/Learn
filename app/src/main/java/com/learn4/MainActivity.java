@@ -800,6 +800,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void setLineForOtherCategoryTabs(int position) {
         switch (position) {
+            case -1:
+                categoryData.setPosition(position);
+                setInitLine();
+                break;
             case 0:
                 categoryData.setPosition(position);
                 setInitLine();

@@ -309,7 +309,7 @@ public class CategoryTabs extends RecyclerView {
                 public void onClick(View label) {
                     Log.e("tabposi",tabPosition+"");
                     categoryData.setPosition(tabPosition);
-                    BusProvider.getInstance().post(new PushEvent(tabPosition));
+                    BusProvider.getInstance().post(new PushEvent(tabPosition, false));
                     onCategoryClicked(category);
                         Log.e("들어옴","ㅅㅎ");
                         if (mListener != null){

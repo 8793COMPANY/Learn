@@ -37,9 +37,11 @@ import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.control.FlyoutController;
 import com.google.blockly.android.ui.BlockListUI;
 import com.google.blockly.android.ui.BlockRecyclerViewHelper;
+import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategorySelectorUI;
 import com.google.blockly.android.ui.CategoryTabs;
 import com.google.blockly.android.ui.FlyoutCallback;
+import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
@@ -167,6 +169,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext());
         mRecyclerHelper.setScrollOrientation(mScrollOrientation);
+
         return mFlyoutView;
     }
 
@@ -266,7 +269,6 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
 
         mRecyclerHelper.setCurrentCategory(null);
         mFlyoutView.setVisibility(View.GONE);
-//        linearLayout.setVisibility(View.GONE);
         updateCategoryColors(null);
         return true;
     }

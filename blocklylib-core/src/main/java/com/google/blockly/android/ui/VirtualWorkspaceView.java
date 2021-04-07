@@ -112,6 +112,8 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         mGridRenderer.updateGridBitmap(mViewScale);
         mImeManager = (InputMethodManager) getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        BusProvider.getInstance().register(this);
     }
 
     /**
@@ -612,6 +614,8 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
+            Log.e("gg", "onSingleTapUp: " + e);
+            BusProvider.getInstance().post(new PushEvent(8, true));
             return callOnClick();
         }
     }
