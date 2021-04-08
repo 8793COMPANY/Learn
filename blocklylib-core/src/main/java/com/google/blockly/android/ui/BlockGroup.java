@@ -94,7 +94,7 @@ public class BlockGroup extends NonPropagatingViewGroup {
             mNextBlockVerticalOffset += childBlockView.getNextBlockVerticalOffset();
         }
 
-        setMeasuredDimension(width, height);
+        setMeasuredDimension(width,height );
     }
 
     @Override

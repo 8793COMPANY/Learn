@@ -236,7 +236,6 @@ public class BlockView extends AbstractBlockView<InputView> {
             if (rtl) {
                 rowFrom -= inputViewWidth;
             }
-
             inputView.layout(rowFrom, rowTop, rowFrom + inputViewWidth,
                     rowTop + inputView.getMeasuredHeight());
         }
@@ -527,9 +526,9 @@ public class BlockView extends AbstractBlockView<InputView> {
 
         // View width is the computed width of the widest statement input, including child blocks
         // and padding, and at least the width of the widest input row.
-        mBlockViewSize.x = Math.max(mBlockContentWidth,
+        mBlockViewSize.x = (Math.max(mBlockContentWidth,
                 mMaxStatementFieldsWidth + maxStatementChildWidth +
-                        mPatchManager.mBlockStartPadding + mPatchManager.mStatementInputPadding);
+                        mPatchManager.mBlockStartPadding + mPatchManager.mStatementInputPadding));
 
         // Height is vertical position of next (non-existent) inputs row, and at least MIN_HEIGHT.
         mBlockContentHeight = Math.max(mPatchManager.mMinBlockHeight, rowTop);
@@ -1232,6 +1231,7 @@ public class BlockView extends AbstractBlockView<InputView> {
             }
         }
 
+
         mNextFillRect = new Rect(left, top, right, bottom);
     }
 
@@ -1278,7 +1278,6 @@ public class BlockView extends AbstractBlockView<InputView> {
                 mNextFillRect.left = mBlockViewSize.x - mNextFillRect.right;
                 mNextFillRect.right = mBlockViewSize.x - left;
             }
-
             mFillRects.add(mNextFillRect);
             mNextFillRect = null;
         }
@@ -1288,6 +1287,7 @@ public class BlockView extends AbstractBlockView<InputView> {
         // TODO: (#161) Use flat 9-patches for shadow blocks
         NinePatchDrawable drawable = mPatchManager.getPatchDrawable(id);
         drawable.setColorFilter(mBlockColorFilter);
+//        drawable.setColorFilter(mBlockColorFilter);
         return drawable;
     }
 }

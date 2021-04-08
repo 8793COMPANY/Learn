@@ -31,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -169,6 +170,8 @@ public class BlockRecyclerViewHelper {
         // pixels. We are assuming the only transforms between BlockViews are the
         // child offsets.
         View view = (View) touchedBlockView;
+
+
         float offsetX = view.getX() + pendingDrag.getTouchDownViewOffsetX();
         float offsetY = view.getY() + pendingDrag.getTouchDownViewOffsetY();
         ViewGroup parent = (ViewGroup) view.getParent();
@@ -255,6 +258,7 @@ public class BlockRecyclerViewHelper {
             BlocklyCategory.CategoryItem item = items.get(position);
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 Block block = ((BlocklyCategory.BlockItem) item).getBlock();
+                block.setEditable(true);
                 BlockGroup bg = mHelper.getParentBlockGroup(block);
 
                 if (bg == null) {
@@ -263,6 +267,9 @@ public class BlockRecyclerViewHelper {
                 } else {
                     bg.setTouchHandler(mTouchHandler);
                 }
+                holder.mContainer.setScaleX(0.82f);
+                holder.mContainer.setScaleY(0.82f);
+
 
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -271,11 +278,14 @@ public class BlockRecyclerViewHelper {
                 holder.mContainer.addView(bg, layoutParams);
                 holder.mContainer.setForegroundGravity(0);
 
-                holder.mContainer.setScaleX(0.7f);
-                holder.mContainer.setScaleY(0.7f);
+
                 holder.mContainer.setPivotX(0);
                 holder.mContainer.setPivotY(0);
+
+
                 holder.bg = bg;
+
+
 
             } else if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BUTTON) {
                 BlocklyCategory.ButtonItem bItem = (BlocklyCategory.ButtonItem) item;
@@ -320,7 +330,7 @@ public class BlockRecyclerViewHelper {
     private class BlockViewHolder extends RecyclerView.ViewHolder {
         final FrameLayout mContainer;
         BlockGroup bg = null;  // Root of the currently attach block views.
-
+        ImageView imageView;
         BlockViewHolder(Context context) {
             super(new FrameLayout(context));
             mContainer = (FrameLayout) itemView;

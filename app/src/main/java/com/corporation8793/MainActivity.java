@@ -13,33 +13,34 @@
  * limitations under the License.
  */
 
-package com.learn4;
+package com.corporation8793;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 
-import com.android.volley.misc.AsyncTask;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
+import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,13 +104,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Boolean compileCheck = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
-    LinearLayout blockly_monitor;
-    String code = "",current_tag ="", serial_code="";
+    EditText serial_input_box;
+    Button serial_send_btn, init_btn;
+    LinearLayout blockly_monitor, input_space;
+    String code = "",current_tag ="", serial_code="", serial_input="";
     TextView monitor_text;
     CategoryData categoryData;
     String TARGET_BASE_PATH;
     UsbDevice bigBoard;
     ProgressDialog customProgressDialog;
+    String str ="";
+    ScrollView scrollview;
 
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -156,7 +161,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mPhysicaloid.open(9600, bigBoard);
             byte[] buf = new byte[256];
             mPhysicaloid.read(buf, buf.length);
-            String str = new String(buf);
+            str += new String(buf);
             Log.e("str",str);
             monitor_text.setText(str);
         }catch (NullPointerException e){
@@ -292,10 +297,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             };
 
     public void serial_write(String str){
-        if(mPhysicaloid.open()) {
-            byte[] buf = str.getBytes();
-            mPhysicaloid.write(buf, buf.length);
-            mPhysicaloid.close();
+        if (mPhysicaloid.isOpened()) {
+            if(mPhysicaloid.open(9600, bigBoard)) {
+                byte[] buf = str.getBytes();
+                mPhysicaloid.write(buf, buf.length);
+                mPhysicaloid.close();
+            }
         }
     }
 
@@ -657,6 +664,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
 
+
     }
 
     @Subscribe
@@ -674,7 +682,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
 
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
+        input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
+        monitor_text.setMovementMethod(new ScrollingMovementMethod());
+
+        serial_input_box = blockly_workspace.findViewById(R.id.serial_input_box);
+        serial_send_btn = blockly_workspace.findViewById(R.id.serial_send_btn);
+        init_btn = blockly_workspace.findViewById(R.id.init_btn);
+        scrollview = blockly_workspace.findViewById(R.id.scrollview);
+
+
+        InputMethodManager imm = (InputMethodManager) getSystemService (Context. INPUT_METHOD_SERVICE );
+        imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
 
         categoryData = CategoryData.getInstance();
         BusProvider.getInstance().register(this);
@@ -691,10 +710,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         //로딩창을 투명하게
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+        serial_input_box.setOnClickListener(v -> {
+            // 에디트 텍스트
+        });
+
+        serial_send_btn.setOnClickListener(v -> {
+            serial_input = serial_input_box.getText().toString();
+            serial_input_box.setText("");
+            monitor_text.append(serial_input + "\n");
+            serial_write(serial_input);
+            imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
+            Toast.makeText(this, "전송", Toast.LENGTH_SHORT).show();
+        });
+
+        init_btn.setOnClickListener(v -> {
+            str = "";
+            monitor_text.setText("");
+            Toast.makeText(this, "초기화", Toast.LENGTH_SHORT).show();
+        });
+
 
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMonitorHandler.sendEmptyMessage(1);
                 monitor_text.setText("");
                 Log.e("code_btn","click");
                 setMonitor(code_btn.getTag().toString());
@@ -702,6 +741,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 categoryData.setPosition(4);
                 setInitLine();
                 code_view.setBackgroundColor(Color.parseColor("#f78f43"));
+
+                input_space.setVisibility(View.GONE);
+                init_btn.setVisibility(View.GONE);
 
                 if (getController().getWorkspace().hasBlocks()) {
                     mBlocklyActivityHelper.requestCodeGeneration(
@@ -714,7 +756,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     monitor_text.setText(code);
-                }, 1000);
+                }, 100);
             }
         });
 
@@ -722,19 +764,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             @Override
             public void onClick(View v) {
                 monitor_text.setText("");
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    read_code();
-                    Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
-                    monitor_text.setText(serial_code);
-                    Log.e("serial_code",serial_code);
-                }, 100);
+                mMonitorHandler.sendEmptyMessage(0);
+//                Handler handler = new Handler();
+//                handler.postDelayed(() -> {
+//                    read_code();
+//                    Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
+//                    monitor_text.setText(serial_code);
+//                    Log.e("serial_code",serial_code);
+//                }, 100);
 //                read_code();
+
                 setMonitor(serial_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(5);
                 setInitLine();
                 serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
+
+                input_space.setVisibility(View.VISIBLE);
+                init_btn.setVisibility(View.VISIBLE);
             }
         });
 
@@ -743,7 +790,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             @Override
             public void onClick(View v) {
                 Log.e("upload_btn","click");
+                mMonitorHandler.sendEmptyMessage(1);
                 customProgressDialog.show();
+                blockly_monitor.setVisibility(View.GONE);
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(6);
                 setInitLine();
@@ -764,6 +813,31 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         return root;
     }
+
+    private final Handler mMonitorHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO : process device message.
+            switch (msg.what){
+                case 0:
+//                    Log.e("hi","zz");
+
+                    read_code();
+                    Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
+                    scrollview.fullScroll(View.FOCUS_DOWN);
+                    sendEmptyMessage(0);
+                    break;
+
+                case 1:
+                    Log.e("bye","zz");
+                    removeMessages(0);
+                    str ="";
+                    monitor_text.setText("");
+                    break;
+            }
+        }
+    } ;
+
 
     void setMonitor(String tag){
         if (current_tag.equals(tag)){
@@ -799,6 +873,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void setLineForOtherCategoryTabs(int position) {
+        mMonitorHandler.sendEmptyMessage(1);
         switch (position) {
             case -1:
                 categoryData.setPosition(position);
@@ -830,10 +905,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        mMonitorHandler.sendEmptyMessage(1);
+    }
+
+    @Override
     public void onClearWorkspace() {
         super.onClearWorkspace();
-//        mGeneratedTextView.setText(mNoCodeText);
-//        updateTextMinWidth();
     }
 
     @NonNull
