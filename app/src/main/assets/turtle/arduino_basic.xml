@@ -72,6 +72,14 @@
             </value>
         </block>
 
+        <block type="serial_begin">
+            <value name="baud">
+                <block type="serial_begin_list">
+                    <field name="SB">9600</field>
+                </block>
+            </value>
+        </block>
+
 
         <block type="serial_println">
             <value name="baud">
@@ -87,6 +95,14 @@
         </block>
         <block type="text">
             <field name="TEXT"></field>
+        </block>
+
+        <block type="number">
+            <value name="num">
+                <block type="math_number">
+                    <field name="NUM">255</field>
+                </block>
+            </value>
         </block>
         <!--
         <block type="controls_if"></block>
@@ -173,6 +189,10 @@
         </block>
 
 
+
+        <block type="serial_begin_list"></block>
+
+
         <block type="inout_analog_write">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -185,6 +205,7 @@
                 </block>
             </value>
         </block>
+
         <block type="inout_analog_read">
             <value name="PIN">
                 <block type="base_pins_list">

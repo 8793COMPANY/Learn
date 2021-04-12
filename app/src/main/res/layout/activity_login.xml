@@ -28,13 +28,12 @@
         android:hint="아이디를 입력해주세요"
         android:paddingHorizontal="52px"
         android:textSize="26px"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/login_btn"
         app:layout_constraintDimensionRatio="504:90"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintVertical_bias="0.829"
         app:layout_constraintWidth_percent="0.35" />
 
     <ImageView

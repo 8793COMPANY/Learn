@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:blockly="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -31,225 +30,211 @@
         tools:ignore="MissingPrefix" />
 
 
-
+    <LinearLayout
+        android:id="@+id/category_block"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        app:layout_constraintDimensionRatio="5:0.5"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="1"
+        blockly:labelRotation="start"
+        blockly:layout_constraintEnd_toEndOf="parent"
+        blockly:layout_constraintStart_toStartOf="parent"
+        blockly:layout_constraintTop_toTopOf="parent"
+        blockly:scrollOrientation="horizontal"
+        tools:ignore="MissingPrefix">
 
         <LinearLayout
-            android:id="@+id/category_block"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_alignParentTop="true"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            blockly:labelRotation="start"
-            blockly:layout_constraintEnd_toEndOf="parent"
-            blockly:layout_constraintStart_toStartOf="parent"
-            blockly:layout_constraintTop_toTopOf="parent"
-            blockly:scrollOrientation="horizontal"
-            tools:ignore="MissingPrefix"
-            app:layout_constraintDimensionRatio="5:0.5"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="1"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="114">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="114"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="8"></LinearLayout>
+                android:layout_height="0dp"
+                android:layout_weight="8"></LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="98"
-                    android:orientation="horizontal"
-                    android:weightSum="1280">
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="8"></View>
-
-
-                    <fragment
-                        android:id="@+id/blockly_categories"
-                        android:name="com.google.blockly.android.CategorySelectorFragment"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="727" />
-
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="542"
-                        android:orientation="horizontal"
-                        app:layout_constraintDimensionRatio="542:98"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintWidth_default="percent"
-                        app:layout_constraintWidth_percent="0.43"
-                        blockly:layout_constraintBottom_toBottomOf="parent"
-                        blockly:layout_constraintEnd_toEndOf="parent"
-                        blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
-                        blockly:layout_constraintTop_toTopOf="parent"
-                        android:weightSum="542">
-
-                        <Button
-                            android:tag="code"
-                            android:id="@+id/code_btn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="168"
-                            android:background="@drawable/code_btn"
-                            ></Button>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="16"
-                            android:background="@drawable/divider"></View>
-
-
-                        <Button
-                            android:tag="serial"
-                            android:id="@+id/serial_btn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="168"
-                            android:background="@drawable/serial_btn"></Button>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="16"
-                            android:background="@drawable/divider"></View>
-
-                        <Button
-                            android:tag="upload"
-                            android:id="@+id/upload_btn"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="168"
-                            android:background="@drawable/upload_btn"
-                            ></Button>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="7"></View>
-
-                    </LinearLayout>
-
-
-
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="98"
+                android:orientation="horizontal"
+                android:weightSum="1280">
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="4"></View>
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"></View>
+
+
+                <fragment
+                    android:id="@+id/blockly_categories"
+                    android:name="com.google.blockly.android.CategorySelectorFragment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="727" />
+
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="542"
                     android:orientation="horizontal"
-                    android:weightSum="1280">
+                    android:weightSum="542"
+                    app:layout_constraintDimensionRatio="542:98"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="0.43"
+                    blockly:layout_constraintBottom_toBottomOf="parent"
+                    blockly:layout_constraintEnd_toEndOf="parent"
+                    blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
+                    blockly:layout_constraintTop_toTopOf="parent">
 
-
-
-                    <View
-                        android:id="@+id/setup_view"
+                    <Button
+                        android:id="@+id/code_btn"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="183"></View>
-
-
-
-                    <View
-                        android:id="@+id/loop_view"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
-
-
+                        android:layout_weight="168"
+                        android:background="@drawable/code_btn"
+                        android:tag="code"></Button>
 
                     <View
-                        android:id="@+id/method_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="16"
+                        android:background="@drawable/divider"></View>
 
 
+                    <Button
+                        android:id="@+id/serial_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="168"
+                        android:background="@drawable/serial_btn"
+                        android:tag="serial"></Button>
 
                     <View
-                        android:id="@+id/etc_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
+                        android:layout_weight="16"
+                        android:background="@drawable/divider"></View>
 
+                    <Button
+                        android:id="@+id/upload_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="168"
+                        android:background="@drawable/upload_btn"
+                        android:tag="upload"></Button>
 
                     <View
-                        android:id="@+id/code_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="184"></View>
-
-
-                    <View
-                        android:id="@+id/serial_view"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="184"></View>
-
-
-                    <View
-                        android:id="@+id/upload_view"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="182"></View>
-
+                        android:layout_weight="7"></View>
 
                 </LinearLayout>
+
+
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:weightSum="1280">
 
 
+                <View
+                    android:id="@+id/setup_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="183"></View>
 
 
+                <View
+                    android:id="@+id/loop_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="182"></View>
 
+
+                <View
+                    android:id="@+id/method_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="182"></View>
+
+
+                <View
+                    android:id="@+id/etc_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="182"></View>
+
+
+                <View
+                    android:id="@+id/code_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="184"></View>
+
+
+                <View
+                    android:id="@+id/serial_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="184"></View>
+
+
+                <View
+                    android:id="@+id/upload_view"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="182"></View>
+
+
+            </LinearLayout>
         </LinearLayout>
 
-    <LinearLayout
 
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/blockly_monitor"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_below="@id/category_block"
         android:layout_alignParentRight="true"
         android:background="#fff4d9"
-        app:layout_constraintDimensionRatio="614:606"
-        app:layout_constraintWidth_percent="0.47"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:weightSum="605"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
         blockly:layout_constraintEnd_toEndOf="@+id/blockly_workspace"
         blockly:layout_constraintTop_toBottomOf="@+id/category_block"
         blockly:scrollOrientation="vertical"
-        tools:ignore="MissingPrefix"
-        android:weightSum="605"
-        android:orientation="vertical">
+        tools:ignore="MissingPrefix">
 
         <LinearLayout
             android:id="@+id/input_space"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="88"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:weightSum="88"
-            android:background="@color/white">
+            android:weightSum="88">
 
 
             <View
@@ -275,11 +260,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="470"
                     android:background="@drawable/serial_input_box"
-                    android:paddingLeft="16dp"
                     android:imeOptions="flagNoExtractUi"
                     android:inputType="text"
                     android:maxLines="1"
-                    ></EditText>
+                    android:paddingLeft="16dp"></EditText>
 
                 <Button
                     android:id="@+id/serial_send_btn"
@@ -297,72 +281,65 @@
             </LinearLayout>
 
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="14"></View>
 
         </LinearLayout>
+
         <ScrollView
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="432"
-            >
+            android:layout_weight="484"
+            android:scrollbars="vertical">
 
             <TextView
                 android:id="@+id/monitor_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="#000000"
-                android:scrollbars="vertical"
-                android:paddingTop="26dp"
                 android:paddingLeft="26dp"
-                />
+                android:paddingTop="26dp"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
 
         </ScrollView>
 
 
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/init_space"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_weight="52"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            android:weightSum="614">-->
+
+        <!--            <View-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="424"></View>-->
 
 
+        <!--            <Button-->
+        <!--                android:id="@+id/init_btn"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:layout_weight="164"-->
+        <!--                android:background="@drawable/serial_init_btn"></Button>-->
 
 
-        <LinearLayout
-            android:id="@+id/init_space"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="52"
-            android:orientation="horizontal"
-            android:weightSum="614">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="424"></View>
-
-
-            <Button
-                android:id="@+id/init_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="164"
-                android:background="@drawable/serial_init_btn"></Button>
-
-
-            <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="26"></View>
-        </LinearLayout>
+        <!--            <View-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="26"></View>-->
+        <!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="30"></LinearLayout>
-
-
-
 
 
     </LinearLayout>
@@ -380,9 +357,7 @@
         blockly:layout_constraintEnd_toEndOf="@+id/blockly_workspace"
         blockly:layout_constraintTop_toBottomOf="@+id/category_block"
         blockly:scrollOrientation="vertical"
-        tools:ignore="MissingPrefix">
-    </fragment>
-
+        tools:ignore="MissingPrefix"></fragment>
 
 
     <LinearLayout
@@ -392,13 +367,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:orientation="vertical"
         app:layout_constraintDimensionRatio="68:88"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintVertical_bias="0.4"
         app:layout_constraintWidth_percent="0.075"
-        android:orientation="vertical"
         blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         blockly:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.03"
         blockly:layout_constraintStart_toStartOf="parent">
 
         <com.google.blockly.android.ui.TrashCanView
@@ -409,4 +384,19 @@
             android:padding="2dp" />
 
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="607dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="1dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

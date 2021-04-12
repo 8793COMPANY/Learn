@@ -196,23 +196,53 @@ Blockly.JavaScript['inout_analog_write'] = function(block) {
 
 Blockly.JavaScript['inout_digital_read'] = function(block) {
   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
-  Blockly.JavaScript.definitions_['digital_read'] = "int digRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return digitalRead(" + value_pin + ");\n}\n"
-  var code = "digRead(" + value_pin + ")";
+//  Blockly.JavaScript.definitions_['digital_read'] = "int digRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return digitalRead(" + value_pin + ");\n}\n"
+  var code = "digitalRead(" + value_pin + ")";
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+
+Blockly.JavaScript['serial_begin_list'] = function(block) {
+    //var num = parseInt(Blockly.JavaScript.valueToCode(block, 'SB',Blockly.JavaScript.ORDER_NONE));
+
+    var dropdown_value = this.getFieldValue('SB');
+    return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['number'] = function(block) {
+  // Generate JavaScript for setting the width.
+//  var channel = parseInt(block.getFieldValue('channel'));
+    var num = parseInt(Blockly.JavaScript.valueToCode(block, 'num',Blockly.JavaScript.ORDER_NONE) || '255');
+
+    return num;
+};
+
+//Blockly.JavaScript['inout_analog_read'] = function(block) {
+//  var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+//  Blockly.JavaScript.definitions_['analog_read'] = "int anaRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return analogRead(" + value_pin + ");\n}\n"
+//    var code = "anaRead(" + value_pin + ")";
+//    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+//};
+
+
 Blockly.JavaScript['inout_analog_read'] = function(block) {
   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
-  Blockly.JavaScript.definitions_['analog_read'] = "int anaRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return analogRead(" + value_pin + ");\n}\n"
-    var code = "anaRead(" + value_pin + ")";
-    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+//  Blockly.JavaScript.definitions_['analog_read'] = "int anaRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return analogRead(" + value_pin + ");\n}\n"
+    var code = "analogRead(" + value_pin + ")";
+   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 Blockly.JavaScript['serial_print'] = function(block) {
    var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
    var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
-   Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
+//   Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
    var code = "Serial.print("+value_text+");\n";
+   return code;
+ };
+
+Blockly.JavaScript['serial_begin'] = function(block) {
+   var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
+   var code = "\nSerial.begin("+value_baud+");\n";
    return code;
  };
 
@@ -220,7 +250,7 @@ Blockly.JavaScript['serial_print'] = function(block) {
  Blockly.JavaScript['serial_println'] = function(block) {
     var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
     var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
-    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
+//    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
     var code = "Serial.println("+value_text+");\n";
     return code;
   };

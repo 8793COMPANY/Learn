@@ -15,6 +15,7 @@
 
 package com.corporation8793;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import android.graphics.Color;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -30,9 +32,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -46,6 +50,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.Guideline;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -115,6 +121,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     ProgressDialog customProgressDialog;
     String str ="";
     ScrollView scrollview;
+    int num = 0;
+
+    Guideline guideline4;
 
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -161,9 +170,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mPhysicaloid.open(9600, bigBoard);
             byte[] buf = new byte[256];
             mPhysicaloid.read(buf, buf.length);
+            monitor_text.append(new String(buf));
+//            monitor_text.append(num+"\n");
             str += new String(buf);
+            num++;
             Log.e("str",str);
-            monitor_text.setText(str);
         }catch (NullPointerException e){
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
@@ -663,6 +674,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
 
 
     }
@@ -688,8 +700,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         serial_input_box = blockly_workspace.findViewById(R.id.serial_input_box);
         serial_send_btn = blockly_workspace.findViewById(R.id.serial_send_btn);
-        init_btn = blockly_workspace.findViewById(R.id.init_btn);
+//        init_btn = blockly_workspace.findViewById(R.id.init_btn);
         scrollview = blockly_workspace.findViewById(R.id.scrollview);
+
+        guideline4 = blockly_workspace.findViewById(R.id.guideline4);
 
 
         InputMethodManager imm = (InputMethodManager) getSystemService (Context. INPUT_METHOD_SERVICE );
@@ -707,6 +721,21 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.setContentView(R.layout.dialog_progress);
 
+        Display display;  // in Activity
+        display = getWindowManager().getDefaultDisplay();
+        /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
+        Point size = new Point();
+        display.getRealSize(size); // or getSize(size)
+        int width = size.x;
+        int heigt = size.y;
+
+        ViewGroup.LayoutParams layoutParams = guideline4.getLayoutParams();
+        layoutParams.width = (int)(width / 1280.0) * 614 ;
+        //guideline4.setLayoutParams(layoutParams);
+        guideline4.setGuidelineEnd((int)(width / 1280.0) * 614);
+
+
+
         //로딩창을 투명하게
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
@@ -717,17 +746,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         serial_send_btn.setOnClickListener(v -> {
             serial_input = serial_input_box.getText().toString();
             serial_input_box.setText("");
+
             monitor_text.append(serial_input + "\n");
+
             serial_write(serial_input);
             imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
             Toast.makeText(this, "전송", Toast.LENGTH_SHORT).show();
         });
 
-        init_btn.setOnClickListener(v -> {
-            str = "";
-            monitor_text.setText("");
-            Toast.makeText(this, "초기화", Toast.LENGTH_SHORT).show();
-        });
+//        init_btn.setOnClickListener(v -> {
+//            str = "";
+//            monitor_text.setText("");
+//            Toast.makeText(this, "초기화", Toast.LENGTH_SHORT).show();
+//        });
 
 
         code_btn.setOnClickListener(new View.OnClickListener() {
@@ -743,7 +774,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 code_view.setBackgroundColor(Color.parseColor("#f78f43"));
 
                 input_space.setVisibility(View.GONE);
-                init_btn.setVisibility(View.GONE);
+//                init_btn.setVisibility(View.GONE);z
 
                 if (getController().getWorkspace().hasBlocks()) {
                     mBlocklyActivityHelper.requestCodeGeneration(
@@ -781,7 +812,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
 
                 input_space.setVisibility(View.VISIBLE);
-                init_btn.setVisibility(View.VISIBLE);
+//                init_btn.setVisibility(View.VISIBLE);
             }
         });
 
@@ -843,9 +874,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if (current_tag.equals(tag)){
             if (blockly_monitor.getVisibility()==View.GONE)
                 blockly_monitor.setVisibility(View.VISIBLE);
-            else
+            else {
                 blockly_monitor.setVisibility(View.GONE);
-        }else{
+                mMonitorHandler.sendEmptyMessage(1);
+            }
+            }else{
             blockly_monitor.setVisibility(View.VISIBLE);
         }
 

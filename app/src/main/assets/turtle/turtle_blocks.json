@@ -436,6 +436,19 @@
   },
 
   {
+    "type": "number",
+    "message0": " %1 ",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "num"
+      }
+    ],
+    "output": "Number",
+    "colour": 120,
+    "tooltip": ""
+  },
+  {
     "type": "lcd",
     "message0": "LCD %1 %2 %3 text %4 line %5 %6 char %7",
     "args0": [
@@ -744,6 +757,23 @@
     "tooltip": ""
   },
 
+  {
+    "type": "serial_begin",
+    "message0": "Serial Begin baud %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "baud",
+        "check": "Number"
+      }
+    ],
+    "colour": 120,
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
 
   {
     "type": "serial_println",
@@ -781,6 +811,25 @@
           ]
       }
       ],
+    "output": "Number",
+    "colour": 160,
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+
+  {
+    "type": "serial_begin_list",
+    "message0": "%1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "SB",
+        "options": [
+          ["9600", "9600"], ["38400", "38400"], ["115200", "115200"]
+        ]
+      }
+    ],
     "output": "Number",
     "colour": 160,
     "tooltip": "",
