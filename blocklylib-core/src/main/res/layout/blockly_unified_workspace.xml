@@ -218,7 +218,7 @@
         android:layout_alignParentRight="true"
         android:background="#fff4d9"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         android:weightSum="605"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -292,8 +292,7 @@
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="484"
-            android:scrollbars="vertical">
+            android:layout_weight="484">
 
             <TextView
                 android:id="@+id/monitor_text"
@@ -387,6 +386,7 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
+        android:background="@color/round_corner_progress_bar_progress_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"

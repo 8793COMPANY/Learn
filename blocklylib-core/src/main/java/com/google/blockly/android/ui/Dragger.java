@@ -17,8 +17,11 @@ package com.google.blockly.android.ui;
 
 import android.content.ClipData;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Handler;
+
+import androidx.annotation.ColorRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
@@ -32,6 +35,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
 
+import com.google.blockly.android.R;
 import com.google.blockly.android.clipboard.BlockClipDataHelper;
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.control.ConnectionManager;
@@ -190,6 +194,7 @@ public class Dragger {
                             if (dragGroup.getParent() == mWorkspaceView) {
                                 // Hide the view on the workspace
                                 mPendingDrag.getDragGroup().setVisibility(View.INVISIBLE);
+
                             }
 
                             // TODO(#35): This might be better described as "selected".
@@ -542,6 +547,7 @@ public class Dragger {
 
         @Size(2) int[] curScreenLocation = mTempScreenCoord2;
         touchedView.getTouchLocationOnScreen(actionMove, curScreenLocation);
+
 
         final int deltaX = touchDownLocation[0] - curScreenLocation[0];
         final int deltaY = touchDownLocation[1] - curScreenLocation[1];

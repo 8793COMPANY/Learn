@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         login_btn = findViewById(R.id.login_btn);
         login_btn.setOnClickListener(new View.OnClickListener() {
                                          @Override

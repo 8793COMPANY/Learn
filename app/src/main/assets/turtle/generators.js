@@ -209,13 +209,15 @@ Blockly.JavaScript['serial_begin_list'] = function(block) {
     return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-Blockly.JavaScript['number'] = function(block) {
-  // Generate JavaScript for setting the width.
-//  var channel = parseInt(block.getFieldValue('channel'));
-    var num = parseInt(Blockly.JavaScript.valueToCode(block, 'num',Blockly.JavaScript.ORDER_NONE) || '255');
+//Blockly.JavaScript['number'] = function(block) {
+//  // Generate JavaScript for setting the width.
+////  var channel = parseInt(block.getFieldValue('channel'));
+//    var num = parseInt(Blockly.JavaScript.valueToCode(block, 'num',Blockly.JavaScript.ORDER_NONE) || '255');
+//
+//    return num;
+//};
 
-    return num;
-};
+
 
 //Blockly.JavaScript['inout_analog_read'] = function(block) {
 //  var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
@@ -241,6 +243,8 @@ Blockly.JavaScript['serial_print'] = function(block) {
  };
 
 Blockly.JavaScript['serial_begin'] = function(block) {
+    //Blockly.JavaScript.definitions_['define_DHT11_h'] = "#include <DHT.h>\n";
+
    var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
    var code = "\nSerial.begin("+value_baud+");\n";
    return code;

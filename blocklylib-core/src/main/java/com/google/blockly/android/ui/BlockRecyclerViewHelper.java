@@ -18,6 +18,8 @@ package com.google.blockly.android.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
+
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -161,6 +163,7 @@ public class BlockRecyclerViewHelper {
      */
     @NonNull
     private Pair<BlockGroup, ViewPoint> getWorkspaceBlockGroupForTouch(PendingDrag pendingDrag) {
+        Log.e("getworkspace","blockgroupfortouch");
         BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
         Block rootBlock = touchedBlockView.getBlock().getRootBlock();
         BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
@@ -170,6 +173,7 @@ public class BlockRecyclerViewHelper {
         // pixels. We are assuming the only transforms between BlockViews are the
         // child offsets.
         View view = (View) touchedBlockView;
+        view.setBackgroundColor(Color.parseColor("#FF007F"));
 
 
         float offsetX = view.getX() + pendingDrag.getTouchDownViewOffsetX();
@@ -347,7 +351,6 @@ public class BlockRecyclerViewHelper {
                 public void run() {
                     // Acquire the draggable BlockGroup on the Workspace from the
                     // {@link OnDragListBlock}.
-                    Log.e("drag","maybegetdraggroupcreator");
                     Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
                             getWorkspaceBlockGroupForTouch(pendingDrag);
                     if (dragGroupAndTouchOffset != null) {
@@ -355,6 +358,7 @@ public class BlockRecyclerViewHelper {
                                 mRecyclerView,
                                 dragGroupAndTouchOffset.first,
                                 dragGroupAndTouchOffset.second);
+                        Log.e("hi~","maybegetdraggroupcreator");
                     }
 
                 }
@@ -367,8 +371,8 @@ public class BlockRecyclerViewHelper {
                 @Override
                 public void run() {
                     // Identify and process the clicked BlockGroup.
-                    Log.e("drag","onblockclicked");
                     getWorkspaceBlockGroupForTouch(pendingDrag);
+                    Log.e("onBlock","clicked");
                 }
             });
             return true;

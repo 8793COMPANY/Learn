@@ -1,6 +1,7 @@
 package com.corporation8793;
 
 import android.os.Environment;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -23,7 +24,12 @@ public class LogHelper implements Thread.UncaughtExceptionHandler {
         final LogConfigurator logConfigurator = new LogConfigurator();
         logConfigurator.setFileName(Environment.getExternalStorageDirectory()+ "/logfile.log");
         //   logConfigurator.setFilePattern(pattern);
-        logConfigurator.configure();
+        try {
+            logConfigurator.configure();
+        }catch (RuntimeException e){
+            Log.e("error","runtime");
+
+        }
 
     }
     @Override
@@ -32,6 +38,7 @@ public class LogHelper implements Thread.UncaughtExceptionHandler {
         e.printStackTrace(new PrintWriter(stackTrace));
         StringBuilder errorReport = new StringBuilder();
         errorReport.append(stackTrace.toString());
+        Log.e("error","마지");
 
         mLogger.error(errorReport);
 

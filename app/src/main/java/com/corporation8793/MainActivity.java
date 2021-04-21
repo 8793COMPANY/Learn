@@ -126,6 +126,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Guideline guideline4;
 
 
+    //시니얼 모니터 slow 방지 문자열
+    StringBuilder stringBuilder = new StringBuilder();
+
+
     byte[] buffer = new byte[1024];  // buffer store for the stream
     int bytes; // bytes returned from read()
     Physicaloid mPhysicaloid = new Physicaloid(this);
@@ -170,11 +174,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mPhysicaloid.open(9600, bigBoard);
             byte[] buf = new byte[256];
             mPhysicaloid.read(buf, buf.length);
-            monitor_text.append(new String(buf));
+//            monitor_text.append(new String(buf));
+            Log.e("buf",new String(buf).trim());
+
 //            monitor_text.append(num+"\n");
-            str += new String(buf);
-            num++;
-            Log.e("str",str);
+//            str += new String(buf);
+
+            if (new String(buf).trim().length() != 0) {
+                Log.e("num:",num+"");
+                Log.e("length",stringBuilder.toString().length()+"");
+                if (num < 60) {
+                    stringBuilder.append(new String(buf));
+                } else if (num >= 60) {
+                    stringBuilder.append(new String(buf));
+                    num = 50;
+                    stringBuilder.delete(0,2560);
+                }
+                monitor_text.setText(stringBuilder);
+                num++;
+            }
+//            Log.e("str",str);
         }catch (NullPointerException e){
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
@@ -674,8 +693,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-
+//        Thread.setDefaultUncaughtExceptionHandler(new LogHelper());
 
     }
 
@@ -691,6 +709,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         View root = getLayoutInflater().inflate(R.layout.split_content, null);
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
         Log.e("oncreate","contentview");
+
+
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
 
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
@@ -732,7 +752,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         ViewGroup.LayoutParams layoutParams = guideline4.getLayoutParams();
         layoutParams.width = (int)(width / 1280.0) * 614 ;
         //guideline4.setLayoutParams(layoutParams);
-        guideline4.setGuidelineEnd((int)(width / 1280.0) * 614);
+        guideline4.setGuidelineEnd((int) ((width / 1280.0) * 614));
 
 
 
@@ -840,6 +860,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             }
         });
+
 
 
         return root;

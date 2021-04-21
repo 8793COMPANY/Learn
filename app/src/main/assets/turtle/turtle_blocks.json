@@ -434,20 +434,8 @@
     "nextStatement": null,
     "tooltip": ""
   },
+  
 
-  {
-    "type": "number",
-    "message0": " %1 ",
-    "args0": [
-      {
-        "type": "input_value",
-        "name": "num"
-      }
-    ],
-    "output": "Number",
-    "colour": 120,
-    "tooltip": ""
-  },
   {
     "type": "lcd",
     "message0": "LCD %1 %2 %3 text %4 line %5 %6 char %7",
@@ -826,7 +814,7 @@
         "type": "field_dropdown",
         "name": "SB",
         "options": [
-          ["9600", "9600"], ["38400", "38400"], ["115200", "115200"]
+          ["4800", "4800"],["9600", "9600"], ["38400", "38400"], ["115200", "115200"]
         ]
       }
     ],
