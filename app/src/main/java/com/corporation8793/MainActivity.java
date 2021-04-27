@@ -16,6 +16,7 @@
 package com.corporation8793;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -118,6 +119,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     CategoryData categoryData;
     String TARGET_BASE_PATH;
     UsbDevice bigBoard;
+    BroadcastReceiver mUsbReceiver;
     ProgressDialog customProgressDialog;
     String str ="";
     ScrollView scrollview;
@@ -737,6 +739,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Button code_btn = (Button) blockly_workspace.findViewById(R.id.code_btn);
         Button serial_btn =(Button) blockly_workspace.findViewById(R.id.serial_btn);
         Button upload_btn = (Button) blockly_workspace.findViewById(R.id.upload_btn);
+
+        mUsbReceiver = new mUsbReceiver();
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.setContentView(R.layout.dialog_progress);
