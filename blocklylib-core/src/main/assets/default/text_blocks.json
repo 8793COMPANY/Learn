@@ -24,7 +24,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#6BABEF",
     "tooltip": "A letter, word, or line of text.",
     "helpUrl": "https://en.wikipedia.org/wiki/String_(computer_science)"
   },

@@ -16,12 +16,7 @@
 <toolbox>
     <category name="Logic" colour="210">
 
-        <block type="controls_if"></block>
-        <block type="controls_ifelse"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-        <block type="logic_negate"></block>
-        <block type="logic_boolean"></block>
+
 
         <block type="set_led">
 
@@ -59,6 +54,81 @@
 
         </block>
 
+        <block type="serial_begin">
+            <value name="baud">
+                <block type="serial_begin_list">
+                    <field name="SB">9600</field>
+                </block>
+            </value>
+        </block>
+
+
+
+
+
+<!--        <block type="number">-->
+<!--            <value name="num">-->
+<!--               -->
+<!--            </value>-->
+<!--        </block>-->
+
+
+
+        <!--
+        <block type="controls_if"></block>
+        <block type="controls_ifelse"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_negate"></block>
+        <block type="logic_boolean"></block>-->
+    </category>
+
+    <category name="Loops" colour="120">
+
+        <block type="inout_digital_write">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="base_logic_list">
+                    <field name="LOGIC">LOW</field>
+                </block>
+            </value>
+        </block>
+
+
+        <block type="inout_analog_write">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="inout_digital_read">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
+
+        <block type="inout_analog_read">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
         <block type="serial_print">
             <value name="baud">
                 <block type="math_number">
@@ -68,14 +138,6 @@
             <value name="text">
                 <block type="text">
                     <field name="TEXT"></field>
-                </block>
-            </value>
-        </block>
-
-        <block type="serial_begin">
-            <value name="baud">
-                <block type="serial_begin_list">
-                    <field name="SB">9600</field>
                 </block>
             </value>
         </block>
@@ -93,65 +155,8 @@
                 </block>
             </value>
         </block>
-        <block type="text">
-            <field name="TEXT"></field>
-        </block>
-
-<!--        <block type="number">-->
-<!--            <value name="num">-->
-<!--               -->
-<!--            </value>-->
-<!--        </block>-->
 
 
-        <block type="math_number">
-            <field name="NUM">255</field>
-        </block>
-
-        <!--
-        <block type="controls_if"></block>
-        <block type="controls_ifelse"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-        <block type="logic_negate"></block>
-        <block type="logic_boolean"></block>-->
-    </category>
-
-    <category name="Loops" colour="120">
-
-        <block type="variables_set"></block>
-        <block type="variables_get"></block>
-
-        <block type="math_change">
-            <field name="VAR">item</field>
-            <value name="DELTA">
-                <shadow type="math_number">
-                    <field name="NUM">0</field>
-                </shadow>
-            </value>
-        </block>
-
-        <block type="turtle_repeat_internal">
-            <field name="TIMES">4</field>
-        </block>
-        <block type="controls_for">
-            <value name="FROM">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-            <value name="TO">
-                <shadow type="math_number">
-                    <field name="NUM">10</field>
-                </shadow>
-            </value>
-            <value name="BY">
-                <shadow type="math_number">
-                    <field name="NUM">1</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="turtle_setup_loop"></block>
         <block type="base_delay">
             <value name="DELAY_TIME">
                 <block type="math_number" gap="32">
@@ -178,103 +183,120 @@
                 </shadow>
             </value>
         </block>-->
-        ]
-        <block type="dc_motor">
-            <field name="channel">1</field>
-            <value name="speed">
-                <block type="math_number">
-                    <field name="NUM">255</field>
-                </block>
+
+
+        <block type="controls_if"></block>
+        <block type="controls_ifelse"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+
+
+
+
+        <block type="turtle_repeat_internal">
+            <field name="TIMES">4</field>
+        </block>
+
+
+        <block type="controls_for">
+            <value name="FROM">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
+            </value>
+            <value name="TO">
+                <shadow type="math_number">
+                    <field name="NUM">10</field>
+                </shadow>
+            </value>
+            <value name="BY">
+                <shadow type="math_number">
+                    <field name="NUM">1</field>
+                </shadow>
             </value>
         </block>
 
-        <block type="bluetooth_sensor">
-                    <value name="baud">
-                        <block type="math_number">
-                            <field name="NUM">115200</field>
-                        </block>
-                    </value>
-        </block>
+
+        <block type="turtle_setup_loop"></block>
 
 
-        <block type="servo">
-            <value name="channel">
-                <block type="base_pins_list">
-                    <field name="PIN">1</field>
-                </block>
-            </value>
-            <value name="angle">
-                <block type="math_number" id="116">
-                    <field name="NUM">45</field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="dc_motor">-->
+<!--            <field name="channel">1</field>-->
+<!--            <value name="speed">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">255</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
+<!--        <block type="bluetooth_sensor">-->
+<!--                    <value name="baud">-->
+<!--                        <block type="math_number">-->
+<!--                            <field name="NUM">115200</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--        </block>-->
 
 
-        <block type="inout_tone_pin">
-                    <value name="PIN">
-                        <block type="base_pins_list">
-                            <field name="PIN">A1</field>
-                        </block>
-                    </value>
-                    <value name="NUM">
-                        <block type="math_number">
-                            <field name="NUM">440</field>
-                        </block>
-                    </value>
-        </block>
+<!--        <block type="servo">-->
+<!--            <value name="channel">-->
+<!--                <block type="base_pins_list">-->
+<!--                    <field name="PIN">1</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="angle">-->
+<!--                <block type="math_number" id="116">-->
+<!--                    <field name="NUM">45</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
+
+<!--        <block type="inout_tone_pin">-->
+<!--                    <value name="PIN">-->
+<!--                        <block type="base_pins_list">-->
+<!--                            <field name="PIN">A1</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                    <value name="NUM">-->
+<!--                        <block type="math_number">-->
+<!--                            <field name="NUM">440</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--        </block>-->
 
     </category>
 
     <category name="Text" colour="130">
 
+
+        <block type="variables_set"></block>
+        <block type="variables_get"></block>
+
+        <block type="math_change">
+            <field name="VAR">item</field>
+            <value name="DELTA">
+                <shadow type="math_number">
+                    <field name="NUM">0</field>
+                </shadow>
+            </value>
+        </block>
+
+        <block type="logic_negate"></block>
+        <block type="logic_boolean"></block>
+
+
         <block type="base_logic_list"></block>
         <block type="base_pins_list"></block>
-        <block type="inout_digital_write">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
-            <value name="NUM">
-                <block type="base_logic_list">
-                    <field name="LOGIC">LOW</field>
-                </block>
-            </value>
-        </block>
-
-        <block type="inout_digital_read">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
-        </block>
-
-
-
         <block type="serial_begin_list"></block>
 
 
-        <block type="inout_analog_write">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
-            <value name="NUM">
-                <block type="math_number">
-                    <field name="NUM">0</field>
-                </block>
-            </value>
+        <block type="text">
+            <field name="TEXT"></field>
         </block>
 
-        <block type="inout_analog_read">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
+        <block type="math_number">
+            <field name="NUM">255</field>
         </block>
 
 

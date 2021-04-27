@@ -254,7 +254,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 120,
+    "colour": "#6CD4DB",
     "tooltip": "Do some statements several times."
   },
 
@@ -271,7 +271,7 @@
         "name": "DO1"
       }
     ],
-    "colour": "#B22222",
+    "colour": "#EA7373",
     "tooltip": "Setup and Loop block"
   },
 
@@ -407,7 +407,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 220,
+    "colour": "#A8D93D",
     "tooltip": "Set LEDS",
     "helpUrl": "http://www.example.com/"
   },
@@ -428,7 +428,7 @@
         "check": "String"
       }
     ],
-    "colour": 120,
+    "colour": "#A8D93D",
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
@@ -661,7 +661,7 @@
       }
 
     ],
-    "colour": 120,
+    "colour": "#FDB900",
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
@@ -684,7 +684,7 @@
       }
 
     ],
-    "colour": 120,
+    "colour": "#FDB900",
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
@@ -701,7 +701,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#FDB900",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
@@ -717,7 +717,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#FDB900",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
@@ -738,7 +738,7 @@
       }
 
     ],
-    "colour": 120,
+    "colour": "#FDB900",
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
@@ -755,7 +755,7 @@
         "check": "Number"
       }
     ],
-    "colour": 120,
+    "colour": "#A8D93D",
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
@@ -779,7 +779,7 @@
       }
 
     ],
-    "colour": 120,
+    "colour": "#FDB900",
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
@@ -800,7 +800,7 @@
       }
       ],
     "output": "Number",
-    "colour": 160,
+    "colour": "#6BABEF",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
@@ -819,7 +819,7 @@
       }
     ],
     "output": "Number",
-    "colour": 160,
+    "colour": "#6BABEF",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
@@ -837,7 +837,7 @@
       }
     ],
     "output": "Number",
-    "colour": 160,
+    "colour": "#6BABEF",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
@@ -855,7 +855,7 @@
       }
     ],
     "output": "String",
-    "colour": 160,
+    "colour": "#6BABEF",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
@@ -871,7 +871,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 160,
+    "colour": "#FDB900",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },

@@ -91,7 +91,7 @@
     "inputsInline": true,
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 120,
+    "colour": "#6CD4DB",
     "helpUrl": "https://github.com/google/blockly/wiki/Loops#count-with"
   },
   {

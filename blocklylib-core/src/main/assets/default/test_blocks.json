@@ -262,7 +262,7 @@
     ],
     "output": "Number",
     "tooltip": "",
-    "colour": 120,
+    "colour": "#669CD5",
     "helpUrl": "http://www.example.com/"
   },
   {
@@ -483,6 +483,6 @@
       }
     ],
     "output": "String",
-    "colour": 160
+    "colour": "#6BABEF"
   }
 ]

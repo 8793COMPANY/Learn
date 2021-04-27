@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.graphics.Point;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -317,9 +318,9 @@ public class CategoryTabs extends RecyclerView {
                             mListener.onItemClick(label,tabPosition);
                         }
 
-
                 }
             });
+
             if (tabPosition == 0){
                 ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 177), ViewGroup.LayoutParams.MATCH_PARENT);
                 holder.itemView.setLayoutParams(layoutParams);

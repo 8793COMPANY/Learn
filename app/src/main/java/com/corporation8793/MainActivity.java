@@ -830,8 +830,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 categoryData.setPosition(5);
                 setInitLine();
                 serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
-
                 input_space.setVisibility(View.VISIBLE);
+
+                stringBuilder.setLength(0);
+                num = 0;
 //                init_btn.setVisibility(View.VISIBLE);
             }
         });

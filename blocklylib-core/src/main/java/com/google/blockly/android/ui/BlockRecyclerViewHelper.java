@@ -173,7 +173,7 @@ public class BlockRecyclerViewHelper {
         // pixels. We are assuming the only transforms between BlockViews are the
         // child offsets.
         View view = (View) touchedBlockView;
-        view.setBackgroundColor(Color.parseColor("#FF007F"));
+//        view.setBackgroundColor(Color.parseColor("#FF007F"));
 
 
         float offsetX = view.getX() + pendingDrag.getTouchDownViewOffsetX();
@@ -237,11 +237,23 @@ public class BlockRecyclerViewHelper {
 
         @Override
         public int getItemCount() {
+            Log.e("getItemCount",mCurrentCategory.getCategoryName()+"");
+//            if (mCurrentCategory.getCategoryName().equals("Logic") || mCurrentCategory.getCategoryName().equals("Loops")){
+//                mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1307, ViewGroup.LayoutParams.MATCH_PARENT));
+//
+//            }else if (mCurrentCategory.getCategoryName().equals("Math")){
+//                mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1648, ViewGroup.LayoutParams.MATCH_PARENT));
+//
+//            }else if (mCurrentCategory.getCategoryName().equals("Text")){
+//                mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1115, ViewGroup.LayoutParams.MATCH_PARENT));
+//            }
             return mCurrentCategory == null ? 0 : mCurrentCategory.getItems().size();
         }
 
         @Override
         public BlockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams());
+
             return new BlockViewHolder(mContext);
         }
 
@@ -273,6 +285,8 @@ public class BlockRecyclerViewHelper {
                 }
                 holder.mContainer.setScaleX(0.82f);
                 holder.mContainer.setScaleY(0.82f);
+
+                Log.e("block size", holder.mContainer.getWidth()+"");
 
 
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(

@@ -9,7 +9,7 @@
         "text": "0"
       }
     ],
-    "colour": 230,
+    "colour": "#6BABEF",
     "output": "Number",
     "tooltip": "A number.",
     "helpUrl": "https://en.wikipedia.org/wiki/Number"
@@ -187,7 +187,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 330,
+    "colour": "#6BABEF",
     "helpUrl": "https://en.wikipedia.org/wiki/Programming_idiom#Incrementing_a_counter"
   },
   {

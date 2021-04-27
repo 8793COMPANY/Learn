@@ -161,9 +161,10 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         mFlyoutView = inflater.inflate(layout, null);
 
 
-        RecyclerView recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);
-        recyclerView.setPivotX(0);
-        recyclerView.setPivotY(0);
+
+        RecyclerView recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);  //start.layout
+//        recyclerView.setPivotX(0.2f);
+//        recyclerView.setPivotY(0.4f);
 //        recyclerView.setScaleX(0.7f);
 //        recyclerView.setScaleY(0.7f);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);

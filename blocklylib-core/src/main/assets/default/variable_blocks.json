@@ -10,7 +10,7 @@
       }
     ],
     "output": null,
-    "colour": 330,
+    "colour": "#6BABEF",
     "tooltip": "Returns the value of this variable.",
     "helpUrl": "https://github.com/google/blockly/wiki/Variables#get"
   },
@@ -76,7 +76,7 @@
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "colour": 120,
+    "colour": "#6BABEF",
     "tooltip": "",
     "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
   }

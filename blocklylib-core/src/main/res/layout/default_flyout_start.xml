@@ -4,7 +4,8 @@
     android:id="@+id/toolbox_view"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/blockly_toolbox_bg">
+    android:background="@color/blockly_toolbox_bg"
+    android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/block_list_view"
         android:layout_width="wrap_content"
