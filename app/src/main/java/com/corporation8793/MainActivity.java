@@ -19,8 +19,11 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 
+import com.google.blockly.android.control.ConnectionManager;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
@@ -28,6 +31,8 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,6 +43,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -107,7 +114,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private String mNoErrorText;
     private CategoryView mCategoryView;
 
-    private Boolean initial=true;
+    private Boolean initial=true, wifi_check = true;
     Boolean compileCheck = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
@@ -126,6 +133,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     int num = 0;
 
     Guideline guideline4;
+
+    private UploadDialog Dialog_Listener;
 
 
     //시니얼 모니터 slow 방지 문자열
@@ -199,6 +208,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }catch (NullPointerException e){
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
+            mMonitorHandler.sendEmptyMessage(1);
         }
 
     }
@@ -348,30 +358,45 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
         else {
             Boolean value = OpenUSB();
-            //Toast.makeText(getApplicationContext(), value.toString(), Toast.LENGTH_SHORT).show();
             if (value) {
-                Toast.makeText(getApplicationContext(), "Compilation Success, Uploading", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Compilation Success, Uploading", Toast.LENGTH_LONG).show();
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
 //                Log.e("generated",code);
-                Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(),"업로드 성공!",Toast.LENGTH_SHORT).show();
+                Dialog_Listener.show();
+
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+
+                Window window = Dialog_Listener.getWindow();
+
+                int x = (int)(size.x * 0.5f);
+                int y = (int)(size.y * 0.45f);
+
+                window.setLayout(x,y);
             }
             else {
-                // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                //  mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
+                Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
+//                // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+//                //  mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
             }
         }
 
-        //Toast.makeText(getApplicationContext(), "Check if Program uploaded ", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "Check if Program uploaded ", Toast.LENGTH_LONG).show();
 
     }
 
     public Boolean OpenUSB() {
         if(initial) {
+            Log.e("openUsb true","!!");
             initial = false;
             mPhysicaloid.upload(Boards.ARDUINO_UNO, "/data/data/com.learn4/code.ino");
             return initial;
         }
         else {
+            Log.e("openUsb false","!!");
             return true;
         }
     }
@@ -386,8 +411,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Response", response);
-                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                         if(response.contains("code.ino")) {
                             //     mGeneratedErrorTextView.setVisibility(View.VISIBLE);
                             //   mGeneratedErrorTextView.setText(response);
@@ -396,6 +420,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         else {
                             //     mGeneratedErrorTextView.setVisibility(View.GONE);
                             //       mGeneratedErrorTextView.setText("");
+//                            Log.e("2여기다 이놈아",response);
                             create_file(response, "out.hex");
                             Log.e("generated", "리모트 안");
                             upload_code("/data/data/com.learn4/out.hex");
@@ -489,7 +514,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         String ori_str = str.toString();
         if(!ori_str.equals(null) && !ori_str.equals("") && !ori_str.contains("warning")){
             System.out.println(str.toString());
-            Toast.makeText(getApplicationContext(), ori_str, Toast.LENGTH_LONG).show();
         }
 
 
@@ -686,6 +710,35 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         return true;
     }
 
+
+    // wifi 연결 상시 확인
+   private final BroadcastReceiver wifiEventReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()){
+                    wifi_check = true;
+                    Log.e("wifi","connect");
+                }else{
+                    wifi_check = false;
+                    Log.e("wifi","not connect");
+                }
+
+            }
+        }
+    };
+
+
+    private View.OnClickListener Confirm = new View.OnClickListener() {
+        public void onClick(View v) {
+//            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
+            Dialog_Listener.dismiss();
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -695,7 +748,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
-//        Thread.setDefaultUncaughtExceptionHandler(new LogHelper());
+        this.registerReceiver(wifiEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        Dialog_Listener = new UploadDialog(this,Confirm,"업로드 성공!","확인을 눌러주세요");
 
     }
 
@@ -704,6 +758,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 이벤트가 발생한뒤 수행할 작업
         setLineForOtherCategoryTabs(mPushEvent.getPos());
         blockly_monitor.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -751,7 +806,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Point size = new Point();
         display.getRealSize(size); // or getSize(size)
         int width = size.x;
-        int heigt = size.y;
 
         ViewGroup.LayoutParams layoutParams = guideline4.getLayoutParams();
         layoutParams.width = (int)(width / 1280.0) * 614 ;
@@ -820,15 +874,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onClick(View v) {
                 monitor_text.setText("");
                 mMonitorHandler.sendEmptyMessage(0);
-//                Handler handler = new Handler();
-//                handler.postDelayed(() -> {
-//                    read_code();
-//                    Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
-//                    monitor_text.setText(serial_code);
-//                    Log.e("serial_code",serial_code);
-//                }, 100);
-//                read_code();
-
                 setMonitor(serial_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(5);
@@ -838,7 +883,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 stringBuilder.setLength(0);
                 num = 0;
-//                init_btn.setVisibility(View.VISIBLE);
             }
         });
 
@@ -847,21 +891,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             @Override
             public void onClick(View v) {
                 Log.e("upload_btn","click");
-                mMonitorHandler.sendEmptyMessage(1);
-                customProgressDialog.show();
-                blockly_monitor.setVisibility(View.GONE);
-                mBlocklyActivityHelper.getFlyoutController();
-                categoryData.setPosition(6);
-                setInitLine();
-                upload_view.setBackgroundColor(Color.parseColor("#f78f43"));
-                compileCheck = true;
-                if (getController().getWorkspace().hasBlocks()) {
-                    Log.e("??","들어옴");
-                    mBlocklyActivityHelper.requestCodeGeneration(
-                            getBlockGeneratorLanguage(),
-                            getBlockDefinitionsJsonPaths(),
-                            getGeneratorsJsPaths(),
-                            getCodeGenerationCallback());
+                if (wifi_check) {
+                    mMonitorHandler.sendEmptyMessage(1);
+                    customProgressDialog.show();
+                    blockly_monitor.setVisibility(View.GONE);
+                    mBlocklyActivityHelper.getFlyoutController();
+                    categoryData.setPosition(6);
+                    setInitLine();
+                    upload_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                    compileCheck = true;
+                    if (getController().getWorkspace().hasBlocks()) {
+                        Log.e("??", "들어옴");
+                        mBlocklyActivityHelper.requestCodeGeneration(
+                                getBlockGeneratorLanguage(),
+                                getBlockDefinitionsJsonPaths(),
+                                getGeneratorsJsPaths(),
+                                getCodeGenerationCallback());
+                    }
+
+                }else{
+                    Toast.makeText(getApplicationContext(),"WIFI를 연결해주세요!",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -878,8 +927,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // TODO : process device message.
             switch (msg.what){
                 case 0:
-//                    Log.e("hi","zz");
-
                     read_code();
                     Log.e("serial isopen : ",mPhysicaloid.isOpened() + "");
                     scrollview.fullScroll(View.FOCUS_DOWN);
@@ -938,6 +985,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case -1:
                 categoryData.setPosition(position);
                 setInitLine();
+
                 break;
             case 0:
                 categoryData.setPosition(position);
@@ -962,6 +1010,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("배울래를 종료하시겠습니까?");
+        builder.setPositiveButton("아니오",(dialog, which) -> {
+            dialog.cancel();});
+        builder.setNegativeButton("예",(dialog, which) -> {finish();});
+        builder.show();
     }
 
     @Override

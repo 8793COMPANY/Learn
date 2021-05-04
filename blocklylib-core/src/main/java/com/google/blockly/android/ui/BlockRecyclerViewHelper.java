@@ -17,6 +17,8 @@ package com.google.blockly.android.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.os.Build;
 import android.os.Handler;
 
 import androidx.annotation.ColorRes;
@@ -27,10 +29,13 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -55,6 +60,7 @@ import java.util.List;
 
 public class BlockRecyclerViewHelper {
     private static final String TAG = "BlockRVHelper";
+    static boolean [] check = {true, true, true, true};
 
     private final Handler mHandler = new Handler();
     private final WorkspacePoint mTempWorkspacePoint = new WorkspacePoint();
@@ -71,8 +77,12 @@ public class BlockRecyclerViewHelper {
     private FlyoutCallback mCallback;
     private BlocklyCategory mCurrentCategory;
     private BlockTouchHandler mTouchHandler;
+    int width = 0;
+    int block_width = 0;
+    BlockGroup toolbox_bg;
+    ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
 
-    public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context) {
+    public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
         mRecyclerView = recyclerView;
         mContext = context;
         mHelium = LayoutInflater.from(mContext);
@@ -83,6 +93,7 @@ public class BlockRecyclerViewHelper {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new ItemSpacingDecoration(mAdapter));
+        this.width = width;
     }
 
     /**
@@ -100,6 +111,8 @@ public class BlockRecyclerViewHelper {
 
         mTouchHandler = controller.getDragger()
                 .buildImmediateDragBlockTouchHandler(new DragHandler());
+
+
     }
 
     /**
@@ -129,6 +142,9 @@ public class BlockRecyclerViewHelper {
      * @param category The category to display blocks for.
      */
     public void setCurrentCategory(@Nullable BlocklyCategory category) {
+        Log.e("setCurrent","click");
+
+
         if (mCurrentCategory == category) {
             return;
         }
@@ -136,10 +152,203 @@ public class BlockRecyclerViewHelper {
             mCurrentCategory.setCallback(null);
         }
         mCurrentCategory = category;
+
+
+
+
+//        }catch (IndexOutOfBoundsException e){
+//            e.printStackTrace();
+//        }
+
+
+        try{
+
+            List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
+                    ? new ArrayList<BlocklyCategory.CategoryItem>()
+                    : mCurrentCategory.getItems();
+
+                BlocklyCategory.CategoryItem item = items.get(0);
+                final Block block = ((BlocklyCategory.BlockItem) item).getBlock();
+                block.setEditable(true);
+                toolbox_bg = mHelper.getParentBlockGroup(block);
+
+
+                if (toolbox_bg == null) {
+                    toolbox_bg = mHelper.getBlockViewFactory().buildBlockGroupTree(
+                            block, mConnectionManager, mTouchHandler);
+                }
+
+//            toolbox_bg.setScaleX(0.8f);
+//            toolbox_bg.setScaleY(0.8f);
+
+
+
+                mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                    @Override
+
+                    public void onGlobalLayout() {
+
+                        block_width= toolbox_bg.getWidth();
+
+
+                        Log.e(TAG, "width = " + block_width);
+
+                        removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(),mGlobalLayoutListener);
+
+                    }
+
+                };
+
+                toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+
+
+            RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
+        if (mCurrentCategory.getCategoryName().toString().equals("Logic") ){
+//            if(width != 1280 ){
+////                marginLayoutParams.width =(int)(width / 1280 * 991);
+//                marginLayoutParams.width =(int)(width / 1280 * 1400);
+//            }else{
+//                marginLayoutParams.width =1007;
+//            }
+
+            if (getLargeSize(1) > 900)
+                marginLayoutParams.width = getLargeSize(1);
+            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
+//            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(991, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+        else if ( mCurrentCategory.getCategoryName().toString().equals("Loops")){
+//            if(width != 1280 ){
+//                marginLayoutParams.width =(int)(width / 1280 * 1400)  ;
+//            }else{
+//                marginLayoutParams.width =1007;
+//            }
+            if (getLargeSize(0) > 800)
+                marginLayoutParams.width = getLargeSize(0);
+            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
+//            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1307, ViewGroup.LayoutParams.MATCH_PARENT));
+        }else if (mCurrentCategory.getCategoryName().toString().equals("Math")){
+            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            if(width != 1280 ){
+                if (getLargeSize(1) > 1200)
+                    marginLayoutParams.width = getLargeSize(1);
+//                marginLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
+            }else{
+                marginLayoutParams.width =1280;
+                marginLayoutParams.setMargins(width - 1253, 0, 0, 0);
+            }
+
+//                marginLayoutParams.width = getLargeSize(1);
+
+//            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1240 , ViewGroup.LayoutParams.MATCH_PARENT));
+
+        }else if (mCurrentCategory.getCategoryName().toString().equals("Text")){
+            Log.e("category!","Text");
+//            marginLayoutParams.width =(int)(width /1280.0 * 900) ;
+            if (getLargeSize(2) > 600)
+                marginLayoutParams.width = getLargeSize(2);
+//            marginLayoutParams.width = getLargeSize(1);
+            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
+        }
+
+//
+//
+            mRecyclerView.setLayoutParams(marginLayoutParams);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+
         mAdapter.notifyDataSetChanged();
+
+
         if (mCurrentCategory != null) {
             mCurrentCategory.setCallback(mCategoryCb);
         }
+    }
+
+
+
+
+
+    private static void removeOnGlobalLayoutListener(ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener) {
+
+
+        if (observer == null) {
+
+            return ;
+
+        }
+
+
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+
+            observer.removeGlobalOnLayoutListener(listener);
+
+        } else {
+
+            observer.removeOnGlobalLayoutListener(listener);
+
+        }
+
+    }
+
+
+    public int getLargeSize(int pos){
+
+        List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
+                ? new ArrayList<BlocklyCategory.CategoryItem>()
+                : mCurrentCategory.getItems();
+        Log.e("mCurrent",mCurrentCategory.getCategoryName().toString());
+
+
+
+        try {
+            BlocklyCategory.CategoryItem item = items.get(pos);
+            final Block block = ((BlocklyCategory.BlockItem) item).getBlock();
+            block.setEditable(true);
+            toolbox_bg = mHelper.getParentBlockGroup(block);
+
+
+            if (toolbox_bg == null) {
+                toolbox_bg = mHelper.getBlockViewFactory().buildBlockGroupTree(
+                        block, mConnectionManager, mTouchHandler);
+            }
+
+            toolbox_bg.setScaleX(0.8f);
+            toolbox_bg.setScaleY(0.8f);
+
+
+
+            mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                @Override
+
+                public void onGlobalLayout() {
+                    block_width= toolbox_bg.getWidth();
+//                    Log.e(TAG, "width = " + block_width);
+                    removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(),mGlobalLayoutListener);
+                }
+
+            };
+
+            toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+
+
+
+            Log.e("hi", toolbox_bg.getWidth() + "");
+        }catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+
+        return block_width;
     }
 
     /**
@@ -217,6 +426,7 @@ public class BlockRecyclerViewHelper {
         @Override
         public void onItemAdded(int index, BlocklyCategory.CategoryItem item) {
             mAdapter.notifyItemInserted(index);
+            Log.e("??","gg");
         }
 
         @Override
@@ -237,22 +447,16 @@ public class BlockRecyclerViewHelper {
 
         @Override
         public int getItemCount() {
-            Log.e("getItemCount",mCurrentCategory.getCategoryName()+"");
-//            if (mCurrentCategory.getCategoryName().equals("Logic") || mCurrentCategory.getCategoryName().equals("Loops")){
-//                mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1307, ViewGroup.LayoutParams.MATCH_PARENT));
-//
-//            }else if (mCurrentCategory.getCategoryName().equals("Math")){
-//                mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1648, ViewGroup.LayoutParams.MATCH_PARENT));
-//
-//            }else if (mCurrentCategory.getCategoryName().equals("Text")){
-//                mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1115, ViewGroup.LayoutParams.MATCH_PARENT));
-//            }
+
             return mCurrentCategory == null ? 0 : mCurrentCategory.getItems().size();
         }
 
         @Override
         public BlockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            Log.e("click","click");
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams());
+
+//
 
             return new BlockViewHolder(mContext);
         }
@@ -262,6 +466,10 @@ public class BlockRecyclerViewHelper {
             if (mCurrentCategory == null) {
                 return -1;
             }
+            Log.e("position",position+"");
+
+//
+//            mRecyclerView.setLayoutParams(marginLayoutParams);
             return mCurrentCategory.getItems().get(position).getType();
         }
 
@@ -283,22 +491,29 @@ public class BlockRecyclerViewHelper {
                 } else {
                     bg.setTouchHandler(mTouchHandler);
                 }
-                holder.mContainer.setScaleX(0.82f);
-                holder.mContainer.setScaleY(0.82f);
-
-                Log.e("block size", holder.mContainer.getWidth()+"");
 
 
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                bg.setScaleX(0.8f);
+                bg.setScaleY(0.8f);
+                bg.setPivotX(0);
+                bg.setPivotY(0);
+
+
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        (int) (ViewGroup.LayoutParams.WRAP_CONTENT ),
+                        (int) (ViewGroup.LayoutParams.WRAP_CONTENT ));
+
+                layoutParams.rightMargin = 0;
 
                 holder.mContainer.addView(bg, layoutParams);
                 holder.mContainer.setForegroundGravity(0);
 
+//                holder.mContainer.setScaleX(0.8f);
+//                holder.mContainer.setScaleY(0.8f);
 
-                holder.mContainer.setPivotX(0);
-                holder.mContainer.setPivotY(0);
+
+//                holder.mContainer.setPivotX(0);
+//                holder.mContainer.setPivotY(0);
 
 
                 holder.bg = bg;
@@ -331,10 +546,12 @@ public class BlockRecyclerViewHelper {
             }
         }
 
+
         @Override
         public void onViewRecycled(BlockViewHolder holder) {
             // If this was a block item BlockGroup may be reused under a new parent.
             // Only clear if it is still a child of mContainer.
+            Log.e("recycled","holder");
             if (holder.bg != null && holder.bg.getParent() == holder.mContainer) {
                 holder.bg.unlinkModel();
                 holder.bg = null;

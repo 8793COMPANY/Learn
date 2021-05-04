@@ -22,6 +22,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
+
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,6 +175,7 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
             BlockGroup bg = mInputViews.get(i).getConnectedBlockGroup();
             if (bg != null) {
                 bg.setTouchHandler(touchHandler);
+                Log.e("!","touchhandler setting");
             }
         }
     }
