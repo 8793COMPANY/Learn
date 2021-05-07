@@ -15,7 +15,6 @@
 
 package com.corporation8793;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,7 +22,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 
-import com.google.blockly.android.control.ConnectionManager;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
@@ -44,7 +42,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,7 +56,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.Guideline;
-import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -134,7 +130,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     Guideline guideline4;
 
-    private UploadDialog Dialog_Listener;
+    private UploadDialog upload_Listener, error_Listener;
 
 
     //시니얼 모니터 slow 방지 문자열
@@ -364,13 +360,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                Log.e("generated",code);
 //                Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
 //            Toast.makeText(getApplicationContext(),"업로드 성공!",Toast.LENGTH_SHORT).show();
-                Dialog_Listener.show();
+                upload_Listener.show();
 
                 Display display = getWindowManager().getDefaultDisplay();
                 Point size = new Point();
                 display.getSize(size);
 
-                Window window = Dialog_Listener.getWindow();
+                Window window = upload_Listener.getWindow();
 
                 int x = (int)(size.x * 0.5f);
                 int y = (int)(size.y * 0.45f);
@@ -439,7 +435,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Log.e("Remote error log",error.getMessage());
                     //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
                     //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
-                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
                 }
                 else {
                     // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
@@ -731,10 +727,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     };
 
 
-    private View.OnClickListener Confirm = new View.OnClickListener() {
+    private View.OnClickListener upload_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
-            Dialog_Listener.dismiss();
+            upload_Listener.dismiss();
+        }
+    };
+
+    private View.OnClickListener error_confirm = new View.OnClickListener() {
+        public void onClick(View v) {
+//            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
+            upload_Listener.dismiss();
         }
     };
 
@@ -749,7 +752,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
         this.registerReceiver(wifiEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        Dialog_Listener = new UploadDialog(this,Confirm,"업로드 성공!","확인을 눌러주세요");
+        upload_Listener = new UploadDialog(this, upload_confirm,"업로드 성공!","확인을 눌러주세요");
+        error_Listener = new UploadDialog(this, upload_confirm,"인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
     }
 

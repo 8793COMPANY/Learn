@@ -81,6 +81,7 @@ public class BlockRecyclerViewHelper {
     int block_width = 0;
     BlockGroup toolbox_bg;
     ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
+    int [] first_check = {0,0,0,0};
 
     public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
         mRecyclerView = recyclerView;
@@ -152,7 +153,7 @@ public class BlockRecyclerViewHelper {
             mCurrentCategory.setCallback(null);
         }
         mCurrentCategory = category;
-
+        mAdapter.notifyDataSetChanged();
 
 
 
@@ -163,48 +164,49 @@ public class BlockRecyclerViewHelper {
 
         try{
 
-            List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
-                    ? new ArrayList<BlocklyCategory.CategoryItem>()
-                    : mCurrentCategory.getItems();
-
-                BlocklyCategory.CategoryItem item = items.get(0);
-                final Block block = ((BlocklyCategory.BlockItem) item).getBlock();
-                block.setEditable(true);
-                toolbox_bg = mHelper.getParentBlockGroup(block);
-
-
-                if (toolbox_bg == null) {
-                    toolbox_bg = mHelper.getBlockViewFactory().buildBlockGroupTree(
-                            block, mConnectionManager, mTouchHandler);
-                }
+//            List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
+//                    ? new ArrayList<BlocklyCategory.CategoryItem>()
+//                    : mCurrentCategory.getItems();
+//
+//                BlocklyCategory.CategoryItem item = items.get(0);
+//                final Block block = ((BlocklyCategory.BlockItem) item).getBlock();
+//                block.setEditable(true);
+//                toolbox_bg = mHelper.getParentBlockGroup(block);
+//
+//
+//                if (toolbox_bg == null) {
+//                    toolbox_bg = mHelper.getBlockViewFactory().buildBlockGroupTree(
+//                            block, mConnectionManager, mTouchHandler);
+//                }
 
 //            toolbox_bg.setScaleX(0.8f);
 //            toolbox_bg.setScaleY(0.8f);
 
 
 
-                mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
-
-                    @Override
-
-                    public void onGlobalLayout() {
-
-                        block_width= toolbox_bg.getWidth();
-
-
-                        Log.e(TAG, "width = " + block_width);
-
-                        removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(),mGlobalLayoutListener);
-
-                    }
-
-                };
-
-                toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+//                mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+//
+//                    @Override
+//
+//                    public void onGlobalLayout() {
+//
+//
+//                        block_width= toolbox_bg.getWidth();
+//
+//                        Log.e(TAG, "width = " + block_width);
+//
+//                        removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(),mGlobalLayoutListener);
+//
+//                    }
+//
+//                };
+//
+//                toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
 
 
             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
         if (mCurrentCategory.getCategoryName().toString().equals("Logic") ){
+            Log.e("current","logic");
 //            if(width != 1280 ){
 ////                marginLayoutParams.width =(int)(width / 1280 * 991);
 //                marginLayoutParams.width =(int)(width / 1280 * 1400);
@@ -212,30 +214,36 @@ public class BlockRecyclerViewHelper {
 //                marginLayoutParams.width =1007;
 //            }
 
-            if (getLargeSize(1) > 900)
-                marginLayoutParams.width = getLargeSize(1);
-            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//            if (getLargeSize(1) > 900)
+//                marginLayoutParams.width = getLargeSize(1);
+//            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            getLargeSize(0);
             marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(991, ViewGroup.LayoutParams.MATCH_PARENT));
         }
         else if ( mCurrentCategory.getCategoryName().toString().equals("Loops")){
+            Log.e("current","loops");
 //            if(width != 1280 ){
 //                marginLayoutParams.width =(int)(width / 1280 * 1400)  ;
 //            }else{
 //                marginLayoutParams.width =1007;
 //            }
-            if (getLargeSize(0) > 800)
-                marginLayoutParams.width = getLargeSize(0);
-            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//            if (getLargeSize(0) > 800)
+//                marginLayoutParams.width = getLargeSize(0);
+            getLargeSize(0);
+//            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
             marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1307, ViewGroup.LayoutParams.MATCH_PARENT));
         }else if (mCurrentCategory.getCategoryName().toString().equals("Math")){
+            Log.e("current","math");
             marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
             if(width != 1280 ){
-                if (getLargeSize(1) > 1200)
-                    marginLayoutParams.width = getLargeSize(1);
+//                if (getLargeSize(1) > 1200)
+//                    marginLayoutParams.width = getLargeSize(1);
 //                marginLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
+                getLargeSize(1);
+                marginLayoutParams.setMargins((int)(width / 1280 * 55), 0,
+                        0, 0);
             }else{
                 marginLayoutParams.width =1280;
                 marginLayoutParams.setMargins(width - 1253, 0, 0, 0);
@@ -246,12 +254,13 @@ public class BlockRecyclerViewHelper {
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1240 , ViewGroup.LayoutParams.MATCH_PARENT));
 
         }else if (mCurrentCategory.getCategoryName().toString().equals("Text")){
-            Log.e("category!","Text");
+            Log.e("current","Text");
 //            marginLayoutParams.width =(int)(width /1280.0 * 900) ;
-            if (getLargeSize(2) > 600)
-                marginLayoutParams.width = getLargeSize(2);
+//            if (getLargeSize(2) > 600)
+//                marginLayoutParams.width = getLargeSize(2);
 //            marginLayoutParams.width = getLargeSize(1);
-            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            getLargeSize(2);
             marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
         }
 
@@ -265,7 +274,7 @@ public class BlockRecyclerViewHelper {
             e.printStackTrace();
         }
 
-        mAdapter.notifyDataSetChanged();
+
 
 
         if (mCurrentCategory != null) {
@@ -278,35 +287,35 @@ public class BlockRecyclerViewHelper {
 
 
     private static void removeOnGlobalLayoutListener(ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener) {
-
+        Log.e("remove","!!");
 
         if (observer == null) {
+            Log.e("remove","null");
 
             return ;
 
         }
 
 
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-
+        if (Build.VERSION.SDK_INT >= 16){
+            Log.e("remove","JELLY");
             observer.removeGlobalOnLayoutListener(listener);
-
-        } else {
-
+        }else{
+            Log.e("remove","INT");
             observer.removeOnGlobalLayoutListener(listener);
-
         }
+
 
     }
 
 
-    public int getLargeSize(int pos){
+    public void getLargeSize(int pos){
+        Log.e("come","getLargeSize");
 
         List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
                 ? new ArrayList<BlocklyCategory.CategoryItem>()
                 : mCurrentCategory.getItems();
-        Log.e("mCurrent",mCurrentCategory.getCategoryName().toString());
+//        Log.e("mCurrent",mCurrentCategory.getCategoryName().toString());
 
 
 
@@ -326,29 +335,36 @@ public class BlockRecyclerViewHelper {
             toolbox_bg.setScaleY(0.8f);
 
 
+                mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
 
-            mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
 
-                @Override
+                    public void onGlobalLayout() {
+                        block_width = toolbox_bg.getWidth();
+                        Log.e(TAG, "width = " + block_width);
+                        try {
+                            RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
+                            marginLayoutParams.width = block_width;
+                            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                            mRecyclerView.setLayoutParams(marginLayoutParams);
+                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
 
-                public void onGlobalLayout() {
-                    block_width= toolbox_bg.getWidth();
-//                    Log.e(TAG, "width = " + block_width);
-                    removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(),mGlobalLayoutListener);
-                }
+                    }
 
-            };
+                };
+
 
             toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+            Log.e("hello","addOnGlobalLayout");
 
-
-
-            Log.e("hi", toolbox_bg.getWidth() + "");
         }catch (IndexOutOfBoundsException e){
             e.printStackTrace();
         }
 
-        return block_width;
+//        return block_width;
     }
 
     /**
@@ -453,10 +469,6 @@ public class BlockRecyclerViewHelper {
 
         @Override
         public BlockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Log.e("click","click");
-//            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams());
-
-//
 
             return new BlockViewHolder(mContext);
         }
