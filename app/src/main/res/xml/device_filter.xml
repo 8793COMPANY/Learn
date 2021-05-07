@@ -7,7 +7,7 @@
     <usb-device product-id="24597" vendor-id="1027"/>
 
     <!-- 0x2341 / Arduino -->
-    <usb-device vendor-id="9025"/>
+    <usb-device vendor-id="9025" />
 
     <!--public static final int VENDOR_ATMEL = 0x03EB;-->
     <!--public static final int ATMEL_LUFA_CDC_DEMO_APP = 0x2044;-->
