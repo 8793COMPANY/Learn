@@ -18,18 +18,13 @@
 
 
 
-        <block type="set_led">
+        <!--<block type="set_led">
 
                 <block type="base_pins_list">
                     <field name="PIN">0</field>
                 </block>
-<!--            <value name="PIN">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">0</field>-->
-<!--                </block>-->
-<!--            </value>-->
             <field name="VALUE1">LOW</field>
-        </block>
+        </block>-->
 
         <block type="test">
             <value name="PIN">

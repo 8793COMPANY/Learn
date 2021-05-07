@@ -808,7 +808,7 @@
 
   {
     "type": "serial_begin_list",
-    "message0": "%1",
+    "message0": "Baud: %1",
     "args0": [
       {
         "type": "field_dropdown",
@@ -826,7 +826,7 @@
 
   {
     "type": "base_logic_list",
-    "message0": "%1",
+    "message0": "Pin Level: %1",
     "args0": [
       {
         "type": "field_dropdown",
@@ -844,7 +844,7 @@
 
   {
     "type": "base_output_list",
-    "message0": "%1",
+    "message0": "Pin IO: %1",
     "args0": [
       {
         "type": "field_dropdown",

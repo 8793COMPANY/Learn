@@ -130,18 +130,18 @@
   },
   {
     "type": "logic_boolean",
-    "message0": "%1",
+    "message0": "Bool: %1",
     "args0": [
       {
         "type": "field_dropdown",
         "name": "BOOL",
         "options": [
           [
-            "true",
+            "TRUE",
             "TRUE"
           ],
           [
-            "false",
+            "FALSE",
             "FALSE"
           ]
         ]
