@@ -184,19 +184,7 @@
             </value>
         </block>-->
 
-
-        <block type="controls_if"></block>
-        <block type="controls_ifelse"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
-
-
-
-
-        <block type="turtle_repeat_internal">
-            <field name="TIMES">4</field>
-        </block>
-
+        <block type="turtle_setup_loop"></block>
 
         <block type="controls_for">
             <value name="FROM">
@@ -217,7 +205,23 @@
         </block>
 
 
-        <block type="turtle_setup_loop"></block>
+
+
+
+        <block type="controls_if"></block>
+        <block type="controls_ifelse"></block>
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+
+
+
+
+        <block type="turtle_repeat_internal">
+            <field name="TIMES">4</field>
+        </block>
+
+
+
 
 
 <!--        <block type="dc_motor">-->

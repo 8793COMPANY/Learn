@@ -18,6 +18,7 @@ package com.google.blockly.android;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -27,9 +28,11 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -93,7 +96,7 @@ import com.google.blockly.utils.ColorUtils;
 public class FlyoutFragment extends Fragment implements BlockListUI{
     private static final String TAG = "FlyoutFragment";
 
-
+    Context mContext;
 
     public static final int DEFAULT_BLOCKS_BACKGROUND_ALPHA = 0xBB;
     public static final int DEFAULT_BLOCKS_BACKGROUND_COLOR = Color.LTGRAY;
@@ -120,6 +123,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(context, attrs, savedInstanceState);
+        mContext = context;
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
@@ -163,12 +167,40 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
 
 
         RecyclerView recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);  //start.layout
+        Display display = getActivity().getWindowManager().getDefaultDisplay();  // in Activity
+        /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
+        Point size = new Point();
+        display.getRealSize(size); // or getSize(size)
+        int width = size.x;
+        Log.e("width",width+"");
+//
+//        RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) recyclerView.getLayoutParams();
+//
+//        if((int)(width / 1280 * 50) < width - 1253){
+//            marginLayoutParams.setMargins((int)(width / 1280 * 50), 0, 0, 0);
+//        }else{
+//            marginLayoutParams.setMargins(width - 1253, 0, 0, 0);
+//        }
+//
+//        recyclerView.setLayoutParams(marginLayoutParams);
+        recyclerView.setPadding(0 ,(int)(width / 1280 * 59),0,0);
 //        recyclerView.setPivotX(0.2f);
 //        recyclerView.setPivotY(0.4f);
 //        recyclerView.setScaleX(0.7f);
 //        recyclerView.setScaleY(0.7f);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext());
+
+//        Display display = getWindowManager().getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+
+
+//        int x = (int)(size.x * 0.5f);
+//        int y = (int)(size.y * 0.45f);
+//
+//        window.setLayout(x,y);
+
+        mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext(),width);
         mRecyclerHelper.setScrollOrientation(mScrollOrientation);
 
         return mFlyoutView;

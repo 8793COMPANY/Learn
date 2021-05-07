@@ -522,6 +522,7 @@ public class BlockView extends AbstractBlockView<InputView> {
 
         // Block width is the computed width of the widest input row, and at least mMinBlockWidth.
         mBlockContentWidth = Math.max(mMinBlockWidth, maxRowWidth);
+//        mBlockContentWidth = 48;
         mBlockViewSize.x = mBlockContentWidth;
 
         // View width is the computed width of the widest statement input, including child blocks

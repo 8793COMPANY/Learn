@@ -184,6 +184,7 @@ public class BlocklyController {
         @Override
         public boolean onBlockClicked(PendingDrag pendingDrag) {
             // TODO(#35): Mark block as focused / selected.
+            Log.e("onBlockClicked","click");
             return false;
         }
     };
