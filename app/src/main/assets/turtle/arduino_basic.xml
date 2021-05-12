@@ -183,19 +183,19 @@
 
         <block type="controls_for">
             <value name="FROM">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">1</field>
-                </shadow>
+                </block>
             </value>
             <value name="TO">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">10</field>
-                </shadow>
+                </block>
             </value>
             <value name="BY">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">1</field>
-                </shadow>
+                </block>
             </value>
         </block>
 
@@ -275,9 +275,9 @@
         <block type="math_change">
             <field name="VAR">item</field>
             <value name="DELTA">
-                <shadow type="math_number">
+                <block type="math_number">
                     <field name="NUM">0</field>
-                </shadow>
+                </block>
             </value>
         </block>
 
