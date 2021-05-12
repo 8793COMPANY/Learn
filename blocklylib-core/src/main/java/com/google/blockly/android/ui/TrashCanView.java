@@ -167,6 +167,7 @@ public class TrashCanView extends AppCompatImageView {
                 setImageDrawable(mDefaultDrawable);
                 break;
             case STATE_ON_HOVER:
+                Log.e("state","hover");
                 setImageDrawable(mOnHoverDrawable);
                 break;
         }

@@ -10,4 +10,6 @@ public class Application extends android.app.Application {
         logHelper = new LogHelper();
         Thread.setDefaultUncaughtExceptionHandler(logHelper);
     }
+
+
 }

@@ -373,6 +373,7 @@
         app:layout_constraintWidth_percent="0.075"
         blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         blockly:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/blockly_trash_ui"
         blockly:layout_constraintStart_toStartOf="parent">
 
         <com.google.blockly.android.ui.TrashCanView
