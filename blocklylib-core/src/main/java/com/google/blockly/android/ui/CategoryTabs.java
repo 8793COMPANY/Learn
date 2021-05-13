@@ -16,6 +16,7 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -113,13 +115,33 @@ public class CategoryTabs extends RecyclerView {
         mLayoutManager = new LinearLayoutManager(context);
         setLayoutManager(mLayoutManager);
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
+//        Display display = wm.getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getRealMetrics(displayMetrics);
+
+        int realDeviceWidth = displayMetrics.widthPixels;
+        int realDeviceHeight = displayMetrics.heightPixels;
+
+
+        Log.e("realDevice",realDeviceWidth+"");
+
+
+//        Resources resources = this.getResources();
+//        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+
+
+//        if (resourceId > 0) {
+//            Log.e("resourceId",resources.getDimensionPixelSize(resourceId)+"");
+////            deviceHeight += resources.getDimensionPixelSize(resourceId);
+////            size.x = size.x + resources.getDimensionPixelSize(resourceId);
+//        }
 
 
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
-        mAdapter = new CategoryAdapter(size.x /1280.0);
+        mAdapter = new CategoryAdapter(realDeviceWidth /1280.0);
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
 

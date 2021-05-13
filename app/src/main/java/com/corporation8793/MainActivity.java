@@ -745,7 +745,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideSystemUI();
+//        hideSystemUI();
         BlocklyController controller = getController();
         controller.recenterWorkspace();
         controller.zoomOut();
@@ -1107,6 +1107,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         }else{
 
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
         }
     }
 
