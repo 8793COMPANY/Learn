@@ -156,7 +156,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             DefaultBlocks.MATH_BLOCKS_PATH,
             DefaultBlocks.TEXT_BLOCKS_PATH,
             DefaultBlocks.VARIABLE_BLOCKS_PATH,
-            "turtle/turtle_blocks_kor.json"
+            "turtle/turtle_blocks.json"
     );
     static final List<String> TURTLE_BLOCK_GENERATORS = Arrays.asList(
             "turtle/generators.js"
@@ -869,19 +869,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                configureMutators();
 //                configureCategoryFactories();
                 TURTLE_BLOCK_DEFINITIONS.set(6,"turtle/turtle_blocks.json");
+
                 /*
                 Intent intent = getIntent();
                 finish(); //현재 액티비티 종료 실시
                 overridePendingTransition(0, 0);
                 startActivity(intent); //현재 액티비티 재실행 실시
                 overridePendingTransition(0, 0);
-                */
+*/
 
                 // 리-로드
-                recreate();
+//                recreate();git 
 
-                resetBlockFactory();  // Initial load of block definitions, extensions, and mutators.
-                configureCategoryFactories();
 //                Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
 
                 mMonitorHandler.sendEmptyMessage(1);
