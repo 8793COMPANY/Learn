@@ -701,6 +701,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * @throws BlockLoadingException If the definition is malformed.
      */
     protected void resetBlockFactory() {
+        Log.e("reset","BlockFactory");
         mBlocklyActivityHelper.resetBlockFactory(
                 getBlockDefinitionsJsonPaths());
 

@@ -148,6 +148,7 @@
                 android:layout_weight="4"></View>
 
             <LinearLayout
+                android:id="@+id/view_linear"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4"
@@ -156,6 +157,7 @@
 
 
                 <View
+                    android:tag="setup"
                     android:id="@+id/setup_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -163,6 +165,7 @@
 
 
                 <View
+                    android:tag="loop"
                     android:id="@+id/loop_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -170,6 +173,7 @@
 
 
                 <View
+                    android:tag="method"
                     android:id="@+id/method_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -177,6 +181,7 @@
 
 
                 <View
+                    android:tag="etc"
                     android:id="@+id/etc_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -184,6 +189,7 @@
 
 
                 <View
+                    android:tag="code"
                     android:id="@+id/code_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -191,6 +197,7 @@
 
 
                 <View
+                    android:tag="serial"
                     android:id="@+id/serial_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -198,6 +205,7 @@
 
 
                 <View
+                    android:tag="upload"
                     android:id="@+id/upload_view"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

@@ -66,15 +66,6 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
     protected int mScrollOrientation = OrientationHelper.HORIZONTAL;
     protected @Rotation.Enum int mLabelRotation = Rotation.NONE;
 
-    static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
-            DefaultBlocks.COLOR_BLOCKS_PATH,
-            DefaultBlocks.LOGIC_BLOCKS_PATH,
-            DefaultBlocks.LOOP_BLOCKS_PATH,
-            DefaultBlocks.MATH_BLOCKS_PATH,
-            DefaultBlocks.TEXT_BLOCKS_PATH,
-            DefaultBlocks.VARIABLE_BLOCKS_PATH,
-            "turtle/turtle_blocks.json"
-    );
 
 
     static final List<String> TURTLE_BLOCK_GENERATORS = Arrays.asList(

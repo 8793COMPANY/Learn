@@ -31,6 +31,7 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -129,8 +130,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     int num = 0;
 
     Guideline guideline4;
+    Button upload_btn;
 
     private UploadDialog upload_Listener, error_Listener;
+
+    LinearLayout view_linear;
+    int current_pos =0;
+//    String current_tag;
 
 
     //시니얼 모니터 slow 방지 문자열
@@ -141,6 +147,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     int bytes; // bytes returned from read()
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
+    Boolean [] view_check = {true,true,true,true};
+
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
             DefaultBlocks.LOGIC_BLOCKS_PATH,
@@ -148,7 +156,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             DefaultBlocks.MATH_BLOCKS_PATH,
             DefaultBlocks.TEXT_BLOCKS_PATH,
             DefaultBlocks.VARIABLE_BLOCKS_PATH,
-            "turtle/turtle_blocks.json"
+            "turtle/turtle_blocks_kor.json"
     );
     static final List<String> TURTLE_BLOCK_GENERATORS = Arrays.asList(
             "turtle/generators.js"
@@ -716,9 +724,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
                 if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()){
                     wifi_check = true;
+                    upload_btn.setBackgroundResource(R.drawable.upload_btn);
                     Log.e("wifi","connect");
                 }else{
                     wifi_check = false;
+                    upload_btn.setBackgroundResource(R.drawable.upload_btn_false);
                     Log.e("wifi","not connect");
                 }
 
@@ -745,7 +755,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        hideSystemUI();
+        hideSystemUI();
+//        test();
         BlocklyController controller = getController();
         controller.recenterWorkspace();
         controller.zoomOut();
@@ -756,6 +767,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_Listener = new UploadDialog(this, upload_confirm,"업로드 성공!","확인을 눌러주세요");
         error_Listener = new UploadDialog(this, upload_confirm,"인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
+
+//        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
     @Subscribe
@@ -763,6 +776,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 이벤트가 발생한뒤 수행할 작업
         setLineForOtherCategoryTabs(mPushEvent.getPos());
         blockly_monitor.setVisibility(View.GONE);
+        Log.e("??","finishLoad");
 
     }
 
@@ -798,7 +812,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         Button code_btn = (Button) blockly_workspace.findViewById(R.id.code_btn);
         Button serial_btn =(Button) blockly_workspace.findViewById(R.id.serial_btn);
-        Button upload_btn = (Button) blockly_workspace.findViewById(R.id.upload_btn);
+        upload_btn = (Button) blockly_workspace.findViewById(R.id.upload_btn);
+
+        view_linear = blockly_workspace.findViewById(R.id.view_linear);
 
         mUsbReceiver = new mUsbReceiver();
 
@@ -847,14 +863,28 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                mBlocklyActivityHelper.resetBlockFactory(
+//                        getBlockDefinitionsJsonPaths());
+//                configureBlockExtensions();
+//                configureMutators();
+//                configureCategoryFactories();
+                TURTLE_BLOCK_DEFINITIONS.set(6,"turtle/turtle_blocks.json");
+                Intent intent = getIntent();
+                finish(); //현재 액티비티 종료 실시
+                overridePendingTransition(0, 0);
+                startActivity(intent); //현재 액티비티 재실행 실시
+                overridePendingTransition(0, 0);
+
+                resetBlockFactory();  // Initial load of block definitions, extensions, and mutators.
+                configureCategoryFactories();
+//                Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
+
                 mMonitorHandler.sendEmptyMessage(1);
                 monitor_text.setText("");
                 Log.e("code_btn","click");
-                setMonitor(code_btn.getTag().toString());
+                setMonitor(code_btn.getTag().toString(),code_view);
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(4);
-                setInitLine();
-                code_view.setBackgroundColor(Color.parseColor("#f78f43"));
 
                 input_space.setVisibility(View.GONE);
 //                init_btn.setVisibility(View.GONE);z
@@ -871,6 +901,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 handler.postDelayed(() -> {
                     monitor_text.setText(code);
                 }, 100);
+                current_pos = 4;
             }
         });
 
@@ -879,15 +910,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onClick(View v) {
                 monitor_text.setText("");
                 mMonitorHandler.sendEmptyMessage(0);
-                setMonitor(serial_btn.getTag().toString());
+                setMonitor(serial_btn.getTag().toString(),serial_view);
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(5);
-                setInitLine();
-                serial_view.setBackgroundColor(Color.parseColor("#f78f43"));
+//                setInitLine();
                 input_space.setVisibility(View.VISIBLE);
 
                 stringBuilder.setLength(0);
                 num = 0;
+                current_pos = 5;
             }
         });
 
@@ -895,6 +926,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         upload_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideSystemUI();
                 Log.e("upload_btn","click");
                 if (wifi_check) {
                     mMonitorHandler.sendEmptyMessage(1);
@@ -918,6 +950,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Toast.makeText(getApplicationContext(),"WIFI를 연결해주세요!",Toast.LENGTH_SHORT).show();
                 }
 
+
+                current_pos = 6;
             }
         });
 
@@ -949,15 +983,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     } ;
 
 
-    void setMonitor(String tag){
+    void setMonitor(String tag,View view){
+
+        setInitLine();
         if (current_tag.equals(tag)){
-            if (blockly_monitor.getVisibility()==View.GONE)
+            if (blockly_monitor.getVisibility()==View.GONE) {
                 blockly_monitor.setVisibility(View.VISIBLE);
-            else {
+                view.setBackgroundColor(Color.parseColor("#f78f43"));
+            }else {
+                setInitLine();
                 blockly_monitor.setVisibility(View.GONE);
                 mMonitorHandler.sendEmptyMessage(1);
             }
             }else{
+            view.setBackgroundColor(Color.parseColor("#f78f43"));
             blockly_monitor.setVisibility(View.VISIBLE);
         }
 
@@ -986,36 +1025,64 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void setLineForOtherCategoryTabs(int position) {
         mMonitorHandler.sendEmptyMessage(1);
+        Log.e("??","gg");
         switch (position) {
             case -1:
                 categoryData.setPosition(position);
                 setInitLine();
-
                 break;
             case 0:
+
                 categoryData.setPosition(position);
                 setInitLine();
-                setup_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                setCategoryTabsColor(position,setup_view);
+
                 break;
             case 1:
+
                 categoryData.setPosition(position);
                 setInitLine();
-                loop_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                setCategoryTabsColor(position,loop_view);
+
                 break;
             case 2:
+
                 categoryData.setPosition(position);
                 setInitLine();
-                method_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                setCategoryTabsColor(position,method_view);
+
                 break;
             case 3:
+
                 categoryData.setPosition(position);
                 setInitLine();
-                etc_view.setBackgroundColor(Color.parseColor("#f78f43"));
+                setCategoryTabsColor(position,etc_view);
+
                 break;
             default:
                 break;
         }
     }
+
+    public void setCategoryTabsColor(int position, View view){
+        if (current_pos == position) {
+            if (view_check[position]){
+                view.setBackgroundColor(Color.parseColor("#f78f43"));
+                view_check[position] = false;
+            }else {
+                view_check[position] = true;
+//                    setInitLine();
+            }
+
+        }else{
+            view_check[position] = false;
+            view.setBackgroundColor(Color.parseColor("#f78f43"));
+        }
+
+        current_pos = position;
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -1113,7 +1180,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
+        if (hasFocus){
             hideSystemUI();
         }
     }
@@ -1124,7 +1191,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         // Set the content to appear under the system bars so that the
                         // content doesn't resize when the system bars hide and show.
                         | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -1134,5 +1201,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
+
 
 }

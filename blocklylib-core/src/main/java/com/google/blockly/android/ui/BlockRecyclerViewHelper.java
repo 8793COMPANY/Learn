@@ -343,11 +343,13 @@ public class BlockRecyclerViewHelper {
                         block_width = toolbox_bg.getWidth();
                         Log.e(TAG, "width = " + block_width);
                         try {
+//                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
                             marginLayoutParams.width = block_width;
                             marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                             mRecyclerView.setLayoutParams(marginLayoutParams);
-                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
+                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
                         } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
