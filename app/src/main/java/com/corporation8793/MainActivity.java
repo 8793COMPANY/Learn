@@ -869,11 +869,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                configureMutators();
 //                configureCategoryFactories();
                 TURTLE_BLOCK_DEFINITIONS.set(6,"turtle/turtle_blocks.json");
+                /*
                 Intent intent = getIntent();
                 finish(); //현재 액티비티 종료 실시
                 overridePendingTransition(0, 0);
                 startActivity(intent); //현재 액티비티 재실행 실시
                 overridePendingTransition(0, 0);
+                */
+
+                // 리-로드
+                recreate();
 
                 resetBlockFactory();  // Initial load of block definitions, extensions, and mutators.
                 configureCategoryFactories();
