@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/blockly_toolbox_ui"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        tools:layout_editor_absoluteX="50dp"
+        tools:layout_editor_absoluteY="-19dp" />
 
     <fragment
         android:id="@+id/blockly_trash_ui"
@@ -351,6 +351,24 @@
 
     </LinearLayout>
 
+    <Button
+
+        android:id="@+id/translate_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="한국어"
+        android:background="#E6E6E6"
+
+        app:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
+        app:layout_constraintDimensionRatio="170:75"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/blockly_workspace"
+        app:layout_constraintVertical_bias="0.939"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.135" />
+
 
     <fragment
         android:id="@+id/blockly_toolbox_ui"
@@ -395,6 +413,8 @@
 
     </LinearLayout>
 
+
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:background="@color/round_corner_progress_bar_progress_default"
@@ -409,5 +429,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="1dp" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

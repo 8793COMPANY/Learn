@@ -116,7 +116,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
     EditText serial_input_box;
-    Button serial_send_btn, init_btn;
+    Button serial_send_btn, init_btn, translate_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
     TextView monitor_text;
@@ -136,6 +136,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     LinearLayout view_linear;
     int current_pos =0;
+    static int turtle_pos=0;
 //    String current_tag;
 
 
@@ -148,6 +149,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
     Boolean [] view_check = {true,true,true,true};
+
+    String [] turtle_files = {"turtle/turtle_blocks.json", "turtle/turtle_blocks_kor.json"};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -792,6 +795,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
+        translate_btn = blockly_workspace.findViewById(R.id.translate_btn);
         monitor_text.setMovementMethod(new ScrollingMovementMethod());
 
         serial_input_box = blockly_workspace.findViewById(R.id.serial_input_box);
@@ -833,7 +837,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         //guideline4.setLayoutParams(layoutParams);
         guideline4.setGuidelineEnd((int) ((width / 1280.0) * 614));
 
-
+        if (turtle_pos == 0) {
+            translate_btn.setText("한국어");
+        }else {
+            translate_btn.setText("영어");
+        }
 
         //로딩창을 투명하게
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -860,6 +868,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        });
 
 
+        translate_btn.setOnClickListener(v ->{
+
+            if (turtle_pos == 0) {
+                turtle_pos = 1;
+//                translate_btn.setText("영문");
+            }else {
+                turtle_pos = 0;
+//                translate_btn.setText("한국어");
+            }
+            TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files[turtle_pos]);
+
+
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            // 플래그 설정
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent); //현재 액티비티 재실행 실시
+            overridePendingTransition(0, 0);
+            finish(); //현재 액티비티 종료 실시
+        });
+
+
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -868,18 +899,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                configureBlockExtensions();
 //                configureMutators();
 //                configureCategoryFactories();
-                TURTLE_BLOCK_DEFINITIONS.set(6,"turtle/turtle_blocks.json");
+
+
+                // 리-로드
+                //recreate();
 
                 /*
+
                 Intent intent = getIntent();
-                finish(); //현재 액티비티 종료 실시
                 overridePendingTransition(0, 0);
+                // 플래그 설정
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent); //현재 액티비티 재실행 실시
                 overridePendingTransition(0, 0);
 */
 
                 // 리-로드
-//                recreate();git 
+//                recreate();
+//                finish(); //현재 액티비티 종료 실시
+
+                // 리-로드
+//                recreate();
+
 
 //                Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
 
