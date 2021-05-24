@@ -781,15 +781,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 이벤트가 발생한뒤 수행할 작업
         setLineForOtherCategoryTabs(mPushEvent.getPos());
         blockly_monitor.setVisibility(View.GONE);
-        translate_btn.setVisibility(View.VISIBLE);
-        if (!categoryData.isSelection()) {
-            translate_btn.setVisibility(View.GONE);
-        } else {
-            translate_btn.setVisibility(View.VISIBLE);
-        }
-        if (mPushEvent.isClose()) {
-            translate_btn.setVisibility(View.VISIBLE);
-        }
+//        translate_btn.setVisibility(View.VISIBLE);
+//        if (!categoryData.isSelection()) {
+//            translate_btn.setVisibility(View.GONE);
+//        } else {
+//            translate_btn.setVisibility(View.VISIBLE);
+//        }
+//        if (mPushEvent.isClose()) {
+//            translate_btn.setVisibility(View.VISIBLE);
+//        }
         Log.e("??","finishLoad");
     }
 
@@ -1014,7 +1014,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if (current_tag.equals(tag)){
             if (blockly_monitor.getVisibility()==View.GONE) {
                 blockly_monitor.setVisibility(View.VISIBLE);
-                translate_btn.setVisibility(View.GONE);
+                translate_btn.setVisibility(View.INVISIBLE);
                 view.setBackgroundColor(Color.parseColor("#f78f43"));
             }else {
                 setInitLine();
@@ -1025,7 +1025,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }else{
             view.setBackgroundColor(Color.parseColor("#f78f43"));
             blockly_monitor.setVisibility(View.VISIBLE);
-            translate_btn.setVisibility(View.GONE);
+            translate_btn.setVisibility(View.INVISIBLE);
         }
 
         current_tag = tag;
@@ -1096,15 +1096,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if (current_pos == position) {
             if (view_check[position]){
                 view.setBackgroundColor(Color.parseColor("#f78f43"));
+                translate_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
             }else {
+                translate_btn.setVisibility(View.VISIBLE);
                 view_check[position] = true;
-//                    setInitLine();
             }
 
         }else{
             view_check[position] = false;
             view.setBackgroundColor(Color.parseColor("#f78f43"));
+            translate_btn.setVisibility(View.INVISIBLE);
         }
 
         current_pos = position;
