@@ -472,8 +472,8 @@ public class BlocklyActivityHelper {
                 .findFragmentById(R.id.blockly_toolbox_ui);
         mCategoryFragment = (CategorySelectorFragment) fragmentManager
                 .findFragmentById(R.id.blockly_categories);
-        mTrashBlockList = (BlockListUI) fragmentManager
-                .findFragmentById(R.id.blockly_trash_ui);
+//        mTrashBlockList = (BlockListUI) fragmentManager
+//                .findFragmentById(R.id.blockly_trash_ui);
 
         if (mTrashBlockList != null) {
             // TODO(#14): Make trash list a drop location.
