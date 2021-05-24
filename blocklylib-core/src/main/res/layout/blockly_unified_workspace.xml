@@ -394,7 +394,7 @@
         app:layout_constraintDimensionRatio="68:88"
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintWidth_percent="0.13"
         blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         blockly:layout_constraintEnd_toEndOf="parent"
         blockly:layout_constraintStart_toStartOf="parent">
@@ -404,8 +404,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/translucent"
+<<<<<<< HEAD
             android:paddingTop="70dp"
             android:paddingRight="70dp" />
+=======
+            android:paddingRight="70dp"
+            android:paddingTop="70dp" />
+>>>>>>> 579641e9eb4555514d3d1ffe826a2a7e37b1e29e
 
     </LinearLayout>
 
