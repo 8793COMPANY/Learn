@@ -81,7 +81,6 @@ public class BlockRecyclerViewHelper {
     int block_width = 0;
     BlockGroup toolbox_bg;
     ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
-    int [] first_check = {0,0,0,0};
 
     public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
         mRecyclerView = recyclerView;
@@ -112,7 +111,6 @@ public class BlockRecyclerViewHelper {
 
         mTouchHandler = controller.getDragger()
                 .buildImmediateDragBlockTouchHandler(new DragHandler());
-
 
     }
 

@@ -713,6 +713,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     @Override
     protected boolean onSectionChanged(int oldSection, int newSection) {
+        Log.e("+oldSection",oldSection+"");
+        Log.e("+newSection",newSection+"");
         reloadToolbox();
         return true;
     }
@@ -872,10 +874,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             if (turtle_pos == 0) {
                 turtle_pos = 1;
-//                translate_btn.setText("영문");
             }else {
                 turtle_pos = 0;
-//                translate_btn.setText("한국어");
             }
             TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files[turtle_pos]);
 
@@ -894,36 +894,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mBlocklyActivityHelper.resetBlockFactory(
-//                        getBlockDefinitionsJsonPaths());
-//                configureBlockExtensions();
-//                configureMutators();
-//                configureCategoryFactories();
-
-
-                // 리-로드
-                //recreate();
-
-                /*
-
-                Intent intent = getIntent();
-                overridePendingTransition(0, 0);
-                // 플래그 설정
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent); //현재 액티비티 재실행 실시
-                overridePendingTransition(0, 0);
-*/
-
-                // 리-로드
-//                recreate();
-//                finish(); //현재 액티비티 종료 실시
-
-                // 리-로드
-//                recreate();
-
-
-//                Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
 
                 mMonitorHandler.sendEmptyMessage(1);
                 monitor_text.setText("");

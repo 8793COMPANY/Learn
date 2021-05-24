@@ -298,7 +298,7 @@ public class BlocklyController {
         if (trashUi != null && mViewFactory == null) {
             throw new IllegalStateException("Cannot set UIs without a BlockViewFactory.");
         }
-        mFlyoutController.setTrashUi(trashUi);
+//        mFlyoutController.setTrashUi(trashUi);
         mFlyoutController.setTrashContents(mWorkspace.getTrashCategory());
     }
 

@@ -16,18 +16,19 @@
         tools:layout_editor_absoluteX="50dp"
         tools:layout_editor_absoluteY="-19dp" />
 
-    <fragment
-        android:id="@+id/blockly_trash_ui"
-        android:name="com.google.blockly.android.FlyoutFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        blockly:closeable="true"
-        blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
-        blockly:layout_constraintEnd_toEndOf="parent"
-        blockly:layout_constraintStart_toStartOf="parent"
-        blockly:scrollOrientation="horizontal"
-        tools:ignore="MissingPrefix" />
+<!--    <fragment-->
+<!--        android:id="@+id/blockly_trash_ui"-->
+<!--        android:name="com.google.blockly.android.FlyoutFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        blockly:closeable="false"-->
+<!--        android:visibility="invisible"-->
+<!--        blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"-->
+<!--        blockly:layout_constraintEnd_toEndOf="parent"-->
+<!--        blockly:layout_constraintStart_toStartOf="parent"-->
+<!--        blockly:scrollOrientation="horizontal"-->
+<!--        tools:ignore="MissingPrefix" />-->
 
 
     <LinearLayout
@@ -352,13 +353,11 @@
     </LinearLayout>
 
     <Button
-
         android:id="@+id/translate_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="한국어"
         android:background="#E6E6E6"
-
         app:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         app:layout_constraintDimensionRatio="170:75"
         app:layout_constraintEnd_toEndOf="parent"
@@ -381,8 +380,7 @@
         blockly:layout_constraintBottom_toBottomOf="parent"
         blockly:layout_constraintEnd_toEndOf="@+id/blockly_workspace"
         blockly:layout_constraintTop_toBottomOf="@+id/category_block"
-        blockly:scrollOrientation="vertical"
-        tools:ignore="MissingPrefix"></fragment>
+        blockly:scrollOrientation="vertical"></fragment>
 
 
     <LinearLayout
@@ -399,7 +397,6 @@
         app:layout_constraintWidth_percent="0.15"
         blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         blockly:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/blockly_trash_ui"
         blockly:layout_constraintStart_toStartOf="parent">
 
         <com.google.blockly.android.ui.TrashCanView
@@ -407,8 +404,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/translucent"
+<<<<<<< HEAD
+            android:paddingTop="70dp"
+            android:paddingRight="70dp" />
+=======
             android:paddingRight="70dp"
             android:paddingTop="70dp" />
+>>>>>>> 579641e9eb4555514d3d1ffe826a2a7e37b1e29e
 
     </LinearLayout>
 
