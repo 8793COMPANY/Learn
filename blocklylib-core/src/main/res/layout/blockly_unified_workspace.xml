@@ -385,8 +385,8 @@
 
     <LinearLayout
         android:id="@+id/blockly_overlay_buttons"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
@@ -394,7 +394,10 @@
         app:layout_constraintDimensionRatio="68:88"
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintVertical_bias="0.4"
+<<<<<<< HEAD
         app:layout_constraintWidth_percent="0.19"
+=======
+>>>>>>> 37047e539d6a6170a744f4c525130589cb94d7a0
         blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
         blockly:layout_constraintEnd_toEndOf="parent"
         blockly:layout_constraintStart_toStartOf="parent">
@@ -404,12 +407,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/translucent"
+<<<<<<< HEAD
             android:paddingTop="70dp"
             android:paddingRight="70dp" />
 
+=======
+            android:scaleX="1.3"
+            android:scaleY="1.3"
+            android:paddingLeft="15dp"
+            android:paddingBottom="30dp"
+            android:paddingTop="70dp"
+            android:paddingRight="70dp" />
+>>>>>>> 37047e539d6a6170a744f4c525130589cb94d7a0
     </LinearLayout>
-
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"

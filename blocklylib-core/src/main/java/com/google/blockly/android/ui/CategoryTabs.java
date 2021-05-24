@@ -84,7 +84,7 @@ public class CategoryTabs extends RecyclerView {
     protected final List<BlocklyCategory> mCategories = new ArrayList<>();
 
     protected @Rotation.Enum int mLabelRotation = Rotation.ROTATION_DIRECTION_MASK;
-    protected boolean mTapSelectedDeselects = false;
+    public boolean mTapSelectedDeselects = false;
 
     private LabelAdapter mLabelAdapter;
     protected @Nullable CategorySelectorUI.Callback mCallback;
