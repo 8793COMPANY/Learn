@@ -43,7 +43,7 @@ public class CategoryView extends RelativeLayout {
     public static final int DEFAULT_CATEGORIES_BACKGROUND_COLOR = Color.LTGRAY;
     protected static final float BLOCKS_BACKGROUND_LIGHTNESS = 0.75f;
 
-    protected CategoryTabs mCategoryTabs;
+    public CategoryTabs mCategoryTabs;
 
     protected BlocklyCategory mRootCategory;
     protected BlocklyCategory mCurrentCategory;
