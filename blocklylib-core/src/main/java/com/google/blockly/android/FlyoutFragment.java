@@ -32,19 +32,15 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.control.FlyoutController;
 import com.google.blockly.android.ui.BlockListUI;
 import com.google.blockly.android.ui.BlockRecyclerViewHelper;
-import com.google.blockly.android.ui.BusProvider;
+import com.google.blockly.android.ui.CategoryData;
 import com.google.blockly.android.ui.CategorySelectorUI;
-import com.google.blockly.android.ui.CategoryTabs;
 import com.google.blockly.android.ui.FlyoutCallback;
-import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
@@ -96,6 +92,27 @@ import com.google.blockly.utils.ColorUtils;
 public class FlyoutFragment extends Fragment implements BlockListUI{
     private static final String TAG = "FlyoutFragment";
 
+//    public interface OnCloseCheckListener {
+//
+//    }
+
+//    private OnCloseCheckListener mListener = null;
+//
+//    public void setOnCheckListener(OnCloseCheckListener listener){
+//        mListener =listener;
+//    }
+
+
+    public static OnCloseCheckListener closeCheck;
+
+
+    public void setCloseCheck(OnCloseCheckListener closeCheck){
+
+        this.closeCheck = closeCheck;
+        Log.e("hi","setCloseCheck");
+    }
+
+
     Context mContext;
 
     public static final int DEFAULT_BLOCKS_BACKGROUND_ALPHA = 0xBB;
@@ -119,6 +136,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     protected BlockRecyclerViewHelper mRecyclerHelper;
     protected final ColorDrawable mBgDrawable = new ColorDrawable(mBgColor);
     LinearLayout linearLayout;
+    public static CategoryData categoryData = CategoryData.getInstance();
 
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
@@ -154,6 +172,8 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         readArgumentsFromBundle(getArguments());
         readArgumentsFromBundle(savedInstanceState);
 
+
+
         int layout = mScrollOrientation == OrientationHelper.VERTICAL
                 ? R.layout.default_flyout_start : R.layout.default_flyout_bottom;
 
@@ -173,16 +193,8 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         display.getRealSize(size); // or getSize(size)
         int width = size.x;
         Log.e("width",width+"");
-//
-//        RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) recyclerView.getLayoutParams();
-//
-//        if((int)(width / 1280 * 50) < width - 1253){
-//            marginLayoutParams.setMargins((int)(width / 1280 * 50), 0, 0, 0);
-//        }else{
-//            marginLayoutParams.setMargins(width - 1253, 0, 0, 0);
-//        }
-//
-//        recyclerView.setLayoutParams(marginLayoutParams);
+
+
         recyclerView.setPadding(0 ,(int)(width / 1280 * 59),0,0);
 //        recyclerView.setPivotX(0.2f);
 //        recyclerView.setPivotY(0.4f);
@@ -190,15 +202,6 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
 //        recyclerView.setScaleY(0.7f);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-//        Display display = getWindowManager().getDefaultDisplay();
-//        Point size = new Point();
-//        display.getSize(size);
-
-
-//        int x = (int)(size.x * 0.5f);
-//        int y = (int)(size.y * 0.45f);
-//
-//        window.setLayout(x,y);
 
         mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext(),width);
         mRecyclerHelper.setScrollOrientation(mScrollOrientation);
@@ -254,6 +257,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         if (category == null) {
             mFlyoutView.setVisibility(View.GONE);
         } else {
+            categoryData.setClosed(true);
             mFlyoutView.setVisibility(View.VISIBLE);
         }
     }
@@ -296,13 +300,20 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      */
     public boolean closeUi() {
         Log.e("gg","closeUi");
+
         if (!isCloseable() || mFlyoutView.getVisibility() == View.GONE) {
             return false;
         }
 
+        Log.e("closeUi","next");
         mRecyclerHelper.setCurrentCategory(null);
         mFlyoutView.setVisibility(View.GONE);
         updateCategoryColors(null);
+        categoryData.setClosed(false);
+
+        if (closeCheck != null)
+            closeCheck.onCloseCheck("호호");
+
         return true;
     }
 

@@ -154,7 +154,6 @@ public class CategoryView extends RelativeLayout {
         mCategoryTabs.setOnItemClickListener(new CategoryTabs.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                Log.e("hi~","zz");
                 itemClick.onClickTest(pos);
             }
         });

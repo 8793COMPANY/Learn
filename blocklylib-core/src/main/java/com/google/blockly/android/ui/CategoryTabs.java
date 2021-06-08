@@ -238,6 +238,7 @@ public class CategoryTabs extends RecyclerView {
                 mLabelAdapter.onSelectionChanged(
                         vh.mLabel, vh.mCategory, vh.getAdapterPosition(), false);
                         categoryData.setSelection(false);
+                Log.e("@mCurrentCategory","in");
             }
         }
         mCurrentCategory = category;

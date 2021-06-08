@@ -81,6 +81,7 @@ public class BlockRecyclerViewHelper {
     int block_width = 0;
     BlockGroup toolbox_bg;
     ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
+    public static CategoryData categoryData = CategoryData.getInstance();
 
     public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
         mRecyclerView = recyclerView;
@@ -145,13 +146,20 @@ public class BlockRecyclerViewHelper {
 
 
         if (mCurrentCategory == category) {
+            Log.e("hi","same");
             return;
         }
+        categoryData.setClosed(false);
         if (mCurrentCategory != null) {
+            Log.e("hi","not null");
             mCurrentCategory.setCallback(null);
+            categoryData.setClosed(true);
         }
+
+        Log.e("hi","final");
         mCurrentCategory = category;
         mAdapter.notifyDataSetChanged();
+
 
 
 

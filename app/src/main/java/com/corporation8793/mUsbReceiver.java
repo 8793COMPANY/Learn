@@ -21,6 +21,7 @@ import java.util.HashMap;
 public class mUsbReceiver extends BroadcastReceiver {
     Context ct;
     Physicaloid physicaloid;
+    boolean usbCheck = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -31,7 +32,6 @@ public class mUsbReceiver extends BroadcastReceiver {
         if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
             // USB was connected
             Log.d("USB 감지 : ", "연결연결");
-
             physicaloid.open();
 
         } else if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
@@ -39,5 +39,10 @@ public class mUsbReceiver extends BroadcastReceiver {
             Log.d("USB 감지 : ", "실패실패");
 
         }
+    }
+
+
+    public Boolean getCheck(){
+        return usbCheck;
     }
 }

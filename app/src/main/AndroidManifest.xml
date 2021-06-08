@@ -37,18 +37,18 @@
 
         </activity>
 
-        <receiver android:name="com.corporation8793.mUsbReceiver"
-            android:directBootAware="true">
-        <intent-filter>
-            <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-        </intent-filter>
-        <intent-filter>
-            <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
-        </intent-filter>
+<!--        <receiver android:name="com.corporation8793.mUsbReceiver"-->
+<!--            android:directBootAware="true">-->
+<!--        <intent-filter>-->
+<!--            <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+<!--        </intent-filter>-->
+<!--        <intent-filter>-->
+<!--            <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />-->
+<!--        </intent-filter>-->
 
-        <meta-data
-            android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
-            android:resource="@xml/device_filter" />
-        </receiver>
+<!--        <meta-data-->
+<!--            android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
+<!--            android:resource="@xml/device_filter" />-->
+<!--        </receiver>-->
     </application>
 </manifest>

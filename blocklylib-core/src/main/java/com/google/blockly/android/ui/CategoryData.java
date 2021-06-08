@@ -1,9 +1,9 @@
 package com.google.blockly.android.ui;
 
-import android.view.View;
-
 public class CategoryData {
     private static CategoryData categoryData = new CategoryData();
+
+    boolean closed = true;
 
     private CategoryData() {}
 
@@ -18,6 +18,8 @@ public class CategoryData {
         this.position = position;
     }
 
+
+
     public void setSelection(boolean selection) {
         this.selection = selection;
     }
@@ -29,4 +31,14 @@ public class CategoryData {
     public int getPosition() {
         return position;
     }
+
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed){
+        this.closed = closed;
+    }
+
 }
