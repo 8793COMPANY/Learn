@@ -33,7 +33,6 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,7 +45,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebSettings;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,7 +58,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.Guideline;
-import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -729,7 +726,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     //wifi , usb 연결 상시 확인
-    BroadcastReceiver usbEventReceiver = new BroadcastReceiver() {
+    BroadcastReceiver uploadEventReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -817,9 +814,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
-        this.registerReceiver(usbEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        this.registerReceiver(usbEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
-        this.registerReceiver(usbEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
+        this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
+        this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
         upload_Listener = new UploadDialog(this, upload_confirm,"업로드 성공!","확인을 눌러주세요");
         error_Listener = new UploadDialog(this, upload_confirm,"인터넷 연결 불안정","WIFI를 확인을 해주세요");
