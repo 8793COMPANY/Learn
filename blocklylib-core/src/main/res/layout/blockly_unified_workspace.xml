@@ -7,15 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/blockly_workspace"
-        android:name="com.google.blockly.android.WorkspaceFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/blockly_toolbox_ui"
-        tools:layout_editor_absoluteX="50dp"
-        tools:layout_editor_absoluteY="-19dp" />
-
     <!--    <fragment-->
     <!--        android:id="@+id/blockly_trash_ui"-->
     <!--        android:name="com.google.blockly.android.FlyoutFragment"-->
@@ -30,6 +21,15 @@
     <!--        blockly:scrollOrientation="horizontal"-->
     <!--        tools:ignore="MissingPrefix" />-->
 
+
+    <fragment
+        android:id="@+id/blockly_workspace"
+        android:name="com.google.blockly.android.WorkspaceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/blockly_toolbox_ui"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <LinearLayout
         android:id="@+id/category_block"

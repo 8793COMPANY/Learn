@@ -635,7 +635,7 @@ Blockly.JavaScript.math_constrain = function(a) {
 Blockly.JavaScript.math_random_int = function(a) {
     var b = Blockly.JavaScript.valueToCode(a, "FROM", Blockly.JavaScript.ORDER_COMMA) || "0";
     a = Blockly.JavaScript.valueToCode(a, "TO", Blockly.JavaScript.ORDER_COMMA) || "0";
-    return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["function " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(a, b) {", "  if (a > b) {", "    // Swap a and b to ensure a is smaller.", "    var c = a;", "    a = b;", "    b = c;", "  }", "  return Math.floor(Math.random() * (b - a + 1) + a);",
+    return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int a, int b) {", "  if (a > b) {", "    // Swap a and b to ensure a is smaller.", "    int c = a;", "    a = b;", "    b = c;", "  }", "  return random(a,b);",
         "}"
     ]) + "(" + b + ", " + a + ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
 };
