@@ -102,7 +102,7 @@ import java.util.Set;
 public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener {
 
     //2021.07.23 제일 최신 버전
-    
+
     private static final String TAG = "TurtleActivity";
 
     private static final String SAVE_FILENAME = "turtle_workspace.xml";

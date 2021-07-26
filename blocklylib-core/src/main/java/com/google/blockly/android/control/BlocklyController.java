@@ -146,7 +146,7 @@ public class BlocklyController {
     private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
         @Override
         public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
-            BlockView touchedView = pendingDrag.getTouchedBlockView();
+            BlockView touchedView = pendingDrag.getTouchedBlockView();;
 
             // If a shadow or other undraggable block is touched, and it is attached to a draggable
             // parent block, drag that block instead.

@@ -337,6 +337,7 @@ public class BlockRecyclerViewHelper {
                         block, mConnectionManager, mTouchHandler);
             }
 
+
             toolbox_bg.setScaleX(0.8f);
             toolbox_bg.setScaleY(0.8f);
 
@@ -513,10 +514,8 @@ public class BlockRecyclerViewHelper {
                 }
 
 
-                bg.setScaleX(0.8f);
-                bg.setScaleY(0.8f);
-                bg.setPivotX(0);
-                bg.setPivotY(0);
+
+
 
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -524,6 +523,21 @@ public class BlockRecyclerViewHelper {
                         (int) (ViewGroup.LayoutParams.WRAP_CONTENT ));
 
                 layoutParams.rightMargin = 0;
+                if (block.getType().equals("logic_compare") || block.getType().equals("logic_operation")){
+                    Log.e("here!!!!!","ok");
+                    bg.setScaleX(0.95f);
+                    bg.setScaleY(0.95f);
+                    bg.setPivotX(0);
+                    bg.setPivotY(0);
+                    layoutParams.bottomMargin = 40;
+                }else{
+                    bg.setScaleX(0.8f);
+                    bg.setScaleY(0.8f);
+                    bg.setPivotX(0);
+                    bg.setPivotY(0);
+                }
+                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
+
 
                 holder.mContainer.addView(bg, layoutParams);
                 holder.mContainer.setForegroundGravity(0);

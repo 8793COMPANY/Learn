@@ -626,7 +626,7 @@ Blockly.defineBlocksWithJsonArray([{
     extensions: ["controls_if_tooltip"]
 }, {
     type: "logic_compare",
-    message0: "%1 %2 %3",
+    message0: "%1  %2  %3",
     args0: [{
         type: "input_value",
         name: "A"
