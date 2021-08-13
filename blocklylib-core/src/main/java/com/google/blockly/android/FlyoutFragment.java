@@ -282,6 +282,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      * @return True if this flyout is allowed to close, false otherwise.
      */
     public boolean isCloseable() {
+        Log.e("isCloseable","in");
         return mCloseable;
     }
 

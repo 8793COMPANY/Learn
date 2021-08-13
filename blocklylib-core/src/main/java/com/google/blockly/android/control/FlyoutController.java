@@ -140,8 +140,8 @@ public class FlyoutController {
      */
     public void setToolboxUiComponents(CategorySelectorUI categoryFragment,
                                        BlockListUI toolbox) {
+        Log.e("setToolboxUiComponents","in");
         mCategorySelectorUi = categoryFragment;
-        Log.e("categoryFragment",mCategorySelectorUi.toString());
         mToolbox = toolbox;
         if (mToolbox == null) {
             return;
