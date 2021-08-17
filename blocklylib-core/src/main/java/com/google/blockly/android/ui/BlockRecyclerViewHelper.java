@@ -83,7 +83,7 @@ public class BlockRecyclerViewHelper {
     int block_width = 0;
     BlockGroup toolbox_bg;
     ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
-    ViewTreeObserver.OnGlobalFocusChangeListener mGlobalFocusChangeListener;
+//    ViewTreeObserver.OnGlobalFocusChangeListener mGlobalFocusChangeListener;
     public static CategoryData categoryData = CategoryData.getInstance();
 
     public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
@@ -426,8 +426,8 @@ public class BlockRecyclerViewHelper {
                 };
 
 
-//            toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
-            toolbox_bg.getViewTreeObserver().addOnGlobalFocusChangeListener(mGlobalFocusChangeListener);
+            toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+//            toolbox_bg.getViewTreeObserver().addOnGlobalFocusChangeListener(mGlobalFocusChangeListener);
             Log.e("hello","addOnGlobalLayout");
 
         }catch (IndexOutOfBoundsException e){
