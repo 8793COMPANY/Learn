@@ -18,6 +18,7 @@ package com.google.blockly.android.ui;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 
@@ -32,6 +33,7 @@ import android.util.Pair;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -81,6 +83,7 @@ public class BlockRecyclerViewHelper {
     int block_width = 0;
     BlockGroup toolbox_bg;
     ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
+//    ViewTreeObserver.OnGlobalFocusChangeListener mGlobalFocusChangeListener;
     public static CategoryData categoryData = CategoryData.getInstance();
 
     public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
@@ -187,6 +190,7 @@ public class BlockRecyclerViewHelper {
 
 //            toolbox_bg.setScaleX(0.8f);
 //            toolbox_bg.setScaleY(0.8f);
+
 
 
 
@@ -337,8 +341,40 @@ public class BlockRecyclerViewHelper {
                         block, mConnectionManager, mTouchHandler);
             }
 
+
             toolbox_bg.setScaleX(0.8f);
             toolbox_bg.setScaleY(0.8f);
+
+//            mGlobalFocusChangeListener = new ViewTreeObserver.OnGlobalFocusChangeListener() {
+//                @Override
+//                public void onGlobalFocusChanged(View oldFocus, View newFocus) {
+//
+//
+//                    Log.e(TAG, "width = " + block_width);
+//                    try {
+////                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                        RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
+//                        if (block_width < toolbox_bg.getWidth()){
+//                            marginLayoutParams.width = toolbox_bg.getWidth();
+//                            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                            block_width = toolbox_bg.getWidth();
+//                        }else{
+//                            marginLayoutParams.width = block_width;
+//                            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                        }
+//
+////                        marginLayoutParams.width = block_width;
+////                        marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                        mRecyclerView.setLayoutParams(marginLayoutParams);
+//                        toolbox_bg.getViewTreeObserver().removeOnGlobalFocusChangeListener(this);
+//
+////                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
+//                    } catch (NullPointerException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            };
 
 
                 mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -346,6 +382,31 @@ public class BlockRecyclerViewHelper {
                     @Override
 
                     public void onGlobalLayout() {
+
+//                        Log.e(TAG, "width = " + block_width);
+//                        try {
+////                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                            RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
+//                            if (block_width < toolbox_bg.getWidth()){
+//                                marginLayoutParams.width = toolbox_bg.getWidth();
+//                                marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                                block_width = toolbox_bg.getWidth();
+//                            }else{
+//                                marginLayoutParams.width = block_width;
+//                                marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                            }
+//
+////                        marginLayoutParams.width = block_width;
+////                        marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                            mRecyclerView.setLayoutParams(marginLayoutParams);
+//                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//
+////                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
+//                        } catch (NullPointerException e) {
+//                            e.printStackTrace();
+//                        }
+
+
                         block_width = toolbox_bg.getWidth();
                         Log.e(TAG, "width = " + block_width);
                         try {
@@ -366,6 +427,7 @@ public class BlockRecyclerViewHelper {
 
 
             toolbox_bg.getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+//            toolbox_bg.getViewTreeObserver().addOnGlobalFocusChangeListener(mGlobalFocusChangeListener);
             Log.e("hello","addOnGlobalLayout");
 
         }catch (IndexOutOfBoundsException e){
@@ -499,6 +561,8 @@ public class BlockRecyclerViewHelper {
                     ? new ArrayList<BlocklyCategory.CategoryItem>()
                     : mCurrentCategory.getItems();
 
+//            holder.mContainer.setBackgroundColor(Color.parseColor("#B5B2FF"));
+
             BlocklyCategory.CategoryItem item = items.get(position);
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 Block block = ((BlocklyCategory.BlockItem) item).getBlock();
@@ -513,10 +577,8 @@ public class BlockRecyclerViewHelper {
                 }
 
 
-                bg.setScaleX(0.8f);
-                bg.setScaleY(0.8f);
-                bg.setPivotX(0);
-                bg.setPivotY(0);
+
+
 
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -524,10 +586,30 @@ public class BlockRecyclerViewHelper {
                         (int) (ViewGroup.LayoutParams.WRAP_CONTENT ));
 
                 layoutParams.rightMargin = 0;
+                if (block.getType().equals("logic_compare") || block.getType().equals("logic_operation")){
+                    Log.e("here!!!!!","ok");
+                    bg.setScaleX(1f);
+                    bg.setScaleY(1f);
+                    bg.setPivotX(0);
+                    bg.setPivotY(0);
+                    layoutParams.bottomMargin = 40;
+
+                }else{
+                    bg.setScaleX(0.8f);
+                    bg.setScaleY(0.8f);
+                    bg.setPivotX(0);
+                    bg.setPivotY(0);
+                }
+//                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
+                //이부분 수정
+
 
                 holder.mContainer.addView(bg, layoutParams);
                 holder.mContainer.setForegroundGravity(0);
 
+
+//                    ViewGroup.LayoutParams params = holder.mContainer.getLayoutParams();
+//                    holder.mContainer.setTouchDelegate(new TouchDelegate(new Rect(holder.mContainer.getWidth(),0,holder.mContainer.getWidth(),holder.mContainer.getHeight()), bg));
 //                holder.mContainer.setScaleX(0.8f);
 //                holder.mContainer.setScaleY(0.8f);
 

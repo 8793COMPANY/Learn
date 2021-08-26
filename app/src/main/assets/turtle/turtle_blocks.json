@@ -412,6 +412,8 @@
     "helpUrl": "http://www.example.com/"
   },
 
+
+
   {
     "type": "test",
     "message0": "pinMode %1 value %2 ",
@@ -762,6 +764,28 @@
     "tooltip": ""
   },
 
+  {
+    "type": "random_number",
+    "message0": "random from %1 to %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "from_num",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "to_num",
+        "check": "Number"
+      }
+    ],
+
+    "output": "Number",
+    "colour": "#A8D93D",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
 
   {
     "type": "serial_println",
@@ -785,6 +809,30 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
+  {
+    "type": "serial_println_int",
+    "message0": "Serial Println baud %1 value %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "baud",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "NUM",
+        "check": "Number"
+      }
+
+    ],
+    "colour": "#FDB900",
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
 
   {
     "type": "base_pins_list",

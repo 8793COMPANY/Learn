@@ -44,6 +44,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -101,6 +102,7 @@ import java.util.Set;
  */
 public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener {
 
+    //2021.07.23 제일 최신 버전
 
     private static final String TAG = "TurtleActivity";
 
@@ -804,8 +806,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideSystemUI();
+//        hideSystemUI();
 //        test();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         BlocklyController controller = getController();
         controller.recenterWorkspace();
         controller.zoomOut();
@@ -832,6 +837,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("??","finishLoad");
         setLineForOtherCategoryTabs(mPushEvent.getPos());
         blockly_monitor.setVisibility(View.GONE);
+
 
         if (categoryData.isClosed()) {
             if (current_pos>3) {
@@ -931,6 +937,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        });
 
 //
+
+
 //        translate_btn.setOnClickListener(v ->{
 //
 //            if (turtle_pos == 0) {
@@ -948,9 +956,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_eng[3]);
 //                TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_eng[4]);
 //            }
-//
-//
-//
+////
+////
+////
 //            Intent intent = getIntent();
 //            overridePendingTransition(0, 0);
 //            // 플래그 설정
@@ -1101,6 +1109,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             blockly_monitor.setVisibility(View.VISIBLE);
 //            translate_btn.setVisibility(View.INVISIBLE);
             Log.e("??3","들어오는데");
+
         }
 
         current_tag = tag;

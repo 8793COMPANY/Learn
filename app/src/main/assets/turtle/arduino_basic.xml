@@ -151,6 +151,19 @@
             </value>
         </block>
 
+        <block type="serial_println_int">
+            <value name="baud">
+                <block type="math_number">
+                    <field name="NUM">9600</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+        </block>
+
 
         <block type="base_delay">
             <value name="DELAY_TIME">
@@ -199,14 +212,43 @@
             </value>
         </block>
 
-
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
 
 
 
         <block type="controls_if"></block>
         <block type="controls_ifelse"></block>
-        <block type="logic_compare"></block>
-        <block type="logic_operation"></block>
+
+
+<!--        <block type="map_number">-->
+<!--            <value name="var">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="in_min">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">10</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="in_max">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">1</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="out_min">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">10</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="out_max">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">1</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
 
 
 
@@ -296,6 +338,22 @@
 
         <block type="math_number">
             <field name="NUM">255</field>
+        </block>
+
+
+
+        <block type="math_random_int">
+            <value name="FROM">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+
+            <value name="TO">
+                <block type="math_number">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
         </block>
 
 
