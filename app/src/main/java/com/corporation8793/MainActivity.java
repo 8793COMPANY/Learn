@@ -58,6 +58,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.core.view.GestureDetectorCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
