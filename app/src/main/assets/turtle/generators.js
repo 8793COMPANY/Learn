@@ -267,18 +267,18 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       return code;
     };
 
-      Blockly.JavaScript['map_number'] = function(block) {
-
-           var variable = Blockly.JavaScript.valueToCode(block, "var", Blockly.JavaScript.ORDER_ATOMIC);
-           var in_min = Blockly.JavaScript.valueToCode(block, "in_min", Blockly.JavaScript.ORDER_ATOMIC);
-           var in_max = Blockly.JavaScript.valueToCode(block, "in_max", Blockly.JavaScript.ORDER_ATOMIC);
-           var out_min = Blockly.JavaScript.valueToCode(block, "out_min", Blockly.JavaScript.ORDER_ATOMIC);
-           var out_max = Blockly.JavaScript.valueToCode(block, "out_max", Blockly.JavaScript.ORDER_ATOMIC);
-
-      //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
-          var code = (variable - in_min) * (out_max - out_min) / (in_max - in_min) + out_min ;
-          return code;
-        };
+//      Blockly.JavaScript['map_number'] = function(block) {
+//
+//           var variable = Blockly.JavaScript.valueToCode(block, "var", Blockly.JavaScript.ORDER_ATOMIC);
+//           var in_min = Blockly.JavaScript.valueToCode(block, "in_min", Blockly.JavaScript.ORDER_ATOMIC);
+//           var in_max = Blockly.JavaScript.valueToCode(block, "in_max", Blockly.JavaScript.ORDER_ATOMIC);
+//           var out_min = Blockly.JavaScript.valueToCode(block, "out_min", Blockly.JavaScript.ORDER_ATOMIC);
+//           var out_max = Blockly.JavaScript.valueToCode(block, "out_max", Blockly.JavaScript.ORDER_ATOMIC);
+//
+//      //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
+//          var code = (variable - in_min) * (out_max - out_min) / (in_max - in_min) + out_min ;
+//          return code;
+//        };
 
 
    Blockly.JavaScript['serial_println_int'] = function(block) {

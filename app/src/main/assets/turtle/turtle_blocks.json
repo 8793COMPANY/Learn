@@ -412,45 +412,7 @@
     "helpUrl": "http://www.example.com/"
   },
 
-  {
-    "type": "map_number",
-    "message0": "map %1 %2 %3 %4 %5",
-    "args0": [
-      {
-        "type": "field_variable",
-        "name": "var",
-        "variable": "item"
-      },
-      {
-        "type": "input_value",
-        "name": "in_min",
-        "check": "Number"
-      }
-    ,
-      {
-        "type": "input_value",
-        "name": "in_max",
-        "check": "Number"
-      }
-    ,
-      {
-        "type": "input_value",
-        "name": "out_min",
-        "check": "Number"
-      }
-    ,
-      {
-        "type": "input_value",
-        "name": "out_max",
-        "check": "Number"
-      }
 
-    ],
-    "output": "Number",
-    "colour": "#FDB900",
-    "inputsInline": true,
-    "tooltip": ""
-  },
 
   {
     "type": "test",
@@ -854,7 +816,7 @@
     "args0": [
       {
         "type": "input_value",
-        "name": "NUM",
+        "name": "baud",
         "check": "Number"
       },
       {
