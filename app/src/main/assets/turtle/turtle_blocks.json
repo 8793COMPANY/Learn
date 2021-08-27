@@ -765,6 +765,43 @@
   },
 
   {
+    "type": "map_number",
+    "message0": "map %1 %2 %3 %4 %5",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "var",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "in_min",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "in_max",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "out_min",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "out_max",
+        "check": "Number"
+      }
+    ],
+
+    "output": "Number",
+    "colour": "#A8D93D",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
+  {
     "type": "random_number",
     "message0": "random from %1 to %2",
     "args0": [
