@@ -639,6 +639,7 @@ Blockly.JavaScript.math_random_int = function(a) {
         "}"
     ]) + "(" + b + ", " + a + ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
 };
+
 Blockly.JavaScript.math_random_float = function(a) {
     return ["Math.random()", Blockly.JavaScript.ORDER_FUNCTION_CALL]
 };
