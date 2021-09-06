@@ -298,7 +298,7 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       var functionName = Blockly.JavaScript.provideFunction_(
           'map_number',
           [ 'int ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + '(int x, int in_min, int in_max, int out_min, int out_max) {',
-            '  // Return the last element of a list.',
+
             '  return map(x,in_min,in_max,out_min,out_max);',
             '}']);
       // Generate the function call for this block.
