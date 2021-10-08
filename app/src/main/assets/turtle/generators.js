@@ -242,6 +242,17 @@ Blockly.JavaScript['serial_print'] = function(block) {
    return code;
  };
 
+
+ Blockly.JavaScript['variables_change'] = function() {
+   // Variable setter.
+   var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+       Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+   var varName = Blockly.JavaScript.variableDB_.getName(this.getFieldValue('VAR'),
+       Blockly.Variables.NAME_TYPE);
+
+   return varName + ' = ' + varValue + ';\n';
+ };
+
 Blockly.JavaScript['serial_begin'] = function(block) {
     //Blockly.JavaScript.definitions_['define_DHT11_h'] = "#include <DHT.h>\n";
 
@@ -267,24 +278,6 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       return code;
     };
 
-//      Blockly.JavaScript['map_number'] = function(block) {
-//
-//           var variable = Blockly.JavaScript.valueToCode(block, "var", Blockly.JavaScript.ORDER_ATOMIC);
-//           var in_min = Blockly.JavaScript.valueToCode(block, "in_min", Blockly.JavaScript.ORDER_ATOMIC);
-//           var in_max = Blockly.JavaScript.valueToCode(block, "in_max", Blockly.JavaScript.ORDER_ATOMIC);
-//           var out_min = Blockly.JavaScript.valueToCode(block, "out_min", Blockly.JavaScript.ORDER_ATOMIC);
-//           var out_max = Blockly.JavaScript.valueToCode(block, "out_max", Blockly.JavaScript.ORDER_ATOMIC);
-//
-//           Blockly.JavaScript.provideFunction_['method_map'] =
-////
-//      //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
-//          var code = "map("+variable+","+in_min+","+in_max+","+out_min+","+out_max+");";
-//          return code;
-////
-////    return [Blockly.JavaScript.provideFunction_("map", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int x, int fromLow, int fromHigh, int toLow, int toHigh) {",  "  return map(x,fromLow,fromHigh,toLow,toHigh);",
-////        "}"
-////    ]) + "(" + variable + ", " + in_min + ", " + in_max+ ", " + out_min+ ", " + out_max+ ")", Blockly.JavaScript.ORDER_FUNCTION_CALL
-//        };
 
   Blockly.JavaScript['map_number'] = function(block) {
 

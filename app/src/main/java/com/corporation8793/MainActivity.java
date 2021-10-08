@@ -403,6 +403,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public Boolean OpenUSB() {
+        Log.e("usb initial",initial+"");
         if(initial) {
             Log.e("openUsb true","!!");
             initial = false;
@@ -735,17 +736,22 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.e("action",action);
+//            Log.e("openUsb",OpenUSB()+"");
 
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
                 Log.e("USB 감지 : ", "연결연결");
                 mPhysicaloid.open();
                 usb_check = true;
+//                initial = true;
+//                mPhysicaloid.upload(Boards.ARDUINO_UNO, "/data/data/com.learn4/code.ino");
+//                OpenUSB();
             }
 
             if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
                 // USB was disconnected
                 Log.e("USB 감지 : ", "실패실패");
+                mPhysicaloid.close();
                 usb_check = false;
 
             }

@@ -564,7 +564,7 @@ Blockly.JavaScript.math_number_property = function(a) {
 Blockly.JavaScript.math_change = function(a) {
     var b = Blockly.JavaScript.valueToCode(a, "DELTA", Blockly.JavaScript.ORDER_ADDITION) || "0";
     a = Blockly.JavaScript.variableDB_.getName(a.getFieldValue("VAR"), Blockly.Variables.NAME_TYPE);
-    return a + " = (typeof " + a + " == 'number' ? " + a + " : 0) + " + b + ";\n"
+    return a + " = (typeof(" + a + ").name() == 'number' ? " + a + " : 0) + " + b + ";\n"
 };
 Blockly.JavaScript.math_round = Blockly.JavaScript.math_single;
 Blockly.JavaScript.math_trig = Blockly.JavaScript.math_single;
@@ -633,11 +633,11 @@ Blockly.JavaScript.math_constrain = function(a) {
     return ["Math.min(Math.max(" + b + ", " + c + "), " + a + ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
 };
 Blockly.JavaScript.math_random_int = function(a) {
-    var b = Blockly.JavaScript.valueToCode(a, "FROM", Blockly.JavaScript.ORDER_COMMA) || "0";
+    var b = Blockly.JavaScript.valueToCode(a, "FROM", Blockly.JavaScript.ORDER_COMMA) || "0" ;
     a = Blockly.JavaScript.valueToCode(a, "TO", Blockly.JavaScript.ORDER_COMMA) || "0";
     return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int a, int b) {", "  if (a > b) {", "    // Swap a and b to ensure a is smaller.", "    int c = a;", "    a = b;", "    b = c;", "  }", "  return random(a,b);",
         "}"
-    ]) + "(" + b + ", " + a + ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
+    ]) + "(" + b + ", " + a+ ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
 };
 
 Blockly.JavaScript.math_random_float = function(a) {
