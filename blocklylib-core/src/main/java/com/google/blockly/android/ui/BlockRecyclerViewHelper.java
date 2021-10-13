@@ -84,16 +84,21 @@ public class BlockRecyclerViewHelper {
     int block_width = 0;
     BlockGroup toolbox_bg;
     ViewTreeObserver.OnGlobalLayoutListener mGlobalLayoutListener;
+    BlocklyController blocklyController;
 //    ViewTreeObserver.OnGlobalFocusChangeListener mGlobalFocusChangeListener;
     public static CategoryData categoryData = CategoryData.getInstance();
 
-    public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width) {
+
+
+
+    public BlockRecyclerViewHelper(RecyclerView recyclerView, Context context, int width, BlocklyController blocklyController) {
         mRecyclerView = recyclerView;
         mContext = context;
         mHelium = LayoutInflater.from(mContext);
         mAdapter = new Adapter();
         mCategoryCb = new CategoryCallback();
         mLayoutManager = new LinearLayoutManager(context);
+        this.blocklyController = blocklyController;
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -116,6 +121,13 @@ public class BlockRecyclerViewHelper {
 
         mTouchHandler = controller.getDragger()
                 .buildImmediateDragBlockTouchHandler(new DragHandler());
+
+        controller.setOnItemClickListener(new BlocklyController.OnItemClickListener() {
+            @Override
+            public void onItemClick(PendingDrag pendingDrag) {
+                getWorkspaceBlockGroupForTouch(pendingDrag);
+            }
+        });
 
     }
 
@@ -412,6 +424,7 @@ public class BlockRecyclerViewHelper {
      * @return The pair of {@link BlockGroup} and the view relative touch point returned by
      *         {@link FlyoutCallback#getDraggableBlockGroup}.
      */
+
     @NonNull
     private Pair<BlockGroup, ViewPoint> getWorkspaceBlockGroupForTouch(PendingDrag pendingDrag) {
         Log.e("getworkspace","blockgroupfortouch");
@@ -453,7 +466,11 @@ public class BlockRecyclerViewHelper {
                 pendingDrag.getTouchDownWorkspaceCoordinates());
         mTempWorkspacePoint.offset(-wsOffsetX, -wsOffsetY);
 
-        int itemIndex = mCurrentCategory.indexOf(rootBlock); // Should never be -1
+
+        ;
+//        int itemIndex = getCurrentCategory().indexOf(rootBlock); // Should never be -1
+        int itemIndex =0;
+
         BlockGroup dragGroup = mCallback.getDraggableBlockGroup(itemIndex, rootBlock,
                 mTempWorkspacePoint);
         return Pair.create(dragGroup, touchOffset);

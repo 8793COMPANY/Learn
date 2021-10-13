@@ -381,6 +381,21 @@
         blockly:layout_constraintTop_toBottomOf="@+id/category_block"
         blockly:scrollOrientation="vertical"></fragment>
 
+    <Button
+        android:id="@+id/replication_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="복사"
+        app:layout_constraintDimensionRatio="68:88"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintBottom_toTopOf="@+id/blockly_overlay_buttons"
+        blockly:layout_constraintEnd_toEndOf="parent"
+        blockly:layout_constraintStart_toStartOf="parent"></Button>
+
 
     <LinearLayout
         android:id="@+id/blockly_overlay_buttons"

@@ -29,10 +29,12 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.google.blockly.android.ui.BlockListUI;
+import com.google.blockly.android.ui.BlockRecyclerViewHelper;
 import com.google.blockly.android.ui.CategorySelectorUI;
 import com.google.blockly.android.WorkspaceFragment;
 import com.google.blockly.android.clipboard.BlockClipDataHelper;
 import com.google.blockly.android.clipboard.SingleMimeTypeClipDataHelper;
+import com.google.blockly.android.ui.CategoryTabs;
 import com.google.blockly.android.ui.Dragger;
 import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.android.ui.BlockTouchHandler;
@@ -103,6 +105,8 @@ public class BlocklyController {
         void onEventGroup(List<BlocklyEvent> events);
     }
 
+
+
     private final Context mContext;
     private final Looper mMainLooper;
     private final BlockFactory mModelFactory;
@@ -130,6 +134,16 @@ public class BlocklyController {
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
+    public interface OnItemClickListener{
+        void onItemClick(PendingDrag pendingDrag);
+    }
+
+    private OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener =listener;
+    }
+
     @VisibleForTesting
     FlyoutController mFlyoutController;
 
@@ -142,6 +156,7 @@ public class BlocklyController {
             mFlyoutController.closeFlyouts();
         }
     };
+
 
     private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
         @Override
@@ -185,9 +200,13 @@ public class BlocklyController {
         @Override
         public boolean onBlockClicked(PendingDrag pendingDrag) {
             // TODO(#35): Mark block as focused / selected.
-            Log.e("onBlockClicked","click");
-            return false;
+            if (mListener != null){
+            Log.e("mlist","not null");
+            mListener.onItemClick(pendingDrag);
         }
+            Log.e("block clicked","in !!!");
+            return false;
+    }
     };
     private final BlockTouchHandler mTouchHandler;
 
@@ -250,6 +269,7 @@ public class BlocklyController {
 
         mFlyoutController = new FlyoutController(this);
     }
+
 
     /**
      * Connects a WorkspaceFragment to this controller.
