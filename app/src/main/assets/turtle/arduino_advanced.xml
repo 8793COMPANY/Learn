@@ -297,6 +297,8 @@
                 </block>
             </value>
         </block>
+
+
         <block type="inout_tone_pin">
             <value name="PIN">
                 <block type="base_pins_list">

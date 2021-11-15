@@ -122,7 +122,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
     int [] current_tab = {R.id.setup_view,R.id.loop_view,R.id.method_view,R.id.etc_view,R.id.code_view,R.id.serial_view,R.id.upload_view};
     EditText serial_input_box;
+
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
+    LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
     TextView monitor_text;
@@ -402,6 +404,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public Boolean OpenUSB() {
+        Log.e("usb initial",initial+"");
         if(initial) {
             Log.e("openUsb true","!!");
             initial = false;
@@ -734,17 +737,22 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             Log.e("action",action);
+//            Log.e("openUsb",OpenUSB()+"");
 
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
                 Log.e("USB 감지 : ", "연결연결");
                 mPhysicaloid.open();
                 usb_check = true;
+//                initial = true;
+//                mPhysicaloid.upload(Boards.ARDUINO_UNO, "/data/data/com.learn4/code.ino");
+//                OpenUSB();
             }
 
             if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
                 // USB was disconnected
                 Log.e("USB 감지 : ", "실패실패");
+                mPhysicaloid.close();
                 usb_check = false;
 
             }
@@ -844,6 +852,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 findViewById(current_tab[categoryData.getPosition()]).setBackgroundColor(getResources().getColor(R.color.white));
                 Log.e("닫힘", "ㅎㅎ");
 //                translate_btn.setVisibility(View.VISIBLE);
+                trashcan_btn.setVisibility(View.VISIBLE);
             }
         }
 
@@ -870,6 +879,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         serial_send_btn = blockly_workspace.findViewById(R.id.serial_send_btn);
 //        init_btn = blockly_workspace.findViewById(R.id.init_btn);
         scrollview = blockly_workspace.findViewById(R.id.scrollview);
+        trashcan_btn = blockly_workspace.findViewById(R.id.blockly_overlay_buttons);
+
 
         guideline4 = blockly_workspace.findViewById(R.id.guideline4);
 
@@ -1093,12 +1104,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if (current_tag.equals(tag)){
             if (blockly_monitor.getVisibility()==View.GONE) {
                 blockly_monitor.setVisibility(View.VISIBLE);
+                trashcan_btn.setVisibility(View.INVISIBLE);
+
 //                translate_btn.setVisibility(View.INVISIBLE);
                 view.setBackgroundColor(Color.parseColor("#f78f43"));
                 Log.e("??","들어오는데");
             }else {
                 setInitLine();
                 blockly_monitor.setVisibility(View.GONE);
+                trashcan_btn.setVisibility(View.VISIBLE);
 //                translate_btn.setVisibility(View.VISIBLE);
                 Log.e("??2","들어오는데");
                 mMonitorHandler.sendEmptyMessage(1);
@@ -1107,6 +1121,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }else{
             view.setBackgroundColor(Color.parseColor("#f78f43"));
             blockly_monitor.setVisibility(View.VISIBLE);
+            trashcan_btn.setVisibility(View.INVISIBLE);
 //            translate_btn.setVisibility(View.INVISIBLE);
             Log.e("??3","들어오는데");
 
@@ -1174,10 +1189,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (view_check[position]){
                 view.setBackgroundColor(Color.parseColor("#f78f43"));
 //                translate_btn.setVisibility(View.INVISIBLE);
+                trashcan_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
                 categoryData.setClosed(false);
             }else {
 //                translate_btn.setVisibility(View.VISIBLE);
+                trashcan_btn.setVisibility(View.VISIBLE);
                 view_check[position] = true;
             }
 
@@ -1185,6 +1202,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             view_check[position] = false;
             view.setBackgroundColor(Color.parseColor("#f78f43"));
 //            translate_btn.setVisibility(View.INVISIBLE);
+            trashcan_btn.setVisibility(View.INVISIBLE);
             categoryData.setClosed(false);
         }
 
@@ -1271,7 +1289,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("getCompiler Error",e.toString());
 //        }
         // TODO : 컴파일러 세팅
-        return "http://13.124.237.59:5000 ";
+        return "http://13.124.237.59:5000";
     }
 
 
@@ -1328,6 +1346,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 findViewById(current_tab[categoryData.getPosition()]).setBackgroundColor(getResources().getColor(R.color.white));
                 view_check[current_pos] = true;
 //                translate_btn.setVisibility(View.VISIBLE);
+                trashcan_btn.setVisibility(View.VISIBLE);
             }
         }catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();

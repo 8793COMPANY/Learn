@@ -221,43 +221,64 @@
         <block type="controls_ifelse"></block>
 
 
-<!--        <block type="map_number">-->
-<!--            <value name="var">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">0</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="in_min">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">10</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="in_max">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="out_min">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">10</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="out_max">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
+        <block type="map_number">
+            <value name="var">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+            <value name="in_min">
+                <block type="math_number">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
+            <value name="in_max">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+            <value name="out_min">
+                <block type="math_number">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
+            <value name="out_max">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
 
 
 
 
+        <block type="controls_whileUntil">
+            <value name="BOOL">
+                <shadow type="logic_boolean">
+                    <field name="BOOL">TRUE</field>
+                </shadow>
+            </value>
+        </block>
 
-<!--        <block type="turtle_repeat_internal">-->
-<!--            <field name="TIMES">4</field>-->
-<!--        </block>-->
-
-
+                <block type="inout_tone_pin">
+                    <value name="PIN">
+                        <block type="base_pins_list">
+                            <field name="PIN">A1</field>
+                        </block>
+                    </value>
+                    <value name="NUM">
+                        <block type="math_number">
+                            <field name="NUM">440</field>
+                        </block>
+                    </value>
+                </block>
+                <block type="inout_notone_pin">
+                    <value name="PIN">
+                        <block type="base_pins_list">
+                            <field name="PIN">A1</field>
+                        </block>
+                    </value>
+                </block>
 
 
 
@@ -278,19 +299,40 @@
 <!--                    </value>-->
 <!--        </block>-->
 
+        <block type="pulseIn">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="base_logic_list">
+                    <field name="LOGIC">HIGH</field>
+                </block>
+            </value>
+        </block>
 
-<!--        <block type="servo">-->
-<!--            <value name="channel">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="angle">-->
-<!--                <block type="math_number" id="116">-->
-<!--                    <field name="NUM">45</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
+
+        <block type="servo">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+            <value name="angle">
+                <block type="math_number" id="116">
+                    <field name="NUM">45</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="DHT11">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+        </block>
 
 
 <!--        <block type="inout_tone_pin">-->
@@ -310,18 +352,25 @@
 
     <category name="Text" colour="130">
 
-
-        <block type="variables_set"></block>
-        <block type="variables_get"></block>
-
-        <block type="math_change">
-            <field name="VAR">item</field>
-            <value name="DELTA">
+        <block type="math_random_int">
+            <value name="FROM">
                 <block type="math_number">
                     <field name="NUM">0</field>
                 </block>
             </value>
+
+            <value name="TO">
+                <block type="math_number">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
         </block>
+
+
+        <block type="variables_set"></block>
+        <block type="variables_get"></block>
+        <block type="variables_change"></block>
+
 
         <block type="logic_negate"></block>
         <block type="logic_boolean"></block>
@@ -342,19 +391,7 @@
 
 
 
-        <block type="math_random_int">
-            <value name="FROM">
-                <block type="math_number">
-                    <field name="NUM">0</field>
-                </block>
-            </value>
 
-            <value name="TO">
-                <block type="math_number">
-                    <field name="NUM">10</field>
-                </block>
-            </value>
-        </block>
 
 
 

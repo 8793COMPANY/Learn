@@ -53,12 +53,6 @@ import java.util.List;
 public class CategorySelectorFragment extends Fragment implements CategorySelectorUI {
     private static final String TAG = "CategorySelectorFragment";
 
-
-
-
-
-
-
     protected CategoryView mCategoryView;
     protected WorkspaceHelper mHelper;
     protected BlocklyController mController;

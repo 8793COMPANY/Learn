@@ -65,6 +65,10 @@
           [
             "char",
             "char"
+          ],
+          [
+            "boolean",
+            "boolean"
           ]
         ]
       },

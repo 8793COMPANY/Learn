@@ -203,7 +203,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
 
-        mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext(),width);
+        mRecyclerHelper = new BlockRecyclerViewHelper(recyclerView, getContext(),width,mController);
         mRecyclerHelper.setScrollOrientation(mScrollOrientation);
 
         return mFlyoutView;
