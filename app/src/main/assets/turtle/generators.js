@@ -162,6 +162,25 @@ Blockly.JavaScript['servo'] = function (block) {
     return code;
  };
 
+
+ Blockly.JavaScript['DHT11'] = function (block) {
+   var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
+//   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+
+   //define sonar settings
+   Blockly.JavaScript.definitions_['define_dht_h'] = "#include <DHT.h>\n";
+//   Blockly.JavaScript.definitions_['define_dht_type_h'] = "#include <DHT.h>\n";
+   Blockly.JavaScript.definitions_['define_dht_' + value_channel] = "DHT dht(" + value_channel +", DHT11);\n";
+
+//   Blockly.JavaScript.setups_['define_servo' + value_channel] = '\n servo' + value_channel + '.attach('+value_channel+');\n';
+//   if( (value_angle < 0 ) || (value_angle > 180 )) {
+//      return '!!alert!!Servo : angle should be between 0 and 180!!\n';
+//   }
+//     // Assemble JavaScript into code variable.
+     var code = 'Serial.println(dht.readTemperature())' + ';\n';
+     return code;
+  };
+
 Blockly.JavaScript['inout_tone_pin'] = function(block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
@@ -328,6 +347,15 @@ Blockly.JavaScript['base_delay'] = function(block) {
   var code = 'delay(' + delay_time + ');\n';
   return code;
 };
+
+Blockly.JavaScript['pulseIn'] = function(block) {
+   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+   var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
+   var code = "pulseIn(" + value_pin + ", " + value_num + ");\n";
+   return code;
+ };
+
+
 
 Blockly.JavaScript['turtle_colour_internal'] = function(block) {
   // Generate JavaScript for setting the colour.

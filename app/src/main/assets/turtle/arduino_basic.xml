@@ -299,19 +299,40 @@
 <!--                    </value>-->
 <!--        </block>-->
 
+        <block type="pulseIn">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="base_logic_list">
+                    <field name="LOGIC">HIGH</field>
+                </block>
+            </value>
+        </block>
 
-<!--        <block type="servo">-->
-<!--            <value name="channel">-->
-<!--                <block type="base_pins_list">-->
-<!--                    <field name="PIN">1</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--            <value name="angle">-->
-<!--                <block type="math_number" id="116">-->
-<!--                    <field name="NUM">45</field>-->
-<!--                </block>-->
-<!--            </value>-->
-<!--        </block>-->
+
+        <block type="servo">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+            <value name="angle">
+                <block type="math_number" id="116">
+                    <field name="NUM">45</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="DHT11">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+        </block>
 
 
 <!--        <block type="inout_tone_pin">-->
@@ -330,6 +351,20 @@
     </category>
 
     <category name="Text" colour="130">
+
+        <block type="math_random_int">
+            <value name="FROM">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+
+            <value name="TO">
+                <block type="math_number">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
+        </block>
 
 
         <block type="variables_set"></block>
@@ -356,19 +391,7 @@
 
 
 
-        <block type="math_random_int">
-            <value name="FROM">
-                <block type="math_number">
-                    <field name="NUM">0</field>
-                </block>
-            </value>
 
-            <value name="TO">
-                <block type="math_number">
-                    <field name="NUM">10</field>
-                </block>
-            </value>
-        </block>
 
 
 

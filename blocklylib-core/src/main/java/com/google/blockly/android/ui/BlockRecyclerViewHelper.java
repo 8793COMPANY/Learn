@@ -257,7 +257,7 @@ public class BlockRecyclerViewHelper {
                     e.printStackTrace();
                 }
             }else{
-                getLargeSize(3,2);
+                getLargeSize(3,0);
             }
 
 

@@ -349,7 +349,8 @@ public class CategoryTabs extends RecyclerView {
                 holder.itemView.setLayoutParams(layoutParams);
                 holder.itemView.requestLayout();
             }else{
-                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 176), ViewGroup.LayoutParams.MATCH_PARENT);
+                //원래 176임 170이 아니라
+                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 170), ViewGroup.LayoutParams.MATCH_PARENT);
                 holder.itemView.setLayoutParams(layoutParams);
                 holder.itemView.requestLayout();
             }
