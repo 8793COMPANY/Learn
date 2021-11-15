@@ -334,6 +334,13 @@
             </value>
         </block>
 
+        <block type="read_temp">
+        </block>
+
+
+        <block type="read_humidity">
+        </block>
+
 
 <!--        <block type="inout_tone_pin">-->
 <!--                    <value name="PIN">-->

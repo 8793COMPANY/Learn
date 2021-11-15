@@ -177,9 +177,39 @@ Blockly.JavaScript['servo'] = function (block) {
 //      return '!!alert!!Servo : angle should be between 0 and 180!!\n';
 //   }
 //     // Assemble JavaScript into code variable.
-     var code = 'Serial.println(dht.readTemperature())' + ';\n';
-     return code;
+//     var code = 'dht.readTemperature()' + '\n';
+     return '';
   };
+
+   Blockly.JavaScript['read_temp'] = function (block) {
+
+
+  //   Blockly.JavaScript.setups_['define_servo' + value_channel] = '\n servo' + value_channel + '.attach('+value_channel+');\n';
+  //   if( (value_angle < 0 ) || (value_angle > 180 )) {
+  //      return '!!alert!!Servo : angle should be between 0 and 180!!\n';
+  //   }
+  //     // Assemble JavaScript into code variable.
+       var code = 'dht.readTemperature()';
+       return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
+   Blockly.JavaScript['read_humidity'] = function (block) {
+//     var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
+  //   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+
+     //define sonar settings
+//     Blockly.JavaScript.definitions_['define_dht_h'] = "#include <DHT.h>\n";
+//  //   Blockly.JavaScript.definitions_['define_dht_type_h'] = "#include <DHT.h>\n";
+//     Blockly.JavaScript.definitions_['define_dht_' + value_channel] = "DHT dht(" + value_channel +", DHT11);\n";
+
+  //   Blockly.JavaScript.setups_['define_servo' + value_channel] = '\n servo' + value_channel + '.attach('+value_channel+');\n';
+  //   if( (value_angle < 0 ) || (value_angle > 180 )) {
+  //      return '!!alert!!Servo : angle should be between 0 and 180!!\n';
+  //   }
+  //     // Assemble JavaScript into code variable.
+       var code = 'dht.readHumidity()';
+       return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    };
 
 Blockly.JavaScript['inout_tone_pin'] = function(block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
@@ -307,15 +337,16 @@ Blockly.JavaScript['serial_begin'] = function(block) {
            var out_max = Blockly.JavaScript.valueToCode(block, "out_max", Blockly.JavaScript.ORDER_ATOMIC);
 
 
-      var functionName = Blockly.JavaScript.provideFunction_(
-          'map_number',
-          [ 'int ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + '(int x, int in_min, int in_max, int out_min, int out_max) {',
-
-            '  return map(x,in_min,in_max,out_min,out_max);',
-            '}']);
+//      var functionName = Blockly.JavaScript.provideFunction_(
+//          'map_number',
+//          [ 'int ' + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + '(int x, int in_min, int in_max, int out_min, int out_max) {',
+//
+//            '  return map(x,in_min,in_max,out_min,out_max);',
+//            '}']);
       // Generate the function call for this block.
-      var code = functionName + '(' + variable+','+in_min +','+in_max+','+out_min +','+out_max + ')';
-      return [code, Blockly.JavaScript.ORDER_FUNCTION_CALL];
+//      var code = functionName + '(' + variable+','+in_min +','+in_max+','+out_min +','+out_max + ')';
+      var code =  'map(' + variable+','+in_min +','+in_max+','+out_min +','+out_max + ')';
+      return [code, Blockly.JavaScript.ORDER_ATOMIC];
         };
 
 
@@ -351,8 +382,10 @@ Blockly.JavaScript['base_delay'] = function(block) {
 Blockly.JavaScript['pulseIn'] = function(block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
-   var code = "pulseIn(" + value_pin + ", " + value_num + ");\n";
-   return code;
+
+
+   var code = "pulseIn(" + value_pin + ", " + value_num + ")";
+   return [code, Blockly.JavaScript.ORDER_ATOMIC];
  };
 
 
