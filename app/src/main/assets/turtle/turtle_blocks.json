@@ -633,7 +633,7 @@
   },
   {
     "type": "DHT11",
-    "message0": "DHT %1 ",
+    "message0": "DHT INIT %1 ",
     "args0": [
       {
         "type": "input_value",
@@ -645,6 +645,32 @@
     "colour": 220,
     "previousStatement": null,
     "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "read_temp",
+    "message0": "read temperature",
+    "args0": [
+
+
+    ],
+    "colour": 220,
+    "output": "Number",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
+  {
+    "type": "read_humidity",
+    "message0": "read humidity",
+    "args0": [
+
+    ],
+
+    "colour": 220,
+    "output": "Number",
+    "inputsInline": true,
     "tooltip": ""
   },
   {
@@ -1014,10 +1040,9 @@
       }
 
     ],
+    "output": "Number",
     "colour": "#FDB900",
     "inputsInline": true,
-    "previousStatement": null,
-    "nextStatement": null,
     "tooltip": ""
   },
 
