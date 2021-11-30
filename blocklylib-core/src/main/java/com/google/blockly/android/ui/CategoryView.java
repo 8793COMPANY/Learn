@@ -98,14 +98,17 @@ public class CategoryView extends RelativeLayout {
         super.onFinishInflate();
         mCategoryTabs = (CategoryTabs) findViewById(R.id.category_tabs);
 
+
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.divider2));
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.new_divider));
         mCategoryTabs.addItemDecoration(dividerItemDecoration);
 
         mCategoryTabs.setCallback(mCallback);
         mCategoryTabs.setOrientation(mScrollOrientation);
         mCategoryTabs.setLabelRotation(mLabelRotation);
     }
+
+
 
     public void setCallback(CategorySelectorUI.Callback callback) {
         mCallback = callback;
@@ -154,7 +157,7 @@ public class CategoryView extends RelativeLayout {
         mCategoryTabs.setOnItemClickListener(new CategoryTabs.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
-                itemClick.onClickTest(pos);
+                itemClick.onClickTest(v,pos);
             }
         });
     }

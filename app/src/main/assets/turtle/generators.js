@@ -162,6 +162,30 @@ Blockly.JavaScript['servo'] = function (block) {
     return code;
  };
 
+Blockly.JavaScript['logic_calculation'] = function(a) {
+    var b = {
+            EQ: "+",
+            LT: "-",
+            GT: "*",
+            GTE: "/"
+        }[a.getFieldValue("OP")],
+        c = "==" == b || "!=" == b ? Blockly.JavaScript.ORDER_EQUALITY : Blockly.JavaScript.ORDER_RELATIONAL,
+        d = Blockly.JavaScript.valueToCode(a, "A", c) || "0";
+    a = Blockly.JavaScript.valueToCode(a, "B", c) || "0";
+    return [d + " " + b + " " + a, c]
+};
+
+
+ Blockly.JavaScript['tone_notone'] = function (block) {
+   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+   var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
+   var delay_time = Blockly.JavaScript.valueToCode(block, 'DELAY_TIME', Blockly.JavaScript.ORDER_ATOMIC) || '1000'
+
+     // Assemble JavaScript into code variable.
+     var code = "tone(" + value_pin + ", " + value_num + ");\ndelay("+ delay_time + ');\n'+"noTone("+value_pin+");\n";
+     return code;
+  };
+
 
  Blockly.JavaScript['DHT11'] = function (block) {
    var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);

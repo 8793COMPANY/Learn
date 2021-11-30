@@ -77,7 +77,7 @@ public class CategoryTabs extends RecyclerView {
 
     public static CategoryData categoryData = CategoryData.getInstance();
 
-    int [] image = {R.drawable.setup_btn,R.drawable.loop_btn, R.drawable.method_btn,R.drawable.etc_btn, R.drawable.code_btn, R.drawable.serial_btn, R.drawable.upload_btn};
+    int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,R.drawable.etc_btn_selector, R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -92,6 +92,8 @@ public class CategoryTabs extends RecyclerView {
     BlocklyCategory mCurrentCategory;
 
     private OnItemClickListener mListener = null;
+
+    boolean isSelected, check;
 
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener =listener;
@@ -141,7 +143,7 @@ public class CategoryTabs extends RecyclerView {
 
 
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
-        mAdapter = new CategoryAdapter(realDeviceWidth /1280.0);
+        mAdapter = new CategoryAdapter(realDeviceWidth);
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
 
@@ -176,6 +178,7 @@ public class CategoryTabs extends RecyclerView {
     public void setCallback(@Nullable CategorySelectorUI.Callback callback) {
         mCallback = callback;
     }
+
 
     /**
      * Sets the orientation in which the tabs will accumulate, which is also the scroll direction
@@ -304,14 +307,16 @@ public class CategoryTabs extends RecyclerView {
             if (mLabelAdapter == null) {
                 throw new IllegalStateException("No LabelAdapter assigned.");
             }
+
+
             return new TabLabelHolder(mLabelAdapter.onCreateLabel());
         }
 
         @Override
-        public void onBindViewHolder(TabLabelHolder holder, final int tabPosition) {
+        public void onBindViewHolder(final TabLabelHolder holder, final int tabPosition) {
             BusProvider.getInstance().register(this);
             final BlocklyCategory category = mCategories.get(tabPosition);
-            boolean isSelected = (category == mCurrentCategory);
+            isSelected = (category == mCurrentCategory);
             Log.e("tabPosition",tabPosition+"");
 
             // These may throw a NPE, but that is an illegal state checked above.
@@ -325,6 +330,8 @@ public class CategoryTabs extends RecyclerView {
          //   holder.itemView.requestLayout();
 
             holder.mLabel.setBackgroundResource(image[tabPosition]);
+            if (check)
+                holder.mLabel.setSelected(false);
             //holder.mRotator.setChildRotation(mLabelRotation);
             holder.mRotator.setTag(holder);  // For getTabLabelHolder() and deselection
 
@@ -333,6 +340,8 @@ public class CategoryTabs extends RecyclerView {
                 public void onClick(View label) {
                     Log.e("tabposi",tabPosition+"");
                     categoryData.setPosition(tabPosition);
+                    Log.e("isSelected",holder.mLabel.isSelected()+"");
+
                     BusProvider.getInstance().post(new PushEvent(tabPosition, false));
                     onCategoryClicked(category);
                         Log.e("들어옴","ㅅㅎ");
@@ -344,16 +353,21 @@ public class CategoryTabs extends RecyclerView {
                 }
             });
 
-            if (tabPosition == 0){
-                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 177), ViewGroup.LayoutParams.MATCH_PARENT);
-                holder.itemView.setLayoutParams(layoutParams);
-                holder.itemView.requestLayout();
-            }else{
-                //원래 176임 170이 아니라
-                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 170), ViewGroup.LayoutParams.MATCH_PARENT);
-                holder.itemView.setLayoutParams(layoutParams);
-                holder.itemView.requestLayout();
-            }
+//            if (tabPosition == 0){
+//                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 177), ViewGroup.LayoutParams.MATCH_PARENT);
+//                holder.itemView.setLayoutParams(layoutParams);
+//                holder.itemView.requestLayout();
+//            }else{
+//                //원래 176임 170이 아니라
+//                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 181), ViewGroup.LayoutParams.MATCH_PARENT);
+//                holder.itemView.setLayoutParams(layoutParams);
+//                holder.itemView.requestLayout();
+//            }
+
+            Log.e("width",width+"");
+            ViewGroup.LayoutParams layoutParams =new LayoutParams((int)( (width / 1280.0)* 175.5), ViewGroup.LayoutParams.MATCH_PARENT);
+            holder.itemView.setLayoutParams(layoutParams);
+            holder.itemView.requestLayout();
 
 
         }
@@ -364,6 +378,11 @@ public class CategoryTabs extends RecyclerView {
             holder.mCategory = null;
             holder.mLabel.setOnClickListener(null);
         }
+    }
+
+    public void test(boolean check){
+        this.check = check;
+        mAdapter.notifyDataSetChanged();
     }
 
     /** Manages TextView labels derived from {@link R.layout#default_toolbox_tab}. */

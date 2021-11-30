@@ -119,7 +119,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Boolean compileCheck = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
-    int [] current_tab = {R.id.setup_view,R.id.loop_view,R.id.method_view,R.id.etc_view,R.id.code_view,R.id.serial_view,R.id.upload_view};
+//    int [] current_tab = {R.id.setup_view,R.id.loop_view,R.id.method_view,R.id.etc_view,R.id.code_view,R.id.serial_view,R.id.upload_view};
     EditText serial_input_box;
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
@@ -490,6 +490,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         FileOutputStream outputStream;
         File f = new File(TARGET_BASE_PATH+filename);
         try {
+
+//            InputStream is = new FileInputStream(f);
+//            int size = is.available();
+//            Toast.makeText(getApplicationContext(),"size:"+size, Toast.LENGTH_LONG).show();
             FileOutputStream fooStream = new FileOutputStream(f, false);
             byte[] myBytes = fileContents.getBytes();
             fooStream.write(myBytes);
@@ -580,6 +584,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             File file = new File(TARGET_BASE_PATH+"app.json");
             InputStream is = new FileInputStream(file);
             int size = is.available();
+//            Toast.makeText(getApplicationContext(),size+"",Toast.LENGTH_SHORT).show();
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
@@ -785,11 +790,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("checkUploadBtn","in");
         if (wifi_check && usb_check){
             Log.e("checkUploadBtn","true");
-            upload_btn.setBackgroundResource(R.drawable.upload_btn);
+            upload_btn.setBackgroundResource(R.drawable.upload_btn_on);
             upload_btn.setEnabled(true);
         }else{
             Log.e("checkUploadBtn","false");
-            upload_btn.setBackgroundResource(R.drawable.upload_btn_false);
+            upload_btn.setBackgroundResource(R.drawable.upload_btn);
             upload_btn.setEnabled(false);
         }
     }
@@ -848,7 +853,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         if (categoryData.isClosed()) {
             if (current_pos>3) {
-                findViewById(current_tab[categoryData.getPosition()]).setBackgroundColor(getResources().getColor(R.color.white));
+//                findViewById(current_tab[categoryData.getPosition()]).setBackgroundColor(getResources().getColor(R.color.white));
                 Log.e("닫힘", "ㅎㅎ");
 //                translate_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
@@ -891,13 +896,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         categoryData.setClosed(false);
         BusProvider.getInstance().register(this);
 
-        setupView(blockly_workspace);
+//        setupView(blockly_workspace);
 
         code_btn =  blockly_workspace.findViewById(R.id.code_btn);
         serial_btn = blockly_workspace.findViewById(R.id.serial_btn);
         upload_btn =  blockly_workspace.findViewById(R.id.upload_btn);
 
-        view_linear = blockly_workspace.findViewById(R.id.view_linear);
+//        view_linear = blockly_workspace.findViewById(R.id.view_linear);
 
 //        mUsbReceiver = new mUsbReceiver();
 
@@ -983,14 +988,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         code_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setInitLine();
+                code_btn.setSelected(true);
                 mMonitorHandler.sendEmptyMessage(1);
                 monitor_text.setText("");
                 Log.e("hi code_btn","click");
                 categoryData.setPosition(4);
                 categoryData.setClosed(true);
                 current_pos = 4;
-                setMonitor(code_btn.getTag().toString(),code_view);
+                setMonitor(code_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
 
 
@@ -1016,15 +1022,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         serial_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setInitLine();
+                serial_btn.setSelected(true);
                 monitor_text.setText("");
                 mMonitorHandler.sendEmptyMessage(0);
                 categoryData.setPosition(5);
                 categoryData.setClosed(true);
                 current_pos = 5;
-                setMonitor(serial_btn.getTag().toString(),serial_view);
+                setMonitor(serial_btn.getTag().toString());
                 mBlocklyActivityHelper.getFlyoutController();
 
-//                setInitLine();
                 input_space.setVisibility(View.VISIBLE);
                 Log.e("serial","btn");
 
@@ -1047,7 +1054,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     categoryData.setPosition(6);
                     current_pos = 6;
                     setInitLine();
-                    upload_view.setBackgroundColor(Color.parseColor("#f78f43"));
                     compileCheck = true;
                     if (getController().getWorkspace().hasBlocks()) {
                         Log.e("??", "들어옴");
@@ -1097,16 +1103,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     } ;
 
 
-    void setMonitor(String tag,View view){
+    void setMonitor(String tag){
 
-        setInitLine();
+//        setInitLine();
         if (current_tag.equals(tag)){
             if (blockly_monitor.getVisibility()==View.GONE) {
                 blockly_monitor.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.INVISIBLE);
 
 //                translate_btn.setVisibility(View.INVISIBLE);
-                view.setBackgroundColor(Color.parseColor("#f78f43"));
+//                view.setBackgroundColor(Color.parseColor("#f78f43"));
                 Log.e("??","들어오는데");
             }else {
                 setInitLine();
@@ -1118,7 +1124,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             }
             }else{
-            view.setBackgroundColor(Color.parseColor("#f78f43"));
+//            view.setBackgroundColor(Color.parseColor("#f78f43"));
             blockly_monitor.setVisibility(View.VISIBLE);
             trashcan_btn.setVisibility(View.INVISIBLE);
 //            translate_btn.setVisibility(View.INVISIBLE);
@@ -1128,30 +1134,32 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         current_tag = tag;
     }
-
-    void setupView(View view){
-        setup_view = view.findViewById(R.id.setup_view);
-        loop_view = view.findViewById(R.id.loop_view);
-        method_view = view.findViewById(R.id.method_view);
-        etc_view = view.findViewById(R.id.etc_view);
-        code_view = view.findViewById(R.id.code_view);
-        serial_view = view.findViewById(R.id.serial_view);
-        upload_view = view.findViewById(R.id.upload_view);
-    }
+//
+//    void setupView(View view){
+////        setup_view = view.findViewById(R.id.setup_view);
+////        loop_view = view.findViewById(R.id.loop_view);
+////        method_view = view.findViewById(R.id.method_view);
+////        etc_view = view.findViewById(R.id.etc_view);
+//        code_view = view.findViewById(R.id.code_view);
+//        serial_view = view.findViewById(R.id.serial_view);
+//        upload_view = view.findViewById(R.id.upload_view);
+//    }
 
     void setInitLine(){
-        setup_view.setBackgroundColor(getResources().getColor(R.color.white));
-        loop_view.setBackgroundColor(getResources().getColor(R.color.white));
-        method_view.setBackgroundColor(getResources().getColor(R.color.white));
-        etc_view.setBackgroundColor(getResources().getColor(R.color.white));
-        code_view.setBackgroundColor(getResources().getColor(R.color.white));
-        serial_view.setBackgroundColor(getResources().getColor(R.color.white));
-        upload_view.setBackgroundColor(getResources().getColor(R.color.white));
+        code_btn.setSelected(false);
+        serial_btn.setSelected(false);
+//        setup_view.setBackgroundColor(getResources().getColor(R.color.white));
+//        loop_view.setBackgroundColor(getResources().getColor(R.color.white));
+//        method_view.setBackgroundColor(getResources().getColor(R.color.white));
+//        etc_view.setBackgroundColor(getResources().getColor(R.color.white));
+//        code_view.setBackgroundColor(getResources().getColor(R.color.white));
+//        serial_view.setBackgroundColor(getResources().getColor(R.color.white));
+//        upload_view.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
     public void setLineForOtherCategoryTabs(int position) {
         mMonitorHandler.sendEmptyMessage(1);
-        Log.e("??","gg");
+        Log.e("??","setLineForOtherCategoryTabs");
         switch (position) {
             case -1:
                 categoryData.setPosition(position);
@@ -1186,8 +1194,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("setCategoryTabs",categoryData.isClosed()+"");
         if (current_pos == position) {
             if (view_check[position]){
-                view.setBackgroundColor(Color.parseColor("#f78f43"));
+//                view.setBackgroundColor(Color.parseColor("#f78f43"));
 //                translate_btn.setVisibility(View.INVISIBLE);
+//                view.setSelected(true);
                 trashcan_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
                 categoryData.setClosed(false);
@@ -1199,8 +1208,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         }else{
             view_check[position] = false;
-            view.setBackgroundColor(Color.parseColor("#f78f43"));
+//            view.setBackgroundColor(Color.parseColor("#f78f43"));
 //            translate_btn.setVisibility(View.INVISIBLE);
+//            view.setSelected(true);
             trashcan_btn.setVisibility(View.INVISIBLE);
             categoryData.setClosed(false);
         }
@@ -1293,18 +1303,28 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     @Override
-    public void onClickTest(int pos) {
+    public void onClickTest(View v,int pos) {
+        Log.e("??","onClickTest");
         Log.e("main create",pos+"");
+        Log.e("isEnabled",v.isSelected()+"");
 //        blockly_monitor.setVisibility(View.GONE);
         //여기서 버튼 underline 바뀌는 코드 작성하면 됨
+//                    mCategoryView.mCategoryTabs.test(true);
         if (pos ==0){
-
+//            if ()
+//            v.setSelected(false);
+//            if (v.isSelected()){
+//                v.setSelected(false);
+//            }else{
+//                v.setSelected(true);
+//            }
+//            mCategoryView.mCategoryTabs.test(true);
         }else if (pos ==1){
-
+//            v.setSelected(false);
         }else if (pos == 2){
-
+//            v.setSelected(false);
         }else{
-
+//            v.setSelected(false);
         }
     }
 
@@ -1342,7 +1362,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         try {
             if (categoryData.getPosition() < 4) {
                 Log.e("hi","zz");
-                findViewById(current_tab[categoryData.getPosition()]).setBackgroundColor(getResources().getColor(R.color.white));
+//                findViewById(current_tab[categoryData.getPosition()]).setBackgroundColor(getResources().getColor(R.color.white));
                 view_check[current_pos] = true;
 //                translate_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
