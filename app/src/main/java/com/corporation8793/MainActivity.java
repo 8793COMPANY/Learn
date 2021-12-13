@@ -90,6 +90,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +115,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private String mNoErrorText;
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
+
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
     private Boolean initial=true, wifi_check = false, usb_check = false;
     Boolean compileCheck = false;
@@ -144,7 +147,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     LinearLayout view_linear;
     int current_pos =0, pre_pos=0;
     static int turtle_pos=0;
-//    String current_tag;
+
+    long first_time = 0 , last_time = 0;
 
 
     //시니얼 모니터 slow 방지 문자열
@@ -216,6 +220,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     num = 50;
                     stringBuilder.delete(0,2560);
                 }
+
                 monitor_text.setText(stringBuilder);
                 num++;
             }
@@ -396,11 +401,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
 //                //  mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
             }
+            getFileSize();
         }
 
 //        Toast.makeText(getApplicationContext(), "Check if Program uploaded ", Toast.LENGTH_LONG).show();
 
     }
+
+    public long getFileSize(){
+        File directory = new File("/data/data/com.learn4/out.hex");
+        Log.e("file size",directory.length()+"");
+        return directory.length();
+    }
+
+
 
     public Boolean OpenUSB() {
         Log.e("usb initial",initial+"");
@@ -1013,7 +1027,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    monitor_text.setText(code);
+
+                    String size = "file size : "+getFileSize()+"bytes\n\n\n";
+                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
                 }, 100);
                 current_pos = 4;
             }
@@ -1047,8 +1063,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onClick(View v) {
                 hideSystemUI();
                 if (wifi_check) {
+                    first_time = System.currentTimeMillis();
+                    Toast.makeText(getApplicationContext(), "first_time : "+mFormat.format(first_time), Toast.LENGTH_SHORT).show();
                     mMonitorHandler.sendEmptyMessage(1);
                     customProgressDialog.show();
+                    last_time = System.currentTimeMillis();
+                    Toast.makeText(getApplicationContext(), "last_time : "+mFormat.format(last_time), Toast.LENGTH_SHORT).show();
                     blockly_monitor.setVisibility(View.GONE);
                     mBlocklyActivityHelper.getFlyoutController();
                     categoryData.setPosition(6);

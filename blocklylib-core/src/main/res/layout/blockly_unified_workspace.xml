@@ -151,7 +151,6 @@
         android:layout_alignParentRight="true"
         android:background="#fff4d9"
         android:orientation="vertical"
-        android:visibility="gone"
         android:weightSum="605"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
