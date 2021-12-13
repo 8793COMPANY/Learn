@@ -249,6 +249,7 @@
             </value>
         </block>
 
+        <block type="logic_calculation"></block>
 
 
 
@@ -322,6 +323,25 @@
             <value name="angle">
                 <block type="math_number" id="116">
                     <field name="NUM">45</field>
+                </block>
+            </value>
+        </block>
+
+
+        <block type="tone_notone">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+            <value name="NUM">
+                <block type="math_number" id="116">
+                    <field name="NUM">45</field>
+                </block>
+            </value>
+            <value name="DELAY_TIME">
+                <block type="math_number" gap="32">
+                    <field name="NUM">1000</field>
                 </block>
             </value>
         </block>

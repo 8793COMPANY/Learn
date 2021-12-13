@@ -632,6 +632,67 @@
     "tooltip": ""
   },
   {
+    "type": "tone_notone",
+    "message0": "tone %1 %2 pin %3 frequency %4 delay %5",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "NUM",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "DELAY_TIME"
+      }
+
+    ],
+    "colour": 220,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "logic_calculation",
+    "message0": "%1 %2 %3",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "A"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "OP",
+        "options": [
+          ["+", "EQ"],
+          ["-", "LT"],
+          ["*", "GT"],
+          ["/", "GTE"]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "B"
+      }
+    ],
+    "inputsInline": true,
+    "output": "Number",
+    "colour": "#6CD4DB",
+    "tooltip": "",
+    "helpUrl": "https://en.wikipedia.org/wiki/Equality_(mathematics)"
+  },
+  {
     "type": "DHT11",
     "message0": "DHT INIT %1 ",
     "args0": [

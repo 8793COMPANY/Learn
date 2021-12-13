@@ -122,12 +122,13 @@ public class BlockRecyclerViewHelper {
         mTouchHandler = controller.getDragger()
                 .buildImmediateDragBlockTouchHandler(new DragHandler());
 
-        controller.setOnItemClickListener(new BlocklyController.OnItemClickListener() {
-            @Override
-            public void onItemClick(PendingDrag pendingDrag) {
-                getWorkspaceBlockGroupForTouch(pendingDrag);
-            }
-        });
+        //블록 복사기능
+//        controller.setOnItemClickListener(new BlocklyController.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(PendingDrag pendingDrag) {
+//                getWorkspaceBlockGroupForTouch(pendingDrag);
+//            }
+//        });
 
     }
 

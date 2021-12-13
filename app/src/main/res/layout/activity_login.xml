@@ -24,6 +24,7 @@
         android:id="@+id/login_id_input_box"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:text="풀이"
         android:background="@drawable/login_id_input_box"
         android:hint="아이디를 입력해주세요"
         android:paddingHorizontal="52px"
