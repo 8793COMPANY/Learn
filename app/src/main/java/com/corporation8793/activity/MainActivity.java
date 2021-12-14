@@ -13,15 +13,17 @@
  * limitations under the License.
  */
 
-package com.corporation8793;
+package com.corporation8793.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 
+import com.corporation8793.R;
+import com.corporation8793.dialog.ProgressDialog;
+import com.corporation8793.dialog.UploadDialog;
 import com.google.blockly.android.FlyoutFragment;
 import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BusProvider;
@@ -384,6 +386,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
 //            Toast.makeText(getApplicationContext(),"업로드 성공!",Toast.LENGTH_SHORT).show();
                 upload_Listener.show();
+                Toast.makeText(getApplicationContext(), "last2: "+mFormat.format(System.currentTimeMillis()), Toast.LENGTH_SHORT).show();
 
                 Display display = getWindowManager().getDefaultDisplay();
                 Point size = new Point();
@@ -1114,6 +1117,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 case 1:
                     Log.e("bye","zz");
+                    //upload_code(str);
                     removeMessages(0);
                     str ="";
                     monitor_text.setText("");

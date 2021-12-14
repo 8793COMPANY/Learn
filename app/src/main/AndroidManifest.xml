@@ -2,28 +2,42 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.corporation8793">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USB_PERMISSION" />
-    <uses-feature android:name="android.hardware.usb.host" android:required="true"/>
+
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true" />
 
     <application
+        android:name=".Application"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name="com.corporation8793.Application"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+        <activity android:name=".activity.ContentActivity"
+            android:screenOrientation="sensorLandscape"
+            ></activity>
         <activity
-            android:name="com.corporation8793.LoginActivity"
-            android:screenOrientation="sensorLandscape">
-        </activity>
+            android:name=".activity.ModeSelect"
+            android:label="@string/title_activity_mode_select"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
-            android:name="com.corporation8793.IntroActivity"
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".activity.IntroActivity"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,23 +46,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.corporation8793.MainActivity"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
-
-<!--        <receiver android:name="com.corporation8793.mUsbReceiver"-->
-<!--            android:directBootAware="true">-->
-<!--        <intent-filter>-->
-<!--            <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
-<!--        </intent-filter>-->
-<!--        <intent-filter>-->
-<!--            <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />-->
-<!--        </intent-filter>-->
-
-<!--        <meta-data-->
-<!--            android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
-<!--            android:resource="@xml/device_filter" />-->
-<!--        </receiver>-->
+            android:name=".activity.MainActivity"
+            android:screenOrientation="sensorLandscape" />
     </application>
+
 </manifest>
