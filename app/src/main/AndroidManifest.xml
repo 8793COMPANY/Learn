@@ -20,9 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ContentActivity"
-            android:screenOrientation="sensorLandscape"
-            ></activity>
+        <activity android:name=".activity.ChapterActivity"
+            android:screenOrientation="sensorLandscape"></activity>
+        <activity
+            android:name=".activity.ProblemActivity"
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".activity.ContentsActivity"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".activity.ModeSelect"
             android:label="@string/title_activity_mode_select"

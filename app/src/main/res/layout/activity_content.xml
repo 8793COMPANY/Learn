@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ContentActivity"
-    android:background="
-#fcf1de">
+    tools:context=".activity.ContentsActivity"
+    android:background="#fcf1de">
 
 
     <Button
         android:id="@+id/back_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/content_back_btn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.04"
+        app:layout_constraintWidth_percent="0.035"
         app:layout_constraintHeight_percent="0.07"
         app:layout_constraintVertical_bias="0.05"
         app:layout_constraintHorizontal_bias="0.03"></Button>
 
-    <ImageView
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,20 @@
         app:layout_constraintWidth_percent="0.13"
         app:layout_constraintHeight_percent="0.07"
         app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintHorizontal_bias="0.02"></ImageView>
+        app:layout_constraintHorizontal_bias="0.02"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        android:elevation="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="콘텐츠모드"
+            android:textColor="#f78f43"
+            android:gravity="center_vertical|center"
+            android:textStyle="bold"
+            android:fontFamily="@font/sb_aggro_m"></TextView>
+    </androidx.cardview.widget.CardView>
 
 
     <androidx.recyclerview.widget.RecyclerView

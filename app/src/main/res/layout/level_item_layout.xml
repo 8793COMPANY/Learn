@@ -8,6 +8,7 @@
         android:id="@+id/level"
         android:text="Level 1"
         android:textColor="#af6400"
+        android:fontFamily="@font/sb_aggro_m"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="12sp"
