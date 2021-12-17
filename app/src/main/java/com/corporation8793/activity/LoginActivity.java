@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         login_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChapterActivity.class);
+            Intent intent = new Intent(this, ModeSelect.class);
             startActivity(intent);
             finish();
 

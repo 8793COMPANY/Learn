@@ -2,9 +2,11 @@ package com.corporation8793.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.corporation8793.CustomView;
 import com.corporation8793.R;
@@ -13,6 +15,7 @@ public class ChapterActivity extends AppCompatActivity {
     private View decorView;
     private int	uiOption;
     CustomView chapter1, chapter2, chapter3;
+    Button back_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +24,8 @@ public class ChapterActivity extends AppCompatActivity {
         chapter1 = findViewById(R.id.chapter1);
         chapter2 = findViewById(R.id.chapter2);
         chapter3 = findViewById(R.id.chapter3);
+
+        back_btn = findViewById(R.id.back_btn);
 
         chapter1.setGroup(R.drawable.default_problem_image);
         chapter2.setGroup(R.drawable.advanced_problem_image);
@@ -41,6 +46,15 @@ public class ChapterActivity extends AppCompatActivity {
             uiOption |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         decorView.setSystemUiVisibility( uiOption );
+
+        chapter1.setOnClickListener(v->{
+            Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
+            startActivity(intent);
+        });
+
+        back_btn.setOnClickListener(v->{
+            finish();
+        });
     }
 
     public void initContent(CustomView view, String title, boolean open, int chapterImg, int step){

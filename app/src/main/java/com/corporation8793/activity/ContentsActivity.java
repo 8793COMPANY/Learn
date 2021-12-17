@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.corporation8793.R;
 import com.corporation8793.data.Chapter;
@@ -23,6 +24,8 @@ public class ContentsActivity extends AppCompatActivity {
     private ArrayList<Level> subjects;
     private View decorView;
     private int	uiOption;
+
+    Button back_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,17 @@ public class ContentsActivity extends AppCompatActivity {
         subjects = prepareData();
 
         rvSubject = findViewById(R.id.level_list);
+        back_btn = findViewById(R.id.back_btn);
 
 
         levelAdapter = new LevelAdapter(ContentsActivity.this, subjects);
         LinearLayoutManager manager = new LinearLayoutManager(ContentsActivity.this);
         rvSubject.setLayoutManager(manager);
         rvSubject.setAdapter(levelAdapter);
+
+        back_btn.setOnClickListener(v->{
+            finish();
+        });
     }
 
 
