@@ -13,15 +13,17 @@
  * limitations under the License.
  */
 
-package com.corporation8793;
+package com.corporation8793.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 
+import com.corporation8793.R;
+import com.corporation8793.dialog.ProgressDialog;
+import com.corporation8793.dialog.UploadDialog;
 import com.google.blockly.android.FlyoutFragment;
 import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BusProvider;
@@ -385,6 +387,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
 //            Toast.makeText(getApplicationContext(),"업로드 성공!",Toast.LENGTH_SHORT).show();
                 upload_Listener.show();
+//                Toast.makeText(getApplicationContext(), "last2: "+mFormat.format(System.currentTimeMillis()), Toast.LENGTH_SHORT).show();
 
                 Display display = getWindowManager().getDefaultDisplay();
                 Point size = new Point();
@@ -1030,7 +1033,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 handler.postDelayed(() -> {
 
                     String size = "file size : "+getFileSize()+"bytes\n\n\n";
-                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
+//                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
+                    monitor_text.setText(code);
                 }, 100);
                 current_pos = 4;
             }
@@ -1064,12 +1068,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onClick(View v) {
                 hideSystemUI();
                 if (wifi_check) {
-                    first_time = System.currentTimeMillis();
-                    Toast.makeText(getApplicationContext(), "first_time : "+mFormat.format(first_time), Toast.LENGTH_SHORT).show();
+//                    first_time = System.currentTimeMillis();
+//                    Toast.makeText(getApplicationContext(), "first_time : "+mFormat.format(first_time), Toast.LENGTH_SHORT).show();
                     mMonitorHandler.sendEmptyMessage(1);
                     customProgressDialog.show();
-                    last_time = System.currentTimeMillis();
-                    Toast.makeText(getApplicationContext(), "last_time : "+mFormat.format(last_time), Toast.LENGTH_SHORT).show();
+//                    last_time = System.currentTimeMillis();
+//                    Toast.makeText(getApplicationContext(), "last_time : "+mFormat.format(last_time), Toast.LENGTH_SHORT).show();
                     blockly_monitor.setVisibility(View.GONE);
                     mBlocklyActivityHelper.getFlyoutController();
                     categoryData.setPosition(6);
@@ -1115,6 +1119,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 case 1:
                     Log.e("bye","zz");
+                    //upload_code(str);
                     removeMessages(0);
                     str ="";
                     monitor_text.setText("");

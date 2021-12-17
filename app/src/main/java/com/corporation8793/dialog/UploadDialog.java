@@ -1,4 +1,4 @@
-package com.corporation8793;
+package com.corporation8793.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.corporation8793.R;
+
 public class UploadDialog extends Dialog {
 
     private Button Confirm;
@@ -25,7 +27,7 @@ public class UploadDialog extends Dialog {
     public String title;
     public String body;
 
-    protected UploadDialog(@NonNull Context context, View.OnClickListener Confirm_Btn, String title, String body) {
+    public UploadDialog(@NonNull Context context, View.OnClickListener Confirm_Btn, String title, String body) {
         super(context);
         this.Confirm_Btn = Confirm_Btn;
         this.title = title;

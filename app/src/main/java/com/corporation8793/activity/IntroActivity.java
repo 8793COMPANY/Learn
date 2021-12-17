@@ -1,13 +1,13 @@
-package com.corporation8793;
+package com.corporation8793.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+
+import com.corporation8793.R;
 
 public class IntroActivity extends AppCompatActivity {
 

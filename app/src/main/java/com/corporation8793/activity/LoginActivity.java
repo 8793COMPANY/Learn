@@ -1,4 +1,4 @@
-package com.corporation8793;
+package com.corporation8793.activity;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.corporation8793.R;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -29,15 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         login_btn = findViewById(R.id.login_btn);
-        login_btn.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                             startActivity(intent);
-                                             finish();
-                                         }
-
-                                     });
 
         login_id_input_box = findViewById(R.id.login_id_input_box);
         auto_login = findViewById(R.id.auto_login);
@@ -56,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         login_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ChapterActivity.class);
             startActivity(intent);
             finish();
 
