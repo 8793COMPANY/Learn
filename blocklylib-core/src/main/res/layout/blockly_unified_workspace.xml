@@ -38,7 +38,7 @@
         android:layout_alignParentTop="true"
         android:background="@color/white"
         android:orientation="horizontal"
-        app:layout_constraintDimensionRatio="5:0.5"
+        app:layout_constraintDimensionRatio="5:0.45"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1"
         blockly:labelRotation="start"
@@ -51,92 +51,73 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="100">
+            android:orientation="vertical">
 
-
+            <fragment
+                android:id="@+id/blockly_categories"
+                android:name="com.google.blockly.android.CategorySelectorFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="100"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="542"
                 android:orientation="horizontal"
-                android:weightSum="1280">
+                android:weightSum="542"
+                app:layout_constraintDimensionRatio="542:98"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="0.43"
+                blockly:layout_constraintBottom_toBottomOf="parent"
+                blockly:layout_constraintEnd_toEndOf="parent"
+                blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
+                blockly:layout_constraintTop_toTopOf="parent">
 
-
-
-                <fragment
-                    android:id="@+id/blockly_categories"
-                    android:name="com.google.blockly.android.CategorySelectorFragment"
+                <Button
+                    android:id="@+id/code_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="735" />
+                    android:layout_weight="181"
+                    android:background="@drawable/code_btn_selector"
+                    android:tag="code"></Button>
 
-
-                <LinearLayout
+                <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="542"
-                    android:orientation="horizontal"
-                    android:weightSum="542"
-                    app:layout_constraintDimensionRatio="542:98"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintWidth_default="percent"
-                    app:layout_constraintWidth_percent="0.43"
-                    blockly:layout_constraintBottom_toBottomOf="parent"
-                    blockly:layout_constraintEnd_toEndOf="parent"
-                    blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
-                    blockly:layout_constraintTop_toTopOf="parent">
-
-                    <Button
-                        android:id="@+id/code_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="181"
-                        android:background="@drawable/code_btn_selector"
-                        android:tag="code"></Button>
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@drawable/new_divider"></View>
+                    android:layout_weight="2"
+                    android:background="@drawable/new_divider"></View>
 
 
-                    <Button
-                        android:id="@+id/serial_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="181"
-                        android:background="@drawable/serial_btn_selector"
-                        android:tag="serial"></Button>
+                <Button
+                    android:id="@+id/serial_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="181"
+                    android:background="@drawable/serial_btn_selector"
+                    android:tag="serial"></Button>
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2"
-                        android:background="@drawable/new_divider"></View>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@drawable/new_divider"></View>
 
-                    <Button
-                        android:id="@+id/upload_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="182"
-                        android:background="@drawable/upload_btn"
-                        android:tag="upload"></Button>
+                <Button
+                    android:id="@+id/upload_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="182"
+                    android:background="@drawable/upload_btn"
+                    android:tag="upload"></Button>
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7"></View>
-
-                </LinearLayout>
-
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"></View>
 
             </LinearLayout>
-
-
-
 
         </LinearLayout>
 

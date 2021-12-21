@@ -109,7 +109,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     public void setCloseCheck(OnCloseCheckListener closeCheck){
 
         this.closeCheck = closeCheck;
-        Log.e("hi","setCloseCheck");
+        //Log.e("hi","setCloseCheck");
     }
 
 
@@ -192,7 +192,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         Point size = new Point();
         display.getRealSize(size); // or getSize(size)
         int width = size.x;
-        Log.e("width",width+"");
+        //Log.e("width",width+"");
 
 
         recyclerView.setPadding(0 ,(int)(width / 1280 * 59),0,0);
@@ -250,7 +250,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      * @param category The {@link BlocklyCategory} with blocks to display.
      */
     public void setCurrentCategory(@NonNull BlocklyCategory category) {
-        Log.e("gg","setCurrentCategory");
+        //Log.e("gg","setCurrentCategory");
         mRecyclerHelper.setCurrentCategory(category);
         updateCategoryColors(category);
         // TODO(#80): Add animation hooks for subclasses.
@@ -290,7 +290,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      * @return True if this fragment is currently visible, false otherwise.
      */
     public boolean isOpen() {
-        Log.e("gg","isOpen");
+        //Log.e("gg","isOpen");
         return mFlyoutView.getVisibility() == View.VISIBLE;
     }
 
@@ -300,7 +300,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      * @return True if an action was taken (the drawer is closeable and was previously open).
      */
     public boolean closeUi() {
-        Log.e("gg","closeUi");
+        //Log.e("gg","closeUi");
 
         if (!isCloseable() || mFlyoutView.getVisibility() == View.GONE) {
             return false;
@@ -336,7 +336,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      * @param curCategory The category to set the color from or null.
      */
     protected void updateCategoryColors(@Nullable BlocklyCategory curCategory) {
-        Log.e("gg","updatecategoryColors");
+        //Log.e("gg","updatecategoryColors");
         Integer maybeColor = curCategory == null ? null : curCategory.getColor();
         int bgColor = mBgColor;
         if (maybeColor != null) {

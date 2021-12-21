@@ -99,9 +99,9 @@ public class CategoryView extends RelativeLayout {
         mCategoryTabs = (CategoryTabs) findViewById(R.id.category_tabs);
 
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.new_divider));
-        mCategoryTabs.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),0);
+//        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.new_divider));
+//        mCategoryTabs.addItemDecoration(dividerItemDecoration);
 
         mCategoryTabs.setCallback(mCallback);
         mCategoryTabs.setOrientation(mScrollOrientation);
@@ -150,7 +150,7 @@ public class CategoryView extends RelativeLayout {
         mCategoryTabs.setCategories(subcats);
         mCategoryTabs.setOrientation(CategoryTabs.HORIZONTAL);
         mCategoryTabs.setVisibility(View.VISIBLE);
-        Log.e("mCloseable",mCloseable+"");
+        //Log.e("mCloseable",mCloseable+"");
         setCurrentCategory(mCloseable ? null : subcats.get(0));
         mCategoryTabs.setTapSelectedDeselects(mCloseable);
 
@@ -158,6 +158,11 @@ public class CategoryView extends RelativeLayout {
             @Override
             public void onItemClick(View v, int pos) {
                 itemClick.onClickTest(v,pos);
+                if (v.isSelected()) {
+                    v.setSelected(true);
+                } else {
+                    v.setSelected(false);
+                }
             }
         });
     }

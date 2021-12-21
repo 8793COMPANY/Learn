@@ -49,7 +49,7 @@ public class ProblemActivity extends AppCompatActivity {
         back_btn.setOnClickListener(v->{
             next_btn.setVisibility(View.VISIBLE);
             pos--;
-            Log.e("pos",pos+"");
+            //Log.e("pos",pos+"");
             if (pos ==0){
                 back_btn.setVisibility(View.INVISIBLE);
             }
@@ -59,7 +59,7 @@ public class ProblemActivity extends AppCompatActivity {
         next_btn.setOnClickListener(v->{
             back_btn.setVisibility(View.VISIBLE);
             pos++;
-            Log.e("pos",pos+"");
+            //Log.e("pos",pos+"");
             if (pos ==2){
                 next_btn.setVisibility(View.INVISIBLE);
             }

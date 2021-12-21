@@ -188,7 +188,7 @@ public class BlockRecyclerViewHelper {
         try{
 
             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
-        if (mCurrentCategory.getCategoryName().toString().equals("Logic") ){
+        if (mCurrentCategory.getCategoryName().equals("Logic") ){
             Log.e("current","logic");
 
             if (widths[0] != 0) {
@@ -205,7 +205,7 @@ public class BlockRecyclerViewHelper {
             marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(991, ViewGroup.LayoutParams.MATCH_PARENT));
         }
-        else if ( mCurrentCategory.getCategoryName().toString().equals("Loops")){
+        else if ( mCurrentCategory.getCategoryName().equals("Loops")){
             Log.e("current","loops");
             if (widths[1] != 0) {
                 try {
@@ -222,7 +222,7 @@ public class BlockRecyclerViewHelper {
 //            marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
             marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1307, ViewGroup.LayoutParams.MATCH_PARENT));
-        }else if (mCurrentCategory.getCategoryName().toString().equals("Math")){
+        }else if (mCurrentCategory.getCategoryName().equals("Math")){
             Log.e("current","math");
             if (widths[2] != 0) {
                 try {
@@ -242,7 +242,7 @@ public class BlockRecyclerViewHelper {
 
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1240 , ViewGroup.LayoutParams.MATCH_PARENT));
 
-        }else if (mCurrentCategory.getCategoryName().toString().equals("Text")){
+        }else if (mCurrentCategory.getCategoryName().equals("Text")){
             Log.e("current","Text");
 //            marginLayoutParams.width =(int)(width /1280.0 * 900) ;
 //            if (getLargeSize(2) > 600)
@@ -665,7 +665,7 @@ public class BlockRecyclerViewHelper {
                                 mRecyclerView,
                                 dragGroupAndTouchOffset.first,
                                 dragGroupAndTouchOffset.second);
-                        Log.e("hi~","maybegetdraggroupcreator");
+                        //Log.e("hi~","maybegetdraggroupcreator");
                     }
 
                 }

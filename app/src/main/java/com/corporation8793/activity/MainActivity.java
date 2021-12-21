@@ -273,9 +273,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                        Log.e("generated",generatedCode);
                         code = generatedCode;
                         create_file(generatedCode,"code.ino");
-                        Log.e("!@","nono");
+                        //Log.e("!@","nono");
                         if (compileCheck) {
-                            Log.e("generated", "컴파컴파");
+                            //Log.e("generated", "컴파컴파");
                             remotecompile("code.ino", getCompiler());
                             compileCheck = false;
                             customProgressDialog.dismiss();
@@ -1002,104 +1002,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            finish(); //현재 액티비티 종료 실시
 //        });
 
-
-        code_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setInitLine();
-                code_btn.setSelected(true);
-                mMonitorHandler.sendEmptyMessage(1);
-                monitor_text.setText("");
-                Log.e("hi code_btn","click");
-                categoryData.setPosition(4);
-                categoryData.setClosed(true);
-                current_pos = 4;
-                setMonitor(code_btn.getTag().toString());
-                mBlocklyActivityHelper.getFlyoutController();
-
-
-                input_space.setVisibility(View.GONE);
-//                init_btn.setVisibility(View.GONE);z
-
-                if (getController().getWorkspace().hasBlocks()) {
-                    mBlocklyActivityHelper.requestCodeGeneration(
-                            getBlockGeneratorLanguage(),
-                            getBlockDefinitionsJsonPaths(),
-                            getGeneratorsJsPaths(),
-                            getCodeGenerationCallback());
-                }
-
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-
-                    String size = "file size : "+getFileSize()+"bytes\n\n\n";
-//                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
-                    monitor_text.setText(code);
-                }, 100);
-                current_pos = 4;
-            }
-        });
-
-        serial_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setInitLine();
-                serial_btn.setSelected(true);
-                monitor_text.setText("");
-                mMonitorHandler.sendEmptyMessage(0);
-                categoryData.setPosition(5);
-                categoryData.setClosed(true);
-                current_pos = 5;
-                setMonitor(serial_btn.getTag().toString());
-                mBlocklyActivityHelper.getFlyoutController();
-
-                input_space.setVisibility(View.VISIBLE);
-                Log.e("serial","btn");
-
-                stringBuilder.setLength(0);
-                num = 0;
-                current_pos = 5;
-            }
-        });
-
-
-        upload_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideSystemUI();
-                if (wifi_check) {
-//                    first_time = System.currentTimeMillis();
-//                    Toast.makeText(getApplicationContext(), "first_time : "+mFormat.format(first_time), Toast.LENGTH_SHORT).show();
-                    mMonitorHandler.sendEmptyMessage(1);
-                    customProgressDialog.show();
-//                    last_time = System.currentTimeMillis();
-//                    Toast.makeText(getApplicationContext(), "last_time : "+mFormat.format(last_time), Toast.LENGTH_SHORT).show();
-                    blockly_monitor.setVisibility(View.GONE);
-                    mBlocklyActivityHelper.getFlyoutController();
-                    categoryData.setPosition(6);
-                    current_pos = 6;
-                    setInitLine();
-                    compileCheck = true;
-                    if (getController().getWorkspace().hasBlocks()) {
-                        Log.e("??", "들어옴");
-                        mBlocklyActivityHelper.requestCodeGeneration(
-                                getBlockGeneratorLanguage(),
-                                getBlockDefinitionsJsonPaths(),
-                                getGeneratorsJsPaths(),
-                                getCodeGenerationCallback());
-                    }
-
-                }else{
-                    Toast.makeText(getApplicationContext(),"WIFI를 연결해주세요!",Toast.LENGTH_SHORT).show();
-                }
-
-
-                current_pos = 6;
-            }
-        });
-
-
-
         return root;
     }
 
@@ -1118,7 +1020,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     break;
 
                 case 1:
-                    Log.e("bye","zz");
+                    //Log.e("bye","zz");
                     //upload_code(str);
                     removeMessages(0);
                     str ="";
@@ -1329,28 +1231,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     @Override
-    public void onClickTest(View v,int pos) {
+    public void onClickTest(View v, int pos) {
         Log.e("??","onClickTest");
+
         Log.e("main create",pos+"");
-        Log.e("isEnabled",v.isSelected()+"");
-//        blockly_monitor.setVisibility(View.GONE);
-        //여기서 버튼 underline 바뀌는 코드 작성하면 됨
-//                    mCategoryView.mCategoryTabs.test(true);
-        if (pos ==0){
-//            if ()
-//            v.setSelected(false);
-//            if (v.isSelected()){
-//                v.setSelected(false);
-//            }else{
-//                v.setSelected(true);
-//            }
-//            mCategoryView.mCategoryTabs.test(true);
-        }else if (pos ==1){
-//            v.setSelected(false);
-        }else if (pos == 2){
-//            v.setSelected(false);
-        }else{
-//            v.setSelected(false);
+
+        Log.e("isEnabled onClickTest",v.isSelected()+"");
+
+        // TODO : 상단 버튼 대응
+        switch (pos) {
+            // code
+            case 4:
+                code_btn();
+                break;
+
+            // serial monitor
+            case 5:
+                serial_btn();
+                break;
+
+            // upload
+            case 6:
+                upload_btn();
+                break;
         }
     }
 
@@ -1383,7 +1286,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     @Override
     public void onCloseCheck(String msg) {
-        Log.e("들어온다!!",msg);
+        //Log.e("들어온다!!",msg);
 
         try {
             if (categoryData.getPosition() < 4) {
@@ -1396,7 +1299,91 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
+    }
+
+    public void code_btn() {
+        setInitLine();
+        code_btn.setSelected(true);
+        mMonitorHandler.sendEmptyMessage(1);
+        monitor_text.setText("");
+        Log.e("hi code_btn","click");
+        categoryData.setPosition(4);
+        categoryData.setSelection(true);
+        categoryData.setClosed(true);
+        current_pos = 4;
+        setMonitor(code_btn.getTag().toString());
+        mBlocklyActivityHelper.getFlyoutController();
 
 
+        input_space.setVisibility(View.GONE);
+//                init_btn.setVisibility(View.GONE);z
+
+        if (getController().getWorkspace().hasBlocks()) {
+            mBlocklyActivityHelper.requestCodeGeneration(
+                    getBlockGeneratorLanguage(),
+                    getBlockDefinitionsJsonPaths(),
+                    getGeneratorsJsPaths(),
+                    getCodeGenerationCallback());
+        }
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+
+            String size1 = "file size : "+getFileSize()+"bytes\n\n\n";
+//                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
+            monitor_text.setText(code);
+        }, 100);
+        current_pos = 4;
+    }
+
+    public void serial_btn() {
+        setInitLine();
+        serial_btn.setSelected(true);
+        monitor_text.setText("");
+        mMonitorHandler.sendEmptyMessage(0);
+        categoryData.setPosition(5);
+        categoryData.setClosed(true);
+        current_pos = 5;
+        setMonitor(serial_btn.getTag().toString());
+        mBlocklyActivityHelper.getFlyoutController();
+
+        input_space.setVisibility(View.VISIBLE);
+        Log.e("serial","btn");
+
+        stringBuilder.setLength(0);
+        num = 0;
+        current_pos = 5;
+    }
+
+    public void upload_btn() {
+        hideSystemUI();
+        if (wifi_check) {
+//                    first_time = System.currentTimeMillis();
+//                    Toast.makeText(getApplicationContext(), "first_time : "+mFormat.format(first_time), Toast.LENGTH_SHORT).show();
+            mMonitorHandler.sendEmptyMessage(1);
+            customProgressDialog.show();
+//                    last_time = System.currentTimeMillis();
+//                    Toast.makeText(getApplicationContext(), "last_time : "+mFormat.format(last_time), Toast.LENGTH_SHORT).show();
+            blockly_monitor.setVisibility(View.GONE);
+            mBlocklyActivityHelper.getFlyoutController();
+            categoryData.setPosition(6);
+            current_pos = 6;
+            setInitLine();
+            compileCheck = true;
+            if (getController().getWorkspace().hasBlocks()) {
+                Log.e("??", "들어옴");
+                mBlocklyActivityHelper.requestCodeGeneration(
+                        getBlockGeneratorLanguage(),
+                        getBlockDefinitionsJsonPaths(),
+                        getGeneratorsJsPaths(),
+                        getCodeGenerationCallback());
+            }
+
+        }else{
+            Toast.makeText(getApplicationContext(),"WIFI를 연결해주세요!",Toast.LENGTH_SHORT).show();
+        }
+
+
+        current_pos = 6;
     }
 }

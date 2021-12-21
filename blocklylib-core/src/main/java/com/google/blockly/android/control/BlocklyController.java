@@ -201,7 +201,7 @@ public class BlocklyController {
         public boolean onBlockClicked(PendingDrag pendingDrag) {
             // TODO(#35): Mark block as focused / selected.
             if (mListener != null){
-            Log.e("mlist","not null");
+            //Log.e("mlist","not null");
             mListener.onItemClick(pendingDrag);
         }
             Log.e("block clicked","in !!!");
