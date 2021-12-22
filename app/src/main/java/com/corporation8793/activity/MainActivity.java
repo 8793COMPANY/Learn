@@ -1242,7 +1242,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         switch (pos) {
             // code
             case 4:
-                code_btn();
+                code_btn(v);
                 break;
 
             // serial monitor
@@ -1301,7 +1301,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     }
 
-    public void code_btn() {
+    public void code_btn(View v) {
         setInitLine();
         code_btn.setSelected(true);
         mMonitorHandler.sendEmptyMessage(1);
@@ -1334,6 +1334,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             monitor_text.setText(code);
         }, 100);
         current_pos = 4;
+
+        v.setSelected(true);
     }
 
     public void serial_btn() {
