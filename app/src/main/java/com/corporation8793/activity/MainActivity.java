@@ -118,6 +118,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private String mNoErrorText;
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
+    View [] tempTab = {null, null, null};
+    Boolean [] tempTabCheck = {false, false, false};
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
@@ -864,10 +866,43 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Subscribe
     public void FinishLoad(PushEvent mPushEvent) {
         // 이벤트가 발생한뒤 수행할 작업
-        Log.e("??","finishLoad");
+        Log.e("??","finishLoad " + mPushEvent.getPos());
         setLineForOtherCategoryTabs(mPushEvent.getPos());
-        blockly_monitor.setVisibility(View.GONE);
 
+
+        Log.e("FinishLoad - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
+
+        int count = 0;
+        for (boolean ttc : tempTabCheck) {
+            if (ttc) {
+                count += 1;
+            }
+        }
+        if (count >= 2) {
+            initTabCheck();
+            Log.e("FinishLoad - case", "Double Check Init !");
+        }
+
+
+
+        switch (mPushEvent.getPos()) {
+            // 어택땅
+            case 8:
+                initTabColor();
+                initTabCheck();
+                break;
+            default:
+                if(mPushEvent.getPos() < 4) {
+                    initTabColor();
+                    initTabCheck();
+                    break;
+                } else if (mPushEvent.getPos() >= 4 && mPushEvent.getPos() != 8){
+                    initTabColor();
+                    break;
+                }
+        }
+
+        blockly_monitor.setVisibility(View.GONE);
 
         if (categoryData.isClosed()) {
             if (current_pos>3) {
@@ -1233,21 +1268,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onClickTest(View v, int pos) {
         Log.e("??","onClickTest");
-
         Log.e("main create",pos+"");
-
         Log.e("isEnabled onClickTest",v.isSelected()+"");
+
+        if (pos >= 4) {
+            tempTab[pos-4] = v;
+
+            Log.e("before case", tempTabCheck[pos-4] + "");
+            //Log.e("in case", tempTabCheck[pos-4] + "");
+        } else {
+            initTabColor();
+            initTabCheck();
+        }
 
         // TODO : 상단 버튼 대응
         switch (pos) {
             // code
             case 4:
-                code_btn(v);
+                code_btn(pos);
                 break;
 
             // serial monitor
             case 5:
-                serial_btn();
+                serial_btn(pos);
                 break;
 
             // upload
@@ -1255,6 +1298,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 upload_btn();
                 break;
         }
+    }
+
+    public void initTabColor() {
+        for (View v : tempTab) {
+            if (v != null) {
+                v.setSelected(false);
+            }
+        }
+        Log.e("initTabColor - case", tempTab[0] + ", " + tempTab[1] + ", " + tempTab[2] + ", ");
+    }
+
+    public void initTabCheck() {
+        tempTabCheck = new Boolean[] {false, false, false};
+        Log.e("initTabCheck - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
     }
 
     @Override
@@ -1301,7 +1358,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     }
 
-    public void code_btn(View v) {
+    public void code_btn(int pos) {
         setInitLine();
         code_btn.setSelected(true);
         mMonitorHandler.sendEmptyMessage(1);
@@ -1335,10 +1392,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }, 100);
         current_pos = 4;
 
-        v.setSelected(true);
+        if (tempTabCheck[pos-4]) {
+            blockly_monitor.setVisibility(View.GONE);
+            initTabColor();
+            initTabCheck();
+        } else {
+            tempTabCheck[pos-4] = !tempTabCheck[pos-4];
+            tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
+            Log.e("after case", tempTabCheck[pos-4] + "");
+        }
     }
 
-    public void serial_btn() {
+    public void serial_btn(int pos) {
         setInitLine();
         serial_btn.setSelected(true);
         monitor_text.setText("");
@@ -1355,6 +1420,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         stringBuilder.setLength(0);
         num = 0;
         current_pos = 5;
+
+        if (tempTabCheck[pos-4]) {
+            blockly_monitor.setVisibility(View.GONE);
+            initTabColor();
+            initTabCheck();
+        } else {
+            tempTabCheck[pos-4] = !tempTabCheck[pos-4];
+            tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
+            Log.e("after case", tempTabCheck[pos-4] + "");
+        }
     }
 
     public void upload_btn() {

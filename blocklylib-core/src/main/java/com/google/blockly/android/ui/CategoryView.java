@@ -158,11 +158,6 @@ public class CategoryView extends RelativeLayout {
             @Override
             public void onItemClick(View v, int pos) {
                 itemClick.onClickTest(v,pos);
-                if (v.isSelected()) {
-                    v.setSelected(true);
-                } else {
-                    v.setSelected(false);
-                }
             }
         });
     }

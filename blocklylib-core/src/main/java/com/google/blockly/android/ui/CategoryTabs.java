@@ -333,9 +333,9 @@ public class CategoryTabs extends RecyclerView {
                     BusProvider.getInstance().post(new PushEvent(tabPosition, false, true));
                     onCategoryClicked(category);
                         Log.e("들어옴","ㅅㅎ");
-                        if (mListener != null){
+                        if (mListener != null) {
                             Log.e("mlist","not null");
-                            mListener.onItemClick(label,tabPosition);
+                            mListener.onItemClick(label, tabPosition);
                         }
 
                 }
