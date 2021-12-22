@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.corporation8793.R;
-import com.corporation8793.data.Chapter;
-import com.corporation8793.data.Level;
+import com.corporation8793.dto.Chapter;
+import com.corporation8793.dto.Level;
 import com.corporation8793.recyclerview.LevelAdapter;
 
 import java.util.ArrayList;

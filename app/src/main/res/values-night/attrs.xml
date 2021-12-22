@@ -5,6 +5,7 @@
         <attr name="chapter" format="integer" />
         <attr name="group" format="integer" />
         <attr name="title" format="string" />
+        <attr name="selected" format="boolean" />
 
 
         <declare-styleable name="MyCustomView">
@@ -14,6 +15,12 @@
             <attr name="percentage"></attr>
             <attr name="chapter"></attr>
         </declare-styleable>
+
+
+    <declare-styleable name="AnswerCustom">
+        <attr name="selected"></attr>
+
+    </declare-styleable>
 
 
 </resources>

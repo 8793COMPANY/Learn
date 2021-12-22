@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.corporation8793.CustomView;
+import com.corporation8793.custom.CustomView;
 import com.corporation8793.R;
 
 public class ChapterActivity extends AppCompatActivity {
@@ -49,6 +49,7 @@ public class ChapterActivity extends AppCompatActivity {
 
         chapter1.setOnClickListener(v->{
             Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
+            intent.putExtra("step",1);
             startActivity(intent);
         });
 
