@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corporation8793.R;
+import com.corporation8793.activity.ChapterActivity;
+import com.corporation8793.activity.ContentsActivity;
 import com.corporation8793.activity.ProblemActivity;
 import com.corporation8793.data.Chapter;
 
@@ -59,7 +61,7 @@ public class ChapterAdapter  extends RecyclerView.Adapter<ChapterAdapter.CustomV
 
         holder.itemView.setOnClickListener(v->{
             if (chapters.get(position).chapterName.equals("LED 깜박이기")){
-                Intent intent = new Intent(context.getApplicationContext(), ProblemActivity.class);
+                Intent intent = new Intent(context.getApplicationContext(), ChapterActivity.class);
                 context.startActivity(intent);
             }else{
                 Toast.makeText(context,"아직 열람할 수 없습니다.",Toast.LENGTH_SHORT).show();
