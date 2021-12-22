@@ -39,11 +39,13 @@ public class ProblemActivity extends AppCompatActivity {
 
     ConstraintLayout background;
     LinearLayout title_background;
+    String chapter_step = "default";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
+
 
         background = findViewById(R.id.problem_background);
         title_background = findViewById(R.id.problem_title_background);
@@ -65,6 +67,14 @@ public class ProblemActivity extends AppCompatActivity {
 
         decorView.setSystemUiVisibility( uiOption );
 
+        Log.e("check",getIntent().getIntExtra("step",1) +"");
+        if (getIntent().getIntExtra("step",1) != 1){
+            chapter_step = "deep";
+            background.setBackgroundColor(Color.WHITE);
+            title2.setVisibility(View.VISIBLE);
+            title_background.setVisibility(View.INVISIBLE);
+        }
+
         replaceFragment(0);
 
 
@@ -73,50 +83,68 @@ public class ProblemActivity extends AppCompatActivity {
             pos--;
             replaceFragment(pos);
             Log.e("pos",pos+"");
+
             if (pos ==0){
+                if (chapter_step.equals("deep")){
+                    background.setBackgroundColor(Color.WHITE);
+                    title2.setVisibility(View.VISIBLE);
+                    title_background.setVisibility(View.INVISIBLE);
+                }else{
+                    title.setText(titles[pos]);
+                }
                 back_btn.setVisibility(View.INVISIBLE);
+            }else{
+                title_background.setVisibility(View.VISIBLE);
+                title.setText(titles[pos]);
+                title2.setVisibility(View.INVISIBLE);
             }
-            title_background.setVisibility(View.VISIBLE);
-            title.setText(titles[pos]);
-            title2.setVisibility(View.INVISIBLE);
+
         });
 
         next_btn.setOnClickListener(v->{
-            if (pos < 4) {
-                back_btn.setVisibility(View.VISIBLE);
+            back_btn.setVisibility(View.VISIBLE);
+
+
+            if (pos < 3) {
                 pos++;
                 replaceFragment(pos);
             }
-            Log.e("pos",pos+"");
-            if (pos ==3){
-                background.setBackgroundColor(Color.WHITE);
-                back_btn.setVisibility(View.INVISIBLE);
-                title_background.setVisibility(View.INVISIBLE);
-                title2.setVisibility(View.VISIBLE);
-            }else if(pos ==4){
-                back_btn.setVisibility(View.INVISIBLE);
+
+            if(pos ==3){
                 Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
                 startActivity(intent);
-            }
-            else{
+            }else{
+                if (chapter_step.equals("deep") && pos ==1){
+                    title2.setVisibility(View.INVISIBLE);
+                    title_background.setVisibility(View.VISIBLE);
+                    background.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                }
                 title.setText(titles[pos]);
             }
 
+
+            Log.e("pos",pos+"");
+
         });
+
     }
+
 
 
     public void replaceFragment(int pos){
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (pos == 0){
-            transaction.replace(R.id.fragment, new Step1());
+            if (chapter_step.equals("default")){
+                transaction.replace(R.id.fragment, new Step1());
+            }else{
+                transaction.replace(R.id.fragment, new Step4());
+            }
+
         }else if (pos ==1){
             transaction.replace(R.id.fragment, new Step2());
         }else if (pos ==2){
             transaction.replace(R.id.fragment, new Step3());
-        }else{
-            transaction.replace(R.id.fragment, new Step4());
         }
 
         transaction.commit();

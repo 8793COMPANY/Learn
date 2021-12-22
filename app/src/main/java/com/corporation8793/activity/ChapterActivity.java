@@ -27,12 +27,12 @@ public class ChapterActivity extends AppCompatActivity {
 
         back_btn = findViewById(R.id.back_btn);
 
-        chapter1.setGroup(R.drawable.default_problem_image);
-        chapter2.setGroup(R.drawable.advanced_problem_image);
-        chapter3.setGroup(R.drawable.advanced_problem_image2);
+        chapter1.setGroup(1);
+        chapter2.setGroup(2);
+        chapter3.setGroup(3);
 
         initContent(chapter1,"LED 깜박이기",true, R.drawable.chapter_content1,1);
-        initContent(chapter2,"LED 1초간 껐다 켜기",false,R.drawable.chapter_content2,0);
+        initContent(chapter2,"LED 1초간 껐다 켜기",true,R.drawable.chapter_content2,0);
         initContent(chapter3,"LED 3개 깜박이기",false,R.drawable.chapter_content3,0);
 
 
@@ -52,6 +52,18 @@ public class ChapterActivity extends AppCompatActivity {
             intent.putExtra("step",1);
             startActivity(intent);
         });
+
+//        chapter2.setOnClickListener(v->{
+//            Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
+//            intent.putExtra("step",2);
+//            startActivity(intent);
+//        });
+//
+//        chapter3.setOnClickListener(v->{
+//            Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
+//            intent.putExtra("step",3);
+//            startActivity(intent);
+//        });
 
         back_btn.setOnClickListener(v->{
             finish();

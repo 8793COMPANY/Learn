@@ -225,7 +225,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     public boolean zoomOut() {
 
         if (mScrollable && mCurrentZoomScaleIndex > 0) {
-            Log.e("들어오는데","??");
+            //Log.e("들어오는데","??");
             Log.e("scale",mCurrentZoomScaleIndex+"");
             updateScaleStep(mCurrentZoomScaleIndex - 1);
             return true;
@@ -615,7 +615,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
-            BusProvider.getInstance().post(new PushEvent(8, true));
+            BusProvider.getInstance().post(new PushEvent(8, true, false));
             return callOnClick();
         }
     }

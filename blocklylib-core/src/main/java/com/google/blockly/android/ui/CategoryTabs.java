@@ -16,44 +16,27 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
-import android.graphics.Point;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import com.google.blockly.android.ui.CategoryData;
-import android.widget.TextView;
-
-import com.google.blockly.android.AbstractBlocklyActivity;
-import com.google.blockly.android.AbstractBlocklyFragment;
-import com.google.blockly.android.BlocklyActivityHelper;
-import com.google.blockly.android.BlocklySectionsActivity;
 import com.google.blockly.android.R;
-import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.model.BlocklyCategory;
-import com.google.blockly.model.DefaultBlocks;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -77,7 +60,8 @@ public class CategoryTabs extends RecyclerView {
 
     public static CategoryData categoryData = CategoryData.getInstance();
 
-    int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,R.drawable.etc_btn_selector, R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn};
+    int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
+    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -128,7 +112,7 @@ public class CategoryTabs extends RecyclerView {
         int realDeviceHeight = displayMetrics.heightPixels;
 
 
-        Log.e("realDevice",realDeviceWidth+"");
+        //Log.e("realDevice",realDeviceWidth+"");
 
 
 //        Resources resources = this.getResources();
@@ -227,31 +211,34 @@ public class CategoryTabs extends RecyclerView {
      * @param category
      */
     public void setSelectedCategory(@Nullable BlocklyCategory category) {
-        Log.e("@???","selected");
+        //Log.e("@???","selected");
+
         if (mCurrentCategory == category) {
-            Log.e("@???","mCurrentCategory");
+            //Log.e("@???","mCurrentCategory");
             return;
         }
+
         if (mCurrentCategory != null) {
             // Deselect the old tab.
-            Log.e("@mCurrentCategory","not null");
+            //Log.e("@mCurrentCategory","not null");
             TabLabelHolder vh = getTabLabelHolder(mCurrentCategory);
             if (vh != null && mLabelAdapter != null) {  // Tab might not be rendered or visible yet.
                 // Update style. Don't use notifyItemChanged(..), due to a resulting UI flash.
                 mLabelAdapter.onSelectionChanged(
                         vh.mLabel, vh.mCategory, vh.getAdapterPosition(), false);
                         categoryData.setSelection(false);
-                Log.e("@mCurrentCategory","in");
+                //Log.e("@mCurrentCategory","in");
             }
         }
+
         mCurrentCategory = category;
         if (mCurrentCategory != null && mLabelAdapter != null) {
             // Select the new tab.
-            Log.e("@mLabelAdapter","not null");
+            //Log.e("@mLabelAdapter","not null");
             TabLabelHolder vh = getTabLabelHolder(mCurrentCategory);
             if (vh != null) {  // Tab might not be rendered or visible yet.
                 // Update style. Don't use notifyItemChanged(..), due to a resulting UI flash.
-                Log.e("@vh","not null");
+                //Log.e("@vh","not null");
                 mLabelAdapter.onSelectionChanged(
                         vh.mLabel, vh.mCategory, vh.getAdapterPosition(), true);
                         categoryData.setSelection(true);
@@ -267,7 +254,7 @@ public class CategoryTabs extends RecyclerView {
     }
 
     public int getTabCount() {
-        return 4;
+        return 7;
     }
 
     private void onCategoryClicked(BlocklyCategory category) {
@@ -294,12 +281,12 @@ public class CategoryTabs extends RecyclerView {
 
         public CategoryAdapter(double width){
             this.width =width;
-            Log.e("width 확인",this.width+"");
+            //Log.e("width 확인",this.width+"");
         }
 
         @Override
         public int getItemCount() {
-            return  getTabCount();
+            return getTabCount();
         }
 
         @Override
@@ -317,7 +304,7 @@ public class CategoryTabs extends RecyclerView {
             BusProvider.getInstance().register(this);
             final BlocklyCategory category = mCategories.get(tabPosition);
             isSelected = (category == mCurrentCategory);
-            Log.e("tabPosition",tabPosition+"");
+            //Log.e("tabPosition",tabPosition+"");
 
             // These may throw a NPE, but that is an illegal state checked above.
 //
@@ -340,9 +327,10 @@ public class CategoryTabs extends RecyclerView {
                 public void onClick(View label) {
                     Log.e("tabposi",tabPosition+"");
                     categoryData.setPosition(tabPosition);
+                    categoryData.setSelection(true);
                     Log.e("isSelected",holder.mLabel.isSelected()+"");
 
-                    BusProvider.getInstance().post(new PushEvent(tabPosition, false));
+                    BusProvider.getInstance().post(new PushEvent(tabPosition, false, true));
                     onCategoryClicked(category);
                         Log.e("들어옴","ㅅㅎ");
                         if (mListener != null){
@@ -353,23 +341,9 @@ public class CategoryTabs extends RecyclerView {
                 }
             });
 
-//            if (tabPosition == 0){
-//                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 177), ViewGroup.LayoutParams.MATCH_PARENT);
-//                holder.itemView.setLayoutParams(layoutParams);
-//                holder.itemView.requestLayout();
-//            }else{
-//                //원래 176임 170이 아니라
-//                ViewGroup.LayoutParams layoutParams =new LayoutParams((int)(width * 181), ViewGroup.LayoutParams.MATCH_PARENT);
-//                holder.itemView.setLayoutParams(layoutParams);
-//                holder.itemView.requestLayout();
-//            }
-
-            Log.e("width",width+"");
-            ViewGroup.LayoutParams layoutParams =new LayoutParams((int)( (width / 1280.0)* 175.5), ViewGroup.LayoutParams.MATCH_PARENT);
+            ViewGroup.LayoutParams layoutParams = new LayoutParams((int)( (width / getTabCount()) ), ViewGroup.LayoutParams.MATCH_PARENT);
             holder.itemView.setLayoutParams(layoutParams);
             holder.itemView.requestLayout();
-
-
         }
 
         @Override
@@ -443,6 +417,12 @@ public class CategoryTabs extends RecyclerView {
         public void onSelectionChanged(
                 View labelView, BlocklyCategory category, int position, boolean isSelected) {
             labelView.setSelected(isSelected);
+            if (isSelected) {
+                Log.e(TAG, "TRUE SELECT");
+            } else {
+                Log.e(TAG, "FALSE SELECT");
+            }
+            Log.e(TAG, "onSelectionChanged: in");
         }
     }
 
@@ -460,8 +440,6 @@ public class CategoryTabs extends RecyclerView {
             mRotator = (RotatedViewGroup) itemView;
             mLabel = label;
             mRotator.addView(mLabel);
-
-
         }
     }
 }

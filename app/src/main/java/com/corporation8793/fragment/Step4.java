@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.corporation8793.R;
+import com.corporation8793.custom.AnswerItem;
 import com.corporation8793.dto.Answer;
 import com.corporation8793.recyclerview.AnswerAdapter;
 import com.corporation8793.recyclerview.RecyclerDecoration;
@@ -33,7 +34,10 @@ public class Step4 extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
     ArrayList<Answer> answers = new ArrayList<>();
+
+    AnswerItem problem1,problem2;
 
     public Step4() {
         // Required empty public constructor
@@ -71,6 +75,13 @@ public class Step4 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step4, container, false);
+        problem1 = view.findViewById(R.id.problem1);
+        problem2 = view.findViewById(R.id.problem2);
+
+        problem1.setType("search");
+        problem2.setType("search");
+        problem1.setSelected(true);
+        problem2.setSelected(false);
         RecyclerView answer_list = view.findViewById(R.id.answer_list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         answer_list.setLayoutManager(layoutManager);

@@ -433,12 +433,13 @@
         </block>-->
     </category>
 
-    <category name="Variables" colour="330">
+<!--    <category name="Variables" colour="330">-->
 
+<!--    </category>-->
 
+    <category name="Code" colour="330">
 
     </category>
-
 
     <category name="Serial" colour="330">
 

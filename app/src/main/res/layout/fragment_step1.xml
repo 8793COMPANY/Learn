@@ -21,8 +21,8 @@
             android:layout_height="match_parent"
             android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/problem_img"
+            <com.corporation8793.custom.AnswerItem
+                android:id="@+id/supplies1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="@+id/small_guide_left"
@@ -34,13 +34,12 @@
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintHorizontal_bias="0"
                 android:background="@drawable/supplies_img1"
-                android:src="#1A000000"
-                android:elevation="20dp"></ImageView>
+                android:elevation="20dp"></com.corporation8793.custom.AnswerItem>
 
 
-            <ImageView
+            <com.corporation8793.custom.AnswerItem
                 android:background="@drawable/supplies_img2"
-                android:id="@+id/answer_img"
+                android:id="@+id/supplies2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="@+id/small_guide_left"
@@ -51,15 +50,16 @@
                 app:layout_constraintWidth_percent="0.23"
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintHorizontal_bias="1"
-                ></ImageView>
+                ></com.corporation8793.custom.AnswerItem>
 
 
             <TextView
+                android:id="@+id/supplies_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/small_guide_left"
-                app:layout_constraintTop_toBottomOf="@+id/problem_img"
+                app:layout_constraintTop_toBottomOf="@+id/supplies1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="LED"
                 android:textColor="#ff9439"
@@ -70,11 +70,12 @@
 
 
             <TextView
+                android:id="@+id/supplies_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/small_guide_left"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/problem_img"
+                app:layout_constraintTop_toBottomOf="@+id/supplies1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다."
                 android:textColor="#2f2f2f"

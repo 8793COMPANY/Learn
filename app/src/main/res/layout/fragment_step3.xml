@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
+        android:id="@+id/background_area"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -13,10 +14,25 @@
         app:cardCornerRadius="14dp"
         app:cardElevation="0dp">
         <LinearLayout
+            android:id="@+id/upload_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/diagram_upload_img"></LinearLayout>
+            android:background="@drawable/diagram_upload_img"
+            android:orientation="vertical">
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/upload_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/background_area"
+        app:layout_constraintBottom_toBottomOf="@+id/background_area"
+        app:layout_constraintStart_toStartOf="@+id/background_area"
+        app:layout_constraintEnd_toEndOf="@+id/background_area"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.85"></ImageView>
 
 
 

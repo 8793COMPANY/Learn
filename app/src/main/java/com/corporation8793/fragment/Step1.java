@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.corporation8793.R;
+import com.corporation8793.custom.AnswerItem;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +27,9 @@ public class Step1 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    AnswerItem supplies1,supplies2;
+    TextView name,comment;
 
     public Step1() {
         // Required empty public constructor
@@ -61,8 +66,31 @@ public class Step1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_step1, container, false);
         String msg = "점퍼선은 납땜없이도 센서와 센서를 연결하거나 센서와 전류를 연결해주는 선입니다.";
-        return inflater.inflate(R.layout.fragment_step1, container, false);
+        supplies1 = view.findViewById(R.id.supplies1);
+        supplies2 = view.findViewById(R.id.supplies2);
+        name = view.findViewById(R.id.supplies_name);
+        comment = view.findViewById(R.id.supplies_comment);
+
+        supplies1.setSelected(true);
+        supplies2.setSelected(false);
+
+        supplies1.setOnClickListener(v->{
+            supplies1.setSelected(true);
+            supplies2.setSelected(false);
+            name.setText("LED");
+            comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
+        });
+        supplies2.setOnClickListener(v->{
+            supplies1.setSelected(false);
+            supplies2.setSelected(true);
+            name.setText("점퍼선");
+            comment.setText(msg);
+        });
+
+
+        return view;
 
     }
 }

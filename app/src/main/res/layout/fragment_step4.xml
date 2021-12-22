@@ -7,8 +7,8 @@
     tools:context=".fragment.Step4">
 
 
-    <ImageView
-        android:id="@+id/problem_img"
+    <com.corporation8793.custom.AnswerItem
+        android:id="@+id/problem1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
@@ -21,7 +21,7 @@
         app:layout_constraintHorizontal_bias="0"
         android:background="@drawable/green_led_img"
         android:src="#1A000000"
-        android:elevation="20dp"></ImageView>
+        android:elevation="20dp"></com.corporation8793.custom.AnswerItem>
 
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
         app:layout_constraintEnd_toEndOf="@+id/guide_right"
-        app:layout_constraintTop_toBottomOf="@+id/problem_img"
+        app:layout_constraintTop_toBottomOf="@+id/problem1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.55"
         app:layout_constraintWidth_percent="0.23"
@@ -42,8 +42,8 @@
         app:layout_constraintHorizontal_bias="0"></TextView>
 
 
-    <ImageView
-        android:id="@+id/answer_img"
+    <com.corporation8793.custom.AnswerItem
+        android:id="@+id/problem2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
@@ -54,7 +54,7 @@
         app:layout_constraintWidth_percent="0.23"
         app:layout_constraintVertical_bias="0.05"
         app:layout_constraintHorizontal_bias="1"
-        ></ImageView>
+        ></com.corporation8793.custom.AnswerItem>
 
 
     <TextView
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
         app:layout_constraintEnd_toEndOf="@+id/guide_right"
-        app:layout_constraintTop_toBottomOf="@+id/problem_img"
+        app:layout_constraintTop_toBottomOf="@+id/problem1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.55"
         app:layout_constraintWidth_percent="0.23"

@@ -65,7 +65,7 @@ public class CustomView extends ConstraintLayout {
             title = a.getString(R.styleable.MyCustomView_title);
             step = a.getInteger(R.styleable.MyCustomView_percentage,0);
             chapter = a.getInt(R.styleable.MyCustomView_chapter,0);
-            group = a.getInt(R.styleable.MyCustomView_group,R.drawable.advanced_problem_image);
+            group = a.getInt(R.styleable.MyCustomView_group,1);
 
             a.recycle(); // 이용이 끝났으면 recycle() 호출
         }
@@ -88,6 +88,7 @@ public class CustomView extends ConstraintLayout {
 
         chapter_image.setOnClickListener(v->{
             Intent intent = new Intent(getContext(), ProblemActivity.class);
+            intent.putExtra("step",group);
             getContext().startActivity(intent);
         });
     }
@@ -134,6 +135,13 @@ public class CustomView extends ConstraintLayout {
 
     public void setGroup(int group){
         this.group = group;
-        problem_group.setBackgroundResource(group);
+        if (group == 1){
+            problem_group.setBackgroundResource(R.drawable.default_problem_image);
+        }else if(group == 2){
+            problem_group.setBackgroundResource(R.drawable.advanced_problem_image);
+        }else{
+            problem_group.setBackgroundResource(R.drawable.advanced_problem_image2);
+        }
+
     }
 }

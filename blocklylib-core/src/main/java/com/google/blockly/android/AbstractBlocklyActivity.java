@@ -267,7 +267,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("test","asdasdasOnCreate");
+        //Log.e("test","asdasdasOnCreate");
         onCreateActivityRootView();
         mBlocklyActivityHelper = onCreateActivityHelper();
         if (mBlocklyActivityHelper == null) {
@@ -290,7 +290,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
 //        controller.recenterWorkspace();
 //        controller.zoomOut();
 
-        Log.e("aba", "onCreate: " + "Load the workspace");
+        //Log.e("aba", "onCreate: " + "Load the workspace");
         onLoadInitialWorkspace();
     }
 

@@ -1,13 +1,21 @@
 package com.corporation8793.fragment;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.corporation8793.R;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +32,12 @@ public class Step3 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    LinearLayout upload_area;
+    ImageView upload_img;
+
+    private static final int REQUEST_IMAGE_CODE = 101;
+    boolean check = false;
 
     public Step3() {
         // Required empty public constructor
@@ -60,6 +74,30 @@ public class Step3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step3, container, false);
+        View view = inflater.inflate(R.layout.fragment_step3, container, false);
+        upload_area = view.findViewById(R.id.upload_area);
+        upload_img = view.findViewById(R.id.upload_img);
+        upload_area.setOnClickListener(v->{
+            takePicture();
+        });
+        return view;
+    }
+
+    public void takePicture(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null){
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CODE && resultCode == RESULT_OK){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            upload_img.setImageBitmap(imageBitmap);
+        }
     }
 }
