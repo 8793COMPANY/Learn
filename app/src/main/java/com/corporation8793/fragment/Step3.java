@@ -131,7 +131,7 @@ public class Step3 extends Fragment {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             upload_img.setImageBitmap(imageBitmap);
             if (!check) {
-                if (MySharedPreferences.getInt(getContext(),contents_name) >= 3) {
+                if (MySharedPreferences.getInt(getContext(),contents_name) <3) {
                     MySharedPreferences.setInt(getContext(), contents_name, 3);
                 }
                 check = true;
