@@ -383,6 +383,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         else {
             Boolean value = OpenUSB();
             if (value) {
+                // TODO : 업로드 팝업 디자인 수정
 //                Toast.makeText(getApplicationContext(), "Compilation Success, Uploading", Toast.LENGTH_LONG).show();
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
 //                Log.e("generated",code);
@@ -391,16 +392,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 upload_Listener.show();
 //                Toast.makeText(getApplicationContext(), "last2: "+mFormat.format(System.currentTimeMillis()), Toast.LENGTH_SHORT).show();
 
-                Display display = getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-
-                Window window = upload_Listener.getWindow();
-
-                int x = (int)(size.x * 0.5f);
-                int y = (int)(size.y * 0.45f);
-
-                window.setLayout(x,y);
+//                Display display = getWindowManager().getDefaultDisplay();
+//                Point size = new Point();
+//                display.getSize(size);
+//
+//                Window window = upload_Listener.getWindow();
+//
+//                //int x = (int)(size.x * 0.5f);
+//                //int y = (int)(size.y * 0.45f);
+//
+//                int x = (int)(size.x);
+//                int y = (int)(size.y);
+//
+//                window.setLayout(x,y);
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
@@ -827,6 +831,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     };
 
+    private View.OnClickListener submit_confirm = v -> {
+        // TODO : LMS 서버 통신
+        Toast.makeText(getApplicationContext(), "LMS 에 제출되었습니다", Toast.LENGTH_SHORT).show();
+    };
+
     private View.OnClickListener error_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
@@ -856,10 +865,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
-        upload_Listener = new UploadDialog(this, upload_confirm,"업로드 성공!","확인을 눌러주세요");
-        error_Listener = new UploadDialog(this, upload_confirm,"인터넷 연결 불안정","WIFI를 확인을 해주세요");
+        upload_Listener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요");
+        error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
 
+
+
+        // TODO : 팝업 테스트
+        // upload_Listener.show();
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
