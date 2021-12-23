@@ -45,12 +45,10 @@ public class UploadDialog extends Dialog {
         Confirm=(Button)findViewById(R.id.Confirm);
 
         Title = findViewById(R.id.title);
-        Body = findViewById(R.id.body);
 
         Confirm.setOnClickListener(Confirm_Btn);
 
         //타이틀과 바디의 글씨 재셋팅
         Title.setText(this.title);
-        Body.setText(this.body);
     }
 }

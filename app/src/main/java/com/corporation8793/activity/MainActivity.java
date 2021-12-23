@@ -383,6 +383,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         else {
             Boolean value = OpenUSB();
             if (value) {
+                // TODO : 업로드 팝업 디자인 수정
 //                Toast.makeText(getApplicationContext(), "Compilation Success, Uploading", Toast.LENGTH_LONG).show();
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
 //                Log.e("generated",code);
@@ -391,16 +392,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 upload_Listener.show();
 //                Toast.makeText(getApplicationContext(), "last2: "+mFormat.format(System.currentTimeMillis()), Toast.LENGTH_SHORT).show();
 
-                Display display = getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-
-                Window window = upload_Listener.getWindow();
-
-                int x = (int)(size.x * 0.5f);
-                int y = (int)(size.y * 0.45f);
-
-                window.setLayout(x,y);
+//                Display display = getWindowManager().getDefaultDisplay();
+//                Point size = new Point();
+//                display.getSize(size);
+//
+//                Window window = upload_Listener.getWindow();
+//
+//                //int x = (int)(size.x * 0.5f);
+//                //int y = (int)(size.y * 0.45f);
+//
+//                int x = (int)(size.x);
+//                int y = (int)(size.y);
+//
+//                window.setLayout(x,y);
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
@@ -860,6 +864,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         error_Listener = new UploadDialog(this, upload_confirm,"인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
 
+
+
+        // TODO : 팝업 테스트
+        upload_Listener.show();
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
