@@ -6,15 +6,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.corporation8793.R;
 import com.corporation8793.custom.AnswerItem;
 import com.corporation8793.dto.Answer;
 import com.corporation8793.recyclerview.AnswerAdapter;
 import com.corporation8793.recyclerview.RecyclerDecoration;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -38,6 +42,8 @@ public class Step4 extends Fragment {
     ArrayList<Answer> answers = new ArrayList<>();
 
     AnswerItem problem1,problem2;
+    TextView problem_answer1,problem_answer2;
+    int count =2, current =0;
 
     public Step4() {
         // Required empty public constructor
@@ -77,6 +83,8 @@ public class Step4 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_step4, container, false);
         problem1 = view.findViewById(R.id.problem1);
         problem2 = view.findViewById(R.id.problem2);
+        problem_answer1 = view.findViewById(R.id.problem_answer1);
+        problem_answer2 = view.findViewById(R.id.problem_answer2);
 
         problem1.setType("search");
         problem2.setType("search");
@@ -89,6 +97,28 @@ public class Step4 extends Fragment {
         setDataList();
         AnswerAdapter adapter = new AnswerAdapter(getContext(),answers);
         answer_list.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new AnswerAdapter.OnItemClickEventListener() {
+            @Override
+            public void onItemClick(String name) {
+                Log.e("name",name);
+                if (current==0){
+                    if (problem_answer1.getText().toString().equals(name)){
+                        problem1.setBackgroundResource(R.drawable.green_led_img);
+                        problem1.setSelected(false);
+                        problem2.setSelected(true);
+                        current++;
+                    }
+
+                }else if(current==1){
+                    if (problem_answer2.getText().toString().equals(name)){
+                        problem2.setBackgroundResource(R.drawable.jumper_wire_img);
+                        problem1.setSelected(false);
+                        problem2.setSelected(false);
+                    }
+                }
+            }
+        });
         return view;
     }
 
@@ -96,17 +126,17 @@ public class Step4 extends Fragment {
     public void setDataList(){
         Answer answer = new Answer();
         answer.setImg(R.drawable.yellow_led_img);
-        answer.setAnswer("LED");
+        answer.setAnswer("LED(yellow)");
         answers.add(answer);
 
         Answer answer1 = new Answer();
         answer1.setImg(R.drawable.red_led_img);
-        answer1.setAnswer("LED");
+        answer1.setAnswer("LED(red)");
         answers.add(answer1);
 
         Answer answer2 = new Answer();
         answer2.setImg(R.drawable.green_led_img);
-        answer2.setAnswer("LED");
+        answer2.setAnswer("LED(green)");
         answers.add(answer2);
 
         Answer answer3 = new Answer();
@@ -128,5 +158,10 @@ public class Step4 extends Fragment {
         answer6.setImg(R.drawable.etc_img);
         answer6.setAnswer("etc");
         answers.add(answer6);
+
+        Answer answer7 = new Answer();
+        answer7.setImg(R.drawable.jumper_wire_img);
+        answer7.setAnswer("점퍼선");
+        answers.add(answer7);
     }
 }

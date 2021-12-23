@@ -19,13 +19,13 @@
         app:layout_constraintWidth_percent="0.23"
         app:layout_constraintVertical_bias="0.05"
         app:layout_constraintHorizontal_bias="0"
-        android:background="@drawable/green_led_img"
         android:src="#1A000000"
         android:elevation="20dp"></com.corporation8793.custom.AnswerItem>
 
 
     <TextView
-        android:text="LED"
+        android:id="@+id/problem_answer1"
+        android:text="LED(green)"
         android:textColor="#707070"
         android:fontFamily="@font/nskr_light"
         android:textSize="14dp"
@@ -58,6 +58,8 @@
 
 
     <TextView
+        android:id="@+id/problem_answer2"
+        android:text="점퍼선"
         android:textColor="#707070"
         android:fontFamily="@font/nskr_light"
         android:textSize="14dp"
