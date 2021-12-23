@@ -79,9 +79,12 @@ public class Step1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step1, container, false);
 
-        if (MySharedPreferences.getInt(getContext(),contents_name) < 1) {
-            MySharedPreferences.setInt(getContext(), contents_name, 1);
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
         }
+
+        MySharedPreferences.setInt(getContext(), contents_name, 1);
+
         String msg = "점퍼선은 납땜없이도 센서와 센서를 연결하거나 센서와 전류를 연결해주는 선입니다.";
         supplies1 = view.findViewById(R.id.supplies1);
         supplies2 = view.findViewById(R.id.supplies2);

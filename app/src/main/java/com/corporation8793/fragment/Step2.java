@@ -71,9 +71,12 @@ public class Step2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step2, container, false);
-        if (MySharedPreferences.getInt(getContext(),contents_name) <2) {
-            MySharedPreferences.setInt(getContext(),contents_name,2);
+
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
         }
+
+            MySharedPreferences.setInt(getContext(),contents_name,2);
 
         LinearLayout diagram_img = view.findViewById(R.id.diagram_img);
         diagram_img.setBackgroundResource(diagram);

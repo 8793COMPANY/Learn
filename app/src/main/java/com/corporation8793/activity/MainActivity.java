@@ -829,7 +829,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private View.OnClickListener upload_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
-            if (!contents_name.equals("none"))
+            if (!contents_name.equals("none")) {
+                if (MySharedPreferences.getInt(getApplicationContext(), contents_name + " MAX") < 5) {
+                    MySharedPreferences.setInt(getApplicationContext(), contents_name + " MAX", 5);
+                }
+            }
                 MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
             upload_Listener.dismiss();
 
@@ -856,9 +860,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        test();
         contents_name = getIntent().getStringExtra("contents_name");
         if (!contents_name.equals("none")){
-            if (MySharedPreferences.getInt(getApplicationContext(),contents_name) < 4) {
-                MySharedPreferences.setInt(getApplicationContext(),contents_name,4);
+            if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {
+                MySharedPreferences.setInt(getApplicationContext(), contents_name+" MAX", 4);
             }
+            MySharedPreferences.setInt(getApplicationContext(),contents_name,4);
+
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -1327,6 +1333,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             // upload
             case 6:
+                Log.e("6 in","come");
                 upload_btn();
                 break;
         }

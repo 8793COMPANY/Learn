@@ -124,9 +124,11 @@ public class Step4 extends Fragment {
                         problem2.setBackgroundResource(R.drawable.jumper_wire_img);
                         problem1.setSelected(false);
                         problem2.setSelected(false);
-                        if (MySharedPreferences.getInt(getContext(),contents_name) < 1) {
-                            MySharedPreferences.setInt(getContext(), contents_name, 1);
+                        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
+                            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
                         }
+                            MySharedPreferences.setInt(getContext(), contents_name, 1);
+
                     }
                 }
             }
