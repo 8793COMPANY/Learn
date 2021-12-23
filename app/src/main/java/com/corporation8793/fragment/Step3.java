@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.RetakeDialog;
 
@@ -44,8 +45,15 @@ public class Step3 extends Fragment {
     boolean check = false;
     private RetakeDialog retakeDialog;
 
+    String contents_name;
+
     public Step3() {
         // Required empty public constructor
+    }
+
+    public Step3(String contents_name) {
+        // Required empty public constructor
+        this.contents_name = contents_name;
     }
 
     /**
@@ -80,23 +88,29 @@ public class Step3 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step3, container, false);
+        MySharedPreferences.setInt(getContext(),contents_name,2);
         upload_area = view.findViewById(R.id.upload_area);
         upload_img = view.findViewById(R.id.upload_img);
 
         retakeDialog = new RetakeDialog(getContext(), retake_ok,retake_cancel);
         upload_area.setOnClickListener(v->{
-//            takePicture();
-            retakeDialog.show();
-            Display display = getActivity().getWindowManager().getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
+            if (check){
+                retakeDialog.show();
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
 
-            Window window = retakeDialog.getWindow();
+                Window window = retakeDialog.getWindow();
 
-            int x = (int)(size.x * 0.3f);
-            int y = (int)(size.y * 0.4f);
+                int x = (int)(size.x * 0.3f);
+                int y = (int)(size.y * 0.35f);
 
-            window.setLayout(x,y);
+                window.setLayout(x,y);
+            }else{
+                takePicture();
+            }
+
+
         });
         return view;
     }
@@ -116,12 +130,19 @@ public class Step3 extends Fragment {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             upload_img.setImageBitmap(imageBitmap);
+            if (!check) {
+                if (MySharedPreferences.getInt(getContext(),contents_name) >= 3) {
+                    MySharedPreferences.setInt(getContext(), contents_name, 3);
+                }
+                check = true;
+            }
         }
     }
 
     private View.OnClickListener retake_ok = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
+            takePicture();
             retakeDialog.dismiss();
         }
     };

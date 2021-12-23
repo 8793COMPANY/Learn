@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.corporation8793.Application;
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.fragment.Step1;
 import com.corporation8793.fragment.Step2;
@@ -34,18 +36,20 @@ public class ProblemActivity extends AppCompatActivity {
 
     TextView title, title2;
 
-    String [] titles = {"준비물","전체 회로도","회로도 구성","필요한 부품을 찾아보세요"};
+    String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
+    String [] contents = {"LED 깜박이기","LED 1초간 껐다 켜기","LED 3개 깜박이기"};
     int pos = 0;
 
     ConstraintLayout background;
     LinearLayout title_background;
     String chapter_step = "default";
+    int diagram_img = R.drawable.all_diagram_img;
+    String contents_name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
-
 
         background = findViewById(R.id.problem_background);
         title_background = findViewById(R.id.problem_title_background);
@@ -67,12 +71,19 @@ public class ProblemActivity extends AppCompatActivity {
 
         decorView.setSystemUiVisibility( uiOption );
 
-        Log.e("check",getIntent().getIntExtra("step",1) +"");
-        if (getIntent().getIntExtra("step",1) != 1){
+        int step = getIntent().getIntExtra("step",1);
+        contents_name = contents[step-1];
+
+        Log.e("check",step +"");
+        if (step != 1){
             chapter_step = "deep";
             background.setBackgroundColor(Color.WHITE);
             title2.setVisibility(View.VISIBLE);
             title_background.setVisibility(View.INVISIBLE);
+        }
+
+        if (step == 3){
+            diagram_img = R.drawable.all_diagram_img2;
         }
 
         replaceFragment(0);
@@ -102,16 +113,36 @@ public class ProblemActivity extends AppCompatActivity {
         });
 
         next_btn.setOnClickListener(v->{
-            back_btn.setVisibility(View.VISIBLE);
 
 
-            if (pos < 3) {
-                pos++;
-                replaceFragment(pos);
+
+            if (MySharedPreferences.getInt(getApplicationContext(),contents_name) < 3) {
+                if (pos < 3) {
+                    Log.e("hello",MySharedPreferences.getInt(getApplicationContext(),contents_name)+"");
+                        pos++;
+                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
+                        pos = 0;
+                    }
+
+                    if (pos <3)
+                            title.setText(titles[pos]);
+
+                }
+                if (MySharedPreferences.getInt(getApplicationContext(),contents_name) == pos) {
+                    Log.e("chapter_step",chapter_step);
+                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
+                    } else {
+                        back_btn.setVisibility(View.VISIBLE);
+                        replaceFragment(pos);
+
+                    }
+                }
+
             }
 
-            if(pos ==3){
+            if(MySharedPreferences.getInt(getApplicationContext(),contents_name) ==3){
                 Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
+                intent.putExtra("contents_name",contents_name);
                 startActivity(intent);
             }else{
                 if (chapter_step.equals("deep") && pos ==1){
@@ -119,7 +150,6 @@ public class ProblemActivity extends AppCompatActivity {
                     title_background.setVisibility(View.VISIBLE);
                     background.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 }
-                title.setText(titles[pos]);
             }
 
 
@@ -136,18 +166,19 @@ public class ProblemActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (pos == 0){
             if (chapter_step.equals("default")){
-                transaction.replace(R.id.fragment, new Step1());
+                transaction.replace(R.id.fragment, new Step1(contents_name));
             }else{
-                transaction.replace(R.id.fragment, new Step4());
+                transaction.replace(R.id.fragment, new Step4(contents_name));
             }
 
         }else if (pos ==1){
-            transaction.replace(R.id.fragment, new Step2());
+            transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));
         }else if (pos ==2){
-            transaction.replace(R.id.fragment, new Step3());
+            transaction.replace(R.id.fragment, new Step3(contents_name));
         }
 
         transaction.commit();
 
     }
+
 }

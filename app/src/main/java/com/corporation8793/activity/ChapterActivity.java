@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.custom.CustomView;
 import com.corporation8793.R;
 
@@ -31,9 +33,9 @@ public class ChapterActivity extends AppCompatActivity {
         chapter2.setGroup(2);
         chapter3.setGroup(3);
 
-        initContent(chapter1,"LED 깜박이기",true, R.drawable.chapter_content1,1);
-        initContent(chapter2,"LED 1초간 껐다 켜기",true,R.drawable.chapter_content2,0);
-        initContent(chapter3,"LED 3개 깜박이기",false,R.drawable.chapter_content3,0);
+        initContent(chapter1,"LED 깜박이기",true, R.drawable.chapter_content1, MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기"));
+        initContent(chapter2,"LED 1초간 껐다 켜기",true,R.drawable.chapter_content2,MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기"));
+        initContent(chapter3,"LED 3개 깜박이기",true,R.drawable.chapter_content3,MySharedPreferences.getInt(getApplicationContext(), "LED 3개 깜박이기"));
 
 
         decorView = getWindow().getDecorView();
@@ -47,11 +49,11 @@ public class ChapterActivity extends AppCompatActivity {
 
         decorView.setSystemUiVisibility( uiOption );
 
-        chapter1.setOnClickListener(v->{
-            Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
-            intent.putExtra("step",1);
-            startActivity(intent);
-        });
+//        chapter1.setOnClickListener(v->{
+//            Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
+//            intent.putExtra("step",1);
+//            startActivity(intent);
+//        });
 
 //        chapter2.setOnClickListener(v->{
 //            Intent intent = new Intent(ChapterActivity.this, ProblemActivity.class);
@@ -75,5 +77,18 @@ public class ChapterActivity extends AppCompatActivity {
         view.setOpen(open,false);
         view.setBackground(chapterImg);
         view.setPercentage(step);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기") == 5){
+            chapter2.setSelected(true);
+        }else if(MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기")==5){
+            chapter3.setSelected(true);
+        }
+        chapter1.setPercentage(MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기"));
+        chapter2.setPercentage(MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기"));
+        chapter3.setPercentage(MySharedPreferences.getInt(getApplicationContext(), "LED 3개 깜박이기"));
     }
 }

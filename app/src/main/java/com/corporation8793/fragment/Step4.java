@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.custom.AnswerItem;
 import com.corporation8793.dto.Answer;
@@ -45,8 +46,16 @@ public class Step4 extends Fragment {
     TextView problem_answer1,problem_answer2;
     int count =2, current =0;
 
+
+
+    String contents_name ="";
     public Step4() {
         // Required empty public constructor
+    }
+
+    public Step4(String contents_name) {
+        // Required empty public constructor
+        this.contents_name = contents_name;
     }
 
     /**
@@ -115,6 +124,9 @@ public class Step4 extends Fragment {
                         problem2.setBackgroundResource(R.drawable.jumper_wire_img);
                         problem1.setSelected(false);
                         problem2.setSelected(false);
+                        if (MySharedPreferences.getInt(getContext(),contents_name) < 1) {
+                            MySharedPreferences.setInt(getContext(), contents_name, 1);
+                        }
                     }
                 }
             }

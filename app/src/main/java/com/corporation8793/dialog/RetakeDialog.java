@@ -42,11 +42,9 @@ public class RetakeDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         setContentView(R.layout.dialog_retake);
-        retake_btn =(Button)findViewById(R.id.Confirm);
+        retake_btn =(Button)findViewById(R.id.retake);
         cancel_btn = findViewById(R.id.cancel);
 
-        Title = findViewById(R.id.title);
-        Body = findViewById(R.id.body);
 
         retake_btn.setOnClickListener(retake_listener);
         cancel_btn.setOnClickListener(cancel_listener);

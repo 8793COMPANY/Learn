@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
 
         free_mode.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.putExtra("contents_name","none");
             startActivity(intent);
         });
 
