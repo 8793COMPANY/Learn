@@ -2,23 +2,18 @@ package com.corporation8793.recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corporation8793.R;
 import com.corporation8793.activity.ChapterActivity;
-import com.corporation8793.activity.ContentsActivity;
-import com.corporation8793.activity.ProblemActivity;
-import com.corporation8793.data.Chapter;
+import com.corporation8793.dto.Chapter;
 
 import java.util.ArrayList;
 

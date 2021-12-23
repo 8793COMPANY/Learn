@@ -40,7 +40,13 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.IntroActivity"
             android:screenOrientation="sensorLandscape">
@@ -48,11 +54,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.Step4">
+
+
+    <com.corporation8793.custom.AnswerItem
+        android:id="@+id/problem1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@+id/guide_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintWidth_percent="0.23"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0"
+        android:background="@drawable/green_led_img"
+        android:src="#1A000000"
+        android:elevation="20dp"></com.corporation8793.custom.AnswerItem>
+
+
+    <TextView
+        android:text="LED"
+        android:textColor="#707070"
+        android:fontFamily="@font/nskr_light"
+        android:textSize="14dp"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@+id/guide_right"
+        app:layout_constraintTop_toBottomOf="@+id/problem1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintWidth_percent="0.23"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"></TextView>
+
+
+    <com.corporation8793.custom.AnswerItem
+        android:id="@+id/problem2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@+id/guide_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintWidth_percent="0.23"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="1"
+        ></com.corporation8793.custom.AnswerItem>
+
+
+    <TextView
+        android:textColor="#707070"
+        android:fontFamily="@font/nskr_light"
+        android:textSize="14dp"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@+id/guide_right"
+        app:layout_constraintTop_toBottomOf="@+id/problem1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintWidth_percent="0.23"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"></TextView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/answer_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.3"
+        android:background="#f7f7f7"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        ></androidx.recyclerview.widget.RecyclerView>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.24"></androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.76"></androidx.constraintlayout.widget.Guideline>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

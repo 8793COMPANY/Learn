@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corporation8793.R;
-import com.corporation8793.data.Level;
+import com.corporation8793.dto.Level;
 
 import java.util.ArrayList;
 
