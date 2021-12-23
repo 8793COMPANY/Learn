@@ -144,6 +144,7 @@ public class ProblemActivity extends AppCompatActivity {
                 Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
                 intent.putExtra("contents_name",contents_name);
                 startActivity(intent);
+                finish();
             }else{
                 if (chapter_step.equals("deep") && pos ==1){
                     title2.setVisibility(View.INVISIBLE);

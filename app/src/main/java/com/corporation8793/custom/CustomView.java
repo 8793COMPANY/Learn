@@ -87,9 +87,11 @@ public class CustomView extends ConstraintLayout {
 //        setGroup(group);
 
         chapter_image.setOnClickListener(v->{
-            Intent intent = new Intent(getContext(), ProblemActivity.class);
-            intent.putExtra("step",group);
-            getContext().startActivity(intent);
+            if (getOpen()) {
+                Intent intent = new Intent(getContext(), ProblemActivity.class);
+                intent.putExtra("step", group);
+                getContext().startActivity(intent);
+            }
         });
     }
 
@@ -102,6 +104,10 @@ public class CustomView extends ConstraintLayout {
 
     public int getPercentage() {
         return step;
+    }
+
+    public boolean getOpen() {
+        return mOpen;
     }
 
 

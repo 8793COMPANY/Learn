@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/problem_answer1"
-        android:text="LED(green)"
+        android:text="LED"
         android:textColor="#707070"
         android:fontFamily="@font/nskr_light"
         android:textSize="14dp"

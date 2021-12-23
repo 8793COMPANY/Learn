@@ -29,6 +29,10 @@ public class ChapterActivity extends AppCompatActivity {
 
         back_btn = findViewById(R.id.back_btn);
 
+        chapter2.setEnabled(false);
+        chapter3.setEnabled(false);
+
+
         chapter1.setGroup(1);
         chapter2.setGroup(2);
         chapter3.setGroup(3);
@@ -36,6 +40,16 @@ public class ChapterActivity extends AppCompatActivity {
         initContent(chapter1,"LED 깜박이기",true, R.drawable.chapter_content1, MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"));
         initContent(chapter2,"LED 1초간 껐다 켜기",false,R.drawable.chapter_content2,MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기 MAX"));
         initContent(chapter3,"LED 3개 깜박이기",false,R.drawable.chapter_content3,MySharedPreferences.getInt(getApplicationContext(), "LED 3개 깜박이기 MAX"));
+        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
+            chapter2.setOpen(true,false);
+            chapter2.setEnabled(true);
+        }
+
+        if(MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기 MAX")==5){
+            chapter3.setOpen(true,false);
+            chapter3.setEnabled(true);
+        }
+
 
 
         decorView = getWindow().getDecorView();
@@ -82,10 +96,11 @@ public class ChapterActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기_max") == 5){
-            chapter2.setSelected(true);
-        }else if(MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기_max")==5){
-            chapter3.setSelected(true);
+        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
+            chapter2.setOpen(true,false);
+        }
+        if(MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기 MAX")==5){
+            chapter3.setOpen(true,false);
         }
         chapter1.setPercentage(MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"));
         chapter2.setPercentage(MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기 MAX"));

@@ -1215,7 +1215,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("배울래를 종료하시겠습니까?");
+        builder.setMessage("단원을 종료하시겠습니까?");
         builder.setPositiveButton("아니오",(dialog, which) -> {
             dialog.cancel();});
         builder.setNegativeButton("예",(dialog, which) -> {
@@ -1223,9 +1223,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // finish();
 
             // 정말로 종료
-            moveTaskToBack(true);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+//            moveTaskToBack(true);
+//            android.os.Process.killProcess(android.os.Process.myPid());
+//            System.exit(1);
+            finish();
         });
         builder.show();
     }

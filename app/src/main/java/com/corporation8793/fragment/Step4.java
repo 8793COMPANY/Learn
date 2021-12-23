@@ -112,8 +112,14 @@ public class Step4 extends Fragment {
             public void onItemClick(String name) {
                 Log.e("name",name);
                 if (current==0){
-                    if (problem_answer1.getText().toString().equals(name)){
-                        problem1.setBackgroundResource(R.drawable.green_led_img);
+                    if (name.contains("LED")){
+                        if (name.equals("LED(red)")){
+                            problem1.setBackgroundResource(R.drawable.red_led_img);
+                        }else if(name.equals("LED(green)")){
+                            problem1.setBackgroundResource(R.drawable.green_led_img);
+                        }else{
+                            problem1.setBackgroundResource(R.drawable.yellow_led_img);
+                        }
                         problem1.setSelected(false);
                         problem2.setSelected(true);
                         current++;
