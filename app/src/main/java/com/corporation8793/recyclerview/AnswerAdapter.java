@@ -22,6 +22,16 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.CustomView
     private ArrayList<Answer> answers;
     private LayoutInflater inflater;
 
+    public interface OnItemClickEventListener {
+        void onItemClick(String name);
+    }
+
+    private OnItemClickEventListener mItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickEventListener a_listener) {
+        mItemClickListener = a_listener;
+    }
+
     public AnswerAdapter(Context context, ArrayList<Answer> answers) {
         this.context = context;
         this.answers = answers;
@@ -47,9 +57,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.CustomView
 
         holder.aImg.setBackgroundResource(answers.get(position).getImg());
 
-        holder.itemView.setOnClickListener(v->{
-           Toast.makeText(context,answers.get(position).getAnswer(),Toast.LENGTH_SHORT).show();
-        });
 
     }
 
@@ -64,6 +71,15 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.CustomView
         public CustomViewHolder(View itemView) {
             super(itemView);
             aImg = itemView.findViewById(R.id.chapter);
+
+            itemView.setOnClickListener(v->{
+                int pos = getAdapterPosition() ;
+                if (pos != RecyclerView.NO_POSITION) {
+                    if (mItemClickListener != null) {
+                        mItemClickListener.onItemClick(answers.get(pos).getAnswer()) ;
+                    }
+                }
+            });
         }
     }
 }

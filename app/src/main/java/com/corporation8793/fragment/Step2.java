@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 
 /**
@@ -25,8 +27,16 @@ public class Step2 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Step2() {
+    int diagram =0;
+    String contents_name ="";
+    public Step2(){
+
+    }
+
+    public Step2(String contents_name,int diagram_img) {
         // Required empty public constructor
+        this.contents_name = contents_name;
+        diagram = diagram_img;
     }
 
     /**
@@ -60,6 +70,16 @@ public class Step2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_step2, container, false);
+        View view = inflater.inflate(R.layout.fragment_step2, container, false);
+
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
+        }
+
+            MySharedPreferences.setInt(getContext(),contents_name,2);
+
+        LinearLayout diagram_img = view.findViewById(R.id.diagram_img);
+        diagram_img.setBackgroundResource(diagram);
+        return view;
     }
 }

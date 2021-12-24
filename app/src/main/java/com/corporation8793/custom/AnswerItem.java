@@ -80,16 +80,19 @@ public class AnswerItem extends ConstraintLayout {
 
     private void setSelected(boolean select, boolean force) {
         mSelected = select;
+        Log.e("mSelected",mSelected+"");
         if (mSelected) {
             stroke.setBackgroundResource(R.drawable.problem_item_box_select);
             stroke.setImageResource(0);
         } else {
             if (type.equals("search")){
                 stroke.setBackgroundResource(R.drawable.problem_item_box_not_select);
+                stroke.setImageResource(0);
             }else{
+                stroke.setBackgroundResource(0);
                 stroke.setImageResource(R.drawable.enabled_item_img);
             }
-            stroke.setImageResource(0);
+
 
         }
     }

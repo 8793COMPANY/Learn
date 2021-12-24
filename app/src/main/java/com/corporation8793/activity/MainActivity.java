@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.UploadDialog;
@@ -143,6 +144,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String str ="";
     ScrollView scrollview;
     int num = 0;
+    String contents_name ="none";
 
     Guideline guideline4;
     Button upload_btn;
@@ -826,7 +828,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private View.OnClickListener upload_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
+            if (!contents_name.equals("none")) {
+                if (MySharedPreferences.getInt(getApplicationContext(), contents_name + " MAX") < 5) {
+                    MySharedPreferences.setInt(getApplicationContext(), contents_name + " MAX", 5);
+                }
+            }
+                MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
             upload_Listener.dismiss();
+
         }
     };
 
@@ -848,6 +857,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         super.onCreate(savedInstanceState);
 //        hideSystemUI();
 //        test();
+        contents_name = getIntent().getStringExtra("contents_name");
+        if (!contents_name.equals("none")){
+            if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {
+                MySharedPreferences.setInt(getApplicationContext(), contents_name+" MAX", 4);
+            }
+            MySharedPreferences.setInt(getApplicationContext(),contents_name,4);
+
+        }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -1198,7 +1215,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("배울래를 종료하시겠습니까?");
+        builder.setMessage("단원을 종료하시겠습니까?");
         builder.setPositiveButton("아니오",(dialog, which) -> {
             dialog.cancel();});
         builder.setNegativeButton("예",(dialog, which) -> {
@@ -1206,9 +1223,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // finish();
 
             // 정말로 종료
-            moveTaskToBack(true);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+//            moveTaskToBack(true);
+//            android.os.Process.killProcess(android.os.Process.myPid());
+//            System.exit(1);
+            finish();
         });
         builder.show();
     }
@@ -1315,6 +1333,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             // upload
             case 6:
+                Log.e("6 in","come");
                 upload_btn();
                 break;
         }

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.corporation8793.Application;
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.custom.AnswerItem;
 
@@ -31,9 +33,18 @@ public class Step1 extends Fragment {
     AnswerItem supplies1,supplies2;
     TextView name,comment;
 
+    String contents_name;
+
     public Step1() {
         // Required empty public constructor
     }
+
+    public Step1(String contents_name) {
+        this.contents_name = contents_name;
+        // Required empty public constructor
+    }
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -67,12 +78,21 @@ public class Step1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step1, container, false);
+
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
+        }
+
+        MySharedPreferences.setInt(getContext(), contents_name, 1);
+
         String msg = "점퍼선은 납땜없이도 센서와 센서를 연결하거나 센서와 전류를 연결해주는 선입니다.";
         supplies1 = view.findViewById(R.id.supplies1);
         supplies2 = view.findViewById(R.id.supplies2);
         name = view.findViewById(R.id.supplies_name);
         comment = view.findViewById(R.id.supplies_comment);
 
+        supplies1.setType("default");
+        supplies2.setType("default");
         supplies1.setSelected(true);
         supplies2.setSelected(false);
 
