@@ -19,7 +19,6 @@
         app:layout_constraintWidth_percent="0.23"
         app:layout_constraintVertical_bias="0.05"
         app:layout_constraintHorizontal_bias="0"
-        android:src="#1A000000"
         android:elevation="20dp"></com.corporation8793.custom.AnswerItem>
 
 

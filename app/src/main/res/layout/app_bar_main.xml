@@ -7,15 +7,21 @@
     tools:context=".activity.ModeSelect">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/actionbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="70dp"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
+        android:gravity="center_vertical"
+        android:background="#fcf1de"
+        android:translationZ="0.1dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#fcf1de"
+            android:background="#ffd0ad"
+            android:layout_gravity="bottom"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
