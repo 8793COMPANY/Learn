@@ -1,4 +1,6 @@
 include ':blocklylib-vertical'
 include ':blocklylib-core'
 include ':app'
+include ':PhysicaloidLibrary'
+project(':PhysicaloidLibrary').projectDir = new File(rootDir, 'PhysicaloidLibrary/')
 rootProject.name = "learn4"

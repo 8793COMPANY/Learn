@@ -36,8 +36,9 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation project(path: ':PhysicaloidLibrary')
     testImplementation 'junit:junit:4.12'
-    implementation 'net.cattaka:physicaloid:1.0.2'
+    //implementation 'net.cattaka:physicaloid:1.0.2'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation project(':blocklylib-vertical')
