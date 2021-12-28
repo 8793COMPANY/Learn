@@ -11,11 +11,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.SurfaceControl;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
@@ -114,8 +116,6 @@ public class ProblemActivity extends AppCompatActivity {
 
         next_btn.setOnClickListener(v->{
 
-
-
             if (MySharedPreferences.getInt(getApplicationContext(),contents_name) < 3) {
                 if (pos < 3) {
                     Log.e("hello",MySharedPreferences.getInt(getApplicationContext(),contents_name)+"");
@@ -126,6 +126,7 @@ public class ProblemActivity extends AppCompatActivity {
 
                     if (pos <3)
                             title.setText(titles[pos]);
+
 
                 }
                 if (MySharedPreferences.getInt(getApplicationContext(),contents_name) == pos) {
@@ -145,11 +146,14 @@ public class ProblemActivity extends AppCompatActivity {
                 intent.putExtra("contents_name",contents_name);
                 startActivity(intent);
                 finish();
-            }else{
+            } else{
                 if (chapter_step.equals("deep") && pos ==1){
                     title2.setVisibility(View.INVISIBLE);
                     title_background.setVisibility(View.VISIBLE);
                     background.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                }else if (MySharedPreferences.getInt(getApplicationContext(),contents_name) ==2 && pos ==3){
+
+                        Toast.makeText(getApplicationContext(),"사진을 업로드해주세요",Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -159,7 +163,6 @@ public class ProblemActivity extends AppCompatActivity {
         });
 
     }
-
 
 
     public void replaceFragment(int pos){

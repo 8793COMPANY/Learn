@@ -13,11 +13,11 @@
         app:layout_constraintEnd_toEndOf="@id/guide_right"
         app:cardCornerRadius="14dp"
         app:cardElevation="0dp">
-        <LinearLayout
+        <ImageView
             android:id="@+id/diagram_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/all_diagram_img"></LinearLayout>
+            android:background="@drawable/all_diagram_img"></ImageView>
     </androidx.cardview.widget.CardView>
 
 

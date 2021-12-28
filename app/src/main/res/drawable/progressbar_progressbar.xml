@@ -16,12 +16,15 @@
         </clip>
     </item>
     <item android:id="@android:id/progress">
-        <clip>
-            <shape>
-                <corners android:radius="6dp" />
-                <solid android:color="#f78f43" />
-                <stroke android:color="#feffff" android:width="3dp"></stroke>
-            </shape>
-        </clip>
+        <scale
+            android:drawable="@drawable/pb_custom_progress"
+            android:scaleWidth="100%"></scale>
+<!--        <clip>-->
+<!--            <shape>-->
+<!--                <corners android:radius="6dp" />-->
+<!--                <solid android:color="#f78f43" />-->
+<!--                <stroke android:color="#feffff" android:width="3dp"></stroke>-->
+<!--            </shape>-->
+<!--        </clip>-->
     </item>
 </layer-list>

@@ -244,6 +244,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             new CodeGenerationRequest.CodeGeneratorCallback() {
                 @Override
                 public void onFinishCodeGeneration(final String generatedCode) {
+                    Log.e("start!","onFinishCodeGeneration");
 
                     mHandler.post(new Runnable() {
                         @Override
@@ -1249,6 +1250,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @NonNull
     @Override
     protected CodeGenerationRequest.CodeGeneratorCallback getCodeGenerationCallback() {
+        Log.e("in!","getCodeGenerationCallback");
         return mCodeGeneratorCallback;
     }
 
@@ -1277,6 +1279,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     @NonNull
     protected String getWorkspaceAutosavePath() {
+        Log.e("in!","getWorkspaceAutosavePath");
         return AUTOSAVE_FILENAME;
     }
 
