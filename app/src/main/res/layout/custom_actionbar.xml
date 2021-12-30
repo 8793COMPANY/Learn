@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/btnBack"
+        android:id="@+id/btnMenu"
         android:layout_alignParentLeft="true"
         android:layout_width="35dp"
         android:layout_height="35dp"

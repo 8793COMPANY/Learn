@@ -112,6 +112,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     private static final String SAVE_FILENAME = "turtle_workspace.xml";
     private static final String AUTOSAVE_FILENAME = "turtle_workspace_temp.xml";
+    private static final String AUTOSAVE_FILENAME2 = "turtle_workspace_temp2.xml";
     private TextView mGeneratedTextView;
     private TextView mGeneratedErrorTextView;
     private FrameLayout mGeneratedFrameLayout;
@@ -261,6 +262,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                        Log.e("generated",generatedCode);
                     }
                     else {
+                        Log.e("start!","not generatedCode.contains");
 
                         // Sample callback.
                         //Log.i(TAG, "generatedCode:\n" + generatedCode);
@@ -566,6 +568,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     @Override
     public void onLoadWorkspace() {
+        Log.e("in!","onLoadWorkspace");
         mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(SAVE_FILENAME);
     }
 
@@ -638,6 +641,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     @Override
     public void onSaveWorkspace() {
+        Log.e("in","onSaveWorkspace");
         mBlocklyActivityHelper.saveWorkspaceToAppDirSafely(SAVE_FILENAME);
     }
 
@@ -858,7 +862,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         super.onCreate(savedInstanceState);
 //        hideSystemUI();
 //        test();
-        contents_name = getIntent().getStringExtra("contents_name");
+
+        Log.e("????",contents_name);
         if (!contents_name.equals("none")){
             if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {
                 MySharedPreferences.setInt(getApplicationContext(), contents_name+" MAX", 4);
@@ -981,9 +986,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 //        setupView(blockly_workspace);
 
+
+        //지울 거
         code_btn =  blockly_workspace.findViewById(R.id.code_btn);
         serial_btn = blockly_workspace.findViewById(R.id.serial_btn);
         upload_btn =  blockly_workspace.findViewById(R.id.upload_btn);
+//
+
 
 //        view_linear = blockly_workspace.findViewById(R.id.view_linear);
 
@@ -1127,16 +1136,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         current_tag = tag;
     }
-//
-//    void setupView(View view){
-////        setup_view = view.findViewById(R.id.setup_view);
-////        loop_view = view.findViewById(R.id.loop_view);
-////        method_view = view.findViewById(R.id.method_view);
-////        etc_view = view.findViewById(R.id.etc_view);
-//        code_view = view.findViewById(R.id.code_view);
-//        serial_view = view.findViewById(R.id.serial_view);
-//        upload_view = view.findViewById(R.id.upload_view);
-//    }
 
     void setInitLine(){
         code_btn.setSelected(false);
@@ -1280,7 +1279,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @NonNull
     protected String getWorkspaceAutosavePath() {
         Log.e("in!","getWorkspaceAutosavePath");
-        return AUTOSAVE_FILENAME;
+        contents_name = getIntent().getStringExtra("contents_name");
+        if (contents_name.equals("none")){
+            Log.e("none","in");
+            return AUTOSAVE_FILENAME;
+        }
+        Log.e("none","not in");
+        return AUTOSAVE_FILENAME2;
     }
 
 
@@ -1311,7 +1316,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("??","onClickTest");
         Log.e("main create",pos+"");
         Log.e("isEnabled onClickTest",v.isSelected()+"");
-
         if (pos >= 4) {
             tempTab[pos-4] = v;
 

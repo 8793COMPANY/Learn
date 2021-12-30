@@ -199,6 +199,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * {@link #getWorkspaceSavePath()}.
      */
     public void onLoadWorkspace() {
+        Log.e("in","onLoadWorkspace");
         mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(getWorkspaceSavePath());
     }
 

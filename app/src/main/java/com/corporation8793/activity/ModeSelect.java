@@ -2,6 +2,7 @@ package com.corporation8793.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -28,6 +30,8 @@ public class ModeSelect extends AppCompatActivity {
 
     private View decorView;
     private int	uiOption;
+
+    NavigationView nav_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class ModeSelect extends AppCompatActivity {
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        DrawerLayout  drawer = findViewById(R.id.drawer_layout);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
@@ -63,10 +68,17 @@ public class ModeSelect extends AppCompatActivity {
 
         actionBar.setCustomView(actionbar);
 
+        getSupportActionBar().getCustomView().findViewById(R.id.btnMenu).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Log.e("hi","in!");
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
 
 
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        NavigationView navigationView = findViewById(R.id.nav_view);
+
 //        // Passing each menu ID as a set of Ids because each
 //        // menu should be considered as top level destinations.
 //        mAppBarConfiguration = new AppBarConfiguration.Builder(
