@@ -80,8 +80,8 @@ import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
-import com.physicaloid.lib.Boards;
 import com.physicaloid.lib.Physicaloid;
+import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -209,7 +209,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
 
         try {
-            mPhysicaloid.open(9600, bigBoard);
+            mPhysicaloid.open();
+
             byte[] buf = new byte[256];
             mPhysicaloid.read(buf, buf.length);
 //            monitor_text.append(new String(buf));
@@ -369,7 +370,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void serial_write(String str){
         if (mPhysicaloid.isOpened()) {
-            if(mPhysicaloid.open(9600, bigBoard)) {
+            if(mPhysicaloid.open()) {
                 byte[] buf = str.getBytes();
                 mPhysicaloid.write(buf, buf.length);
                 mPhysicaloid.close();
