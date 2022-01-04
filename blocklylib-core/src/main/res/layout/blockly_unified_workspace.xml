@@ -252,8 +252,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="30"
-            android:background="#D4F4FA"></LinearLayout>
+            android:layout_weight="30"></LinearLayout>
 
 
     </LinearLayout>

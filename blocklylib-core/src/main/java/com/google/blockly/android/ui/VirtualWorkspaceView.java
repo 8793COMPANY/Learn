@@ -41,15 +41,15 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     // TODO(#87): Replace with configuration. Use dp.
     // Default desired width of the view in pixels.
-    private static final int DESIRED_WIDTH = 2048;
+    private static final int DESIRED_WIDTH = 512;
     // Default desired height of the view in pixels.
-    private static final int DESIRED_HEIGHT = 2048;
+    private static final int DESIRED_HEIGHT = 512;
 
     private static final float MIN_SCALE_TO_DRAW_GRID = 0.5f;
 
     // Allowed zoom scales.
-    private static final float[] ZOOM_SCALES = new float[]{0.25f, 0.7f, 0.5f, 1.0f, 2.0f};
-    private static final int INIT_ZOOM_SCALES_INDEX = 1;
+    private static final float[] ZOOM_SCALES = new float[]{0.15f, 0.3f, 0.45f};
+    private static final int INIT_ZOOM_SCALES_INDEX = 2;
 
     protected boolean mScrollable = true;
     protected boolean mScalable = true;
@@ -680,7 +680,10 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             if (shouldDrawGrid()) {
                 mGridRenderer.updateGridBitmap(mViewScale);
             }
-
+            // 줌 레벨 2.0 이상에서 많은 블록 사용할 시 어플이 죽어버림!!
+            if (!(mViewScale < 0.45)) {
+                mViewScale = 0.45f;
+            }
             mWorkspaceView.setScaleX(mViewScale);
             mWorkspaceView.setScaleY(mViewScale);
 

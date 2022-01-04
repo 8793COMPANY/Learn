@@ -1520,7 +1520,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         getCodeGenerationCallback());
             }
 
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(),"WIFI를 연결해주세요!",Toast.LENGTH_SHORT).show();
         }
 
