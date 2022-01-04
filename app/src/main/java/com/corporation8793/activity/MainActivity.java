@@ -893,7 +893,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
-
         // TODO : 팝업 테스트
         // upload_Listener.show();
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
@@ -1076,6 +1075,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            overridePendingTransition(0, 0);
 //            finish(); //현재 액티비티 종료 실시
 //        });
+
+
+//        BlocklyController controller = getController();
+//        boolean loadWorkspace = false;
+//        String filename = "";
+//        loadWorkspace = true;
+//        filename = "android.xml";
+//
+//        if (loadWorkspace) {
+//            String assetFilename = "turtle/demo_workspaces/" + filename;
+//            try {
+//                controller.loadWorkspaceContents(getAssets().open(assetFilename));
+//            } catch (IOException | BlockLoadingException e) {
+//                throw new IllegalStateException(
+//                        "Couldn't load demo workspace from assets: " + assetFilename, e);
+//            }
+//        }
+
 
         return root;
     }

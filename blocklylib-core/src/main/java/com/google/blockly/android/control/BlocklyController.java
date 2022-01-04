@@ -837,6 +837,7 @@ public class BlocklyController {
         groupAndFireEvents(new Runnable() {
             @Override
             public void run() {
+                Log.e("block connect","in");
                 connectImpl(blockConnection, otherConnection);
             }
         });
@@ -1571,6 +1572,7 @@ public class BlocklyController {
                 childBlockGroup = mViewFactory.buildBlockGroupTree(
                         child, mWorkspace.getConnectionManager(), mTouchHandler);
             }
+
             parentInputView.setConnectedBlockGroup(childBlockGroup);
         }
     }

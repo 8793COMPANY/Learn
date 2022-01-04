@@ -17,11 +17,13 @@ package com.google.blockly.android.ui.vertical;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
@@ -284,6 +286,7 @@ public class BlockView extends AbstractBlockView<InputView> {
         }
         return false;
     }
+
 
     /**
      * Reads the configuration and style to determine if the block has a "cap" style hat.
@@ -846,9 +849,12 @@ public class BlockView extends AbstractBlockView<InputView> {
         bottomStartDrawable.setBounds(tempRect);
         bottomStartBorderDrawable.setBounds(tempRect);
 
+        //
+        Drawable drawable = getResources().getDrawable(R.drawable.bottom_start_next_shadow);
+        drawable.setColorFilter(Color.parseColor("#FF00DD"), PorterDuff.Mode.SRC_IN);
         if (mBlock.getNextConnection() != null) {
             mNextConnectionHighlightPatch =
-                    mPatchManager.getPatchDrawable(R.drawable.bottom_start_next_connection);
+                    mPatchManager.getPatchDrawable(drawable);
             mNextConnectionHighlightPatch.setBounds(tempRect);
         }
 

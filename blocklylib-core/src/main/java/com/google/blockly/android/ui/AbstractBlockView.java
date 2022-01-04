@@ -191,6 +191,7 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.e("event",event.toString());
         return hitTest(event) && mTouchHandler.onTouchBlock(this, event);
     }
 
@@ -440,6 +441,11 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
             boolean wasHit = mHasHit;
             mHasHit = false;
             return wasHit;
+        }
+
+        if (action == MotionEvent.ACTION_BUTTON_PRESS){
+            Log.e("action button press","in!");
+
         }
 
         final int eventX = (int) event.getX();

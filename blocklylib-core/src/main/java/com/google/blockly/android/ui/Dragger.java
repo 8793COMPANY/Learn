@@ -281,6 +281,7 @@ public class Dragger {
         return new BlockTouchHandler() {
             @Override
             public boolean onTouchBlock(BlockView blockView, MotionEvent motionEvent) {
+                Log.e("onTouchBlock","in!");
                 return onTouchBlockImpl(DRAG_MODE_SLOPPY, dragHandler, blockView, motionEvent,
                         /* interceptMode */ false);
             }
@@ -289,6 +290,7 @@ public class Dragger {
             public boolean onInterceptTouchEvent(BlockView blockView, MotionEvent motionEvent) {
                 // Intercepted move events might still be handled but the child view, such as
                 // a drop down field.
+                Log.e("onInterceptTouchEvent","in!");
                 return onTouchBlockImpl(DRAG_MODE_SLOPPY, dragHandler, blockView, motionEvent,
                         /* interceptMode */ true);
             }
@@ -439,6 +441,7 @@ public class Dragger {
         }
         mWithinOnTouchBlockImpl = true;
 
+
         final int action = event.getActionMasked();
 
         boolean matchesPending = false;
@@ -461,6 +464,7 @@ public class Dragger {
         }
 
         final boolean result;
+        Log.e("action 확인",action+"");
         if (action == MotionEvent.ACTION_DOWN ) {
             if (mPendingDrag == null) {
                 mPendingDrag = new PendingDrag(mController, touchedView, event);

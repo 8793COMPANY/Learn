@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -137,6 +138,11 @@ public class PatchManager {
     public NinePatchDrawable getPatchDrawable(int id) {
         return (NinePatchDrawable) ContextCompat.getDrawable(mContext, id);
     }
+
+    public NinePatchDrawable getPatchDrawable(Drawable drawable) {
+        return (NinePatchDrawable) drawable;
+    }
+
 
     /**
      * Compute layout measures such as offsets and paddings from the various block patches.

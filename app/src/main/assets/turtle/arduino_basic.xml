@@ -125,11 +125,6 @@
         </block>
 
         <block type="serial_print">
-            <value name="baud">
-                <block type="math_number">
-                    <field name="NUM">9600</field>
-                </block>
-            </value>
             <value name="text">
                 <block type="text">
                     <field name="TEXT"></field>
@@ -139,11 +134,11 @@
 
 
         <block type="serial_println">
-            <value name="baud">
-                <block type="math_number">
-                    <field name="NUM">9600</field>
-                </block>
-            </value>
+<!--            <value name="baud">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">9600</field>-->
+<!--                </block>-->
+<!--            </value>-->
             <value name="text">
                 <block type="text">
                     <field name="TEXT"></field>
@@ -152,11 +147,11 @@
         </block>
 
         <block type="serial_println_int">
-            <value name="baud">
-                <block type="math_number">
-                    <field name="NUM">9600</field>
-                </block>
-            </value>
+<!--            <value name="baud">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">9600</field>-->
+<!--                </block>-->
+<!--            </value>-->
             <value name="NUM">
                 <block type="math_number">
                     <field name="NUM">0</field>
@@ -217,7 +212,11 @@
 
 
 
-        <block type="controls_if"></block>
+        <block type="controls_if">
+            <value name="IF0">
+                <block type="logic_compare"></block>
+            </value>
+        </block>
         <block type="controls_ifelse"></block>
 
 
@@ -346,6 +345,15 @@
             </value>
         </block>
 
+
+        <block type="bluetooth_sensor">
+            <value name="baud">
+                <block type="math_number">
+                    <field name="NUM">115200</field>
+                </block>
+            </value>
+        </block>
+
         <block type="DHT11">
             <value name="channel">
                 <block type="base_pins_list">
@@ -414,6 +422,10 @@
 
         <block type="math_number">
             <field name="NUM">255</field>
+        </block>
+
+        <block type="base_output_list">
+            <field name="LOGIC">OUTPUT</field>
         </block>
 
 
