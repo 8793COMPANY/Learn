@@ -47,9 +47,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     private static final float MIN_SCALE_TO_DRAW_GRID = 0.5f;
 
-    // Allowed zoom scales.
-    private static final float[] ZOOM_SCALES = new float[]{0.15f, 0.3f, 0.45f};
-    private static final int INIT_ZOOM_SCALES_INDEX = 2;
+    // TODO : Allowed zoom scales. (줌 레벨 설정)
+    private static final float[] ZOOM_SCALES = new float[]{0.15f, 0.3f, 0.45f, 2.0f};
+    private static final int INIT_ZOOM_SCALES_INDEX = 3;
 
     protected boolean mScrollable = true;
     protected boolean mScalable = true;
@@ -680,10 +680,10 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             if (shouldDrawGrid()) {
                 mGridRenderer.updateGridBitmap(mViewScale);
             }
-            // 줌 레벨 2.0 이상에서 많은 블록 사용할 시 어플이 죽어버림!!
-            if (!(mViewScale < 0.45)) {
-                mViewScale = 0.45f;
-            }
+            // TODO : 줌 레벨 2.0 이상에서 많은 블록 사용할 시 어플이 죽어버림!!
+//            if (!(mViewScale < 0.45)) {
+//                mViewScale = 0.45f;
+//            }
             mWorkspaceView.setScaleX(mViewScale);
             mWorkspaceView.setScaleY(mViewScale);
 

@@ -284,6 +284,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                        Log.e("generated",generatedCode);
                         code = generatedCode;
                         create_file(generatedCode,"code.ino");
+                        Log.e("compileCheck",compileCheck+"");
                         //Log.e("!@","nono");
                         if (compileCheck) {
                             //Log.e("generated", "컴파컴파");
@@ -868,11 +869,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        test();
 
         Log.e("????",contents_name);
+        Log.e("onCreate","in");
+        OpenUSB();
         if (!contents_name.equals("none")){
+
             if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {
                 MySharedPreferences.setInt(getApplicationContext(), contents_name+" MAX", 4);
             }
             MySharedPreferences.setInt(getApplicationContext(),contents_name,4);
+
+        }else{
 
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
