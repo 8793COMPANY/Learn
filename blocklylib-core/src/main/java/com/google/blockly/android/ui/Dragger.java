@@ -31,9 +31,11 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.DragEvent;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
+import android.widget.Toast;
 
 import com.google.blockly.android.R;
 import com.google.blockly.android.clipboard.BlockClipDataHelper;
@@ -597,12 +599,16 @@ public class Dragger {
                             removeDraggedConnectionsFromConnectionManager(rootBlock);
                             int flags = mViewHelper.getBlockViewFactory().getDragAndDropFlags();
 
-                            ViewCompat.startDragAndDrop(
-                                    dragGroup,
-                                    clipData,
-                                    new DragShadowBuilder(pendingDrag, mViewHelper),
-                                    pendingDrag,
-                                    flags);
+                            try {
+                                ViewCompat.startDragAndDrop(
+                                        dragGroup,
+                                        clipData,
+                                        new DragShadowBuilder(pendingDrag, mViewHelper),
+                                        pendingDrag,
+                                        flags);
+                            }catch (Surface.OutOfResourcesException e){
+                                Log.e("outofresource","error");
+                            }
                         } catch (IOException e) {
                             Log.w(TAG, "Serialization failed in ClipDataHelper.");
                             mPendingDrag = null;
