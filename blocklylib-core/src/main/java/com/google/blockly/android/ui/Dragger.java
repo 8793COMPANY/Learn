@@ -673,7 +673,19 @@ public class Dragger {
         DragShadowBuilder(PendingDrag pendingDrag, WorkspaceHelper helper) {
             super(pendingDrag.getDragGroup());
             mPendingDrag = pendingDrag;
-            mZoomScale = helper.getWorkspaceZoomScale();
+
+            // 셋업-루프 블록이거나
+            // 블록 개수 10개 초과하는 블록은 OOM 방지 및 메모리 최적화 위해서 사이즈 축소
+            if (mPendingDrag.getDragGroup().getFirstBlock().getType().equals("turtle_setup_loop") ||
+                    (mPendingDrag.getDragGroup().getChildCount()) >= 10) {
+                mZoomScale = 0.5f;
+            } else {
+                // 원본 스케일 사이즈 블록 사용
+                mZoomScale = helper.getWorkspaceZoomScale();
+            }
+
+            Log.e("드래그 블록 갯수", mPendingDrag.getDragGroup().getChildCount() + "개");
+            Log.e("드래그 퍼스트 블록 정보", mPendingDrag.getDragGroup().getFirstBlock().getType());
 
             BlockGroup dragGroup = pendingDrag.getDragGroup();
             mSizeX = dragGroup.getWidth();
