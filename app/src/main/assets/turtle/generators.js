@@ -263,7 +263,8 @@ Blockly.JavaScript['inout_analog_write'] = function(block) {
      if( (value_num < 0 ) || (value_num > 255 )) {
          return '!!alert!!Pin : analog value should be between 0 and 255!!\n';
       }
-    var code = "pinMode("+value_pin+", OUTPUT);\n analogWrite(" + value_pin + ", " + value_num + ");\n";
+    //var code = "pinMode("+value_pin+", OUTPUT);\n analogWrite(" + value_pin + ", " + value_num + ");\n";
+    var code = "analogWrite(" + value_pin + ", " + value_num + ");\n";
     return code;
   };
 
