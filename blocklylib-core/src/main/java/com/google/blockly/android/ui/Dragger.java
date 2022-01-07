@@ -15,6 +15,8 @@
 
 package com.google.blockly.android.ui;
 
+import static android.view.View.DRAG_FLAG_OPAQUE;
+
 import android.content.ClipData;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -597,7 +599,9 @@ public class Dragger {
 
                             Block rootBlock = dragGroup.getFirstBlock();
                             removeDraggedConnectionsFromConnectionManager(rootBlock);
-                            int flags = mViewHelper.getBlockViewFactory().getDragAndDropFlags();
+                            //int flags = mViewHelper.getBlockViewFactory().getDragAndDropFlags();
+                            // TODO : 이젠 드래그 할 때 블록이 반투명이 되지 않습니다!
+                            int flags = DRAG_FLAG_OPAQUE;
 
                             try {
                                 ViewCompat.startDragAndDrop(
@@ -680,6 +684,7 @@ public class Dragger {
             super(pendingDrag.getDragGroup());
             mPendingDrag = pendingDrag;
 
+            // TODO : 블록 드래그 할때 투명 블록 설정
             // 셋업-루프 블록이거나
             // 블록 개수 10개 초과하는 블록은 OOM 방지 및 메모리 최적화 위해서 사이즈 축소
             if (mPendingDrag.getDragGroup().getFirstBlock().getType().equals("turtle_setup_loop") ||
