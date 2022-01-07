@@ -49,6 +49,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +97,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -129,7 +132,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Boolean compileCheck = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
-//    int [] current_tab = {R.id.setup_view,R.id.loop_view,R.id.method_view,R.id.etc_view,R.id.code_view,R.id.serial_view,R.id.upload_view};
     EditText serial_input_box;
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
@@ -150,13 +152,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Guideline guideline4;
     Button upload_btn;
 
+    ArrayList<Integer> arrayList;
+    ArrayAdapter<Integer> arrayAdapter;
+    Spinner baud_rate;
+
+
     private UploadDialog upload_Listener, error_Listener;
 
-    LinearLayout view_linear;
-    int current_pos =0, pre_pos=0;
-    static int turtle_pos=0;
-
-    long first_time = 0 , last_time = 0;
+    int current_pos =0;
 
 
     //시니얼 모니터 slow 방지 문자열
@@ -893,6 +896,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
+
+
         // TODO : 팝업 테스트
         // upload_Listener.show();
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
@@ -975,6 +980,33 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         guideline4 = blockly_workspace.findViewById(R.id.guideline4);
+
+        baud_rate = blockly_workspace.findViewById(R.id.baud_rate);
+
+
+        arrayList = new ArrayList<>();
+        arrayList.add(9600);
+        arrayList.add(19200);
+        arrayList.add(38400);
+        arrayList.add(115200);
+
+        arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, arrayList);
+
+
+
+        baud_rate.setAdapter(arrayAdapter);
+        baud_rate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mPhysicaloid.setBaudrate(arrayList.get(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
 
         InputMethodManager imm = (InputMethodManager) getSystemService (Context.INPUT_METHOD_SERVICE );
