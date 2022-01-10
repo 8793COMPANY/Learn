@@ -126,6 +126,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/blockly_monitor"
         android:layout_width="0dp"
         android:layout_height="0dp"
