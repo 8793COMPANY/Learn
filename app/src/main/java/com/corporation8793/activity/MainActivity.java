@@ -943,6 +943,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case 8:
                 initTabColor();
                 initTabCheck();
+                trashcan_btn.setVisibility(View.VISIBLE);
                 break;
             default:
                 if(mPushEvent.getPos() < 4) {
