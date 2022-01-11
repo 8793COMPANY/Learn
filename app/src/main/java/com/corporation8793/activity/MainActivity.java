@@ -1141,6 +1141,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         @Override
         public void handleMessage(Message msg) {
             // TODO : process device message.
+            Log.e("getHandleMessage","" + msg.what);
             switch (msg.what){
                 case 0:
                     read_code();
@@ -1206,7 +1207,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void setLineForOtherCategoryTabs(int position) {
-        mMonitorHandler.sendEmptyMessage(1);
+        //mMonitorHandler.sendEmptyMessage(1);
         Log.e("??","setLineForOtherCategoryTabs");
         switch (position) {
             case -1:
@@ -1509,7 +1510,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         setInitLine();
         serial_btn.setSelected(true);
         monitor_text.setText("");
-        mMonitorHandler.sendEmptyMessage(0);
+
+        mPhysicaloid.open();
+        Log.e("isOpened Serial","" + mPhysicaloid.isOpened());
+
         categoryData.setPosition(5);
         categoryData.setClosed(true);
         current_pos = 5;
@@ -1531,6 +1535,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             tempTabCheck[pos-4] = !tempTabCheck[pos-4];
             tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
             Log.e("after case", tempTabCheck[pos-4] + "");
+            mMonitorHandler.sendEmptyMessage(0);
         }
     }
 

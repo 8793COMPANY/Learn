@@ -15,6 +15,7 @@
 
 package com.google.blockly.android.ui;
 
+import static android.view.View.DRAG_FLAG_GLOBAL;
 import static android.view.View.DRAG_FLAG_OPAQUE;
 
 import android.content.ClipData;
@@ -599,9 +600,12 @@ public class Dragger {
 
                             Block rootBlock = dragGroup.getFirstBlock();
                             removeDraggedConnectionsFromConnectionManager(rootBlock);
-                            //int flags = mViewHelper.getBlockViewFactory().getDragAndDropFlags();
+                            int flags = mViewHelper.getBlockViewFactory().getDragAndDropFlags();
+
                             // TODO : 이젠 드래그 할 때 블록이 반투명이 되지 않습니다!
-                            int flags = DRAG_FLAG_OPAQUE;
+
+                            // int flags = DRAG_FLAG_OPAQUE;
+                            // int flags = 128;
 
                             try {
                                 ViewCompat.startDragAndDrop(
