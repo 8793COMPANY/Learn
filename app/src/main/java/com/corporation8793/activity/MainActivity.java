@@ -829,7 +829,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     void checkUploadBtn(){
-        // TODO : 업로드 체크
         Log.e("checkUploadBtn","in");
         if (wifi_check && usb_check){
             Log.e("checkUploadBtn","true");
