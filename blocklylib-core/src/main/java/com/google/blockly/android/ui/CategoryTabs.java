@@ -322,6 +322,10 @@ public class CategoryTabs extends RecyclerView {
             //holder.mRotator.setChildRotation(mLabelRotation);
             holder.mRotator.setTag(holder);  // For getTabLabelHolder() and deselection
 
+            if (category.getCategoryName().equals("upload")) {
+                categoryData.setUpload_btn(holder.mLabel);
+            }
+
             holder.mLabel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View label) {

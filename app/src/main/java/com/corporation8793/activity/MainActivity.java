@@ -231,6 +231,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     stringBuilder.append(new String(buf));
                     num = 50;
                     stringBuilder.delete(0,2560);
+                    Log.e("length delete","OK");
+                }
+
+                if (Integer.parseInt(String.valueOf(stringBuilder.toString().length())) > 5120) {
+                    stringBuilder.delete(0,2560);
+                    Log.e("length delete MAX","OK");
                 }
 
                 monitor_text.setText(stringBuilder);
@@ -802,6 +808,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     wifi_check = true;
                     Log.e("!!wifi","connect");
                     Toast.makeText(getApplicationContext(),"wifi 연결",Toast.LENGTH_SHORT).show();
+
 //                    checkUploadBtn();
                 }else{
                     wifi_check = false;
@@ -822,15 +829,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     void checkUploadBtn(){
+        // TODO : 업로드 체크
         Log.e("checkUploadBtn","in");
         if (wifi_check && usb_check){
             Log.e("checkUploadBtn","true");
-            upload_btn.setBackgroundResource(R.drawable.upload_btn_on);
-            upload_btn.setEnabled(true);
+            categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
+            categoryData.getUpload_btn().setEnabled(true);
         }else{
             Log.e("checkUploadBtn","false");
-            upload_btn.setBackgroundResource(R.drawable.upload_btn);
-            upload_btn.setEnabled(false);
+            categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
+            categoryData.getUpload_btn().setEnabled(false);
         }
     }
 
@@ -1398,7 +1406,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // upload
             case 6:
                 Log.e("6 in","come");
-                upload_btn();
+                upload_btn(pos);
                 break;
         }
     }
@@ -1539,7 +1547,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     }
 
-    public void upload_btn() {
+    public void upload_btn(int pos) {
         hideSystemUI();
         if (wifi_check) {
 //                    first_time = System.currentTimeMillis();
