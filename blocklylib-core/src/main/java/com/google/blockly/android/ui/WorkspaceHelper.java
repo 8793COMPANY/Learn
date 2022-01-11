@@ -74,7 +74,7 @@ public class WorkspaceHelper {
 
     // Blocks "snap" toward each other at the end of drags if they have compatible connections
     // near each other.  This is the farthest they can snap at 1.0 zoom, in workspace units.
-    private static final int DEFAULT_MAX_SNAP_DISTANCE = 24;
+    private static final int DEFAULT_MAX_SNAP_DISTANCE = 50;
 
     private final ViewPoint mVirtualWorkspaceViewOffset = new ViewPoint();
     private final ViewPoint mTempViewPoint = new ViewPoint();

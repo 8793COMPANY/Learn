@@ -479,6 +479,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("error",error.toString());
                 if(error.toString().equals("com.android.volley.error.ServerError")) {
                     Log.e("server error log",error.getMessage());
                     //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
