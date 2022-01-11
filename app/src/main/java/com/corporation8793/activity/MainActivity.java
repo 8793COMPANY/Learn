@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.android.volley.error.TimeoutError;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.ProgressDialog;
@@ -481,29 +482,33 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         }
                         //System.out.println(response);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if(error.toString().equals("com.android.volley.error.ServerError")) {
-                    Log.e("server error log",error.getMessage());
-                    //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
-                }
-                else if(error.getMessage().contains("java.net.ConnectException")) {
-                    Log.e("Remote error log",error.getMessage());
-                    //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
-//                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //  mGeneratedErrorTextView.setText(error.getMessage());
+                }, error -> {
+                    if (error instanceof TimeoutError) {
+                        Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    if (error.getMessage() != null) {
+                        Log.e("서버 에러", "remotecompile: " + error.getMessage());
+                        if(error.toString().equals("com.android.volley.error.ServerError")) {
+                            Log.e("server error log",error.getMessage());
+                            //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                            //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
+                        }
+                        else if(error.getMessage().contains("java.net.ConnectException")) {
+                            Log.e("Remote error log",error.getMessage());
+                            Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                            //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
+    //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                            //  mGeneratedErrorTextView.setText(error.getMessage());
 
-                    Log.e("error log",error.getMessage());
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                            Log.e("error log",error.getMessage());
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
 //        Map<String,String> Headers = new HashMap<>();
 //        Headers.put("board", "uno");
@@ -1373,6 +1378,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        }
         // TODO : 컴파일러 세팅
         return "http://52.79.240.76:5000";
+
+        // 테스트용 구라 주소
+        //return "http://87.93.87.93:5000";
     }
 
 
