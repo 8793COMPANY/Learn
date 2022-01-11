@@ -27,4 +27,5 @@
     android:paddingRight="8dip"
     android:saveEnabled="false"
     android:singleLine="true"
-    android:textSize="?blockTextSize"/>
+    android:textSize="?blockTextSize"
+    android:inputType="text"/>

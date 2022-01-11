@@ -682,7 +682,9 @@ public class BlockView extends AbstractBlockView<InputView> {
     }
 
     private void initDrawingObjects() {
+        // 블록 색상 지정
         int blockColour = mBlock.getColor();
+
         if (mBlock.isShadow()) {
             float hsv[] = new float[3];
             Color.colorToHSV(blockColour, hsv);
@@ -699,7 +701,6 @@ public class BlockView extends AbstractBlockView<InputView> {
         final int highlight = Color.argb(255, Color.red(blockColour) / 2,
                 Color.green(blockColour) / 2, Color.blue(blockColour) / 2);
         mBlockColorFilter = new LightingColorFilter(blockColour, highlight);
-
         mFillPaint.setColor(blockColour);
         mFillPaint.setStyle(Paint.Style.FILL);
     }

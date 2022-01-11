@@ -423,7 +423,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             getFileSize();
         }
 
-//        Toast.makeText(getApplicationContext(), "Check if Program uploaded ", Toast.LENGTH_LONG).show();
+        //block 위치 지정
+        //  mBlock.setPosition(mTempWorkspacePoint.x, mTempWorkspacePoint.y);
 
     }
 

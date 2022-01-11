@@ -80,6 +80,7 @@ public class BasicFieldNumberView extends AppCompatEditText implements FieldView
                             double newValue =
                                     mLocalizedNumberParser.parse(textWithoutGrouping).doubleValue();
                             mNumberField.setValue(newValue);
+                            Log.e("newValue",newValue+"");
                             setTextValid(true);
                         } catch (ParseException e) {
                             // Failed to parse intermediate
@@ -226,6 +227,7 @@ public class BasicFieldNumberView extends AppCompatEditText implements FieldView
     }
 
     protected void updateInputMethod() {
+        Log.e("updateInputMethod","hi");
         boolean hasNumberField = mNumberField != null;
         setEnabled(hasNumberField);
 
