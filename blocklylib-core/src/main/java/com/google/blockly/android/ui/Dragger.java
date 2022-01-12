@@ -66,6 +66,8 @@ public class Dragger {
 
     private static final int TAP_TIMEOUT = ViewConfiguration.getTapTimeout();
 
+    CategoryData categoryData = CategoryData.getInstance();
+
     // Modes of finishDragging()
     private static final int FINISH_BEHAVIOR_DROP = 1;
     private static final int FINISH_BEHAVIOR_REVERT = 2;
@@ -295,6 +297,11 @@ public class Dragger {
             public boolean onInterceptTouchEvent(BlockView blockView, MotionEvent motionEvent) {
                 // Intercepted move events might still be handled but the child view, such as
                 // a drop down field.
+
+                // 포커스 된 블록 좌표
+                Log.e("block coords", "x: " + blockView.getBlock().getPosition().x);
+                Log.e("block coords", "y: " + blockView.getBlock().getPosition().y);
+                categoryData.setWorkspacePoint(blockView.getBlock().getPosition());
                 Log.e("onInterceptTouchEvent","in!");
                 return onTouchBlockImpl(DRAG_MODE_SLOPPY, dragHandler, blockView, motionEvent,
                         /* interceptMode */ true);
@@ -603,9 +610,7 @@ public class Dragger {
                             int flags = mViewHelper.getBlockViewFactory().getDragAndDropFlags();
 
                             // TODO : 이젠 드래그 할 때 블록이 반투명이 되지 않습니다!
-
                             // int flags = DRAG_FLAG_OPAQUE;
-                            // int flags = 128;
 
                             try {
                                 ViewCompat.startDragAndDrop(

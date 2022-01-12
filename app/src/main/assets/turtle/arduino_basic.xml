@@ -430,7 +430,20 @@
 
 
 
-
+        <block type="lcd">
+            <value name="text">
+                <block type="text">
+                    <field name="TEXT">Hello World</field>
+                </block>
+            </value>
+            <field name="line_number">0</field>
+            <value name="character_number">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+        </block>
+        <block type="clear_lcd"></block>
 
 
 
@@ -527,20 +540,7 @@
 <!--&lt;!&ndash;                </block>&ndash;&gt;-->
 <!--&lt;!&ndash;            </value>&ndash;&gt;-->
 <!--&lt;!&ndash;        </block>&ndash;&gt;-->
-<!--&lt;!&ndash;        <block type="lcd">&ndash;&gt;-->
-<!--&lt;!&ndash;            <value name="text">&ndash;&gt;-->
-<!--&lt;!&ndash;                <block type="text">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <field name="TEXT">Hello World</field>&ndash;&gt;-->
-<!--&lt;!&ndash;                </block>&ndash;&gt;-->
-<!--&lt;!&ndash;            </value>&ndash;&gt;-->
-<!--&lt;!&ndash;            <field name="line_number">0</field>&ndash;&gt;-->
-<!--&lt;!&ndash;            <value name="character_number">&ndash;&gt;-->
-<!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <field name="NUM">0</field>&ndash;&gt;-->
-<!--&lt;!&ndash;                </block>&ndash;&gt;-->
-<!--&lt;!&ndash;            </value>&ndash;&gt;-->
-<!--&lt;!&ndash;        </block>&ndash;&gt;-->
-<!--&lt;!&ndash;        <block type="clear_lcd"></block>&ndash;&gt;-->
+
 <!--&lt;!&ndash;        <block type="bluetooth_sensor">&ndash;&gt;-->
 <!--&lt;!&ndash;            <value name="baud">&ndash;&gt;-->
 <!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->

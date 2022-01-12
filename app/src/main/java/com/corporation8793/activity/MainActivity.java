@@ -48,6 +48,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsAnimation;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -86,6 +88,9 @@ import com.google.blockly.utils.BlockLoadingException;
 import com.physicaloid.lib.Physicaloid;
 import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1144,11 +1149,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            }
 //        }
 
+        KeyboardVisibilityEvent.setEventListener(this, isOpen -> {
+            BlocklyController controller = getController();
+
+            // 키보드가 열렸을때
+            if (isOpen) {
+                // 포커스 된 블록이 있다면
+                if (categoryData.getWorkspacePoint() != null) {
+                    // 해당 블록을 기준으로 화면을 이동하고
+                    controller.zoomToFocusedBlock(categoryData.getWorkspacePoint());
+                    // 포커스 된 블록의 좌표값은 초기화
+                    categoryData.setWorkspacePoint(null);
+                }
+            }
+            else {
+                //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return root;
     }
-
-
 
     private final Handler mMonitorHandler = new Handler() {
         @Override

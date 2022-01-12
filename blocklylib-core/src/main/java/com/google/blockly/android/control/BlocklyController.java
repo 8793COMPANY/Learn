@@ -61,6 +61,7 @@ import com.google.blockly.model.Mutator;
 import com.google.blockly.model.ProcedureInfo;
 import com.google.blockly.model.VariableInfo;
 import com.google.blockly.model.Workspace;
+import com.google.blockly.model.WorkspacePoint;
 import com.google.blockly.model.mutator.AbstractProcedureMutator;
 import com.google.blockly.utils.BlockLoadingException;
 
@@ -1081,6 +1082,12 @@ public class BlocklyController {
     public void recenterWorkspace() {
         if (mVirtualWorkspaceView != null) {
             mVirtualWorkspaceView.resetView();
+        }
+    }
+
+    public void zoomToFocusedBlock(WorkspacePoint wp) {
+        if (mVirtualWorkspaceView != null) {
+            mVirtualWorkspaceView.resetView_2(wp);
         }
     }
 

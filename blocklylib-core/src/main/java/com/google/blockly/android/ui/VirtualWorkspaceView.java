@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.google.blockly.android.R;
 import com.google.blockly.android.ZoomBehavior;
+import com.google.blockly.model.WorkspacePoint;
 
 /**
  * Virtual view of a {@link WorkspaceView}.
@@ -151,6 +152,35 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
                 scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
             } else {
                 scrollTo(blocksBoundingBox.left - margin, -200);
+            }
+        } else {
+            // Reset top leading corner to 0,0 when
+            scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
+        }
+    }
+
+    public void resetView_2(WorkspacePoint wp) {
+        // Reset scrolling state.
+        mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
+        mPanningStart.set(0,0);
+        mOriginalScrollX = 0;
+        mOriginalScrollY = 0;
+
+        updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+
+        final Rect blocksBoundingBox = getViewScaledBlockBounds();
+        final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
+        if (mScrollable) {
+            final int margin = mGridRenderer.getGridSpacing() / 2;
+            final int scrollToY = blocksBoundingBox.top - margin;
+            if (useRtl) {
+                scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+            } else {
+                //scrollTo(blocksBoundingBox.left - margin, -200);
+
+                // TODO : 포커스 된 블록 위치로 화면 이동 (좌측 좌표는 고정하고 y 만 조절)
+                // Reset top leading corner to 0,0 when
+                scrollTo(useRtl ? -getMeasuredWidth() : 0, ((int) wp.y) - 100);
             }
         } else {
             // Reset top leading corner to 0,0 when
