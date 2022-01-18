@@ -435,8 +435,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             getFileSize();
         }
 
-        //block 위치 지정
-        //  mBlock.setPosition(mTempWorkspacePoint.x, mTempWorkspacePoint.y);
 
     }
 

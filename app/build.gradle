@@ -50,4 +50,5 @@ dependencies {
     implementation "de.mindpipe.android:android-logging-log4j:1.0.3"
 
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
 }

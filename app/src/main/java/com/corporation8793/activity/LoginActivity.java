@@ -8,6 +8,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -15,6 +16,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.corporation8793.R;
+
+import java.io.InputStream;
+
+import jxl.Sheet;
+import jxl.Workbook;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
 
         });
+
     }
 
     @Override
@@ -80,6 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
+
+
 
 
 }
