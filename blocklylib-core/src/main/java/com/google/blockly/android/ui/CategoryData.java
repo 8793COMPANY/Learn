@@ -1,5 +1,9 @@
 package com.google.blockly.android.ui;
 
+import android.view.View;
+
+import com.google.blockly.model.WorkspacePoint;
+
 public class CategoryData {
     private static CategoryData categoryData = new CategoryData();
 
@@ -14,11 +18,29 @@ public class CategoryData {
     int position = -1;
     boolean selection = false;
 
+    public View getUpload_btn() {
+        return upload_btn;
+    }
+
+    public void setUpload_btn(View upload_btn) {
+        this.upload_btn = upload_btn;
+    }
+
+    View upload_btn = null;
+
+    public WorkspacePoint getWorkspacePoint() {
+        return workspacePoint;
+    }
+
+    public void setWorkspacePoint(WorkspacePoint workspacePoint) {
+        this.workspacePoint = workspacePoint;
+    }
+
+    WorkspacePoint workspacePoint;
+
     public void setPosition(int position) {
         this.position = position;
     }
-
-
 
     public void setSelection(boolean selection) {
         this.selection = selection;

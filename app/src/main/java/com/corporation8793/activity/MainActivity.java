@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.android.volley.error.TimeoutError;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.ProgressDialog;
@@ -47,6 +48,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
+import android.view.WindowInsetsAnimation;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -85,6 +88,9 @@ import com.google.blockly.utils.BlockLoadingException;
 import com.physicaloid.lib.Physicaloid;
 import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -231,6 +237,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     stringBuilder.append(new String(buf));
                     num = 50;
                     stringBuilder.delete(0,2560);
+                    Log.e("length delete","OK");
+                }
+
+                if (Integer.parseInt(String.valueOf(stringBuilder.toString().length())) > 5120) {
+                    stringBuilder.delete(0,2560);
+                    Log.e("length delete MAX","OK");
                 }
 
                 monitor_text.setText(stringBuilder);
@@ -476,30 +488,33 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         }
                         //System.out.println(response);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("error",error.toString());
-                if(error.toString().equals("com.android.volley.error.ServerError")) {
-                    Log.e("server error log",error.getMessage());
-                    //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
-                }
-                else if(error.getMessage().contains("java.net.ConnectException")) {
-                    Log.e("Remote error log",error.getMessage());
-                    //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
-//                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //  mGeneratedErrorTextView.setText(error.getMessage());
+                }, error -> {
+                    if (error instanceof TimeoutError) {
+                        Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    if (error.getMessage() != null) {
+                        Log.e("서버 에러", "remotecompile: " + error.getMessage());
+                        if(error.toString().equals("com.android.volley.error.ServerError")) {
+                            Log.e("server error log",error.getMessage());
+                            //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                            //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
+                        }
+                        else if(error.getMessage().contains("java.net.ConnectException")) {
+                            Log.e("Remote error log",error.getMessage());
+                            Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                            //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
+    //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                            //  mGeneratedErrorTextView.setText(error.getMessage());
 
-                    Log.e("error log",error.getMessage());
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+                            Log.e("error log",error.getMessage());
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
 //        Map<String,String> Headers = new HashMap<>();
 //        Headers.put("board", "uno");
@@ -804,6 +819,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     wifi_check = true;
                     Log.e("!!wifi","connect");
                     Toast.makeText(getApplicationContext(),"wifi 연결",Toast.LENGTH_SHORT).show();
+
 //                    checkUploadBtn();
                 }else{
                     wifi_check = false;
@@ -827,12 +843,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("checkUploadBtn","in");
         if (wifi_check && usb_check){
             Log.e("checkUploadBtn","true");
-            upload_btn.setBackgroundResource(R.drawable.upload_btn_on);
-            upload_btn.setEnabled(true);
+            categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
+            categoryData.getUpload_btn().setEnabled(true);
         }else{
             Log.e("checkUploadBtn","false");
-            upload_btn.setBackgroundResource(R.drawable.upload_btn);
-            upload_btn.setEnabled(false);
+            categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
+            categoryData.getUpload_btn().setEnabled(false);
         }
     }
 
@@ -938,6 +954,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case 8:
                 initTabColor();
                 initTabCheck();
+                trashcan_btn.setVisibility(View.VISIBLE);
                 break;
             default:
                 if(mPushEvent.getPos() < 4) {
@@ -1133,16 +1150,32 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            }
 //        }
 
+        KeyboardVisibilityEvent.setEventListener(this, isOpen -> {
+            BlocklyController controller = getController();
+
+            // 키보드가 열렸을때
+            if (isOpen) {
+                // 포커스 된 블록이 있다면
+                if (categoryData.getWorkspacePoint() != null) {
+                    // 해당 블록을 기준으로 화면을 이동하고
+                    controller.zoomToFocusedBlock(categoryData.getWorkspacePoint());
+                    // 포커스 된 블록의 좌표값은 초기화
+                    categoryData.setWorkspacePoint(null);
+                }
+            }
+            else {
+                //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return root;
     }
-
-
 
     private final Handler mMonitorHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             // TODO : process device message.
+            Log.e("getHandleMessage","" + msg.what);
             switch (msg.what){
                 case 0:
                     read_code();
@@ -1208,7 +1241,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void setLineForOtherCategoryTabs(int position) {
-        mMonitorHandler.sendEmptyMessage(1);
+        //mMonitorHandler.sendEmptyMessage(1);
         Log.e("??","setLineForOtherCategoryTabs");
         switch (position) {
             case -1:
@@ -1366,6 +1399,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        }
         // TODO : 컴파일러 세팅
         return "http://52.79.240.76:5000";
+
+        // 테스트용 구라 주소
+        //return "http://87.93.87.93:5000";
     }
 
 
@@ -1399,7 +1435,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // upload
             case 6:
                 Log.e("6 in","come");
-                upload_btn();
+                upload_btn(pos);
                 break;
         }
     }
@@ -1511,7 +1547,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         setInitLine();
         serial_btn.setSelected(true);
         monitor_text.setText("");
-        mMonitorHandler.sendEmptyMessage(0);
+
+        mPhysicaloid.open();
+        Log.e("isOpened Serial","" + mPhysicaloid.isOpened());
+
         categoryData.setPosition(5);
         categoryData.setClosed(true);
         current_pos = 5;
@@ -1533,10 +1572,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             tempTabCheck[pos-4] = !tempTabCheck[pos-4];
             tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
             Log.e("after case", tempTabCheck[pos-4] + "");
+            mMonitorHandler.sendEmptyMessage(0);
         }
     }
 
-    public void upload_btn() {
+    public void upload_btn(int pos) {
         hideSystemUI();
         if (wifi_check) {
 //                    first_time = System.currentTimeMillis();

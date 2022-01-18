@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\src\main\jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\src\debug\jniLibs"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\src\main\jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\src\debug\jniLibs"/></dataSet></merger>
+>>>>>>> 86ae4dd7b5a83a4267fa9ff0caa9db1f89e6f682

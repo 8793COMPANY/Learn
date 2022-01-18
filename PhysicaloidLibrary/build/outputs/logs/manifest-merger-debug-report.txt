@@ -1,5 +1,6 @@
 -- Merging decision tree log ---
 manifest
+<<<<<<< HEAD
 ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
 INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
 INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
@@ -35,3 +36,40 @@ INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\Andr
 		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:7:9-35
 		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+=======
+ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-10:12
+	package
+		ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:2:5-30
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+	android:versionName
+		ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:4:5-35
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:11-69
+	android:versionCode
+		ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:3:5-32
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+uses-sdk
+ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-8:41
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-8:41
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-8:41
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-8:41
+INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-8:41
+	android:targetSdkVersion
+		ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:8:9-38
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:7:9-35
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\DONG\Documents\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+>>>>>>> 86ae4dd7b5a83a4267fa9ff0caa9db1f89e6f682
