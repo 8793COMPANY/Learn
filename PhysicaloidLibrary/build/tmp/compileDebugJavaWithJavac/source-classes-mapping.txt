@@ -1,7 +1,7 @@
 com/physicaloid/lib/usb/UsbVidPid.java
  com.physicaloid.lib.usb.UsbVidPid
-com/physicaloid/lib/framework/AutoCommunicator.java
- com.physicaloid.lib.framework.AutoCommunicator
+com/physicaloid/BuildConfig.java
+ com.physicaloid.BuildConfig
 com/physicaloid/lib/Boards.java
  com.physicaloid.lib.Boards
  com.physicaloid.lib.Boards$ChipTypes
@@ -49,10 +49,8 @@ com/physicaloid/lib/fpga/PhysicaloidFpgaPacketFilter.java
  com.physicaloid.lib.fpga.PhysicaloidFpgaPacketFilter
 com/physicaloid/lib/fpga/PhysicaloidFpgaConst.java
  com.physicaloid.lib.fpga.PhysicaloidFpgaConst
-com/physicaloid/lib/bluetooth/driver/uart/UartBluetooth.java
- com.physicaloid.lib.bluetooth.driver.uart.UartBluetooth
- com.physicaloid.lib.bluetooth.driver.uart.UartBluetooth$1
- com.physicaloid.lib.bluetooth.driver.uart.UartBluetooth$2
+com/physicaloid/misc/Misc.java
+ com.physicaloid.misc.Misc
 com/physicaloid/lib/programmer/avr/AvrConf.java
  com.physicaloid.lib.programmer.avr.AvrConf
 com/physicaloid/lib/wifi/driver/uart/UartWifi.java
@@ -99,7 +97,9 @@ com/physicaloid/lib/Physicaloid.java
  com.physicaloid.lib.Physicaloid
  com.physicaloid.lib.Physicaloid$1
  com.physicaloid.lib.Physicaloid$UploadCallBack
-com/physicaloid/misc/Misc.java
- com.physicaloid.misc.Misc
-com/physicaloid/BuildConfig.java
- com.physicaloid.BuildConfig
+com/physicaloid/lib/framework/AutoCommunicator.java
+ com.physicaloid.lib.framework.AutoCommunicator
+com/physicaloid/lib/bluetooth/driver/uart/UartBluetooth.java
+ com.physicaloid.lib.bluetooth.driver.uart.UartBluetooth
+ com.physicaloid.lib.bluetooth.driver.uart.UartBluetooth$1
+ com.physicaloid.lib.bluetooth.driver.uart.UartBluetooth$2
