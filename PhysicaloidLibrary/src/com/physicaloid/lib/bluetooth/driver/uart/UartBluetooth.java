@@ -5,10 +5,14 @@
 package com.physicaloid.lib.bluetooth.driver.uart;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.physicaloid.BuildConfig;
 import com.physicaloid.lib.Physicaloid;
 import com.physicaloid.lib.framework.SerialCommunicator;
@@ -22,6 +26,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -49,6 +54,9 @@ public class UartBluetooth extends SerialCommunicator {
         private DataInputStream DATA_IN;
         private BluetoothAdapter mBluetoothAdapter;
         private BluetoothServerSocket serverSocket;
+        Set<BluetoothDevice> pairedDevices;
+        String deviceName;
+        String deviceHardwareAddress;
 
         public UartBluetooth(Context context, String BlueName) {
                 super(context);
@@ -86,11 +94,51 @@ public class UartBluetooth extends SerialCommunicator {
                                         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                                         if(mBluetoothAdapter != null) {
                                                 if(mBluetoothAdapter.isEnabled()) {
+                                                        // BT Module -> Phone
+                                                        /*
                                                         serverSocket = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(mBlueName, uu);
                                                         DATA_socket = serverSocket.accept();
                                                         DATA_OUT = new DataOutputStream(DATA_socket.getOutputStream());
                                                         DATA_IN = new DataInputStream(DATA_socket.getInputStream());
                                                         DATA_still_going = false;
+                                                        return;
+                                                        */
+
+                                                        // BT Module <- Phone
+                                                        pairedDevices = mBluetoothAdapter.getBondedDevices();
+                                                        if (pairedDevices.size() > 0) {
+                                                                // There are paired devices. Get the name and address of each paired device.
+                                                                for (BluetoothDevice device : pairedDevices) {
+                                                                        Log.d(TAG, "targetDevices name : " + mBlueName);
+                                                                        Log.d(TAG, "pairedDevices name : " + device.getName());
+                                                                        if (device.getName().equals(mBlueName)) {
+                                                                                deviceName = device.getName();
+                                                                                deviceHardwareAddress = device.getAddress(); // MAC address
+                                                                        }
+                                                                }
+                                                        }
+
+                                                        boolean flag = true;
+
+                                                        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(deviceHardwareAddress);
+                                                        BluetoothSocket btSocket = null;
+
+                                                        // create & connect socket
+                                                        try {
+                                                                DATA_socket = device.createRfcommSocketToServiceRecord(uu);
+                                                                DATA_socket.connect();
+                                                        } catch (IOException e) {
+                                                                flag = false;
+                                                                Log.e(TAG, "connection failed!", e);
+                                                                e.printStackTrace();
+                                                        }
+
+                                                        if(flag){
+                                                                DATA_OUT = new DataOutputStream(DATA_socket.getOutputStream());
+                                                                DATA_IN = new DataInputStream(DATA_socket.getInputStream());
+                                                                DATA_still_going = false;
+                                                                Log.d(TAG, "connected to " + deviceName);
+                                                        }
                                                         return;
                                                 }
                                         }

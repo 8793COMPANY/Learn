@@ -174,7 +174,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
     int bytes; // bytes returned from read()
-    Physicaloid mPhysicaloid = new Physicaloid(this);
+    Physicaloid mPhysicaloid = new Physicaloid(this, true, "IOTMASS");
 
     Boolean [] view_check = {true,true,true,true};
 
@@ -208,7 +208,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
 
         if(deviceList.isEmpty()){
-            Log.e("generated : ", "isempty 디바이스 리스트");
+            Log.e("read_code generated : ", "isempty 디바이스 리스트");
         }
         else {
             Set<String> keys = deviceList.keySet();
@@ -399,38 +399,22 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         if(deviceList.isEmpty()){
-            Log.e("generated : ", "isempty 디바이스 리스트");
+            Log.e("uploadcode generated : ", "isempty 디바이스 리스트");
         }
-        else {
+
+        if (mPhysicaloid.isOpened()) {
+            OpenUSB();
+            mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+            upload_Listener.show();
+        } else {
             Boolean value = OpenUSB();
             if (value) {
                 // TODO : 업로드 팝업 디자인 수정
-//                Toast.makeText(getApplicationContext(), "Compilation Success, Uploading", Toast.LENGTH_LONG).show();
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
-//                Log.e("generated",code);
-//                Toast.makeText(getApplicationContext(), "Uploading Completed", Toast.LENGTH_LONG).show();
-//            Toast.makeText(getApplicationContext(),"업로드 성공!",Toast.LENGTH_SHORT).show();
                 upload_Listener.show();
-//                Toast.makeText(getApplicationContext(), "last2: "+mFormat.format(System.currentTimeMillis()), Toast.LENGTH_SHORT).show();
-
-//                Display display = getWindowManager().getDefaultDisplay();
-//                Point size = new Point();
-//                display.getSize(size);
-//
-//                Window window = upload_Listener.getWindow();
-//
-//                //int x = (int)(size.x * 0.5f);
-//                //int y = (int)(size.y * 0.45f);
-//
-//                int x = (int)(size.x);
-//                int y = (int)(size.y);
-//
-//                window.setLayout(x,y);
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
-//                // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-//                //  mGeneratedErrorTextView.setText("ERROR: Connect USB and try again");
             }
             getFileSize();
         }
@@ -839,7 +823,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     void checkUploadBtn(){
         Log.e("checkUploadBtn","in");
-        if (wifi_check && usb_check){
+        if (wifi_check){
             Log.e("checkUploadBtn","true");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
             categoryData.getUpload_btn().setEnabled(true);
@@ -886,7 +870,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         Log.e("????",contents_name);
         Log.e("onCreate","in");
-        OpenUSB();
+        mPhysicaloid.open();
+        //OpenUSB();
         if (!contents_name.equals("none")){
 
             if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {

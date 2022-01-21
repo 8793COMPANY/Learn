@@ -3,4 +3,5 @@
     android:versionCode="20000"
     android:versionName="02.00.00" >
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 </manifest>
