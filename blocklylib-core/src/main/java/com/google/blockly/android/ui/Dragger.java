@@ -299,10 +299,14 @@ public class Dragger {
                 // a drop down field.
 
                 // 포커스 된 블록 좌표
+                Log.e("block type", "t: " + blockView.getBlock().getType());
                 Log.e("block coords", "x: " + blockView.getBlock().getPosition().x);
                 Log.e("block coords", "y: " + blockView.getBlock().getPosition().y);
+
                 categoryData.setWorkspacePoint(blockView.getBlock().getPosition());
+
                 Log.e("onInterceptTouchEvent","in!");
+
                 return onTouchBlockImpl(DRAG_MODE_SLOPPY, dragHandler, blockView, motionEvent,
                         /* interceptMode */ true);
             }

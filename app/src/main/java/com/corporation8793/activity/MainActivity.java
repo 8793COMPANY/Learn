@@ -174,7 +174,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
     int bytes; // bytes returned from read()
-    Physicaloid mPhysicaloid = new Physicaloid(this, true, "IOTMASS");
+    // TODO : 블루투스 모드까지 ON
+    //Physicaloid mPhysicaloid = new Physicaloid(this, true, "IOTMASS");
+    // TODO : ONLY USB
+    Physicaloid mPhysicaloid = new Physicaloid(this);
 
     Boolean [] view_check = {true,true,true,true};
 

@@ -474,6 +474,10 @@ public class Physicaloid {
                                                         mSerial.stopReadListener();
                                                         mSerial.clearBuffer();
 
+                                                        Log.d(TAG, "di_mFileStream is null?: " + (mFileStream == null));
+                                                        Log.d(TAG, "di_mBoard: " + mBoard.idText);
+                                                        Log.d(TAG, "di_mSerial: " + mSerial.getClass().getName());
+                                                        Log.d(TAG, "di_mSerial is null?: " + mSerial.getClass());
                                                         mUploader.upload(mFileStream, mBoard, mSerial, mCallBack);
 
                                                         mSerial.setUartConfig(tmpUartConfig); // recover if already

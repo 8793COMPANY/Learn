@@ -50,7 +50,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     // TODO : Allowed zoom scales. (줌 레벨 설정)
     private static final float[] ZOOM_SCALES = new float[]{0.15f, 0.3f, 0.45f, 1.0f, 2.0f};
-    private static final int INIT_ZOOM_SCALES_INDEX = 3;
+    private static final int INIT_ZOOM_SCALES_INDEX = 2;
 
     protected boolean mScrollable = true;
     protected boolean mScalable = true;
