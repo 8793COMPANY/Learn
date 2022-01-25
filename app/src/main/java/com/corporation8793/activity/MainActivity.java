@@ -404,6 +404,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         if (mPhysicaloid.isOpened()) {
             OpenUSB();
+
             mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
             upload_Listener.show();
         } else {
@@ -496,6 +497,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
+
                 });
 
 //        Map<String,String> Headers = new HashMap<>();
