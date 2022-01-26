@@ -26,14 +26,14 @@
 
     <string name="blockly_toolbox_default_category_name">Blocks</string>
     <string name="rename_variable">Rename variable\u2026"</string>
-    <string name="delete_variable">Delete variable\u2026"</string>
-    <string name="create_variable">New variable</string>
-    <string name="delete_variable_title">Delete variable</string>
+    <string name="delete_variable">변수 삭제하기\u2026"</string>
+    <string name="create_variable">새로운 변수 생성</string>
+    <string name="delete_variable_title">변수 삭제하기</string>
     <!-- Confirmation message shown if a user is deleting a variable with more than 1 block that
          uses it. -->
-    <string name="delete_variable_confirm">Delete variable %1$s and %2$d blocks using it?</string>
-    <string name="delete_variable_positive">Delete</string>
-    <string name="delete_variable_negative">Cancel</string>
+    <string name="delete_variable_confirm">변수 \"%1$s\" 를 삭제하시겠습니까?\n(\"%1$s\" 변수를 사용중인 %2$d개의 블록도 함께 삭제됩니다)</string>
+    <string name="delete_variable_positive">삭제하기</string>
+    <string name="delete_variable_negative">취소</string>
     <!-- Message shown when creating or renaming a variable. -->
     <string name="name_variable_title">Variable name</string>
     <string name="name_variable_message">New variable name</string>

@@ -38,6 +38,13 @@ public class DeleteVariableDialog extends DialogFragment {
         bob.setTitle(R.string.delete_variable_title);
         bob.setMessage(String.format(getResources().getString(R.string.delete_variable_confirm),
                 mVariable, mCount));
+        bob.setNegativeButton(R.string.delete_variable_negative,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                });
         bob.setPositiveButton(R.string.delete_variable_positive,
                 new DialogInterface.OnClickListener() {
                     @Override

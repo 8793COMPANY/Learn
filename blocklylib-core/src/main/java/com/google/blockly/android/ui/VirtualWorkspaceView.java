@@ -185,7 +185,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         // reset view end *
 
         // TODO : 포커스 된 블록 위치로 화면 이동
-        scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
+        if ( ptp != null ) {
+            scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
+        }
     }
 
     public boolean isScrollable() {
