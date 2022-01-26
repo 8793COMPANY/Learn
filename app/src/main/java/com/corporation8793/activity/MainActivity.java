@@ -47,9 +47,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowInsets;
-import android.view.WindowInsetsAnimation;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -67,12 +64,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.Guideline;
-import androidx.core.view.GestureDetectorCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.blockly.android.AbstractBlocklyActivity;
@@ -90,7 +85,6 @@ import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,12 +129,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
     private Boolean initial=true, wifi_check = false, usb_check = false;
-    Boolean compileCheck = false;
+    Boolean compileCheck = false, copy_check = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
     EditText serial_input_box;
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
+    public Button block_copy_btn;
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
@@ -171,10 +166,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     //시니얼 모니터 slow 방지 문자열
     StringBuilder stringBuilder = new StringBuilder();
 
+    BlocklyController controller;
+
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
     int bytes; // bytes returned from read()
-    Physicaloid mPhysicaloid = new Physicaloid(this, true, "IOTMASS");
+    // TODO : 블루투스 모드까지 ON
+    //Physicaloid mPhysicaloid = new Physicaloid(this, true, "IOTMASS");
+    // TODO : ONLY USB
+    Physicaloid mPhysicaloid = new Physicaloid(this);
 
     Boolean [] view_check = {true,true,true,true};
 
@@ -201,7 +201,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         LEVEL_TOOLBOX[1] = "arduino_advanced.xml";
     }
 
-    private final Handler mHandler = new Handler();
+    Handler mHandler = new Handler();
+
+
+
+
     public void read_code() {
         Log.e("generated", "리드");
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
@@ -272,9 +276,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     });
 
                     if(generatedCode.contains("alert")) {
+                        /*
+                         js 에서   '!!alert!! ~~'
+                         관련 코드를 return하면 여기로 들어옴
+                        */
                         String[] alert = generatedCode.split("!!");
+                        Log.e("in",alert[2]);
                         Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
                         code = generatedCode;
+                        customProgressDialog.dismiss();
 //                        Log.e("generated",generatedCode);
                     }
                     else {
@@ -301,6 +311,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         if (compileCheck) {
                             //Log.e("generated", "컴파컴파");
                             remotecompile("code.ino", getCompiler());
+                            Log.e("in!","ok");
                             compileCheck = false;
                             customProgressDialog.dismiss();
                         }
@@ -404,9 +415,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         if (mPhysicaloid.isOpened()) {
             OpenUSB();
-
+            Log.e("in! upload","before");
+            mHandler.sendEmptyMessageDelayed(1,3000);
             mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+            Log.e("in! upload","finish");
+            mHandler.removeMessages(1);
             upload_Listener.show();
+
         } else {
             Boolean value = OpenUSB();
             if (value) {
@@ -468,10 +483,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             create_file(response, "out.hex");
                             Log.e("generated", "리모트 안");
                             upload_code("/data/data/com.learn4/out.hex");
+                            Log.e("upload finish","in!");
                         }
                         //System.out.println(response);
                     }
                 }, error -> {
+                    Log.e("error","in!");
                     if (error instanceof TimeoutError) {
                         Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     }
@@ -870,6 +887,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        hideSystemUI();
 //        test();
 
+
+
         Log.e("????",contents_name);
         Log.e("onCreate","in");
         mPhysicaloid.open();
@@ -887,12 +906,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        BlocklyController controller = getController();
+        controller = getController();
         controller.recenterWorkspace();
         controller.zoomOut();
+        controller.setCopyCheck(this);
+
+
 
         flyoutFragment = new FlyoutFragment();
         flyoutFragment.setCloseCheck(this);
+
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
@@ -976,6 +999,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
 
 
+        block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
@@ -1015,6 +1039,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+        });
+
+        block_copy_btn.setOnClickListener(v->{
+            copy_check = true;
+            block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
+            controller.setCopyEnabled(copy_check);
+
         });
 
 
@@ -1152,6 +1183,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
 
         return root;
     }
@@ -1470,6 +1505,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     public void onCloseCheck(String msg) {
         //Log.e("들어온다!!",msg);
 
+
         try {
             if (categoryData.getPosition() < 4) {
                 Log.e("hi","zz");
@@ -1481,6 +1517,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onCopyCheck(boolean check) {
+        copy_check = check;
+        Log.e("in!",copy_check+"");
+        controller.setCopyEnabled(copy_check);
+        block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_off));
     }
 
     public void code_btn(int pos) {

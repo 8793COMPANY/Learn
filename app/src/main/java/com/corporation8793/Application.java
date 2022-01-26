@@ -34,8 +34,8 @@ public class Application extends android.app.Application {
         super.onCreate();
         logHelper = new LogHelper();
         Thread.setDefaultUncaughtExceptionHandler(logHelper);
-        readComponent();
-        readContents();
+//        readComponent();
+//        readContents();
 
     }
 

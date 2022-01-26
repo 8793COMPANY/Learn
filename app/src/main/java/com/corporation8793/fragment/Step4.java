@@ -19,8 +19,6 @@ import com.corporation8793.dto.Answer;
 import com.corporation8793.recyclerview.AnswerAdapter;
 import com.corporation8793.recyclerview.RecyclerDecoration;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**

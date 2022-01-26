@@ -2,7 +2,6 @@ package com.corporation8793.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -10,24 +9,18 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.SurfaceControl;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.fragment.Step1;
 import com.corporation8793.fragment.Step2;
 import com.corporation8793.fragment.Step3;
 import com.corporation8793.fragment.Step4;
-
-import org.w3c.dom.Text;
 
 public class ProblemActivity extends AppCompatActivity {
 

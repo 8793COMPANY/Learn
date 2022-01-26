@@ -16,13 +16,10 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 
-import androidx.annotation.ColorRes;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,14 +27,11 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -87,6 +81,7 @@ public class BlockRecyclerViewHelper {
     BlocklyController blocklyController;
 //    ViewTreeObserver.OnGlobalFocusChangeListener mGlobalFocusChangeListener;
     public static CategoryData categoryData = CategoryData.getInstance();
+    public boolean copy_check = false;
 
 
 
@@ -123,14 +118,22 @@ public class BlockRecyclerViewHelper {
                 .buildImmediateDragBlockTouchHandler(new DragHandler());
 
         //블록 복사기능
-//        controller.setOnItemClickListener(new BlocklyController.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(PendingDrag pendingDrag) {
-//                getWorkspaceBlockGroupForTouch(pendingDrag);
-//            }
-//        });
+        controller.setOnBlockClickListener(new BlocklyController.OnBlockClickListener() {
+            @Override
+            public void onBlockClick(PendingDrag pendingDrag) {
+                BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+                Block rootBlock = touchedBlockView.getBlock().getRootBlock();
+                if (!rootBlock.getType().trim().equals("turtle_setup_loop")){
+//                    getWorkspaceBlockGroupForTouch(pendingDrag);
+                    copyBlock(pendingDrag);
+                }
+
+            }
+        });
 
     }
+
+
 
     /**
      * Reset all the initialized components so this object may be attached to a new
@@ -426,11 +429,67 @@ public class BlockRecyclerViewHelper {
      *         {@link FlyoutCallback#getDraggableBlockGroup}.
      */
 
+    //블록 복사
+    @NonNull
+    private Pair<BlockGroup, ViewPoint> copyBlock(PendingDrag pendingDrag) {
+        Log.e("getworkspace","blockgroupfortouch");
+        BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+        Block rootBlock = touchedBlockView.getBlock().getRootBlock();
+        Log.e("rootBlock",rootBlock.getType());
+        BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
+        BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
+
+        // Calculate the offset from rootTouchedGroup to touchedBlockView in view
+        // pixels. We are assuming the only transforms between BlockViews are the
+        // child offsets.
+        View view = (View) touchedBlockView;
+//        view.setBackgroundColor(Color.parseColor("#FF007F"));
+
+
+        float offsetX = view.getX() + pendingDrag.getTouchDownViewOffsetX();
+        float offsetY = view.getY() + pendingDrag.getTouchDownViewOffsetY();
+        ViewGroup parent = (ViewGroup) view.getParent();
+        while (parent != rootTouchedGroup) {
+            view = parent;
+            offsetX += view.getX();
+            offsetY += view.getY();
+            parent = (ViewGroup) view.getParent();
+        }
+        ViewPoint touchOffset = new ViewPoint((int) Math.ceil(offsetX),
+                (int) Math.ceil(offsetY));
+
+        // Adjust for RTL, where the block workspace coordinate will be in the top right
+        if (mHelper.useRtl()) {
+            offsetX = rootTouchedGroup.getWidth() - offsetX;
+        }
+
+        // Scale into workspace coordinates.
+
+        //복사한 블록 workspace에 띄워줄 위치 조정은 여기서 하시면 돼요
+        int wsOffsetX = mHelper.virtualViewToWorkspaceUnits(offsetX);
+        int wsOffsetY = mHelper.virtualViewToWorkspaceUnits(offsetY)-100;
+
+        // Offset the workspace coord by the BlockGroup's touch offset.
+        mTempWorkspacePoint.setFrom(
+                pendingDrag.getTouchDownWorkspaceCoordinates());
+        mTempWorkspacePoint.offset(-wsOffsetX, -wsOffsetY);
+
+
+        ;
+//        int itemIndex = getCurrentCategory().indexOf(rootBlock); // Should never be -1
+        int itemIndex =0;
+
+        BlockGroup dragGroup = mCallback.getDraggableBlockGroup(itemIndex, rootBlock,
+                mTempWorkspacePoint);
+        return Pair.create(dragGroup, touchOffset);
+    }
+
     @NonNull
     private Pair<BlockGroup, ViewPoint> getWorkspaceBlockGroupForTouch(PendingDrag pendingDrag) {
         Log.e("getworkspace","blockgroupfortouch");
         BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
         Block rootBlock = touchedBlockView.getBlock().getRootBlock();
+        Log.e("rootBlock",rootBlock.getType());
         BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
         BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
 
