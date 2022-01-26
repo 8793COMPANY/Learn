@@ -1109,9 +1109,9 @@ public class BlocklyController {
         }
     }
 
-    public void zoomToFocusedBlock(WorkspacePoint wp) {
+    public void zoomToFocusedBlock(WorkspacePoint ntp, WorkspacePoint ptp, WorkspacePoint rtp) {
         if (mVirtualWorkspaceView != null) {
-            mVirtualWorkspaceView.resetView_2(wp);
+            mVirtualWorkspaceView.resetView_2(ntp, ptp, rtp);
         }
     }
 

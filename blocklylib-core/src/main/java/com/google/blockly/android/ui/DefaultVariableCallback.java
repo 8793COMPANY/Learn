@@ -59,10 +59,11 @@ public class DefaultVariableCallback extends BlocklyController.VariableCallback 
         }
 
         int usageCount = variableInfo.getUsageCount();
-        if (usageCount == 1) {
-            // For one block just let the controller delete it.
-            return true;
-        }
+        // 이제 변수 개수와 상관없이 삭제확인 팝업(DeleteVariableDialog)을 띄웁니다.
+        //        if (usageCount == 1) {
+        //            // For one block just let the controller delete it.
+        //            return true;
+        //        }
 
         DeleteVariableDialog deleteVariableDialog = newDeleteVariableDialog();
         deleteVariableDialog.setController(mController);
