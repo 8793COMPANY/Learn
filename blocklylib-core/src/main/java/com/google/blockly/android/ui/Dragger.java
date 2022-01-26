@@ -299,11 +299,29 @@ public class Dragger {
                 // a drop down field.
 
                 // 포커스 된 블록 좌표
-                Log.e("block type", "t: " + blockView.getBlock().getType());
-                Log.e("block coords", "x: " + blockView.getBlock().getPosition().x);
-                Log.e("block coords", "y: " + blockView.getBlock().getPosition().y);
+                if (blockView.getBlock().getRootBlock() != null) {
+                    Log.e("block type", "rt: " + blockView.getBlock().getRootBlock().getType());
+                    Log.e("block coords", "rtx: " + blockView.getBlock().getRootBlock().getPosition().x);
+                    Log.e("block coords", "rty: " + blockView.getBlock().getRootBlock().getPosition().y);
 
-                categoryData.setWorkspacePoint(blockView.getBlock().getPosition());
+                    categoryData.setRtp(blockView.getBlock().getRootBlock().getPosition());
+                }
+
+                if (blockView.getBlock().getParentBlock() != null) {
+                    Log.e("block type", "pt: " + blockView.getBlock().getParentBlock().getType());
+                    Log.e("block coords", "ptx: " + blockView.getBlock().getParentBlock().getPosition().x);
+                    Log.e("block coords", "pty: " + blockView.getBlock().getParentBlock().getPosition().y);
+
+                    categoryData.setPtp(blockView.getBlock().getParentBlock().getPosition());
+                }
+
+                if (blockView.getBlock() != null) {
+                    Log.e("block type", "t: " + blockView.getBlock().getType());
+                    Log.e("block coords", "tx: " + blockView.getBlock().getPosition().x);
+                    Log.e("block coords", "ty: " + blockView.getBlock().getPosition().y);
+
+                    categoryData.setNtp(blockView.getBlock().getPosition());
+                }
 
                 Log.e("onInterceptTouchEvent","in!");
 

@@ -28,15 +28,31 @@ public class CategoryData {
 
     View upload_btn = null;
 
-    public WorkspacePoint getWorkspacePoint() {
-        return workspacePoint;
+    WorkspacePoint rtp, ptp, ntp;
+
+    public WorkspacePoint getRtp() {
+        return rtp;
     }
 
-    public void setWorkspacePoint(WorkspacePoint workspacePoint) {
-        this.workspacePoint = workspacePoint;
+    public void setRtp(WorkspacePoint rtp) {
+        this.rtp = rtp;
     }
 
-    WorkspacePoint workspacePoint;
+    public WorkspacePoint getPtp() {
+        return ptp;
+    }
+
+    public void setPtp(WorkspacePoint ptp) {
+        this.ptp = ptp;
+    }
+
+    public WorkspacePoint getNtp() {
+        return ntp;
+    }
+
+    public void setNtp(WorkspacePoint ntp) {
+        this.ntp = ntp;
+    }
 
     public void setPosition(int position) {
         this.position = position;

@@ -1142,11 +1142,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // 키보드가 열렸을때
             if (isOpen) {
                 // 포커스 된 블록이 있다면
-                if (categoryData.getWorkspacePoint() != null) {
+                if (categoryData.getNtp() != null) {
                     // 해당 블록을 기준으로 화면을 이동하고
-                    controller.zoomToFocusedBlock(categoryData.getWorkspacePoint());
+                    controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     // 포커스 된 블록의 좌표값은 초기화
-                    categoryData.setWorkspacePoint(null);
+                    categoryData.setRtp(null);
+                    categoryData.setPtp(null);
+                    categoryData.setNtp(null);
                 }
             }
             else {

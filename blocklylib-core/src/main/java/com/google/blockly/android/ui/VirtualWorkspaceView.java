@@ -49,7 +49,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     private static final float MIN_SCALE_TO_DRAW_GRID = 0.5f;
 
     // TODO : Allowed zoom scales. (줌 레벨 설정)
-    private static final float[] ZOOM_SCALES = new float[]{0.15f, 0.3f, 0.45f, 1.0f, 2.0f};
+    private static final float[] ZOOM_SCALES = new float[]{0.15f, 0.3f, 0.45f, 0.8f , 1.0f, 2.0f};
     private static final int INIT_ZOOM_SCALES_INDEX = 2;
 
     protected boolean mScrollable = true;
@@ -159,14 +159,14 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         }
     }
 
-    public void resetView_2(WorkspacePoint wp) {
+    public void resetView_2(WorkspacePoint ntp, WorkspacePoint ptp, WorkspacePoint rtp) {
         // Reset scrolling state.
         mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
         mPanningStart.set(0,0);
         mOriginalScrollX = 0;
         mOriginalScrollY = 0;
 
-        updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+        updateScaleStep(3);
 
         final Rect blocksBoundingBox = getViewScaledBlockBounds();
         final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
@@ -176,16 +176,16 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             if (useRtl) {
                 scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
             } else {
-                //scrollTo(blocksBoundingBox.left - margin, -200);
-
-                // TODO : 포커스 된 블록 위치로 화면 이동 (좌측 좌표는 고정하고 y 만 조절)
-                // Reset top leading corner to 0,0 when
-                scrollTo(useRtl ? -getMeasuredWidth() : 0, ((int) wp.y) - 100);
+                scrollTo(blocksBoundingBox.left - margin, -200);
             }
         } else {
             // Reset top leading corner to 0,0 when
             scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
         }
+        // reset view end *
+
+        // TODO : 포커스 된 블록 위치로 화면 이동
+        scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
     }
 
     public boolean isScrollable() {
