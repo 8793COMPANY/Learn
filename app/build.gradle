@@ -10,7 +10,7 @@ android {
         applicationId "com.learn4"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 7
+        versionCode 8
         versionName "0.9.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
