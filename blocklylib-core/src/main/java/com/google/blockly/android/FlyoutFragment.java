@@ -133,10 +133,12 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     protected int mScrollOrientation = OrientationHelper.VERTICAL;
 
     protected FlyoutCallback mViewCallback = null;
-    protected BlockRecyclerViewHelper mRecyclerHelper;
+    public BlockRecyclerViewHelper mRecyclerHelper;
     protected final ColorDrawable mBgDrawable = new ColorDrawable(mBgColor);
     LinearLayout linearLayout;
     public static CategoryData categoryData = CategoryData.getInstance();
+    RecyclerView recyclerView;
+
 
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
@@ -186,7 +188,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
 
 
 
-        RecyclerView recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);  //start.layout
+        recyclerView = (RecyclerView) mFlyoutView.findViewById(R.id.block_list_view);  //start.layout
         Display display = getActivity().getWindowManager().getDefaultDisplay();  // in Activity
         /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
         Point size = new Point();

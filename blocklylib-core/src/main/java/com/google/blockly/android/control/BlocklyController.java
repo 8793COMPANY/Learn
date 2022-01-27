@@ -28,13 +28,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BlockListUI;
-import com.google.blockly.android.ui.BlockRecyclerViewHelper;
 import com.google.blockly.android.ui.CategorySelectorUI;
 import com.google.blockly.android.WorkspaceFragment;
 import com.google.blockly.android.clipboard.BlockClipDataHelper;
 import com.google.blockly.android.clipboard.SingleMimeTypeClipDataHelper;
-import com.google.blockly.android.ui.CategoryTabs;
 import com.google.blockly.android.ui.Dragger;
 import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.android.ui.BlockTouchHandler;
@@ -106,6 +105,15 @@ public class BlocklyController {
         void onEventGroup(List<BlocklyEvent> events);
     }
 
+    public static OnCloseCheckListener copyCheck;
+
+
+    public void setCopyCheck(OnCloseCheckListener closeCheck){
+
+        this.copyCheck = closeCheck;
+        //Log.e("hi","setCloseCheck");
+    }
+
 
 
     private final Context mContext;
@@ -122,6 +130,7 @@ public class BlocklyController {
     // Whether the current call stack is actively executing code intended to group and fire events.
     // See groupAndFireEvents(Runnable)
     private boolean mInEventGroup = false;
+    private boolean mBlockCopyCheck = false;
 
     private ArrayList<BlocklyEvent> mPendingEvents;
     private int mPendingEventsMask = 0;
@@ -135,13 +144,13 @@ public class BlocklyController {
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
-    public interface OnItemClickListener{
-        void onItemClick(PendingDrag pendingDrag);
+    public interface OnBlockClickListener {
+        void onBlockClick(PendingDrag pendingDrag);
     }
 
-    private OnItemClickListener mListener = null;
+    private OnBlockClickListener mListener = null;
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnBlockClickListener(OnBlockClickListener listener){
         mListener =listener;
     }
 
@@ -158,6 +167,9 @@ public class BlocklyController {
         }
     };
 
+    public void setCopyEnabled(boolean check){
+        mBlockCopyCheck = check;
+    }
 
     private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
         @Override
@@ -203,7 +215,15 @@ public class BlocklyController {
             // TODO(#35): Mark block as focused / selected.
             if (mListener != null){
             //Log.e("mlist","not null");
-            mListener.onItemClick(pendingDrag);
+                //블록 복사
+                if (mBlockCopyCheck) {
+                    mListener.onBlockClick(pendingDrag);
+                    if (copyCheck != null){
+                        Log.e("in! hi","copyCheck");
+                        copyCheck.onCopyCheck(false);
+                    }
+
+                }
         }
             Log.e("block clicked","in !!!");
             return false;
@@ -269,6 +289,10 @@ public class BlocklyController {
         mTouchHandler = mDragger.buildSloppyBlockTouchHandler(mWorkspaceDragHandler);
 
         mFlyoutController = new FlyoutController(this);
+
+        if (copyCheck != null){
+            copyCheck.onCopyCheck(false);
+        }
     }
 
 

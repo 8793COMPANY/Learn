@@ -626,11 +626,8 @@
   },
   {
     "type": "tone_notone",
-    "message0": "tone %1 %2 pin %3 frequency %4 delay %5",
+    "message0": "Tone %1 pin %2 frequency %3 delay %4",
     "args0": [
-      {
-        "type": "input_dummy"
-      },
       {
         "type": "input_dummy"
       },

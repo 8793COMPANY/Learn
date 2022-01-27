@@ -15,8 +15,10 @@
 
 package com.google.blockly.android.ui;
 
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.blockly.android.clipboard.BlockClipDataHelper;
 import com.google.blockly.android.control.BlocklyController;
@@ -57,6 +59,11 @@ public class OnDragToTrashListener implements View.OnDragListener {
         // (this Activity) in order to trash it.
         PendingDrag drag = mClipHelper.getPendingDrag(event);
         Block rootBlock = drag == null ? null : drag.getRootDraggedBlock();
+        if (rootBlock != null && rootBlock.getType().trim().equals("turtle_setup_loop")){
+            Log.e("in! rootblock type",rootBlock.getType());
+            Log.e("in! rootblock delete",rootBlock.isDeletable()+"");
+            return rootBlock != null && false;
+        }
         return rootBlock != null && rootBlock.isDeletable();
     }
 }

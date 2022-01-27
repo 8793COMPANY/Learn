@@ -83,18 +83,22 @@ public class TrashCanView extends AppCompatImageView {
         View.OnDragListener wrapper = new OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
+                Log.e("trashcanview","draging");
                 int action = dragEvent.getAction();
                 // Whether the dragged object can be handled by the trash.
                 boolean result = dragListener.onDrag(view, dragEvent);
                 if (action == DragEvent.ACTION_DRAG_ENDED) {
+                    Log.e("in! drag","ended");
                     setState(STATE_DEFAULT);
                 } else  if (result) {
                     switch (action) {
                         case DragEvent.ACTION_DRAG_ENTERED:
+                            Log.e("in! drag","enterd");
                             setState(STATE_ON_HOVER);
                             break;
                         case DragEvent.ACTION_DROP:
                         case DragEvent.ACTION_DRAG_EXITED:
+                            Log.e("in! drag","exit");
                             setState(STATE_DEFAULT);
                             break;
                     }
