@@ -78,7 +78,7 @@ public class ContentsActivity extends AppCompatActivity {
         back_btn.setOnClickListener(v-> finish());
 
         // 웰컴 메시지 재생 완료
-        mediaPlayer.setOnCompletionListener(mp -> mp.release());
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }
 
 

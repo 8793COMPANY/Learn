@@ -1066,7 +1066,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
         
         // 테스트 메시지 재생 완료
-        mediaPlayer.setOnCompletionListener(mp -> mp.release());
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
 
 
