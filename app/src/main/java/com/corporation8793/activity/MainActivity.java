@@ -55,6 +55,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
@@ -139,7 +140,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
     public Button block_copy_btn, reset_btn;
 
-    AppCompatButton block_bot_btn;
+    ImageView block_bot_btn;
     MediaPlayer mediaPlayer;
 
     LinearLayout trashcan_btn;
@@ -1007,7 +1008,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
 
-        block_bot_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
+        block_bot_btn = blockly_workspace.findViewById(R.id.block_bot_btn);
         // 봇 메시지 초기화
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
 
@@ -1062,12 +1063,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         // 테스트 메시지 재생
         block_bot_btn.setOnClickListener(v -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+            // 봇 메시지 초기화
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
             mediaPlayer.start();
             Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
         });
 
         // 테스트 메시지 재생 완료
-        mediaPlayer.setOnCompletionListener(mp -> mp.release());
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
         reset_btn.setOnClickListener(v->{
             getController().resetWorkspace();
