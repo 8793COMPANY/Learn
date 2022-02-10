@@ -75,9 +75,7 @@ public class ContentsActivity extends AppCompatActivity {
         rvSubject.setLayoutManager(manager);
         rvSubject.setAdapter(levelAdapter);
 
-        back_btn.setOnClickListener(v->{
-            finish();
-        });
+        back_btn.setOnClickListener(v-> finish());
 
         // 웰컴 메시지 재생 완료
         mediaPlayer.setOnCompletionListener(mp -> mp.release());
