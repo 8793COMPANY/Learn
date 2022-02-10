@@ -301,11 +301,11 @@
         android:id="@+id/block_bot_btn"
         android:layout_width="59dp"
         android:layout_height="86dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/bot_test"
-        app:layout_constraintBottom_toTopOf="@id/block_copy_btn"
-        app:layout_constraintRight_toRightOf="@id/block_copy_btn"
-        app:layout_constraintLeft_toLeftOf="@id/block_copy_btn"/>
+        app:layout_constraintBottom_toTopOf="@id/reset_btn"
+        app:layout_constraintRight_toRightOf="@id/reset_btn"
+        app:layout_constraintLeft_toLeftOf="@id/reset_btn"/>
 
     <Button
         android:id="@+id/block_copy_btn"
