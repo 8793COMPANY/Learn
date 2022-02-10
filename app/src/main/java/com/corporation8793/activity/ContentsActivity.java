@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -27,10 +28,30 @@ public class ContentsActivity extends AppCompatActivity {
 
     Button back_btn;
 
+    MediaPlayer mediaPlayer;
+
+    @Override
+    protected void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onPause();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.into_contents_mode_main);
+        mediaPlayer.start();
 
         decorView = getWindow().getDecorView();
         uiOption = getWindow().getDecorView().getSystemUiVisibility();
@@ -54,9 +75,10 @@ public class ContentsActivity extends AppCompatActivity {
         rvSubject.setLayoutManager(manager);
         rvSubject.setAdapter(levelAdapter);
 
-        back_btn.setOnClickListener(v->{
-            finish();
-        });
+        back_btn.setOnClickListener(v-> finish());
+
+        // 웰컴 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
     }
 
 

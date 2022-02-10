@@ -36,6 +36,7 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
@@ -64,6 +66,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.Guideline;
 
 import com.android.volley.Request;
@@ -110,7 +113,6 @@ import java.util.Set;
  * Demo app with the Blockly Games turtle game in a webview.
  */
 public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener {
-
     //2021.07.23 제일 최신 버전
 
     private static final String TAG = "TurtleActivity";
@@ -138,6 +140,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
     public Button block_copy_btn, reset_btn;
+
+    ImageView block_bot_btn;
+    MediaPlayer mediaPlayer;
+
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
@@ -1018,6 +1024,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
+
+        block_bot_btn = blockly_workspace.findViewById(R.id.block_bot_btn);
+        // 봇 메시지 초기화
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
+
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
@@ -1070,8 +1081,21 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
             }
             controller.setCopyEnabled(copy_check);
-
         });
+
+        // 테스트 메시지 재생
+        block_bot_btn.setOnClickListener(v -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+            // 봇 메시지 초기화
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
+            mediaPlayer.start();
+            Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
+        });
+
+        // 테스트 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
         reset_btn.setOnClickListener(v->{
             getController().resetWorkspace();
@@ -1359,10 +1383,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     protected void onPause() {
         super.onPause();
         mMonitorHandler.sendEmptyMessage(1);
+        // 봇 메시지 재생 종료
+        mediaPlayer.release();
 //        if (wifiEventReceiver != null) {
 //            unregisterReceiver(wifiEventReceiver);
 //            wifiEventReceiver = null;
 //        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 봇 메시지 재생 종료
+        mediaPlayer.release();
     }
 
     @Override
