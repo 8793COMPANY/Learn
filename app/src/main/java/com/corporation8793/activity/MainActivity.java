@@ -90,6 +90,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -135,7 +136,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     EditText serial_input_box;
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
-    public Button block_copy_btn;
+    public Button block_copy_btn, reset_btn;
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
@@ -1012,6 +1013,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         scrollview = blockly_workspace.findViewById(R.id.scrollview);
         trashcan_btn = blockly_workspace.findViewById(R.id.blockly_overlay_buttons);
 
+        reset_btn = blockly_workspace.findViewById(R.id.reset_btn);
+
 
         guideline4 = blockly_workspace.findViewById(R.id.guideline4);
 
@@ -1046,6 +1049,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
             controller.setCopyEnabled(copy_check);
 
+        });
+
+        reset_btn.setOnClickListener(v->{
+            getController().resetWorkspace();
+            loadSetupBlock();
         });
 
 
@@ -1191,6 +1199,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         return root;
+    }
+
+    void loadSetupBlock(){
+        String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "  <block type=\"turtle_setup_loop\" x=\"20.0\" y=\"128.0\" />\n" +
+                "</xml>";
+        InputStream is = new ByteArrayInputStream(str.getBytes());
+
+        try {
+            mBlocklyActivityHelper.loadWorkspaceFromInputStream(is);
+        } catch (BlockLoadingException e1) {
+            Log.e(TAG, "Failed to load default arduino workspace", e1);
+        }
     }
 
     private final Handler mMonitorHandler = new Handler() {
@@ -1553,6 +1574,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     getGeneratorsJsPaths(),
                     getCodeGenerationCallback());
         }
+
+
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {

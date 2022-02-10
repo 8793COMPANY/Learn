@@ -636,10 +636,10 @@ public class BlockRecyclerViewHelper {
 //                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
                 //이부분 수정
 
-
-                holder.mContainer.addView(bg, layoutParams);
-                holder.mContainer.setForegroundGravity(0);
-
+                if (!block.getType().equals("turtle_setup_loop")) {
+                    holder.mContainer.addView(bg, layoutParams);
+                    holder.mContainer.setForegroundGravity(0);
+                }
 
 //                    ViewGroup.LayoutParams params = holder.mContainer.getLayoutParams();
 //                    holder.mContainer.setTouchDelegate(new TouchDelegate(new Rect(holder.mContainer.getWidth(),0,holder.mContainer.getWidth(),holder.mContainer.getHeight()), bg));
