@@ -31,6 +31,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.graphics.drawable.ScaleDrawable;
 import android.util.Log;
 
 import com.google.blockly.android.control.ConnectionManager;
@@ -1174,11 +1176,18 @@ public class BlockView extends AbstractBlockView<InputView> {
         bmp=bmp.createScaledBitmap(bmp,300,300,true);
         Drawable drawable = getResources().getDrawable(R.drawable.statementinput_top_connection);
         Canvas canvas = new Canvas(bmp);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.setBounds(0, 0, canvas.getWidth()+100, canvas.getHeight());
         drawable.draw(canvas);
 
 
+//        BitmapDrawable bmpImage = (BitmapDrawable) getResources().getDrawable(R.drawable.statementinput_top_connection);
+//        Bitmap bmp2 = Bitmap.createScaledBitmap(bmpImage.getBitmap(),(int)bmpImage.getIntrinsicWidth()+50,(int)bmpImage.getIntrinsicHeight()+50,false);
+//
+//        Drawable drawable = BitmapDrawable(getResources(),bmp2);
+//        ScaleDrawable scaleDrawable = (ScaleDrawable) drawable;
+//        scaleDrawable.setBounds(100,100,100,100);
 
+//        final NinePatchDrawable statementConnectionHighlight = mPatchManager.getPatchDrawable(drawable);
         final NinePatchDrawable statementConnectionHighlight = mPatchManager.getPatchDrawable(drawable);
         statementConnectionHighlight.setColorFilter(Color.parseColor("#FF00DD"), PorterDuff.Mode.SRC_IN);
     //  Drawable d = getResources().getDrawable(R.drawable.statementinput_top_connection);

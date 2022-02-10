@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import com.android.volley.error.TimeoutError;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.dialog.FinishDialog;
 import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.UploadDialog;
 import com.google.blockly.android.FlyoutFragment;
@@ -159,7 +160,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Spinner baud_rate;
 
 
-    private UploadDialog upload_Listener, error_Listener;
+    private UploadDialog uploadListener, error_Listener;
+    private FinishDialog finishListener;
 
     int current_pos =0;
 
@@ -421,14 +423,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
-            upload_Listener.show();
+            uploadListener.show();
 
         } else {
             Boolean value = OpenUSB();
             if (value) {
                 // TODO : 업로드 팝업 디자인 수정
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
-                upload_Listener.show();
+                uploadListener.show();
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
@@ -864,7 +866,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
             }
                 MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
-            upload_Listener.dismiss();
+            uploadListener.dismiss();
 
         }
     };
@@ -877,8 +879,22 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private View.OnClickListener error_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
-            upload_Listener.dismiss();
+            uploadListener.dismiss();
         }
+    };
+
+    private View.OnClickListener finish_confirm = new View.OnClickListener() {
+        public void onClick(View v) {
+//            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show()
+            finishListener.dismiss();
+            finish();
+
+        }
+    };
+
+    private View.OnClickListener finish_cancel = v -> {
+        // TODO : LMS 서버 통신
+        finishListener.dismiss();
     };
 
 
@@ -924,7 +940,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
-        upload_Listener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요");
+        uploadListener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요");
+        finishListener = new FinishDialog(this,finish_confirm,finish_cancel);
         error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
 
@@ -1045,8 +1062,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
         block_copy_btn.setOnClickListener(v->{
-            copy_check = true;
-            block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
+            if (copy_check){
+                copy_check = false;
+                block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_off));
+            }else{
+                copy_check = true;
+                block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
+            }
             controller.setCopyEnabled(copy_check);
 
         });
@@ -1203,7 +1225,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     void loadSetupBlock(){
         String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
-                "  <block type=\"turtle_setup_loop\" x=\"20.0\" y=\"128.0\" />\n" +
+                "  <block type=\"turtle_setup_loop\" x=\"-20.0\" y=\"108.0\" />\n" +
                 "</xml>";
         InputStream is = new ByteArrayInputStream(str.getBytes());
 
@@ -1274,69 +1296,51 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     void setInitLine(){
         code_btn.setSelected(false);
         serial_btn.setSelected(false);
-//        setup_view.setBackgroundColor(getResources().getColor(R.color.white));
-//        loop_view.setBackgroundColor(getResources().getColor(R.color.white));
-//        method_view.setBackgroundColor(getResources().getColor(R.color.white));
-//        etc_view.setBackgroundColor(getResources().getColor(R.color.white));
-//        code_view.setBackgroundColor(getResources().getColor(R.color.white));
-//        serial_view.setBackgroundColor(getResources().getColor(R.color.white));
-//        upload_view.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
     public void setLineForOtherCategoryTabs(int position) {
         //mMonitorHandler.sendEmptyMessage(1);
         Log.e("??","setLineForOtherCategoryTabs");
+        categoryData.setPosition(position);
         switch (position) {
             case -1:
-                categoryData.setPosition(position);
                 setInitLine();
                 break;
             case 0:
-                categoryData.setPosition(position);
                 setInitLine();
-                setCategoryTabsColor(position,setup_view);
+                setCategoryTabsColor(position);
                 break;
             case 1:
-                categoryData.setPosition(position);
                 setInitLine();
-                setCategoryTabsColor(position,loop_view);
+                setCategoryTabsColor(position);
                 break;
             case 2:
-                categoryData.setPosition(position);
                 setInitLine();
-                setCategoryTabsColor(position,method_view);
+                setCategoryTabsColor(position);
                 break;
             case 3:
-                categoryData.setPosition(position);
                 setInitLine();
-                setCategoryTabsColor(position,etc_view);
+                setCategoryTabsColor(position);
                 break;
             default:
                 break;
         }
     }
 
-    public void setCategoryTabsColor(int position, View view){
+    public void setCategoryTabsColor(int position){
         Log.e("setCategoryTabs",categoryData.isClosed()+"");
         if (current_pos == position) {
             if (view_check[position]){
-//                view.setBackgroundColor(Color.parseColor("#f78f43"));
-//                translate_btn.setVisibility(View.INVISIBLE);
-//                view.setSelected(true);
                 trashcan_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
                 categoryData.setClosed(false);
             }else {
-//                translate_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
                 view_check[position] = true;
             }
 
         }else{
             view_check[position] = false;
-//            view.setBackgroundColor(Color.parseColor("#f78f43"));
-//            translate_btn.setVisibility(View.INVISIBLE);
-//            view.setSelected(true);
             trashcan_btn.setVisibility(View.INVISIBLE);
             categoryData.setClosed(false);
         }
@@ -1348,21 +1352,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     @Override
     public void onBackPressed() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("단원을 종료하시겠습니까?");
-        builder.setPositiveButton("아니오",(dialog, which) -> {
-            dialog.cancel();});
-        builder.setNegativeButton("예",(dialog, which) -> {
-            // 가짜로 종료
-            // finish();
-
-            // 정말로 종료
-//            moveTaskToBack(true);
-//            android.os.Process.killProcess(android.os.Process.myPid());
-//            System.exit(1);
-            finish();
-        });
-        builder.show();
+        finishListener.show();
     }
 
     @Override
