@@ -141,6 +141,7 @@ public class BlocklyController {
     private WorkspaceFragment mWorkspaceFragment = null;
     private Dragger mDragger;
     private VariableCallback mVariableCallback = null;
+    Block testblock = null;
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
@@ -709,6 +710,7 @@ public class BlocklyController {
             List<Block> rootBlocks = mWorkspace.getRootBlocks();
             ConnectionManager connManager = mWorkspace.getConnectionManager();
             for (int i = 0; i < rootBlocks.size(); i++) {
+                Log.e("list rootblock init",rootBlocks.get(i).getType());
                 BlockGroup bg = mViewFactory.buildBlockGroupTree(
                         rootBlocks.get(i), connManager, mTouchHandler);
                 mWorkspaceView.addView(bg);
@@ -1122,23 +1124,36 @@ public class BlocklyController {
     public void resetWorkspace() {
         // Unlink the Views before wiping out the model's root list.
         ArrayList<Block> rootBlocks = mWorkspace.getRootBlocks();
+        if (rootBlocks.size() != 0){
+            testblock = rootBlocks.get(0);
+        }
+
+//        mWorkspaceView.addView(mWorkspaceView.getRootView());
         for (int i = 0; i < rootBlocks.size(); ++i) {
+            Log.e("list root",rootBlocks.get(i).getType());
             unlinkViews(rootBlocks.get(i));
         }
-        List<Block> trashBlocks = new ArrayList<>();
-        mWorkspace.getTrashCategory().getAllBlocksRecursive(trashBlocks);
-        for (int i = 0; i < trashBlocks.size(); i++) {
-            unlinkViews(trashBlocks.get(i));
-        }
+
+//        List<Block> trashBlocks = new ArrayList<>();
+//        mWorkspace.getTrashCategory().getAllBlocksRecursive(trashBlocks);
+//        for (int i = 0; i < trashBlocks.size(); i++) {
+//            Log.e("list trash",trashBlocks.get(i).getType());
+//            unlinkViews(trashBlocks.get(i));
+//        }
         mWorkspace.resetWorkspace();
         if (mWorkspaceView != null) {
+            Log.e("list workspace","not null");
             mWorkspaceView.removeAllViews();
             initBlockViews();
         }
+
         if (mFlyoutController != null) {
+            Log.e("list flyoutcontroller","not null");
             mFlyoutController.setTrashContents(mWorkspace.getTrashCategory());
         }
-    }
+
+        }
+
 
     /**
      * Removes all blocks from the {@link WorkspaceView} and puts them in the trash.

@@ -323,6 +323,16 @@
         blockly:layout_constraintEnd_toEndOf="parent"
         blockly:layout_constraintStart_toStartOf="parent"></Button>
 
+    <Button
+        android:id="@+id/reset_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reset"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintBottom_toTopOf="@+id/block_copy_btn"
+        blockly:layout_constraintEnd_toEndOf="parent"
+        blockly:layout_constraintStart_toStartOf="parent"></Button>
+
 
     <LinearLayout
         android:id="@+id/blockly_overlay_buttons"

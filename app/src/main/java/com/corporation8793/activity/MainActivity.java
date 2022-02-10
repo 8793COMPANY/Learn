@@ -35,7 +35,6 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
-import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -55,7 +54,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ScrollView;
@@ -65,7 +63,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.Guideline;
 
 import com.android.volley.Request;
@@ -138,11 +135,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     EditText serial_input_box;
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
-    public Button block_copy_btn;
-
-    AppCompatButton block_bot_btn;
-    MediaPlayer mediaPlayer;
-
+    public Button block_copy_btn, reset_btn;
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
@@ -1007,11 +1000,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
-
-        block_bot_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
-        // 봇 메시지 초기화
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
-
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
@@ -1023,6 +1011,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        init_btn = blockly_workspace.findViewById(R.id.init_btn);
         scrollview = blockly_workspace.findViewById(R.id.scrollview);
         trashcan_btn = blockly_workspace.findViewById(R.id.blockly_overlay_buttons);
+
+        reset_btn = blockly_workspace.findViewById(R.id.reset_btn);
 
 
         guideline4 = blockly_workspace.findViewById(R.id.guideline4);
@@ -1057,16 +1047,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             copy_check = true;
             block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
             controller.setCopyEnabled(copy_check);
+
         });
 
-        // 테스트 메시지 재생
-        block_bot_btn.setOnClickListener(v -> {
-            mediaPlayer.start();
-            Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
+        reset_btn.setOnClickListener(v->{
+            getController().resetWorkspace();
+            loadSetupBlock();
         });
-        
-        // 테스트 메시지 재생 완료
-        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
 
 
@@ -1211,6 +1198,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         return root;
+    }
+
+    void loadSetupBlock(){
+        String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "  <block type=\"turtle_setup_loop\" x=\"20.0\" y=\"128.0\" />\n" +
+                "</xml>";
+        InputStream is = new ByteArrayInputStream(str.getBytes());
+
+        try {
+            mBlocklyActivityHelper.loadWorkspaceFromInputStream(is);
+        } catch (BlockLoadingException e1) {
+            Log.e(TAG, "Failed to load default arduino workspace", e1);
+        }
     }
 
     private final Handler mMonitorHandler = new Handler() {
@@ -1368,19 +1368,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     protected void onPause() {
         super.onPause();
         mMonitorHandler.sendEmptyMessage(1);
-        // 봇 메시지 재생 종료
-        mediaPlayer.release();
 //        if (wifiEventReceiver != null) {
 //            unregisterReceiver(wifiEventReceiver);
 //            wifiEventReceiver = null;
 //        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // 봇 메시지 재생 종료
-        mediaPlayer.release();
     }
 
     @Override
@@ -1582,6 +1573,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     getGeneratorsJsPaths(),
                     getCodeGenerationCallback());
         }
+
+
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {

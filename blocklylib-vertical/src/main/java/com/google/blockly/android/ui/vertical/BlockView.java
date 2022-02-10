@@ -18,6 +18,7 @@ package com.google.blockly.android.ui.vertical;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -25,6 +26,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import androidx.annotation.NonNull;
@@ -1159,8 +1161,31 @@ public class BlockView extends AbstractBlockView<InputView> {
                 isShadow ? R.drawable.statementinput_top_shadow : R.drawable.statementinput_top);
         final NinePatchDrawable statementTopBorderDrawable =
                 mPatchManager.getPatchDrawable(R.drawable.statementinput_top_border);
-        final NinePatchDrawable statementConnectionHighlight =
-                mPatchManager.getPatchDrawable(R.drawable.statementinput_top_connection);
+//        final NinePatchDrawable statementConnectionHighlight =
+//                mPatchManager.getPatchDrawable(R.drawable.statementinput_top_connection);
+//
+//
+//        statementConnectionHighlight.setColorFilter(Color.parseColor("#FF00DD"), PorterDuff.Mode.SRC_IN);
+//        statementConnectionHighlight.
+
+
+
+        Bitmap bmp = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        bmp=bmp.createScaledBitmap(bmp,300,300,true);
+        Drawable drawable = getResources().getDrawable(R.drawable.statementinput_top_connection);
+        Canvas canvas = new Canvas(bmp);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+
+
+        final NinePatchDrawable statementConnectionHighlight = mPatchManager.getPatchDrawable(drawable);
+        statementConnectionHighlight.setColorFilter(Color.parseColor("#FF00DD"), PorterDuff.Mode.SRC_IN);
+    //  Drawable d = getResources().getDrawable(R.drawable.statementinput_top_connection);
+    //
+
+
+////        topStartBorderDrawable.setColorFilter(Color.parseColor("#FF00DD"), PorterDuff.Mode.SRC_IN);
 
         mHelper.setRtlAwareBounds(tempRect,
                 /* this width */  mBlockViewSize.x,
@@ -1170,7 +1195,15 @@ public class BlockView extends AbstractBlockView<InputView> {
                 /* bottom */ inputLayoutOrigin.y + statementTopDrawable.getIntrinsicHeight());
         statementTopDrawable.setBounds(tempRect);
         statementTopBorderDrawable.setBounds(tempRect);
+
+      Log.e("tempRect get left : ", tempRect.left+"");
+        Log.e("tempRect get top : ", tempRect.top+"");
+        Log.e("tempRect get boot : ", tempRect.bottom+"");
+        Log.e("tempRect get right : ", tempRect.right+"");
+
+        tempRect.right=250;
         statementConnectionHighlight.setBounds(tempRect);
+
 
         mBlockPatches.add(statementTopDrawable);
         mBlockBorderPatches.add(statementTopBorderDrawable);
