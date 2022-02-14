@@ -185,7 +185,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     // TODO : ONLY USB
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
-    Boolean [] view_check = {true,true,true,true};
+    Boolean [] view_check = {true,true,true,true,true,true,true};
 
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
@@ -851,7 +851,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     void checkUploadBtn(){
         Log.e("checkUploadBtn","in");
-        if (wifi_check){
+        if (wifi_check&& usb_check){
             Log.e("checkUploadBtn","true");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
             categoryData.getUpload_btn().setEnabled(true);
@@ -987,19 +987,23 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 initTabColor();
                 initTabCheck();
                 trashcan_btn.setVisibility(View.VISIBLE);
+                blockly_monitor.setVisibility(View.GONE);
+                view_check[current_pos] = true;
                 break;
             default:
+                Log.e("code_btn in","어택땅");
                 if(mPushEvent.getPos() < 4) {
                     initTabColor();
                     initTabCheck();
                     break;
                 } else if (mPushEvent.getPos() >= 4 && mPushEvent.getPos() != 8){
                     initTabColor();
+
                     break;
                 }
         }
 
-        blockly_monitor.setVisibility(View.GONE);
+
 
         if (categoryData.isClosed()) {
             if (current_pos>3) {
@@ -1075,10 +1079,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_copy_btn.setOnClickListener(v->{
             if (copy_check){
                 copy_check = false;
-                block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_off));
+                block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
             }else{
                 copy_check = true;
-                block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_on));
+                block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_on);
             }
             controller.setCopyEnabled(copy_check);
         });
@@ -1247,6 +1251,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         return root;
     }
 
+    //setup loop 블록 workspace에 다시 생성
     void loadSetupBlock(){
         String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                 "  <block type=\"turtle_setup_loop\" x=\"-20.0\" y=\"108.0\" />\n" +
@@ -1285,36 +1290,33 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     } ;
 
 
-    void setMonitor(String tag){
+    void setMonitor(int position){
 
-//        setInitLine();
-        if (current_tag.equals(tag)){
-            if (blockly_monitor.getVisibility()==View.GONE) {
+        if (current_pos == position) {
+            if (view_check[position]){
+                Log.e("setMonitor","in!");
                 blockly_monitor.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.INVISIBLE);
-
-//                translate_btn.setVisibility(View.INVISIBLE);
-//                view.setBackgroundColor(Color.parseColor("#f78f43"));
-                Log.e("??","들어오는데");
+                view_check[position] = false;
+                categoryData.setClosed(false);
             }else {
-                setInitLine();
+                Log.e("setMonitor","in!2");
                 blockly_monitor.setVisibility(View.GONE);
                 trashcan_btn.setVisibility(View.VISIBLE);
-//                translate_btn.setVisibility(View.VISIBLE);
-                Log.e("??2","들어오는데");
+                view_check[position] = true;
                 mMonitorHandler.sendEmptyMessage(1);
-
             }
-            }else{
-//            view.setBackgroundColor(Color.parseColor("#f78f43"));
+
+        }else{
+            Log.e("setMonitor","in!3");
+            view_check[position] = false;
             blockly_monitor.setVisibility(View.VISIBLE);
             trashcan_btn.setVisibility(View.INVISIBLE);
-//            translate_btn.setVisibility(View.INVISIBLE);
-            Log.e("??3","들어오는데");
-
+            categoryData.setClosed(false);
         }
 
-        current_tag = tag;
+        current_pos = position;
+
     }
 
     void setInitLine(){
@@ -1326,6 +1328,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         //mMonitorHandler.sendEmptyMessage(1);
         Log.e("??","setLineForOtherCategoryTabs");
         categoryData.setPosition(position);
+        blockly_monitor.setVisibility(View.GONE);
         switch (position) {
             case -1:
                 setInitLine();
@@ -1346,13 +1349,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 setInitLine();
                 setCategoryTabsColor(position);
                 break;
+
             default:
                 break;
         }
     }
 
     public void setCategoryTabsColor(int position){
-        Log.e("setCategoryTabs",categoryData.isClosed()+"");
         if (current_pos == position) {
             if (view_check[position]){
                 trashcan_btn.setVisibility(View.INVISIBLE);
@@ -1570,7 +1573,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         copy_check = check;
         Log.e("in!",copy_check+"");
         controller.setCopyEnabled(copy_check);
-        block_copy_btn.setBackgroundColor(getResources().getColor(R.color.copy_off));
+        block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
     }
 
     public void code_btn(int pos) {
@@ -1582,8 +1585,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         categoryData.setPosition(4);
         categoryData.setSelection(true);
         categoryData.setClosed(true);
-        current_pos = 4;
-        setMonitor(code_btn.getTag().toString());
+        setMonitor(4);
         mBlocklyActivityHelper.getFlyoutController();
 
 
@@ -1607,7 +1609,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
             monitor_text.setText(code);
         }, 100);
-        current_pos = 4;
+
 
         if (tempTabCheck[pos-4]) {
             blockly_monitor.setVisibility(View.GONE);
@@ -1630,8 +1632,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         categoryData.setPosition(5);
         categoryData.setClosed(true);
-        current_pos = 5;
-        setMonitor(serial_btn.getTag().toString());
+        setMonitor(5);
         mBlocklyActivityHelper.getFlyoutController();
 
         input_space.setVisibility(View.VISIBLE);
@@ -1639,7 +1640,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         stringBuilder.setLength(0);
         num = 0;
-        current_pos = 5;
 
         if (tempTabCheck[pos-4]) {
             blockly_monitor.setVisibility(View.GONE);

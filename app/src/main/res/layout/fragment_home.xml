@@ -18,10 +18,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.245"
-        app:layout_constraintHeight_percent="0.7"
-        app:layout_constraintHorizontal_bias="0.02"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintDimensionRatio="1:1.2"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.2">
 
         <Button
             android:id="@+id/free_mode"
@@ -39,12 +39,12 @@
         android:background="@drawable/shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/guide_right"
-        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintDimensionRatio="1:1.2"
+        app:layout_constraintHeight_percent="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.98"
-        app:layout_constraintVertical_bias="0.105"
-        app:layout_constraintWidth_percent="0.245">
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0.2">
     <Button
         android:id="@+id/content_mode"
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.34"
         app:layout_constraintHeight_percent="0.11"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.3"
         android:background="@drawable/rounding_item_box_white"
         >
         <TextView
@@ -71,7 +71,7 @@
             android:gravity="center"
             android:text="모드를 선택해주세요."
             android:textColor="#b45611"
-            android:textSize="13sp"
+            android:textSize="15dp"
             android:fontFamily="@font/nskr_medium"></TextView>
     </LinearLayout>
 
@@ -81,7 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.21"></androidx.constraintlayout.widget.Guideline>
+        app:layout_constraintGuide_percent="0.2"></androidx.constraintlayout.widget.Guideline>
 
 
     <androidx.constraintlayout.widget.Guideline
