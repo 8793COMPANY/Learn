@@ -310,17 +310,15 @@
 
     <Button
         android:id="@+id/block_copy_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:text="복사"
-        android:background="@color/copy_off"
-        app:layout_constraintDimensionRatio="68:88"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.17"
+        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintWidth_percent="0.09"
+        android:background="@drawable/block_copy_btn_off"
         app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintBottom_toTopOf="@+id/blockly_overlay_buttons"
+        app:layout_constraintTop_toTopOf="@+id/category_block"
+        app:layout_constraintBottom_toBottomOf="parent"
         blockly:layout_constraintEnd_toEndOf="parent"
         blockly:layout_constraintStart_toStartOf="parent"></Button>
 

@@ -50,7 +50,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.CustomView
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 //        Chapter chapter = chapters.get(position);
-        Log.e("position",position+"");
         ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
         layoutParams.width = 340;
         holder.itemView.requestLayout();

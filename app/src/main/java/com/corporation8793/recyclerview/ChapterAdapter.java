@@ -2,6 +2,10 @@ package com.corporation8793.recyclerview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.corporation8793.R;
@@ -42,10 +48,13 @@ public class ChapterAdapter  extends RecyclerView.Adapter<ChapterAdapter.CustomV
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 //        Chapter chapter = chapters.get(position);
 //        holder.tvChapterName.setText(chapter.chapterName);
-        if (chapters.get(position).chapterName.equals("none")){
-            holder.ivChapter.setBackgroundColor(chapters.get(position).image);
-        }else{
+        if (!chapters.get(position).chapterName.equals("none")){
             holder.ivChapter.setBackgroundResource(chapters.get(position).image);
+//            holder.ivChapter.setBackgroundColor(chapters.get(position).image);
+        }else{
+            if (Build.VERSION.SDK_INT >= 21) {
+                holder.ivChapter.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffdca2")));
+            }
         }
 //        Picasso.get().load(chapter.imageUrl).into(holder.ivChapter);
 
