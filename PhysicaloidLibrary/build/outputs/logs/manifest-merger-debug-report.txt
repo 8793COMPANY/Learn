@@ -1,41 +1,33 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
 	package
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:2:5-30
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:2:5-30
+		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
 	android:versionName
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:4:5-35
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:4:5-35
 	xmlns:android
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:11-69
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:11-69
 	android:versionCode
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:3:5-32
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:3:5-32
 uses-permission#android.permission.BLUETOOTH
-ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-68
+ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:5-68
 	android:name
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:22-65
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:22-65
 uses-sdk
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
