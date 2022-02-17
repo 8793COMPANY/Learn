@@ -914,8 +914,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         Log.e("????",contents_name);
         Log.e("onCreate","in");
-        mPhysicaloid.open();
-        //OpenUSB();
+//        mPhysicaloid.open();
+        OpenUSB();
         if (!contents_name.equals("none")){
 
             if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {

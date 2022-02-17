@@ -847,6 +847,7 @@ Blockly.JavaScript.variables_set = function() {
   var varType = this.getFieldValue('TYPE') || 'int';
   Blockly.JavaScript.definitions_[varName] = varType + ' ' + varName + ';';
 
+
   return varName + ' = ' + varValue + ';\n';
 };
 
