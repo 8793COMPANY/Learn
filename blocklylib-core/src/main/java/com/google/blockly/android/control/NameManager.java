@@ -17,6 +17,8 @@ package com.google.blockly.android.control;
 
 import android.annotation.SuppressLint;
 import android.database.DataSetObservable;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.collection.ArrayMap;

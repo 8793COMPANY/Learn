@@ -1,18 +1,32 @@
 -- Merging decision tree log ---
 manifest
+<<<<<<< HEAD
+ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+=======
 ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
 INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
 INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
+>>>>>>> 673b50a8788b4dc57cfd82ff68a392184df25277
 	package
 		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:2:5-30
 		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
 		INJECTED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
 	android:versionName
+<<<<<<< HEAD
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:4:5-35
+=======
 		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:4:5-35
+>>>>>>> 673b50a8788b4dc57cfd82ff68a392184df25277
 	xmlns:android
 		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:11-69
 	android:versionCode
+<<<<<<< HEAD
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:3:5-32
+=======
 		ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:3:5-32
+>>>>>>> 673b50a8788b4dc57cfd82ff68a392184df25277
 uses-permission#android.permission.BLUETOOTH
 ADDED from /media/doodong/TFX245S_D/DONG/Documents/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:5-68
 	android:name

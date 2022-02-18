@@ -15,6 +15,8 @@
 
 package com.google.blockly.android.control;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.collection.SimpleArrayMap;
 
@@ -48,10 +50,16 @@ public class WorkspaceStats {
         @Override
         public void onValueChanged(Field field, String oldVar, String newVar) {
             if (oldVar != null) {
+                /*
+                변수 rename시 에러나는 부분
+                처음 변수를 만들 때 대문자로 이름을 지정해도 저장은 소문자로 됨 ( makeCanonical method 확인바람)
+                대문자로 들어온 문자열을 소문자로 바꿔줌
+                */
                 VariableInfoImpl usages = getVarInfoImpl(oldVar, /* create */ false);
                 usages.removeField((FieldVariable) field);
             }
             if (newVar != null) {
+                Log.e("var check (new)",newVar);
                 VariableInfoImpl usages = getVarInfoImpl(newVar, /* create */ true);
                 usages.addField((FieldVariable) field);
             }
@@ -284,6 +292,7 @@ public class WorkspaceStats {
 
     private VariableInfoImpl getVarInfoImpl(String varName, boolean create) {
         String canonical = mVariableNameManager.makeCanonical(varName);
+        Log.e("oldvar Info",varName);
         VariableInfoImpl varInfo = mVariableInfoMap.get(varName);
         if (varInfo == null && create) {
             varInfo = new VariableInfoImpl(canonical, varName);
