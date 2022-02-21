@@ -298,15 +298,16 @@
         blockly:scrollOrientation="vertical"></fragment>
 
     <ImageView
-        android:visibility="gone"
         android:id="@+id/block_bot_btn"
         android:layout_width="59dp"
         android:layout_height="86dp"
-        android:layout_marginBottom="10dp"
+        app:layout_constraintVertical_bias="0.9"
         android:src="@drawable/bot_test"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/reset_btn"
+        app:layout_constraintLeft_toLeftOf="@id/reset_btn"
         app:layout_constraintRight_toRightOf="@id/reset_btn"
-        app:layout_constraintLeft_toLeftOf="@id/reset_btn"/>
+        app:layout_constraintTop_toBottomOf="@+id/category_block" />
 
     <Button
         android:id="@+id/block_copy_btn"

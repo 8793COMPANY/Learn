@@ -66,7 +66,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.Guideline;
 
 import com.android.volley.Request;
@@ -1096,6 +1095,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
             mediaPlayer.start();
             Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
+
+            // TODO : block compare test
+            loadWorkspace(this);
         });
 
         // 테스트 메시지 재생 완료
@@ -1263,6 +1265,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         } catch (BlockLoadingException e1) {
             Log.e(TAG, "Failed to load default arduino workspace", e1);
         }
+    }
+
+    void loadWorkspace(AbstractBlocklyActivity activity) {
+        BlocklyController controller = activity.getController();
+
+        String filename = "lv1_blink.xml";
+        String assetFilename = "turtle/demo_workspaces/" + filename;
+
+        try {
+            controller.loadWorkspaceContents(activity.getAssets().open(assetFilename));
+        } catch (IOException | BlockLoadingException e) {
+            throw new IllegalStateException(
+                    "Couldn't load demo workspace from assets: " + assetFilename, e);
+        }
+        addDefaultVariables(controller);
+    }
+
+    void compareCode(AbstractBlocklyActivity activity) {
     }
 
     private final Handler mMonitorHandler = new Handler() {
