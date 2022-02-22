@@ -20,18 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-
-import com.android.volley.error.TimeoutError;
-import com.corporation8793.MySharedPreferences;
-import com.corporation8793.R;
-import com.corporation8793.dialog.FinishDialog;
-import com.corporation8793.dialog.ProgressDialog;
-import com.corporation8793.dialog.UploadDialog;
-import com.google.blockly.android.FlyoutFragment;
-import com.google.blockly.android.OnCloseCheckListener;
-import com.google.blockly.android.ui.BusProvider;
-import com.google.blockly.android.ui.CategoryData;
-
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
@@ -71,41 +59,68 @@ import androidx.constraintlayout.widget.Guideline;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.error.TimeoutError;
 import com.android.volley.request.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
+import com.corporation8793.MySharedPreferences;
+import com.corporation8793.R;
+import com.corporation8793.dialog.FinishDialog;
+import com.corporation8793.dialog.ProgressDialog;
+import com.corporation8793.dialog.UploadDialog;
 import com.google.blockly.android.AbstractBlocklyActivity;
 import com.google.blockly.android.BlocklySectionsActivity;
+import com.google.blockly.android.FlyoutFragment;
+import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
-
+import com.google.blockly.android.ui.BusProvider;
+import com.google.blockly.android.ui.CategoryData;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
-import com.physicaloid.lib.Physicaloid;
 import com.physicaloid.lib.Boards;
+import com.physicaloid.lib.Physicaloid;
 import com.squareup.otto.Subscribe;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xmlunit.builder.Input;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
 
 
 /**
@@ -146,6 +161,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
     String code = "",current_tag ="", serial_code="", serial_input="";
+    String submittedXml = "";
     TextView monitor_text;
     CategoryData categoryData;
     String TARGET_BASE_PATH;
@@ -268,17 +284,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     }
 
-    //private WebView mTurtleWebview;
     private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new CodeGenerationRequest.CodeGeneratorCallback() {
                 @Override
-                public void onFinishCodeGeneration(final String generatedCode) {
+                public void onFinishCodeGeneration(final String generatedCode, String xml) {
                     Log.e("start!","onFinishCodeGeneration");
 
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             code = generatedCode;
+                            submittedXml = xml;
 //                            updateTextMinWidth();
                         }
                     });
@@ -298,21 +314,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     else {
                         Log.e("start!","not generatedCode.contains");
 
-                        // Sample callback.
-                        //Log.i(TAG, "generatedCode:\n" + generatedCode);
-                        // System.out.println( "generatedCode:\n" + generatedCode);
-                        //Toast.makeText(getApplicationContext(), generatedCode,Toast.LENGTH_LONG).show();
-                    /*ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("label", generatedCode);
-                    clipboard.setPrimaryClip(clip);*/
-                        // Intent launchIntent = getPackageManager().getLaunchIntentForPackage("name.antonsmirnov.android.arduinodroid2");
-                        //   if (launchIntent != null) {
-                        // mPhysicaloid.upload(Boards.ARDUINO_UNO, "/storage/emulated/0/code/Blink.hex");
-                        // try {
-                        //  get_ports();
-//                        System.out.println(generatedCode);
-//                        Log.e("generated",generatedCode);
                         code = generatedCode;
+                        submittedXml = xml;
                         create_file(generatedCode,"code.ino");
                         Log.e("compileCheck",compileCheck+"");
                         //Log.e("!@","nono");
@@ -323,83 +326,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             compileCheck = false;
                             customProgressDialog.dismiss();
                         }
-
-
-                        //  execute_shell("ls");
-
-
-//                            execute_shell("touch Blink.cpp");
-//                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
-//
-//                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
-//                            execute_shell("avr-g++")
-
-
-                        //--execute_shell("cat Blink1.cpp");
-                        // --execute_shell("/storage/emulated/0/code/hardware/tools/avr/bin/avr-g++");
-                        // --execute_shell("sh -c avr-g++");
-                        // -- execute_shell_2(new String[]{"sh -c", "/data/data/com.google.blockly.demo/hardware/tools/avr/bin/avr-g++"});
-                        //--execute_shell_2(new String[]{"sh", "/storage/emulated/0/code/hardware/tools/avr/bin/avr-g++"});
-                        //  --execute_shell(new String[] {"avr-g++","-x", "c++", "-MMD", "-c", "-mmcu=atmega328p", "-Wall", "-DF_CPU=16000000L", "-DARDUINO=160", "-DARDUINO_ARCH_AVR", "-D__PROG_TYPES_COMPAT__", "-I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino", "-I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard", "-Wall", "-Os", "Blink1.cpp"});
-
-
-
-                        //--execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os Blink1.cpp");
-                        /*  execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_digital.c");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring.c");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_analog.c");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_pulse.c");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_shift.c");
-
-                            //execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/CDC.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/HardwareSerial.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WString.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WMath.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WInterrupts.c");
-                           // execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/USBCore.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Tone.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Stream.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Print.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/IPAddress.cpp");
-*/
-                        //  execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/HID.cpp");
-                        // --execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/LiquidCrystal.cpp");
-
-                        //   execute_shell("avr-ar rcs libcore.a wiring.o wiring_digital.o wiring_analog.o wiring_shift.o wiring_pulse.o WMath.o WString.o WInterrupts.o Tone.o Stream.o Print.o IPAddress.o HardwareSerial.o");
-                        //--execute_shell("avr-ar rcs core.a CDC.cpp.o LiquidCrystal.o HardwareSerial.cpp.o HID.cpp.o IPAddress.cpp.o malloc.c.o new.cpp.o main.cpp.o new.cpp.o Print.cpp.o realloc.c.o Stream.cpp.o Tone.cpp.o Tone.cpp.o USBCore.cpp.o WInterrupts.c.o wiring.c.o wiring_analog.c.o wiring_digital.c.o wiring_pulse.c.o wiring_shift.c.o WMath.cpp.o WString.cpp.o");
-                        //--execute_shell("avr-gcc -mmcu=atmega328p -Wl,--gc-sections -Os -o Blink1.elf Blink1.o core.a -lc -lm");
-                        //--execute_shell("avr-objcopy -O ihex -R .eeprom Blink1.elf Blink1.hex");
-                        //--Toast.makeText(getApplicationContext(), "Compilation Success, trying to upload code!!",Toast.LENGTH_LONG).show();
-
-
-                        // execute_shell("chmod -R 700 hardware");
-                        //execute_shell("echo hi");
-                        // execute_shell("rm -rf Blink.cpp");
-                        //} catch (IOException e) {
-                        //   Toast.makeText(getApplicationContext(), "Error Compiling", Toast.LENGTH_LONG).show();
-                        //}
-
-
-
-
-
-                        //  startActivity(launchIntent);//null pointer check in case package name was not found
-                        // }
-                    /*mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            String encoded = "Turtle.execute("
-                                    + JavascriptUtil.makeJsString(generatedCode) + ")";
-                            mTurtleWebview.loadUrl("javascript:" + encoded);
-                        }
-                    });*/
                     }
-
                 }
             };
 
@@ -423,6 +350,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         if (mPhysicaloid.isOpened()) {
             OpenUSB();
+            loadXmlFromWorkspace();
             Log.e("in! upload","before");
             mHandler.sendEmptyMessageDelayed(1,3000);
             mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
@@ -432,6 +360,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         } else {
             Boolean value = OpenUSB();
+            loadXmlFromWorkspace();
             if (value) {
                 // TODO : 업로드 팝업 디자인 수정
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
@@ -803,6 +732,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             String action = intent.getAction();
             Log.e("action",action);
 //            Log.e("openUsb",OpenUSB()+"");
+            loadXmlFromWorkspace();
 
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
@@ -915,6 +845,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("onCreate","in");
 //        mPhysicaloid.open();
         OpenUSB();
+        loadXmlFromWorkspace();
+
         if (!contents_name.equals("none")){
 
             if (MySharedPreferences.getInt(getApplicationContext(),contents_name+" MAX") < 4) {
@@ -1060,8 +992,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, arrayList);
 
-
-
         baud_rate.setAdapter(arrayAdapter);
         baud_rate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1093,11 +1023,65 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
             // 봇 메시지 초기화
             mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
-            mediaPlayer.start();
-            Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
+            //mediaPlayer.start();
+            //Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
 
             // TODO : block compare test
-            loadWorkspace(this);
+            // loadWorkspace(this);
+
+            monitor_text.setText(submittedXml);
+
+            String filename = "lv1_blink.xml";
+            String assetFilename = "turtle/demo_workspaces/" + filename;
+
+            Source control = null;
+            try {
+                control = Input.fromStream(this.getAssets().open(assetFilename)).build();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Source test = Input.fromString(submittedXml).build();
+
+            Log.d(TAG, "Solution XML : " + getSourceAsString(control));
+            Log.d(TAG, "Submitted XML : " + getSourceAsString(test));
+
+            // TODO : 정답지, 답안지 체크
+            Reader reader = null;
+            try {
+                reader = new InputStreamReader(this.getAssets().open(assetFilename),"UTF-8");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            InputSource is = new InputSource(reader);
+            is.setEncoding("UTF-8");
+
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = null;
+            try {
+                docBuilder = docBuilderFactory.newDocumentBuilder();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+            try {
+                Document doc = docBuilder.parse(is);
+
+                NodeList statement_nl = doc.getElementsByTagName("statement");
+
+                // 노드 리스트 돌리기
+                for (int i = 0; i < statement_nl.getLength(); i++) {
+                    Node n = statement_nl.item(i);
+
+                    // node details
+                    Log.d(TAG, i + " node n0 name : " + n.getNodeName());
+                    Log.d(TAG, i + " node n0 attr name : " + n.getAttributes().getNamedItem("name").getNodeValue());
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
         });
 
         // 테스트 메시지 재생 완료
@@ -1117,7 +1101,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         categoryData.setClosed(false);
         BusProvider.getInstance().register(this);
 
-//        setupView(blockly_workspace);
+//      setupView(blockly_workspace);
 
 
         //지울 거
@@ -1264,6 +1248,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mBlocklyActivityHelper.loadWorkspaceFromInputStream(is);
         } catch (BlockLoadingException e1) {
             Log.e(TAG, "Failed to load default arduino workspace", e1);
+        }
+    }
+
+    void loadXmlFromWorkspace() {
+        if (getController().getWorkspace().hasBlocks()) {
+            mBlocklyActivityHelper.requestCodeGeneration(
+                    getBlockGeneratorLanguage(),
+                    getBlockDefinitionsJsonPaths(),
+                    getGeneratorsJsPaths(),
+                    getCodeGenerationCallback());
         }
     }
 
@@ -1703,5 +1697,25 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         current_pos = 6;
+    }
+
+    private String getSourceAsString(Source s) {
+        String result = "";
+
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            OutputStream out = new ByteArrayOutputStream();
+            StreamResult streamResult = new StreamResult();
+            streamResult.setOutputStream(out);
+            transformer.transform(s, streamResult);
+            return streamResult.getOutputStream().toString();
+        } catch (Exception e) {
+            //do nothing
+        }
+        return result;
     }
 }

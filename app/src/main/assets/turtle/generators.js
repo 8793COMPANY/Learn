@@ -47,7 +47,7 @@ Blockly.JavaScript['set_leds'] = function (block) {
 Blockly.JavaScript['test'] = function (block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "VALUE1", Blockly.JavaScript.ORDER_ATOMIC);
-   var code = "\npinMode(" + value_pin + ", " + value_num + ");\n";
+   var code = "\npinMode(" + value_pin + ", " + value_num + ");";
    return code;
 };
 

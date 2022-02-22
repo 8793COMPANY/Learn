@@ -63,6 +63,7 @@ public class CodeGeneratorService extends Service {
     private List<String> mDefinitions = new ArrayList<>();
     private List<String> mGenerators = new ArrayList<>();
     private String mAllBlocks;
+    static String submittedXml;
 
     @Override
     public void onCreate() {
@@ -127,28 +128,25 @@ public class CodeGeneratorService extends Service {
                     return;
                 }
                 // Run on the main thread.
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCallback = request.getCallback();
-                        if (!equivalentLists(request.getBlockDefinitionsFilenames(), mDefinitions)
-                                || !equivalentLists(request.getBlockGeneratorsFilenames(),
-                                mGenerators)) {
-                             //Reload the page with the new block definitions.  Push the request
-                             //back onto the queue until the page is loaded.
-                            mDefinitions = request.getBlockDefinitionsFilenames();
-                            mGenerators = request.getBlockGeneratorsFilenames();
-                            mGeneratorLanguage = request.getGeneratorLanguageDefinition();
-                            mAllBlocks = null;
-                            mRequestQueue.addFirst(request);
-                            mWebview.loadUrl(BLOCKLY_COMPILER_PAGE);
-                        } else {
-                            String xml = request.getXml();
-                            String codeGenerationURL = buildCodeGenerationUrl(xml,
-                                    mGeneratorLanguage.mGeneratorRef);
-                            if (codeGenerationURL != null) {
-                                mWebview.loadUrl(codeGenerationURL);
-                            }
+                mHandler.post(() -> {
+                    mCallback = request.getCallback();
+                    if (!equivalentLists(request.getBlockDefinitionsFilenames(), mDefinitions)
+                            || !equivalentLists(request.getBlockGeneratorsFilenames(),
+                            mGenerators)) {
+                         //Reload the page with the new block definitions.  Push the request
+                         //back onto the queue until the page is loaded.
+                        mDefinitions = request.getBlockDefinitionsFilenames();
+                        mGenerators = request.getBlockGeneratorsFilenames();
+                        mGeneratorLanguage = request.getGeneratorLanguageDefinition();
+                        mAllBlocks = null;
+                        mRequestQueue.addFirst(request);
+                        mWebview.loadUrl(BLOCKLY_COMPILER_PAGE);
+                    } else {
+                        String xml = request.getXml();
+                        String codeGenerationURL = buildCodeGenerationUrl(xml,
+                                mGeneratorLanguage.mGeneratorRef);
+                        if (codeGenerationURL != null) {
+                            mWebview.loadUrl(codeGenerationURL);
                         }
                     }
                 });
@@ -180,6 +178,9 @@ public class CodeGeneratorService extends Service {
             }
         } else {
             String jsEscapedXml = xml.replace("'", "\\'");
+            // TODO : 블록 답지 XML 이랑 비교하기
+            Log.i(TAG, "cgs 블록 jex : " + jsEscapedXml);
+            submittedXml = jsEscapedXml;
             return "javascript:generate('" + jsEscapedXml + "', " + generatorObject + ");";
         }
     }
@@ -193,7 +194,8 @@ public class CodeGeneratorService extends Service {
                 mReady = true;
             }
             if (cb != null) {
-                cb.onFinishCodeGeneration(program);
+                Log.d("BJI code", "" + program);
+                cb.onFinishCodeGeneration(program, submittedXml);
             }
             handleRequest();
         }

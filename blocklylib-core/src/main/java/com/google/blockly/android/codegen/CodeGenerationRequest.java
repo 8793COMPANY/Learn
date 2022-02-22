@@ -17,6 +17,7 @@ package com.google.blockly.android.codegen;
 
 import androidx.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class CodeGenerationRequest {
         mBlockDefinitionsFilenames = blockDefinitionsFilenames;
         mBlockGeneratorsFilenames = blockGeneratorsFilenames;
         mGeneratorLanguage = generatorsLanguage;
+        Log.d("CGR xml : ", "" + xml);
     }
 
     public CodeGeneratorCallback getCallback() {
@@ -85,7 +87,7 @@ public class CodeGenerationRequest {
          *
          * @param generatedCode The string containing all of the generated code.
          */
-        void onFinishCodeGeneration(String generatedCode);
+        void onFinishCodeGeneration(String generatedCode, String submittedXml);
     }
 
 }
