@@ -36,9 +36,11 @@ import android.graphics.drawable.ScaleDrawable;
 import android.util.Log;
 
 import com.google.blockly.android.control.ConnectionManager;
+import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.Dragger;
 import com.google.blockly.android.ui.AbstractBlockView;
 import com.google.blockly.android.ui.BlockTouchHandler;
+import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.android.ui.ViewPoint;
 import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.Block;
@@ -1150,6 +1152,8 @@ public class BlockView extends AbstractBlockView<InputView> {
     private void addStatementInputPatches(boolean isShadow, int i,
                                           int xFrom, int xToAbove, int xToBelow,
                                           InputView inputView, ViewPoint inputLayoutOrigin) {
+        BusProvider.getInstance().register(this);
+
         // Position connector. Shift by horizontal and vertical patch thickness to line up with
         // "Previous" connector on child block.
         int xOffset = xFrom + inputView.getFieldLayoutWidth();
@@ -1205,10 +1209,12 @@ public class BlockView extends AbstractBlockView<InputView> {
         statementTopDrawable.setBounds(tempRect);
         statementTopBorderDrawable.setBounds(tempRect);
 
-      Log.e("tempRect get left : ", tempRect.left+"");
+        Log.e("tempRect get left : ", tempRect.left+"");
         Log.e("tempRect get top : ", tempRect.top+"");
         Log.e("tempRect get boot : ", tempRect.bottom+"");
         Log.e("tempRect get right : ", tempRect.right+"");
+        // xml code refresh event
+        BusProvider.getInstance().post(new PushEvent(9));
 
         tempRect.right=250;
         statementConnectionHighlight.setBounds(tempRect);

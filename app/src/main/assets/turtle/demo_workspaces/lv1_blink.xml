@@ -1,8 +1,5 @@
-<!-- Level1 Blink 답지 XML -->
 <xml xmlns="http://www.w3.org/1999/xhtml">
-    <!-- Setup & Loop Root Block -->
     <block type="turtle_setup_loop" x="8.0" y="128.0">
-        <!-- Setup (D0) Block -->
         <statement name="DO">
             <block type="test">
                 <value name="PIN">
@@ -17,7 +14,6 @@
                 </value>
             </block>
         </statement>
-        <!-- Loop (DO1) Block -->
         <statement name="DO1">
             <block type="inout_digital_write">
                 <value name="PIN">

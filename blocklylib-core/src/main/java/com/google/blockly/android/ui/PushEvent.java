@@ -9,6 +9,13 @@ public class PushEvent
     private boolean isClose;
     private boolean selection;
 
+    public PushEvent(int pushPosition)
+    {
+        this.pos = pushPosition;
+        this.isClose = false;
+        this.selection = false;
+    }
+
     public PushEvent(int pushPosition, boolean isClose, boolean selection)
     {
         this.pos = pushPosition;

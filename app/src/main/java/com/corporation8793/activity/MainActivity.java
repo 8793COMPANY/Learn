@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetManager;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
@@ -88,6 +89,7 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -106,6 +108,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,6 +123,7 @@ import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 
 
@@ -896,7 +900,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("??","finishLoad " + mPushEvent.getPos());
         setLineForOtherCategoryTabs(mPushEvent.getPos());
 
-
         Log.e("FinishLoad - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
 
         int count = 0;
@@ -915,6 +918,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         switch (mPushEvent.getPos()) {
             // 어택땅
             case 8:
+                loadXmlFromWorkspace();
                 initTabColor();
                 initTabCheck();
                 trashcan_btn.setVisibility(View.VISIBLE);
@@ -924,13 +928,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             default:
                 Log.e("code_btn in","어택땅");
                 if(mPushEvent.getPos() < 4) {
+                    loadXmlFromWorkspace();
                     initTabColor();
                     initTabCheck();
                     break;
                 } else if (mPushEvent.getPos() >= 4 && mPushEvent.getPos() != 8){
+                    loadXmlFromWorkspace();
                     initTabColor();
 
                     break;
+                } else {
+                    loadXmlFromWorkspace();
                 }
         }
 
@@ -1018,73 +1026,74 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         // 테스트 메시지 재생
         block_bot_btn.setOnClickListener(v -> {
+            // TODO : block compare test
+            // 답안지 갱신
+            loadXmlFromWorkspace();
+
+            // 봇 메시지 초기화
             if (mediaPlayer != null) {
                 mediaPlayer.release();
             }
-            // 봇 메시지 초기화
-            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
-            //mediaPlayer.start();
-            //Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
 
-            // TODO : block compare test
+            // 정답지 로드 (시험용)
             // loadWorkspace(this);
 
-            monitor_text.setText(submittedXml);
-
+            // 정답지 XML 초기화
             String filename = "lv1_blink.xml";
             String assetFilename = "turtle/demo_workspaces/" + filename;
 
-            Source control = null;
-            try {
-                control = Input.fromStream(this.getAssets().open(assetFilename)).build();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            // Source solution_src = null;
+            // solution_src = Input.fromStream(this.getAssets().open(assetFilename)).build();
 
-            Source test = Input.fromString(submittedXml).build();
+            // 답안지 id, x, y 값 제거 후, 빌드 (쓰레기값)
+            Source submitted_src =  Input.fromString(submittedXml
+                    .replaceAll("id=\".*?\"", "")
+                    .replaceAll("x=\".*?\"", "")
+                    .replaceAll("y=\".*?\"", "")).build();
 
-            Log.d(TAG, "Solution XML : " + getSourceAsString(control));
-            Log.d(TAG, "Submitted XML : " + getSourceAsString(test));
+            // TODO : 정답지, 답안지 체크 시퀀스
+            // 정답지에 남아있을지도 모르는 id, x, y 값 제거 후, 빌드 (쓰레기값)
+            // 채점하기 위해 정답지, 답안지 문자열 전처리 (평문 변환)
+            String solution_str = getStringFromXml(assetFilename)
+                    .replaceAll("id=\".*?\"", "")
+                    .replaceAll("x=\".*?\"", "")
+                    .replaceAll("y=\".*?\"", "")
+                    .replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "").trim();
+            String submitted_str = getSourceAsString(submitted_src).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "").trim();
 
-            // TODO : 정답지, 답안지 체크
-            Reader reader = null;
-            try {
-                reader = new InputStreamReader(this.getAssets().open(assetFilename),"UTF-8");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            InputSource is = new InputSource(reader);
-            is.setEncoding("UTF-8");
+            // 정답지, 답안지 내용 디버깅
+            Log.d("Build Bot", "Solution XML : " + solution_str);
+            Log.d("Build Bot", "Submitted XML : " + submitted_str);
 
-            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = null;
-            try {
-                docBuilder = docBuilderFactory.newDocumentBuilder();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-            try {
-                Document doc = docBuilder.parse(is);
+            // 채점
+            Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
+            // TODO : 정답 여부에 따라서 빌드-봇 모양이 바뀌도록 디자인 예정
+            if (solution_str.equals(submitted_str)) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
+                mediaPlayer.start();
 
-                NodeList statement_nl = doc.getElementsByTagName("statement");
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("블록 코딩 튜터");
+                alertDialog.setMessage("정답입니다. 참 잘했어요~!");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
+            } else {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
+                mediaPlayer.start();
 
-                // 노드 리스트 돌리기
-                for (int i = 0; i < statement_nl.getLength(); i++) {
-                    Node n = statement_nl.item(i);
-
-                    // node details
-                    Log.d(TAG, i + " node n0 name : " + n.getNodeName());
-                    Log.d(TAG, i + " node n0 attr name : " + n.getAttributes().getNamedItem("name").getNodeValue());
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("블록 코딩 튜터");
+                alertDialog.setMessage("오답입니다. 코드를 다시 확인해주세요.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
             }
         });
 
+
         // 테스트 메시지 재생 완료
+        // TODO : 테스트 메시지 재생이 끝나면 원상태로 복귀
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
         reset_btn.setOnClickListener(v->{
@@ -1717,5 +1726,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             //do nothing
         }
         return result;
+    }
+
+    private String getStringFromXml(String fileName) {
+        String xmlString = null;
+        AssetManager am = getApplicationContext().getAssets();
+        try {
+            InputStream is = am.open(fileName);
+            int length = is.available();
+            byte[] data = new byte[length];
+            is.read(data);
+            xmlString = new String(data, StandardCharsets.UTF_8);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return xmlString;
     }
 }

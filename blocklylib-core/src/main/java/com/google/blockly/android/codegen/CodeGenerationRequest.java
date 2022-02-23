@@ -58,7 +58,7 @@ public class CodeGenerationRequest {
         mBlockDefinitionsFilenames = blockDefinitionsFilenames;
         mBlockGeneratorsFilenames = blockGeneratorsFilenames;
         mGeneratorLanguage = generatorsLanguage;
-        Log.d("CGR xml : ", "" + xml);
+        //Log.d("CGR xml : ", "" + xml);
     }
 
     public CodeGeneratorCallback getCallback() {

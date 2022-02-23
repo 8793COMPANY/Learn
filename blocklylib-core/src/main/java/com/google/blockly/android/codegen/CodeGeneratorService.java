@@ -179,7 +179,7 @@ public class CodeGeneratorService extends Service {
         } else {
             String jsEscapedXml = xml.replace("'", "\\'");
             // TODO : 블록 답지 XML 이랑 비교하기
-            Log.i(TAG, "cgs 블록 jex : " + jsEscapedXml);
+            //Log.i(TAG, "cgs 블록 jex : " + jsEscapedXml);
             submittedXml = jsEscapedXml;
             return "javascript:generate('" + jsEscapedXml + "', " + generatorObject + ");";
         }
@@ -194,7 +194,7 @@ public class CodeGeneratorService extends Service {
                 mReady = true;
             }
             if (cb != null) {
-                Log.d("BJI code", "" + program);
+                //Log.d("BJI code", "" + program);
                 cb.onFinishCodeGeneration(program, submittedXml);
             }
             handleRequest();
