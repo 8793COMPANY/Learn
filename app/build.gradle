@@ -1,5 +1,11 @@
 plugins {
     id 'com.android.application'
+
+    // 코틀린(.kt) 병행 사용 설정
+    id 'kotlin-android'
+
+    // dokka
+    id("org.jetbrains.dokka") version "1.5.30"
 }
 
 android {
@@ -26,6 +32,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // 코틀린(.kt) 병행 사용 설정
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -56,4 +67,11 @@ dependencies {
     implementation 'org.xmlunit:xmlunit-core:2.6.4'
 
     implementation 'junit:junit:4.13'
+
+    // 코틀린(.kt) 병행 사용 설정
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // dokka
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.5.30")
 }

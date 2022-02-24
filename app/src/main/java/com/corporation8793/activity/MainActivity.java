@@ -68,6 +68,7 @@ import com.corporation8793.R;
 import com.corporation8793.dialog.FinishDialog;
 import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.UploadDialog;
+import com.corporation8793.learn.xml.ParentXml;
 import com.google.blockly.android.AbstractBlocklyActivity;
 import com.google.blockly.android.BlocklySectionsActivity;
 import com.google.blockly.android.FlyoutFragment;
@@ -1027,6 +1028,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 테스트 메시지 재생
         block_bot_btn.setOnClickListener(v -> {
             // TODO : block compare test
+            ParentXml parentXml = new ParentXml();
             // 답안지 갱신
             loadXmlFromWorkspace();
 
@@ -1035,31 +1037,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 mediaPlayer.release();
             }
 
-            // 정답지 로드 (시험용)
-            // loadWorkspace(this);
-
             // 정답지 XML 초기화
-            String filename = "lv1_blink.xml";
-            String assetFilename = "turtle/demo_workspaces/" + filename;
+            String solutionXmlFileName = "lv1_blink.xml";
+            String solutionXmlAssetFilePath = "turtle/demo_workspaces/" + solutionXmlFileName;
 
-            // Source solution_src = null;
-            // solution_src = Input.fromStream(this.getAssets().open(assetFilename)).build();
-
-            // 답안지 id, x, y 값 제거 후, 빌드 (쓰레기값)
-            Source submitted_src =  Input.fromString(submittedXml
-                    .replaceAll("id=\".*?\"", "")
-                    .replaceAll("x=\".*?\"", "")
-                    .replaceAll("y=\".*?\"", "")).build();
+            Source solution_src = parentXml.getSourceFromString(
+                    parentXml.getPreprocessedStringForSource(
+                            parentXml.getStringFromXmlAsset(solutionXmlAssetFilePath, getApplicationContext())
+                    )
+            );
+            Source submitted_src = parentXml.getSourceFromString(parentXml.getPreprocessedStringForSource(submittedXml));
 
             // TODO : 정답지, 답안지 체크 시퀀스
-            // 정답지에 남아있을지도 모르는 id, x, y 값 제거 후, 빌드 (쓰레기값)
-            // 채점하기 위해 정답지, 답안지 문자열 전처리 (평문 변환)
-            String solution_str = getStringFromXml(assetFilename)
-                    .replaceAll("id=\".*?\"", "")
-                    .replaceAll("x=\".*?\"", "")
-                    .replaceAll("y=\".*?\"", "")
-                    .replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "").trim();
-            String submitted_str = getSourceAsString(submitted_src).replaceAll("[^\uAC00-\uD7A30-9a-zA-Z]", "").trim();
+            String solution_str = parentXml.getPreprocessedString(parentXml.getStringFromXmlAsset(solutionXmlAssetFilePath, getApplicationContext()));
+            String submitted_str = parentXml.getPreprocessedString(submittedXml);
 
             // 정답지, 답안지 내용 디버깅
             Log.d("Build Bot", "Solution XML : " + solution_str);
@@ -1270,6 +1261,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     }
 
+    // 정답지 로드
     void loadWorkspace(AbstractBlocklyActivity activity) {
         BlocklyController controller = activity.getController();
 
@@ -1283,9 +1275,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     "Couldn't load demo workspace from assets: " + assetFilename, e);
         }
         addDefaultVariables(controller);
-    }
-
-    void compareCode(AbstractBlocklyActivity activity) {
     }
 
     private final Handler mMonitorHandler = new Handler() {
@@ -1706,40 +1695,5 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         current_pos = 6;
-    }
-
-    private String getSourceAsString(Source s) {
-        String result = "";
-
-        try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            transformerFactory.setFeature(javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING, true);
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            OutputStream out = new ByteArrayOutputStream();
-            StreamResult streamResult = new StreamResult();
-            streamResult.setOutputStream(out);
-            transformer.transform(s, streamResult);
-            return streamResult.getOutputStream().toString();
-        } catch (Exception e) {
-            //do nothing
-        }
-        return result;
-    }
-
-    private String getStringFromXml(String fileName) {
-        String xmlString = null;
-        AssetManager am = getApplicationContext().getAssets();
-        try {
-            InputStream is = am.open(fileName);
-            int length = is.available();
-            byte[] data = new byte[length];
-            is.read(data);
-            xmlString = new String(data, StandardCharsets.UTF_8);
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        return xmlString;
     }
 }
