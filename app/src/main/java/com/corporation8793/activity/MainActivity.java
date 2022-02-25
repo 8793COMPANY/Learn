@@ -92,6 +92,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -1079,6 +1080,57 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> dialog.dismiss());
                 alertDialog.show();
+            }
+            Log.d("Build Bot", "===============================");
+
+            // 정답지, 답안지 IS 초기화
+            InputSource solution_is = SAXSource.sourceToInputSource(solution_src);
+            InputSource submitted_is = SAXSource.sourceToInputSource(submitted_src);
+            solution_is.setEncoding("UTF-8");
+            submitted_is.setEncoding("UTF-8");
+
+            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = null;
+            Document solution_doc = null;
+            Document submitted_doc = null;
+            try {
+                docBuilder = docBuilderFactory.newDocumentBuilder();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            }
+            try {
+                // 정답지, 답안지 DOM 생성
+                solution_doc = docBuilder.parse(solution_is);
+                submitted_doc = docBuilder.parse(submitted_is);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
+
+            // 답안지 파싱 작업 시작
+            NodeList submitted_statement_nl = submitted_doc.getElementsByTagName("statement");
+            Node submitted_setup_node = null;
+            NodeList submitted_setup_nl = null;
+            Node submitted_loop_node = null;
+            NodeList submitted_loop_nl = null;
+
+            // 1. Setup 이랑 Loop 노드 분리
+            for (int i = 0; i < submitted_statement_nl.getLength(); i++) {
+                Node n = submitted_statement_nl.item(i);
+
+                // turtle_setup_loop - statement node details (for debug log)
+                Log.d("Build Bot", i + " - n0 name : " + n.getNodeName());
+                Log.d("Build Bot", i + " - n0 attr name : " + n.getAttributes().getNamedItem("name").getNodeValue());
+
+                // attr name : DO - Setup node
+                // attr name : DO1 - Loop node
+                switch (n.getAttributes().getNamedItem("name").getNodeValue()) {
+                    case "DO":
+                        submitted_setup_node = n;
+                    case "DO1":
+                        submitted_loop_node = n;
+                }
             }
         });
 
