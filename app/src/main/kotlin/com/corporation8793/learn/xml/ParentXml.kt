@@ -2,19 +2,44 @@ package com.corporation8793.learn.xml
 
 import android.content.Context
 import android.content.res.AssetManager
-import android.util.Log
+import org.w3c.dom.Document
+import org.xml.sax.InputSource
 import org.xmlunit.builder.Input
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import java.nio.charset.StandardCharsets
 import javax.xml.XMLConstants
+import javax.xml.parsers.DocumentBuilder
+import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
 import javax.xml.transform.Source
 import javax.xml.transform.TransformerFactory
+import javax.xml.transform.sax.SAXSource
 import javax.xml.transform.stream.StreamResult
 
-class ParentXml {
+class ParentXml(val context : Context, solutionXmlAssetFilePath : String, submittedXml : String) {
+
+    val solutionSource : Source = getSourceFromString(getPreprocessedStringForSource(getStringFromXmlAsset(solutionXmlAssetFilePath, context)))
+    val submittedSource : Source = getSourceFromString(getPreprocessedStringForSource(submittedXml))
+    val solutionString : String = getPreprocessedString(getStringFromXmlAsset(solutionXmlAssetFilePath, context))
+    val submittedString : String = getPreprocessedString(submittedXml)
+
+    val solutionInputStream : InputSource? = SAXSource.sourceToInputSource(solutionSource)
+    val submittedInputStream : InputSource? = SAXSource.sourceToInputSource(submittedSource)
+
+
+    var docBuilderFactory = DocumentBuilderFactory.newInstance()
+    var docBuilder: DocumentBuilder = docBuilderFactory.newDocumentBuilder()
+
+    var solutionDocument : Document? = null
+    var submittedDocument : Document? = null
+
+    fun initDocument() {
+        solutionDocument = docBuilder.parse(solutionInputStream).apply { normalizeDocument() }
+        submittedDocument = docBuilder.parse(submittedInputStream).apply { normalizeDocument() }
+    }
+
     fun getPreprocessedStringForSource(string: String): String {
         val regexRemoveID = Regex("id=\".*?\"")
         val regexRemoveX = Regex("x=\".*?\"")
@@ -65,8 +90,8 @@ class ParentXml {
         return result
     }
 
-    fun getStringFromXmlAsset(XmlAssetFilePath: String, c:Context): String? {
-        var xmlString: String? = null
+    fun getStringFromXmlAsset(XmlAssetFilePath: String, c:Context): String {
+        var xmlString = ""
         val am: AssetManager = c.assets
         try {
             val `is` = am.open(XmlAssetFilePath)

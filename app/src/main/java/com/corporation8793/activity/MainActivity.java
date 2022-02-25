@@ -1028,34 +1028,25 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         // 테스트 메시지 재생
         block_bot_btn.setOnClickListener(v -> {
-            // TODO : block compare test
-            ParentXml parentXml = new ParentXml();
-            // 답안지 갱신
-            loadXmlFromWorkspace();
-
             // 봇 메시지 초기화
             if (mediaPlayer != null) {
                 mediaPlayer.release();
             }
 
-            // 정답지 XML 초기화
-            String solutionXmlFileName = "lv1_blink.xml";
-            String solutionXmlAssetFilePath = "turtle/demo_workspaces/" + solutionXmlFileName;
+            // 답안지 갱신
+            loadXmlFromWorkspace();
 
-            Source solution_src = parentXml.getSourceFromString(
-                    parentXml.getPreprocessedStringForSource(
-                            parentXml.getStringFromXmlAsset(solutionXmlAssetFilePath, getApplicationContext())
-                    )
-            );
-            Source submitted_src = parentXml.getSourceFromString(parentXml.getPreprocessedStringForSource(submittedXml));
 
-            // TODO : 정답지, 답안지 체크 시퀀스
-            String solution_str = parentXml.getPreprocessedString(parentXml.getStringFromXmlAsset(solutionXmlAssetFilePath, getApplicationContext()));
-            String submitted_str = parentXml.getPreprocessedString(submittedXml);
+            // TODO : block compare test
+            ParentXml parentXml = new ParentXml(getApplicationContext(),
+                    "turtle/demo_workspaces/lv1_blink.xml",
+                                                submittedXml);
 
-            // 정답지, 답안지 내용 디버깅
-            Log.d("Build Bot", "Solution XML : " + solution_str);
-            Log.d("Build Bot", "Submitted XML : " + submitted_str);
+            Source solution_src = parentXml.getSolutionSource();
+            Source submitted_src = parentXml.getSubmittedSource();
+
+            String solution_str = parentXml.getSolutionString();
+            String submitted_str = parentXml.getSubmittedString();
 
             // 채점
             Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
@@ -1084,32 +1075,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.d("Build Bot", "===============================");
 
             // 정답지, 답안지 IS 초기화
-            InputSource solution_is = SAXSource.sourceToInputSource(solution_src);
-            InputSource submitted_is = SAXSource.sourceToInputSource(submitted_src);
-            solution_is.setEncoding("UTF-8");
-            submitted_is.setEncoding("UTF-8");
+            InputSource solution_is = parentXml.getSolutionInputStream();
+            InputSource submitted_is = parentXml.getSubmittedInputStream();
 
-            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = null;
-            Document solution_doc = null;
-            Document submitted_doc = null;
-            try {
-                docBuilder = docBuilderFactory.newDocumentBuilder();
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            }
-            try {
-                // 정답지, 답안지 DOM 생성
-                solution_doc = docBuilder.parse(solution_is);
-                submitted_doc = docBuilder.parse(submitted_is);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            }
+            // 정답지, 답안지 DOM 생성
+            parentXml.initDocument();
+
+            Document solution_doc = parentXml.getSolutionDocument();
+            Document submitted_doc = parentXml.getSubmittedDocument();
 
             // 답안지 파싱 작업 시작
             NodeList submitted_statement_nl = submitted_doc.getElementsByTagName("statement");
+            NodeList solution_statement_nl = submitted_doc.getElementsByTagName("statement");
             Node submitted_setup_node = null;
             NodeList submitted_setup_nl = null;
             Node submitted_loop_node = null;
