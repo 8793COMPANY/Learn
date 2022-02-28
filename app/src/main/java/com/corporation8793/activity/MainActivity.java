@@ -1075,8 +1075,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.d("Build Bot", "===============================");
 
             // 정답지, 답안지 IS 초기화
-            InputSource solution_is = parentXml.getSolutionInputStream();
-            InputSource submitted_is = parentXml.getSubmittedInputStream();
+            InputSource solution_is = parentXml.getSolutionInputSource();
+            InputSource submitted_is = parentXml.getSubmittedInputSource();
 
             // 정답지, 답안지 DOM 생성
             parentXml.initDocument();
@@ -1109,6 +1109,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         submitted_loop_node = n;
                 }
             }
+
+            // TODO : 2. Setup 노드 테스트 케이스 작성
+            switch (submitted_statement_nl.item(0)
+                    .getChildNodes().item(1).
+                            getChildNodes().item(1).
+                            getChildNodes().item(1).getNodeType()) {
+                case Node.ATTRIBUTE_NODE:
+                    Log.d("Build Bot ATTR type : ", "" + Node.ATTRIBUTE_NODE);
+                case Node.ENTITY_NODE:
+                    Log.d("Build Bot ENT type : ", "" + Node.ENTITY_NODE);
+                case Node.ELEMENT_NODE:
+                    Log.d("Build Bot E type : ", "" + Node.ELEMENT_NODE);
+                    Element e = (Element) submitted_statement_nl.item(0)
+                            .getChildNodes().item(1)
+                            .getChildNodes().item(1)
+                            .getChildNodes().item(1);
+                    Log.d("Build Bot text : ", "" + e.getElementsByTagName("field").item(0).getTextContent());
+            }
+
+            Log.d("Build Bot", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
         });
 
 
