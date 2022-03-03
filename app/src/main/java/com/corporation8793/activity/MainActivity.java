@@ -1051,37 +1051,37 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // 채점
             Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
 
-            if (solution_str.equals(submitted_str)) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
-                mediaPlayer.start();
-
-                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
-
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                alertDialog.setTitle("블록 코딩 튜터");
-                alertDialog.setMessage("정답입니다. 참 잘했어요~!");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> {
-                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
-                            dialog.dismiss();
-                        });
-                alertDialog.show();
-            } else {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
-                mediaPlayer.start();
-
-                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
-
-                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                alertDialog.setTitle("블록 코딩 튜터");
-                alertDialog.setMessage("오답입니다. 코드를 다시 확인해주세요.");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> {
-                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
-                            dialog.dismiss();
-                        });
-                alertDialog.show();
-            }
+//            if (solution_str.equals(submitted_str)) {
+//                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
+//                mediaPlayer.start();
+//
+//                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
+//
+//                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+//                alertDialog.setTitle("블록 코딩 튜터");
+//                alertDialog.setMessage("정답입니다. 참 잘했어요~!");
+//                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                        (dialog, which) -> {
+//                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+//                            dialog.dismiss();
+//                        });
+//                alertDialog.show();
+//            } else {
+//                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
+//                mediaPlayer.start();
+//
+//                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
+//
+//                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+//                alertDialog.setTitle("블록 코딩 튜터");
+//                alertDialog.setMessage("오답입니다. 코드를 다시 확인해주세요.");
+//                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                        (dialog, which) -> {
+//                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+//                            dialog.dismiss();
+//                        });
+//                alertDialog.show();
+//            }
             Log.d("Build Bot", "===============================");
 
             // 정답지, 답안지 IS 초기화
@@ -1121,24 +1121,86 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
 
             // TODO : 2. Setup 노드 테스트 케이스 작성
-            switch (submitted_statement_nl.item(0)
-                    .getChildNodes().item(1).
-                            getChildNodes().item(1).
-                            getChildNodes().item(1).getNodeType()) {
-                case Node.ATTRIBUTE_NODE:
-                    Log.d("Build Bot ATTR type : ", "" + Node.ATTRIBUTE_NODE);
-                case Node.ENTITY_NODE:
-                    Log.d("Build Bot ENT type : ", "" + Node.ENTITY_NODE);
-                case Node.ELEMENT_NODE:
-                    Log.d("Build Bot E type : ", "" + Node.ELEMENT_NODE);
-                    Element e = (Element) submitted_statement_nl.item(0)
-                            .getChildNodes().item(1)
-                            .getChildNodes().item(1)
-                            .getChildNodes().item(1);
-                    Log.d("Build Bot text : ", "" + e.getElementsByTagName("field").item(0).getTextContent());
+            Element e = (Element) submitted_statement_nl.item(0);
+
+            // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
+            if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
+                    e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
+            ) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
+                mediaPlayer.start();
+
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("블록 코딩 튜터");
+                alertDialog.setMessage("정답입니다. 참 잘했어요~!");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> {
+                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                            dialog.dismiss();
+                        });
+                alertDialog.show();
+            }
+            // 핀 번호만 틀린 경우
+            else if (!e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
+                    e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
+            ) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
+                mediaPlayer.start();
+
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("블록 코딩 튜터");
+                alertDialog.setMessage("오답입니다. Pin 을 확인해주세요!");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> {
+                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                            dialog.dismiss();
+                        });
+                alertDialog.show();
+            }
+            // 핀 IO만 틀린 경우
+            else if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
+                    !e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
+            ) {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
+                mediaPlayer.start();
+
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("블록 코딩 튜터");
+                alertDialog.setMessage("오답입니다. Pin IO 를 확인해주세요!");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> {
+                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                            dialog.dismiss();
+                        });
+                alertDialog.show();
+            }
+            // 둘 다 틀린 경우
+            else {
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
+                mediaPlayer.start();
+
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle("블록 코딩 튜터");
+                alertDialog.setMessage("오답입니다. 코드를 다시 확인해주세요.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> {
+                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                            dialog.dismiss();
+                        });
+                alertDialog.show();
             }
 
-            Log.d("Build Bot", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
+            Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
+            Log.d("Build Bot pin IO", e.getElementsByTagName("field").item(1).getTextContent());
+            Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
         });
 
 
