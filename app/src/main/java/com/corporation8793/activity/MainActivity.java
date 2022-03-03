@@ -1124,8 +1124,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Element e = (Element) submitted_statement_nl.item(0);
 
             // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
+            // 또는, " 답안지가 정답지와 일치 " 했을때 정답처리
             if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                     e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
+                    ||
+                    solution_str.equals(submitted_str)
             ) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
                 mediaPlayer.start();
