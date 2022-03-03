@@ -972,7 +972,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_bot_btn = blockly_workspace.findViewById(R.id.block_bot_btn);
         // 봇 메시지 초기화
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
 
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
         input_space = blockly_workspace.findViewById(R.id.input_space);
@@ -1146,7 +1146,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             else if (!e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                     e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
             ) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_pin);
                 mediaPlayer.start();
 
                 block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
@@ -1165,7 +1165,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             else if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                     !e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
             ) {
-                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_pin_io);
                 mediaPlayer.start();
 
                 block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
