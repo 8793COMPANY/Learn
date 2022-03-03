@@ -302,7 +302,7 @@
         android:layout_width="59dp"
         android:layout_height="86dp"
         app:layout_constraintVertical_bias="0.9"
-        android:src="@drawable/bot_test"
+        android:src="@drawable/bot_test_2_normal"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/reset_btn"
         app:layout_constraintLeft_toLeftOf="@id/reset_btn"

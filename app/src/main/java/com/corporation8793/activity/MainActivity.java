@@ -1050,26 +1050,36 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             // 채점
             Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
-            // TODO : 정답 여부에 따라서 빌드-봇 모양이 바뀌도록 디자인 예정
+
             if (solution_str.equals(submitted_str)) {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
                 mediaPlayer.start();
+
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
 
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 alertDialog.setTitle("블록 코딩 튜터");
                 alertDialog.setMessage("정답입니다. 참 잘했어요~!");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> dialog.dismiss());
+                        (dialog, which) -> {
+                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                            dialog.dismiss();
+                        });
                 alertDialog.show();
             } else {
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_false_answer);
                 mediaPlayer.start();
 
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_no));
+
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 alertDialog.setTitle("블록 코딩 튜터");
                 alertDialog.setMessage("오답입니다. 코드를 다시 확인해주세요.");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> dialog.dismiss());
+                        (dialog, which) -> {
+                            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                            dialog.dismiss();
+                        });
                 alertDialog.show();
             }
             Log.d("Build Bot", "===============================");
