@@ -2,6 +2,7 @@ package com.corporation8793.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,26 @@ public class ChapterActivity extends AppCompatActivity {
     private View decorView;
     private int	uiOption;
     CustomView chapter1, chapter2, chapter3;
-    Button back_btn;
+    Button back_btn, block_bot_btn;
+
+    MediaPlayer mediaPlayer;
+
+    @Override
+    protected void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        // 웰컴 메시지 재생 종료
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+        mediaPlayer.release();
+        super.onPause();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +46,12 @@ public class ChapterActivity extends AppCompatActivity {
         chapter3 = findViewById(R.id.chapter3);
 
         back_btn = findViewById(R.id.back_btn);
+        block_bot_btn = findViewById(R.id.block_bot_btn);
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_lv1_led_into_contents_1_select);
+        mediaPlayer.start();
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
 
         chapter2.setEnabled(false);
         chapter3.setEnabled(false);
@@ -81,6 +107,30 @@ public class ChapterActivity extends AppCompatActivity {
 
         back_btn.setOnClickListener(v->{
             finish();
+        });
+
+        block_bot_btn.setOnClickListener(v -> {
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_lv1_led_into_contents_1_select);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+        });
+
+        // 웰컴 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(mp -> {
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+            mp.release();
         });
     }
 

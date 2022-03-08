@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,7 +28,7 @@ public class ProblemActivity extends AppCompatActivity {
     private View decorView;
     private int	uiOption;
 
-    Button back_btn, next_btn;
+    Button back_btn, next_btn, block_bot_btn;
 
     TextView title, title2;
 
@@ -41,6 +42,24 @@ public class ProblemActivity extends AppCompatActivity {
     int diagram_img = R.drawable.all_diagram_img;
     String contents_name = "";
 
+    MediaPlayer mediaPlayer;
+
+    @Override
+    protected void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        // 웰컴 메시지 재생 종료
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+        mediaPlayer.release();
+        super.onPause();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +72,13 @@ public class ProblemActivity extends AppCompatActivity {
         title2 = findViewById(R.id.title2);
 
         back_btn = findViewById(R.id.back_btn);
+        block_bot_btn = findViewById(R.id.block_bot_btn);
         next_btn = findViewById(R.id.next_btn);
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_lv1_led_into_contents_2_ready);
+        mediaPlayer.start();
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
 
         decorView = getWindow().getDecorView();
         uiOption = getWindow().getDecorView().getSystemUiVisibility();
@@ -155,23 +180,45 @@ public class ProblemActivity extends AppCompatActivity {
 
         });
 
+        block_bot_btn.setOnClickListener(v -> {
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_lv1_led_into_contents_2_ready);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+        });
+
+        // 웰컴 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(mp -> {
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+            mp.release();
+        });
     }
 
 
     public void replaceFragment(int pos){
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (pos == 0){
             if (chapter_step.equals("default")){
-                transaction.replace(R.id.fragment, new Step1(contents_name));
+                transaction.replace(R.id.fragment, new Step1(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
             }else{
-                transaction.replace(R.id.fragment, new Step4(contents_name));
+                transaction.replace(R.id.fragment, new Step4(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
             }
 
         }else if (pos ==1){
-            transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));
+            transaction.replace(R.id.fragment, new Step2(contents_name, diagram_img, mediaPlayer, getApplicationContext(), block_bot_btn));
         }else if (pos ==2){
-            transaction.replace(R.id.fragment, new Step3(contents_name));
+            transaction.replace(R.id.fragment, new Step3(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
         }
 
         transaction.commit();

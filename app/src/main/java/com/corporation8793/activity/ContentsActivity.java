@@ -26,13 +26,14 @@ public class ContentsActivity extends AppCompatActivity {
     private View decorView;
     private int	uiOption;
 
-    Button back_btn;
+    Button back_btn, block_bot_btn;
 
     MediaPlayer mediaPlayer;
 
     @Override
     protected void onDestroy() {
         // 웰컴 메시지 재생 종료
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
         mediaPlayer.release();
         super.onDestroy();
     }
@@ -40,6 +41,7 @@ public class ContentsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         // 웰컴 메시지 재생 종료
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
         mediaPlayer.release();
         super.onPause();
     }
@@ -48,10 +50,6 @@ public class ContentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
-
-        // 웰컴 메시지 재생
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.into_contents_mode_main);
-        mediaPlayer.start();
 
         decorView = getWindow().getDecorView();
         uiOption = getWindow().getDecorView().getSystemUiVisibility();
@@ -68,6 +66,12 @@ public class ContentsActivity extends AppCompatActivity {
 
         rvSubject = findViewById(R.id.level_list);
         back_btn = findViewById(R.id.back_btn);
+        block_bot_btn = findViewById(R.id.block_bot_btn);
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.into_contents_mode_main);
+        mediaPlayer.start();
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
 
 
         levelAdapter = new LevelAdapter(ContentsActivity.this, subjects);
@@ -77,8 +81,29 @@ public class ContentsActivity extends AppCompatActivity {
 
         back_btn.setOnClickListener(v-> finish());
 
+        block_bot_btn.setOnClickListener(v -> {
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.into_contents_mode_main);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+        });
+
         // 웰컴 메시지 재생 완료
-        mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+        mediaPlayer.setOnCompletionListener(mp -> {
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+            mp.release();
+        });
     }
 
 

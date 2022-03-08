@@ -1,5 +1,7 @@
 package com.corporation8793.fragment;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.corporation8793.MySharedPreferences;
@@ -34,13 +37,33 @@ public class Step1 extends Fragment {
 
     String contents_name;
 
+    Context context;
+    MediaPlayer mediaPlayer;
+    Button block_bot_btn;
+
+    @Override
+    public void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onPause();
+    }
+
     public Step1() {
         // Required empty public constructor
     }
 
-    public Step1(String contents_name) {
+    public Step1(String contents_name, MediaPlayer mp, Context context, Button block_bot_btn) {
         this.contents_name = contents_name;
-        // Required empty public constructor
+        this.mediaPlayer = mp;
+        this.context = context;
+        this.block_bot_btn = block_bot_btn;
     }
 
 
@@ -92,16 +115,86 @@ public class Step1 extends Fragment {
 
         supplies1.setType("default");
         supplies2.setType("default");
-        supplies1.setSelected(true);
+        name.setText("");
+        comment.setText("");
+        supplies1.setSelected(false);
         supplies2.setSelected(false);
 
         supplies1.setOnClickListener(v->{
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_2_ready_led);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+
+            block_bot_btn.setOnClickListener(v1 -> {
+                // 봇 메시지 초기화
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+
+                // 웰컴 메시지 재생
+                mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_2_ready_led);
+                mediaPlayer.start();
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+                // 웰컴 메시지 재생 완료
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                    mp.release();
+                });
+            });
+
             supplies1.setSelected(true);
             supplies2.setSelected(false);
             name.setText("LED");
             comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
         });
         supplies2.setOnClickListener(v->{
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_2_ready_jw);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+
+            block_bot_btn.setOnClickListener(v1 -> {
+                // 봇 메시지 초기화
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+
+                // 웰컴 메시지 재생
+                mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_2_ready_jw);
+                mediaPlayer.start();
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+                // 웰컴 메시지 재생 완료
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                    mp.release();
+                });
+            });
+
             supplies1.setSelected(false);
             supplies2.setSelected(true);
             name.setText("점퍼선");
@@ -110,6 +203,5 @@ public class Step1 extends Fragment {
 
 
         return view;
-
     }
 }

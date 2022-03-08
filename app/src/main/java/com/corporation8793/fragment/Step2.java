@@ -1,11 +1,14 @@
 package com.corporation8793.fragment;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
@@ -32,6 +35,24 @@ public class Step2 extends Fragment {
     int diagram =0;
     String contents_name ="";
 
+    Context context;
+    MediaPlayer mediaPlayer;
+    Button block_bot_btn;
+
+    @Override
+    public void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onPause();
+    }
+
 
     ScaleGestureDetector mScaleGestureDetector;
     float mScaleFactor =1.0f;
@@ -40,10 +61,13 @@ public class Step2 extends Fragment {
 
     }
 
-    public Step2(String contents_name,int diagram_img) {
+    public Step2(String contents_name, int diagram_img, MediaPlayer mp, Context context, Button block_bot_btn) {
         // Required empty public constructor
         this.contents_name = contents_name;
         diagram = diagram_img;
+        this.mediaPlayer = mp;
+        this.context = context;
+        this.block_bot_btn = block_bot_btn;
     }
 
     /**
@@ -78,6 +102,42 @@ public class Step2 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step2, container, false);
+        // 봇 메시지 초기화
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_3_circuit);
+        mediaPlayer.start();
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+
+        // 웰컴 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(mp -> {
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+            mp.release();
+        });
+
+
+
+        block_bot_btn.setOnClickListener(v1 -> {
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_3_circuit);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+        });
 
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);

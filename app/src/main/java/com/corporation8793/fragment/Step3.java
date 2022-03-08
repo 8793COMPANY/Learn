@@ -1,8 +1,10 @@
 package com.corporation8793.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Display;
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -47,13 +50,34 @@ public class Step3 extends Fragment {
 
     String contents_name;
 
+    Context context;
+    MediaPlayer mediaPlayer;
+    Button block_bot_btn;
+
+    @Override
+    public void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onPause();
+    }
+
     public Step3() {
         // Required empty public constructor
     }
 
-    public Step3(String contents_name) {
+    public Step3(String contents_name, MediaPlayer mp, Context context, Button block_bot_btn) {
         // Required empty public constructor
         this.contents_name = contents_name;
+        this.mediaPlayer = mp;
+        this.context = context;
+        this.block_bot_btn = block_bot_btn;
     }
 
     /**
@@ -93,6 +117,41 @@ public class Step3 extends Fragment {
         upload_img = view.findViewById(R.id.upload_img);
 
         retakeDialog = new RetakeDialog(getContext(), retake_ok,retake_cancel);
+
+        // 봇 메시지 초기화
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_4_picture);
+        mediaPlayer.start();
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+        // 웰컴 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(mp -> {
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+            mp.release();
+        });
+
+        block_bot_btn.setOnClickListener(v1 -> {
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_4_picture);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+        });
+
         upload_area.setOnClickListener(v->{
             if (check){
                 retakeDialog.show();

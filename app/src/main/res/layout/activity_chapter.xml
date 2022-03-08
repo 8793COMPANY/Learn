@@ -7,6 +7,19 @@
     tools:context=".activity.ChapterActivity"
     android:background="#fcf1de">
 
+    <Button
+        android:id="@+id/block_bot_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintDimensionRatio="1:1"
+        android:background="@drawable/bot_test_2_normal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.04"
+        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.97"/>
 
     <Button
         android:id="@+id/back_btn"

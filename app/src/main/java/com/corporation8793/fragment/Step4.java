@@ -1,5 +1,7 @@
 package com.corporation8793.fragment;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.corporation8793.MySharedPreferences;
@@ -47,13 +50,35 @@ public class Step4 extends Fragment {
 
 
     String contents_name ="";
+
+    Context context;
+    MediaPlayer mediaPlayer;
+    Button block_bot_btn;
+
+    @Override
+    public void onDestroy() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        // 웰컴 메시지 재생 종료
+        mediaPlayer.release();
+        super.onPause();
+    }
+
     public Step4() {
         // Required empty public constructor
     }
 
-    public Step4(String contents_name) {
+    public Step4(String contents_name, MediaPlayer mp, Context context, Button block_bot_btn) {
         // Required empty public constructor
         this.contents_name = contents_name;
+        this.mediaPlayer = mp;
+        this.context = context;
+        this.block_bot_btn = block_bot_btn;
     }
 
     /**
