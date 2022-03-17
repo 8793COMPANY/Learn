@@ -4,7 +4,7 @@
 
     <style name="AppTheme" parent="BlocklyVerticalTheme">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/teal_200</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/teal_200</item>
         <item name="android:imeOptions">actionDone</item>

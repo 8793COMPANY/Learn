@@ -2,15 +2,19 @@ package com.corporation8793.fragment;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.corporation8793.MySharedPreferences;
@@ -57,6 +61,7 @@ public class Step2 extends Fragment {
     ScaleGestureDetector mScaleGestureDetector;
     float mScaleFactor =1.0f;
     ImageView diagram_img;
+    WebView diagram_image_viewer;
     public Step2(){
 
     }
@@ -97,6 +102,7 @@ public class Step2 extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -143,19 +149,35 @@ public class Step2 extends Fragment {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
         }
 
-            MySharedPreferences.setInt(getContext(),contents_name,2);
+        MySharedPreferences.setInt(getContext(),contents_name,2);
 
+        // 웹뷰기반 이미지 뷰어 생성
+        diagram_image_viewer = view.findViewById(R.id.diagram_image_viewer);
+
+        WebView webView = new WebView(getContext());
+        webView.setBackgroundColor(0xffffffff);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+        webView.setInitialScale(0);
+        webView.loadDataWithBaseURL("file:///android_res/drawable/", "<img src='all_diagram_img.png' />", "text/html", "utf-8", null);
+
+        diagram_image_viewer.addView(webView, -1, -2);
+
+        // (구)이미지뷰 (확대, 축소만 됨)
         diagram_img = view.findViewById(R.id.diagram_img);
         diagram_img.setBackgroundResource(diagram);
 
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
 
-        diagram_img.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mScaleGestureDetector.onTouchEvent(event);
-                return true;
-            }
+        diagram_img.setOnTouchListener((v, event) -> {
+            mScaleGestureDetector.onTouchEvent(event);
+            return true;
         });
         return view;
     }
