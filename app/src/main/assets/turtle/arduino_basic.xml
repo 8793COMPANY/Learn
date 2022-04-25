@@ -268,25 +268,26 @@
             </value>
         </block>
 
-                <block type="inout_tone_pin">
-                    <value name="PIN">
-                        <block type="base_pins_list">
-                            <field name="PIN">A1</field>
-                        </block>
-                    </value>
-                    <value name="NUM">
-                        <block type="math_number">
-                            <field name="NUM">440</field>
-                        </block>
-                    </value>
-                </block>
-                <block type="inout_notone_pin">
-                    <value name="PIN">
-                        <block type="base_pins_list">
-                            <field name="PIN">A1</field>
-                        </block>
-                    </value>
-                </block>
+<!--                <block type="inout_tone_pin">-->
+<!--                    <value name="PIN">-->
+<!--                        <block type="base_pins_list">-->
+<!--                            <field name="PIN">A1</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                    <value name="NUM">-->
+<!--                        <block type="math_number">-->
+<!--                            <field name="NUM">440</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                </block>-->
+
+<!--                <block type="inout_notone_pin">-->
+<!--                    <value name="PIN">-->
+<!--                        <block type="base_pins_list">-->
+<!--                            <field name="PIN">A1</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                </block>-->
 
 
 
