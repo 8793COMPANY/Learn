@@ -16,6 +16,7 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Handler;
 
@@ -27,6 +28,7 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -99,6 +101,7 @@ public class BlockRecyclerViewHelper {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new ItemSpacingDecoration(mAdapter));
         this.width = width;
+        Log.e("width",width+"");
     }
 
     /**
@@ -228,14 +231,17 @@ public class BlockRecyclerViewHelper {
         }else if (mCurrentCategory.getCategoryName().equals("Math")){
             Log.e("current","math");
             if (widths[2] != 0) {
+                Log.e("in if",widths[2]+"");
                 try {
                     marginLayoutParams.width = widths[2];
                     marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                    marginLayoutParams.rightMargin= 20;
                     mRecyclerView.setLayoutParams(marginLayoutParams);
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
             }else{
+                Log.e("in else","getsize");
                 getLargeSize(2,1);
             }
 
@@ -378,8 +384,13 @@ public class BlockRecyclerViewHelper {
                     public void onGlobalLayout() {
 
                         block_width = toolbox_bg.getWidth();
+                        Log.e("block_width",block_width+"");
                         if (block_width != 0)
-                            widths[aIndex] = block_width;
+                            if (block_width > width)
+                                widths[aIndex] = width;
+                            else
+                                widths[aIndex] = block_width;
+
                         Log.e(TAG, "width = " + block_width);
 
 
@@ -388,7 +399,6 @@ public class BlockRecyclerViewHelper {
                             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
                             marginLayoutParams.width = block_width;
                             marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-                            mRecyclerView.setLayoutParams(marginLayoutParams);
                             toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 //                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
                         } catch (NullPointerException e) {

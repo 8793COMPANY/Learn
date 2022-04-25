@@ -910,6 +910,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        hideSystemUI();
 //        test();
 
+        Display display = getWindowManager().getDefaultDisplay();
+
+        Point size = new Point();
+
+        display.getSize(size);
+
+        Log.e(TAG, ">>> block_width size.x : " + size.x + ", size.y : " + size.y);
+
+
+
 
 
         Log.e("????",contents_name);
