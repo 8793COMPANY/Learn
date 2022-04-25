@@ -5,13 +5,13 @@
     "kind": "Directory"
   },
   "applicationId": "com.learn4",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 8,
-      "versionName": "0.9.1",
+      "versionCode": 10,
+      "versionName": "0.9.3",
       "outputFile": "app-release.apk"
     }
   ]
