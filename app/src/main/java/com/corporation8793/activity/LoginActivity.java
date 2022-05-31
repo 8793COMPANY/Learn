@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.corporation8793.R;
+import com.corporation8793.Setting;
 
 import java.io.InputStream;
 
@@ -35,6 +36,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         hideSystemUI();
         setContentView(R.layout.activity_login);
+
+//        Setting setting = new Setting(getApplicationContext());
+        Setting setting = Setting.getInstance(getApplicationContext());
+        setting.dataCheck();
+
+//        setting.settingChapterByLevel(1);
+//        setting.settingChapterByLevel(2);
+//        setting.settingChapterByLevel(3);
+
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
         login_btn = findViewById(R.id.login_btn);
 

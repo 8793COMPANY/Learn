@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.android.volley.error.TimeoutError;
+import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.FinishDialog;
@@ -167,7 +168,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     private UploadDialog uploadListener, error_Listener;
-    private FinishDialog finishListener;
+    private FinishDialog finishListener, resetListener;
 
     int current_pos =0;
 
@@ -898,9 +899,23 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     };
 
+    private View.OnClickListener reset_confirm = new View.OnClickListener() {
+        public void onClick(View v) {
+//            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show()
+            resetListener.dismiss();
+            getController().resetWorkspace();
+            loadSetupBlock();
+        }
+    };
+
+    private View.OnClickListener reset_cancel = v -> {
+        // TODO : LMS 서버 통신
+        resetListener.dismiss();
+    };
+
     private View.OnClickListener finish_cancel = v -> {
         // TODO : LMS 서버 통신
-        finishListener.dismiss();
+        resetListener.dismiss();
     };
 
 
@@ -909,6 +924,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         super.onCreate(savedInstanceState);
 //        hideSystemUI();
 //        test();
+
+
+
 
         Display display = getWindowManager().getDefaultDisplay();
 
@@ -957,7 +975,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
         uploadListener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요");
-        finishListener = new FinishDialog(this,finish_confirm,finish_cancel);
+        finishListener = new FinishDialog(this,"단원을 종료하시겠습니까?",finish_confirm,finish_cancel);
+        resetListener = new FinishDialog(this,"정말 초기화하시겠습니까?",reset_confirm,reset_cancel);
         error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
 
@@ -1112,8 +1131,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
         reset_btn.setOnClickListener(v->{
-            getController().resetWorkspace();
-            loadSetupBlock();
+            resetListener.show();
+
         });
 
 

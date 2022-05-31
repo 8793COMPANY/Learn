@@ -8,27 +8,35 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.corporation8793.Application;
 import com.corporation8793.R;
+import com.corporation8793.Setting;
 import com.corporation8793.dto.Chapter;
 import com.corporation8793.dto.Level;
 import com.corporation8793.recyclerview.LevelAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContentsActivity extends AppCompatActivity {
 
     private RecyclerView rvSubject;
     private LevelAdapter levelAdapter;
     private ArrayList<Level> subjects;
+    List<Chapter> chapters;
     private View decorView;
     private int	uiOption;
 
     Button back_btn;
 
     MediaPlayer mediaPlayer;
+
+    Setting setting;
+
 
     @Override
     protected void onDestroy() {
@@ -49,6 +57,13 @@ public class ContentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
 
+        setting = Setting.getInstance(getApplicationContext());
+        setting.printChapter();
+
+//        setting.printChapter();
+
+
+
         // 웰컴 메시지 재생
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.into_contents_mode_main);
         mediaPlayer.start();
@@ -63,6 +78,8 @@ public class ContentsActivity extends AppCompatActivity {
             uiOption |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         decorView.setSystemUiVisibility( uiOption );
+
+
 
         subjects = prepareData();
 
@@ -79,6 +96,8 @@ public class ContentsActivity extends AppCompatActivity {
 
         // 웰컴 메시지 재생 완료
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
+
+
     }
 
 
@@ -91,36 +110,33 @@ public class ContentsActivity extends AppCompatActivity {
         level.level = "Level 1";
         level.chapters = new ArrayList<Chapter>();
 
-        Chapter chapter1 = new Chapter();
-        chapter1.id = 1;
-        chapter1.chapterName = "LED 깜박이기";
-        chapter1.image = R.drawable.chapter1;
+        Level level2 = new Level();
+        level2.id = 2;
+        level2.level = "Level 2";
+        level2.chapters = new ArrayList<Chapter>();
 
-        Chapter chapter2 = new Chapter();
-        chapter2.id = 2;
-        chapter2.chapterName = "조도센서 사용하기";
-        chapter2.image = R.drawable.chapter2;
+        Level level3 = new Level();
+        level3.id = 2;
+        level3.level = "Level 3";
+        level3.chapters = new ArrayList<Chapter>();
 
-        Chapter chapter3 = new Chapter();
-        chapter3.id = 3;
-        chapter3.chapterName = "부저 사용하기";
-        chapter3.image = R.drawable.chapter3;
-
-        Chapter chapter4 = new Chapter();
-        chapter4.id = 4;
-        chapter4.chapterName = "초음파 센서 사용하기";
-        chapter4.image = R.drawable.chapter4;
+        for (int i =0; i<setting.chapter_list.get("1").size(); i++){
+            Log.e("check",setting.chapter_list.get("1").get(i).chapterName);
+            level.chapters.add(setting.chapter_list.get("1").get(i));
+        }
 
 
-        Chapter chapter5 = new Chapter();
-        chapter5.id = 5;
-        chapter5.chapterName = "스위치 사용하기";
-        chapter5.image = R.drawable.chapter5;
+        for (int i =0; i<setting.chapter_list.get("2").size(); i++){
+            Log.e("check",setting.chapter_list.get("2").get(i).chapterName);
+            level2.chapters.add(setting.chapter_list.get("2").get(i));
+        }
 
-        Chapter chapter6 = new Chapter();
-        chapter6.id = 6;
-        chapter6.chapterName = "3색 LED 깜박이기";
-        chapter6.image = R.drawable.chapter6;
+        for (int i =0; i<setting.chapter_list.get("3").size(); i++){
+            Log.e("check",setting.chapter_list.get("3").get(i).chapterName);
+            level3.chapters.add(setting.chapter_list.get("3").get(i));
+        }
+
+
 
         Chapter chapter7 = new Chapter();
         chapter7.id = 7;
@@ -128,42 +144,24 @@ public class ContentsActivity extends AppCompatActivity {
         chapter7.image = Color.parseColor("#ffdca2");
 
 
-        level.chapters.add(chapter1);
-        level.chapters.add(chapter2);
-        level.chapters.add(chapter3);
+
         level.chapters.add(chapter7);
 
         subjects.add(level);
 
         //두번째 subject 추가
-        Level level2 = new Level();
-        level2.id = 2;
-        level2.level = "Level 2";
-        level2.chapters = new ArrayList<Chapter>();
 
-        level2.chapters.add(chapter4);
-        level2.chapters.add(chapter5);
-        level2.chapters.add(chapter7);
-        level2.chapters.add(chapter7);
-//        level2.chapters.add(chapter7);
-//        level2.chapters.add(chapter7);
-//        level2.chapters.add(chapter7);
 
-//        level2.chapters.add(chapter5);
 
 
         subjects.add(level2);
 
         //세번째 subject 추가
-        Level level3 = new Level();
-        level3.id = 2;
-        level3.level = "Level 3";
-        level3.chapters = new ArrayList<Chapter>();
 
-        level3.chapters.add(chapter6);
+
+//        level3.chapters.add(chapter6);
         level3.chapters.add(chapter7);
-        level3.chapters.add(chapter7);
-        level3.chapters.add(chapter7);
+
 //        level3.chapters.add(chapter7);
 //        level3.chapters.add(chapter7);
 //        level3.chapters.add(chapter7);
@@ -176,6 +174,8 @@ public class ContentsActivity extends AppCompatActivity {
 
         return subjects;
     }
+
+
 
 
 }

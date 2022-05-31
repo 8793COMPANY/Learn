@@ -7,11 +7,10 @@
 
     <ImageButton
         android:id="@+id/btnMenu"
-        android:layout_alignParentLeft="true"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:background="@drawable/actionbar_menu_icon"
-        />
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/actionbar_menu_icon" />
 
 
 

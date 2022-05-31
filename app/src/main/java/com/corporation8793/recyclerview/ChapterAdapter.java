@@ -49,7 +49,9 @@ public class ChapterAdapter  extends RecyclerView.Adapter<ChapterAdapter.CustomV
 //        Chapter chapter = chapters.get(position);
 //        holder.tvChapterName.setText(chapter.chapterName);
         if (!chapters.get(position).chapterName.equals("none")){
-            holder.ivChapter.setBackgroundResource(chapters.get(position).image);
+            int resID = context.getResources().getIdentifier("chapter"+String.valueOf(chapters.get(position).id) , "drawable" ,
+                    context.getPackageName());
+            holder.ivChapter.setBackgroundResource(resID);
 //            holder.ivChapter.setBackgroundColor(chapters.get(position).image);
         }else{
             if (Build.VERSION.SDK_INT >= 21) {

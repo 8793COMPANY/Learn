@@ -1,14 +1,16 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.learn4"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 10
         versionName "0.9.3"
@@ -22,6 +24,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets{
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -51,4 +58,23 @@ dependencies {
 
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
     implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+
+    implementation "androidx.room:room-runtime:2.4.2"
+    annotationProcessor "androidx.room:room-compiler:2.4.2"
+
+    // kotlin 사용 설정
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.20"
+
+    apply plugin: 'kotlin-kapt'
+    kapt("androidx.room:room-compiler:2.4.2")
+
+
+    //RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
+
+    implementation "androidx.room:room-rxjava3:2.4.2"
+
 }
