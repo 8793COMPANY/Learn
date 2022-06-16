@@ -1496,7 +1496,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("getCompiler Error",e.toString());
 //        }
         // TODO : 컴파일러 세팅
-        return "http://54.180.31.249:5000";
+        return "http://learnserver24.com:5000";
 
 
         // 테스트용 구라 주소
