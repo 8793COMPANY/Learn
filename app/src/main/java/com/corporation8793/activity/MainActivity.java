@@ -294,7 +294,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         Log.e("in",alert[2]);
                         Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
                         code = generatedCode;
-                        customProgressDialog.dismiss();
+//                        customProgressDialog.dismiss();
 //                        Log.e("generated",generatedCode);
                     }
                     else {
@@ -323,7 +323,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             remotecompile("code.ino", getCompiler());
                             Log.e("in!","ok");
                             compileCheck = false;
-                            customProgressDialog.dismiss();
+//                            customProgressDialog.dismiss();
                         }
 
 
@@ -430,6 +430,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
+                                    customProgressDialog.dismiss();
             uploadListener.show();
 
         } else {
@@ -437,6 +438,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (value) {
                 // TODO : 업로드 팝업 디자인 수정
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+                                        customProgressDialog.dismiss();
                 uploadListener.show();
             }
             else {
@@ -524,6 +526,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
+            upload_btn.setEnabled(true);
 
                 });
 
@@ -534,6 +537,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         smr.addFile("file", TARGET_BASE_PATH+filename);
         RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mRequestQueue.add(smr);
+
     }
 
   /*  public void get_ports() {
@@ -874,6 +878,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
                 MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
             uploadListener.dismiss();
+            upload_btn.setEnabled(true);
 
         }
     };
@@ -881,6 +886,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private View.OnClickListener submit_confirm = v -> {
         // TODO : LMS 서버 통신
         Toast.makeText(getApplicationContext(), "LMS 에 제출되었습니다", Toast.LENGTH_SHORT).show();
+        uploadListener.dismiss();
+        upload_btn.setEnabled(true);
     };
 
     private View.OnClickListener error_confirm = new View.OnClickListener() {
@@ -975,6 +982,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
         uploadListener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요");
+        uploadListener.setCancelable(false);
         finishListener = new FinishDialog(this,"단원을 종료하시겠습니까?",finish_confirm,finish_cancel);
         resetListener = new FinishDialog(this,"정말 초기화하시겠습니까?",reset_confirm,reset_cancel);
         error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
@@ -1160,6 +1168,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.setContentView(R.layout.dialog_progress);
+
+        customProgressDialog.setCancelable(false);
 
         Display display;  // in Activity
         display = getWindowManager().getDefaultDisplay();
@@ -1496,7 +1506,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("getCompiler Error",e.toString());
 //        }
         // TODO : 컴파일러 세팅
-        return "http://54.180.31.249:5000";
+//        return "http://54.180.31.249:5000";
+
+        return "http://learnserver24.com:5000/";
 
 
         // 테스트용 구라 주소
@@ -1534,7 +1546,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // upload
             case 6:
                 Log.e("6 in","come");
-                upload_btn(pos);
+                Log.e("isenabled",upload_btn.isEnabled()+"");
+//                if (upload_btn.isEnabled()) {
+                    upload_btn(pos);
                 break;
         }
     }
@@ -1685,30 +1699,34 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void upload_btn(int pos) {
         hideSystemUI();
-        if (wifi_check) {
+        if (upload_btn.isEnabled()) {
+            if (wifi_check) {
+                upload_btn.setEnabled(false);
 //                    first_time = System.currentTimeMillis();
 //                    Toast.makeText(getApplicationContext(), "first_time : "+mFormat.format(first_time), Toast.LENGTH_SHORT).show();
-            mMonitorHandler.sendEmptyMessage(1);
-            customProgressDialog.show();
+                mMonitorHandler.sendEmptyMessage(1);
+                customProgressDialog.show();
 //                    last_time = System.currentTimeMillis();
 //                    Toast.makeText(getApplicationContext(), "last_time : "+mFormat.format(last_time), Toast.LENGTH_SHORT).show();
-            blockly_monitor.setVisibility(View.GONE);
-            mBlocklyActivityHelper.getFlyoutController();
-            categoryData.setPosition(6);
-            current_pos = 6;
-            setInitLine();
-            compileCheck = true;
-            if (getController().getWorkspace().hasBlocks()) {
-                Log.e("??", "들어옴");
-                mBlocklyActivityHelper.requestCodeGeneration(
-                        getBlockGeneratorLanguage(),
-                        getBlockDefinitionsJsonPaths(),
-                        getGeneratorsJsPaths(),
-                        getCodeGenerationCallback());
-            }
+                blockly_monitor.setVisibility(View.GONE);
+                mBlocklyActivityHelper.getFlyoutController();
+                categoryData.setPosition(6);
+                current_pos = 6;
+                setInitLine();
+                compileCheck = true;
+                if (getController().getWorkspace().hasBlocks()) {
+                    Log.e("??", "들어옴");
+                    mBlocklyActivityHelper.requestCodeGeneration(
+                            getBlockGeneratorLanguage(),
+                            getBlockDefinitionsJsonPaths(),
+                            getGeneratorsJsPaths(),
+                            getCodeGenerationCallback());
+                }
 
-        } else {
-            Toast.makeText(getApplicationContext(),"WIFI를 연결해주세요!",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "WIFI를 연결해주세요!", Toast.LENGTH_SHORT).show();
+                upload_btn.setEnabled(true);
+            }
         }
 
 
