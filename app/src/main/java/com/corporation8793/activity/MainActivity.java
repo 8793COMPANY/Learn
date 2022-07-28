@@ -16,6 +16,8 @@
 package com.corporation8793.activity;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +35,7 @@ import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
@@ -40,9 +43,13 @@ import android.hardware.usb.UsbManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
@@ -102,11 +109,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -144,6 +153,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     ImageView block_bot_btn;
     MediaPlayer mediaPlayer;
+    Bitmap bitmapWorkspace;
 
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
@@ -969,8 +979,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         controller.zoomOut();
         controller.setCopyCheck(this);
 
-
-
         flyoutFragment = new FlyoutFragment();
         flyoutFragment.setCloseCheck(this);
 
@@ -1282,6 +1290,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
 
 
@@ -1624,7 +1635,60 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
     }
 
+    private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
+        OutputStream fos;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentResolver resolver = getContentResolver();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+        } else {
+            String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+            File image = new File(imagesDir, name + ".jpg");
+            fos = new FileOutputStream(image);
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        Objects.requireNonNull(fos).close();
+    }
+
     public void code_btn(int pos) {
+        Log.e("MainActivity", "captureWorkspace: start");
+        bitmapWorkspace = controller.captureWorkspace();
+
+        try {
+            saveImage(bitmapWorkspace, "test");
+            Log.e("MainActivity", "captureWorkspace: save ok");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        String filename = "test.png";
+//        File sd = Environment.getExternalStorageDirectory();
+//
+//        File file = new File(sd, filename);
+//
+//        runOnUiThread(() -> {
+//            Log.e("MainActivity", "captureWorkspace: runOnUiThread");
+//            try {
+//                file.createNewFile();
+//                FileOutputStream ostream = new FileOutputStream(file);
+//                bitmapWorkspace.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+//                ostream.flush();
+//                ostream.close();
+//                Log.e("MainActivity", "captureWorkspace: save ok");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            Log.e("MainActivity", "captureWorkspace: end");
+//        });
+
+
+
+
+
         setInitLine();
         code_btn.setSelected(true);
         mMonitorHandler.sendEmptyMessage(1);

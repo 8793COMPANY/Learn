@@ -18,6 +18,7 @@ package com.google.blockly.android.control;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Looper;
 import androidx.annotation.NonNull;
@@ -1115,6 +1116,16 @@ public class BlocklyController {
         if (mVirtualWorkspaceView != null) {
             mVirtualWorkspaceView.resetView_2(ntp, ptp, rtp);
         }
+    }
+
+    public Bitmap captureWorkspace() {
+        Bitmap bitmap = null;
+
+        if (mVirtualWorkspaceView != null) {
+            bitmap = mVirtualWorkspaceView.captureView();
+        }
+
+        return bitmap;
     }
 
     /**

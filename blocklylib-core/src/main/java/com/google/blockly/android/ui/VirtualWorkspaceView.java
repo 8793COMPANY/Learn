@@ -16,6 +16,7 @@
 package com.google.blockly.android.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import androidx.annotation.NonNull;
@@ -30,6 +31,9 @@ import com.google.blockly.android.R;
 import com.google.blockly.android.ZoomBehavior;
 import com.google.blockly.model.WorkspacePoint;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 /**
  * Virtual view of a {@link WorkspaceView}.
  * <p/>
@@ -42,9 +46,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     // TODO(#87): Replace with configuration. Use dp.
     // Default desired width of the view in pixels.
-    private static final int DESIRED_WIDTH = 1024;
+    private static final int DESIRED_WIDTH = 512;
     // Default desired height of the view in pixels.
-    private static final int DESIRED_HEIGHT = 1024;
+    private static final int DESIRED_HEIGHT = 512;
 
     private static final float MIN_SCALE_TO_DRAW_GRID = 0.5f;
 
@@ -188,6 +192,20 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         if ( ptp != null ) {
             scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
         }
+    }
+
+    public Bitmap captureView() {
+        updateScaleStep(0);
+//        mPanningStart.set(0,0);
+//        mOriginalScrollX = 0;
+//        mOriginalScrollY = 0;
+        scrollTo(0, 0);
+        Bitmap b = Bitmap.createBitmap(mWorkspaceView.getWidth(), mWorkspaceView.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas c = new Canvas(b);
+        mWorkspaceView.layout(0, 0, mWorkspaceView.getLayoutParams().width, mWorkspaceView.getLayoutParams().height);
+        mWorkspaceView.draw(c);
+        return b;
     }
 
     public boolean isScrollable() {
