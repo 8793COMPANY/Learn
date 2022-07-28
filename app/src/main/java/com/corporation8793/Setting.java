@@ -1,7 +1,12 @@
 package com.corporation8793;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.corporation8793.dto.Chapter;
@@ -245,4 +250,45 @@ public class Setting {
         chapter.image = R.drawable.chapter1;
         return chapter;
     }
+
+    ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+        @Override
+        public void onAvailable(Network network) {
+            Toast.makeText(context, "network 연결", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onLost(Network network) {
+            Toast.makeText(context, "network 해제", Toast.LENGTH_SHORT).show();
+        }
+
+    };
+
+    public void registerNetworkCallback() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkRequest wifiNetworkRequest = new NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .build();
+        cm.registerNetworkCallback(wifiNetworkRequest, networkCallback);
+    }
+
+    public void unregisterNetworkCallback() {
+        ConnectivityManager cm = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        cm.unregisterNetworkCallback(networkCallback);
+    }
+
+//    Boolean isWIFIConnected(Context context){
+//        Boolean result = false;
+//        ConnectivityManager cm = (ConnectivityManager)  context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkCapabilities  capabilities = cm.getNetworkCapabilities(cm.getActiveNetwork());
+//        if (capabilities != null) {
+//            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+//                result = true;
+//            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+//                result = true;
+//            }
+//        }
+//        return result;
+//    }
 }

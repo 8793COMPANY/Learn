@@ -25,6 +25,7 @@ import com.android.volley.error.TimeoutError;
 import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.Setting;
 import com.corporation8793.dialog.FinishDialog;
 import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.UploadDialog;
@@ -33,14 +34,21 @@ import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
@@ -800,6 +808,38 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
 
+    ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+        @Override
+        public void onAvailable(Network network) {
+            Toast.makeText(getApplicationContext(), "network 연결", Toast.LENGTH_SHORT).show();
+            wifi_check = true;
+            mMonitorHandler.sendEmptyMessage(1);
+//            checkUploadBtn();
+        }
+
+        @Override
+        public void onLost(Network network) {
+            Toast.makeText(getApplicationContext(), "network 해제", Toast.LENGTH_SHORT).show();
+            wifi_check = false;
+            mMonitorHandler.sendEmptyMessage(1);
+//            checkUploadBtn();
+        }
+
+    };
+
+    public void registerNetworkCallback() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkRequest wifiNetworkRequest = new NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .build();
+        cm.registerNetworkCallback(wifiNetworkRequest, networkCallback);
+    }
+
+    public void unregisterNetworkCallback() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        cm.unregisterNetworkCallback(networkCallback);
+    }
 
 
     //wifi , usb 연결 상시 확인
@@ -809,6 +849,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             String action = intent.getAction();
             Log.e("action",action);
 //            Log.e("openUsb",OpenUSB()+"");
+            Toast.makeText(getApplicationContext(), "hey", Toast.LENGTH_SHORT).show();
 
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
@@ -828,23 +869,25 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             }
 
-            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
-                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()){
-                    wifi_check = true;
-                    Log.e("!!wifi","connect");
-                    Toast.makeText(getApplicationContext(),"wifi 연결",Toast.LENGTH_SHORT).show();
-
-//                    checkUploadBtn();
-                }else{
-                    wifi_check = false;
-                    Log.e("!!wifi","not connect");
-                    Toast.makeText(getApplicationContext(),"wifi 안 연결",Toast.LENGTH_SHORT).show();
-//                    checkUploadBtn();
-                }
-
-
-            }
+//            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
+//                NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+////                Log.e("networkInfo",networkInfo.getTypeName());
+//                Toast.makeText(getApplicationContext(),"networkInfo : "+networkInfo.getTypeName(), Toast.LENGTH_SHORT).show();
+//                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()){
+//                    wifi_check = true;
+//                    Log.e("!!wifi","connect");
+//                    Toast.makeText(getApplicationContext(),"wifi 연결",Toast.LENGTH_SHORT).show();
+//
+////                    checkUploadBtn();
+//                }else{
+//                    wifi_check = false;
+//                    Log.e("!!wifi","not connect");
+//                    Toast.makeText(getApplicationContext(),"wifi 안 연결",Toast.LENGTH_SHORT).show();
+////                    checkUploadBtn();
+//                }
+//
+//
+//            }
 
 
             checkUploadBtn();
@@ -855,7 +898,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     void checkUploadBtn(){
-        Log.e("checkUploadBtn","in");
+        Toast.makeText(getApplicationContext(), wifi_check+"", Toast.LENGTH_SHORT).show();
         if (wifi_check&& usb_check){
             Log.e("checkUploadBtn","true");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
@@ -865,6 +908,39 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
             categoryData.getUpload_btn().setEnabled(false);
         }
+    }
+
+
+
+    public File ScreenShotActivity(View view){
+        int width_container = view.getWidth() ;//캡쳐할 레이아웃 크기
+
+        int height_container = view.getHeight() ;//캡쳐할 레이아웃 크기
+
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache(true);
+
+        Bitmap screenBitmap = Bitmap.createBitmap(view.getLayoutParams().width,view.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+        Canvas screenShotCanvas = new Canvas(screenBitmap);
+        view.draw(screenShotCanvas);
+
+
+        String filename = "screenshot"+"현재시간milliseonds"+".png";
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/Screenshots/", filename);
+        FileOutputStream os = null;
+        try{
+            os = new FileOutputStream(file);
+            screenBitmap.compress(Bitmap.CompressFormat.PNG, 100, os); //PNG파일로 만들기
+            view.setDrawingCacheEnabled(false);
+            os.close();
+        }catch (IOException e){
+            e.printStackTrace();
+            Log.e("e",e.getMessage());
+            return null;
+        }
+
+        view.setDrawingCacheEnabled(false);
+        return file;
     }
 
 
@@ -932,7 +1008,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        hideSystemUI();
 //        test();
 
-
+//        Setting setting = Setting.getInstance(this);
+//        setting.registerNetworkCallback();
 
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -994,6 +1071,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // TODO : 팝업 테스트
         // upload_Listener.show();
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerNetworkCallback();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterNetworkCallback();
     }
 
     @Subscribe
@@ -1284,7 +1373,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
 
+        File file = ScreenShotActivity(serial_send_btn);
 
+        if(file !=null){
+            Log.e("file in","not null");
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file )));
+        }else{
+            Log.e("file in","null");
+        }
 
 
         return root;
@@ -1323,6 +1419,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     removeMessages(0);
                     str ="";
                     monitor_text.setText("");
+                    break;
+                case 2:
+                    checkUploadBtn();
                     break;
             }
         }
@@ -1427,6 +1526,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mMonitorHandler.sendEmptyMessage(1);
         // 봇 메시지 재생 종료
         mediaPlayer.release();
+
+//        Setting setting = Setting.getInstance(this);
+//        setting.unregisterNetworkCallback();
+
+
 //        if (wifiEventReceiver != null) {
 //            unregisterReceiver(wifiEventReceiver);
 //            wifiEventReceiver = null;

@@ -16,13 +16,17 @@
 package com.google.blockly.android.control;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AlertDialog;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,6 +146,7 @@ public class BlocklyController {
     private Dragger mDragger;
     private VariableCallback mVariableCallback = null;
     Block testblock = null;
+    long delay = 0;
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
@@ -186,6 +191,8 @@ public class BlocklyController {
                 return null;
             }
 
+
+
             return new Runnable() {
                 @Override
                 public void run() {
@@ -216,15 +223,43 @@ public class BlocklyController {
             // TODO(#35): Mark block as focused / selected.
             if (mListener != null){
             //Log.e("mlist","not null");
-                //블록 복사
-                if (mBlockCopyCheck) {
-                    mListener.onBlockClick(pendingDrag);
-                    if (copyCheck != null){
-                        Log.e("in! hi","copyCheck");
-                        copyCheck.onCopyCheck(false);
-                    }
-
+                if (System.currentTimeMillis() > delay){
+                    delay = System.currentTimeMillis() + 200;
+                    return false;
                 }
+
+                if (System.currentTimeMillis() <= delay){
+                    Log.e("두번","클릭");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                    builder.setTitle("인사말").setMessage("반갑습니다");
+
+                    builder.setPositiveButton("복사", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            mListener.onBlockClick(pendingDrag);
+                            if (copyCheck != null){
+                                Log.e("in! hi","copyCheck");
+                                copyCheck.onCopyCheck(false);
+                            }
+
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+
+                    alertDialog.show();
+                }
+                //블록 복사
+//                if (mBlockCopyCheck) {
+//                    mListener.onBlockClick(pendingDrag);
+//                    if (copyCheck != null){
+//                        Log.e("in! hi","copyCheck");
+//                        copyCheck.onCopyCheck(false);
+//                    }
+//
+//                }
         }
             Log.e("block clicked","in !!!");
             return false;

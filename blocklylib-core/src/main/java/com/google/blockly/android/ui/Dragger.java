@@ -72,6 +72,7 @@ public class Dragger {
     private static final int FINISH_BEHAVIOR_DROP = 1;
     private static final int FINISH_BEHAVIOR_REVERT = 2;
     private static final int FINISH_BEHAVIOR_DELETED = 3;
+    static long delay = 0;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({FINISH_BEHAVIOR_DROP, FINISH_BEHAVIOR_REVERT, FINISH_BEHAVIOR_DELETED})
@@ -499,6 +500,8 @@ public class Dragger {
 
         final boolean result;
         Log.e("action 확인",action+"");
+
+
         if (action == MotionEvent.ACTION_DOWN ) {
             if (mPendingDrag == null) {
                 mPendingDrag = new PendingDrag(mController, touchedView, event);

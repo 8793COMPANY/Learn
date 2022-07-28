@@ -2,7 +2,12 @@ package com.corporation8793;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.room.Room;
 
