@@ -1655,15 +1655,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void code_btn(int pos) {
-        Log.e("MainActivity", "captureWorkspace: start");
-        bitmapWorkspace = controller.captureWorkspace();
-
-        try {
-            saveImage(bitmapWorkspace, "test");
-            Log.e("MainActivity", "captureWorkspace: save ok");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // TODO : 화면 전체 캡쳐 트리거
+//        Log.e("MainActivity", "captureWorkspace: start");
+//        bitmapWorkspace = controller.captureWorkspace();
+//
+//        try {
+//            saveImage(bitmapWorkspace, "test");
+//            Log.e("MainActivity", "captureWorkspace: save ok");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 //        String filename = "test.png";
 //        File sd = Environment.getExternalStorageDirectory();
