@@ -7,3 +7,5 @@ X
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 y
 Iapp/src/androidTest/java/com/corporation8793/ExampleInstrumentedTest.java,f\4\f425ecea647247c086c3a78ff9290f0e93eb218c
+|
+Lblocklylib-core/src/main/java/com/google/blockly/android/FlyoutFragment.java,0\a\0ade54fe3b04b98814604c90db544b8ea108b62f

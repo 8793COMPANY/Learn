@@ -196,9 +196,6 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     public Bitmap captureView() {
         updateScaleStep(0);
-//        mPanningStart.set(0,0);
-//        mOriginalScrollX = 0;
-//        mOriginalScrollY = 0;
         scrollTo(0, 0);
         Bitmap b = Bitmap.createBitmap(mWorkspaceView.getWidth(), mWorkspaceView.getHeight(), Bitmap.Config.ARGB_8888);
 

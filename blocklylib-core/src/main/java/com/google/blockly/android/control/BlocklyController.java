@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Looper;
 import androidx.annotation.NonNull;
@@ -1121,11 +1122,26 @@ public class BlocklyController {
     public Bitmap captureWorkspace() {
         Bitmap bitmap = null;
 
-        if (mVirtualWorkspaceView != null) {
-            bitmap = mVirtualWorkspaceView.captureView();
-        }
+        // 개선된 캡쳐 기능(블록만 캡쳐)
+        Log.e("test Child 0h: ", ""+mWorkspaceView.getChildAt(0).getMeasuredHeight());
+        Log.e("test Child 0w: ", ""+mWorkspaceView.getChildAt(0).getMeasuredWidth());
+
+        bitmap = loadBitmapFromView(mWorkspaceView.getChildAt(0));
+
+        // OOM 유발 캡쳐(배경포함 캡쳐)
+//        if (mVirtualWorkspaceView != null) {
+//            bitmap = mVirtualWorkspaceView.captureView();
+//        }
 
         return bitmap;
+    }
+
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap( v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+        v.draw(c);
+        return b;
     }
 
     /**
