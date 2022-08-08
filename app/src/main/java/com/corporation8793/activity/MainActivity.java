@@ -16,6 +16,8 @@
 package com.corporation8793.activity;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,6 +37,7 @@ import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
 import android.graphics.Bitmap;
+
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -47,10 +50,12 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
@@ -110,11 +115,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -127,7 +134,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private static final String TAG = "TurtleActivity";
 
     private static final String SAVE_FILENAME = "turtle_workspace.xml";
-    private static final String AUTOSAVE_FILENAME = "turtle_workspace_temp.xml";
+    private static String AUTOSAVE_FILENAME = "turtle_workspace_temp.xml";
     private static final String AUTOSAVE_FILENAME2 = "turtle_workspace_temp2.xml";
     private TextView mGeneratedTextView;
     private TextView mGeneratedErrorTextView;
@@ -152,6 +159,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     ImageView block_bot_btn;
     MediaPlayer mediaPlayer;
+    Bitmap bitmapWorkspace;
 
     LinearLayout trashcan_btn;
     LinearLayout blockly_monitor, input_space;
@@ -166,6 +174,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     ScrollView scrollview;
     int num = 0;
     String contents_name ="none";
+    String id ="none";
 
     Guideline guideline4;
     Button upload_btn;
@@ -912,38 +921,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
-    public File ScreenShotActivity(View view){
-        int width_container = view.getWidth() ;//캡쳐할 레이아웃 크기
-
-        int height_container = view.getHeight() ;//캡쳐할 레이아웃 크기
-
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache(true);
-
-        Bitmap screenBitmap = Bitmap.createBitmap(view.getLayoutParams().width,view.getLayoutParams().height, Bitmap.Config.ARGB_8888);
-        Canvas screenShotCanvas = new Canvas(screenBitmap);
-        view.draw(screenShotCanvas);
-
-
-        String filename = "screenshot"+"현재시간milliseonds"+".png";
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/DCIM/Screenshots/", filename);
-        FileOutputStream os = null;
-        try{
-            os = new FileOutputStream(file);
-            screenBitmap.compress(Bitmap.CompressFormat.PNG, 100, os); //PNG파일로 만들기
-            view.setDrawingCacheEnabled(false);
-            os.close();
-        }catch (IOException e){
-            e.printStackTrace();
-            Log.e("e",e.getMessage());
-            return null;
-        }
-
-        view.setDrawingCacheEnabled(false);
-        return file;
-    }
-
-
     private View.OnClickListener upload_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
@@ -1011,6 +988,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Setting setting = Setting.getInstance(this);
 //        setting.registerNetworkCallback();
 
+        contents_name = getIntent().getStringExtra("contents_name");
+
 
         Display display = getWindowManager().getDefaultDisplay();
 
@@ -1045,8 +1024,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         controller.recenterWorkspace();
         controller.zoomOut();
         controller.setCopyCheck(this);
-
-
 
         flyoutFragment = new FlyoutFragment();
         flyoutFragment.setCloseCheck(this);
@@ -1283,6 +1260,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         serial_input_box.setOnClickListener(v -> {
             // 에디트 텍스트
+
         });
 
         serial_send_btn.setOnClickListener(v -> {
@@ -1372,15 +1350,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
         });
 
-
-        File file = ScreenShotActivity(serial_send_btn);
-
-        if(file !=null){
-            Log.e("file in","not null");
-            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file )));
-        }else{
-            Log.e("file in","null");
-        }
 
 
         return root;
@@ -1582,13 +1551,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @NonNull
     protected String getWorkspaceAutosavePath() {
         Log.e("in!","getWorkspaceAutosavePath");
-        contents_name = getIntent().getStringExtra("contents_name");
-        if (contents_name.equals("none")){
-            Log.e("none","in");
-            return AUTOSAVE_FILENAME;
-        }
-        Log.e("none","not in");
-        return AUTOSAVE_FILENAME2;
+
+        id = getIntent().getStringExtra("id");
+        Log.e("mainactivity id",id);
+        AUTOSAVE_FILENAME =  "turtle_workspace_temp"+id+".xml";
+//        if (contents_name.equals("none")){
+//            Log.e("none","in");
+//            return AUTOSAVE_FILENAME;
+//        }
+//        Log.e("none","not in");
+//        return AUTOSAVE_FILENAME2;
+        return  AUTOSAVE_FILENAME;
     }
 
 
@@ -1728,7 +1701,61 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
     }
 
+    private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
+        OutputStream fos;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentResolver resolver = getContentResolver();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+        } else {
+            String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+            File image = new File(imagesDir, name + ".jpg");
+            fos = new FileOutputStream(image);
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        Objects.requireNonNull(fos).close();
+    }
+
     public void code_btn(int pos) {
+        // TODO : 화면 전체 캡쳐 트리거
+//        Log.e("MainActivity", "captureWorkspace: start");
+//        bitmapWorkspace = controller.captureWorkspace();
+//
+//        try {
+//            saveImage(bitmapWorkspace, "test");
+//            Log.e("MainActivity", "captureWorkspace: save ok");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+//        String filename = "test.png";
+//        File sd = Environment.getExternalStorageDirectory();
+//
+//        File file = new File(sd, filename);
+//
+//        runOnUiThread(() -> {
+//            Log.e("MainActivity", "captureWorkspace: runOnUiThread");
+//            try {
+//                file.createNewFile();
+//                FileOutputStream ostream = new FileOutputStream(file);
+//                bitmapWorkspace.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+//                ostream.flush();
+//                ostream.close();
+//                Log.e("MainActivity", "captureWorkspace: save ok");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            Log.e("MainActivity", "captureWorkspace: end");
+//        });
+
+
+
+
+
         setInitLine();
         code_btn.setSelected(true);
         mMonitorHandler.sendEmptyMessage(1);
