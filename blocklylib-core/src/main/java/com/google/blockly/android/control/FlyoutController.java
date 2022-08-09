@@ -62,6 +62,7 @@ public class FlyoutController {
         @Override
         public void onButtonClicked(View v, String action, BlocklyCategory category) {
             if (action == VariableCustomCategory.ACTION_CREATE_VARIABLE && mController != null) {
+
                 mController.requestAddVariable("item");
             }
         }

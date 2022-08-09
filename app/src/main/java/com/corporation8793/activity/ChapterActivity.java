@@ -21,6 +21,8 @@ public class ChapterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter);
 
+        String chapter_id = getIntent().getStringExtra("id");
+
         chapter1 = findViewById(R.id.chapter1);
         chapter2 = findViewById(R.id.chapter2);
         chapter3 = findViewById(R.id.chapter3);
@@ -35,9 +37,9 @@ public class ChapterActivity extends AppCompatActivity {
         chapter2.setGroup(2);
         chapter3.setGroup(3);
 
-        initContent(chapter1,"LED 깜박이기",true, R.drawable.chapter_content1, MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"));
-        initContent(chapter2,"LED 1초간 껐다 켜기",false,R.drawable.chapter_content2,MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기 MAX"));
-        initContent(chapter3,"LED 3개 깜박이기",false,R.drawable.chapter_content3,MySharedPreferences.getInt(getApplicationContext(), "LED 3개 깜박이기 MAX"));
+        initContent(chapter1,"LED 깜박이기",true, R.drawable.chapter_content1, MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"),chapter_id+"_"+"1");
+        initContent(chapter2,"LED 1초간 껐다 켜기",false,R.drawable.chapter_content2,MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기 MAX"),chapter_id+"_"+"2");
+        initContent(chapter3,"LED 3개 깜박이기",false,R.drawable.chapter_content3,MySharedPreferences.getInt(getApplicationContext(), "LED 3개 깜박이기 MAX"),chapter_id+"_"+"3");
         if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
             chapter2.setOpen(true,false);
             chapter2.setEnabled(true);
@@ -84,11 +86,12 @@ public class ChapterActivity extends AppCompatActivity {
         });
     }
 
-    public void initContent(CustomView view, String title, boolean open, int chapterImg, int step){
+    public void initContent(CustomView view, String title, boolean open, int chapterImg, int step, String id){
         view.setTitle(title);
         view.setOpen(open,false);
         view.setBackground(chapterImg);
         view.setPercentage(step);
+        view.setID(id);
     }
 
     @Override

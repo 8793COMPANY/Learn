@@ -121,18 +121,18 @@ public class ContentsActivity extends AppCompatActivity {
         level3.chapters = new ArrayList<Chapter>();
 
         for (int i =0; i<setting.chapter_list.get("1").size(); i++){
-            Log.e("check",setting.chapter_list.get("1").get(i).chapterName);
+            Log.e("check",setting.chapter_list.get("1").get(i).id+"");
             level.chapters.add(setting.chapter_list.get("1").get(i));
         }
 
 
         for (int i =0; i<setting.chapter_list.get("2").size(); i++){
-            Log.e("check",setting.chapter_list.get("2").get(i).chapterName);
+            Log.e("check",setting.chapter_list.get("2").get(i).id+"");
             level2.chapters.add(setting.chapter_list.get("2").get(i));
         }
 
         for (int i =0; i<setting.chapter_list.get("3").size(); i++){
-            Log.e("check",setting.chapter_list.get("3").get(i).chapterName);
+            Log.e("check",setting.chapter_list.get("3").get(i).id+"");
             level3.chapters.add(setting.chapter_list.get("3").get(i));
         }
 

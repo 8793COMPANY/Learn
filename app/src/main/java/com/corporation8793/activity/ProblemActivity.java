@@ -67,6 +67,9 @@ public class ProblemActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility( uiOption );
 
         int step = getIntent().getIntExtra("step",1);
+        String id = getIntent().getStringExtra("id");
+
+        Log.e("id",id);
         contents_name = contents[step-1];
 
         Log.e("check",step +"");
@@ -137,6 +140,9 @@ public class ProblemActivity extends AppCompatActivity {
             if(MySharedPreferences.getInt(getApplicationContext(),contents_name) ==3){
                 Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
                 intent.putExtra("contents_name",contents_name);
+                intent.putExtra("id",id);
+                Log.e("contents_name",contents_name);
+                Log.e("id",id);
                 startActivity(intent);
                 finish();
             } else{
