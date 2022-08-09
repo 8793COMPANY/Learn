@@ -1,0 +1,32 @@
+
+?
+java:S1604‹"(Make this anonymous inner class a lambda(Ô”Õ¹
+x
+java:S1488Ï"\Immediately return this expression instead of assigning it to the temporary variable "view".(ò¥Œèøÿÿÿÿ
+V	java:S125`"<This block of commented-out lines of code should be removed.(²ýðçûÿÿÿÿ
+R	java:S125‹"<This block of commented-out lines of code should be removed.(Ö§‘
+W	java:S125"<This block of commented-out lines of code should be removed.(çÈ¿˜úÿÿÿÿ
+W	java:S125¢"<This block of commented-out lines of code should be removed.(ýÔôýùÿÿÿÿ
+R	java:S125¦"<This block of commented-out lines of code should be removed.(¶©ºé
+P
+java:S1874É"9Remove this use of "PreferenceManager"; it is deprecated.(Â­©Ð
+Z
+java:S1874É"CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(Â­©Ð
+R	java:S125Í"<This block of commented-out lines of code should be removed.(ˆ£â©
+j
+java:S4042¢"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(ºèêŒüÿÿÿÿ
+[
+java:S1124Â"EReorder the modifiers to comply with the Java Language Specification.(ø¨”d
+a
+java:S1124È"EReorder the modifiers to comply with the Java Language Specification.(¡¶´ñüÿÿÿÿ
+a
+java:S1124‰"EReorder the modifiers to comply with the Java Language Specification.(ÃÙãÁùÿÿÿÿ
+a
+java:S1124’"EReorder the modifiers to comply with the Java Language Specification.(øâº“øÿÿÿÿ
+W	java:S125°"<This block of commented-out lines of code should be removed.(×êá‡üÿÿÿÿ
+R	java:S125Ä"<This block of commented-out lines of code should be removed.(ö‡ž§
+R	java:S125ê"<This block of commented-out lines of code should be removed.(šïÉÐ
+U
+java:S1874"9Remove this use of "PreferenceManager"; it is deprecated.(•®Ã–üÿÿÿÿ
+_
+java:S1874"CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(•®Ã–üÿÿÿÿ
