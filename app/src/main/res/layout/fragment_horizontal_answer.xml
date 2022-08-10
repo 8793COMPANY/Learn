@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.Step1">
+
+    <TextView
+        android:id="@+id/question_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다음 중 LED센서는 무엇일까요?"
+        android:textColor="#5a5a5a"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/answer_list"
+        app:layout_constraintVertical_bias="0.5"
+        ></TextView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/answer_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guide_bottom"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@id/guide_right"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="0dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="17dp"
+            android:layout_marginBottom="17dp">
+
+            <com.corporation8793.custom.AnswerItem
+                android:id="@+id/supplies1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="@+id/small_guide_left"
+                app:layout_constraintRight_toLeftOf="@+id/supplies2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="0"
+                android:background="@drawable/supplies_img1"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                android:elevation="20dp"></com.corporation8793.custom.AnswerItem>
+
+
+            <com.corporation8793.custom.AnswerItem
+                android:background="@drawable/supplies_img2"
+                android:id="@+id/supplies2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toLeftOf="@+id/supplies3"
+                app:layout_constraintLeft_toRightOf="@+id/supplies1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="1"
+                ></com.corporation8793.custom.AnswerItem>
+
+
+            <com.corporation8793.custom.AnswerItem
+                android:background="@drawable/supplies_img2"
+                android:id="@+id/supplies3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toLeftOf="@+id/supplies4"
+                app:layout_constraintLeft_toRightOf="@+id/supplies2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="1"
+                ></com.corporation8793.custom.AnswerItem>
+
+            <com.corporation8793.custom.AnswerItem
+                android:background="@drawable/supplies_img2"
+                android:id="@+id/supplies4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toRightOf="@+id/supplies3"
+                app:layout_constraintRight_toRightOf="@+id/small_guide_right"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent="0.2"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="1"
+                ></com.corporation8793.custom.AnswerItem>
+
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/small_guide_left"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.03"></androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/small_guide_right"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.97"></androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/small_guide_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.95"></androidx.constraintlayout.widget.Guideline>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03"></androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97"></androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95"></androidx.constraintlayout.widget.Guideline>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

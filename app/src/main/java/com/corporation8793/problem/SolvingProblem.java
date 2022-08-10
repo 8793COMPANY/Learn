@@ -1,8 +1,4 @@
-package com.corporation8793.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentTransaction;
+package com.corporation8793.problem;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,16 +11,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.activity.MainActivity;
 import com.corporation8793.fragment.Step1;
 import com.corporation8793.fragment.Step2;
 import com.corporation8793.fragment.Step3;
 import com.corporation8793.fragment.Step4;
-import com.corporation8793.problem.HorizontalAnswer;
-import com.corporation8793.problem.VerticalAnswer;
 
-public class ProblemActivity extends AppCompatActivity {
+public class SolvingProblem extends AppCompatActivity {
 
     private View decorView;
     private int	uiOption;
@@ -142,7 +141,7 @@ public class ProblemActivity extends AppCompatActivity {
             }
 
             if(MySharedPreferences.getInt(getApplicationContext(),contents_name) ==3){
-                Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
+                Intent intent = new Intent(SolvingProblem.this, MainActivity.class);
                 intent.putExtra("contents_name",contents_name);
                 intent.putExtra("id",id);
                 Log.e("contents_name",contents_name);
