@@ -25,7 +25,7 @@ import jxl.Workbook;
 
 
 public class LoginActivity extends AppCompatActivity {
-    EditText login_id_input_box;
+    EditText login_id_input_box, login_pw_input_box;
     ImageView auto_login;
     ImageButton login_btn;
 //
@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.login_btn);
 
         login_id_input_box = findViewById(R.id.login_id_input_box);
+        login_pw_input_box = findViewById(R.id.login_pw_input_box);
         auto_login = findViewById(R.id.auto_login);
         login_btn = findViewById(R.id.login_btn);
 
