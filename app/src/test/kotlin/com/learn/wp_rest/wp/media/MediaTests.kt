@@ -1,7 +1,6 @@
 package com.learn.wp_rest.wp.media
 
 import com.learn.wp_rest.repository.wp.media.MediaRepository
-import com.learn.wp_rest.repository.wp.users.UsersRepository
 import okhttp3.Credentials
 import org.junit.Assert
 import org.junit.jupiter.api.MethodOrderer

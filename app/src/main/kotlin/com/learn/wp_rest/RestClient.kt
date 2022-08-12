@@ -1,5 +1,6 @@
 package com.learn.wp_rest
 
+import com.learn.wp_rest.repository.acf.AcfService
 import com.learn.wp_rest.repository.auth.AuthService
 import com.learn.wp_rest.repository.wp.media.MediaService
 import com.learn.wp_rest.repository.wp.posts.PostsService
@@ -60,4 +61,9 @@ object RestClient {
      * [retrofit]의 [PostsService]
      */
     val postsService = retrofit.create(PostsService::class.java)
+
+    /**
+     * [retrofit]의 [AcfService]
+     */
+    val acfService = retrofit.create(AcfService::class.java)
 }
