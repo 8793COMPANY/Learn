@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +78,8 @@ public class Step1 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step1, container, false);
+
+        Log.e("contents",contents_name);
 
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);

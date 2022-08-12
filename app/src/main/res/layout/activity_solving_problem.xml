@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ProblemActivity"
-    android:background="#f7f7f7"
+    android:background="@color/white"
     android:id="@+id/problem_background">
 
     <Button
-        android:visibility="invisible"
         android:id="@+id/back_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -28,7 +27,8 @@
         android:id="@+id/next_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/problem_next_btn"
+        android:enabled="false"
+        android:background="@drawable/problem_next_btn_off"
         app:layout_constraintTop_toTopOf="@+id/guide_top"
         app:layout_constraintBottom_toBottomOf="@+id/guide_bottom"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
@@ -38,16 +38,37 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="1"></Button>
 
+    <TextView
+        android:id="@+id/problem_progress_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_regular"
+        android:includeFontPadding="false"
+        android:textSize="16dp"
+        android:text="1/5"
+        android:textColor="@color/gray_a0a0a0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/guide_top"
+        app:layout_constraintBottom_toTopOf="@+id/problem_progress"
+        app:layout_constraintLeft_toRightOf="@+id/back_btn"
+        app:layout_constraintRight_toLeftOf="@+id/next_btn"></TextView>
+
 
     <ProgressBar
-        android:id="@+id/problem_title_background"
+        android:id="@+id/problem_progress"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/problem_progress_progressbar"
+        android:progress="20"
+        android:max="100"
         app:layout_constraintTop_toTopOf="@+id/guide_top"
         app:layout_constraintLeft_toRightOf="@+id/back_btn"
         app:layout_constraintRight_toLeftOf="@+id/next_btn"
-        app:layout_constraintWidth_percent="0.24"
-        app:layout_constraintHeight_percent="0.1">
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn"
+        app:layout_constraintWidth_percent="0.47"
+        app:layout_constraintHeight_percent="0.02"
+        app:layout_constraintVertical_bias="0.7">
     </ProgressBar>
 
 

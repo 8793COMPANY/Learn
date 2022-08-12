@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,28 +31,32 @@ public class SolvingProblem extends AppCompatActivity {
 
     Button back_btn, next_btn;
 
-    TextView title, title2;
+    TextView title, title2, problem_progress_text;
+    ProgressBar problem_progress;
 
     String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
     String [] contents = {"LED 깜박이기","LED 1초간 껐다 켜기","LED 3개 깜박이기","LED 깜박이기",};
-    int pos = 0;
+    int pos = 1;
 
     ConstraintLayout background;
-    LinearLayout title_background;
+//    LinearLayout title_background;
     String chapter_step = "default";
     int diagram_img = R.drawable.all_diagram_img;
     String contents_name = "";
+    int [] answers = {0,0,0,0,0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_problem);
+        setContentView(R.layout.activity_solving_problem);
 
         background = findViewById(R.id.problem_background);
-        title_background = findViewById(R.id.problem_title_background);
+        problem_progress_text = findViewById(R.id.problem_progress_text);
+        problem_progress = findViewById(R.id.problem_progress);
+//        title_background = findViewById(R.id.problem_title_background);
 
-        title = findViewById(R.id.title);
-        title2 = findViewById(R.id.title2);
+//        title = findViewById(R.id.title);
+//        title2 = findViewById(R.id.title2);
 
         back_btn = findViewById(R.id.back_btn);
         next_btn = findViewById(R.id.next_btn);
@@ -78,7 +83,7 @@ public class SolvingProblem extends AppCompatActivity {
             chapter_step = "deep";
             background.setBackgroundColor(Color.WHITE);
             title2.setVisibility(View.VISIBLE);
-            title_background.setVisibility(View.INVISIBLE);
+//            title_background.setVisibility(View.INVISIBLE);
         }
 
         if (step == 3){
@@ -86,102 +91,90 @@ public class SolvingProblem extends AppCompatActivity {
         }
 
 //        replaceFragment(0);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment, new VerticalAnswer(contents_name));
-        transaction.commit();
-
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.fragment, new VerticalAnswer(contents_name));
+//        transaction.commit();
+        replaceFragment(1);
         back_btn.setOnClickListener(v->{
             next_btn.setVisibility(View.VISIBLE);
+            next_btn.setEnabled(true);
             pos--;
             replaceFragment(pos);
+//            replaceFragment(pos);
             Log.e("pos",pos+"");
 
-            if (pos ==0){
-                if (chapter_step.equals("deep")){
-                    background.setBackgroundColor(Color.WHITE);
-                    title2.setVisibility(View.VISIBLE);
-                    title_background.setVisibility(View.INVISIBLE);
-                }else{
-                    title.setText(titles[pos]);
-                }
-                back_btn.setVisibility(View.INVISIBLE);
+            if (pos ==1){
+                problem_progress_text.setText(pos+"/5");
+                problem_progress.setProgress(pos*20);
+                back_btn.setEnabled(false);
             }else{
-                title_background.setVisibility(View.VISIBLE);
-                title.setText(titles[pos]);
-                title2.setVisibility(View.INVISIBLE);
+//                title_background.setVisibility(View.VISIBLE);
+//                title.setText(titles[pos]);
+                problem_progress_text.setText(pos+"/5");
+                problem_progress.setProgress(pos*20);
+//                title2.setVisibility(View.INVISIBLE);
             }
 
         });
 
         next_btn.setOnClickListener(v->{
+            back_btn.setVisibility(View.VISIBLE);
+            back_btn.setEnabled(true);
+            pos++;
+            replaceFragment(pos);
+            if (pos ==5){
+                problem_progress_text.setText(pos+"/5");
+                problem_progress.setProgress(pos*20);
 
-            if (MySharedPreferences.getInt(getApplicationContext(),contents_name) < 3) {
-                if (pos < 3) {
-                    Log.e("hello",MySharedPreferences.getInt(getApplicationContext(),contents_name)+"");
-                        pos++;
-                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
-                        pos = 0;
-                    }
-
-                    if (pos <3)
-                            title.setText(titles[pos]);
-
-
-                }
-                if (MySharedPreferences.getInt(getApplicationContext(),contents_name) == pos) {
-                    Log.e("chapter_step",chapter_step);
-                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
-                    } else {
-                        back_btn.setVisibility(View.VISIBLE);
-                        replaceFragment(pos);
-
-                    }
-                }
-
+                next_btn.setEnabled(false);
+            }else{
+//                title_background.setVisibility(View.VISIBLE);
+//                title.setText(titles[pos]);
+                problem_progress_text.setText(pos+"/5");
+                problem_progress.setProgress(pos*20);
+//                title2.setVisibility(View.INVISIBLE);
             }
-
-            if(MySharedPreferences.getInt(getApplicationContext(),contents_name) ==3){
-                Intent intent = new Intent(SolvingProblem.this, MainActivity.class);
-                intent.putExtra("contents_name",contents_name);
-                intent.putExtra("id",id);
-                Log.e("contents_name",contents_name);
-                Log.e("id",id);
-                startActivity(intent);
-                finish();
-            } else{
-                if (chapter_step.equals("deep") && pos ==1){
-                    title2.setVisibility(View.INVISIBLE);
-                    title_background.setVisibility(View.VISIBLE);
-                    background.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                }else if (MySharedPreferences.getInt(getApplicationContext(),contents_name) ==2 && pos ==3){
-
-                        Toast.makeText(getApplicationContext(),"사진을 업로드해주세요",Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
-            Log.e("pos",pos+"");
 
         });
 
+    }
+
+    public void addValue(int pos,int answer){
+        answers[pos] = answer;
+        if (!next_btn.isEnabled())
+            next_btn.setEnabled(true);
+
+        if (answers[pos] != 0 && next_btn.isEnabled())
+            next_btn.setBackgroundResource(R.drawable.problem_next_btn);
+    }
+
+    public void printAnswer(){
+        for (int i =0; i<answers.length; i++){
+            Log.e(i+"",answers[i]+"");
+        }
+    }
+
+    public void initBtn(){
+        next_btn.setBackgroundResource(R.drawable.problem_next_btn_off);
+        next_btn.setEnabled(false);
     }
 
 
     public void replaceFragment(int pos){
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (pos == 0){
-            if (chapter_step.equals("default")){
-                transaction.replace(R.id.fragment, new Step1(contents_name));
-            }else{
-                transaction.replace(R.id.fragment, new Step4(contents_name));
-            }
-
-        }else if (pos ==1){
-            transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));
+        if (pos == 1){
+            transaction.replace(R.id.fragment, new HorizontalAnswer(1,"다음 중 LED센서는 무엇일까요?"));
         }else if (pos ==2){
-            transaction.replace(R.id.fragment, new Step3(contents_name));
+            transaction.replace(R.id.fragment, new VerticalAnswer(2,"pinMode의 설명과 일치하는 것은 무엇일까요?"));
+        }else if (pos ==3){
+            transaction.replace(R.id.fragment, new HorizontalAnswer(3,"다음 중 스위치는 무엇일까요?"));
+        }else if (pos ==4){
+            transaction.replace(R.id.fragment, new VerticalAnswer(4,"Digitalread의 설명과 일치하는 것은 무엇일까요?"));
+        }else{
+            transaction.replace(R.id.fragment, new VerticalAnswer(5,"analogWrite의 설명과 일치하는 것은 무엇일까요?"));
         }
+
 
         transaction.commit();
 

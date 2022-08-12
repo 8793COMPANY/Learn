@@ -1721,41 +1721,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void code_btn(int pos) {
-        // TODO : 화면 전체 캡쳐 트리거
-//        Log.e("MainActivity", "captureWorkspace: start");
-//        bitmapWorkspace = controller.captureWorkspace();
-//
-//        try {
-//            saveImage(bitmapWorkspace, "test");
-//            Log.e("MainActivity", "captureWorkspace: save ok");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-//        String filename = "test.png";
-//        File sd = Environment.getExternalStorageDirectory();
-//
-//        File file = new File(sd, filename);
-//
-//        runOnUiThread(() -> {
-//            Log.e("MainActivity", "captureWorkspace: runOnUiThread");
-//            try {
-//                file.createNewFile();
-//                FileOutputStream ostream = new FileOutputStream(file);
-//                bitmapWorkspace.compress(Bitmap.CompressFormat.PNG, 100, ostream);
-//                ostream.flush();
-//                ostream.close();
-//                Log.e("MainActivity", "captureWorkspace: save ok");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            Log.e("MainActivity", "captureWorkspace: end");
-//        });
-
-
-
-
-
         setInitLine();
         code_btn.setSelected(true);
         mMonitorHandler.sendEmptyMessage(1);
@@ -1856,6 +1821,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             getBlockDefinitionsJsonPaths(),
                             getGeneratorsJsPaths(),
                             getCodeGenerationCallback());
+                }
+
+                // TODO : 화면 캡쳐 트리거
+                Log.e("MainActivity", "captureWorkspace: start");
+                bitmapWorkspace = controller.captureWorkspace();
+
+                try {
+                    saveImage(bitmapWorkspace, "captureWorkspace");
+                    Log.e("MainActivity", "captureWorkspace: save ok");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             } else {

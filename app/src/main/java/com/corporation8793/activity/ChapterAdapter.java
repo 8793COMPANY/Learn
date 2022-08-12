@@ -2,6 +2,8 @@ package com.corporation8793.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.corporation8793.R;
 import com.corporation8793.dto.Contents;
+import com.corporation8793.problem.SolvingProblem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemViewHolder> {
 
@@ -48,6 +52,26 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
     }
 
     @Override
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull List<Object> payloads) {
+        // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
+        if (payloads.isEmpty()){
+            super.onBindViewHolder(holder,position,payloads);
+        }else{
+            for(Object payload : payloads){
+                String type = (String) payload;
+                if (TextUtils.equals(type, "lock_check")){
+                    Log.e("hi","payloads in~");
+                    listData.get(position).open = true;
+                    holder.lock_check.setBackgroundResource(0);
+
+                }
+            }
+        }
+
+//        holder.onBind(listData.get(position));
+    }
+
+    @Override
     public int getItemCount() {
         // RecyclerView의 총 개수 입니다.
         return listData.size();
@@ -60,6 +84,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView problem_group;
+        private ImageView lock_check;
         private TextView chapter_content_title;
         private LinearLayout chapter_content_img;
         ProgressBar progressBar;
@@ -72,6 +97,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
             chapter_content_img = itemView.findViewById(R.id.chapter_content_img);
             problem_group = itemView.findViewById(R.id.problem_group);
             progressBar = itemView.findViewById(R.id.progress);
+            lock_check = itemView.findViewById(R.id.lock_check);
         }
 
         void onBind(Contents contents) {
@@ -81,12 +107,23 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
             chapter_content_img.setBackgroundResource(contents.getImage());
             problem_group.setBackgroundResource(contents.getGroup());
             progressBar.setProgress(contents.getPercentage()*20);
+            if (contents.open)
+                lock_check.setBackgroundResource(0);
 
             itemView.setOnClickListener(v->{
-                Intent intent = new Intent(context, ProblemActivity.class);
-                intent.putExtra("step", 1);
-                intent.putExtra("id", contents.getId());
-                context.startActivity(intent);
+                if (contents.open) {
+                    if (getAdapterPosition() == 3) {
+                        Intent intent = new Intent(context, SolvingProblem.class);
+                        intent.putExtra("step", 1);
+                        intent.putExtra("id", contents.getId());
+                        context.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(context, ProblemActivity.class);
+                        intent.putExtra("step", getAdapterPosition());
+                        intent.putExtra("id", contents.getId());
+                        context.startActivity(intent);
+                    }
+                }
             });
 
         }

@@ -1,6 +1,7 @@
 package com.corporation8793.problem;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.custom.AnswerItem;
+import com.corporation8793.custom.ImgAnswerItem;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,13 +34,15 @@ public class HorizontalAnswer extends Fragment {
     TextView name,comment;
 
     String contents_name;
+    int number;
 
     public HorizontalAnswer() {
         // Required empty public constructor
     }
 
-    public HorizontalAnswer(String contents_name) {
+    public HorizontalAnswer(int number, String contents_name) {
         this.contents_name = contents_name;
+        this.number = number;
         // Required empty public constructor
     }
 
@@ -77,6 +81,72 @@ public class HorizontalAnswer extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_horizontal_answer, container, false);
 
+        TextView question_number_text = view.findViewById(R.id.question_number_text);
+        TextView question_text = view.findViewById(R.id.question_text);
+        ImgAnswerItem supplies1 = view.findViewById(R.id.supplies1);
+        ImgAnswerItem supplies2 = view.findViewById(R.id.supplies2);
+        ImgAnswerItem supplies3 = view.findViewById(R.id.supplies3);
+        ImgAnswerItem supplies4 = view.findViewById(R.id.supplies4);
+
+        question_number_text.setText("Q"+number);
+        question_text.setText(contents_name);
+        Log.e("number",((SolvingProblem)getActivity()).answers[number-1]+"");
+
+        if ( ((SolvingProblem)getActivity()).answers[number-1] == 0) {
+            Log.e("in??","hi");
+            ((SolvingProblem) getActivity()).initBtn();
+        }else{
+            switch ( ((SolvingProblem)getActivity()).answers[number-1]){
+                case 1:
+                    supplies1.setSelected(true);
+                    break;
+                case 2:
+                    supplies2.setSelected(true);
+                    break;
+                case 3:
+                    supplies3.setSelected(true);
+                    break;
+                case 4:
+                    supplies4.setSelected(true);
+                    break;
+            }
+        }
+
+
+
+
+        supplies1.setOnClickListener(v->{
+            ((SolvingProblem)getActivity()).addValue(number-1,1);
+            ((SolvingProblem)getActivity()).printAnswer();
+            supplies1.setSelected(true);
+            supplies2.setSelected(false);
+            supplies3.setSelected(false);
+            supplies4.setSelected(false);
+        });
+        supplies2.setOnClickListener(v->{
+            ((SolvingProblem)getActivity()).addValue(number-1,2);
+            ((SolvingProblem)getActivity()).printAnswer();
+            supplies1.setSelected(false);
+            supplies2.setSelected(true);
+            supplies3.setSelected(false);
+            supplies4.setSelected(false);
+        });
+        supplies3.setOnClickListener(v->{
+            ((SolvingProblem)getActivity()).addValue(number-1,3);
+            ((SolvingProblem)getActivity()).printAnswer();
+            supplies1.setSelected(false);
+            supplies2.setSelected(false);
+            supplies3.setSelected(true);
+            supplies4.setSelected(false);
+        });
+        supplies4.setOnClickListener(v->{
+            ((SolvingProblem)getActivity()).addValue(number-1,4);
+            ((SolvingProblem)getActivity()).printAnswer();
+            supplies1.setSelected(false);
+            supplies2.setSelected(false);
+            supplies3.setSelected(false);
+            supplies4.setSelected(true);
+        });
 
 
         return view;

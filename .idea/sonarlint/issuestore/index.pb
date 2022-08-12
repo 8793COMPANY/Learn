@@ -1,9 +1,27 @@
 
 X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+|
+Lblocklylib-core/src/main/java/com/google/blockly/android/FlyoutFragment.java,0\a\0ade54fe3b04b98814604c90db544b8ea108b62f
+u
+Eblocklylib-core/src/main/java/com/google/blockly/model/Workspace.java,9\3\93551a57411eb8ee7383cddd40fb1b0258402c51
+{
+Kblocklylib-core/src/main/java/com/google/blockly/android/ui/BlockGroup.java,3\d\3d06bcb4ecd834faeede8b29719507ee7ab5e46a
+z
+Jblocklylib-core/src/main/java/com/google/blockly/android/ui/BlockView.java,c\5\c51373e384d21b6b3df7dec674af89816b31488a
+…
+Ublocklylib-core/src/main/java/com/google/blockly/android/BlocklySectionsActivity.java,a\9\a907a16fbd38aa6a47ef44584cc5403650a4af60
+…
+Ublocklylib-core/src/main/java/com/google/blockly/android/AbstractBlocklyActivity.java,f\7\f7f9252e07a6590785de53e23d20b591da3b8516
+€
+Pblocklylib-core/src/main/java/com/google/blockly/android/ui/WorkspaceHelper.java,7\4\741b9e91202d9e92fc6d32779832ebd656b4dae4
+…
+Ublocklylib-core/src/main/java/com/google/blockly/android/ui/VirtualWorkspaceView.java,e\0\e07af1566f526d3b370d8282698d807727c4caa6
+‡
+Wblocklylib-core/src/main/java/com/google/blockly/android/control/BlocklyController.java,a\f\aff3a5664eab3f3c215a707dee4e7cf3d494834f
+~
+Nblocklylib-core/src/main/java/com/google/blockly/android/ui/WorkspaceView.java,e\9\e97caf36ccc6a9c21b8796b7113113f1c9754c1c
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 y
 Iapp/src/androidTest/java/com/corporation8793/ExampleInstrumentedTest.java,f\4\f425ecea647247c086c3a78ff9290f0e93eb218c

@@ -1,9 +1,11 @@
 package com.corporation8793.problem;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -32,13 +34,15 @@ public class VerticalAnswer extends Fragment {
     TextView name,comment;
 
     String contents_name;
+    int number;
 
     public VerticalAnswer() {
         // Required empty public constructor
     }
 
-    public VerticalAnswer(String contents_name) {
+    public VerticalAnswer(int number, String contents_name) {
         this.contents_name = contents_name;
+        this.number = number;
         // Required empty public constructor
     }
 
@@ -77,15 +81,69 @@ public class VerticalAnswer extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vertical_answer, container, false);
 
+        TextView question_number_text = view.findViewById(R.id.question_number_text);
+        TextView question_text = view.findViewById(R.id.question_text);
+
+        ImageView block_img = view.findViewById(R.id.block_img);
+
         TextAnswerItem answerItem = view.findViewById(R.id.answer);
+        TextAnswerItem answerItem2 = view.findViewById(R.id.answer2);
+        TextAnswerItem answerItem3 = view.findViewById(R.id.answer3);
+
+        question_number_text.setText("Q"+number);
+        question_text.setText(contents_name);
+
+        if ( ((SolvingProblem)getActivity()).answers[number-1] == 0) {
+            Log.e("in??","hi");
+            ((SolvingProblem) getActivity()).initBtn();
+        }else{
+            switch ( ((SolvingProblem)getActivity()).answers[number-1]){
+                case 1:
+                    answerItem.setSelected(true);
+                    break;
+                case 2:
+                    answerItem2.setSelected(true);
+                    break;
+                case 3:
+                    answerItem3.setSelected(true);
+                    break;
+            }
+        }
 
         answerItem.setTitle("신호가 참인지 거짓인지 구분하는 블록");
 
+        if (number ==2){
+            block_img.setBackgroundResource(R.drawable.problem_block2);
+        }else if (number==4){
+            block_img.setBackgroundResource(R.drawable.problem_block4);
+        }else{
+            block_img.setBackgroundResource(R.drawable.problem_block5);
+        }
+
+//        ((SolvingProblem) getActivity()).test();
+
         answerItem.setOnClickListener(v->{
-            if (answerItem.getSelected())
-                answerItem.setSelected(false);
-            else
-                answerItem.setSelected(true);
+            ((SolvingProblem)getActivity()).addValue(number-1,1);
+            ((SolvingProblem)getActivity()).printAnswer();
+            answerItem.setSelected(true);
+            answerItem2.setSelected(false);
+            answerItem3.setSelected(false);
+        });
+
+        answerItem2.setOnClickListener(v->{
+            ((SolvingProblem)getActivity()).addValue(number-1,2);
+            ((SolvingProblem)getActivity()).printAnswer();
+            answerItem.setSelected(false);
+            answerItem2.setSelected(true);
+            answerItem3.setSelected(false);
+        });
+
+        answerItem3.setOnClickListener(v->{
+            ((SolvingProblem)getActivity()).addValue(number-1,3);
+            ((SolvingProblem)getActivity()).printAnswer();
+            answerItem.setSelected(false);
+            answerItem2.setSelected(false);
+            answerItem3.setSelected(true);
         });
 
         return view;

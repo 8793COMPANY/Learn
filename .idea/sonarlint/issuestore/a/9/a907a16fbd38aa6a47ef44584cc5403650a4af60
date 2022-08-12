@@ -1,0 +1,43 @@
+
+D
+java:S1066m"/Merge this if statement with the enclosing one.(Ò†”4
+g
+java:S1301À"KReplace this "switch" statement by "if" statements to increase readability.(×ö³–úÿÿÿÿ
+_
+java:S2095¥"IUse try-with-resources or close this "InputStream" in a "finally" clause.(€€Œ
+j
+java:S2095ª"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(¤ÀÞœúÿÿÿÿ
+u	java:S1165"[Rename this field "TARGET_BASE_PATH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Øáé´ýÿÿÿÿ
+T
+java:S1874<"9Remove this use of "PreferenceManager"; it is deprecated.(Ñ…¦Ãøÿÿÿÿ
+^
+java:S1874<"CRemove this use of "getDefaultSharedPreferences"; it is deprecated.(Ñ…¦Ãøÿÿÿÿ
+V	java:S125A"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ
+m
+java:S3776["RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(ËÞèÿùÿÿÿÿ
+<
+java:S1075\"&Remove this hard-coded path-delimiter.(¯ùŠÓ
+Q	java:S125]"<This block of commented-out lines of code should be removed.(´±È
+@
+java:S1197_"*Move the array designators [] to the type.(ÿ‘’
+W	java:S125ƒ"<This block of commented-out lines of code should be removed.(ÛŠà„þÿÿÿÿ
+O	java:S106"9Replace this use of System.out or System.err by a logger.(æŽ×
+W	java:S125"<This block of commented-out lines of code should be removed.(¿‹±òýÿÿÿÿ
+O	java:S106”"9Replace this use of System.out or System.err by a logger.(Ú×Ò§
+W	java:S125—"<This block of commented-out lines of code should be removed.(¿‹±òýÿÿÿÿ
+W	java:S125™"<This block of commented-out lines of code should be removed.(—¢äüÿÿÿÿ
+R
+java:S1854²"6Remove this useless assignment to local variable "in".(Ž÷Ìîùÿÿÿÿ
+S
+java:S1854µ"7Remove this useless assignment to local variable "out".(Ìàå…ÿÿÿÿÿ
+2
+java:S3626Ë"Remove this redundant jump.(ûÁÝ…
+=	java:S131À""Add a default case to this switch.(×ö³–úÿÿÿÿ
+w
+java:S3923Ã"[Remove this conditional structure or edit its code blocks so that they're not all the same.(Ø’µ•þÿÿÿÿ
+\
+java:S1124”"EReorder the modifiers to comply with the Java Language Specification.(—ˆÂ†
+\
+java:S1124¥"EReorder the modifiers to comply with the Java Language Specification.(’êñ‡
+B
+java:S1068/"'Remove this unused "TAG" private field.(¸ ¼ûùÿÿÿÿ

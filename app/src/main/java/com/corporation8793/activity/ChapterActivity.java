@@ -26,6 +26,7 @@ public class ChapterActivity extends AppCompatActivity {
     RecyclerView chapter_list;
     ChapterAdapter chapterAdapter;
     ArrayList<Contents> contents_list = new ArrayList<>();
+    Boolean lock_check = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,29 +43,32 @@ public class ChapterActivity extends AppCompatActivity {
                 R.drawable.default_problem_image,
                 "LED 깜빡이기",
                 R.drawable.chapter_content1,
-                MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX")));
+                MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"),true));
+
+        if(MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5)
+            lock_check = true;
 
         contents_list.add(new Contents(
                 chapter_id+"_2",
                 R.drawable.advanced_problem_image,
-                "LED 1초간 껐다 켜기",
+                "LED 깜빡이는 시간 바꾸기",
                 R.drawable.chapter_content2,
-                MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기 MAX")));
+                MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이는 시간 바꾸기 MAX"),lock_check));
 
 
         contents_list.add(new Contents(
                 chapter_id+"_3",
                 R.drawable.advanced_problem_image2,
-                "LED 3개 깜박이기",
+                "LED 핀 번호 바꾸기",
                 R.drawable.chapter_content3,
-                MySharedPreferences.getInt(getApplicationContext(),"LED 3개 깜박이기 MAX")));
+                MySharedPreferences.getInt(getApplicationContext(),"LED 핀 번호 바꾸기 MAX"),lock_check));
 
         contents_list.add(new Contents(
                 chapter_id+"_4",
                 R.drawable.advanced_problem_image,
-                "LED 깜빡이기",
+                "문제풀이",
                 R.drawable.chapter_content1,
-                MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX")));
+                MySharedPreferences.getInt(getApplicationContext(),"문제풀이"+chapter_id),lock_check));
 
 //        chapter1 = findViewById(R.id.chapter1);
 //        chapter2 = findViewById(R.id.chapter2);
@@ -152,9 +156,10 @@ public class ChapterActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-//        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
-//            chapter2.setOpen(true,false);
-//        }
+        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
+            //여기 코드 작성해주세요 ~
+            chapterAdapter.notifyItemRangeChanged(1,contents_list.size()-1,"lock_check");
+        }
 //        if(MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기 MAX")==5){
 //            chapter3.setOpen(true,false);
 //        }

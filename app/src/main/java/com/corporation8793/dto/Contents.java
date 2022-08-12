@@ -6,6 +6,7 @@ public class Contents {
     public String title;
     public int image;
     public int percentage;
+    public boolean open;
 
     public String getId() {
         return id;
@@ -25,16 +26,23 @@ public class Contents {
 
 
 
-    public Contents(String id, int group, String title, int image, int percentage) {
+    public Contents(String id, int group, String title, int image, int percentage,boolean open) {
         this.id = id;
         this.group = group;
         this.title = title;
         this.image = image;
         this.percentage = percentage;
+        this.open = open;
     }
 
 
+    public Boolean getOpen() {
+        return open;
+    }
 
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
 
 
     public String getTitle() {
