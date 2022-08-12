@@ -1,6 +1,9 @@
 package com.learn.wp_rest
 
 import com.learn.wp_rest.repository.auth.AuthService
+import com.learn.wp_rest.repository.wp.media.MediaService
+import com.learn.wp_rest.repository.wp.posts.PostsService
+import com.learn.wp_rest.repository.wp.users.UsersService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,4 +32,19 @@ object RestClient {
      * [retrofit]의 [AuthService]
      */
     val authService = retrofit.create(AuthService::class.java)
+
+    /**
+     * [retrofit]의 [UsersService]
+     */
+    val usersService = retrofit.create(UsersService::class.java)
+
+    /**
+     * [retrofit]의 [MediaService]
+     */
+    val mediaService = retrofit.create(MediaService::class.java)
+
+    /**
+     * [retrofit]의 [PostsService]
+     */
+    val postsService = retrofit.create(PostsService::class.java)
 }
