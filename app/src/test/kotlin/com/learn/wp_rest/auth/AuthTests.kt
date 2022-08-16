@@ -7,6 +7,7 @@ import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import java.util.*
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class AuthTests {
@@ -31,12 +32,17 @@ class AuthTests {
     @Test
     @Order(2)
     fun getAuthCookie() {
-        val authCookie = authRepository.getAuthCookie(nonce, username, password)
+        val currentTime = System.currentTimeMillis()
+        val currentDate = Date(currentTime)
+        println("currentTime : $currentTime")
+        println("currentDate : $currentDate")
+
+        val authCookie = authRepository.getAuthCookie(nonce, username, password, "$currentTime")
         println("getAuthCookie : ${authCookie.first}, ${authCookie.second}")
         cookie = authCookie.second?.cookie
         Assert.assertEquals("200", authCookie.first)
 
-        val validation = authRepository.isValidCookie(cookie)
+        val validation = authRepository.isValidCookie(cookie, "$currentTime")
         println("isValidCookie : ${validation.first}, ${validation.second}")
         Assert.assertEquals("200", validation.first)
     }

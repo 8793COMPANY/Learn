@@ -38,8 +38,9 @@ class AuthRepository {
      */
     fun getAuthCookie(nonce: String?,
                       username: String,
-                      password: String) : Pair<String, AuthCookie?> {
-        val response = RestClient.authService.getAuthCookie(nonce, username, password).execute()
+                      password: String,
+                      time: String) : Pair<String, AuthCookie?> {
+        val response = RestClient.authService.getAuthCookie(nonce, username, password, time).execute()
 
         return Pair(response.code().toString(), response.body())
     }
@@ -52,8 +53,9 @@ class AuthRepository {
      * @see     getAuthCookie
      * @see     Pair
      */
-    fun isValidCookie(cookie: String?) : Pair<String, Boolean> {
-        val response = RestClient.authService.isValidCookie(cookie).execute()
+    fun isValidCookie(cookie: String?,
+                      time: String) : Pair<String, Boolean> {
+        val response = RestClient.authService.isValidCookie(cookie, time).execute()
 
         return Pair(response.code().toString(), response.body()!!.valid)
     }
