@@ -6,6 +6,7 @@ import com.learn.wp_rest.data.auth.Nonce
 import com.learn.wp_rest.data.auth.Validation
 import retrofit2.Call
 import retrofit2.http.Query
+import java.util.*
 
 /**
  * [AuthService]의 구현 클래스
@@ -38,8 +39,14 @@ class AuthRepository {
      */
     fun getAuthCookie(nonce: String?,
                       username: String,
-                      password: String) : Pair<String, AuthCookie?> {
-        val response = RestClient.authService.getAuthCookie(nonce, username, password).execute()
+                      password: String
+    ) : Pair<String, AuthCookie?> {
+        val currentTime = System.currentTimeMillis()
+        val currentDate = Date(currentTime)
+        println("authCookieGenerateTime : $currentTime")
+        println("authCookieGenerateDate : $currentDate")
+
+        val response = RestClient.authService.getAuthCookie(nonce, username, password, "$currentTime").execute()
 
         return Pair(response.code().toString(), response.body())
     }
@@ -53,7 +60,12 @@ class AuthRepository {
      * @see     Pair
      */
     fun isValidCookie(cookie: String?) : Pair<String, Boolean> {
-        val response = RestClient.authService.isValidCookie(cookie).execute()
+        val currentTime = System.currentTimeMillis()
+        val currentDate = Date(currentTime)
+        println("authCookieValidateTime : $currentTime")
+        println("authCookieValidateDate : $currentDate")
+
+        val response = RestClient.authService.isValidCookie(cookie, "$currentTime").execute()
 
         return Pair(response.code().toString(), response.body()!!.valid)
     }

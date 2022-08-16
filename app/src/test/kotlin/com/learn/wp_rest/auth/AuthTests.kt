@@ -7,6 +7,7 @@ import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestMethodOrder
+import java.util.*
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class AuthTests {
@@ -37,6 +38,21 @@ class AuthTests {
         Assert.assertEquals("200", authCookie.first)
 
         val validation = authRepository.isValidCookie(cookie)
+        println("isValidCookie : ${validation.first}, ${validation.second}")
+        Assert.assertEquals("200", validation.first)
+    }
+
+    @Test
+    @Order(3)
+    fun getValidation() {
+        val currentTime = System.currentTimeMillis()
+        val currentDate = Date(currentTime)
+        println("currentTime : $currentTime")
+        println("currentDate : $currentDate")
+
+        val tempCookie = "student8793|1660627700|i1O9lp1537k220PkImeVmMggzBPdvMqVNEMNmz9AdWE|0dc18ab1bf201e4d8fdbd745c8ec0dc927a3c4059d34b6b0451ca9d1273a973d"
+
+        val validation = authRepository.isValidCookie(tempCookie)
         println("isValidCookie : ${validation.first}, ${validation.second}")
         Assert.assertEquals("200", validation.first)
     }

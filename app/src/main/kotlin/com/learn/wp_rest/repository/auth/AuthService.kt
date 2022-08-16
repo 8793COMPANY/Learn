@@ -29,6 +29,7 @@ interface AuthService {
     fun getAuthCookie(@Query("nonce") nonce: String?,
                       @Query("username") username: String,
                       @Query("password") password: String,
+                      @Query("time") time: String,
                       @Query("seconds") seconds: String = "7200") : Call<AuthCookie>
 
     /**
@@ -36,5 +37,6 @@ interface AuthService {
      * @author  두동근
      */
     @GET("api/auth/validate_auth_cookie")
-    fun isValidCookie(@Query("cookie") cookie: String?) : Call<Validation>
+    fun isValidCookie(@Query("cookie") cookie: String?,
+                      @Query("time") time: String) : Call<Validation>
 }
