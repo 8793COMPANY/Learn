@@ -19,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"></TextView>
 
     <TextView
-        android:id="@+id/block_introduction"
+        android:id="@+id/block_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳"
@@ -35,11 +35,12 @@
 
 
     <ImageView
+        android:id="@+id/block_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:background="@drawable/problem_block2"
-        app:layout_constraintTop_toBottomOf="@+id/block_introduction"
+        app:layout_constraintTop_toBottomOf="@+id/block_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

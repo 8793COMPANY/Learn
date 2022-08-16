@@ -476,6 +476,10 @@
 
     </category>
 
+    <category name="dictionary" colour="330">
+
+    </category>
+
 <!--    <category name="IO" colour="230">-->
 <!--        <block type="base_logic_list"></block>-->
 <!--        <block type="base_pins_list"></block>-->
