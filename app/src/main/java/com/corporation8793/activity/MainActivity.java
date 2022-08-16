@@ -1180,7 +1180,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_setup_btn.setSelected(true);
 
         block_list.setLayoutManager(new LinearLayoutManager(this));
-        
+
         dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2));
         dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
         dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
