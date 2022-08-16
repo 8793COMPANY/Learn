@@ -31,6 +31,10 @@
         <activity
             android:name=".activity.ProblemActivity"
             android:screenOrientation="sensorLandscape" />
+
+        <activity
+            android:name=".problem.SolvingProblem"
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".activity.ContentsActivity"
             android:screenOrientation="sensorLandscape" />

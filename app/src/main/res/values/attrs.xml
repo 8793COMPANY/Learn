@@ -26,5 +26,12 @@
 
     </declare-styleable>
 
+    <declare-styleable name="TextAnswerCustom">
+        <attr name="selected"></attr>
+        <attr name="type"></attr>
+        <attr name="title"></attr>
+
+    </declare-styleable>
+
 
 </resources>

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.corporation8793.R;
 import com.corporation8793.Setting;
+import com.learn.wp_rest.repository.auth.AuthRepository;
 
 import java.io.InputStream;
 
@@ -71,6 +72,9 @@ public class LoginActivity extends AppCompatActivity {
             finish();
 
         });
+
+//        AuthRepository auth = new AuthRepository();
+//        auth.getAuthCookie()
 
     }
 

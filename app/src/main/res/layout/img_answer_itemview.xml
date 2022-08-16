@@ -19,28 +19,27 @@
         android:id="@+id/select_stroke"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/problem_item_box_select"
+        android:background="@drawable/answer_item_box_not_select"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         ></ImageView>
 
-<!--    <ImageView-->
-<!--        android:visibility="gone"-->
-<!--        android:id="@+id/select_check_btn"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@drawable/answer_check_off_btn"-->
-<!--        app:layout_constraintDimensionRatio="1:1"-->
-<!--        app:layout_constraintWidth_percent="0.16"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.06"-->
-<!--        app:layout_constraintHorizontal_bias="0.9"-->
-<!--        ></ImageView>-->
+    <ImageView
+        android:id="@+id/select_check_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/answer_check_off_btn"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintHorizontal_bias="0.9"
+        ></ImageView>
 
 
 

@@ -21,6 +21,8 @@ import com.corporation8793.fragment.Step1;
 import com.corporation8793.fragment.Step2;
 import com.corporation8793.fragment.Step3;
 import com.corporation8793.fragment.Step4;
+import com.corporation8793.problem.HorizontalAnswer;
+import com.corporation8793.problem.VerticalAnswer;
 
 public class ProblemActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class ProblemActivity extends AppCompatActivity {
     TextView title, title2;
 
     String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
-    String [] contents = {"LED 깜박이기","LED 1초간 껐다 켜기","LED 3개 깜박이기"};
+    String [] contents = {"LED 깜박이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
     int pos = 0;
 
     ConstraintLayout background;
@@ -70,10 +72,11 @@ public class ProblemActivity extends AppCompatActivity {
         String id = getIntent().getStringExtra("id");
 
         Log.e("id",id);
-        contents_name = contents[step-1];
+        Log.e("step",step+"");
+        contents_name = contents[step];
 
         Log.e("check",step +"");
-        if (step != 1){
+        if (step == 2){
             chapter_step = "deep";
             background.setBackgroundColor(Color.WHITE);
             title2.setVisibility(View.VISIBLE);
@@ -85,7 +88,6 @@ public class ProblemActivity extends AppCompatActivity {
         }
 
         replaceFragment(0);
-
 
         back_btn.setOnClickListener(v->{
             next_btn.setVisibility(View.VISIBLE);
