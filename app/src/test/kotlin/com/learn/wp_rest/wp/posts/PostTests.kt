@@ -33,4 +33,19 @@ class PostTests {
         println("createUploadReport : ${response.first}, ${response.second}")
         Assert.assertEquals("201", response.first)
     }
+
+    @Test
+    @Order(2)
+    fun createQuizReport() {
+        val response = postsRepository.createQuizReport(
+            title = "PostTests - createQuizReport",
+            answer_1 = 1,
+            answer_2 = 4,
+            answer_3 = 2,
+            answer_4 = 3,
+            answer_5 = 5,
+        )
+        println("createQuizReport : ${response.first}, ${response.second}")
+        Assert.assertEquals("201", response.first)
+    }
 }

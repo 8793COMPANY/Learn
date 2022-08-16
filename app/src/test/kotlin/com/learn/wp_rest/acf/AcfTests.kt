@@ -22,12 +22,12 @@ class AcfTests {
 
     @Test
     @Order(1)
-    fun updatePostAcf() {
-        val testPostId = "436"
+    fun updateUploadReportAcf() {
+        val testPostId = "451"
         val mediaResponse_ci_guid = "http://baeulrae.kr/wp-content/uploads/2022/08/circuit_img_test.jpg"
         val mediaResponse_bi_guid = "http://baeulrae.kr/wp-content/uploads/2022/08/block_img_test.jpg"
 
-        val response = acfRepository.updatePostAcf(
+        val response = acfRepository.updateUploadReportAcf(
             id = testPostId,
             chapter = 3,
             content = 1,
@@ -35,7 +35,27 @@ class AcfTests {
             circuit_img = mediaResponse_ci_guid,
             block_img = mediaResponse_bi_guid
         )
-        println("updatePostAcf : ${response.first}, ${response.second}")
+        println("updateUploadReportAcf : ${response.first}, ${response.second}")
+        Assert.assertEquals("200", response.first)
+    }
+
+    @Test
+    @Order(2)
+    fun updateQuizReportAcf() {
+        val testPostId = "453"
+
+        val response = acfRepository.updateQuizReportAcf(
+            id = testPostId,
+            chapter = 3,
+            content = 1,
+            lesson_name = "LED 깜빡이기",
+            answer_1 = 1,
+            answer_2 = 4,
+            answer_3 = 2,
+            answer_4 = 3,
+            answer_5 = 5,
+        )
+        println("updateQuizReportAcf : ${response.first}, ${response.second}")
         Assert.assertEquals("200", response.first)
     }
 }
