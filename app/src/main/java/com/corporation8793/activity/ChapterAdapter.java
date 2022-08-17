@@ -27,12 +27,14 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
     // adapter에 들어갈 list 입니다.
     private ArrayList<Contents> listData = new ArrayList<>();
     private int width = 0;
+    private String chapter_id = "0";
     Context context;
 
-    public ChapterAdapter(Context context, ArrayList<Contents> arrayList, int width){
+    public ChapterAdapter(Context context, ArrayList<Contents> arrayList, int width, String chapter_id){
         listData = arrayList;
         this.width = width;
         this.context = context;
+        this.chapter_id = chapter_id;
     }
 
     @NonNull
@@ -116,6 +118,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
                         Intent intent = new Intent(context, SolvingProblem.class);
                         intent.putExtra("step", 1);
                         intent.putExtra("id", contents.getId());
+                        intent.putExtra("chapter_id", chapter_id);
                         context.startActivity(intent);
                     } else {
                         Intent intent = new Intent(context, ProblemActivity.class);

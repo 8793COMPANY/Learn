@@ -1,10 +1,17 @@
 package com.corporation8793.fragment;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +20,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -21,6 +29,12 @@ import com.corporation8793.R;
 import com.corporation8793.dialog.RetakeDialog;
 
 import static android.app.Activity.RESULT_OK;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,6 +120,7 @@ public class Step3 extends Fragment {
                 int y = (int)(size.y * 0.35f);
 
                 window.setLayout(x,y);
+
             }else{
                 takePicture();
             }
@@ -123,13 +138,48 @@ public class Step3 extends Fragment {
         }
     }
 
+    private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
+        OutputStream fos;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContentResolver resolver = getActivity().getContentResolver();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            Log.e("imageUri",imageUri.toString());
+            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+        } else {
+            String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+            File image = new File(imagesDir, name + ".jpg");
+            fos = new FileOutputStream(image);
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 200, fos);
+        Objects.requireNonNull(fos).close();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CODE && resultCode == RESULT_OK){
+            OutputStream fos;
+
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            upload_img.setImageBitmap(imageBitmap);
+//            upload_img.setImageBitmap(imageBitmap);
+
+            try {
+                saveImage(imageBitmap,"check");
+                Log.e("MainActivity", "captureWorkspace: save ok");
+                String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+                File image = new File(imagesDir, check + ".jpg");
+                fos = new FileOutputStream(image);
+                Log.e("path",imagesDir);
+                upload_img.setImageBitmap(BitmapFactory.decodeFile(image.getAbsolutePath()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             if (!check) {
 
                 if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {

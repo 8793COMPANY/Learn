@@ -49,13 +49,15 @@ public class SolvingProblem extends AppCompatActivity {
 //    LinearLayout title_background;
     String chapter_step = "default";
     int diagram_img = R.drawable.all_diagram_img;
-    String contents_name = "";
+    String contents_name = "",chapter_id = "";
     int [] answers = {0,0,0,0,0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solving_problem);
+
+        chapter_id = getIntent().getStringExtra("chapter_id");
 
         background = findViewById(R.id.problem_background);
         problem_progress_text = findViewById(R.id.problem_progress_text);
@@ -125,7 +127,8 @@ public class SolvingProblem extends AppCompatActivity {
         back_btn.setOnClickListener(v->{
             next_btn.setVisibility(View.VISIBLE);
             next_btn.setEnabled(true);
-            pos--;
+            if (pos != 1)
+                pos--;
             replaceFragment(pos);
 //            replaceFragment(pos);
             Log.e("pos",pos+"");
@@ -145,23 +148,33 @@ public class SolvingProblem extends AppCompatActivity {
         });
 
         next_btn.setOnClickListener(v->{
+            if (pos == 5){
+                String results = answers[0]+" "+answers[1]+" "+answers[2]+" "+answers[3]+" "+answers[4];
+                Intent intent = new Intent(this, RightAnswerActivity.class);
+                intent.putExtra("results",results);
+                startActivity(intent);
+                finish();
+            }else{
             back_btn.setVisibility(View.VISIBLE);
             back_btn.setEnabled(true);
             pos++;
             replaceFragment(pos);
-            if (pos ==5){
+            if (pos != 6){
                 problem_progress_text.setText(pos+"/5");
                 problem_progress.setProgress(pos*20);
-
-                next_btn.setEnabled(false);
-            }else{
-//                title_background.setVisibility(View.VISIBLE);
-//                title.setText(titles[pos]);
-                problem_progress_text.setText(pos+"/5");
-                problem_progress.setProgress(pos*20);
-//                title2.setVisibility(View.INVISIBLE);
             }
+//            if (pos ==5){
+//
+//
+//            }else{
+////                title_background.setVisibility(View.VISIBLE);
+////                title.setText(titles[pos]);
+//                problem_progress_text.setText(pos+"/5");
+//                problem_progress.setProgress(pos*20);
+////                title2.setVisibility(View.INVISIBLE);
+//            }
 
+        }
         });
 
 

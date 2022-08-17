@@ -216,7 +216,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     // TODO : ONLY USB
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
-    Boolean [] view_check = {true,true,true,true,true,true,true};
+    Boolean [] view_check = {true,true,true,true,true,true,true,true};
 
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
@@ -1680,6 +1680,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("main create",pos+"");
         Log.e("isEnabled onClickTest",v.isSelected()+"");
         if (pos >= 4) {
+            Log.e("pos",pos+"");
             tempTab[pos-4] = v;
 
             Log.e("before case", tempTabCheck[pos-4] + "");
@@ -1710,6 +1711,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 break;
 
             case 7:
+                categoryData.setPosition(7);
+                current_pos = 7;
                 if (v.isSelected())
                     block_dictionary.setVisibility(View.VISIBLE);
                 else
@@ -1727,7 +1730,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void initTabCheck() {
-        tempTabCheck = new Boolean[] {false, false, false};
+        tempTabCheck = new Boolean[] {false, false, false,false};
         Log.e("initTabCheck - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
     }
 
