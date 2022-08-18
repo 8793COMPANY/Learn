@@ -127,7 +127,13 @@ public class CategoryTabs extends RecyclerView {
 
 
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
-        mAdapter = new CategoryAdapter(realDeviceWidth);
+        // TODO : 블록 카테고리-탭스 Width 사이즈 설정
+        int oneTapWidth = 370;
+        mAdapter = new CategoryAdapter(realDeviceWidth + oneTapWidth);
+
+//        mAdapter = new CategoryAdapter(((oneTapWidth) * getTabCount()));
+//        Log.e(TAG, "CategoryTabs width 1: " + realDeviceWidth);
+//        Log.e(TAG, "CategoryTabs width 2: " + ((oneTapWidth) * getTabCount()));
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
 
@@ -254,6 +260,7 @@ public class CategoryTabs extends RecyclerView {
     }
 
     public int getTabCount() {
+        // TODO : 블록 카테고리-탭스 항목수 지정, Width 사이즈에서 이 수만큼 나눕니다.
         return 8;
     }
 
@@ -280,7 +287,7 @@ public class CategoryTabs extends RecyclerView {
         double width = 0;
 
         public CategoryAdapter(double width){
-            this.width =width;
+            this.width = width;
             //Log.e("width 확인",this.width+"");
         }
 

@@ -1,8 +1,6 @@
 
 X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-|
-Lblocklylib-core/src/main/java/com/google/blockly/android/FlyoutFragment.java,0\a\0ade54fe3b04b98814604c90db544b8ea108b62f
 u
 Eblocklylib-core/src/main/java/com/google/blockly/model/Workspace.java,9\3\93551a57411eb8ee7383cddd40fb1b0258402c51
 {
