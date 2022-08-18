@@ -76,17 +76,17 @@ public class ProblemActivity extends AppCompatActivity {
         contents_name = contents[step];
 
         Log.e("check",step +"");
-        if (step == 2){
-            chapter_step = "deep";
-            background.setBackgroundColor(Color.WHITE);
-            title2.setVisibility(View.VISIBLE);
-            title_background.setVisibility(View.INVISIBLE);
-        }
+//        if (step == 2){
+//            chapter_step = "deep";
+//            background.setBackgroundColor(Color.WHITE);
+//            title2.setVisibility(View.VISIBLE);
+//            title_background.setVisibility(View.INVISIBLE);
+//        }
 
-        if (step == 3){
-            diagram_img = R.drawable.all_diagram_img2;
-        }
-
+//        if (step == 3){
+//            diagram_img = R.drawable.all_diagram_img2;
+//        }
+//
         replaceFragment(0);
 
         back_btn.setOnClickListener(v->{
@@ -96,13 +96,13 @@ public class ProblemActivity extends AppCompatActivity {
             Log.e("pos",pos+"");
 
             if (pos ==0){
-                if (chapter_step.equals("deep")){
-                    background.setBackgroundColor(Color.WHITE);
-                    title2.setVisibility(View.VISIBLE);
-                    title_background.setVisibility(View.INVISIBLE);
-                }else{
+//                if (chapter_step.equals("deep")){
+//                    background.setBackgroundColor(Color.WHITE);
+//                    title2.setVisibility(View.VISIBLE);
+//                    title_background.setVisibility(View.INVISIBLE);
+//                }else{
                     title.setText(titles[pos]);
-                }
+//                }
                 back_btn.setVisibility(View.INVISIBLE);
             }else{
                 title_background.setVisibility(View.VISIBLE);
@@ -118,9 +118,9 @@ public class ProblemActivity extends AppCompatActivity {
                 if (pos < 3) {
                     Log.e("hello",MySharedPreferences.getInt(getApplicationContext(),contents_name)+"");
                         pos++;
-                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
-                        pos = 0;
-                    }
+//                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
+//                        pos = 0;
+//                    }
 
                     if (pos <3)
                             title.setText(titles[pos]);
@@ -148,11 +148,12 @@ public class ProblemActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else{
-                if (chapter_step.equals("deep") && pos ==1){
-                    title2.setVisibility(View.INVISIBLE);
-                    title_background.setVisibility(View.VISIBLE);
-                    background.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                }else if (MySharedPreferences.getInt(getApplicationContext(),contents_name) ==2 && pos ==3){
+//                if (chapter_step.equals("deep") && pos ==1){
+//                    title2.setVisibility(View.INVISIBLE);
+//                    title_background.setVisibility(View.VISIBLE);
+//                    background.setBackgroundColor(Color.parseColor("#f7f7f7"));
+//                }else
+                    if (MySharedPreferences.getInt(getApplicationContext(),contents_name) ==2 && pos ==3){
 
                         Toast.makeText(getApplicationContext(),"사진을 업로드해주세요",Toast.LENGTH_SHORT).show();
                 }
@@ -170,11 +171,12 @@ public class ProblemActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (pos == 0){
-            if (chapter_step.equals("default")){
+//            if (chapter_step.equals("default")){
                 transaction.replace(R.id.fragment, new Step1(contents_name));
-            }else{
-                transaction.replace(R.id.fragment, new Step4(contents_name));
-            }
+//            }
+//            else{
+//                transaction.replace(R.id.fragment, new Step4(contents_name));
+//            }
 
         }else if (pos ==1){
             transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));

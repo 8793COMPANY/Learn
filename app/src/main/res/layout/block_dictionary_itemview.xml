@@ -16,10 +16,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"></TextView>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0"></TextView>
 
     <TextView
-        android:id="@+id/block_introduction"
+        android:id="@+id/block_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳"
@@ -31,15 +32,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.01"></TextView>
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="5dp"></TextView>
 
 
     <ImageView
+        android:id="@+id/block_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:background="@drawable/problem_block2"
-        app:layout_constraintTop_toBottomOf="@+id/block_introduction"
+        app:layout_constraintTop_toBottomOf="@+id/block_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

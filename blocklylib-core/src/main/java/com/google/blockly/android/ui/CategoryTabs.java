@@ -61,7 +61,7 @@ public class CategoryTabs extends RecyclerView {
     public static CategoryData categoryData = CategoryData.getInstance();
 
     int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
-    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn};
+    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn, R.drawable.code_dictionary_btn_selector};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -254,7 +254,7 @@ public class CategoryTabs extends RecyclerView {
     }
 
     public int getTabCount() {
-        return 7;
+        return 8;
     }
 
     private void onCategoryClicked(BlocklyCategory category) {

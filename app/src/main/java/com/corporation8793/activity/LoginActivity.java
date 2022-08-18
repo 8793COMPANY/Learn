@@ -17,6 +17,8 @@ import android.widget.ImageView;
 
 import com.corporation8793.R;
 import com.corporation8793.Setting;
+import com.learn.wp_rest.data.auth.AuthCookie;
+import com.learn.wp_rest.data.auth.Nonce;
 import com.learn.wp_rest.repository.auth.AuthRepository;
 
 import java.io.InputStream;
@@ -73,8 +75,16 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-//        AuthRepository auth = new AuthRepository();
-//        auth.getAuthCookie()
+        new Thread(()->{
+            AuthRepository auth = new AuthRepository();
+            String nonce = auth.getNonce().getSecond().getNonce();
+            String cookie = auth.getAuthCookie(nonce,"student8793","@ejrghk3865").getSecond().getCookie();
+            String validation = auth.isValidCookie(cookie).getFirst();
+            Boolean validation_check = auth.isValidCookie(cookie).getSecond();
+            Log.e("validation",validation);
+            Log.e("validation check",validation_check+"");
+        }).start();
+
 
     }
 

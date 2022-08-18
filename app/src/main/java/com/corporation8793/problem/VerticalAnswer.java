@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.custom.AnswerItem;
 import com.corporation8793.custom.TextAnswerItem;
@@ -81,6 +82,8 @@ public class VerticalAnswer extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vertical_answer, container, false);
 
+        String chapter_id = ((SolvingProblem)getActivity()).chapter_id;
+
         TextView question_number_text = view.findViewById(R.id.question_number_text);
         TextView question_text = view.findViewById(R.id.question_text);
 
@@ -97,6 +100,8 @@ public class VerticalAnswer extends Fragment {
             Log.e("in??","hi");
             ((SolvingProblem) getActivity()).initBtn();
         }else{
+            Log.e("chapter_id",chapter_id);
+            MySharedPreferences.setInt(getContext(), "문제풀이"+chapter_id, number);
             switch ( ((SolvingProblem)getActivity()).answers[number-1]){
                 case 1:
                     answerItem.setSelected(true);

@@ -38,8 +38,9 @@ public class ChapterActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(display);
         int width = (int)(display.widthPixels / 4);
 
+        //id : chapter_id+"_1",
         contents_list.add(new Contents(
-                chapter_id+"_1",
+                "3_1",
                 R.drawable.default_problem_image,
                 "LED 깜빡이기",
                 R.drawable.chapter_content1,
@@ -49,7 +50,7 @@ public class ChapterActivity extends AppCompatActivity {
             lock_check = true;
 
         contents_list.add(new Contents(
-                chapter_id+"_2",
+                "3_2",
                 R.drawable.advanced_problem_image,
                 "LED 깜빡이는 시간 바꾸기",
                 R.drawable.chapter_content2,
@@ -57,25 +58,26 @@ public class ChapterActivity extends AppCompatActivity {
 
 
         contents_list.add(new Contents(
-                chapter_id+"_3",
+                "3_3",
                 R.drawable.advanced_problem_image2,
                 "LED 핀 번호 바꾸기",
                 R.drawable.chapter_content3,
                 MySharedPreferences.getInt(getApplicationContext(),"LED 핀 번호 바꾸기 MAX"),lock_check));
 
         contents_list.add(new Contents(
-                chapter_id+"_4",
+                "3_4",
                 R.drawable.advanced_problem_image,
                 "문제풀이",
                 R.drawable.chapter_content1,
-                MySharedPreferences.getInt(getApplicationContext(),"문제풀이"+chapter_id),lock_check));
+                MySharedPreferences.getInt(getApplicationContext(),"문제풀이3"),lock_check));
+        // 문제풀이 +chapter_id
 
 //        chapter1 = findViewById(R.id.chapter1);
 //        chapter2 = findViewById(R.id.chapter2);
 //        chapter3 = findViewById(R.id.chapter3);
 
         chapter_list = findViewById(R.id.chapter_list);
-        chapterAdapter = new ChapterAdapter(this,contents_list,width);
+        chapterAdapter = new ChapterAdapter(this,contents_list,width,"3");
 
         chapter_list.setAdapter(chapterAdapter);
         chapter_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
