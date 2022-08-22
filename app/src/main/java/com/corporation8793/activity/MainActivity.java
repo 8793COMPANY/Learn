@@ -1712,6 +1712,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             case 7:
                 categoryData.setPosition(7);
+                categoryData.setClosed(true);
                 current_pos = 7;
                 if (v.isSelected())
                     block_dictionary.setVisibility(View.VISIBLE);

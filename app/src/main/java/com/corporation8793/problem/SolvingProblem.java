@@ -81,24 +81,7 @@ public class SolvingProblem extends AppCompatActivity {
 
         decorView.setSystemUiVisibility( uiOption );
 
-        new Thread(()-> {
-            Log.e("in","thread");
-            String basic = Credentials.basic("student8793", "@ejrghk3865");
-            PostsRepository postsRepository = new PostsRepository(basic);
-            AcfRepository acfRepository = new AcfRepository(basic);
-            String post_id = postsRepository.createQuizReport(
-                    "LED 깜박이기",
-                    1,
-                    2,
-                    3,
-                    4,
-                    5
-            ).getSecond().getId();
-            String check =
-                    acfRepository.updateQuizReportAcf(post_id,1,1,"LED 깜박이기",1,2,3,4,5).getSecond().toString();
-            Log.e("end","thread");
-            Log.e("upload_check",check);
-        }).start();
+
 
 
         int step = getIntent().getIntExtra("step",1);
