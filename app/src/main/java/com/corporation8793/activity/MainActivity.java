@@ -156,7 +156,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
-    private Boolean initial=true, wifi_check = false, usb_check = false;
+    private Boolean initial=true, wifi_check = false, usb_check = false, server_upload_check = true;
     Boolean compileCheck = false, copy_check = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
@@ -1028,7 +1028,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             MySharedPreferences.setInt(getApplicationContext(),contents_name,4);
 
         }else{
-
+            server_upload_check = false;
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
