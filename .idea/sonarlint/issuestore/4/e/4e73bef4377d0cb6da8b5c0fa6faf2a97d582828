@@ -1,11 +1,0 @@
-
-jkotlin:S107("GThis function has 9 parameters, which is greater than the 7 authorized.(¬úå£øÿÿÿÿ8àîŞ¤ª0
-ekotlin:S117"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(“¾³Ê
-dkotlin:S117"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(µëö}
-jkotlin:S117"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(›êŠïúÿÿÿÿ
-ekotlin:S117+"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(“¾³Ê
-lkotlin:S117,"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(³›ç8æîŞ¤ª0
-lkotlin:S117-"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(Ë÷âÜ8æîŞ¤ª0
-lkotlin:S117."NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ïÔœ²8æîŞ¤ª0
-lkotlin:S117/"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(Ç„Î¸8çîŞ¤ª0
-qkotlin:S1170"NRename this parameter to match the regular expression ^`?[_a-z][a-zA-Z0-9]*`?$(ÙÃêüÿÿÿÿ8çîŞ¤ª0

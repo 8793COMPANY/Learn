@@ -18,7 +18,6 @@ class AcfRepository(private val basicAuth : String) {
     fun updateUploadReportAcf(id : String,
                       chapter : Int,
                       content : Int,
-                      lesson_name : String,
                       circuit_img : String,
                       block_img : String) : Pair<String, UploadReportJson?> {
         val response = RestClient.acfService.updateUploadReportAcf(
@@ -26,7 +25,6 @@ class AcfRepository(private val basicAuth : String) {
             id = id,
             chapter = chapter,
             content = content,
-            lesson_name = lesson_name,
             circuit_img = circuit_img,
             block_img = block_img)
             .execute()
@@ -39,8 +37,6 @@ class AcfRepository(private val basicAuth : String) {
      */
     fun updateQuizReportAcf(id : String,
                             chapter : Int,
-                            content : Int,
-                            lesson_name : String,
                             answer_1 : Int,
                             answer_2 : Int,
                             answer_3 : Int,
@@ -51,8 +47,6 @@ class AcfRepository(private val basicAuth : String) {
             h1 = basicAuth,
             id = id,
             chapter = chapter,
-            content = content,
-            lesson_name = lesson_name,
             answer_1 = answer_1,
             answer_2 = answer_2,
             answer_3 = answer_3,

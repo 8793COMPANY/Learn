@@ -31,7 +31,6 @@ class AcfTests {
             id = testPostId,
             chapter = 3,
             content = 1,
-            lesson_name = "LED 깜빡이기",
             circuit_img = mediaResponse_ci_guid,
             block_img = mediaResponse_bi_guid
         )
@@ -47,8 +46,6 @@ class AcfTests {
         val response = acfRepository.updateQuizReportAcf(
             id = testPostId,
             chapter = 3,
-            content = 1,
-            lesson_name = "LED 깜빡이기",
             answer_1 = 1,
             answer_2 = 4,
             answer_3 = 2,
