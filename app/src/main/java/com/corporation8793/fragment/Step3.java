@@ -140,21 +140,34 @@ public class Step3 extends Fragment {
 
     private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
+        File directory = Environment.getExternalStoragePublicDirectory("/learn");
+        if(!directory.mkdirs()){
+            Log.e("FILE", "Directory not created");
+        }else{
+            Log.e("hi","file created");
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentResolver resolver = getActivity().getContentResolver();
             ContentValues contentValues = new ContentValues();
             contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
             Log.e("imageUri",imageUri.toString());
+            Log.e("check 위치", Environment.getExternalStorageDirectory().toString());
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
         } else {
-            String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-            File image = new File(imagesDir, name + ".jpg");
+            File imagesDir = Environment.getExternalStoragePublicDirectory("/learn");
+            if(!imagesDir.mkdirs()){
+                Log.e("FILE", "Directory not created");
+            }else{
+                Log.e("hi","file created");
+            }
+            File image = new File(imagesDir.toString(), name + ".jpg");
             fos = new FileOutputStream(image);
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 200, fos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
         Objects.requireNonNull(fos).close();
     }
 
@@ -166,16 +179,10 @@ public class Step3 extends Fragment {
 
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            upload_img.setImageBitmap(imageBitmap);
+            upload_img.setImageBitmap(imageBitmap);
 
             try {
                 saveImage(imageBitmap,"check");
-                Log.e("MainActivity", "captureWorkspace: save ok");
-                String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-                File image = new File(imagesDir, check + ".jpg");
-                fos = new FileOutputStream(image);
-                Log.e("path",imagesDir);
-                upload_img.setImageBitmap(BitmapFactory.decodeFile(image.getAbsolutePath()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

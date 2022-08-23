@@ -8,6 +8,7 @@
     <attr name="selected" format="boolean" />
     <attr name="type" format="string" />
     <attr name="id" format="string" />
+    <attr name="correct" format="boolean" />
 
 
     <declare-styleable name="MyCustomView">
@@ -17,6 +18,12 @@
         <attr name="percentage"></attr>
         <attr name="chapter"></attr>
         <attr name="id"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="ScoreItem">
+        <attr name="correct"></attr>
+        <attr name="title"></attr>
+
     </declare-styleable>
 
 
