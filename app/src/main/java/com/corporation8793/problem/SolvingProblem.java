@@ -5,8 +5,9 @@ import android.graphics.Color;
 import android.net.wifi.hotspot2.pps.Credential;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,14 +22,18 @@ import androidx.fragment.app.FragmentTransaction;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.activity.MainActivity;
+import com.corporation8793.activity.ModeSelect;
 import com.corporation8793.fragment.Step1;
 import com.corporation8793.fragment.Step2;
 import com.corporation8793.fragment.Step3;
 import com.corporation8793.fragment.Step4;
+import com.learn.wp_rest.data.acf.QuizReportJson;
 import com.learn.wp_rest.data.wp.posts.QuizReport;
 import com.learn.wp_rest.repository.acf.AcfRepository;
+import com.learn.wp_rest.repository.auth.AuthRepository;
 import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 
+import kotlin.Pair;
 import okhttp3.Credentials;
 
 public class SolvingProblem extends AppCompatActivity {
@@ -133,10 +138,40 @@ public class SolvingProblem extends AppCompatActivity {
         next_btn.setOnClickListener(v->{
             if (pos == 5){
                 String results = answers[0]+" "+answers[1]+" "+answers[2]+" "+answers[3]+" "+answers[4];
-                Intent intent = new Intent(this, RightAnswerActivity.class);
-                intent.putExtra("results",results);
-                startActivity(intent);
-                finish();
+
+//                new Thread(()->{
+//                    Log.e("in", "thread");
+//                    String basic =
+//                            Credentials.basic("student8793", "@ejrghk3865");
+//                    PostsRepository postsRepository = new PostsRepository(basic);
+//                    AcfRepository acfRepository = new AcfRepository(basic);
+//                    String post_id = postsRepository.createQuizReport(
+//                            "LED 깜박이기",
+//                            answers[0],
+//                            answers[1],
+//                            answers[2],
+//                            answers[3],
+//                            answers[4]
+//                    ).getSecond().getId();
+//                    Pair<String, QuizReportJson> check = acfRepository.updateQuizReportAcf(
+//                            post_id,
+//                            3,
+//                            1,
+//                            "LED 깜박이기",
+//                            answers[0],
+//                            answers[1],
+//                            answers[2],
+//                            answers[3],
+//                            answers[4]
+//                    );
+//                    Log.e("end", "thread");
+//                    Log.e("upload_check", check.getFirst());
+//                    Log.e("upload_check", check.getSecond().getAcf().toString());
+//                }).start();
+//                Intent intent = new Intent(this, RightAnswerActivity.class);
+//                intent.putExtra("results",results);
+//                startActivity(intent);
+//                finish();
             }else{
             back_btn.setVisibility(View.VISIBLE);
             back_btn.setEnabled(true);

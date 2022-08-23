@@ -6,14 +6,11 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.util.Log
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.corporation8793.R
 import com.corporation8793.custom.ScoreItem
-import com.learn.wp_rest.repository.acf.AcfRepository
-import com.learn.wp_rest.repository.wp.posts.PostsRepository
-import okhttp3.Credentials
 
 class RightAnswerActivity : AppCompatActivity() {
     var right_answers = arrayOf("3","2","2","3","3")
@@ -21,6 +18,8 @@ class RightAnswerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_right_answer)
+
+        hideSystemUI()
 
         var result_text = findViewById<TextView>(R.id.result_text)
 
@@ -80,34 +79,7 @@ class RightAnswerActivity : AppCompatActivity() {
         changeScoreTextStyle(result_text)
 
         //업로드
-//        Thread {
-//            Log.e("in", "thread")
-//            val basic =
-//                Credentials.basic("student8793", "@ejrghk3865")
-//            val postsRepository = PostsRepository(basic)
-//            val acfRepository = AcfRepository(basic)
-//            val post_id = postsRepository.createQuizReport(
-//                "LED 깜박이기",
-//                1,
-//                2,
-//                3,
-//                4,
-//                5
-//            ).second!!.id
-//            val check = acfRepository.updateQuizReportAcf(
-//                post_id!!,
-//                1,
-//                1,
-//                "LED 깜박이기",
-//                1,
-//                2,
-//                3,
-//                4,
-//                5
-//            ).second.toString()
-//            Log.e("end", "thread")
-//            Log.e("upload_check", check)
-//        }.start()
+
 
     }
 
@@ -148,5 +120,20 @@ class RightAnswerActivity : AppCompatActivity() {
 
 
         textView.setText(spannableStringBuilder)
+    }
+
+    private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        val decorView = window.decorView
+        decorView.systemUiVisibility =
+            (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY // Set the content to appear under the system bars so that the
+                    // content doesn't resize when the system bars hide and show.
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN // Hide the nav bar and status bar
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN)
     }
 }

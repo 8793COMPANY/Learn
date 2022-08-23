@@ -8,6 +8,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -73,17 +75,26 @@ public class LoginActivity extends AppCompatActivity {
             new Thread(()->{
                 AuthRepository auth = new AuthRepository();
                 String nonce = auth.getNonce().getSecond().getNonce();
-                String cookie = auth.getAuthCookie(nonce,"student8793","@ejrghk3865").getSecond().getCookie();
+                String cookie = auth.getAuthCookie(nonce,login_id_input_box.getText().toString(),login_pw_input_box.getText().toString()).getSecond().getCookie();
                 String validation = auth.isValidCookie(cookie).getFirst();
                 Boolean validation_check = auth.isValidCookie(cookie).getSecond();
                 Log.e("validation",validation);
                 Log.e("validation check",validation_check+"");
+                Handler handler = new Handler(Looper.getMainLooper());
                 if(validation_check) {
                     Intent intent = new Intent(this, ModeSelect.class);
                     startActivity(intent);
                     finish();
-                }else
-                    Toast.makeText(getApplicationContext(),"로그인 정보를 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(getApplicationContext(), "로그인 정보를 다시 확인해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
+                }
             }).start();
         });
 
