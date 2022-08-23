@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.corporation8793.R;
 import com.corporation8793.Setting;
@@ -69,21 +70,24 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         login_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ModeSelect.class);
-            startActivity(intent);
-            finish();
-
+            new Thread(()->{
+                AuthRepository auth = new AuthRepository();
+                String nonce = auth.getNonce().getSecond().getNonce();
+                String cookie = auth.getAuthCookie(nonce,"student8793","@ejrghk3865").getSecond().getCookie();
+                String validation = auth.isValidCookie(cookie).getFirst();
+                Boolean validation_check = auth.isValidCookie(cookie).getSecond();
+                Log.e("validation",validation);
+                Log.e("validation check",validation_check+"");
+                if(validation_check) {
+                    Intent intent = new Intent(this, ModeSelect.class);
+                    startActivity(intent);
+                    finish();
+                }else
+                    Toast.makeText(getApplicationContext(),"로그인 정보를 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
+            }).start();
         });
 
-        new Thread(()->{
-            AuthRepository auth = new AuthRepository();
-            String nonce = auth.getNonce().getSecond().getNonce();
-            String cookie = auth.getAuthCookie(nonce,"student8793","@ejrghk3865").getSecond().getCookie();
-            String validation = auth.isValidCookie(cookie).getFirst();
-            Boolean validation_check = auth.isValidCookie(cookie).getSecond();
-            Log.e("validation",validation);
-            Log.e("validation check",validation_check+"");
-        }).start();
+
 
 
     }
