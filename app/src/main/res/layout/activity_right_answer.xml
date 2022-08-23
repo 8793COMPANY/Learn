@@ -155,6 +155,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/back_to_solve_problem_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="310:80"

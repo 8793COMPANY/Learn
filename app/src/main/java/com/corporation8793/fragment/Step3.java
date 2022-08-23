@@ -1,8 +1,11 @@
 package com.corporation8793.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -27,6 +30,8 @@ import androidx.fragment.app.Fragment;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.RetakeDialog;
+import com.learn.wp_rest.data.wp.media.Media;
+import com.learn.wp_rest.repository.wp.media.MediaRepository;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -35,6 +40,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
+
+import kotlin.Pair;
+import okhttp3.Credentials;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,15 +67,17 @@ public class Step3 extends Fragment {
     boolean check = false;
     private RetakeDialog retakeDialog;
 
-    String contents_name;
+    String contents_name, chapter_id;
+
 
     public Step3() {
         // Required empty public constructor
     }
 
-    public Step3(String contents_name) {
+    public Step3(String contents_name,String chapter_id) {
         // Required empty public constructor
         this.contents_name = contents_name;
+        this.chapter_id = chapter_id;
     }
 
     /**
@@ -140,13 +150,6 @@ public class Step3 extends Fragment {
 
     private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
-        File directory = Environment.getExternalStoragePublicDirectory("/learn");
-        if(!directory.mkdirs()){
-            Log.e("FILE", "Directory not created");
-        }else{
-            Log.e("hi","file created");
-        }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentResolver resolver = getActivity().getContentResolver();
             ContentValues contentValues = new ContentValues();
@@ -154,6 +157,18 @@ public class Step3 extends Fragment {
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+            new Thread(()->{
+            String basicAuth = Credentials.basic("student8793", "@ejrghk3865");
+
+            MediaRepository mediaRepository = new MediaRepository(basicAuth);
+            Pair<String, Media> response_ci = mediaRepository.uploadMedia(new File(uri2path(getContext(),imageUri)));
+            MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+
+            Log.e("response_ci",response_ci.getFirst());
+            Log.e("response_ci",response_ci.getSecond().toString());
+            }).start();
+
             Log.e("imageUri",imageUri.toString());
             Log.e("check 위치", Environment.getExternalStorageDirectory().toString());
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
@@ -170,6 +185,19 @@ public class Step3 extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
         Objects.requireNonNull(fos).close();
     }
+
+    public static String uri2path(Context context, Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        cursor.moveToNext();
+        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+        Uri uri = Uri.fromFile(new File(path));
+
+        cursor.close();
+        return path;
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

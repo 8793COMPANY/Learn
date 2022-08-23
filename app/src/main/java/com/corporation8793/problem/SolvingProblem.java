@@ -90,9 +90,9 @@ public class SolvingProblem extends AppCompatActivity {
 
 
         int step = getIntent().getIntExtra("step",1);
-        String id = getIntent().getStringExtra("id");
-
-        Log.e("id",id);
+//        String id = getIntent().getStringExtra("id");
+//
+//        Log.e("id",id);
         contents_name = contents[step-1];
 
         Log.e("check",step +"");
@@ -138,40 +138,45 @@ public class SolvingProblem extends AppCompatActivity {
         next_btn.setOnClickListener(v->{
             if (pos == 5){
                 String results = answers[0]+" "+answers[1]+" "+answers[2]+" "+answers[3]+" "+answers[4];
+                if (MySharedPreferences.getBoolean(this,"solving_problem"+chapter_id)){
+                    Log.e("data","in");
+                }else{
+                    Log.e("data","none");
+                    new Thread(()->{
+                        Log.e("in", "thread");
+                        String basic =
+                                Credentials.basic("student8793", "@ejrghk3865");
+                        PostsRepository postsRepository = new PostsRepository(basic);
+                        AcfRepository acfRepository = new AcfRepository(basic);
+                        String post_id = postsRepository.createQuizReport(
+                                "LED 깜박이기",
+                                answers[0],
+                                answers[1],
+                                answers[2],
+                                answers[3],
+                                answers[4]
+                        ).getSecond().getId();
+                        Pair<String, QuizReportJson> check = acfRepository.updateQuizReportAcf(
+                                post_id,
+                                3,
+                                answers[0],
+                                answers[1],
+                                answers[2],
+                                answers[3],
+                                answers[4]
+                        );
+                        Log.e("end", "thread");
+                        Log.e("upload_check", check.getFirst());
+                        Log.e("upload_check", check.getSecond().getAcf().toString());
+                        MySharedPreferences.setBoolean(this,"solving_problem"+chapter_id,true);
+                    }).start();
+                }
 
-//                new Thread(()->{
-//                    Log.e("in", "thread");
-//                    String basic =
-//                            Credentials.basic("student8793", "@ejrghk3865");
-//                    PostsRepository postsRepository = new PostsRepository(basic);
-//                    AcfRepository acfRepository = new AcfRepository(basic);
-//                    String post_id = postsRepository.createQuizReport(
-//                            "LED 깜박이기",
-//                            answers[0],
-//                            answers[1],
-//                            answers[2],
-//                            answers[3],
-//                            answers[4]
-//                    ).getSecond().getId();
-//                    Pair<String, QuizReportJson> check = acfRepository.updateQuizReportAcf(
-//                            post_id,
-//                            3,
-//                            1,
-//                            "LED 깜박이기",
-//                            answers[0],
-//                            answers[1],
-//                            answers[2],
-//                            answers[3],
-//                            answers[4]
-//                    );
-//                    Log.e("end", "thread");
-//                    Log.e("upload_check", check.getFirst());
-//                    Log.e("upload_check", check.getSecond().getAcf().toString());
-//                }).start();
-//                Intent intent = new Intent(this, RightAnswerActivity.class);
-//                intent.putExtra("results",results);
-//                startActivity(intent);
-//                finish();
+                Intent intent = new Intent(this, RightAnswerActivity.class);
+                intent.putExtra("results",results);
+                intent.putExtra("chapter_id",chapter_id);
+                startActivity(intent);
+                finish();
             }else{
             back_btn.setVisibility(View.VISIBLE);
             back_btn.setEnabled(true);

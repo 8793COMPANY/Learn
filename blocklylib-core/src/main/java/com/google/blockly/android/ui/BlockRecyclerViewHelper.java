@@ -131,6 +131,7 @@ public class BlockRecyclerViewHelper {
                     copyBlock(pendingDrag);
                 }
 
+
             }
         });
 
