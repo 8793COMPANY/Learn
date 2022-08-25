@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.activity.MainActivity;
@@ -136,6 +137,7 @@ public class SolvingProblem extends AppCompatActivity {
         });
 
         next_btn.setOnClickListener(v->{
+            MySharedPreferences.setInt(getApplicationContext(),"문제풀이3",pos);
             if (pos == 5){
                 String results = answers[0]+" "+answers[1]+" "+answers[2]+" "+answers[3]+" "+answers[4];
                 if (MySharedPreferences.getBoolean(this,"solving_problem"+chapter_id)){
@@ -143,20 +145,15 @@ public class SolvingProblem extends AppCompatActivity {
                 }else{
                     Log.e("data","none");
                     new Thread(()->{
-                        Log.e("in", "thread");
-                        String basic =
-                                Credentials.basic("student8793", "@ejrghk3865");
-                        PostsRepository postsRepository = new PostsRepository(basic);
-                        AcfRepository acfRepository = new AcfRepository(basic);
-                        String post_id = postsRepository.createQuizReport(
-                                "LED 깜박이기",
+                        String post_id = Application.postsRepository.createQuizReport(
+                                chapter_id+"-5. "+"LED 문제",
                                 answers[0],
                                 answers[1],
                                 answers[2],
                                 answers[3],
                                 answers[4]
                         ).getSecond().getId();
-                        Pair<String, QuizReportJson> check = acfRepository.updateQuizReportAcf(
+                        Pair<String, QuizReportJson> check = Application.acfRepository.updateQuizReportAcf(
                                 post_id,
                                 3,
                                 answers[0],

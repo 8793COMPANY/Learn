@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -18,8 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.corporation8793.Application;
 import com.corporation8793.R;
 import com.corporation8793.Setting;
+import com.corporation8793.dialog.ProgressDialog;
 import com.learn.wp_rest.data.auth.AuthCookie;
 import com.learn.wp_rest.data.auth.Nonce;
 import com.learn.wp_rest.repository.auth.AuthRepository;
@@ -28,12 +31,15 @@ import java.io.InputStream;
 
 import jxl.Sheet;
 import jxl.Workbook;
+import okhttp3.Credentials;
 
 
 public class LoginActivity extends AppCompatActivity {
     EditText login_id_input_box, login_pw_input_box;
     ImageView auto_login;
     ImageButton login_btn;
+
+    ProgressDialog customProgressDialog;
 //
 //    ImageButton login_btn;
 
@@ -42,6 +48,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         hideSystemUI();
         setContentView(R.layout.activity_login);
+
+        customProgressDialog = new ProgressDialog(this);
+        customProgressDialog.setContentView(R.layout.dialog_progress);
+
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 //        Setting setting = new Setting(getApplicationContext());
         Setting setting = Setting.getInstance(getApplicationContext());
@@ -72,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         login_btn.setOnClickListener(v -> {
+            customProgressDialog.show();
             new Thread(()->{
                 AuthRepository auth = new AuthRepository();
                 String nonce = auth.getNonce().getSecond().getNonce();
@@ -82,6 +95,9 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("validation check",validation_check+"");
                 Handler handler = new Handler(Looper.getMainLooper());
                 if(validation_check) {
+                    customProgressDialog.dismiss();
+                    Application application = Application.getInstance(this);
+                    application.setAuth(Credentials.basic(login_id_input_box.getText().toString(),login_pw_input_box.getText().toString()));
                     Intent intent = new Intent(this, ModeSelect.class);
                     startActivity(intent);
                     finish();
@@ -91,12 +107,14 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void run()
                         {
+                            customProgressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "로그인 정보를 다시 확인해주세요.", Toast.LENGTH_SHORT).show();
                         }
                     }, 0);
                 }
             }).start();
         });
+
 
 
 

@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.corporation8793.R;
 
 public class ScoreItem extends ConstraintLayout {
-    private ImageView background, stroke;
+    private ImageView background, stroke,answer_correct_check_img;
     private boolean correct = false; // 선택된 번호
     String title="";
     private TextView problem_number;
@@ -61,6 +61,7 @@ public class ScoreItem extends ConstraintLayout {
         super.onFinishInflate();
 //        background = (ImageView) findViewById(R.id.background);
         problem_number =  findViewById(R.id.problem_number);
+        answer_correct_check_img = findViewById(R.id.answer_correct_check_img);
         // 처음에는 XML의 지정을 반영하고자 0번째 인수인 force를 true로 한다
         setTitle(title);
         setCorrect(correct);
@@ -75,8 +76,9 @@ public class ScoreItem extends ConstraintLayout {
     public void setCorrect(boolean correct) {
         this.correct = correct;
         if (correct){
+            answer_correct_check_img.setBackgroundResource(R.drawable.answer_correct_img);
         }else{
-
+            answer_correct_check_img.setBackgroundResource(R.drawable.answer_incorrect_img);
         }
     }
 

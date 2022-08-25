@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,8 +28,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.RetakeDialog;
 import com.learn.wp_rest.data.wp.media.Media;
 import com.learn.wp_rest.repository.wp.media.MediaRepository;
@@ -50,6 +53,7 @@ import okhttp3.Credentials;
  * create an instance of this fragment.
  */
 public class Step3 extends Fragment {
+    ProgressDialog customProgressDialog;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -116,6 +120,12 @@ public class Step3 extends Fragment {
         upload_area = view.findViewById(R.id.upload_area);
         upload_img = view.findViewById(R.id.upload_img);
 
+        customProgressDialog = new ProgressDialog(getContext());
+        customProgressDialog.setContentView(R.layout.dialog_progress);
+
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         retakeDialog = new RetakeDialog(getContext(), retake_ok,retake_cancel);
         upload_area.setOnClickListener(v->{
             if (check){
@@ -159,18 +169,15 @@ public class Step3 extends Fragment {
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
             new Thread(()->{
-            String basicAuth = Credentials.basic("student8793", "@ejrghk3865");
-
-            MediaRepository mediaRepository = new MediaRepository(basicAuth);
-            Pair<String, Media> response_ci = mediaRepository.uploadMedia(new File(uri2path(getContext(),imageUri)));
+            Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(getContext(),imageUri)));
             MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
 
             Log.e("response_ci",response_ci.getFirst());
             Log.e("response_ci",response_ci.getSecond().toString());
+            customProgressDialog.dismiss();
             }).start();
 
             Log.e("imageUri",imageUri.toString());
-            Log.e("check 위치", Environment.getExternalStorageDirectory().toString());
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
         } else {
             File imagesDir = Environment.getExternalStoragePublicDirectory("/learn");
@@ -210,9 +217,12 @@ public class Step3 extends Fragment {
             upload_img.setImageBitmap(imageBitmap);
 
             try {
+                customProgressDialog.show();
                 saveImage(imageBitmap,"check");
+
             } catch (Exception e) {
                 e.printStackTrace();
+                customProgressDialog.dismiss();
             }
 
             if (!check) {

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -40,17 +41,17 @@ public class ChapterActivity extends AppCompatActivity {
 
         //id : chapter_id+"_1",
         contents_list.add(new Contents(
-                "3_1",
+                "3-2",
                 R.drawable.default_problem_image,
                 "LED 깜빡이기",
                 R.drawable.chapter_content1,
-                MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"),true));
+                MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이기 MAX"),true));
 
-        if(MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5)
+        if(MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이기 MAX") == 5)
             lock_check = true;
 
         contents_list.add(new Contents(
-                "3_2",
+                "3-3",
                 R.drawable.advanced_problem_image,
                 "LED 깜빡이는 시간 바꾸기",
                 R.drawable.chapter_content2,
@@ -58,14 +59,14 @@ public class ChapterActivity extends AppCompatActivity {
 
 
         contents_list.add(new Contents(
-                "3_3",
+                "3-4",
                 R.drawable.advanced_problem_image2,
                 "LED 핀 번호 바꾸기",
                 R.drawable.chapter_content3,
                 MySharedPreferences.getInt(getApplicationContext(),"LED 핀 번호 바꾸기 MAX"),lock_check));
 
         contents_list.add(new Contents(
-                "3_4",
+                "3-5",
                 R.drawable.advanced_problem_image,
                 "문제풀이",
                 R.drawable.chapter_content1,
@@ -158,6 +159,7 @@ public class ChapterActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        chapterAdapter.notifyItemChanged(chapterAdapter.current_chapter,"update");
         if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
             //여기 코드 작성해주세요 ~
             chapterAdapter.notifyItemRangeChanged(1,contents_list.size()-1,"lock_check");

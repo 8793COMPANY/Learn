@@ -1016,7 +1016,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         contents_name = getIntent().getStringExtra("contents_name");
         chapter_id = getIntent().getStringExtra("id");
 
-        chapter_id_split = chapter_id.split("_");
+        chapter_id_split = chapter_id.split("-");
 
         Log.e("chapter_id",chapter_id);
 
@@ -1028,7 +1028,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         display.getSize(size);
 
         Log.e(TAG, ">>> block_width size.x : " + size.x + ", size.y : " + size.y);
-
 
 
 
@@ -1686,6 +1685,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
+
+
         // 테스트용 구라 주소
         //return "http://87.93.87.93:5000";
     }
@@ -1731,6 +1732,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 categoryData.setPosition(7);
                 categoryData.setClosed(true);
                 current_pos = 7;
+                blockly_monitor.setVisibility(View.GONE);
+                setInitLine();
                 if (v.isSelected())
                     block_dictionary.setVisibility(View.VISIBLE);
                 else
@@ -1830,24 +1833,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
             new Thread(()->{
-                String basicAuth = Credentials.basic("student8793", "@ejrghk3865");
-
-                MediaRepository mediaRepository = new MediaRepository(basicAuth);
-                AcfRepository acfRepository = new AcfRepository(basicAuth);
                 Log.e("uri",uri2path(this,imageUri));
-                Pair<String, Media> response_ci = mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
+                Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
                 MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
 
-
-                PostsRepository postsRepository = new PostsRepository(basicAuth);
-                Pair<String, UploadReport> response = postsRepository.createUploadReport(
-                        contents_name,
+                Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+                        chapter_id+". "+contents_name,
                         MySharedPreferences.getString(this,"circuit_img"+chapter_id),
                         response_ci.getSecond().getGuid().getRendered()
                         );
                 Log.e("response",response.getFirst());
                 Log.e("response",response.getSecond().toString());
-                Pair<String, UploadReportJson> upload_result = acfRepository.updateUploadReportAcf(
+                Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
                         response.getSecond().getId(),
                         Integer.parseInt(chapter_id_split[0]),
                         Integer.parseInt(chapter_id_split[1]),
