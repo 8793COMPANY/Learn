@@ -69,7 +69,7 @@ public class ChapterAdapter  extends RecyclerView.Adapter<ChapterAdapter.CustomV
         holder.itemView.requestLayout();
 
         holder.itemView.setOnClickListener(v->{
-            if (chapters.get(position).chapterName.equals("LED 깜박이기")){
+            if (chapters.get(position).chapterName.equals("LED 깜빡이기")){
                 Intent intent = new Intent(context.getApplicationContext(), ChapterActivity.class);
                 intent.putExtra("id",String.valueOf(chapters.get(position).id));
                 context.startActivity(intent);

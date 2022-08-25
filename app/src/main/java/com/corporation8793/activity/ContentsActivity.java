@@ -152,8 +152,6 @@ public class ContentsActivity extends AppCompatActivity {
         //두번째 subject 추가
 
 
-
-
         subjects.add(level2);
 
         //세번째 subject 추가

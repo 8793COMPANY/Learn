@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dto.Contents;
 import com.corporation8793.problem.SolvingProblem;
@@ -29,6 +30,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
     private int width = 0;
     private String chapter_id = "0";
     Context context;
+    public static int current_chapter =0;
 
     public ChapterAdapter(Context context, ArrayList<Contents> arrayList, int width, String chapter_id){
         listData = arrayList;
@@ -58,7 +60,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
         if (payloads.isEmpty()){
             super.onBindViewHolder(holder,position,payloads);
-        }else{
+        } else{
             for(Object payload : payloads){
                 String type = (String) payload;
                 if (TextUtils.equals(type, "lock_check")){
@@ -66,6 +68,18 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
                     listData.get(position).open = true;
                     holder.lock_check.setBackgroundResource(0);
 
+                }else{
+                    int progress = 0;
+                    if (position != 3) {
+                        progress = MySharedPreferences.getInt(context, listData.get(position).title + " MAX");
+                    }else{
+
+                        progress = listData.get(position).percentage = MySharedPreferences.getInt(context, "문제풀이"+chapter_id);
+                    }
+
+                    listData.get(position).percentage = progress;
+                    holder.progressBar.setProgress(progress*20);
+                    holder.percentage.setText(progress*20+"%");
                 }
             }
         }
@@ -113,6 +127,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
                 lock_check.setBackgroundResource(0);
 
             itemView.setOnClickListener(v->{
+                current_chapter = getAdapterPosition();
                 if (contents.open) {
                     if (getAdapterPosition() == 3) {
                         Intent intent = new Intent(context, SolvingProblem.class);

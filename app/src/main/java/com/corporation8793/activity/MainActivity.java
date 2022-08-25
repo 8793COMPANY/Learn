@@ -15,6 +15,7 @@
 
 package com.corporation8793.activity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -37,6 +38,7 @@ import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 
 import android.graphics.Canvas;
@@ -104,6 +106,12 @@ import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
+import com.learn.wp_rest.data.acf.UploadReportJson;
+import com.learn.wp_rest.data.wp.media.Media;
+import com.learn.wp_rest.data.wp.posts.UploadReport;
+import com.learn.wp_rest.repository.acf.AcfRepository;
+import com.learn.wp_rest.repository.wp.media.MediaRepository;
+import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 import com.physicaloid.lib.Physicaloid;
 import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
@@ -131,6 +139,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import kotlin.Pair;
+import okhttp3.Credentials;
 
 
 /**
@@ -181,7 +192,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String str ="";
     ScrollView scrollview;
     int num = 0;
-    String contents_name ="none";
+    String contents_name ="none", chapter_id = "none";
+    String [] chapter_id_split;
     String id ="none";
 
     Guideline guideline4;
@@ -1002,6 +1014,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        setting.registerNetworkCallback();
 
         contents_name = getIntent().getStringExtra("contents_name");
+        chapter_id = getIntent().getStringExtra("id");
+
+        chapter_id_split = chapter_id.split("-");
+
+        Log.e("chapter_id",chapter_id);
 
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -1011,7 +1028,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         display.getSize(size);
 
         Log.e(TAG, ">>> block_width size.x : " + size.x + ", size.y : " + size.y);
-
 
 
 
@@ -1669,6 +1685,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
+
+
         // 테스트용 구라 주소
         //return "http://87.93.87.93:5000";
     }
@@ -1714,6 +1732,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 categoryData.setPosition(7);
                 categoryData.setClosed(true);
                 current_pos = 7;
+                blockly_monitor.setVisibility(View.GONE);
+                setInitLine();
                 if (v.isSelected())
                     block_dictionary.setVisibility(View.VISIBLE);
                 else
@@ -1788,6 +1808,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
     }
 
+    public static String uri2path(Context context, Uri contentUri) {
+        Log.e("in","uripath");
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        cursor.moveToNext();
+        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+//        Uri uri = Uri.fromFile(new File(path));
+
+        cursor.close();
+        Log.e("out","uripath");
+        return path;
+    }
+
     private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -1798,6 +1832,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+            new Thread(()->{
+                Log.e("uri",uri2path(this,imageUri));
+                Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
+                MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+
+                Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+                        chapter_id+". "+contents_name,
+                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                        response_ci.getSecond().getGuid().getRendered()
+                        );
+                Log.e("response",response.getFirst());
+                Log.e("response",response.getSecond().toString());
+                Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
+                        response.getSecond().getId(),
+                        Integer.parseInt(chapter_id_split[0]),
+                        Integer.parseInt(chapter_id_split[1]),
+                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                        response_ci.getSecond().getGuid().getRendered()
+                );
+
+                Log.e("upload_result",upload_result.getFirst());
+                Log.e("upload_result",upload_result.getSecond().toString());
+            }).start();
+
         } else {
             String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
             File image = new File(imagesDir, name + ".jpg");
@@ -1911,14 +1969,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
 
                 // TODO : 화면 캡쳐 트리거
-                Log.e("MainActivity", "captureWorkspace: start");
-                bitmapWorkspace = controller.captureWorkspace();
+                if(!chapter_id.equals("0")) {
+                    Log.e("MainActivity", "captureWorkspace: start");
+                    bitmapWorkspace = controller.captureWorkspace();
 
-                try {
-                    saveImage(bitmapWorkspace, "captureWorkspace");
-                    Log.e("MainActivity", "captureWorkspace: save ok");
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        saveImage(bitmapWorkspace, "captureWorkspace");
+                        Log.e("MainActivity", "captureWorkspace: save ok");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             } else {

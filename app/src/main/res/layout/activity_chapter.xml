@@ -8,6 +8,7 @@
     android:background="#fcf1de">
 
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chapter_list"
         android:layout_width="0dp"

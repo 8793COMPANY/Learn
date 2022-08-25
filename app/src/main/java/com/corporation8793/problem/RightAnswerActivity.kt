@@ -1,5 +1,6 @@
 package com.corporation8793.problem
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -7,6 +8,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.corporation8793.R
@@ -15,11 +17,14 @@ import com.corporation8793.custom.ScoreItem
 class RightAnswerActivity : AppCompatActivity() {
     var right_answers = arrayOf("3","2","2","3","3")
     var score_text = ""
+    var chapter_id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_right_answer)
 
         hideSystemUI()
+
+        chapter_id = intent.getStringExtra("chapter_id")!!
 
         var result_text = findViewById<TextView>(R.id.result_text)
 
@@ -28,6 +33,20 @@ class RightAnswerActivity : AppCompatActivity() {
         var problem3 = findViewById<ScoreItem>(R.id.problem3)
         var problem4 = findViewById<ScoreItem>(R.id.problem4)
         var problem5 = findViewById<ScoreItem>(R.id.problem5)
+
+        var back_to_solve_problem_btn  = findViewById<Button>(R.id.back_to_solve_problem_btn)
+        var finish_btn = findViewById<Button>(R.id.finish_btn)
+
+        back_to_solve_problem_btn.setOnClickListener {
+            var intent = Intent(this, SolvingProblem::class.java)
+            intent.putExtra("chapter_id",chapter_id)
+            startActivity(intent)
+            finish()
+        }
+
+        finish_btn.setOnClickListener {
+            finish()
+        }
 //        var result = findViewById<TextView>(R.id.result)
 
         problem1.setTitle("Q1")

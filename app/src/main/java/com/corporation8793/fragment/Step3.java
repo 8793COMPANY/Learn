@@ -1,11 +1,15 @@
 package com.corporation8793.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,9 +28,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.RetakeDialog;
+import com.learn.wp_rest.data.wp.media.Media;
+import com.learn.wp_rest.repository.wp.media.MediaRepository;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -36,12 +44,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
+import kotlin.Pair;
+import okhttp3.Credentials;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Step3#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class Step3 extends Fragment {
+    ProgressDialog customProgressDialog;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,15 +71,17 @@ public class Step3 extends Fragment {
     boolean check = false;
     private RetakeDialog retakeDialog;
 
-    String contents_name;
+    String contents_name, chapter_id;
+
 
     public Step3() {
         // Required empty public constructor
     }
 
-    public Step3(String contents_name) {
+    public Step3(String contents_name,String chapter_id) {
         // Required empty public constructor
         this.contents_name = contents_name;
+        this.chapter_id = chapter_id;
     }
 
     /**
@@ -106,6 +120,12 @@ public class Step3 extends Fragment {
         upload_area = view.findViewById(R.id.upload_area);
         upload_img = view.findViewById(R.id.upload_img);
 
+        customProgressDialog = new ProgressDialog(getContext());
+        customProgressDialog.setContentView(R.layout.dialog_progress);
+
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
         retakeDialog = new RetakeDialog(getContext(), retake_ok,retake_cancel);
         upload_area.setOnClickListener(v->{
             if (check){
@@ -140,13 +160,6 @@ public class Step3 extends Fragment {
 
     private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
-        File directory = Environment.getExternalStoragePublicDirectory("/learn");
-        if(!directory.mkdirs()){
-            Log.e("FILE", "Directory not created");
-        }else{
-            Log.e("hi","file created");
-        }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentResolver resolver = getActivity().getContentResolver();
             ContentValues contentValues = new ContentValues();
@@ -154,8 +167,17 @@ public class Step3 extends Fragment {
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+            new Thread(()->{
+            Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(getContext(),imageUri)));
+            MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+
+            Log.e("response_ci",response_ci.getFirst());
+            Log.e("response_ci",response_ci.getSecond().toString());
+            customProgressDialog.dismiss();
+            }).start();
+
             Log.e("imageUri",imageUri.toString());
-            Log.e("check 위치", Environment.getExternalStorageDirectory().toString());
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
         } else {
             File imagesDir = Environment.getExternalStoragePublicDirectory("/learn");
@@ -171,6 +193,19 @@ public class Step3 extends Fragment {
         Objects.requireNonNull(fos).close();
     }
 
+    public static String uri2path(Context context, Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        cursor.moveToNext();
+        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+        Uri uri = Uri.fromFile(new File(path));
+
+        cursor.close();
+        return path;
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -182,9 +217,12 @@ public class Step3 extends Fragment {
             upload_img.setImageBitmap(imageBitmap);
 
             try {
+                customProgressDialog.show();
                 saveImage(imageBitmap,"check");
+
             } catch (Exception e) {
                 e.printStackTrace();
+                customProgressDialog.dismiss();
             }
 
             if (!check) {
