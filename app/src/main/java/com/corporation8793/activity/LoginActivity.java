@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.corporation8793.Application;
+import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.Setting;
 import com.corporation8793.dialog.ProgressDialog;
@@ -71,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
         auto_login = findViewById(R.id.auto_login);
         login_btn = findViewById(R.id.login_btn);
 
+        if (MySharedPreferences.getBoolean(this,"auto_login")){
+            auto_login.setSelected(true);
+            auto_login.setBackground(getResources().getDrawable(R.drawable.auto_login_));
+            login_id_input_box.setText(MySharedPreferences.getString(this,"login_id"));
+            login_pw_input_box.setText(MySharedPreferences.getString(this,"login_pw"));
+        }
+
         auto_login.setOnClickListener(v -> {
             runOnUiThread(() -> {
                 if (!v.isSelected()) {
@@ -95,6 +103,13 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("validation check",validation_check+"");
                 Handler handler = new Handler(Looper.getMainLooper());
                 if(validation_check) {
+                    Log.e("auto login check",auto_login.isSelected()+"");
+                    if (auto_login.isSelected()) {
+                        MySharedPreferences.setBoolean(this, "auto_login",true);
+                        MySharedPreferences.setString(this, "login_id", login_id_input_box.getText().toString());
+                        MySharedPreferences.setString(this, "login_pw", login_pw_input_box.getText().toString());
+                    }else
+                        MySharedPreferences.setBoolean(this, "auto_login",false);
                     customProgressDialog.dismiss();
                     Application application = Application.getInstance(this);
                     application.setAuth(Credentials.basic(login_id_input_box.getText().toString(),login_pw_input_box.getText().toString()));

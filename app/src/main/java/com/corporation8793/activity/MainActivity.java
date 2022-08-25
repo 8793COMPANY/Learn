@@ -1058,6 +1058,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         flyoutFragment.setCloseCheck(this);
 
 
+
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.setItemClick(this);
         this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -1154,6 +1155,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         View root = getLayoutInflater().inflate(R.layout.split_content, null);
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
         Log.e("oncreate","contentview");
+
+//        mBlocklyActivityHelper.getmCategoryView().getCurrentCategory().getCategoryName();
 
 
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);

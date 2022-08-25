@@ -48,7 +48,7 @@ public class SolvingProblem extends AppCompatActivity {
     ProgressBar problem_progress;
 
     String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
-    String [] contents = {"LED 깜박이기","LED 1초간 껐다 켜기","LED 3개 깜박이기","LED 깜박이기",};
+    String [] contents = {"LED 깜빡이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
     int pos = 1;
 
     ConstraintLayout background;

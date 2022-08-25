@@ -34,7 +34,7 @@ public class ProblemActivity extends AppCompatActivity {
     TextView title, title2;
 
     String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
-    String [] contents = {"LED 깜박이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
+    String [] contents = {"LED 깜빡이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
     int pos = 0;
 
     ConstraintLayout background;

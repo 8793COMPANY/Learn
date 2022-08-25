@@ -160,7 +160,7 @@ public class ChapterActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         chapterAdapter.notifyItemChanged(chapterAdapter.current_chapter,"update");
-        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX") == 5){
+        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이기 MAX") == 5){
             //여기 코드 작성해주세요 ~
             chapterAdapter.notifyItemRangeChanged(1,contents_list.size()-1,"lock_check");
         }

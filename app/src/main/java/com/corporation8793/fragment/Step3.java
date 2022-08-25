@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import com.corporation8793.Application;
@@ -42,6 +43,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import kotlin.Pair;
@@ -72,6 +75,7 @@ public class Step3 extends Fragment {
     private RetakeDialog retakeDialog;
 
     String contents_name, chapter_id;
+    String mCurrentPhotoPath = "";
 
 
     public Step3() {
@@ -154,11 +158,29 @@ public class Step3 extends Fragment {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null){
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CODE);
+            File photoFile = null;
+            File tempDir = getActivity().getCacheDir();
+
+            String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "Capture_"+timeStamp+"_";
+
+            try {
+                File tempImage = File.createTempFile(imageFileName,".jpg",tempDir);
+                mCurrentPhotoPath = tempImage.getAbsolutePath();
+                photoFile = tempImage;
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+            if (photoFile != null) {
+                Uri photURI = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CODE);
+            }
         }
     }
 
-    private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
+    private void saveImage(File imageFile, Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContentResolver resolver = getActivity().getContentResolver();
@@ -169,8 +191,11 @@ public class Step3 extends Fragment {
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
             new Thread(()->{
-            Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(getContext(),imageUri)));
+                Log.e("in","thread");
+            Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
+                Log.e("in","thread2");
             MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+                Log.e("in","thread3");
 
             Log.e("response_ci",response_ci.getFirst());
             Log.e("response_ci",response_ci.getSecond().toString());
@@ -212,13 +237,17 @@ public class Step3 extends Fragment {
         if (requestCode == REQUEST_IMAGE_CODE && resultCode == RESULT_OK){
             OutputStream fos;
 
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            upload_img.setImageBitmap(imageBitmap);
+            File file = new File(mCurrentPhotoPath);
+            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
             upload_img.setImageBitmap(imageBitmap);
 
             try {
                 customProgressDialog.show();
-                saveImage(imageBitmap,"check");
+                saveImage(file,imageBitmap,"check");
+
 
             } catch (Exception e) {
                 e.printStackTrace();

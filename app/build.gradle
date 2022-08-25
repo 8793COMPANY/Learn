@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.learn4"
+        applicationId "com.corporation8793"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 14
