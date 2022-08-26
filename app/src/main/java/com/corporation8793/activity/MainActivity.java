@@ -35,6 +35,8 @@ import com.corporation8793.dialog.UploadDialog;
 import com.corporation8793.dto.CodeBlock;
 import com.google.blockly.android.FlyoutFragment;
 import com.google.blockly.android.OnCloseCheckListener;
+import com.google.blockly.android.control.FlyoutController;
+import com.google.blockly.android.ui.BlockView;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
@@ -104,6 +106,7 @@ import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.Block;
+import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
 import com.learn.wp_rest.data.acf.UploadReportJson;
@@ -1060,6 +1063,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
+//        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());
+//        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+//        Log.e("blocks",blocks.size()+"");
         mCategoryView.setItemClick(this);
         this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
@@ -1157,6 +1163,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("oncreate","contentview");
 
 //        mBlocklyActivityHelper.getmCategoryView().getCurrentCategory().getCategoryName();
+
 
 
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
