@@ -1062,9 +1062,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
+
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
 //        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());
-//        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+
+        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+        for (BlocklyCategory.CategoryItem item : blocks) {
+            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
+                // Clean up the old views
+                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
+                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,blockItem.getBlock()));
+//                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
+//                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
+            }
+        }
+        CodeDictionaryAdapter dictionaryAdapter = new CodeDictionaryAdapter(this,dictionary_block_list);
+        block_list.setAdapter(dictionaryAdapter);
+
+//        (BlocklyCategory.BlockItem) blocks.get(0)).getBlock()
 //        Log.e("blocks",blocks.size()+"");
         mCategoryView.setItemClick(this);
         this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -1207,13 +1222,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_list.setLayoutManager(new LinearLayoutManager(this));
 
-        dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2));
-        dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
-        dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
 
 
-        CodeDictionaryAdapter dictionaryAdapter = new CodeDictionaryAdapter(this,dictionary_block_list);
-        block_list.setAdapter(dictionaryAdapter);
+
+
 
 
         arrayList = new ArrayList<>();
@@ -1444,6 +1456,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
 
 
