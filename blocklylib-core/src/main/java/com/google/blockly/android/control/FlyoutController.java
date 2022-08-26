@@ -246,6 +246,8 @@ public class FlyoutController {
             return;
         }
         List<BlocklyCategory> subCats = mToolboxRoot.getSubcategories();
+        Log.e("subcats", subCats.get(0).getCategoryName()+"");
+
         List<BlocklyCategory.CategoryItem> topItems = mToolboxRoot.getItems();
         if (subCats.size() > 0 && topItems.size() > 0) {
             throw new IllegalArgumentException(

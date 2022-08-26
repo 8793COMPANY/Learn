@@ -119,6 +119,7 @@ public class Step3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("hi","!!");
         View view = inflater.inflate(R.layout.fragment_step3, container, false);
         MySharedPreferences.setInt(getContext(),contents_name,2);
         upload_area = view.findViewById(R.id.upload_area);
@@ -183,12 +184,12 @@ public class Step3 extends Fragment {
     private void saveImage(File imageFile, Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContentResolver resolver = getActivity().getContentResolver();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
-            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+//            ContentResolver resolver = getActivity().getContentResolver();
+//            ContentValues contentValues = new ContentValues();
+//            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
+//            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
+//            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
+//            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
             new Thread(()->{
                 Log.e("in","thread");
@@ -202,8 +203,8 @@ public class Step3 extends Fragment {
             customProgressDialog.dismiss();
             }).start();
 
-            Log.e("imageUri",imageUri.toString());
-            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+//            Log.e("imageUri",imageUri.toString());
+//            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
         } else {
             File imagesDir = Environment.getExternalStoragePublicDirectory("/learn");
             if(!imagesDir.mkdirs()){
@@ -212,10 +213,12 @@ public class Step3 extends Fragment {
                 Log.e("hi","file created");
             }
             File image = new File(imagesDir.toString(), name + ".jpg");
-            fos = new FileOutputStream(image);
+            fos = new FileOutputStream(imageFile);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            Objects.requireNonNull(fos).close();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-        Objects.requireNonNull(fos).close();
+
     }
 
     public static String uri2path(Context context, Uri contentUri) {
@@ -236,21 +239,25 @@ public class Step3 extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CODE && resultCode == RESULT_OK){
             OutputStream fos;
+            Log.e("hi onactivityresult","!!");
 
 //            Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
 //            upload_img.setImageBitmap(imageBitmap);
+            Log.e("hi file start","!!");
             File file = new File(mCurrentPhotoPath);
             Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
             upload_img.setImageBitmap(imageBitmap);
-
+            Log.e("hi file end","!!");
             try {
+                Log.e("hi dialog start","!!");
                 customProgressDialog.show();
+                Log.e("hi dialog show","!!");
                 saveImage(file,imageBitmap,"check");
-
+                Log.e("hi dialog end","!!");
 
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("e",e.toString());
                 customProgressDialog.dismiss();
             }
 
