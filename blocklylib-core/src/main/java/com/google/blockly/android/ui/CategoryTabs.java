@@ -128,7 +128,7 @@ public class CategoryTabs extends RecyclerView {
 
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
         // TODO : 블록 카테고리-탭스 Width 사이즈 설정
-        int oneTapWidth = 370;
+        int oneTapWidth = 400;
         mAdapter = new CategoryAdapter(realDeviceWidth + oneTapWidth);
 
 //        mAdapter = new CategoryAdapter(((oneTapWidth) * getTabCount()));

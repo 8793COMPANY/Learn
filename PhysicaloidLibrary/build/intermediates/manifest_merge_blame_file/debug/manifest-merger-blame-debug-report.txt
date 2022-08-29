@@ -6,12 +6,12 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="12"
-8-->/Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+8-->C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 9        android:targetSdkVersion="30" />
-9-->/Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+9-->C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.BLUETOOTH" />
-11-->/Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:5-68
-11-->/Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:22-65
+11-->C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-68
+11-->C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:22-65
 12
 13</manifest>

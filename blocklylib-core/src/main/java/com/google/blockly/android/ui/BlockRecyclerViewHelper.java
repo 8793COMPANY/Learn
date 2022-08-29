@@ -131,6 +131,7 @@ public class BlockRecyclerViewHelper {
                     copyBlock(pendingDrag);
                 }
 
+
             }
         });
 
@@ -182,6 +183,7 @@ public class BlockRecyclerViewHelper {
         Log.e("hi","final");
         mCurrentCategory = category;
         mAdapter.notifyDataSetChanged();
+
 
 
 
@@ -600,6 +602,7 @@ public class BlockRecyclerViewHelper {
 
         @Override
         public void onBindViewHolder(BlockViewHolder holder, int position) {
+            Log.e("mcurrentcategory",mCurrentCategory.getCategoryName());
             List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
                     ? new ArrayList<BlocklyCategory.CategoryItem>()
                     : mCurrentCategory.getItems();
@@ -645,7 +648,6 @@ public class BlockRecyclerViewHelper {
                 }
 //                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
                 //이부분 수정
-
                 if (!block.getType().equals("turtle_setup_loop")) {
                     holder.mContainer.addView(bg, layoutParams);
                     holder.mContainer.setForegroundGravity(0);

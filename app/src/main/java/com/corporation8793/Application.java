@@ -15,6 +15,10 @@ import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.room.AppDatabase;
 import com.corporation8793.room.entity.Contents;
 import com.google.blockly.model.Input;
+import com.learn.wp_rest.repository.acf.AcfRepository;
+import com.learn.wp_rest.repository.auth.AuthRepository;
+import com.learn.wp_rest.repository.wp.media.MediaRepository;
+import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,14 +40,22 @@ public class Application extends android.app.Application {
     private LogHelper logHelper;
     private ProgressDialog loadingDialog;
 
+    private static Application instance = null;
+
+    public static AcfRepository acfRepository;
+    public static AuthRepository authRepository;
+    public static MediaRepository mediaRepository;
+    public static PostsRepository postsRepository;
 
 
 
+    public static com.corporation8793.Application getInstance(Context context){
+//        this.context = context;
+        if (instance == null){
+            instance = new Application();
+        }
 
-    public com.corporation8793.Application getInstance(Context context){
-        this.context = context;
-
-        return this;
+        return instance;
     }
 
     @Override
@@ -81,6 +93,11 @@ public class Application extends android.app.Application {
     }
 
 
+    public void setAuth(String auth){
+        acfRepository = new AcfRepository(auth);
+        mediaRepository = new MediaRepository(auth);
+        postsRepository = new PostsRepository(auth);
+    }
 
 
 

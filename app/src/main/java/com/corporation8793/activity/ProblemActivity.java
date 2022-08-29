@@ -34,7 +34,7 @@ public class ProblemActivity extends AppCompatActivity {
     TextView title, title2;
 
     String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
-    String [] contents = {"LED 깜박이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
+    String [] contents = {"LED 깜빡이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
     int pos = 0;
 
     ConstraintLayout background;
@@ -42,6 +42,7 @@ public class ProblemActivity extends AppCompatActivity {
     String chapter_step = "default";
     int diagram_img = R.drawable.all_diagram_img;
     String contents_name = "";
+    String chapter_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +70,9 @@ public class ProblemActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility( uiOption );
 
         int step = getIntent().getIntExtra("step",1);
-        String id = getIntent().getStringExtra("id");
+        chapter_id = getIntent().getStringExtra("id");
 
-        Log.e("id",id);
+        Log.e("id",chapter_id);
         Log.e("step",step+"");
         contents_name = contents[step];
 
@@ -142,9 +143,9 @@ public class ProblemActivity extends AppCompatActivity {
             if(MySharedPreferences.getInt(getApplicationContext(),contents_name) ==3){
                 Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
                 intent.putExtra("contents_name",contents_name);
-                intent.putExtra("id",id);
+                intent.putExtra("id",chapter_id);
                 Log.e("contents_name",contents_name);
-                Log.e("id",id);
+                Log.e("id",chapter_id);
                 startActivity(intent);
                 finish();
             } else{
@@ -181,7 +182,7 @@ public class ProblemActivity extends AppCompatActivity {
         }else if (pos ==1){
             transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));
         }else if (pos ==2){
-            transaction.replace(R.id.fragment, new Step3(contents_name));
+            transaction.replace(R.id.fragment, new Step3(contents_name,chapter_id));
         }
 
         transaction.commit();

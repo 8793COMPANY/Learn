@@ -23,7 +23,6 @@ interface AcfService {
                               @Path("id") id : String,
                               @Query("fields[chapter]") chapter : Int,
                               @Query("fields[content]") content : Int,
-                              @Query("fields[lesson_name]") lesson_name : String,
                               @Query("fields[circuit_img]") circuit_img : String,
                               @Query("fields[block_img]") block_img : String) : Call<UploadReportJson>
     /**
@@ -34,8 +33,6 @@ interface AcfService {
     fun updateQuizReportAcf(@Header("Authorization") h1 : String,
                             @Path("id") id : String,
                             @Query("fields[chapter]") chapter : Int,
-                            @Query("fields[content]") content : Int,
-                            @Query("fields[lesson_name]") lesson_name : String,
                             @Query("fields[answer_1]") answer_1 : Int,
                             @Query("fields[answer_2]") answer_2 : Int,
                             @Query("fields[answer_3]") answer_3 : Int,

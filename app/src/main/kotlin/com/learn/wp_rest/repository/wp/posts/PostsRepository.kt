@@ -19,13 +19,11 @@ class PostsRepository(private val basicAuth : String) {
             """
                 <div class="app-report-row">
                   <div class="app-report-column">
-                    <h2>회로도</h2>
                     <a href="$circuit_img" target="_blank">
                     <img src="$circuit_img" alt="circuit" style="width:100%">
                     </a>
                   </div>
                   <div class="app-report-column">
-                    <h2>블록</h2>
                     <a href="$block_img" target="_blank">
                     <img src="$block_img" alt="block" style="width:100%">
                     </a>
@@ -57,21 +55,8 @@ class PostsRepository(private val basicAuth : String) {
                          answer_5 : Int) : Pair<String, QuizReport?> {
         val htmlTemplate =
             """
-                <h2>답안지</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th colspan="5">답안지</th>
-                        </tr>
-                    </thead>
                     <tbody>
-                        <tr>
-                            <td>1번</td>
-                            <td>2번</td>
-                            <td>3번</td>
-                            <td>4번</td>
-                            <td>5번</td>
-                        </tr>
                         <tr>
                             <td>${answer_1}</td>
                             <td>${answer_2}</td>

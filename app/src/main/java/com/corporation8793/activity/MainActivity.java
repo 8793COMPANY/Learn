@@ -15,6 +15,7 @@
 
 package com.corporation8793.activity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -34,9 +35,12 @@ import com.corporation8793.dialog.UploadDialog;
 import com.corporation8793.dto.CodeBlock;
 import com.google.blockly.android.FlyoutFragment;
 import com.google.blockly.android.OnCloseCheckListener;
+import com.google.blockly.android.control.FlyoutController;
+import com.google.blockly.android.ui.BlockView;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 
 import android.graphics.Canvas;
@@ -102,8 +106,15 @@ import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.model.Block;
+import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.utils.BlockLoadingException;
+import com.learn.wp_rest.data.acf.UploadReportJson;
+import com.learn.wp_rest.data.wp.media.Media;
+import com.learn.wp_rest.data.wp.posts.UploadReport;
+import com.learn.wp_rest.repository.acf.AcfRepository;
+import com.learn.wp_rest.repository.wp.media.MediaRepository;
+import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 import com.physicaloid.lib.Physicaloid;
 import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
@@ -132,6 +143,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import kotlin.Pair;
+import okhttp3.Credentials;
+
 
 /**
  * Demo app with the Blockly Games turtle game in a webview.
@@ -156,7 +170,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
-    private Boolean initial=true, wifi_check = false, usb_check = false;
+    private Boolean initial=true, wifi_check = false, usb_check = false, server_upload_check = true;
     Boolean compileCheck = false, copy_check = false;
     private EditText editURL;
     View setup_view, loop_view, method_view, etc_view, code_view, serial_view, upload_view;
@@ -181,7 +195,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String str ="";
     ScrollView scrollview;
     int num = 0;
-    String contents_name ="none";
+    String contents_name ="none", chapter_id = "none";
+    String [] chapter_id_split;
     String id ="none";
 
     Guideline guideline4;
@@ -1002,6 +1017,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        setting.registerNetworkCallback();
 
         contents_name = getIntent().getStringExtra("contents_name");
+        chapter_id = getIntent().getStringExtra("id");
+
+        chapter_id_split = chapter_id.split("-");
+
+        Log.e("chapter_id",chapter_id);
 
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -1011,7 +1031,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         display.getSize(size);
 
         Log.e(TAG, ">>> block_width size.x : " + size.x + ", size.y : " + size.y);
-
 
 
 
@@ -1028,7 +1047,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             MySharedPreferences.setInt(getApplicationContext(),contents_name,4);
 
         }else{
-
+            server_upload_check = false;
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -1042,7 +1061,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         flyoutFragment.setCloseCheck(this);
 
 
+
+
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
+//        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());
+
+        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+        for (BlocklyCategory.CategoryItem item : blocks) {
+            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
+                // Clean up the old views
+                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
+                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,blockItem.getBlock()));
+//                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
+//                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
+            }
+        }
+        CodeDictionaryAdapter dictionaryAdapter = new CodeDictionaryAdapter(this,dictionary_block_list);
+        block_list.setAdapter(dictionaryAdapter);
+
+//        (BlocklyCategory.BlockItem) blocks.get(0)).getBlock()
+//        Log.e("blocks",blocks.size()+"");
         mCategoryView.setItemClick(this);
         this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
@@ -1139,6 +1177,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
         Log.e("oncreate","contentview");
 
+//        mBlocklyActivityHelper.getmCategoryView().getCurrentCategory().getCategoryName();
+
+
 
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
 
@@ -1181,13 +1222,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_list.setLayoutManager(new LinearLayoutManager(this));
 
-        dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2));
-        dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
-        dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
 
 
-        CodeDictionaryAdapter dictionaryAdapter = new CodeDictionaryAdapter(this,dictionary_block_list);
-        block_list.setAdapter(dictionaryAdapter);
+
+
 
 
         arrayList = new ArrayList<>();
@@ -1418,6 +1456,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
 
 
@@ -1669,6 +1709,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
+
+
         // 테스트용 구라 주소
         //return "http://87.93.87.93:5000";
     }
@@ -1712,7 +1754,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             case 7:
                 categoryData.setPosition(7);
+                categoryData.setClosed(true);
                 current_pos = 7;
+                blockly_monitor.setVisibility(View.GONE);
+                setInitLine();
                 if (v.isSelected())
                     block_dictionary.setVisibility(View.VISIBLE);
                 else
@@ -1787,6 +1832,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
     }
 
+    public static String uri2path(Context context, Uri contentUri) {
+        Log.e("in","uripath");
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        cursor.moveToNext();
+        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+//        Uri uri = Uri.fromFile(new File(path));
+
+        cursor.close();
+        Log.e("out","uripath");
+        return path;
+    }
+
     private void saveImage(Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -1797,6 +1856,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+            new Thread(()->{
+                Log.e("uri",uri2path(this,imageUri));
+                Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
+                MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+
+                Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+                        chapter_id+". "+contents_name,
+                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                        response_ci.getSecond().getGuid().getRendered()
+                        );
+                Log.e("response",response.getFirst());
+                Log.e("response",response.getSecond().toString());
+                Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
+                        response.getSecond().getId(),
+                        Integer.parseInt(chapter_id_split[0]),
+                        Integer.parseInt(chapter_id_split[1]),
+                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                        response_ci.getSecond().getGuid().getRendered()
+                );
+
+                Log.e("upload_result",upload_result.getFirst());
+                Log.e("upload_result",upload_result.getSecond().toString());
+            }).start();
+
         } else {
             String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
             File image = new File(imagesDir, name + ".jpg");
@@ -1910,14 +1993,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
 
                 // TODO : 화면 캡쳐 트리거
-                Log.e("MainActivity", "captureWorkspace: start");
-                bitmapWorkspace = controller.captureWorkspace();
+                if(!chapter_id.equals("0")) {
+                    Log.e("MainActivity", "captureWorkspace: start");
+                    bitmapWorkspace = controller.captureWorkspace();
 
-                try {
-                    saveImage(bitmapWorkspace, "captureWorkspace");
-                    Log.e("MainActivity", "captureWorkspace: save ok");
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        saveImage(bitmapWorkspace, "captureWorkspace");
+                        Log.e("MainActivity", "captureWorkspace: save ok");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             } else {

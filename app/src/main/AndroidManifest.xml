@@ -25,17 +25,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:configChanges="orientation|screenSize"
         android:usesCleartextTraffic="true">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.corporation8793.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"></meta-data>
+        </provider>
+
         <activity
             android:name=".problem.RightAnswerActivity"
             android:exported="false"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".activity.ChapterActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".activity.ProblemActivity"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            />
         <activity
             android:name=".problem.SolvingProblem"
             android:screenOrientation="sensorLandscape" />
