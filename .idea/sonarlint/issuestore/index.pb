@@ -29,10 +29,6 @@ f
 6app/src/main/java/com/corporation8793/Application.java,a\8\a8a74f8d7df2703d0f342ff0309cd9ab6dbe7358
 q
 Aapp/src/main/java/com/corporation8793/activity/LoginActivity.java,0\5\05388f7120a1700a945ce8efc147b0a2bcadf8bc
-h
-8app/src/main/kotlin/com/learn/wp_rest/data/auth/Nonce.kt,3\a\3a9bfa121edc9e202830f5045f6675ee45f2e3e5
-k
-;app/src/main/kotlin/com/learn/wp_rest/data/wp/users/User.kt,f\7\f7e19b3126679a62c960a0d5067528bbc6738289
 |
 Lapp/src/main/kotlin/com/learn/wp_rest/repository/wp/media/MediaRepository.kt,7\a\7ab6eaece159daa32fefd470ee1455f39a341b28
 y
@@ -45,10 +41,6 @@ s
 Capp/src/main/kotlin/com/learn/wp_rest/data/wp/posts/UploadReport.kt,1\2\1291100ca91e21ea6ac4d2c64ac5d96a20527a08
 c
 3app/src/main/kotlin/com/learn/wp_rest/RestClient.kt,4\f\4fbbe082b28614976d5609e7ecd2a7b6d56e4f94
-m
-=app/src/main/kotlin/com/learn/wp_rest/data/auth/AuthCookie.kt,3\2\32891a725a460718cbfdefae602ceb8ecef24087
-m
-=app/src/main/kotlin/com/learn/wp_rest/data/auth/Validation.kt,8\d\8d4a94750d2e49ac53d43c1e99969990b455a357
 e
 5app/src/main/kotlin/com/learn/wp_rest/data/acf/Acf.kt,2\3\23037222c711a7f4c297ce6d94fb76b7e37e6d80
 y
@@ -57,8 +49,6 @@ q
 Aapp/src/main/kotlin/com/learn/wp_rest/data/wp/posts/QuizReport.kt,2\9\29b9186b32fc45cd8cda5e428d2c371ba6b141b7
 y
 Iapp/src/main/kotlin/com/learn/wp_rest/repository/wp/users/UsersService.kt,a\5\a5ca830ecdc2b0a9442f7395ab1d46012831c41f
-|
-Lapp/src/main/kotlin/com/learn/wp_rest/repository/wp/users/UsersRepository.kt,d\e\de76a565b412bd672df6dc28c3d306ceeccf28af
 w
 Gapp/src/main/kotlin/com/learn/wp_rest/repository/auth/AuthRepository.kt,d\6\d61625b8182c81bf2197aaf3e39f52afe5444c92
 t
