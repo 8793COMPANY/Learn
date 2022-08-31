@@ -28,12 +28,12 @@ class PostsRepository(private val basicAuth : String) {
                 <div class="app-report-row">
                   <div class="app-report-column">
                     <a href="$requestReportAnswer$ciSearchQuery" target="_blank">
-                    <img src="$requestReportAnswer$ciSearchQuery" alt="circuit" style="width:100%">
+                        <img src="$circuit_img" alt="circuit" style="width:100%">
                     </a>
                   </div>
                   <div class="app-report-column">
                     <a href="$requestReportAnswer$biSearchQuery" target="_blank">
-                    <img src="$requestReportAnswer$biSearchQuery" alt="block" style="width:100%">
+                        <img src="$block_img" alt="block" style="width:100%">
                     </a>
                   </div>
                 </div>
