@@ -1,16 +1,28 @@
 package com.corporation8793.dto;
 
+import com.google.blockly.model.Block;
+
 public class CodeBlock {
     String id;
     String name;
     String info;
     int img;
+    Block block;
 
-    public CodeBlock(String id, String title, String info, int img) {
+    public CodeBlock(String id, String title, String info, int img, Block block) {
         this.id = id;
         this.name = title;
         this.info = info;
         this.img = img;
+        this.block = block;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public void setBlock(Block block) {
+        this.block = block;
     }
 
 

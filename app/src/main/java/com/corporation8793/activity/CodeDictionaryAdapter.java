@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.corporation8793.R;
 import com.corporation8793.dto.CodeBlock;
+import com.google.blockly.android.ui.BlockView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,7 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
             block_name.setText(block.getName());
             block_info.setText(block.getInfo());
             block_img.setBackgroundResource(block.getImg());
+//            (BlockView)block.getBlock();
 
         }
     }
