@@ -74,7 +74,7 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //        BlockGroup copyView  = controller.mHelper.getBlockViewFactory().getView(listData.get(position).getBlock()).getParentBlockGroup();
 //        BlockGroup copyView = controller.addRootBlock(listData.get(position).getBlock());
 //        BlockGroup copyView = controller.mHelper.getRootBlockGroup(listData.get(position).getBlock());
-        View view = (View) controller.getBlockViewFactory().getView(listData.get(position).getBlock().getRootBlock());
+//        View view = (View) controller.getBlockViewFactory().getView(listData.get(position).getBlock().getRootBlock());
 //        if ()
 //        if (controller.getBlockViewFactory().getView(listData.get(position).getBlock()) != null) {
 //            Log.e("hi", "not null");
