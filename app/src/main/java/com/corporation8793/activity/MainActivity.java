@@ -67,6 +67,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -165,8 +166,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private String mNoErrorText;
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
-    View [] tempTab = {null, null, null,null};
-    Boolean [] tempTabCheck = {false, false, false,false};
+    View [] tempTab = {null, null, null,null,null,null};
+    Boolean [] tempTabCheck = {false, false, false,false,false,false};
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
@@ -222,6 +223,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     StringBuilder stringBuilder = new StringBuilder();
 
     BlocklyController controller;
+
+    CodeDictionaryAdapter dictionaryAdapter;
 
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -1071,13 +1074,27 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 // Clean up the old views
                 BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
-                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,blockItem.getBlock()));
+//                controller.getBlockViewFactory().getView()
+                Block block = blockItem.getBlock();
+                if (block !=null)
+                    Log.e("block item","not null");
+                Log.e("block",blockItem.getBlock().toString());
+                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
 //                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
 //                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
             }
         }
-        CodeDictionaryAdapter dictionaryAdapter = new CodeDictionaryAdapter(this,dictionary_block_list);
+        Log.e("block list count",dictionary_block_list.size()+"");
+        dictionaryAdapter = new CodeDictionaryAdapter(this,controller,dictionary_block_list);
         block_list.setAdapter(dictionaryAdapter);
+
+        block_list.setLayoutManager(new LinearLayoutManager(this));
+        block_list.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener(){
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
+        });
 
 //        (BlocklyCategory.BlockItem) blocks.get(0)).getBlock()
 //        Log.e("blocks",blocks.size()+"");
@@ -1137,7 +1154,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         switch (mPushEvent.getPos()) {
             // 어택땅
-            case 8:
+            case 10:
                 initTabColor();
                 initTabCheck();
                 trashcan_btn.setVisibility(View.VISIBLE);
@@ -1220,7 +1237,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_setup_btn.setSelected(true);
 
-        block_list.setLayoutManager(new LinearLayoutManager(this));
+
 
 
 
@@ -1756,12 +1773,28 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 categoryData.setPosition(7);
                 categoryData.setClosed(true);
                 current_pos = 7;
+                setInitLine();
+                resetListener.show();
+                break;
+            case 8:
+                categoryData.setPosition(8);
+                categoryData.setClosed(true);
+                current_pos = 8;
+                setInitLine();
+                finishListener.show();
+                break;
+            case 9:
+                categoryData.setPosition(9);
+                categoryData.setClosed(true);
+                current_pos = 9;
                 blockly_monitor.setVisibility(View.GONE);
                 setInitLine();
+//                dictionaryAdapter.notifyDataSetChanged();
                 if (v.isSelected())
                     block_dictionary.setVisibility(View.VISIBLE);
                 else
                     block_dictionary.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -1775,7 +1808,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void initTabCheck() {
-        tempTabCheck = new Boolean[] {false, false, false,false};
+        tempTabCheck = new Boolean[] {false, false, false,false,false,false};
         Log.e("initTabCheck - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
     }
 

@@ -129,6 +129,7 @@ public class BlockRecyclerViewHelper {
                 if (!rootBlock.getType().trim().equals("turtle_setup_loop")){
 //                    getWorkspaceBlockGroupForTouch(pendingDrag);
                     copyBlock(pendingDrag);
+//                    removeBlock(pendingDrag);
                 }
 
 
@@ -441,6 +442,17 @@ public class BlockRecyclerViewHelper {
      *         {@link FlyoutCallback#getDraggableBlockGroup}.
      */
 
+
+
+    void removeBlock(PendingDrag pendingDrag) {
+        Log.e("getworkspace", "blockgroupfortouch");
+        BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+        Block rootBlock = touchedBlockView.getBlock().getRootBlock();
+        Log.e("rootBlock", rootBlock.getType());
+        BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
+        BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
+    }
+
     //블록 복사
     @NonNull
     private Pair<BlockGroup, ViewPoint> copyBlock(PendingDrag pendingDrag) {
@@ -450,6 +462,7 @@ public class BlockRecyclerViewHelper {
         Log.e("rootBlock",rootBlock.getType());
         BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
         BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
+
 
         // Calculate the offset from rootTouchedGroup to touchedBlockView in view
         // pixels. We are assuming the only transforms between BlockViews are the
@@ -648,6 +661,11 @@ public class BlockRecyclerViewHelper {
                 }
 //                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
                 //이부분 수정
+                if(bg.getParent() != null) {
+                    ((ViewGroup)bg.getParent()).removeView(bg); // <- fix
+                }
+
+
                 if (!block.getType().equals("turtle_setup_loop")) {
                     holder.mContainer.addView(bg, layoutParams);
                     holder.mContainer.setForegroundGravity(0);

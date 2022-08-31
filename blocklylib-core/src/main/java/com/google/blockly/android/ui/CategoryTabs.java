@@ -61,7 +61,8 @@ public class CategoryTabs extends RecyclerView {
     public static CategoryData categoryData = CategoryData.getInstance();
 
     int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
-    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn, R.drawable.code_dictionary_btn_selector};
+    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn
+            , R.drawable.reset_btn, R.drawable.home_btn, R.drawable.code_dictionary_btn_selector};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -128,7 +129,7 @@ public class CategoryTabs extends RecyclerView {
 
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
         // TODO : 블록 카테고리-탭스 Width 사이즈 설정
-        int oneTapWidth = 400;
+        int oneTapWidth = 700;
         mAdapter = new CategoryAdapter(realDeviceWidth + oneTapWidth);
 
 //        mAdapter = new CategoryAdapter(((oneTapWidth) * getTabCount()));
@@ -261,7 +262,7 @@ public class CategoryTabs extends RecyclerView {
 
     public int getTabCount() {
         // TODO : 블록 카테고리-탭스 항목수 지정, Width 사이즈에서 이 수만큼 나눕니다.
-        return 8;
+        return 10;
     }
 
     private void onCategoryClicked(BlocklyCategory category) {

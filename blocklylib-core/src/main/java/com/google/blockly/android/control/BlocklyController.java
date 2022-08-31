@@ -126,7 +126,7 @@ public class BlocklyController {
     private final Looper mMainLooper;
     private final BlockFactory mModelFactory;
     private final BlockViewFactory mViewFactory;
-    private final WorkspaceHelper mHelper;
+    public final WorkspaceHelper mHelper;
     private final BlockClipDataHelper mClipHelper;
 
     private final Workspace mWorkspace;
@@ -237,6 +237,19 @@ public class BlocklyController {
                     builder.setTitle("인사말").setMessage("반갑습니다");
 
                     builder.setPositiveButton("복사", new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            mListener.onBlockClick(pendingDrag);
+                            if (copyCheck != null){
+                                Log.e("in! hi","copyCheck");
+                                copyCheck.onCopyCheck(false);
+                            }
+
+                        }
+                    });
+
+                    builder.setNegativeButton("삭제", new DialogInterface.OnClickListener(){
                         @Override
                         public void onClick(DialogInterface dialog, int id)
                         {
