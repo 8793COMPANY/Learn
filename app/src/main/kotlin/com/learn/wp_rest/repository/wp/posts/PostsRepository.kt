@@ -56,6 +56,7 @@ class PostsRepository(private val basicAuth : String) {
      * @return  responseCode (expected : "201"), [QuizReport]
      */
     fun createQuizReport(title : String,
+                         uid : String,
                          answer_1 : Int,
                          answer_2 : Int,
                          answer_3 : Int,
@@ -65,7 +66,8 @@ class PostsRepository(private val basicAuth : String) {
 
         // answerType = ci, bi, quiz
         // answerTitle = title
-        val quizSearchQuery = "answerType=quiz&answerTitle=$title"
+        // submitted = uid
+        val quizSearchQuery = "answerType=quiz&answerTitle=$title&submitted=$uid"
 
         val htmlTemplate =
             """
