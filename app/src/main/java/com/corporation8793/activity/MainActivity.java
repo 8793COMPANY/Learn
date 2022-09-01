@@ -1067,8 +1067,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
-//        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());
-
+//        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
         List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
         for (BlocklyCategory.CategoryItem item : blocks) {
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
@@ -1790,9 +1789,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 blockly_monitor.setVisibility(View.GONE);
                 setInitLine();
 //                dictionaryAdapter.notifyDataSetChanged();
-                if (v.isSelected())
+                if (v.isSelected()) {
                     block_dictionary.setVisibility(View.VISIBLE);
-                else
+                    dictionaryAdapter.notifyDataSetChanged();
+                }else
                     block_dictionary.setVisibility(View.GONE);
                 break;
         }

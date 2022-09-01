@@ -130,11 +130,14 @@ public class BlockRecyclerViewHelper {
 //                    getWorkspaceBlockGroupForTouch(pendingDrag);
                     copyBlock(pendingDrag);
 //                    removeBlock(pendingDrag);
+//                    controller.removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
                 }
 
 
             }
         });
+
+
 
     }
 

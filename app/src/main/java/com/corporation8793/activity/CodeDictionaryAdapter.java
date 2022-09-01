@@ -19,6 +19,7 @@ import com.corporation8793.dto.CodeBlock;
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.android.ui.BlockView;
+import com.google.blockly.model.Block;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
         // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
         // return 인자는 ViewHolder 입니다.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_dictionary_itemview, parent, false);
-        view.getLayoutParams().height = 350;
+//        view.getLayoutParams().height = 350;
 
         return new ItemViewHolder(view);
     }
@@ -60,12 +61,43 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 
         holder.block_name.setTextColor(listData.get(position).getBlock().getColor());
 
-        if (listData.get(position).getBlock() != null)
-            Log.e("block hey",listData.get(position).getBlock().getColor()+"");
-
-//        BlockGroup group = new BlockGroup(context,controller.getWorkspaceHelper())
 
 
+        controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
+
+        Block block = listData.get(position).getBlock();
+//        if (controller.getBlockViewFactory().getView(listData.get(position).getBlock()) != null)
+//            Log.e("codedictionary","getView not null");
+//        else {
+//            Log.e("codedictionary", "getView null");
+//            controller.addRootBlock(listData.get(position).getBlock());
+//        }
+
+        BlockView blockView = controller.getBlockViewFactory().getView(listData.get(position).getBlock());
+        BlockGroup group = controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
+        if (group != null)
+            Log.e("codedictionary","getParentBlockGroup not null");
+        else {
+            Log.e("codedictionary", "getParentBlockGroup null");
+            group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
+//            controller.addRootBlock(listData.get(position).getBlock());
+        }
+
+        if(group.getParent() != null) {
+            ((ViewGroup)group.getParent()).removeView(group); // <- fix
+        }
+
+        Log.e("codedictionary",block.getType());
+        if (block.getType().equals("turtle_setup_loop")) {
+            group.setScaleX(0.8f);
+            group.setScaleY(0.8f);
+        }
+
+        holder.blockView.addView(group);
+
+//        BlockGroup group = new BlockGroup(context,controller.getWorkspaceHelper());
+
+//        if (controller.getBlockFactory())
 
 //        controller.getBlockViewFactory().getView(listData.get(position).getBlock());
 

@@ -253,11 +253,7 @@ public class BlocklyController {
                         @Override
                         public void onClick(DialogInterface dialog, int id)
                         {
-                            mListener.onBlockClick(pendingDrag);
-                            if (copyCheck != null){
-                                Log.e("in! hi","copyCheck");
-                                copyCheck.onCopyCheck(false);
-                            }
+                            removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
 
                         }
                     });
