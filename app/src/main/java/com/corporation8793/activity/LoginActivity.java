@@ -112,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
                         MySharedPreferences.setBoolean(this, "auto_login",false);
                     customProgressDialog.dismiss();
                     Application application = Application.getInstance(this);
+                    Log.e("login id",login_id_input_box.getText().toString());
+                    Log.e("login pw",login_pw_input_box.getText().toString());
                     application.setAuth(Credentials.basic(login_id_input_box.getText().toString(),login_pw_input_box.getText().toString()));
                     Intent intent = new Intent(this, ModeSelect.class);
                     startActivity(intent);

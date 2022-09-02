@@ -99,6 +99,7 @@ public class Application extends android.app.Application {
     public void setAuth(String auth){
         usersRepository = new UsersRepository(auth);
         user = usersRepository.whoAmI().getSecond();
+        Log.e("user",user.getName());
         acfRepository = new AcfRepository(auth);
         mediaRepository = new MediaRepository(auth);
         postsRepository = new PostsRepository(auth);
