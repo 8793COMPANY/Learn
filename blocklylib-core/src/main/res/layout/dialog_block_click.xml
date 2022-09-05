@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/function_area"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:background="@drawable/block_click_dialog_background"
@@ -18,6 +19,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/copy_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="복사"
@@ -34,6 +36,7 @@
             android:background="#ffd2b1"></View>
 
         <TextView
+            android:id="@+id/delete_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="삭제"
@@ -45,6 +48,19 @@
             android:fontFamily="@font/pretendard_regular"></TextView>
 
     </LinearLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/close_btn"
+        android:background="@drawable/block_dialog_close_btn"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        app:layout_constraintLeft_toLeftOf="@+id/function_area"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintRight_toRightOf="@+id/function_area"
+        app:layout_constraintHorizontal_bias="1.07"
+        app:layout_constraintBottom_toBottomOf="@+id/function_area"></androidx.appcompat.widget.AppCompatButton>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

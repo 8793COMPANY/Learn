@@ -178,7 +178,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     EditText serial_input_box;
 
     Button serial_send_btn, init_btn, translate_btn, code_btn, serial_btn;
-    public Button block_copy_btn, reset_btn, close_btn;
+    public Button  close_btn;
+    //block_copy_btn, reset_btn,
 
     ImageView block_bot_btn;
     MediaPlayer mediaPlayer;
@@ -1218,7 +1219,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
 
 
-        block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
+//        block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
 
         block_bot_btn = blockly_workspace.findViewById(R.id.block_bot_btn);
         // 봇 메시지 초기화
@@ -1236,7 +1237,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         scrollview = blockly_workspace.findViewById(R.id.scrollview);
         trashcan_btn = blockly_workspace.findViewById(R.id.blockly_overlay_buttons);
 
-        reset_btn = blockly_workspace.findViewById(R.id.reset_btn);
+//        reset_btn = blockly_workspace.findViewById(R.id.reset_btn);
 
 
         guideline4 = blockly_workspace.findViewById(R.id.guideline4);
@@ -1328,16 +1329,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
         });
 
-        block_copy_btn.setOnClickListener(v->{
-            if (copy_check){
-                copy_check = false;
-                block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
-            }else{
-                copy_check = true;
-                block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_on);
-            }
-            controller.setCopyEnabled(copy_check);
-        });
+//        block_copy_btn.setOnClickListener(v->{
+//            if (copy_check){
+//                copy_check = false;
+//                block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
+//            }else{
+//                copy_check = true;
+//                block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_on);
+//            }
+//            controller.setCopyEnabled(copy_check);
+//        });
 
         // 테스트 메시지 재생
         block_bot_btn.setOnClickListener(v -> {
@@ -1353,10 +1354,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 테스트 메시지 재생 완료
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
-        reset_btn.setOnClickListener(v->{
-            resetListener.show();
-
-        });
+//        reset_btn.setOnClickListener(v->{
+//            resetListener.show();
+//
+//        });
 
 
 
@@ -1888,7 +1889,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         copy_check = check;
         Log.e("in!",copy_check+"");
         controller.setCopyEnabled(copy_check);
-        block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
+//        block_copy_btn.setBackgroundResource(R.drawable.block_copy_btn_off);
     }
 
     public static String uri2path(Context context, Uri contentUri) {

@@ -287,6 +287,25 @@ public class BlocklyController {
                     View blockview = (View) touchedBlockView;
 //        view.setBackgroundColor(Color.parseColor("#FF007F"));
 
+                    view.findViewById(R.id.close_btn).setOnClickListener(v->{
+                        alertDialog.dismiss();
+
+                    });
+
+                    view.findViewById(R.id.copy_btn).setOnClickListener(v->{
+                        mListener.onBlockClick(pendingDrag);
+                        if (copyCheck != null){
+                            Log.e("in! hi","copyCheck");
+                            copyCheck.onCopyCheck(false);
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                    view.findViewById(R.id.delete_btn).setOnClickListener(v->{
+                        removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
+                        alertDialog.dismiss();
+                    });
+
 
                     float offsetX = blockview.getWidth()  ;
                     float offsetY = blockview.getHeight() + blockview.getPivotY();
