@@ -1048,6 +1048,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             String solution_str = parentXml.getSolutionString();
             String submitted_str = parentXml.getSubmittedString();
 
+            Log.e("solution_str",solution_str);
+            Log.e("submitted_str",submitted_str);
+
             // 채점
             Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
 
@@ -1122,6 +1125,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             // TODO : 2. Setup 노드 테스트 케이스 작성
             Element e = (Element) submitted_statement_nl.item(0);
+
+
+            Log.e("e check",e.getNodeName());
+            Log.e("e check",e.getElementsByTagName("field").item(0).getTextContent()+"");
 
             if (e != null) {
                 // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
