@@ -97,7 +97,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xmlunit.builder.Input;
+//import org.xmlunit.builder.Input;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
