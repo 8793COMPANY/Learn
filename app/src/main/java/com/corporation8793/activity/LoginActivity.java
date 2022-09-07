@@ -6,12 +6,15 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -49,6 +52,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         hideSystemUI();
         setContentView(R.layout.activity_login);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        Log.e("check pixel width",displayMetrics.widthPixels+"");
+        Log.e("check pixel height",displayMetrics.heightPixels+"");
+        Log.e("check dpi",displayMetrics.densityDpi+"");
+
+        Display display = getWindowManager().getDefaultDisplay();  // in Activity
+        /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
+        Point size = new Point();
+        display.getRealSize(size); // or getSize(size)
+        int width = size.x;
+        int height = size.y;
+
+        Log.e("check width",width+"");
+        Log.e("check height",height+"");
 
         customProgressDialog = new ProgressDialog(this);
         customProgressDialog.setContentView(R.layout.dialog_progress);

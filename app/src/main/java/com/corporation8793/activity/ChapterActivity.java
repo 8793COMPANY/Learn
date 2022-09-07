@@ -67,7 +67,7 @@ public class ChapterActivity extends AppCompatActivity {
 
         contents_list.add(new Contents(
                 "3-5",
-                R.drawable.advanced_problem_image,
+                R.drawable.advanced_problem_image3,
                 "문제풀이",
                 R.drawable.chapter_content1,
                 MySharedPreferences.getInt(getApplicationContext(),"문제풀이3"),lock_check));
