@@ -1,12 +1,25 @@
 package com.corporation8793.fragment;
 
+
+import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+
 import android.media.MediaPlayer;
+
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
+
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +29,31 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.RetakeDialog;
+import com.learn.wp_rest.data.wp.media.Media;
+import com.learn.wp_rest.repository.wp.media.MediaRepository;
 
 import static android.app.Activity.RESULT_OK;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
+
+import kotlin.Pair;
+import okhttp3.Credentials;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +61,7 @@ import static android.app.Activity.RESULT_OK;
  * create an instance of this fragment.
  */
 public class Step3 extends Fragment {
+    ProgressDialog customProgressDialog;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,7 +79,9 @@ public class Step3 extends Fragment {
     boolean check = false;
     private RetakeDialog retakeDialog;
 
-    String contents_name;
+    String contents_name, chapter_id;
+    String mCurrentPhotoPath = "";
+
 
     Context context;
     MediaPlayer mediaPlayer;
@@ -72,12 +105,19 @@ public class Step3 extends Fragment {
         // Required empty public constructor
     }
 
-    public Step3(String contents_name, MediaPlayer mp, Context context, Button block_bot_btn) {
+    public Step3(String contents_name,String chapter_id, MediaPlayer mp, Context context, Button block_bot_btn) {
         // Required empty public constructor
         this.contents_name = contents_name;
+        this.chapter_id = chapter_id;
         this.mediaPlayer = mp;
         this.context = context;
         this.block_bot_btn = block_bot_btn;
+//=======
+//    public Step3(String contents_name,String chapter_id) {
+//        // Required empty public constructor
+//        this.contents_name = contents_name;
+//        this.chapter_id = chapter_id;
+//>>>>>>> master
     }
 
     /**
@@ -111,10 +151,17 @@ public class Step3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.e("hi","!!");
         View view = inflater.inflate(R.layout.fragment_step3, container, false);
         MySharedPreferences.setInt(getContext(),contents_name,2);
         upload_area = view.findViewById(R.id.upload_area);
         upload_img = view.findViewById(R.id.upload_img);
+
+        customProgressDialog = new ProgressDialog(getContext());
+        customProgressDialog.setContentView(R.layout.dialog_progress);
+
+        customProgressDialog.setCancelable(false);
+        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         retakeDialog = new RetakeDialog(getContext(), retake_ok,retake_cancel);
 
@@ -165,6 +212,7 @@ public class Step3 extends Fragment {
                 int y = (int)(size.y * 0.35f);
 
                 window.setLayout(x,y);
+
             }else{
                 takePicture();
             }
@@ -178,17 +226,108 @@ public class Step3 extends Fragment {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null){
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CODE);
+            File photoFile = null;
+            File tempDir = getActivity().getCacheDir();
+
+            String timeStamp = new SimpleDateFormat("yyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "Capture_"+timeStamp+"_";
+
+            try {
+                File tempImage = File.createTempFile(imageFileName,".jpg",tempDir);
+                mCurrentPhotoPath = tempImage.getAbsolutePath();
+                photoFile = tempImage;
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+            if (photoFile != null) {
+                Uri photURI = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CODE);
+            }
         }
     }
+
+    private void saveImage(File imageFile, Bitmap bitmap, @NonNull String name) throws IOException {
+        OutputStream fos;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//            ContentResolver resolver = getActivity().getContentResolver();
+//            ContentValues contentValues = new ContentValues();
+//            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name + ".jpg");
+//            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
+//            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
+//            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+            new Thread(()->{
+                Log.e("in","thread");
+            Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
+                Log.e("in","thread2");
+            MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+                Log.e("in","thread3");
+
+            Log.e("response_ci",response_ci.getFirst());
+            Log.e("response_ci",response_ci.getSecond().toString());
+            customProgressDialog.dismiss();
+            }).start();
+
+//            Log.e("imageUri",imageUri.toString());
+//            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
+        } else {
+            File imagesDir = Environment.getExternalStoragePublicDirectory("/learn");
+            if(!imagesDir.mkdirs()){
+                Log.e("FILE", "Directory not created");
+            }else{
+                Log.e("hi","file created");
+            }
+            File image = new File(imagesDir.toString(), name + ".jpg");
+            fos = new FileOutputStream(imageFile);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            Objects.requireNonNull(fos).close();
+        }
+
+    }
+
+    public static String uri2path(Context context, Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        cursor.moveToNext();
+        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
+        Uri uri = Uri.fromFile(new File(path));
+
+        cursor.close();
+        return path;
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CODE && resultCode == RESULT_OK){
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            OutputStream fos;
+            Log.e("hi onactivityresult","!!");
+
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            upload_img.setImageBitmap(imageBitmap);
+            Log.e("hi file start","!!");
+            File file = new File(mCurrentPhotoPath);
+            Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
             upload_img.setImageBitmap(imageBitmap);
+            Log.e("hi file end","!!");
+            try {
+                Log.e("hi dialog start","!!");
+                customProgressDialog.show();
+                Log.e("hi dialog show","!!");
+                saveImage(file,imageBitmap,"check");
+                Log.e("hi dialog end","!!");
+
+            } catch (Exception e) {
+                Log.e("e",e.toString());
+                customProgressDialog.dismiss();
+            }
+
             if (!check) {
 
                 if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {

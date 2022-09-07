@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.BlockDictionaryActivity">
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/content_back_btn"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.04"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.04"></Button>
+
+    <TextView
+        android:elevation="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="블럭설명사전"
+        android:textSize="14dp"
+        android:textColor="#f78f43"
+        android:fontFamily="@font/sb_aggro_m"
+        android:includeFontPadding="false"
+        android:padding="8dp"
+        app:layout_constraintDimensionRatio="200:54"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintVertical_bias="0.05"
+        app:layout_constraintHorizontal_bias="0.02"
+        android:background="@drawable/no_stroke_round_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/back_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"></TextView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/category_section"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="182:566"
+        app:layout_constraintWidth_percent="0.14"
+        app:layout_constraintTop_toBottomOf="@+id/back_btn"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/corner_round_14dp_background"
+        android:backgroundTint="#fcf1de"
+        app:layout_constraintStart_toStartOf="@+id/back_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0.5">
+
+        <Button
+            android:id="@+id/dictionary_setup_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/dictionary_setup_btn_selector"
+            app:layout_constraintDimensionRatio="132:110"
+            app:layout_constraintWidth_percent="0.72"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/dictionary_loop_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            ></Button>
+
+
+        <Button
+            android:id="@+id/dictionary_loop_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/dictionary_loop_btn_selector"
+            app:layout_constraintDimensionRatio="132:110"
+            app:layout_constraintWidth_percent="0.72"
+            app:layout_constraintTop_toBottomOf="@+id/dictionary_setup_btn"
+            app:layout_constraintBottom_toTopOf="@+id/dictionary_method_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            ></Button>
+
+
+        <Button
+            android:id="@+id/dictionary_method_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/dictionary_method_btn_selector"
+            app:layout_constraintDimensionRatio="132:110"
+            app:layout_constraintWidth_percent="0.72"
+            app:layout_constraintTop_toBottomOf="@+id/dictionary_loop_btn"
+            app:layout_constraintBottom_toTopOf="@+id/dictionary_etc_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            ></Button>
+
+
+        <Button
+            android:id="@+id/dictionary_etc_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/dictionary_etc_btn_selector"
+            app:layout_constraintDimensionRatio="132:110"
+            app:layout_constraintWidth_percent="0.72"
+            app:layout_constraintTop_toBottomOf="@+id/dictionary_method_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            ></Button>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintTop_toTopOf="@+id/category_section"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/category_section"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"></androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

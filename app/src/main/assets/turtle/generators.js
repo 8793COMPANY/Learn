@@ -192,9 +192,10 @@ Blockly.JavaScript['logic_calculation'] = function(a) {
 //   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
    //define sonar settings
-   Blockly.JavaScript.definitions_['define_dht_h'] = "#include <DHT.h>\n";
+   Blockly.JavaScript.definitions_['define_dht_h'] = "#include \"DHT.h\"\n";
 //   Blockly.JavaScript.definitions_['define_dht_type_h'] = "#include <DHT.h>\n";
    Blockly.JavaScript.definitions_['define_dht_' + value_channel] = "DHT dht(" + value_channel +", DHT11);\n";
+    Blockly.JavaScript.setups_['setup_dht_' + value_channel] =  "\ndht.begin();";
 
 //   Blockly.JavaScript.setups_['define_servo' + value_channel] = '\n servo' + value_channel + '.attach('+value_channel+');\n';
 //   if( (value_angle < 0 ) || (value_angle > 180 )) {

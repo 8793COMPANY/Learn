@@ -16,19 +16,34 @@
 package com.google.blockly.android.control;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.google.blockly.android.BlockClickDialog;
 import com.google.blockly.android.OnCloseCheckListener;
+import com.google.blockly.android.R;
 import com.google.blockly.android.ui.BlockListUI;
 import com.google.blockly.android.ui.CategorySelectorUI;
 import com.google.blockly.android.WorkspaceFragment;
@@ -120,7 +135,7 @@ public class BlocklyController {
     private final Looper mMainLooper;
     private final BlockFactory mModelFactory;
     private final BlockViewFactory mViewFactory;
-    private final WorkspaceHelper mHelper;
+    public final WorkspaceHelper mHelper;
     private final BlockClipDataHelper mClipHelper;
 
     private final Workspace mWorkspace;
@@ -142,6 +157,7 @@ public class BlocklyController {
     private Dragger mDragger;
     private VariableCallback mVariableCallback = null;
     Block testblock = null;
+    long delay = 0;
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
@@ -186,6 +202,8 @@ public class BlocklyController {
                 return null;
             }
 
+
+
             return new Runnable() {
                 @Override
                 public void run() {
@@ -216,20 +234,122 @@ public class BlocklyController {
             // TODO(#35): Mark block as focused / selected.
             if (mListener != null){
             //Log.e("mlist","not null");
-                //블록 복사
-                if (mBlockCopyCheck) {
-                    mListener.onBlockClick(pendingDrag);
-                    if (copyCheck != null){
-                        Log.e("in! hi","copyCheck");
-                        copyCheck.onCopyCheck(false);
-                    }
+                if (System.currentTimeMillis() > delay){
+                    delay = System.currentTimeMillis() + 200;
+                    return false;
+                }
+
+                if (System.currentTimeMillis() <= delay){
+                    Log.e("두번","클릭");
+//                    BlockClickDialog blockClickDialog = new BlockClickDialog(getContext(), copy_listener, copy_listener);
+//                    blockClickDialog.show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_block_click,null);
+                    builder.setView(view);
+
+
+
+
+
+
+//                    builder.setTitle("인사말").setMessage("반갑습니다");
+
+//                    builder.setPositiveButton("복사", new DialogInterface.OnClickListener(){
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int id)
+//                        {
+//                            mListener.onBlockClick(pendingDrag);
+//                            if (copyCheck != null){
+//                                Log.e("in! hi","copyCheck");
+//                                copyCheck.onCopyCheck(false);
+//                            }
+//
+//                        }
+//                    });
+//
+//                    builder.setNegativeButton("삭제", new DialogInterface.OnClickListener(){
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int id)
+//                        {
+//                            removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
+//
+//                        }
+//                    });
+
+                    AlertDialog alertDialog = builder.create();
+
+                    alertDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+                    alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                    alertDialog.setCancelable(true);
+
+                    BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+                    View blockview = (View) touchedBlockView;
+//        view.setBackgroundColor(Color.parseColor("#FF007F"));
+
+                    view.findViewById(R.id.close_btn).setOnClickListener(v->{
+                        alertDialog.dismiss();
+
+                    });
+
+                    view.findViewById(R.id.copy_btn).setOnClickListener(v->{
+                        mListener.onBlockClick(pendingDrag);
+                        if (copyCheck != null){
+                            Log.e("in! hi","copyCheck");
+                            copyCheck.onCopyCheck(false);
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                    view.findViewById(R.id.delete_btn).setOnClickListener(v->{
+                        removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
+                        alertDialog.dismiss();
+                    });
+
+
+                    float offsetX = blockview.getWidth()  ;
+                    float offsetY = blockview.getHeight() + blockview.getPivotY();
+
+                    Log.e("offsetX",blockview.getPivotX()+"");
+                    Log.e("offsetY",blockview.getPivotY()+"");
+
+                    WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
+                    params.x = (int)(offsetX );
+                    params.y = (int) (offsetY );
+//                    params.gravity = Gravity.CENTER;
+                    alertDialog.getWindow().setAttributes(params);
+
+                    alertDialog.show();
+
+
+
 
                 }
+                //블록 복사
+//                if (mBlockCopyCheck) {
+//                    mListener.onBlockClick(pendingDrag);
+//                    if (copyCheck != null){
+//                        Log.e("in! hi","copyCheck");
+//                        copyCheck.onCopyCheck(false);
+//                    }
+//
+//                }
         }
             Log.e("block clicked","in !!!");
             return false;
     }
     };
+
+    private View.OnClickListener copy_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+//            mListener.onBlockClick(pendingDrag);
+//            if (copyCheck != null){
+//                Log.e("in! hi","copyCheck");
+//                copyCheck.onCopyCheck(false);
+//            }
+        }
+    };
+
     private final BlockTouchHandler mTouchHandler;
 
     /**
@@ -1115,6 +1235,31 @@ public class BlocklyController {
         if (mVirtualWorkspaceView != null) {
             mVirtualWorkspaceView.resetView_2(ntp, ptp, rtp);
         }
+    }
+
+    public Bitmap captureWorkspace() {
+        Bitmap bitmap = null;
+
+        // 개선된 캡쳐 기능(블록만 캡쳐)
+        Log.e("test Child 0h: ", ""+mWorkspaceView.getChildAt(0).getMeasuredHeight());
+        Log.e("test Child 0w: ", ""+mWorkspaceView.getChildAt(0).getMeasuredWidth());
+
+        bitmap = loadBitmapFromView(mWorkspaceView.getChildAt(0));
+
+        // OOM 유발 캡쳐(배경포함 캡쳐)
+//        if (mVirtualWorkspaceView != null) {
+//            bitmap = mVirtualWorkspaceView.captureView();
+//        }
+
+        return bitmap;
+    }
+
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap( v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+        v.draw(c);
+        return b;
     }
 
     /**

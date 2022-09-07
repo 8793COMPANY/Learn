@@ -40,4 +40,10 @@
         <item name="android:background">@color/blockly_spinner_dropdown_bg</item>
         <item name="android:padding">4dip</item>
     </style>
+
+    <style name="BlockClickDialog">
+<!--        <item name="android:windowIsTranslucent">true</item>-->
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+    </style>
+
 </resources>

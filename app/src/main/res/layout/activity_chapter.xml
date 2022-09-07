@@ -21,6 +21,19 @@
         app:layout_constraintVertical_bias="0.95"
         app:layout_constraintHorizontal_bias="0.97"/>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chapter_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/guide_left"
+        app:layout_constraintRight_toRightOf="@+id/guide_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintHeight_percent="0.68"></androidx.recyclerview.widget.RecyclerView>
+
     <Button
         android:id="@+id/back_btn"
         android:layout_width="0dp"
@@ -62,62 +75,75 @@
     </androidx.cardview.widget.CardView>
 
 
-    <com.corporation8793.custom.CustomView
-        android:id="@+id/chapter1"
-        app:group="@drawable/default_problem_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1.5"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/guide_left"
-        app:layout_constraintRight_toLeftOf="@+id/chapter2"
-        app:layout_constraintWidth_percent="0.26"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"></com.corporation8793.custom.CustomView>
+<!--    <com.corporation8793.custom.CustomView-->
+<!--        android:id="@+id/chapter1"-->
+<!--        app:group="@drawable/default_problem_image"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintDimensionRatio="1:1.5"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toRightOf="@+id/guide_left"-->
+<!--        app:layout_constraintRight_toLeftOf="@+id/chapter2"-->
+<!--        app:layout_constraintWidth_percent="0.21"-->
+<!--        app:layout_constraintVertical_bias="0.6"-->
+<!--        app:layout_constraintHorizontal_chainStyle="spread_inside"></com.corporation8793.custom.CustomView>-->
 
-    <com.corporation8793.custom.CustomView
-        android:id="@+id/chapter2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:group="@drawable/advanced_problem_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/chapter1"
-        app:layout_constraintRight_toLeftOf="@+id/chapter3"
-        app:layout_constraintDimensionRatio="1:1.5"
-        app:layout_constraintWidth_percent="0.26"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintHorizontal_chainStyle="spread"></com.corporation8793.custom.CustomView>
+<!--    <com.corporation8793.custom.CustomView-->
+<!--        android:id="@+id/chapter2"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:group="@drawable/advanced_problem_image"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toRightOf="@+id/chapter1"-->
+<!--        app:layout_constraintRight_toLeftOf="@+id/chapter3"-->
+<!--        app:layout_constraintDimensionRatio="1:1.5"-->
+<!--        app:layout_constraintWidth_percent="0.21"-->
+<!--        app:layout_constraintVertical_bias="0.6"-->
+<!--        app:layout_constraintHorizontal_chainStyle="spread"></com.corporation8793.custom.CustomView>-->
 
-    <com.corporation8793.custom.CustomView
-        android:id="@+id/chapter3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:group="@drawable/advanced_problem_image2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/chapter2"
-        app:layout_constraintRight_toRightOf="@+id/guide_right"
-        app:layout_constraintDimensionRatio="1:1.5"
-        app:layout_constraintWidth_percent="0.26"
-        app:layout_constraintVertical_bias="0.6"
-        app:layout_constraintVertical_chainStyle="spread_inside"></com.corporation8793.custom.CustomView>
+<!--    <com.corporation8793.custom.CustomView-->
+<!--        android:id="@+id/chapter3"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:group="@drawable/advanced_problem_image2"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toRightOf="@+id/chapter2"-->
+<!--        app:layout_constraintRight_toLeftOf="@+id/chapter4"-->
+<!--        app:layout_constraintDimensionRatio="1:1.5"-->
+<!--        app:layout_constraintWidth_percent="0.21"-->
+<!--        app:layout_constraintVertical_bias="0.6"-->
+<!--        app:layout_constraintVertical_chainStyle="spread_inside"></com.corporation8793.custom.CustomView>-->
 
 
+<!--    <com.corporation8793.custom.CustomView-->
+<!--        android:id="@+id/chapter4"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:group="@drawable/advanced_problem_image2"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toRightOf="@+id/chapter3"-->
+<!--        app:layout_constraintRight_toRightOf="@+id/guide_right"-->
+<!--        app:layout_constraintDimensionRatio="1:1.5"-->
+<!--        app:layout_constraintWidth_percent="0.21"-->
+<!--        app:layout_constraintVertical_bias="0.6"-->
+<!--        app:layout_constraintVertical_chainStyle="spread_inside"></com.corporation8793.custom.CustomView>-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_left"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05"></androidx.constraintlayout.widget.Guideline>
+        app:layout_constraintGuide_percent="0.04"></androidx.constraintlayout.widget.Guideline>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_right"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95"></androidx.constraintlayout.widget.Guideline>
+        app:layout_constraintGuide_percent="0.96"></androidx.constraintlayout.widget.Guideline>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

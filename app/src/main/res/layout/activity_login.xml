@@ -7,79 +7,137 @@
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
 
+    <!-- 로고 -->
     <ImageView
+        android:id="@+id/login_learn_logo_small"
+        android:background="@drawable/login_learn_logo_small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/login_learn_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="372:136"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125"
-        app:layout_constraintWidth_percent="0.3" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="0.25"
+        app:layout_constraintHeight_percent="0.175"
+        app:layout_constraintVertical_bias="0.1"/>
+
+    <!-- 아이디 -->
+    <ImageView
+        android:id="@+id/login_id_input_box_bg"
+        android:background="@drawable/login_id_input_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="20dp"
+        app:layout_constraintTop_toBottomOf="@id/login_learn_logo_small"
+        app:layout_constraintLeft_toLeftOf="@id/login_learn_logo_small"
+        app:layout_constraintRight_toRightOf="@id/login_learn_logo_small"
+        app:layout_constraintDimensionRatio="604:90"
+        app:layout_constraintWidth_percent="0.35" />
 
     <EditText
         android:id="@+id/login_id_input_box"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="풀이"
-        android:background="@drawable/login_id_input_box"
+        android:text="student8793"
         android:hint="아이디를 입력해주세요"
-        android:paddingHorizontal="52px"
-        android:textSize="26px"
-        app:layout_constraintBottom_toTopOf="@+id/login_btn"
-        app:layout_constraintDimensionRatio="504:90"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16dp"
+        android:background="@null"
+        app:layout_constraintLeft_toRightOf="@id/login_id_icon"
+        app:layout_constraintTop_toTopOf="@id/login_id_input_box_bg"
+        app:layout_constraintBottom_toBottomOf="@id/login_id_input_box_bg"
+        app:layout_constraintRight_toRightOf="@id/login_id_input_box_bg"
         app:layout_constraintVertical_bias="0.829"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:layout_marginLeft="15dp"
+        />
+
+    <ImageView
+        android:id="@+id/login_id_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/login_learn_id_off"
+        app:layout_constraintTop_toTopOf="@id/login_id_input_box_bg"
+        app:layout_constraintBottom_toBottomOf="@id/login_id_input_box_bg"
+        app:layout_constraintLeft_toLeftOf="@id/login_id_input_box_bg"
+        app:layout_constraintRight_toRightOf="@id/login_id_input_box_bg"
+        app:layout_constraintDimensionRatio="38:38"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintWidth_percent="0.03" />
+
+    <!-- 비밀번호 -->
+    <ImageView
+        android:id="@+id/login_pw_input_box_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/login_id_input_box"
+        app:layout_constraintTop_toBottomOf="@id/login_id_input_box_bg"
+        app:layout_constraintLeft_toLeftOf="@id/login_learn_logo_small"
+        app:layout_constraintRight_toRightOf="@id/login_learn_logo_small"
+        app:layout_constraintDimensionRatio="604:90"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintWidth_percent="0.35" />
 
+    <EditText
+        android:id="@+id/login_pw_input_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@ejrghk3865"
+        android:hint="비밀번호를 입력해주세요"
+        android:textSize="16dp"
+        android:background="@null"
+        app:layout_constraintLeft_toRightOf="@id/login_pw_icon"
+        app:layout_constraintTop_toTopOf="@id/login_pw_input_box_bg"
+        app:layout_constraintBottom_toBottomOf="@id/login_pw_input_box_bg"
+        app:layout_constraintRight_toRightOf="@id/login_pw_input_box_bg"
+        app:layout_constraintVertical_bias="0.829"
+        app:layout_constraintHorizontal_bias="0.1"
+        android:layout_marginLeft="15dp"
+        />
+
+    <ImageView
+        android:id="@+id/login_pw_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/login_learn_pw_off"
+        app:layout_constraintTop_toTopOf="@id/login_pw_input_box_bg"
+        app:layout_constraintBottom_toBottomOf="@id/login_pw_input_box_bg"
+        app:layout_constraintLeft_toLeftOf="@id/login_pw_input_box_bg"
+        app:layout_constraintRight_toRightOf="@id/login_pw_input_box_bg"
+        app:layout_constraintDimensionRatio="38:38"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintWidth_percent="0.03" />
+
+    <!-- 자동로그인 -->
     <ImageView
         android:id="@+id/auto_login"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/auto_login_off"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/login_pw_input_box_bg"
+        app:layout_constraintLeft_toLeftOf="@id/login_pw_input_box_bg"
+        app:layout_constraintRight_toRightOf="@id/login_pw_input_box_bg"
         app:layout_constraintDimensionRatio="156:38"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.374"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.566"
-        app:layout_constraintWidth_percent="0.11" />
+        app:layout_constraintWidth_percent="0.11"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintVertical_bias="0.2"
+        />
 
+    <!-- 로그인 버튼 -->
     <ImageButton
         android:id="@+id/login_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/login_btn"
+        app:layout_constraintTop_toBottomOf="@id/auto_login"
+        app:layout_constraintLeft_toLeftOf="@id/login_learn_logo_small"
+        app:layout_constraintRight_toRightOf="@id/login_learn_logo_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="504:147"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.738"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintHeight_percent="0.2"
         app:layout_constraintWidth_percent="0.35" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="102dp"
-        android:gravity="center"
-        android:text="Company 8793."
-        android:textColor="#f78f43"
-        android:textSize="24px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="173:36"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

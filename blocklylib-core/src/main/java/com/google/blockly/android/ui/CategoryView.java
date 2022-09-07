@@ -45,7 +45,7 @@ public class CategoryView extends RelativeLayout {
 
     public CategoryTabs mCategoryTabs;
 
-    protected BlocklyCategory mRootCategory;
+    public BlocklyCategory mRootCategory;
     protected BlocklyCategory mCurrentCategory;
 
     BlocklyActivityHelper mBlocklyActivityHelper;

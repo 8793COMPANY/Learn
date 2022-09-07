@@ -26,7 +26,7 @@ public class CustomView extends ConstraintLayout {
     private ImageView  lock_check, problem_group;
     private boolean mOpen = false; // 선택된 번호
     private int  step= 0, chapter = 0, group =0;
-    private String title = "";
+    private String title = "", id ="";
     private ProgressBar progressBar;
     private TextView percentage;
 
@@ -66,6 +66,7 @@ public class CustomView extends ConstraintLayout {
             step = a.getInteger(R.styleable.MyCustomView_percentage,0);
             chapter = a.getInt(R.styleable.MyCustomView_chapter,0);
             group = a.getInt(R.styleable.MyCustomView_group,1);
+            id =  a.getString(R.styleable.MyCustomView_id);
 
             a.recycle(); // 이용이 끝났으면 recycle() 호출
         }
@@ -88,8 +89,10 @@ public class CustomView extends ConstraintLayout {
 
         chapter_image.setOnClickListener(v->{
             if (getOpen()) {
+                Log.e("customview id",id);
                 Intent intent = new Intent(getContext(), ProblemActivity.class);
                 intent.putExtra("step", group);
+                intent.putExtra("id", id);
                 getContext().startActivity(intent);
             }
         });
@@ -104,6 +107,9 @@ public class CustomView extends ConstraintLayout {
 
     public int getPercentage() {
         return step;
+    }
+    public String getID() {
+        return id;
     }
 
     public boolean getOpen() {
@@ -127,6 +133,11 @@ public class CustomView extends ConstraintLayout {
     public void setTitle(String title){
         this.title = title;
         chapter_title.setText(title);
+
+    }
+
+    public void setID(String id){
+        this.id = id;
 
     }
 
