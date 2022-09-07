@@ -1,0 +1,374 @@
+
+g
+java:S1192ë"IDefine a constant instead of duplicating this literal "code.ino" 3 times.(ĞéüĞ8ôºêÄ­0
+i
+java:S1192ñ"KDefine a constant instead of duplicating this literal "setMonitor" 3 times.(â¾œñ8‡–­0
+g
+java:S1192‰"JDefine a constant instead of duplicating this literal "generated" 4 times.(Šøè48Œ»êÄ­0
+R
+java:S1066Ç"/Merge this if statement with the enclosing one.(Â©÷ùûÿÿÿÿ8œ»êÄ­0
+L
+java:S1066¼"/Merge this if statement with the enclosing one.(º¬ãV8œ»êÄ­0
+M
+java:S1066‹	"/Merge this if statement with the enclosing one.(Æé½Ü8‡Ù¶•¯0
+s	java:S117ƒ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œø”‚øÿÿÿÿ8©»êÄ­0
+s	java:S117 	"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“ıÙˆûÿÿÿÿ8Ù¶•¯0
+n	java:S117Å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·â™Ÿ8©–­0
+n	java:S117Ï"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢›ÂÚ8©–­0
+K
+java:S1604Å"(Make this anonymous inner class a lambda(’éúıÿÿÿÿ8±»êÄ­0
+K
+java:S1604"(Make this anonymous inner class a lambda(±æÿÚıÿÿÿÿ8±»êÄ­0
+F
+java:S1604™"(Make this anonymous inner class a lambda(Âú¡ß8±»êÄ­0
+E
+java:S1604¥"(Make this anonymous inner class a lambda(¼…ú[8±»êÄ­0
+K
+java:S1604¸"(Make this anonymous inner class a lambda(í—¼Áÿÿÿÿÿ8±»êÄ­0
+F
+java:S1604Î"(Make this anonymous inner class a lambda(îƒ¿Ó8¹»êÄ­0
+F
+java:S1604Õ"(Make this anonymous inner class a lambda(´€˜ü8¹»êÄ­0
+F
+java:S1604Ş"(Make this anonymous inner class a lambda(ñàò8¹»êÄ­0
+i
+java:S1301ò"KReplace this "switch" statement by "if" statements to increase readability.(„©Ó‹8—Ù¶•¯0
+}
+java:S1104´"ZMake block_copy_btn a static final constant or non-public and provide accessors if needed.(ûØúÕûÿÿÿÿ8É»êÄ­0
+x
+java:S1104´"UMake reset_btn a static final constant or non-public and provide accessors if needed.(ûØúÕûÿÿÿÿ8É»êÄ­0
+x
+java:S1104´"UMake close_btn a static final constant or non-public and provide accessors if needed.(ûØúÕûÿÿÿÿ8É»êÄ­0
+G
+java:S5411î"*Use the primitive boolean expression here.(ÛåÉt8Ñ»êÄ­0
+H
+java:S5411ã"*Use the primitive boolean expression here.(ìü€Ø8Ñ»êÄ­0
+H
+java:S5411ü"*Use the primitive boolean expression here.(ÉÖ¶8Ñ»êÄ­0
+M
+java:S5411Š
+"*Use the primitive boolean expression here.(ÿã¯èüÿÿÿÿ8ŸÙ¶•¯0
+H
+java:S5411ğ"*Use the primitive boolean expression here.(¾Çöí8Ô–­0
+H
+java:S5411°"*Use the primitive boolean expression here.(¾Çöí8Õ–­0
+H
+java:S5411‡"*Use the primitive boolean expression here.(ãÜä§8Ö–­0
+H
+java:S5411¥"*Use the primitive boolean expression here.(ãÜä§8Ö–­0
+M
+java:S5411´"*Use the primitive boolean expression here.(Ì„°øÿÿÿÿ8×–­0
+d
+java:S2259¢"AA "NullPointerException" could be thrown; "obj" is nullable here.(²®Œİùÿÿÿÿ8íÁêÄ­0
+q
+java:S2095ß"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(¿³¸öÿÿÿÿÿ8íÁêÄ­0
+k
+java:S2095¸"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(ÀˆóÙ8íÁêÄ­0
+Z
+java:S2589„"7Remove this expression which always evaluates to "true"(Ï…•üÿÿÿÿ8íÁêÄ­0
+w	java:S116­"URename this field "wifi_check" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º×½›úÿÿÿÿ8õÁêÄ­0
+v	java:S116­"TRename this field "usb_check" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º×½›úÿÿÿÿ8õÁêÄ­0
+€	java:S116­"^Rename this field "server_upload_check" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º×½›úÿÿÿÿ8õÁêÄ­0
+r	java:S116®"URename this field "copy_check" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆÊõ8õÁêÄ­0
+q	java:S116°"URename this field "setup_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+p	java:S116°"TRename this field "loop_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+r	java:S116°"VRename this field "method_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+o	java:S116°"SRename this field "etc_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+p	java:S116°"TRename this field "code_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+r	java:S116°"VRename this field "serial_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+r	java:S116°"VRename this field "upload_view" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÙÉ	8õÁêÄ­0
+}	java:S116±"[Rename this field "serial_input_box" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ì÷ØÚÿÿÿÿÿ8ıÁêÄ­0
+|	java:S116³"ZRename this field "serial_send_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂŠ²—øÿÿÿÿ8ıÁêÄ­0
+u	java:S116³"SRename this field "init_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂŠ²—øÿÿÿÿ8ıÁêÄ­0
+z	java:S116³"XRename this field "translate_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂŠ²—øÿÿÿÿ8ıÁêÄ­0
+u	java:S116³"SRename this field "code_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂŠ²—øÿÿÿÿ8ıÁêÄ­0
+w	java:S116³"URename this field "serial_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂŠ²—øÿÿÿÿ8ıÁêÄ­0
+{	java:S116´"YRename this field "block_copy_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûØúÕûÿÿÿÿ8ıÁêÄ­0
+v	java:S116´"TRename this field "reset_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûØúÕûÿÿÿÿ8ıÁêÄ­0
+v	java:S116´"TRename this field "close_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûØúÕûÿÿÿÿ8ıÁêÄ­0
+z	java:S116¶"XRename this field "block_bot_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÈÊäùÿÿÿÿ8ıÁêÄ­0
+t	java:S116º"WRename this field "trashcan_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú¨ìÆ8ıÁêÄ­0
+|	java:S116»"ZRename this field "blockly_monitor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²Ã—şùÿÿÿÿ8ıÁêÄ­0
+x	java:S116»"VRename this field "input_space" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²Ã—şùÿÿÿÿ8…ÂêÄ­0
+x	java:S116¼"VRename this field "current_tag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÅØ¬ÿÿÿÿÿ8…ÂêÄ­0
+x	java:S116¼"VRename this field "serial_code" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÅØ¬ÿÿÿÿÿ8…ÂêÄ­0
+y	java:S116¼"WRename this field "serial_input" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÅØ¬ÿÿÿÿÿ8…ÂêÄ­0
+y	java:S116½"WRename this field "monitor_text" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(î¦“ƒşÿÿÿÿ8…ÂêÄ­0
+}	java:S116¿"[Rename this field "TARGET_BASE_PATH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Øáé´ıÿÿÿÿ8…ÂêÄ­0
+u	java:S116Æ"XRename this field "contents_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›¨İ‡8…ÂêÄ­0
+r	java:S116Æ"URename this field "chapter_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›¨İ‡8…ÂêÄ­0
+x	java:S116Ç"[Rename this field "chapter_id_split" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ò™Äª8…ÂêÄ­0
+w	java:S116Ë"URename this field "upload_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Çú­Óşÿÿÿÿ8…ÂêÄ­0
+}	java:S116Í"[Rename this field "block_dictionary" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º›æäøÿÿÿÿ8…ÂêÄ­0
+w	java:S116Î"ZRename this field "block_setup_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š‹º8…ÂêÄ­0
+v	java:S116Î"YRename this field "block_loop_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š‹º8…ÂêÄ­0
+x	java:S116Î"[Rename this field "block_method_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š‹º8…ÂêÄ­0
+u	java:S116Î"XRename this field "block_etc_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š‹º8ÂêÄ­0
+w	java:S116Ï"URename this field "block_list" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Á‡ãÃşÿÿÿÿ8ÂêÄ­0
+}	java:S116Ò"`Rename this field "dictionary_block_list" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èèÑ²8ÂêÄ­0
+v	java:S116Ô"TRename this field "baud_rate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶¬µæøÿÿÿÿ8ÂêÄ­0
+u	java:S116×"YRename this field "error_Listener" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘¯8ÂêÄ­0
+x	java:S116Ú"VRename this field "current_pos" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Â›Å»úÿÿÿÿ8ÂêÄ­0
+r	java:S116ê"URename this field "view_check" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ª¬„8ÂêÄ­0
+}	java:S116ì"[Rename this field "turtle_files_kor" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹ÜÁ´úÿÿÿÿ8ÂêÄ­0
+x	java:S116í"[Rename this field "turtle_files_eng" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ğ€—ó8ÂêÄ­0
+{	java:S116¸"YRename this field "upload_confirm" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—¼Áÿÿÿÿÿ8•ÂêÄ­0
+v	java:S116Ç"YRename this field "submit_confirm" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ê¾Ïî8•ÂêÄ­0
+u	java:S116Î"XRename this field "error_confirm" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(îƒ¿Ó8•ÂêÄ­0
+v	java:S116Õ"YRename this field "finish_confirm" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´€˜ü8•ÂêÄ­0
+u	java:S116Ş"XRename this field "reset_confirm" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñàò8•ÂêÄ­0
+y	java:S116ç"WRename this field "reset_cancel" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Éøçûÿÿÿÿ8•ÂêÄ­0
+u	java:S116ì"XRename this field "finish_cancel" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(›ªà€8•ÂêÄ­0
+z
+java:S3008Ÿ"\Rename this field "AUTOSAVE_FILENAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ï“Ñ°8•ÂêÄ­0
+j
+java:S1659­"GDeclare "wifi_check" and all following declarations on a separate line.(º×½›úÿÿÿÿ8ÂêÄ­0
+F
+java:S1659®"(Declare "copy_check" on a separate line.(ˆÊõ8ÂêÄ­0
+c
+java:S1659°"FDeclare "loop_view" and all following declarations on a separate line.(ÁÙÉ	8ÂêÄ­0
+h
+java:S1659³"EDeclare "init_btn" and all following declarations on a separate line.(ÂŠ²—øÿÿÿÿ8ÂêÄ­0
+i
+java:S1659´"FDeclare "reset_btn" and all following declarations on a separate line.(ûØúÕûÿÿÿÿ8ÂêÄ­0
+L
+java:S1659»")Declare "input_space" on a separate line.(²Ã—şùÿÿÿÿ8ÂêÄ­0
+k
+java:S1659¼"HDeclare "current_tag" and all following declarations on a separate line.(ÅÅØ¬ÿÿÿÿÿ8ÂêÄ­0
+F
+java:S1659Æ"(Declare "chapter_id" on a separate line.(›¨İ‡8¥ÂêÄ­0
+i
+java:S1659Î"KDeclare "block_loop_btn" and all following declarations on a separate line.(Š‹º8¥ÂêÄ­0
+I
+java:S1659×",Declare "error_Listener" on a separate line.(‘¯8¥ÂêÄ­0
+I
+java:S1659Ø"+Declare "resetListener" on a separate line.(ßôÖ8¥ÂêÄ­0
+~
+java:S1450Ÿ"`Remove the "AUTOSAVE_FILENAME" field and declare it as a local variable in the relevant methods.(Ï“Ñ°8¥ÂêÄ­0
+z
+java:S1450×"]Remove the "error_Listener" field and declare it as a local variable in the relevant methods.(‘¯8¥ÂêÄ­0
+z
+java:S1450¦"\Remove the "mCategoryView" field and declare it as a local variable in the relevant methods.(ëë÷É8¥ÂêÄ­0
+‡
+java:S1450£"dRemove the "mGeneratedFrameLayout" field and declare it as a local variable in the relevant methods.(‰Úı“øÿÿÿÿ8¥ÂêÄ­0
+…
+java:S1450­"bRemove the "server_upload_check" field and declare it as a local variable in the relevant methods.(º×½›úÿÿÿÿ8¥ÂêÄ­0
+^	java:S125æ"<This block of commented-out lines of code should be removed.(¸´úöşÿÿÿÿ8µÂêÄ­0
+P
+java:S1135å"2Complete the task associated to this TODO comment.(«ïúâ8µÂêÄ­0
+P
+java:S1135ç"2Complete the task associated to this TODO comment.(ÃÁàŞ8½ÂêÄ­0
+M
+java:S1874ƒ"/Remove this use of "Handler"; it is deprecated.(Äÿ¬ğ8½¨–­0
+Y	java:S125œ"<This block of commented-out lines of code should be removed.( Êÿ8½ÂêÄ­0
+Y	java:S125Ÿ"<This block of commented-out lines of code should be removed.(ôæè8ÅÂêÄ­0
+Y	java:S125¾"<This block of commented-out lines of code should be removed.(Ñ‰¢8ÅÂêÄ­0
+Y	java:S125É"<This block of commented-out lines of code should be removed.(í²·Ï8ÅÂêÄ­0
+X	java:S125Ö"<This block of commented-out lines of code should be removed.(§øÅ;8ÍÂêÄ­0
+^	java:S125İ"<This block of commented-out lines of code should be removed.(îãÜ¾øÿÿÿÿ8ÍÂêÄ­0
+Y	java:S125ã"<This block of commented-out lines of code should be removed.(¡’Ü²8ÍÂêÄ­0
+^	java:S125í"<This block of commented-out lines of code should be removed.(êõáåÿÿÿÿÿ8ÍÂêÄ­0
+Y	java:S125ï"<This block of commented-out lines of code should be removed.(³ãî®8ÍÂêÄ­0
+X	java:S125ó"<This block of commented-out lines of code should be removed.(§øÅ;8ÍÂêÄ­0
+^	java:S125÷"<This block of commented-out lines of code should be removed.(êÇ¥ùÿÿÿÿ8ÍÂêÄ­0
+Y	java:S125ú"<This block of commented-out lines of code should be removed.(»ÔâÛ8ÕÂêÄ­0
+X	java:S125"<This block of commented-out lines of code should be removed.(–²’8ÕÂêÄ­0
+^	java:S125Š"<This block of commented-out lines of code should be removed.(­ì×úÿÿÿÿ8ÕÂêÄ­0
+^	java:S125¡"<This block of commented-out lines of code should be removed.( ‚Áøÿÿÿÿ8ÕÂêÄ­0
+^	java:S125¤"<This block of commented-out lines of code should be removed.(Ç¦šÿÿÿÿÿ8ÕÂêÄ­0
+Y	java:S125«"<This block of commented-out lines of code should be removed.(ÆˆÈŠ8ÕÂêÄ­0
+^	java:S125·"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8ÕÂêÄ­0
+P
+java:S1135ä"2Complete the task associated to this TODO comment.(Úªãû8İÂêÄ­0
+_
+java:S1075ó"ARefactor your code to get this URI from a customizable parameter.(ù¤‡Ú8åÂêÄ­0
+Y	java:S125’"<This block of commented-out lines of code should be removed.(¬éÖ¦8åÂêÄ­0
+^	java:S125”"<This block of commented-out lines of code should be removed.(¥àØÑúÿÿÿÿ8åÂêÄ­0
+^	java:S125™"<This block of commented-out lines of code should be removed.(û°ÆÇıÿÿÿÿ8åÂêÄ­0
+Y	java:S125¡"<This block of commented-out lines of code should be removed.(æ¸ï‰8åÂêÄ­0
+^	java:S125¬"<This block of commented-out lines of code should be removed.(¥àØÑúÿÿÿÿ8íÂêÄ­0
+^	java:S125²"<This block of commented-out lines of code should be removed.(¥àØÑúÿÿÿÿ8íÂêÄ­0
+^	java:S125·"<This block of commented-out lines of code should be removed.(¥àØÑúÿÿÿÿ8íÂêÄ­0
+Y	java:S125Â"<This block of commented-out lines of code should be removed.(ßÜ˜‚8íÂêÄ­0
+^	java:S125Ì"<This block of commented-out lines of code should be removed.(è×àùøÿÿÿÿ8íÂêÄ­0
+O
+java:S1481Ø"1Remove this unused "outputStream" local variable.(¥‰­ì8õÂêÄ­0
+Y	java:S125Ü"<This block of commented-out lines of code should be removed.(™àÊ§8õÂêÄ­0
+[
+java:S1117î"8Rename "str" which hides the field declared at line 195.(÷ïä«üÿÿÿÿ8º¨–­0
+^	java:S125ì"<This block of commented-out lines of code should be removed.(ÛŠà„şÿÿÿÿ8õÂêÄ­0
+V	java:S106ö"9Replace this use of System.out or System.err by a logger.(æ×8ıÂêÄ­0
+^	java:S125ù"<This block of commented-out lines of code should be removed.(¿‹±òıÿÿÿÿ8ıÂêÄ­0
+V	java:S106ş"9Replace this use of System.out or System.err by a logger.(Ú×Ò§8ıÂêÄ­0
+
+java:S2159„"zRemove this call to "equals"; comparisons against null always return false; consider using '== null' to check for nullity.(Ï…•üÿÿÿÿ8ıÂêÄ­0
+U	java:S106…"9Replace this use of System.out or System.err by a logger.(Ä Y8ıÂêÄ­0
+Y
+java:S1117»";Rename "buffer" which hides the field declared at line 227.(î¼à©8…ÃêÄ­0
+Y	java:S125º"<This block of commented-out lines of code should be removed.(¡ŞÉ8…ÃêÄ­0
+m
+java:S2674¼"JCheck the return value of the "read" call to see how many bytes were read.(ë¥áïøÿÿÿÿ8…ÃêÄ­0
+W
+java:S4719¾"9Replace charset name argument with StandardCharsets.UTF_8(Şİ½8…ÃêÄ­0
+^	java:S125È"<This block of commented-out lines of code should be removed.(ÖôäÛÿÿÿÿÿ8…ÃêÄ­0
+^	java:S125é"<This block of commented-out lines of code should be removed.(ÎÁîœÿÿÿÿÿ8ÃêÄ­0
+Y	java:S125„"<This block of commented-out lines of code should be removed.(ˆãìÂ8ÃêÄ­0
+Y	java:S125¡"<This block of commented-out lines of code should be removed.(¬óì8ÃêÄ­0
+D
+java:S1075½"&Remove this hard-coded path-delimiter.(¯ùŠÓ8ÃêÄ­0
+^	java:S125Ö"<This block of commented-out lines of code should be removed.(©Èğõşÿÿÿÿ8•ÃêÄ­0
+^	java:S125Ş"<This block of commented-out lines of code should be removed.(©Èğõşÿÿÿÿ8•ÃêÄ­0
+^	java:S125ø"<This block of commented-out lines of code should be removed.(½Ç¹ˆûÿÿÿÿ8•ÃêÄ­0
+^	java:S125€"<This block of commented-out lines of code should be removed.(Û±ášùÿÿÿÿ8•ÃêÄ­0
+^	java:S125"<This block of commented-out lines of code should be removed.(ÀÜÊÖüÿÿÿÿ8ÃêÄ­0
+^	java:S125º"<This block of commented-out lines of code should be removed.(¿âÆÚøÿÿÿÿ8ÃêÄ­0
+U
+java:S1135È"2Complete the task associated to this TODO comment.(Æ¦› úÿÿÿÿ8ÃêÄ­0
+^	java:S125Ğ"<This block of commented-out lines of code should be removed.(¿âÆÚøÿÿÿÿ8ÃêÄ­0
+O
+java:S1602ç",Remove useless curly braces around statement(Éøçûÿÿÿÿ8“¨–­0
+U
+java:S1135è"2Complete the task associated to this TODO comment.(Æ¦› úÿÿÿÿ8¥ÃêÄ­0
+J
+java:S1602ì",Remove useless curly braces around statement(›ªà€8¨–­0
+U
+java:S1135í"2Complete the task associated to this TODO comment.(Æ¦› úÿÿÿÿ8¥ÃêÄ­0
+^	java:S125õ"<This block of commented-out lines of code should be removed.(•»±íûÿÿÿÿ8¥ÃêÄ­0
+Y	java:S125ø"<This block of commented-out lines of code should be removed.(Ãèéÿ8à¨–­0
+R
+java:S1874‡"/Remove this use of "getSize"; it is deprecated.(¯ÊÃÙøÿÿÿÿ8¥ÃêÄ­0
+^	java:S125"<This block of commented-out lines of code should be removed.(ÿ…õªşÿÿÿÿ8­ÃêÄ­0
+Z
+java:S1874œ"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(ÛŒ şÿÿÿÿ8­ÃêÄ­0
+U
+java:S1874"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(­‰ı›8­ÃêÄ­0
+^	java:S125«"<This block of commented-out lines of code should be removed.(úùüÿÿÿÿ8ÁŞ¶•¯0
+Y	java:S125³"<This block of commented-out lines of code should be removed.(ÀØ£ê8ÉŞ¶•¯0
+^	java:S125»"<This block of commented-out lines of code should be removed.(Ï«Óãÿÿÿÿÿ8ÉŞ¶•¯0
+Y
+java:S1874½";Remove this use of "CONNECTIVITY_ACTION"; it is deprecated.(ÄõÔ8ÉŞ¶•¯0
+^	java:S125Ì"<This block of commented-out lines of code should be removed.(ôóÃÁÿÿÿÿÿ8ÉŞ¶•¯0
+P
+java:S1135Ë"2Complete the task associated to this TODO comment.(çƒå8ÉŞ¶•¯0
+X	java:S125Œ	"<This block of commented-out lines of code should be removed.(›£Ó>8ÂÄêÄ­0
+^	java:S125	"<This block of commented-out lines of code should be removed.(çÑåşÿÿÿÿ8ÂÄêÄ­0
+Y	java:S125œ	"<This block of commented-out lines of code should be removed.(Ù¸Ô°8ÙŞ¶•¯0
+Y	java:S125¬	"<This block of commented-out lines of code should be removed.( ™£à8ÙŞ¶•¯0
+^	java:S125±	"<This block of commented-out lines of code should be removed.(¾¡µşÿÿÿÿ8áŞ¶•¯0
+O
+java:S1602õ	",Remove useless curly braces around statement(¢ìãµıÿÿÿÿ8©ß¶•¯0
+¤
+java:S1186„
+"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ñ¢®Êøÿÿÿÿ8©ß¶•¯0
+J
+java:S1602¢
+",Remove useless curly braces around statement(ÜÒ¬Ë8±ß¶•¯0
+^	java:S125°
+"<This block of commented-out lines of code should be removed.(œêÁ¤ûÿÿÿÿ8±ß¶•¯0
+^	java:S125º
+"<This block of commented-out lines of code should be removed.(“óÖ®ùÿÿÿÿ8¹ß¶•¯0
+Y	java:S125¼
+"<This block of commented-out lines of code should be removed.(îş™Ÿ8¹ß¶•¯0
+Q
+java:S1874Ç
+"3Remove this use of "getRealSize"; it is deprecated.(‹øÙî8¹ß¶•¯0
+Y	java:S125Ì
+"<This block of commented-out lines of code should be removed.( ‚ª¸8¹ß¶•¯0
+^	java:S125Ï
+"<This block of commented-out lines of code should be removed.(½ÍÕøÿÿÿÿ8¹ß¶•¯0
+^	java:S125è
+"<This block of commented-out lines of code should be removed.(Ãµ¸íüÿÿÿÿ8Áß¶•¯0
+^	java:S125ñ
+"<This block of commented-out lines of code should be removed.(ÓÇÀİÿÿÿÿÿ8Áß¶•¯0
+^	java:S125"<This block of commented-out lines of code should be removed.(ıÔôıùÿÿÿÿ8Áß¶•¯0
+]
+java:S1117¡"?Rename "controller" which hides the field declared at line 224.(—‰ıë8Áß¶•¯0
+Y	java:S125°"<This block of commented-out lines of code should be removed.(ûÓ±è8Ëß¶•¯0
+V
+java:S1117Å"8Rename "str" which hides the field declared at line 195.(™¢äÆ8ûÃêÄ­0
+L
+java:S1874Ñ"/Remove this use of "Handler"; it is deprecated.(„èâz8»©–­0
+O
+java:S1135Ô"2Complete the task associated to this TODO comment.(ò¹Ü?8À¨–­0
+D	java:S131Ö""Add a default case to this switch.(ıŞ³‹ùÿÿÿÿ8Á¨–­0
+Y	java:S125ß"<This block of commented-out lines of code should be removed.(¦ ÿ‰8Ä¨–­0
+Y	java:S125"<This block of commented-out lines of code should be removed.(Ã²á¨8Ğ¨–­0
+m
+java:S1871¤"JThis case's code block is the same as the block for the case on line 1560.(‰ÆÄÎşÿÿÿÿ8Ò¨–­0
+m
+java:S1871 "JThis case's code block is the same as the block for the case on line 1560.(úâúÿÿÿÿ8Ò¨–­0
+m
+java:S1871œ"JThis case's code block is the same as the block for the case on line 1560.(ªëÅŞúÿÿÿÿ8Ñ¨–­0
+Y	java:S125Ğ"<This block of commented-out lines of code should be removed.(Ãèéÿ8¦ÄêÄ­0
+Y	java:S125Ô"<This block of commented-out lines of code should be removed.(ÉÁæü8à¨–­0
+U
+java:S1135î"2Complete the task associated to this TODO comment.(”Œİèøÿÿÿÿ8æ¨–­0
+Y
+java:S2696Š"6Make the enclosing method "static" or remove this set.(É¿‡åıÿÿÿÿ8ë¨–­0
+Y	java:S125‹"<This block of commented-out lines of code should be removed.(ı’ëú8ì¨–­0
+K
+java:S1481›"(Remove this unused "obj" local variable.(‘ªá„ıÿÿÿÿ8ğ¨–­0
+K
+java:S1481œ"(Remove this unused "url" local variable.(Ìó—×øÿÿÿÿ8ñ¨–­0
+^	java:S125"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8ò¨–­0
+^	java:S125¨"<This block of commented-out lines of code should be removed.(ÿŒæïşÿÿÿÿ8ò¨–­0
+Y	java:S125ª"<This block of commented-out lines of code should be removed.(…Ç£É8ó¨–­0
+P
+java:S1135¦"2Complete the task associated to this TODO comment.(…ÈÍß8ô¨–­0
+Y	java:S125³"<This block of commented-out lines of code should be removed.(˜½Š8ô¨–­0
+Y	java:S125Á"<This block of commented-out lines of code should be removed.(…ë¹º8ü¨–­0
+D	java:S131È""Add a default case to this switch.(à¶Âıÿÿÿÿ8ş¨–­0
+P
+java:S1135Ç"2Complete the task associated to this TODO comment.(ãüì8ş¨–­0
+^	java:S125×"<This block of commented-out lines of code should be removed.(³ıæÑøÿÿÿÿ8©–­0
+[
+java:S1874„"=Remove this use of "setSystemUiVisibility"; it is deprecated.(³Ìù§8‹©–­0
+j
+java:S1874…"GRemove this use of "SYSTEM_UI_FLAG_IMMERSIVE_STICKY"; it is deprecated.(ÿÒÃ­úÿÿÿÿ8‹©–­0
+b
+java:S1874ˆ"DRemove this use of "SYSTEM_UI_FLAG_LAYOUT_STABLE"; it is deprecated.(«‘’Ä8Œ©–­0
+p
+java:S1874‰"MRemove this use of "SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION"; it is deprecated.(®Ü¢Òøÿÿÿÿ8Œ©–­0
+k
+java:S1874Š"HRemove this use of "SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN"; it is deprecated.(¢÷¬ÿÿÿÿÿ8©–­0
+i
+java:S1874Œ"FRemove this use of "SYSTEM_UI_FLAG_HIDE_NAVIGATION"; it is deprecated.(ßÓ›Ùüÿÿÿÿ8©–­0
+_
+java:S1874"ARemove this use of "SYSTEM_UI_FLAG_FULLSCREEN"; it is deprecated.(ˆÖõ8©–­0
+Y	java:S125“"<This block of commented-out lines of code should be removed.(õÜ¦è8©–­0
+X	java:S125™"<This block of commented-out lines of code should be removed.(›£Ó>8öß¶•¯0
+^	java:S125›"<This block of commented-out lines of code should be removed.(çÑåşÿÿÿÿ8öß¶•¯0
+p
+java:S3252­"MUse static access with "android.provider.MediaStore$MediaColumns" for "DATA".(ÅöÔ¡üÿÿÿÿ8™©–­0
+O
+java:S1874­",Remove this use of "DATA"; it is deprecated.(ÅöÔ¡üÿÿÿÿ8™©–­0
+O
+java:S1874±",Remove this use of "DATA"; it is deprecated.(ÏÜ“úÿÿÿÿ8œ©–­0
+^	java:S125²"<This block of commented-out lines of code should be removed.(¸²…Äÿÿÿÿÿ8©–­0
+g
+java:S1874Ü"IRemove this use of "getExternalStoragePublicDirectory"; it is deprecated.(½•¶’8°©–­0
+M
+java:S1874ş"/Remove this use of "Handler"; it is deprecated.(’Ú©Š8×ÄêÄ­0
+H
+java:S1481"*Remove this unused "size1" local variable.(Ê´¥ä8½©–­0
+^	java:S125‚"<This block of commented-out lines of code should be removed.(ÖšŒ„üÿÿÿÿ8¾©–­0
+Y	java:S125¶"<This block of commented-out lines of code should be removed.(Øò•»8Ë©–­0
+^	java:S125º"<This block of commented-out lines of code should be removed.(ïªÍŞÿÿÿÿÿ8Í©–­0
+U
+java:S1135Ë"2Complete the task associated to this TODO comment.(µ»´Æúÿÿÿÿ8Ñ©–­0
+Y
+java:S1068 "6Remove this unused "AUTOSAVE_FILENAME2" private field.(¯ø¦³ıÿÿÿÿ8ßÄêÄ­0
+T
+java:S1068¡"6Remove this unused "mGeneratedTextView" private field.(·ß–û8ßÄêÄ­0
+\
+java:S1068£"9Remove this unused "mGeneratedFrameLayout" private field.(‰Úı“øÿÿÿÿ8ßÄêÄ­0
+R
+java:S1068¤"/Remove this unused "mNoCodeText" private field.(¡àéĞüÿÿÿÿ8ßÄêÄ­0
+N
+java:S1068¥"0Remove this unused "mNoErrorText" private field.(Ü´†¼8ßÄêÄ­0
+Z
+java:S1068­"7Remove this unused "server_upload_check" private field.(º×½›úÿÿÿÿ8ßÄêÄ­0
+O
+java:S1068×"2Remove this unused "error_Listener" private field.(‘¯8ßÄêÄ­0
+O
+java:S1068Î"1Remove this unused "error_confirm" private field.(îƒ¿Ó8ßÄêÄ­0

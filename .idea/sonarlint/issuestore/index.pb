@@ -63,3 +63,15 @@ Lblocklylib-core/src/main/java/com/google/blockly/android/FlyoutFragment.java,0
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 r
 Bapp/src/main/kotlin/com/learn/wp_rest/repository/acf/AcfService.kt,c\8\c82e305671fcbb62255538a9d0382ad14d7d8629
+p
+@app/src/main/java/com/corporation8793/activity/MainActivity.java,9\8\980b0fb2bd4cd0c80f44f08c273f53eb46f9e97b
+k
+;app/src/test/kotlin/com/learn/wp_rest/wp/posts/PostTests.kt,1\7\1767bf731ced46f2de4c88ca99ededdac727fb65
+m
+=app/src/main/kotlin/com/learn/wp_rest/data/auth/AuthCookie.kt,3\2\32891a725a460718cbfdefae602ceb8ecef24087
+m
+=app/src/main/kotlin/com/learn/wp_rest/data/auth/Validation.kt,8\d\8d4a94750d2e49ac53d43c1e99969990b455a357
+|
+Lapp/src/main/kotlin/com/learn/wp_rest/repository/wp/users/UsersRepository.kt,d\e\de76a565b412bd672df6dc28c3d306ceeccf28af
+k
+;app/src/main/kotlin/com/learn/wp_rest/data/wp/users/User.kt,f\7\f7e19b3126679a62c960a0d5067528bbc6738289
