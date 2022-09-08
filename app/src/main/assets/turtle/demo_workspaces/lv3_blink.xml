@@ -4,7 +4,7 @@
             <block type="test">
                 <value name="PIN">
                     <block type="base_pins_list">
-                        <field name="PIN">8</field>
+                        <field name="PIN">13</field>
                     </block>
                 </value>
                 <value name="VALUE1">
@@ -18,7 +18,7 @@
             <block type="inout_digital_write">
                 <value name="PIN">
                     <block type="base_pins_list">
-                        <field name="PIN">8</field>
+                        <field name="PIN">13</field>
                     </block>
                 </value>
                 <value name="NUM">
@@ -30,14 +30,14 @@
                     <block type="base_delay">
                         <value name="DELAY_TIME">
                             <block type="math_number">
-                                <field name="NUM">1000</field>
+                                <field name="NUM">500</field>
                             </block>
                         </value>
                         <next>
                             <block type="inout_digital_write">
                                 <value name="PIN">
                                     <block type="base_pins_list">
-                                        <field name="PIN">8</field>
+                                        <field name="PIN">13</field>
                                     </block>
                                 </value>
                                 <value name="NUM">

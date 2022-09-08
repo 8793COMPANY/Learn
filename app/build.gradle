@@ -50,14 +50,15 @@ android {
     // 코틀린(.kt) 병행 사용 설정
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-
-//        testOptions {
-//            unitTests.all {
-//                useJUnitPlatform()
-//            }
-//
-//        }
     }
+
+        testOptions {
+            unitTests.all {
+                useJUnitPlatform()
+            }
+
+        }
+
 }
 
 dependencies {

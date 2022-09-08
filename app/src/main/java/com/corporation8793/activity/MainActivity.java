@@ -1300,9 +1300,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             loadXmlFromWorkspace();
 
 
+
+            String solutionXmlAssetFilePath ="";
+            if(chapter_id.equals("3-2")){
+                solutionXmlAssetFilePath = "lv1_blink.xml";
+            }else if (chapter_id.equals("3-3")){
+                solutionXmlAssetFilePath = "lv2_blink.xml";
+            }else if (chapter_id.equals("3-4")){
+                solutionXmlAssetFilePath = "lv3_blink.xml";
+            }else{
+                solutionXmlAssetFilePath = "lv1_blink.xml";
+            }
+
+            Log.e("solutionXmlAssetFilePath",solutionXmlAssetFilePath);
+
+
             // TODO : block compare test
             ParentXml parentXml = new ParentXml(getApplicationContext(),
-                    "turtle/demo_workspaces/lv1_blink.xml",
+                    "turtle/demo_workspaces/"+solutionXmlAssetFilePath,
                                                 submittedXml);
 
             Source solution_src = parentXml.getSolutionSource();
@@ -1390,12 +1405,42 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Element e = (Element) submitted_statement_nl.item(0);
 
 
-            Log.e("e check",e.getNodeName());
-            Log.e("e check",e.getElementsByTagName("field").item(0).getTextContent()+"");
+            //블록 이름 가져오기
+//            Log.e("e check",e.getElementsByTagName("block").item(3).getAttributes().getNamedItem("type").getTextContent()+"");
+//            Log.e("e check",e.getElementsByTagName("field").item(0).getTextContent()+"");
 
             if (e != null) {
                 // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
                 // 또는, " 답안지가 정답지와 일치 " 했을때 정답처리
+
+                if (solution_str.equals(submitted_str)){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
+                    mediaPlayer.start();
+
+                    block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("블록 코딩 튜터");
+                    alertDialog.setMessage("정답입니다. 참 잘했어요~!");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> {
+                                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                                dialog.dismiss();
+                            });
+                    alertDialog.show();
+                }else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("블록 코딩 튜터");
+                    alertDialog.setMessage("틀렸습니다. 다시 한번 해보세요~!");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> {
+                                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                                dialog.dismiss();
+                            });
+                    alertDialog.show();
+                }
+
+                /*
                 if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                         e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
                         ||
@@ -1471,11 +1516,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             });
                     alertDialog.show();
                 }
+                */
+
 
                 Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
                 Log.d("Build Bot pin IO", e.getElementsByTagName("field").item(1).getTextContent());
                 Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
             }
+
+
         });
 
         // 테스트 메시지 재생 완료
