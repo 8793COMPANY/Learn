@@ -32,6 +32,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RadioButton;
 
 import com.google.blockly.android.BlockClickDialog;
 import com.google.blockly.android.OnCloseCheckListener;
@@ -130,7 +132,7 @@ public class BlocklyController {
     }
 
 
-
+    boolean delete_check = true;
     private final Context mContext;
     private final Looper mMainLooper;
     private final BlockFactory mModelFactory;
@@ -159,6 +161,8 @@ public class BlocklyController {
     Block testblock = null;
     long delay = 0;
 
+    private int centerX = 0, centerY = 0;
+
     private List<Block> mTempBlocks = new ArrayList<>();
 
     public interface OnBlockClickListener {
@@ -186,6 +190,14 @@ public class BlocklyController {
 
     public void setCopyEnabled(boolean check){
         mBlockCopyCheck = check;
+    }
+
+    public void setCenterXPosition(int centerX){
+        this.centerX = centerX;
+    }
+
+    public void setCenterYPosition(int centerY){
+        this.centerY = centerY;
     }
 
     private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
@@ -280,47 +292,75 @@ public class BlocklyController {
 
                     alertDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
                     alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+//                    alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                     alertDialog.setCancelable(true);
 
-                    BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
-                    View blockview = (View) touchedBlockView;
+//                    BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+//                    Block rootBlock = touchedBlockView.getBlock().getRootBlock();
+//                    Log.e("rootBlock",rootBlock.getType());
+//                    BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
+//                    BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
+//                    View blockview = (View) touchedBlockView;
 //        view.setBackgroundColor(Color.parseColor("#FF007F"));
 
-                    view.findViewById(R.id.close_btn).setOnClickListener(v->{
-                        alertDialog.dismiss();
+//                    view.findViewById(R.id.close_btn).setOnClickListener(v->{
+//                        alertDialog.dismiss();
+//
+//                    });
+
+                    RadioButton copy_btn = view.findViewById(R.id.copy_btn);
+                    RadioButton delete_btn = view.findViewById(R.id.delete_btn);
+
+
+
+                    copy_btn.setOnClickListener(v->{
+                        delete_btn.setChecked(false);
+                        delete_check = false;
 
                     });
 
-                    view.findViewById(R.id.copy_btn).setOnClickListener(v->{
-                        mListener.onBlockClick(pendingDrag);
-                        if (copyCheck != null){
-                            Log.e("in! hi","copyCheck");
-                            copyCheck.onCopyCheck(false);
+                    delete_btn.setOnClickListener(v->{
+                        copy_btn.setChecked(false);
+                        delete_check = true;
+
+                    });
+
+                    view.findViewById(R.id.cancel).setOnClickListener(v->{
+                        alertDialog.dismiss();
+                    });
+
+                    view.findViewById(R.id.confirm).setOnClickListener(v->{
+                        if (delete_check){
+                            removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
                             alertDialog.dismiss();
+                        }else{
+                            mListener.onBlockClick(pendingDrag);
+                            if (copyCheck != null){
+                                Log.e("in! hi","copyCheck");
+                                copyCheck.onCopyCheck(false);
+                                alertDialog.dismiss();
+                            }
                         }
-                    });
-
-                    view.findViewById(R.id.delete_btn).setOnClickListener(v->{
-                        removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
                         alertDialog.dismiss();
                     });
 
 
-                    float offsetX = blockview.getWidth()  ;
-                    float offsetY = blockview.getHeight() + blockview.getPivotY();
 
-                    Log.e("offsetX",blockview.getPivotX()+"");
-                    Log.e("offsetY",blockview.getPivotY()+"");
-
-                    WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
-                    params.x = (int)(offsetX );
-                    params.y = (int) (offsetY );
-//                    params.gravity = Gravity.CENTER;
-                    alertDialog.getWindow().setAttributes(params);
 
                     alertDialog.show();
 
+
+                    Window window = alertDialog.getWindow();
+
+                    int x = (int) (centerX * 0.36f);
+                    int y = (int) (centerY * 0.5f);
+//                    WindowManager.LayoutParams params = alertDialog.getWindow().getAttributes();
+//                    params.width = (int) (centerX * 0.35);
+//                    params.height = 1000;
+//                    params.height = (int) (centerY * 0.6);
+//                    alertDialog.getWindow().setAttributes(params);
+
+                    window.setLayout(x,y);
 
 
 

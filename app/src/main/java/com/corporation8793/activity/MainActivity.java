@@ -1109,7 +1109,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         resetListener = new FinishDialog(this,"정말 초기화하시겠습니까?",reset_confirm,reset_cancel);
         error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
-
+        Display display2;  // in Activity
+        display2 = getWindowManager().getDefaultDisplay();
+        /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
+        Point size2 = new Point();
+        display2.getSize(size2); // or getSize(size)
+        int width = size2.x;
+        int height = size2.y;
+        controller.setCenterXPosition(width);
+        controller.setCenterYPosition(height);
 
 
 
