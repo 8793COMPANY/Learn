@@ -39,6 +39,7 @@ class PostTests {
     fun createQuizReport() {
         val response = postsRepository.createQuizReport(
             title = "PostTests - createQuizReport",
+            uid = "4",
             answer_1 = 1,
             answer_2 = 4,
             answer_3 = 2,
