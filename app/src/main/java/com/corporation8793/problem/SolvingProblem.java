@@ -147,6 +147,7 @@ public class SolvingProblem extends AppCompatActivity {
                     new Thread(()->{
                         String post_id = Application.postsRepository.createQuizReport(
                                 chapter_id+"-5. "+"LED 문제",
+                                Application.user.getId(),
                                 answers[0],
                                 answers[1],
                                 answers[2],

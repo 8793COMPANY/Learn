@@ -26,6 +26,8 @@
             <field name="VALUE1">LOW</field>
         </block>-->
 
+        <block type="turtle_setup_loop"></block>
+
         <block type="test">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -195,7 +197,7 @@
             </value>
         </block>-->
 
-        <block type="turtle_setup_loop"></block>
+
 
         <block type="controls_for">
             <value name="FROM">
@@ -473,6 +475,14 @@
 
 
     <category name="upload" colour="330">
+
+    </category>
+
+    <category name="reset" colour="330">
+
+    </category>
+
+    <category name="home" colour="330">
 
     </category>
 

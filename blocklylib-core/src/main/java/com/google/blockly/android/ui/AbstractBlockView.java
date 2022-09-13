@@ -192,7 +192,14 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.e("event",event.toString());
-        return hitTest(event) && mTouchHandler.onTouchBlock(this, event);
+
+        //TODO : 블록사전에 있는 블록 드래그를 막기 위해 null 에러 처리를 해주었지만 나중에 다른 방법을 찾아볼 필요는 있음
+        try {
+            return hitTest(event) && mTouchHandler.onTouchBlock(this, event);
+        }catch (NullPointerException e){
+            Log.e("e",e.toString());
+        }
+        return false;
     }
 
     /**
