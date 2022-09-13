@@ -72,17 +72,13 @@ class PostsRepository(private val basicAuth : String) {
         val htmlTemplate =
             """
                 <a href="$requestReportAnswer$quizSearchQuery" target="_blank">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>${answer_1}</td>
-                                <td>${answer_2}</td>
-                                <td>${answer_3}</td>
-                                <td>${answer_4}</td>
-                                <td>${answer_5}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="quiz-div">
+                        $answer_1 
+                        $answer_2 
+                        $answer_3 
+                        $answer_4 
+                        $answer_5
+                    </div>
                 </a>
             """.trimIndent()
 
