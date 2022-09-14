@@ -38,7 +38,7 @@ class PostTests {
     @Order(2)
     fun createQuizReport() {
         val response = postsRepository.createQuizReport(
-            title = "PostTests - createQuizReport",
+            title = "3-5. LED 문제",
             uid = "4",
             answer_1 = 1,
             answer_2 = 4,

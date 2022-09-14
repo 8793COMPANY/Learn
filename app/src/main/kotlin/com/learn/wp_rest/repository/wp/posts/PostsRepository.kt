@@ -73,7 +73,7 @@ class PostsRepository(private val basicAuth : String) {
             """
                 <a href="$requestReportAnswer$quizSearchQuery" target="_blank">
                     <div class="quiz-div">
-                        $answer_1&ensp;$answer_2&ensp;$answer_3&ensp;$answer_4&ensp;$answer_5
+                        $answer_1&ensp; $answer_2&ensp; $answer_3&ensp; $answer_4&ensp; $answer_5
                     </div>
                 </a>
             """.trimIndent()
