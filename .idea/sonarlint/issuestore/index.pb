@@ -61,8 +61,6 @@ r
 Bapp/src/main/kotlin/com/learn/wp_rest/repository/acf/AcfService.kt,c\8\c82e305671fcbb62255538a9d0382ad14d7d8629
 p
 @app/src/main/java/com/corporation8793/activity/MainActivity.java,9\8\980b0fb2bd4cd0c80f44f08c273f53eb46f9e97b
-k
-;app/src/test/kotlin/com/learn/wp_rest/wp/posts/PostTests.kt,1\7\1767bf731ced46f2de4c88ca99ededdac727fb65
 m
 =app/src/main/kotlin/com/learn/wp_rest/data/auth/AuthCookie.kt,3\2\32891a725a460718cbfdefae602ceb8ecef24087
 m
