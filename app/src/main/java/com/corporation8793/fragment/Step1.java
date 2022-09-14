@@ -109,8 +109,8 @@ public class Step1 extends Fragment {
 
         supplies_list.add(new Supplies(R.drawable.supplies_img1,true));
         supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
-        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
-        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
+//        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
+//        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
 
         suppliesAdapter = new SuppliesAdapter(getContext(),supplies_list);
 
@@ -128,6 +128,13 @@ public class Step1 extends Fragment {
                 suppliesAdapter.notifyItemChanged(previous_num, "no");
                 suppliesAdapter.notifyItemChanged(position, "click");
                 previous_num = position;
+                if (position ==0) {
+                    name.setText("LED");
+                    comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
+                }else{
+                    name.setText("점퍼선");
+                    comment.setText(msg);
+                }
             }
         });
 //        supplies1.setType("default");
