@@ -11,19 +11,18 @@
 
     <RadioButton
         android:id="@+id/copy_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintWidth_percent="0.07"
         android:background="@drawable/radio_btn_selector"
         android:button="@null"
         android:checked="true"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
-
         app:layout_constraintVertical_bias="0.15"></RadioButton>
 
     <TextView
@@ -40,8 +39,8 @@
 
     <RadioButton
         android:id="@+id/delete_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintWidth_percent="0.07"
         android:background="@drawable/radio_btn_selector"
@@ -50,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/copy_btn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintVertical_bias="0.07"></RadioButton>
 
     <TextView
@@ -73,7 +72,7 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:background="@drawable/bottom_radius"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_default="percent"
         app:layout_constraintHeight_percent="0.35"

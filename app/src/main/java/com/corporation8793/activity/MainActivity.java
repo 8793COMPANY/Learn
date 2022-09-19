@@ -1098,6 +1098,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 //        (BlocklyCategory.BlockItem) blocks.get(0)).getBlock()
 //        Log.e("blocks",blocks.size()+"");
+
         mCategoryView.setItemClick(this);
         this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
@@ -1924,29 +1925,35 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
-            new Thread(()->{
-                Log.e("uri",uri2path(this,imageUri));
-                Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
-                MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+            try {
+                new Thread(()->{
+                    Log.e("uri",uri2path(this,imageUri));
+                    Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
+                    MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
 
-                Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
-                        chapter_id+". "+contents_name,
-                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
-                        response_ci.getSecond().getGuid().getRendered()
-                        );
-                Log.e("response",response.getFirst());
-                Log.e("response",response.getSecond().toString());
-                Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
-                        response.getSecond().getId(),
-                        Integer.parseInt(chapter_id_split[0]),
-                        Integer.parseInt(chapter_id_split[1]),
-                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
-                        response_ci.getSecond().getGuid().getRendered()
-                );
+                    Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+                            chapter_id+". "+contents_name,
+                            MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                            response_ci.getSecond().getGuid().getRendered()
+                    );
+                    Log.e("response",response.getFirst());
+                    Log.e("response",response.getSecond().toString());
+                    Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
+                            response.getSecond().getId(),
+                            Integer.parseInt(chapter_id_split[0]),
+                            Integer.parseInt(chapter_id_split[1]),
+                            MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                            response_ci.getSecond().getGuid().getRendered()
+                    );
 
-                Log.e("upload_result",upload_result.getFirst());
-                Log.e("upload_result",upload_result.getSecond().toString());
-            }).start();
+                    Log.e("upload_result",upload_result.getFirst());
+                    Log.e("upload_result",upload_result.getSecond().toString());
+                }).start();
+            }catch (Exception e){
+                Log.e("main error",e.toString());
+                e.printStackTrace();
+            }
+
 
         } else {
             String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();

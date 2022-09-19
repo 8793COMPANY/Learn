@@ -8,14 +8,29 @@
     android:background="#fcf1de"
     android:clipToPadding="false">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/name_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98"></androidx.constraintlayout.widget.Guideline>
+
+
+
     <TextView
         android:id="@+id/user_name"
         android:text="김이름"
+        android:textColor="#b45611"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/guide_right"
+        app:layout_constraintRight_toRightOf="@+id/name_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="13dp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeStepGranularity="2dp"
+        app:layout_constraintHorizontal_bias="1"
         ></TextView>
 
 

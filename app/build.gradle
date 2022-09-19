@@ -95,4 +95,6 @@ dependencies {
     implementation 'se.akerfeldt:okhttp-signpost:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
     implementation 'oauth.signpost:signpost-core:1.2.1.2'
+
+    implementation 'androidx.palette:palette:1.0.0'
 }
