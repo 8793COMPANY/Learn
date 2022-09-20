@@ -391,12 +391,21 @@ public class BlockRecyclerViewHelper {
 
                         block_width = toolbox_bg.getWidth();
                         Log.e("block_width",block_width+"");
+                        Log.e("block_width",width+"");
                         if (block_width != 0)
-                            if (block_width > width)
+                            if (block_width > width) {
+                                Log.e("block_width","width");
                                 widths[aIndex] = width;
-                            else
+                            }else {
+                                Log.e("block_width","block_width");
                                 widths[aIndex] = block_width;
+                            }
 
+                        Log.e("block_width pos",aIndex+"");
+                        if (aIndex == 2) {
+                            Log.e("block_width","들어옴");
+                            widths[aIndex] = width;
+                        }
                         Log.e(TAG, "width = " + block_width);
 
 
@@ -628,6 +637,7 @@ public class BlockRecyclerViewHelper {
             BlocklyCategory.CategoryItem item = items.get(position);
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 Block block = ((BlocklyCategory.BlockItem) item).getBlock();
+                Log.e("block",block.getType());
                 block.setEditable(true);
                 BlockGroup bg = mHelper.getParentBlockGroup(block);
 

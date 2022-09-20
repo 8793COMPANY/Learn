@@ -341,6 +341,7 @@ public class CategoryTabs extends RecyclerView {
                     categoryData.setPosition(tabPosition);
                     categoryData.setSelection(true);
                     Log.e("isSelected",holder.mLabel.isSelected()+"");
+                    Log.e("mpush!!",tabPosition+"");
 
                     BusProvider.getInstance().post(new PushEvent(tabPosition, false, true));
                     onCategoryClicked(category);

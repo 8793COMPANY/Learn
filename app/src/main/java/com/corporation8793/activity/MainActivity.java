@@ -1016,18 +1016,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
         List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
         for (BlocklyCategory.CategoryItem item : blocks) {
-            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
+//            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 // Clean up the old views
                 BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
 //                controller.getBlockViewFactory().getView()
                 Block block = blockItem.getBlock();
+                Log.e("block type",block.getType());
                 if (block !=null)
                     Log.e("block item","not null");
                 Log.e("block",blockItem.getBlock().toString());
                 dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
 //                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
 //                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
-            }
+//            }
         }
         Log.e("block list count",dictionary_block_list.size()+"");
         dictionaryAdapter = new CodeDictionaryAdapter(this,controller,dictionary_block_list);
@@ -2055,6 +2056,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 break;
 
             case 7:
+                flyoutFragment.setCloseable(true);
                 categoryData.setPosition(7);
                 categoryData.setSelection(true);
                 current_pos = 7;
@@ -2062,6 +2064,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 resetListener.show();
                 break;
             case 8:
+                flyoutFragment.setCloseable(true);
                 categoryData.setPosition(8);
                 categoryData.setSelection(true);
                 current_pos = 8;
@@ -2069,6 +2072,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 finishListener.show();
                 break;
             case 9:
+                categoryData.setClosed(true);
+
                 Log.e("mPushEvent","why");
                 categoryData.setPosition(9);
                 categoryData.setSelection(true);
@@ -2080,7 +2085,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 if (v.isSelected()) {
                     Log.e("true","in");
                     block_dictionary.setVisibility(View.VISIBLE);
-                    dictionaryAdapter.notifyDataSetChanged();
+//                    dictionaryAdapter.notifyDataSetChanged();
                 }else
                     block_dictionary.setVisibility(View.GONE);
                 break;
