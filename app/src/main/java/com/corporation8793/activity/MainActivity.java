@@ -188,7 +188,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] tempTab = {null, null, null,null,null,null};
-    Boolean [] tempTabCheck = {false, false, false,false,false,false};
+    Boolean [] tempTabCheck = {false, false, false, false, false, false};
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
@@ -1014,33 +1014,33 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
 //        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
-        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
-        for (BlocklyCategory.CategoryItem item : blocks) {
-//            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
-                // Clean up the old views
-                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
-//                controller.getBlockViewFactory().getView()
-                Block block = blockItem.getBlock();
-                Log.e("block type",block.getType());
-                if (block !=null)
-                    Log.e("block item","not null");
-                Log.e("block",blockItem.getBlock().toString());
-                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
-//                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
-//                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
-//            }
-        }
+//        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+//        for (BlocklyCategory.CategoryItem item : blocks) {
+////            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
+//                // Clean up the old views
+//                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
+////                controller.getBlockViewFactory().getView()
+//                Block block = blockItem.getBlock();
+//                Log.e("block type",block.getType());
+//                if (block !=null)
+//                    Log.e("block item","not null");
+//                Log.e("block",blockItem.getBlock().toString());
+//                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
+////                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
+////                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
+////            }
+//        }
         Log.e("block list count",dictionary_block_list.size()+"");
-        dictionaryAdapter = new CodeDictionaryAdapter(this,controller,dictionary_block_list);
-        block_list.setAdapter(dictionaryAdapter);
+//        dictionaryAdapter = new CodeDictionaryAdapter(this,controller,dictionary_block_list);
+//        block_list.setAdapter(dictionaryAdapter);
 
-        block_list.setLayoutManager(new LinearLayoutManager(this));
-        block_list.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener(){
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-        });
+//        block_list.setLayoutManager(new LinearLayoutManager(this));
+//        block_list.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener(){
+//            @Override
+//            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+//                return false;
+//            }
+//        });
 
 //        (BlocklyCategory.BlockItem) blocks.get(0)).getBlock()
 //        Log.e("blocks",blocks.size()+"");
@@ -1116,6 +1116,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         for (boolean ttc : tempTabCheck) {
             if (ttc) {
                 count += 1;
+                Log.e("FinishLoad - count", "selected count : " + count);
             }
         }
         if (count >= 2) {
@@ -1131,7 +1132,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            case 8:
 //                loadXmlFromWorkspace();
 //=======
-            case 8:
+            case 10:
                 Log.e("check","어택땅");
                 loadXmlFromWorkspace();
                 initTabColor();
@@ -1146,11 +1147,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case 9:
                 break;
             default:
-                Log.e("code_btn in","어택땅");
 //                trashcan_btn.setVisibility(View.VISIBLE);
 //                block_bot_btn.setVisibility(View.VISIBLE);
                 block_dictionary.setVisibility(View.GONE);
-                if(mPushEvent.getPos() < 5) {
+                if(mPushEvent.getPos() < 4) {
                     loadXmlFromWorkspace();
                     initTabColor();
                     initTabCheck();
@@ -1825,7 +1825,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void setLineForOtherCategoryTabs(int position) {
         //mMonitorHandler.sendEmptyMessage(1);
-        Log.e("??","setLineForOtherCategoryTabs");
+        Log.e("setLineForOtherCategoryTabs","position : " + position);
         categoryData.setPosition(position);
         blockly_monitor.setVisibility(View.GONE);
         switch (position) {
@@ -2035,16 +2035,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         switch (pos) {
             // code
             case 4:
-
                     code_btn(pos);
                 break;
 
             // serial monitor
             case 5:
-
                 serial_btn(pos);
-
-
                 break;
 
             // upload
@@ -2056,27 +2052,25 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 break;
 
             case 7:
-                flyoutFragment.setCloseable(true);
+
                 categoryData.setPosition(7);
-                categoryData.setSelection(true);
+                categoryData.setClosed(true);
                 current_pos = 7;
                 setInitLine();
                 resetListener.show();
                 break;
             case 8:
-                flyoutFragment.setCloseable(true);
+
                 categoryData.setPosition(8);
-                categoryData.setSelection(true);
+                categoryData.setClosed(true);
                 current_pos = 8;
                 setInitLine();
                 finishListener.show();
                 break;
             case 9:
-                categoryData.setClosed(true);
 
                 Log.e("mPushEvent","why");
                 categoryData.setPosition(9);
-                categoryData.setSelection(true);
                 current_pos = 9;
                 blockly_monitor.setVisibility(View.GONE);
 //                setInitLine();
@@ -2102,7 +2096,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void initTabCheck() {
-        tempTabCheck = new Boolean[] {false, false, false,false,false,false};
+        tempTabCheck = new Boolean[] {false, false, false, false, false, false};
         Log.e("initTabCheck - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
     }
 
@@ -2258,14 +2252,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }, 100);
 
 
+        Log.e("code_btn", "status boolean : " + tempTabCheck[pos-4]);
         if (tempTabCheck[pos-4]) {
             blockly_monitor.setVisibility(View.GONE);
             initTabColor();
             initTabCheck();
+            Log.e("code_btn", "init check : " + tempTabCheck[pos-4]);
         } else {
             tempTabCheck[pos-4] = !tempTabCheck[pos-4];
             tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
-            Log.e("after case", tempTabCheck[pos-4] + "");
+            Log.e("code_btn", "setSelected : " + tempTabCheck[pos-4]);
         }
     }
 
