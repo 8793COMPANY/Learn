@@ -73,30 +73,30 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            controller.addRootBlock(listData.get(position).getBlock());
 //        }
 
-        if (holder.blockView != null)
-            holder.blockView.removeAllViews();
-
-        BlockView blockView = controller.getBlockViewFactory().getView(listData.get(position).getBlock());
-        BlockGroup group = controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
-        if (group != null)
-            Log.e("codedictionary","getParentBlockGroup not null");
-        else {
-            Log.e("codedictionary", "getParentBlockGroup null");
-            group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
-//            controller.addRootBlock(listData.get(position).getBlock());
-        }
-
-        if(group.getParent() != null) {
-            ((ViewGroup)group.getParent()).removeView(group); // <- fix
-        }
-
-        Log.e("codedictionary",block.getType());
-//        if (block.getType().equals("turtle_setup_loop")) {
-            group.setScaleX(0.8f);
-            group.setScaleY(0.8f);
+//        if (holder.blockView != null)
+//            holder.blockView.removeAllViews();
+//
+//        BlockView blockView = controller.getBlockViewFactory().getView(listData.get(position).getBlock());
+//        BlockGroup group = controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
+//        if (group != null)
+//            Log.e("codedictionary","getParentBlockGroup not null");
+//        else {
+//            Log.e("codedictionary", "getParentBlockGroup null");
+//            group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
+////            controller.addRootBlock(listData.get(position).getBlock());
 //        }
-
-        holder.blockView.addView(group);
+//
+//        if(group.getParent() != null) {
+//            ((ViewGroup)group.getParent()).removeView(group); // <- fix
+//        }
+//
+//        Log.e("codedictionary",block.getType());
+////        if (block.getType().equals("turtle_setup_loop")) {
+////            group.setScaleX(0.8f);
+////            group.setScaleY(0.8f);
+////        }
+//
+//        holder.blockView.addView(group);
 
 //        BlockGroup group = new BlockGroup(context,controller.getWorkspaceHelper());
 

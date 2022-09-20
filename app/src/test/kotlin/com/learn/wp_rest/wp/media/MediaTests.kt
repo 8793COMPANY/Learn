@@ -24,7 +24,7 @@ class MediaTests {
     @Order(1)
     fun uploadMedia() {
         val circuit_img_test = File("src/test/kotlin/com/learn/wp_rest/wp/media/circuit_img_test.jpg")
-        val block_img_test = File("src/test/kotlin/com/learn/wp_rest/wp/media/block_img_test.jpg")
+        val block_img_test = File("src/test/kotlin/com/learn/wp_rest/wp/media/unsubmission_img.png")
 
         val response_ci = mediaRepository.uploadMedia(circuit_img_test)
         println("uploadMedia : ${response_ci.first}, ${response_ci.second}")

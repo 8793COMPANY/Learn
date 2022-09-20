@@ -924,10 +924,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private View.OnClickListener finish_confirm = new View.OnClickListener() {
         public void onClick(View v) {
 //            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show()
+            Log.e("in","finish confirm");
             finishListener.dismiss();
             finish();
 
         }
+    };
+
+    private View.OnClickListener finish_cancel = v -> {
+        // TODO : LMS 서버 통신
+        Log.e("in","finish cancel");
+        finishListener.dismiss();
     };
 
     private View.OnClickListener reset_confirm = new View.OnClickListener() {
@@ -944,10 +951,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         resetListener.dismiss();
     };
 
-    private View.OnClickListener finish_cancel = v -> {
-        // TODO : LMS 서버 통신
-        resetListener.dismiss();
-    };
+
 
 
     @Override
@@ -1039,6 +1043,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 //        (BlocklyCategory.BlockItem) blocks.get(0)).getBlock()
 //        Log.e("blocks",blocks.size()+"");
+
         mCategoryView.setItemClick(this);
         this.registerReceiver(uploadEventReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
@@ -1050,7 +1055,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         resetListener = new FinishDialog(this,"정말 초기화하시겠습니까?",reset_confirm,reset_cancel);
         error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
-
+        Display display2;  // in Activity
+        display2 = getWindowManager().getDefaultDisplay();
+        /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
+        Point size2 = new Point();
+        display2.getSize(size2); // or getSize(size)
+        int width = size2.x;
+        int height = size2.y;
+        controller.setCenterXPosition(width);
+        controller.setCenterYPosition(height);
 
 
 
@@ -1109,7 +1122,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.e("FinishLoad - case", "Double Check Init !");
         }
 
-
+        Log.e("mPushEvent",mPushEvent.getPos()+"");
 
         switch (mPushEvent.getPos()) {
             // 어택땅
@@ -1117,17 +1130,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            case 8:
 //                loadXmlFromWorkspace();
 //=======
-            case 10:
+            case 8:
+                Log.e("check","어택땅");
                 loadXmlFromWorkspace();
                 initTabColor();
                 initTabCheck();
                 trashcan_btn.setVisibility(View.VISIBLE);
+                block_bot_btn.setVisibility(View.VISIBLE);
+                block_dictionary.setVisibility(View.GONE);
                 blockly_monitor.setVisibility(View.GONE);
-                view_check[current_pos] = true;
+//                view_check[current_pos] = true;
+
+                break;
+            case 9:
                 break;
             default:
                 Log.e("code_btn in","어택땅");
-                if(mPushEvent.getPos() < 4) {
+//                trashcan_btn.setVisibility(View.VISIBLE);
+//                block_bot_btn.setVisibility(View.VISIBLE);
+                block_dictionary.setVisibility(View.GONE);
+                if(mPushEvent.getPos() < 5) {
                     loadXmlFromWorkspace();
                     initTabColor();
                     initTabCheck();
@@ -1140,6 +1162,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 } else {
                     loadXmlFromWorkspace();
                 }
+
         }
 
 
@@ -1150,6 +1173,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.e("닫힘", "ㅎㅎ");
 //                translate_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
+                block_bot_btn.setVisibility(View.VISIBLE);
             }
         }
 
@@ -1241,6 +1265,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         block_method_btn.setOnClickListener(v->{
+            Log.e("mPush","함수 눌림");
             setDictionaryData(2);
             dictionaryAdapter.notifyDataSetChanged();
             dictionary_btn_selected(block_setup_btn,false);
@@ -1572,7 +1597,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         int width = size.x;
 
         ViewGroup.LayoutParams layoutParams = guideline4.getLayoutParams();
-        layoutParams.width = (int)(width / 1280.0) * 614 ;
+        layoutParams.width = (int)(width / 1280.0) * 614;
         //guideline4.setLayoutParams(layoutParams);
         guideline4.setGuidelineEnd((int) ((width / 1280.0) * 614));
 
@@ -1767,12 +1792,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.e("setMonitor","in!");
                 blockly_monitor.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.INVISIBLE);
+                block_bot_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
                 categoryData.setClosed(false);
             }else {
                 Log.e("setMonitor","in!2");
                 blockly_monitor.setVisibility(View.GONE);
                 trashcan_btn.setVisibility(View.VISIBLE);
+                block_bot_btn.setVisibility(View.VISIBLE);
                 view_check[position] = true;
                 mMonitorHandler.sendEmptyMessage(1);
             }
@@ -1782,6 +1809,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             view_check[position] = false;
             blockly_monitor.setVisibility(View.VISIBLE);
             trashcan_btn.setVisibility(View.INVISIBLE);
+            block_bot_btn.setVisibility(View.INVISIBLE);
             categoryData.setClosed(false);
         }
 
@@ -1829,16 +1857,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if (current_pos == position) {
             if (view_check[position]){
                 trashcan_btn.setVisibility(View.INVISIBLE);
+                block_bot_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
                 categoryData.setClosed(false);
             }else {
                 trashcan_btn.setVisibility(View.VISIBLE);
+                block_bot_btn.setVisibility(View.VISIBLE);
                 view_check[position] = true;
             }
 
         }else{
             view_check[position] = false;
             trashcan_btn.setVisibility(View.INVISIBLE);
+            block_bot_btn.setVisibility(View.INVISIBLE);
             categoryData.setClosed(false);
         }
 
@@ -2003,12 +2034,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         switch (pos) {
             // code
             case 4:
-                code_btn(pos);
+
+                    code_btn(pos);
                 break;
 
             // serial monitor
             case 5:
+
                 serial_btn(pos);
+
+
                 break;
 
             // upload
@@ -2021,26 +2056,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             case 7:
                 categoryData.setPosition(7);
-                categoryData.setClosed(true);
+                categoryData.setSelection(true);
                 current_pos = 7;
                 setInitLine();
                 resetListener.show();
                 break;
             case 8:
                 categoryData.setPosition(8);
-                categoryData.setClosed(true);
+                categoryData.setSelection(true);
                 current_pos = 8;
                 setInitLine();
                 finishListener.show();
                 break;
             case 9:
+                Log.e("mPushEvent","why");
                 categoryData.setPosition(9);
-                categoryData.setClosed(true);
+                categoryData.setSelection(true);
                 current_pos = 9;
                 blockly_monitor.setVisibility(View.GONE);
-                setInitLine();
+//                setInitLine();
 //                dictionaryAdapter.notifyDataSetChanged();
+                Log.e("v",v.isSelected()+"");
                 if (v.isSelected()) {
+                    Log.e("true","in");
                     block_dictionary.setVisibility(View.VISIBLE);
                     dictionaryAdapter.notifyDataSetChanged();
                 }else
@@ -2102,6 +2140,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 view_check[current_pos] = true;
 //                translate_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
+                block_bot_btn.setVisibility(View.VISIBLE);
             }
         }catch (ArrayIndexOutOfBoundsException e){
             e.printStackTrace();
@@ -2140,29 +2179,35 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
             Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
             fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
-            new Thread(()->{
-                Log.e("uri",uri2path(this,imageUri));
-                Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
-                MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+            try {
+                new Thread(()->{
+                    Log.e("uri",uri2path(this,imageUri));
+                    Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(new File(uri2path(this,imageUri)));
+                    MySharedPreferences.setString(this,"block_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
 
-                Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
-                        chapter_id+". "+contents_name,
-                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
-                        response_ci.getSecond().getGuid().getRendered()
-                        );
-                Log.e("response",response.getFirst());
-                Log.e("response",response.getSecond().toString());
-                Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
-                        response.getSecond().getId(),
-                        Integer.parseInt(chapter_id_split[0]),
-                        Integer.parseInt(chapter_id_split[1]),
-                        MySharedPreferences.getString(this,"circuit_img"+chapter_id),
-                        response_ci.getSecond().getGuid().getRendered()
-                );
+                    Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+                            chapter_id+". "+contents_name,
+                            MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                            response_ci.getSecond().getGuid().getRendered()
+                    );
+                    Log.e("response",response.getFirst());
+                    Log.e("response",response.getSecond().toString());
+                    Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
+                            response.getSecond().getId(),
+                            Integer.parseInt(chapter_id_split[0]),
+                            Integer.parseInt(chapter_id_split[1]),
+                            MySharedPreferences.getString(this,"circuit_img"+chapter_id),
+                            response_ci.getSecond().getGuid().getRendered()
+                    );
 
-                Log.e("upload_result",upload_result.getFirst());
-                Log.e("upload_result",upload_result.getSecond().toString());
-            }).start();
+                    Log.e("upload_result",upload_result.getFirst());
+                    Log.e("upload_result",upload_result.getSecond().toString());
+                }).start();
+            }catch (Exception e){
+                Log.e("main error",e.toString());
+                e.printStackTrace();
+            }
+
 
         } else {
             String imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
@@ -2180,8 +2225,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         monitor_text.setText("");
         Log.e("hi code_btn","click");
         categoryData.setPosition(4);
-        categoryData.setSelection(true);
-        categoryData.setClosed(true);
+//        categoryData.setSelection(true);
+//        categoryData.setClosed(true);
         setMonitor(4);
         mBlocklyActivityHelper.getFlyoutController();
 
@@ -2228,7 +2273,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("isOpened Serial","" + mPhysicaloid.isOpened());
 
         categoryData.setPosition(5);
-        categoryData.setClosed(true);
+//        categoryData.setClosed(true);
         setMonitor(5);
         mBlocklyActivityHelper.getFlyoutController();
 

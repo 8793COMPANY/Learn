@@ -63,18 +63,21 @@ public class ModeSelect extends AppCompatActivity {
 
 
         //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
-        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-        View actionbar = inflater.inflate(R.layout.custom_actionbar, null);
-
-        actionBar.setCustomView(actionbar);
-
-        getSupportActionBar().getCustomView().findViewById(R.id.btnMenu).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.e("hi","in!");
-                drawer.openDrawer(GravityCompat.START);
-            }
+//        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+//        View actionbar = inflater.inflate(R.layout.custom_actionbar, null);
+//
+//        actionBar.setCustomView(actionbar);
+//
+//        getSupportActionBar().getCustomView().findViewById(R.id.btnMenu).setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Log.e("hi","in!");
+//                drawer.openDrawer(GravityCompat.START);
+//            }
+//        });
+        findViewById(R.id.btnMenu).setOnClickListener(v->{
+            drawer.openDrawer(GravityCompat.START);
         });
 
 

@@ -37,16 +37,12 @@ l
 <app/src/main/kotlin/com/learn/wp_rest/data/wp/media/Media.kt,b\0\b0476c6d4ac16a2a7fce595cf7bc340410f1c906
 l
 <app/src/test/kotlin/com/learn/wp_rest/wp/media/MediaTests.kt,b\1\b154a5386c9feeaac96c44673ece7d18956da491
-s
-Capp/src/main/kotlin/com/learn/wp_rest/data/wp/posts/UploadReport.kt,1\2\1291100ca91e21ea6ac4d2c64ac5d96a20527a08
 c
 3app/src/main/kotlin/com/learn/wp_rest/RestClient.kt,4\f\4fbbe082b28614976d5609e7ecd2a7b6d56e4f94
 e
 5app/src/main/kotlin/com/learn/wp_rest/data/acf/Acf.kt,2\3\23037222c711a7f4c297ce6d94fb76b7e37e6d80
 y
 Iapp/src/main/kotlin/com/learn/wp_rest/repository/wp/posts/PostsService.kt,0\a\0a3b2702889c4fd8af96569f543cf0d0d12ab261
-q
-Aapp/src/main/kotlin/com/learn/wp_rest/data/wp/posts/QuizReport.kt,2\9\29b9186b32fc45cd8cda5e428d2c371ba6b141b7
 y
 Iapp/src/main/kotlin/com/learn/wp_rest/repository/wp/users/UsersService.kt,a\5\a5ca830ecdc2b0a9442f7395ab1d46012831c41f
 w
@@ -63,3 +59,13 @@ Lblocklylib-core/src/main/java/com/google/blockly/android/FlyoutFragment.java,0
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 r
 Bapp/src/main/kotlin/com/learn/wp_rest/repository/acf/AcfService.kt,c\8\c82e305671fcbb62255538a9d0382ad14d7d8629
+p
+@app/src/main/java/com/corporation8793/activity/MainActivity.java,9\8\980b0fb2bd4cd0c80f44f08c273f53eb46f9e97b
+m
+=app/src/main/kotlin/com/learn/wp_rest/data/auth/AuthCookie.kt,3\2\32891a725a460718cbfdefae602ceb8ecef24087
+m
+=app/src/main/kotlin/com/learn/wp_rest/data/auth/Validation.kt,8\d\8d4a94750d2e49ac53d43c1e99969990b455a357
+|
+Lapp/src/main/kotlin/com/learn/wp_rest/repository/wp/users/UsersRepository.kt,d\e\de76a565b412bd672df6dc28c3d306ceeccf28af
+k
+;app/src/main/kotlin/com/learn/wp_rest/data/wp/users/User.kt,f\7\f7e19b3126679a62c960a0d5067528bbc6738289
