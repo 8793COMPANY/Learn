@@ -22,6 +22,8 @@ import com.corporation8793.fragment.Step1;
 import com.corporation8793.fragment.Step2;
 import com.corporation8793.fragment.Step3;
 import com.corporation8793.fragment.Step4;
+import com.corporation8793.problem.HorizontalAnswer;
+import com.corporation8793.problem.VerticalAnswer;
 
 public class ProblemActivity extends AppCompatActivity {
 
@@ -33,7 +35,7 @@ public class ProblemActivity extends AppCompatActivity {
     TextView title, title2;
 
     String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
-    String [] contents = {"LED 깜박이기","LED 1초간 껐다 켜기","LED 3개 깜박이기"};
+    String [] contents = {"LED 깜빡이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
     int pos = 0;
 
     ConstraintLayout background;
@@ -41,6 +43,7 @@ public class ProblemActivity extends AppCompatActivity {
     String chapter_step = "default";
     int diagram_img = R.drawable.all_diagram_img;
     String contents_name = "";
+    String chapter_id = "";
 
     MediaPlayer mediaPlayer;
 
@@ -92,22 +95,25 @@ public class ProblemActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility( uiOption );
 
         int step = getIntent().getIntExtra("step",1);
-        contents_name = contents[step-1];
+        chapter_id = getIntent().getStringExtra("id");
+
+        Log.e("id",chapter_id);
+        Log.e("step",step+"");
+        contents_name = contents[step];
 
         Log.e("check",step +"");
-        if (step != 1){
-            chapter_step = "deep";
-            background.setBackgroundColor(Color.WHITE);
-            title2.setVisibility(View.VISIBLE);
-            title_background.setVisibility(View.INVISIBLE);
-        }
+//        if (step == 2){
+//            chapter_step = "deep";
+//            background.setBackgroundColor(Color.WHITE);
+//            title2.setVisibility(View.VISIBLE);
+//            title_background.setVisibility(View.INVISIBLE);
+//        }
 
-        if (step == 3){
-            diagram_img = R.drawable.all_diagram_img2;
-        }
-
+//        if (step == 3){
+//            diagram_img = R.drawable.all_diagram_img2;
+//        }
+//
         replaceFragment(0);
-
 
         back_btn.setOnClickListener(v->{
             next_btn.setVisibility(View.VISIBLE);
@@ -116,13 +122,13 @@ public class ProblemActivity extends AppCompatActivity {
             Log.e("pos",pos+"");
 
             if (pos ==0){
-                if (chapter_step.equals("deep")){
-                    background.setBackgroundColor(Color.WHITE);
-                    title2.setVisibility(View.VISIBLE);
-                    title_background.setVisibility(View.INVISIBLE);
-                }else{
+//                if (chapter_step.equals("deep")){
+//                    background.setBackgroundColor(Color.WHITE);
+//                    title2.setVisibility(View.VISIBLE);
+//                    title_background.setVisibility(View.INVISIBLE);
+//                }else{
                     title.setText(titles[pos]);
-                }
+//                }
                 back_btn.setVisibility(View.INVISIBLE);
             }else{
                 title_background.setVisibility(View.VISIBLE);
@@ -138,9 +144,9 @@ public class ProblemActivity extends AppCompatActivity {
                 if (pos < 3) {
                     Log.e("hello",MySharedPreferences.getInt(getApplicationContext(),contents_name)+"");
                         pos++;
-                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
-                        pos = 0;
-                    }
+//                    if (MySharedPreferences.getInt(getApplicationContext(), contents_name) == 0 && chapter_step.equals("deep")) {
+//                        pos = 0;
+//                    }
 
                     if (pos <3)
                             title.setText(titles[pos]);
@@ -162,14 +168,18 @@ public class ProblemActivity extends AppCompatActivity {
             if(MySharedPreferences.getInt(getApplicationContext(),contents_name) ==3){
                 Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
                 intent.putExtra("contents_name",contents_name);
+                intent.putExtra("id",chapter_id);
+                Log.e("contents_name",contents_name);
+                Log.e("id",chapter_id);
                 startActivity(intent);
                 finish();
             } else{
-                if (chapter_step.equals("deep") && pos ==1){
-                    title2.setVisibility(View.INVISIBLE);
-                    title_background.setVisibility(View.VISIBLE);
-                    background.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                }else if (MySharedPreferences.getInt(getApplicationContext(),contents_name) ==2 && pos ==3){
+//                if (chapter_step.equals("deep") && pos ==1){
+//                    title2.setVisibility(View.INVISIBLE);
+//                    title_background.setVisibility(View.VISIBLE);
+//                    background.setBackgroundColor(Color.parseColor("#f7f7f7"));
+//                }else
+                    if (MySharedPreferences.getInt(getApplicationContext(),contents_name) ==2 && pos ==3){
 
                         Toast.makeText(getApplicationContext(),"사진을 업로드해주세요",Toast.LENGTH_SHORT).show();
                 }
@@ -209,16 +219,29 @@ public class ProblemActivity extends AppCompatActivity {
     public void replaceFragment(int pos){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (pos == 0){
-            if (chapter_step.equals("default")){
+//<<<<<<< HEAD
+//            if (chapter_step.equals("default")){
+//                transaction.replace(R.id.fragment, new Step1(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
+//            }else{
+//                transaction.replace(R.id.fragment, new Step4(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
+//            }
+//=======
+//            if (chapter_step.equals("default")){
                 transaction.replace(R.id.fragment, new Step1(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
-            }else{
-                transaction.replace(R.id.fragment, new Step4(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
-            }
+//            },
+//            else{
+//                transaction.replace(R.id.fragment, new Step4(contents_name));
+//            }
+//>>>>>>> master
 
         }else if (pos ==1){
             transaction.replace(R.id.fragment, new Step2(contents_name, diagram_img, mediaPlayer, getApplicationContext(), block_bot_btn));
         }else if (pos ==2){
-            transaction.replace(R.id.fragment, new Step3(contents_name, mediaPlayer, getApplicationContext(), block_bot_btn));
+//<<<<<<< HEAD
+            transaction.replace(R.id.fragment, new Step3(contents_name,chapter_id, mediaPlayer, getApplicationContext(), block_bot_btn));
+//=======
+//            transaction.replace(R.id.fragment, new Step3(contents_name,chapter_id));
+//>>>>>>> master
         }
 
         transaction.commit();

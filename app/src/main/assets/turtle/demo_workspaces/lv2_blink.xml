@@ -1,0 +1,64 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="test">
+                <value name="PIN">
+                    <block type="base_pins_list">
+                        <field name="PIN">8</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="inout_digital_write">
+                <value name="PIN">
+                    <block type="base_pins_list">
+                        <field name="PIN">8</field>
+                    </block>
+                </value>
+                <value name="NUM">
+                    <block type="base_logic_list">
+                        <field name="LOGIC">HIGH</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="base_delay">
+                        <value name="DELAY_TIME">
+                            <block type="math_number">
+                                <field name="NUM">100</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="inout_digital_write">
+                                <value name="PIN">
+                                    <block type="base_pins_list">
+                                        <field name="PIN">8</field>
+                                    </block>
+                                </value>
+                                <value name="NUM">
+                                    <block type="base_logic_list">
+                                        <field name="LOGIC">LOW</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="base_delay">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number">
+                                                <field name="NUM">50</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

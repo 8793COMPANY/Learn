@@ -1,0 +1,50 @@
+
+E
+java:S1066
+"/Merge this if statement with the enclosing one.(¥¯’&
+F
+java:S1066
+"/Merge this if statement with the enclosing one.(ª´º
+K
+java:S1066Á
+"/Merge this if statement with the enclosing one.(ÒĞ•‘ÿÿÿÿÿ
+Q
+java:S1141Û"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+D
+java:S1604È	"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
+x
+java:S1488…
+"aImmediately return this expression instead of assigning it to the temporary variable "finalName".(›ÁŠ¼
+S
+java:S4973Ç
+"<Strings and Boxed types should be compared using "equals()".(Ú—Œ÷
+N
+java:S2589€"7Remove this expression which always evaluates to "true"(†Úéâ
+R	java:S125©	"<This block of commented-out lines of code should be removed.(Êô…Ì
+W	java:S125¯	"<This block of commented-out lines of code should be removed.(ÎÄ÷ıÿÿÿÿ
+I
+java:S1135†
+"2Complete the task associated to this TODO comment.(å»œ
+i
+java:S3776’
+"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚ŒõÔ
+I
+java:S1135®
+"2Complete the task associated to this TODO comment.(Ûïä“
+n
+java:S3776¿
+"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(»ıóªûÿÿÿÿ
+N
+java:S1135Ñ"2Complete the task associated to this TODO comment.(äÈ–ÿÿÿÿÿ
+n
+java:S3776¤"RRefactor this method to reduce its Cognitive Complexity from 35 to the 15 allowed.(­ë±¼ûÿÿÿÿ
+I
+java:S1135­"2Complete the task associated to this TODO comment.(˜À¾ˆ
+N
+java:S1135É"2Complete the task associated to this TODO comment.(àÃŒˆüÿÿÿÿ
+`
+java:S1854Ù"DRemove this useless assignment to local variable "fromClausePeriod".(¶Øë¿ûÿÿÿÿ
+V
+java:S1610ï"@Convert the abstract class "VariableCallback" into an interface.(Ö…©
+G
+java:S1172ø"+Remove this unused method parameter "info".(íĞæ¹øÿÿÿÿ

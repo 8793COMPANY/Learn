@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -13,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -145,6 +147,8 @@ public class Step2 extends Fragment {
             });
         });
 
+
+
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
         }
@@ -173,11 +177,34 @@ public class Step2 extends Fragment {
         diagram_img = view.findViewById(R.id.diagram_img);
         diagram_img.setBackgroundResource(diagram);
 
+        if (contents_name.equals("LED 핀 번호 바꾸기"))
+            diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
+
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
 
         diagram_img.setOnTouchListener((v, event) -> {
             mScaleGestureDetector.onTouchEvent(event);
             return true;
+        });
+
+        RadioButton bigboard_btn = view.findViewById(R.id.bigboard_btn);
+
+        bigboard_btn.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
+                else
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);
+            }else {
+                if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
+                else
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);
+            }
+        });
+
+        view.findViewById(R.id.bigboard_btn).setOnClickListener(v->{
+
         });
         return view;
     }

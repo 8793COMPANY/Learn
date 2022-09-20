@@ -26,6 +26,8 @@
             <field name="VALUE1">LOW</field>
         </block>-->
 
+        <block type="turtle_setup_loop"></block>
+
         <block type="test">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -195,7 +197,7 @@
             </value>
         </block>-->
 
-        <block type="turtle_setup_loop"></block>
+
 
         <block type="controls_for">
             <value name="FROM">
@@ -268,25 +270,26 @@
             </value>
         </block>
 
-                <block type="inout_tone_pin">
-                    <value name="PIN">
-                        <block type="base_pins_list">
-                            <field name="PIN">A1</field>
-                        </block>
-                    </value>
-                    <value name="NUM">
-                        <block type="math_number">
-                            <field name="NUM">440</field>
-                        </block>
-                    </value>
-                </block>
-                <block type="inout_notone_pin">
-                    <value name="PIN">
-                        <block type="base_pins_list">
-                            <field name="PIN">A1</field>
-                        </block>
-                    </value>
-                </block>
+<!--                <block type="inout_tone_pin">-->
+<!--                    <value name="PIN">-->
+<!--                        <block type="base_pins_list">-->
+<!--                            <field name="PIN">A1</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                    <value name="NUM">-->
+<!--                        <block type="math_number">-->
+<!--                            <field name="NUM">440</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                </block>-->
+
+<!--                <block type="inout_notone_pin">-->
+<!--                    <value name="PIN">-->
+<!--                        <block type="base_pins_list">-->
+<!--                            <field name="PIN">A1</field>-->
+<!--                        </block>-->
+<!--                    </value>-->
+<!--                </block>-->
 
 
 
@@ -472,6 +475,18 @@
 
 
     <category name="upload" colour="330">
+
+    </category>
+
+    <category name="reset" colour="330">
+
+    </category>
+
+    <category name="home" colour="330">
+
+    </category>
+
+    <category name="dictionary" colour="330">
 
     </category>
 

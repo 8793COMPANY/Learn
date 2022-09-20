@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.corporation8793.R;
 
@@ -22,12 +21,15 @@ public class FinishDialog extends Dialog {
 
     private View.OnClickListener Confirm_Btn;
     private View.OnClickListener Cancel_Btn;
+    TextView textView;
+    private String title;
 
 
-    public FinishDialog(@NonNull Context context, View.OnClickListener Confirm_Btn, @Nullable View.OnClickListener Cancel_Btn) {
+    public FinishDialog(@NonNull Context context, String text, View.OnClickListener Confirm_Btn, @Nullable View.OnClickListener Cancel_Btn) {
         super(context);
         this.Confirm_Btn = Confirm_Btn;
         this.Cancel_Btn = Cancel_Btn;
+        title = text;
     }
 
 
@@ -41,6 +43,9 @@ public class FinishDialog extends Dialog {
 
         confirm_btn = findViewById(R.id.confirm);
         cancel_btn = findViewById(R.id.cancel);
+        textView = findViewById(R.id.title);
+
+        textView.setText(title);
 
         confirm_btn.setOnClickListener(Confirm_Btn);
         if (Cancel_Btn != null) {

@@ -157,7 +157,7 @@ public class ProcedureCustomCategory implements CustomCategory {
 
     private void rebuildItems(BlocklyCategory category) throws BlockLoadingException {
         category.clear();
-
+        Log.e("rebuildItems name", mDefaultProcedureName);
         Block block = mBlockFactory.obtainBlockFrom(DEFINE_NO_RETURN_BLOCK_TEMPLATE);
         ((FieldInput)block.getFieldByName(NAME_FIELD)).setText(mDefaultProcedureName);
         category.addItem(new BlocklyCategory.BlockItem(block));

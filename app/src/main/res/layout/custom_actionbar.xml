@@ -7,11 +7,10 @@
 
     <ImageButton
         android:id="@+id/btnMenu"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/actionbar_menu_icon"
-        />
+        android:background="@drawable/actionbar_menu_icon" />
 
 
 
@@ -19,8 +18,8 @@
         android:id="@+id/btnHistory"
         android:layout_alignParentRight="true"
         android:background="@drawable/user_icon"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginRight="20dp"/>
 </RelativeLayout>
 
