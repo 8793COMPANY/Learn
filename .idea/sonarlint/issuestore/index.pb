@@ -13,14 +13,8 @@ Ublocklylib-core/src/main/java/com/google/blockly/android/BlocklySectionsActivit
 Ublocklylib-core/src/main/java/com/google/blockly/android/AbstractBlocklyActivity.java,f\7\f7f9252e07a6590785de53e23d20b591da3b8516
 €
 Pblocklylib-core/src/main/java/com/google/blockly/android/ui/WorkspaceHelper.java,7\4\741b9e91202d9e92fc6d32779832ebd656b4dae4
-…
-Ublocklylib-core/src/main/java/com/google/blockly/android/ui/VirtualWorkspaceView.java,e\0\e07af1566f526d3b370d8282698d807727c4caa6
-‡
-Wblocklylib-core/src/main/java/com/google/blockly/android/control/BlocklyController.java,a\f\aff3a5664eab3f3c215a707dee4e7cf3d494834f
 ~
 Nblocklylib-core/src/main/java/com/google/blockly/android/ui/WorkspaceView.java,e\9\e97caf36ccc6a9c21b8796b7113113f1c9754c1c
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 y
 Iapp/src/androidTest/java/com/corporation8793/ExampleInstrumentedTest.java,f\4\f425ecea647247c086c3a78ff9290f0e93eb218c
 b
@@ -59,8 +53,6 @@ Lblocklylib-core/src/main/java/com/google/blockly/android/FlyoutFragment.java,0
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 r
 Bapp/src/main/kotlin/com/learn/wp_rest/repository/acf/AcfService.kt,c\8\c82e305671fcbb62255538a9d0382ad14d7d8629
-p
-@app/src/main/java/com/corporation8793/activity/MainActivity.java,9\8\980b0fb2bd4cd0c80f44f08c273f53eb46f9e97b
 m
 =app/src/main/kotlin/com/learn/wp_rest/data/auth/AuthCookie.kt,3\2\32891a725a460718cbfdefae602ceb8ecef24087
 m

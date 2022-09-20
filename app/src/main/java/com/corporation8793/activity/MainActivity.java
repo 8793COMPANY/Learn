@@ -188,7 +188,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] tempTab = {null, null, null,null,null,null};
-    Boolean [] tempTabCheck = {false, false, false,false,false,false};
+    Boolean [] tempTabCheck = {false, false, false, false, false, false};
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
@@ -1115,6 +1115,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         for (boolean ttc : tempTabCheck) {
             if (ttc) {
                 count += 1;
+                Log.e("FinishLoad - count", "selected count : " + count);
             }
         }
         if (count >= 2) {
@@ -1145,11 +1146,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case 9:
                 break;
             default:
-                Log.e("code_btn in","어택땅");
 //                trashcan_btn.setVisibility(View.VISIBLE);
 //                block_bot_btn.setVisibility(View.VISIBLE);
                 block_dictionary.setVisibility(View.GONE);
-                if(mPushEvent.getPos() < 5) {
+                if(mPushEvent.getPos() < 4) {
                     loadXmlFromWorkspace();
                     initTabColor();
                     initTabCheck();
@@ -1824,7 +1824,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void setLineForOtherCategoryTabs(int position) {
         //mMonitorHandler.sendEmptyMessage(1);
-        Log.e("??","setLineForOtherCategoryTabs");
+        Log.e("setLineForOtherCategoryTabs","position : " + position);
         categoryData.setPosition(position);
         blockly_monitor.setVisibility(View.GONE);
         switch (position) {
@@ -2097,7 +2097,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void initTabCheck() {
-        tempTabCheck = new Boolean[] {false, false, false,false,false,false};
+        tempTabCheck = new Boolean[] {false, false, false, false, false, false};
         Log.e("initTabCheck - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
     }
 
@@ -2253,14 +2253,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }, 100);
 
 
+        Log.e("code_btn", "status boolean : " + tempTabCheck[pos-4]);
         if (tempTabCheck[pos-4]) {
             blockly_monitor.setVisibility(View.GONE);
             initTabColor();
             initTabCheck();
+            Log.e("code_btn", "init check : " + tempTabCheck[pos-4]);
         } else {
             tempTabCheck[pos-4] = !tempTabCheck[pos-4];
             tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
-            Log.e("after case", tempTabCheck[pos-4] + "");
+            Log.e("code_btn", "setSelected : " + tempTabCheck[pos-4]);
         }
     }
 
