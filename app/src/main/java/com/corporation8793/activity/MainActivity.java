@@ -1162,13 +1162,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             default:
 //                trashcan_btn.setVisibility(View.VISIBLE);
 //                block_bot_btn.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
-
 //                block_dictionary.setVisibility(View.GONE);
 
-=======
-                block_dictionary.setVisibility(View.GONE);
->>>>>>> 7a47be51517688ecb5bb7aa66a5f4c73e84a4f14
                 if(mPushEvent.getPos() < 4) {
                     loadXmlFromWorkspace();
                     initTabColor();
