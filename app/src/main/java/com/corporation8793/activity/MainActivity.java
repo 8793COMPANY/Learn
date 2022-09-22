@@ -156,7 +156,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     private static final String TAG = "TurtleActivity";
 
-    private static final String SAVE_FILENAME = "turtle_workspace.xml";
+    private static String SAVE_FILENAME = "turtle_workspace.xml";
     private static String AUTOSAVE_FILENAME = "turtle_workspace_temp.xml";
     private static final String AUTOSAVE_FILENAME2 = "turtle_workspace_temp2.xml";
     private TextView mGeneratedTextView;
@@ -1724,6 +1724,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         id = getIntent().getStringExtra("id");
         Log.e("mainactivity id",id);
         AUTOSAVE_FILENAME =  "turtle_workspace_temp"+id+".xml";
+        SAVE_FILENAME = "turtle_workspace"+id+".xml";
 //        if (contents_name.equals("none")){
 //            Log.e("none","in");
 //            return AUTOSAVE_FILENAME;
