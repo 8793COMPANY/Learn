@@ -112,7 +112,7 @@ public class ChapterActivity extends AppCompatActivity {
 
         // 웰컴 메시지 재생
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_lv1_led_into_contents_1_select);
-        mediaPlayer.start();
+//        mediaPlayer.start();
         block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
 
 //        chapter2.setEnabled(false);

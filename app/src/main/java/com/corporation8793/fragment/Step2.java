@@ -112,41 +112,43 @@ public class Step2 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step2, container, false);
         // 봇 메시지 초기화
-//        if (mediaPlayer != null) {
-//            mediaPlayer.release();
-//        }
-//
-//        // 웰컴 메시지 재생
-//        mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_3_circuit);
-//        mediaPlayer.start();
-//        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
-//
-//
-//        // 웰컴 메시지 재생 완료
-//        mediaPlayer.setOnCompletionListener(mp -> {
-//            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
-//            mp.release();
-//        });
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
+
+        // 웰컴 메시지 재생
+        mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_3_circuit);
+        mediaPlayer.start();
+        block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+
+        // 웰컴 메시지 재생 완료
+        mediaPlayer.setOnCompletionListener(mp -> {
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+            mp.release();
+        });
 
 
 
-//        block_bot_btn.setOnClickListener(v1 -> {
-//            // 봇 메시지 초기화
-//            if (mediaPlayer != null) {
-//                mediaPlayer.release();
-//            }
-//
-//            // 웰컴 메시지 재생
-//            mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_3_circuit);
-//            mediaPlayer.start();
-//            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
-//
-//            // 웰컴 메시지 재생 완료
-//            mediaPlayer.setOnCompletionListener(mp -> {
-//                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
-//                mp.release();
-//            });
-//        });
+        block_bot_btn.setOnClickListener(v1 -> {
+            // 봇 메시지 초기화
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+            }
+
+            // 웰컴 메시지 재생
+            mediaPlayer = MediaPlayer.create(context, R.raw.bot_test_lv1_led_into_contents_3_circuit);
+            mediaPlayer.start();
+            block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_speech));
+
+            // 웰컴 메시지 재생 완료
+            mediaPlayer.setOnCompletionListener(mp -> {
+                block_bot_btn.setBackground(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                mp.release();
+            });
+        });
+
+        block_bot_btn.setVisibility(View.GONE);
 
 
 
@@ -157,22 +159,22 @@ public class Step2 extends Fragment {
         MySharedPreferences.setInt(getContext(),contents_name,2);
 
         // 웹뷰기반 이미지 뷰어 생성
-        diagram_image_viewer = view.findViewById(R.id.diagram_image_viewer);
-
-        WebView webView = new WebView(getContext());
-        webView.setBackgroundColor(0xffffffff);
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setDisplayZoomControls(false);
-        webView.getSettings().setAllowFileAccess(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        webView.setInitialScale(0);
-        webView.loadDataWithBaseURL("file:///android_res/drawable/", "<img src='all_diagram_img.png' />", "text/html", "utf-8", null);
-
-        diagram_image_viewer.addView(webView, -1, -2);
+//        diagram_image_viewer = view.findViewById(R.id.diagram_image_viewer);
+//
+//        WebView webView = new WebView(getContext());
+//        webView.setBackgroundColor(0xffffffff);
+//        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+//        webView.getSettings().setBuiltInZoomControls(true);
+//        webView.getSettings().setSupportZoom(true);
+//        webView.getSettings().setDisplayZoomControls(false);
+//        webView.getSettings().setAllowFileAccess(true);
+//        webView.getSettings().setUseWideViewPort(true);
+//        webView.getSettings().setLoadWithOverviewMode(true);
+//        webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
+//        webView.setInitialScale(0);
+//        webView.loadDataWithBaseURL("file:///android_res/drawable/", "<img src='all_diagram_img.png' />", "text/html", "utf-8", null);
+//
+//        diagram_image_viewer.addView(webView, -1, -2);
 
         // (구)이미지뷰 (확대, 축소만 됨)
         diagram_img = view.findViewById(R.id.diagram_img);
@@ -193,25 +195,23 @@ public class Step2 extends Fragment {
         bigboard_btn.setOnCheckedChangeListener((compoundButton, b) -> {
             Log.e("bigboard", "");
             if (b) {
-                diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
-//                Log.e("bigboard","true");
-//                if (contents_name.equals("LED 핀 번호 바꾸기")) {
-//                    Log.e("bigboard","all 핀");
-//                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
-//                }else {
-//                    Log.e("bigboard","all");
-//                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);
-//                }
+                Log.e("bigboard","true");
+                if (contents_name.equals("LED 핀 번호 바꾸기")) {
+                    Log.e("bigboard","all 핀");
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
+                }else {
+                    Log.e("bigboard","all");
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);
+                }
             }else {
-                diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
-//                Log.e("bigboard","false");
-//                if (contents_name.equals("LED 핀 번호 바꾸기")) {
-//                    Log.e("bigboard","module 핀");
-//                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
-//                }else {
-//                    Log.e("bigboard","module");
-//                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);
-//                }
+                Log.e("bigboard","false");
+                if (contents_name.equals("LED 핀 번호 바꾸기")) {
+                    Log.e("bigboard","module 핀");
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
+                }else {
+                    Log.e("bigboard","module");
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);
+                }
             }
         });
 

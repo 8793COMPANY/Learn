@@ -14,13 +14,12 @@
         app:layout_constraintEnd_toEndOf="@id/guide_right"
         app:cardCornerRadius="14dp"
         app:cardElevation="0dp">
-        <WebView
-            android:visibility="visible"
-            android:id="@+id/diagram_image_viewer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+<!--        <WebView-->
+<!--            android:visibility="visible"-->
+<!--            android:id="@+id/diagram_image_viewer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
         <ImageView
-            android:visibility="gone"
             android:id="@+id/diagram_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

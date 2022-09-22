@@ -663,7 +663,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
             //여기 체크
-            BusProvider.getInstance().post(new PushEvent(10, true, false));
+            BusProvider.getInstance().post(new PushEvent(8, true, false));
             return callOnClick();
         }
     }

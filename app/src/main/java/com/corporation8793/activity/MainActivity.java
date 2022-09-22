@@ -404,6 +404,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if(deviceList.isEmpty()){
             Log.e("uploadcode generated : ", "isempty 디바이스 리스트");
         }
+        Log.e("isOpend",mPhysicaloid.isOpened()+"");
 
         if (mPhysicaloid.isOpened()) {
             OpenUSB();
@@ -413,7 +414,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
-                                    customProgressDialog.dismiss();
+            customProgressDialog.dismiss();
             uploadListener.show();
 
         } else {
@@ -422,7 +423,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (value) {
                 // TODO : 업로드 팝업 디자인 수정
                 mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
-                                        customProgressDialog.dismiss();
+                customProgressDialog.dismiss();
                 uploadListener.show();
             }
             else {
@@ -1013,7 +1014,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
-//        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
+//        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());
 //        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
 //        for (BlocklyCategory.CategoryItem item : blocks) {
 ////            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
@@ -1033,7 +1034,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("block list count",dictionary_block_list.size()+"");
 //        dictionaryAdapter = new CodeDictionaryAdapter(this,controller,dictionary_block_list);
 //        block_list.setAdapter(dictionaryAdapter);
-
+//
 //        block_list.setLayoutManager(new LinearLayoutManager(this));
 //        block_list.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener(){
 //            @Override
@@ -1073,24 +1074,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
-    public void setDictionaryData(int position){
-        dictionary_block_list.clear();
-        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(position).getItems();
-        for (BlocklyCategory.CategoryItem item : blocks) {
-            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
-                // Clean up the old views
-                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
-//                controller.getBlockViewFactory().getView()
-                Block block = blockItem.getBlock();
-                if (block !=null)
-                    Log.e("block item","not null");
-                Log.e("block",blockItem.getBlock().toString());
-                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
-//                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
-//                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
-            }
-        }
-    }
+//    public void setDictionaryData(int position){
+//        dictionary_block_list.clear();
+//        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(position).getItems();
+//        for (BlocklyCategory.CategoryItem item : blocks) {
+//            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
+//                // Clean up the old views
+//                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
+////                controller.getBlockViewFactory().getView()
+//                Block block = blockItem.getBlock();
+//                if (block !=null)
+//                    Log.e("block item","not null");
+//                Log.e("block",blockItem.getBlock().toString());
+//                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
+////                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
+////                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
+//            }
+//        }
+//    }
 
     @Override
     protected void onResume() {
@@ -1146,10 +1147,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 break;
             case 9:
                 break;
+
+            case 11:
+                Log.e("isClosed",categoryData.isClosed()+"");
+                if (!categoryData.isClosed()){
+                    block_bot_btn.setVisibility(View.VISIBLE);
+                    trashcan_btn.setVisibility(View.VISIBLE);
+                }else{
+                    trashcan_btn.setVisibility(View.GONE);
+                    block_bot_btn.setVisibility(View.GONE);
+                }
+//                Log.e("flyoutFragment.isCloseable()",flyoutFragment.isCloseable()+"");
+                break;
             default:
 //                trashcan_btn.setVisibility(View.VISIBLE);
 //                block_bot_btn.setVisibility(View.VISIBLE);
-                block_dictionary.setVisibility(View.GONE);
+
+//                block_dictionary.setVisibility(View.GONE);
+
                 if(mPushEvent.getPos() < 4) {
                     loadXmlFromWorkspace();
                     initTabColor();
@@ -1218,16 +1233,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         baud_rate = blockly_workspace.findViewById(R.id.baud_rate);
 
-        block_dictionary = blockly_workspace.findViewById(R.id.block_dictionary);
-        block_setup_btn = blockly_workspace.findViewById(R.id.block_setup_btn);
-        block_loop_btn = blockly_workspace.findViewById(R.id.block_loop_btn);
-        block_method_btn = blockly_workspace.findViewById(R.id.block_method_btn);
-        block_etc_btn = blockly_workspace.findViewById(R.id.block_etc_btn);
-        block_list = blockly_workspace.findViewById(R.id.block_list);
-
-        close_btn = blockly_workspace.findViewById(R.id.close_btn);
-
-        block_setup_btn.setSelected(true);
+//        block_dictionary = blockly_workspace.findViewById(R.id.block_dictionary);
+//        block_setup_btn = blockly_workspace.findViewById(R.id.block_setup_btn);
+//        block_loop_btn = blockly_workspace.findViewById(R.id.block_loop_btn);
+//        block_method_btn = blockly_workspace.findViewById(R.id.block_method_btn);
+//        block_etc_btn = blockly_workspace.findViewById(R.id.block_etc_btn);
+//        block_list = blockly_workspace.findViewById(R.id.block_list);
+//
+//        close_btn = blockly_workspace.findViewById(R.id.close_btn);
+//
+//        block_setup_btn.setSelected(true);
 
 
 
@@ -1246,48 +1261,48 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, arrayList);
 
 
-        block_setup_btn.setOnClickListener(v->{
-            setDictionaryData(0);
-            dictionaryAdapter.notifyDataSetChanged();
-            dictionary_btn_selected(block_setup_btn,true);
-            dictionary_btn_selected(block_loop_btn,false);
-            dictionary_btn_selected(block_method_btn,false);
-            dictionary_btn_selected(block_etc_btn,false);
-        });
-
-        block_loop_btn.setOnClickListener(v->{
-            setDictionaryData(1);
-            dictionaryAdapter.notifyDataSetChanged();
-            dictionary_btn_selected(block_setup_btn,false);
-            dictionary_btn_selected(block_loop_btn,true);
-            dictionary_btn_selected(block_method_btn,false);
-            dictionary_btn_selected(block_etc_btn,false);
-        });
-
-
-        block_method_btn.setOnClickListener(v->{
-            Log.e("mPush","함수 눌림");
-            setDictionaryData(2);
-            dictionaryAdapter.notifyDataSetChanged();
-            dictionary_btn_selected(block_setup_btn,false);
-            dictionary_btn_selected(block_loop_btn,false);
-            dictionary_btn_selected(block_method_btn,true);
-            dictionary_btn_selected(block_etc_btn,false);
-        });
-
-
-        block_etc_btn.setOnClickListener(v->{
-            setDictionaryData(3);
-            dictionaryAdapter.notifyDataSetChanged();
-            dictionary_btn_selected(block_setup_btn,false);
-            dictionary_btn_selected(block_loop_btn,false);
-            dictionary_btn_selected(block_method_btn,false);
-            dictionary_btn_selected(block_etc_btn,true);
-        });
-
-        close_btn.setOnClickListener(v->{
-            block_dictionary.setVisibility(View.GONE);
-        });
+//        block_setup_btn.setOnClickListener(v->{
+//            setDictionaryData(0);
+//            dictionaryAdapter.notifyDataSetChanged();
+//            dictionary_btn_selected(block_setup_btn,true);
+//            dictionary_btn_selected(block_loop_btn,false);
+//            dictionary_btn_selected(block_method_btn,false);
+//            dictionary_btn_selected(block_etc_btn,false);
+//        });
+//
+//        block_loop_btn.setOnClickListener(v->{
+//            setDictionaryData(1);
+//            dictionaryAdapter.notifyDataSetChanged();
+//            dictionary_btn_selected(block_setup_btn,false);
+//            dictionary_btn_selected(block_loop_btn,true);
+//            dictionary_btn_selected(block_method_btn,false);
+//            dictionary_btn_selected(block_etc_btn,false);
+//        });
+//
+//
+//        block_method_btn.setOnClickListener(v->{
+//            Log.e("mPush","함수 눌림");
+//            setDictionaryData(2);
+//            dictionaryAdapter.notifyDataSetChanged();
+//            dictionary_btn_selected(block_setup_btn,false);
+//            dictionary_btn_selected(block_loop_btn,false);
+//            dictionary_btn_selected(block_method_btn,true);
+//            dictionary_btn_selected(block_etc_btn,false);
+//        });
+//
+//
+//        block_etc_btn.setOnClickListener(v->{
+//            setDictionaryData(3);
+//            dictionaryAdapter.notifyDataSetChanged();
+//            dictionary_btn_selected(block_setup_btn,false);
+//            dictionary_btn_selected(block_loop_btn,false);
+//            dictionary_btn_selected(block_method_btn,false);
+//            dictionary_btn_selected(block_etc_btn,true);
+//        });
+//
+//        close_btn.setOnClickListener(v->{
+//            block_dictionary.setVisibility(View.GONE);
+//        });
 
 
 
@@ -2071,6 +2086,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 Log.e("mPushEvent","why");
                 categoryData.setPosition(9);
+                categoryData.setClosed(true);
                 current_pos = 9;
                 blockly_monitor.setVisibility(View.GONE);
 //                setInitLine();
@@ -2079,7 +2095,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 if (v.isSelected()) {
                     Log.e("true","in");
                     block_dictionary.setVisibility(View.VISIBLE);
-//                    dictionaryAdapter.notifyDataSetChanged();
+                    dictionaryAdapter.notifyDataSetChanged();
                 }else
                     block_dictionary.setVisibility(View.GONE);
                 break;

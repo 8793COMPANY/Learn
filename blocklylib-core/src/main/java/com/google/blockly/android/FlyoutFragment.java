@@ -125,7 +125,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
     protected int mBgAlpha = DEFAULT_BLOCKS_BACKGROUND_ALPHA;
     protected int mBgColor = DEFAULT_BLOCKS_BACKGROUND_COLOR;
 
-    protected View mFlyoutView, mainView;
+    public View mFlyoutView, mainView;
     protected BlocklyController mController;
     protected WorkspaceHelper mHelper;
 
