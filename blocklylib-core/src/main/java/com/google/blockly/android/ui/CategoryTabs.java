@@ -15,6 +15,7 @@
 
 package com.google.blockly.android.ui;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -323,13 +324,14 @@ public class CategoryTabs extends RecyclerView {
            // ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
          //   layoutParams.width=100;
          //   holder.itemView.requestLayout();
-
             holder.mLabel.setBackgroundResource(image[tabPosition]);
-            if (check)
+            if (check){
+                Log.e("check category",category.getCategoryName());
                 holder.mLabel.setSelected(false);
+            }
             //holder.mRotator.setChildRotation(mLabelRotation);
             holder.mRotator.setTag(holder);  // For getTabLabelHolder() and deselection
-            Log.e("why", category.getCategoryName());
+            Log.e("hello why", category.getCategoryName());
             if (category.getCategoryName().equals("upload")) {
                 categoryData.setUpload_btn(holder.mLabel);
             }
@@ -342,6 +344,7 @@ public class CategoryTabs extends RecyclerView {
                     categoryData.setSelection(true);
                     Log.e("isSelected",holder.mLabel.isSelected()+"");
                     Log.e("mpush!!",tabPosition+"");
+                    Log.e("mpush category is closed",categoryData.isClosed()+"");
 
                     BusProvider.getInstance().post(new PushEvent(tabPosition, false, true));
                     onCategoryClicked(category);
