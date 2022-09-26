@@ -280,6 +280,7 @@ public class FlyoutController {
                 Log.e("category",category.toString()+"");
             } else {
                 mToolbox.closeUi();
+                Log.e("category","closeUi");
             }
         }
         if (mCategorySelectorUi != null) {
@@ -293,6 +294,7 @@ public class FlyoutController {
      * @return true if the toolbox was closed, false otherwise.
      */
     public boolean closeToolbox() {
+        Log.e("hello","closeToolbox");
         boolean didClose = false;
         if (isToolboxCloseable() && mToolbox != null) {
             didClose = mToolbox.closeUi();

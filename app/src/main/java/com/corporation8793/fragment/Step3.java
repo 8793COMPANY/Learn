@@ -326,10 +326,14 @@ public class Step3 extends Fragment {
                         Log.e("response_ci",response_ci.getFirst());
                         Log.e("response_ci",response_ci.getSecond().toString());
 
+                        String block_img ="http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg";
+                        if (MySharedPreferences.getString(getContext(),"block_img"+chapter_id) != null)
+                            block_img = MySharedPreferences.getString(getContext(),"block_img"+chapter_id);
+
                         Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
                                 chapter_id+". "+contents_name,
                                 response_ci.getSecond().getGuid().getRendered(),
-                                "http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg"
+                                block_img
                         );
                         Log.e("response",response.getFirst());
                         Log.e("response",response.getSecond().toString());
@@ -338,7 +342,7 @@ public class Step3 extends Fragment {
                                 Integer.parseInt(chapter_id_split[0]),
                                 Integer.parseInt(chapter_id_split[1]),
                                 response_ci.getSecond().getGuid().getRendered(),
-                                "http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg"
+                                block_img
                         );
                         Log.e("response",upload_result.getFirst());
                         customProgressDialog.dismiss();

@@ -288,6 +288,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     public void read_code() {
+
         Log.e("generated", "리드");
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
@@ -837,7 +838,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
                 Log.e("USB 감지 : ", "연결연결");
-                Application.mPhysicaloid.open();
                 usb_check = true;
 //                initial = true;
 //                mPhysicaloid.upload(Boards.ARDUINO_UNO, "/data/data/com.learn4/code.ino");
@@ -1161,14 +1161,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             case 11:
                 Log.e("mpush isClosed",categoryData.isClosed()+"");
-                if (!categoryData.isClosed()){
-                    trashcan_btn.setVisibility(View.GONE);
-                    block_bot_btn.setVisibility(View.GONE);
-
-                }else{
+                if (categoryData.isClosed()){
                     block_bot_btn.setVisibility(View.VISIBLE);
                     trashcan_btn.setVisibility(View.VISIBLE);
                 }
+
+                if (current_pos >3 && current_pos < 7) {
+                    Log.e("hello", tempTab[current_pos - 4].isSelected() + "");
+                    if (tempTab[current_pos - 4].isSelected())
+                        tempTab[current_pos - 4].setSelected(false);
+                    else
+                        tempTab[current_pos - 4].setSelected(true);
+                }
+//                if (!categoryData.isClosed()){
+//                    trashcan_btn.setVisibility(View.GONE);
+//                    block_bot_btn.setVisibility(View.GONE);
+//
+//                }else{
+//                    block_bot_btn.setVisibility(View.VISIBLE);
+//                    trashcan_btn.setVisibility(View.VISIBLE);
+//                }
 
 //                Log.e("flyoutFragment.isCloseable()",flyoutFragment.isCloseable()+"");
                 break;
@@ -2072,7 +2084,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // code
             case 4:
 //                setCategoryTabsColor(pos);
-                    code_btn(pos);
+                code_btn(pos);
                 break;
 
             // serial monitor
@@ -2086,6 +2098,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                setCategoryTabsColor(pos);
                 Log.e("6 in","come");
 //                if (upload_btn.isEnabled()) {
+
                     upload_btn(pos);
                 break;
 
@@ -2094,12 +2107,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 categoryData.setPosition(7);
 //                categoryData.setClosed(true);
                 current_pos = 7;
+                Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
+
 //                setInitLine();
                 resetListener.show();
                 break;
             case 8:
 //                setCategoryTabsColor(pos);
                 categoryData.setPosition(8);
+                Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
 //                categoryData.setClosed(true);
                 current_pos = 8;
 //                setInitLine();
@@ -2108,6 +2124,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case 9:
 //                setCategoryTabsColor(pos);
                 Log.e("mPushEvent","why");
+                Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
                 categoryData.setPosition(9);
 //                categoryData.setClosed(true);
                 current_pos = 9;
@@ -2364,17 +2381,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
 
                 // TODO : 화면 캡쳐 트리거
-//                if(!chapter_id.equals("0")) {
-//                    Log.e("MainActivity", "captureWorkspace: start");
-//                    bitmapWorkspace = controller.captureWorkspace();
-//
-//                    try {
-//                        saveImage(bitmapWorkspace, "captureWorkspace");
-//                        Log.e("MainActivity", "captureWorkspace: save ok");
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
+                if(!chapter_id.equals("0")) {
+                    Log.e("MainActivity", "captureWorkspace: start");
+                    bitmapWorkspace = controller.captureWorkspace();
+
+                    try {
+                        saveImage(bitmapWorkspace, "captureWorkspace");
+                        Log.e("MainActivity", "captureWorkspace: save ok");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
             } else {
                 Toast.makeText(getApplicationContext(), "WIFI를 연결해주세요!", Toast.LENGTH_SHORT).show();

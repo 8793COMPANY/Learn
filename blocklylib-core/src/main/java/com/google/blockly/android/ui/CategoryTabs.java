@@ -62,7 +62,7 @@ public class CategoryTabs extends RecyclerView {
     public static CategoryData categoryData = CategoryData.getInstance();
 
     int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
-    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn
+    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
             , R.drawable.reset_btn, R.drawable.home_btn, R.drawable.code_dictionary_btn_selector};
 
     private final LinearLayoutManager mLayoutManager;
@@ -315,6 +315,8 @@ public class CategoryTabs extends RecyclerView {
             isSelected = (category == mCurrentCategory);
             //Log.e("tabPosition",tabPosition+"");
 
+
+
             // These may throw a NPE, but that is an illegal state checked above.
 //
             mLabelAdapter.onBindLabel(holder.mLabel, category, tabPosition);
@@ -334,6 +336,10 @@ public class CategoryTabs extends RecyclerView {
             Log.e("hello why", category.getCategoryName());
             if (category.getCategoryName().equals("upload")) {
                 categoryData.setUpload_btn(holder.mLabel);
+            }else if(category.getCategoryName().equals("reset")){
+                categoryData.setReset_btn(holder.mLabel);
+            }else if(category.getCategoryName().equals("home")){
+                categoryData.setHome_btn(holder.mLabel);
             }
 
             holder.mLabel.setOnClickListener(new View.OnClickListener() {

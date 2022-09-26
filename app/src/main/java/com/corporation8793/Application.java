@@ -167,6 +167,7 @@ public class Application extends android.app.Application {
                     if (categoryData.getUpload_btn() != null) {
                         categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
                         categoryData.getUpload_btn().setSelected(true);
+                        categoryData.getUpload_btn().setEnabled(true);
                     }
                 }catch (NullPointerException e){
                     Log.e("upload btn","null!");
@@ -182,8 +183,9 @@ public class Application extends android.app.Application {
 
                 try {
                     if (categoryData.getUpload_btn() != null) {
-                        categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn);
+                        categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
                         categoryData.getUpload_btn().setSelected(false);
+                        categoryData.getUpload_btn().setEnabled(false);
                     }
                 }catch (NullPointerException e){
                     Log.e("upload btn","null!");
