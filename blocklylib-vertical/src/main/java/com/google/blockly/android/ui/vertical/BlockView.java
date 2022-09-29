@@ -1214,7 +1214,7 @@ public class BlockView extends AbstractBlockView<InputView> {
         Log.e("tempRect get boot : ", tempRect.bottom+"");
         Log.e("tempRect get right : ", tempRect.right+"");
         // xml code refresh event
-        BusProvider.getInstance().post(new PushEvent(11));
+//        BusProvider.getInstance().post(new PushEvent(11));
 
         tempRect.right=250;
         statementConnectionHighlight.setBounds(tempRect);

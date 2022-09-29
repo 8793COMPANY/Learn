@@ -168,6 +168,9 @@ public class CategoryView extends RelativeLayout {
             return;
         }
         mCurrentCategory = category;
+//        if (mCurrentCategory.getCategoryName() != null)
+//            Log.e("check mCurrentCategory",mCurrentCategory.getCategoryName()+"");
+        Log.e("hello in","selectCurrentView");
         mCategoryTabs.setSelectedCategory(category);
 //        updateCategoryColors(category);
     }

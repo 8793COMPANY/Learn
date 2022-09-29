@@ -257,7 +257,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     // TODO : ONLY USB
     Physicaloid mPhysicaloid = new Physicaloid(this);
 
-    Boolean [] view_check = {true,true,true,true,true,true,true,true,true,true};
+    Boolean [] view_check = {true,true,true,true,true,true,true,true,true,true,false};
 
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
@@ -298,7 +298,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
         else {
             Set<String> keys = deviceList.keySet();
+
             for (String key : keys) {
+                Log.e("device list",key);
                 bigBoard = deviceList.get(key);
             }
         }
@@ -1160,19 +1162,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 break;
 
             case 11:
-                Log.e("mpush isClosed",categoryData.isClosed()+"");
-                if (categoryData.isClosed()){
-                    block_bot_btn.setVisibility(View.VISIBLE);
-                    trashcan_btn.setVisibility(View.VISIBLE);
-                }
+//                Log.e("mpush isClosed",categoryData.isClosed()+"");
+//                if (categoryData.isClosed()){
+//                    block_bot_btn.setVisibility(View.VISIBLE);
+//                    trashcan_btn.setVisibility(View.VISIBLE);
+//                }
+//                if (current_pos != 11) {
+//                    view_check[current_pos] = false;
+//                    if (current_pos>3)
+//                        tempTab[current_pos-4].setSelected(false);
+//                }
+//                current_pos = 11;
+//                setCategoryTabsColor(10);
+//                setMonitor(10);
+                Log.e("current_pos",current_pos+"");
+                block_bot_btn.setVisibility(View.INVISIBLE);
+                trashcan_btn.setVisibility(View.INVISIBLE);
 
-                if (current_pos >3 && current_pos < 7) {
-                    Log.e("hello", tempTab[current_pos - 4].isSelected() + "");
-                    if (tempTab[current_pos - 4].isSelected())
-                        tempTab[current_pos - 4].setSelected(false);
-                    else
-                        tempTab[current_pos - 4].setSelected(true);
-                }
+//                if (current_pos >3 && current_pos < 7) {
+//                    Log.e("hello", tempTab[current_pos - 4].isSelected() + "");
+//                    if (tempTab[current_pos - 4].isSelected())
+//                        tempTab[current_pos - 4].setSelected(false);
+//                    else
+//                        tempTab[current_pos - 4].setSelected(true);
+//                }
 //                if (!categoryData.isClosed()){
 //                    trashcan_btn.setVisibility(View.GONE);
 //                    block_bot_btn.setVisibility(View.GONE);
@@ -1187,7 +1200,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             default:
                 Log.e("mpush","default");
 
-                block_dictionary.setVisibility(View.GONE);
+//                block_dictionary.setVisibility(View.GONE);
 
                 Log.e("default isClosed",categoryData.isClosed()+"");
                 Log.e("default isSelected",categoryData.isSelection()+"");
@@ -1271,12 +1284,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         close_btn = blockly_workspace.findViewById(R.id.close_btn);
 
         block_setup_btn.setSelected(true);
-
-
-
-
-
-
 
 
 
@@ -1828,7 +1835,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     void setMonitor(int position){
-
+        Log.e("check tempTab",tempTab[position-4].isSelected()+"");
         if (current_pos == position) {
             if (view_check[position]){
                 Log.e("setMonitor","in!");
@@ -1837,12 +1844,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 block_bot_btn.setVisibility(View.INVISIBLE);
                 view_check[position] = false;
                 categoryData.setClosed(false);
+                tempTab[position-4].setSelected(true);
             }else {
                 Log.e("setMonitor","in!2");
                 blockly_monitor.setVisibility(View.GONE);
                 trashcan_btn.setVisibility(View.VISIBLE);
                 block_bot_btn.setVisibility(View.VISIBLE);
                 view_check[position] = true;
+                tempTab[position-4].setSelected(false);
+//                categoryData.setClosed(true);
                 mMonitorHandler.sendEmptyMessage(1);
             }
 
@@ -1853,6 +1863,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             trashcan_btn.setVisibility(View.INVISIBLE);
             block_bot_btn.setVisibility(View.INVISIBLE);
             categoryData.setClosed(false);
+            tempTab[position-4].setSelected(true);
         }
 
         current_pos = position;
@@ -1869,16 +1880,22 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("setLineForOtherCategoryTabs","position : " + position);
         categoryData.setPosition(position);
         blockly_monitor.setVisibility(View.GONE);
+        block_dictionary.setVisibility(View.GONE);
+        initTabCheck();
+        initTabColor();
         switch (position) {
             case -1:
 //                setInitLine();
                 break;
             case 0:
 //                setInitLine();
+
+
                 setCategoryTabsColor(position);
                 break;
             case 1:
 //                setInitLine();
+                view_check[position] = true;
                 setCategoryTabsColor(position);
                 break;
             case 2:
@@ -1896,6 +1913,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void setCategoryTabsColor(int position){
+        Log.e("setCategoryTabsColor current_pos",current_pos+"");
+        Log.e("setCategoryTabsColor position",position+"");
+        Log.e("setCategoryTabs",view_check[position]+"");
         if (current_pos == position) {
             if (view_check[position]){
                 trashcan_btn.setVisibility(View.INVISIBLE);
@@ -2071,6 +2091,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if (pos >= 4) {
             Log.e("pos",pos+"");
             tempTab[pos-4] = v;
+            mBlocklyActivityHelper.getFlyoutController();
 
             Log.e("before case", tempTabCheck[pos-4] + "");
             //Log.e("in case", tempTabCheck[pos-4] + "");
@@ -2084,12 +2105,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // code
             case 4:
 //                setCategoryTabsColor(pos);
+                categoryData.setPosition(4);
                 code_btn(pos);
+
                 break;
 
             // serial monitor
             case 5:
 //                setCategoryTabsColor(pos);
+                categoryData.setPosition(5);
                 serial_btn(pos);
                 break;
 
@@ -2124,7 +2148,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             case 9:
 //                setCategoryTabsColor(pos);
                 Log.e("mPushEvent","why");
-                Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
                 categoryData.setPosition(9);
 //                categoryData.setClosed(true);
                 current_pos = 9;
@@ -2132,12 +2155,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                setInitLine();
 //                dictionaryAdapter.notifyDataSetChanged();
                 Log.e("v",v.isSelected()+"");
-                if (v.isSelected()) {
-                    Log.e("true","in");
+                if (view_check[pos]){
+                    Log.e("setMonitor","in!");
                     block_dictionary.setVisibility(View.VISIBLE);
                     dictionaryAdapter.notifyDataSetChanged();
-                }else
+                    view_check[pos] = false;
+                    categoryData.setClosed(false);
+                    tempTab[pos-4].setSelected(true);
+                }else {
+                    Log.e("setMonitor","in!2");
                     block_dictionary.setVisibility(View.GONE);
+                    view_check[pos] = true;
+                    tempTab[pos-4].setSelected(false);
+//                categoryData.setClosed(true);
+                }
+//                if (tempTab[pos-4].isSelected()) {
+//                    Log.e("case 9 true","in");
+//
+//                    tempTab[pos-4].setSelected(false);
+//                }else {
+//                    Log.e("case 9 false","in");
+//
+//                    tempTab[pos-4].setSelected(true);
+//                }
                 break;
         }
     }
@@ -2278,15 +2318,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        setInitLine();
 
 //        code_btn.setSelected(true);
+//        Log.e()
         mMonitorHandler.sendEmptyMessage(1);
         monitor_text.setText("");
         Log.e("hi code_btn","click");
-        categoryData.setPosition(4);
 //        categoryData.setSelection(true);
 //        categoryData.setClosed(true);
         setMonitor(4);
-        mBlocklyActivityHelper.getFlyoutController();
-
+        block_dictionary.setVisibility(View.GONE);
+//        mBlocklyActivityHelper.getFlyoutController();
 
         input_space.setVisibility(View.GONE);
 //                init_btn.setVisibility(View.GONE);z
@@ -2310,31 +2350,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }, 100);
 
 
+
         Log.e("code_btn", "status boolean : " + tempTabCheck[pos-4]);
-        if (tempTabCheck[pos-4]) {
-            blockly_monitor.setVisibility(View.GONE);
-            initTabColor();
-            initTabCheck();
-            Log.e("code_btn", "init check : " + tempTabCheck[pos-4]);
-        } else {
-            tempTabCheck[pos-4] = !tempTabCheck[pos-4];
-            tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
-            Log.e("code_btn", "setSelected : " + tempTabCheck[pos-4]);
-        }
+//        if (tempTabCheck[pos-4]) {
+//            blockly_monitor.setVisibility(View.GONE);
+//            initTabColor();
+//            initTabCheck();
+//            Log.e("code_btn", "init check : " + tempTabCheck[pos-4]);
+//        } else {
+//            tempTabCheck[pos-4] = !tempTabCheck[pos-4];
+//            tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
+//            Log.e("code_btn", "setSelected : " + tempTabCheck[pos-4]);
+//        }
     }
 
     public void serial_btn(int pos) {
 //        setInitLine();
 //        serial_btn.setSelected(true);
         monitor_text.setText("");
-
         Application.mPhysicaloid.open();
         Log.e("isOpened Serial","" + Application.mPhysicaloid.isOpened());
-
-        categoryData.setPosition(5);
+        block_dictionary.setVisibility(View.GONE);
 //        categoryData.setClosed(true);
         setMonitor(5);
-        mBlocklyActivityHelper.getFlyoutController();
+//        mBlocklyActivityHelper.getFlyoutController();
 
         input_space.setVisibility(View.VISIBLE);
         Log.e("serial","btn");
@@ -2342,16 +2381,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         stringBuilder.setLength(0);
         num = 0;
 
-        if (tempTabCheck[pos-4]) {
-            blockly_monitor.setVisibility(View.GONE);
-            initTabColor();
-            initTabCheck();
-        } else {
-            tempTabCheck[pos-4] = !tempTabCheck[pos-4];
-            tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
-            Log.e("after case", tempTabCheck[pos-4] + "");
-            mMonitorHandler.sendEmptyMessage(0);
-        }
+//        if (tempTabCheck[pos-4]) {
+//            blockly_monitor.setVisibility(View.GONE);
+//            initTabColor();
+//            initTabCheck();
+//        } else {
+//            tempTabCheck[pos-4] = !tempTabCheck[pos-4];
+//            tempTab[pos-4].setSelected(tempTabCheck[pos-4]);
+//            Log.e("after case", tempTabCheck[pos-4] + "");
+//            mMonitorHandler.sendEmptyMessage(0);
+//        }
     }
 
     public void upload_btn(int pos) {
@@ -2369,6 +2408,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 mBlocklyActivityHelper.getFlyoutController();
                 categoryData.setPosition(6);
                 current_pos = 6;
+                block_dictionary.setVisibility(View.GONE);
 //                setInitLine();
                 compileCheck = true;
                 if (getController().getWorkspace().hasBlocks()) {
