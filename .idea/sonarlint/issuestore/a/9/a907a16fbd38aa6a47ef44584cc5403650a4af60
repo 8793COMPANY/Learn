@@ -3,10 +3,10 @@ D
 java:S1066m"/Merge this if statement with the enclosing one.(Ò†”4
 g
 java:S1301À"KReplace this "switch" statement by "if" statements to increase readability.(×ö³–úÿÿÿÿ
-_
-java:S2095¥"IUse try-with-resources or close this "InputStream" in a "finally" clause.(€€Œ
 j
 java:S2095ª"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(¤ÀÞœúÿÿÿÿ
+_
+java:S2095¥"IUse try-with-resources or close this "InputStream" in a "finally" clause.(€€Œ
 u	java:S1165"[Rename this field "TARGET_BASE_PATH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Øáé´ýÿÿÿÿ
 T
 java:S1874<"9Remove this use of "PreferenceManager"; it is deprecated.(Ñ…¦Ãøÿÿÿÿ

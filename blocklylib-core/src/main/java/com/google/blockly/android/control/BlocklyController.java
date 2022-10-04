@@ -17,24 +17,36 @@ package com.google.blockly.android.control;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.RadioButton;
 
+import com.google.blockly.android.BlockClickDialog;
 import com.google.blockly.android.OnCloseCheckListener;
+import com.google.blockly.android.R;
 import com.google.blockly.android.ui.BlockListUI;
 import com.google.blockly.android.ui.CategorySelectorUI;
 import com.google.blockly.android.WorkspaceFragment;
@@ -120,13 +132,14 @@ public class BlocklyController {
         //Log.e("hi","setCloseCheck");
     }
 
-
-
+    View.OnClickListener finish_confirm, error_confirm, copy_listener, delete_listener;
+    BlockClickDialog blockClickDialog;
+    boolean delete_check = true;
     private final Context mContext;
     private final Looper mMainLooper;
     private final BlockFactory mModelFactory;
     private final BlockViewFactory mViewFactory;
-    private final WorkspaceHelper mHelper;
+    public final WorkspaceHelper mHelper;
     private final BlockClipDataHelper mClipHelper;
 
     private final Workspace mWorkspace;
@@ -149,6 +162,8 @@ public class BlocklyController {
     private VariableCallback mVariableCallback = null;
     Block testblock = null;
     long delay = 0;
+
+    private int centerX = 0, centerY = 0;
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
@@ -177,6 +192,14 @@ public class BlocklyController {
 
     public void setCopyEnabled(boolean check){
         mBlockCopyCheck = check;
+    }
+
+    public void setCenterXPosition(int centerX){
+        this.centerX = centerX;
+    }
+
+    public void setCenterYPosition(int centerY){
+        this.centerY = centerY;
     }
 
     private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
@@ -232,41 +255,67 @@ public class BlocklyController {
 
                 if (System.currentTimeMillis() <= delay){
                     Log.e("두번","클릭");
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
-                    builder.setTitle("인사말").setMessage("반갑습니다");
+                    delete_check = false;
 
-                    builder.setPositiveButton("복사", new DialogInterface.OnClickListener(){
-                        @Override
-                        public void onClick(DialogInterface dialog, int id)
-                        {
+                    error_confirm = new View.OnClickListener() {
+                        public void onClick(View v) {
+//            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show();
+                            blockClickDialog.dismiss();
+                        }
+                    };
+
+                    finish_confirm = new View.OnClickListener() {
+                        public void onClick(View v) {
+//            Toast.makeText(getApplicationContext(), "확인버튼",Toast.LENGTH_SHORT).show()
+
+                            if (blockClickDialog.delete_btn.isChecked()){
+                                removeBlockTree(pendingDrag.getTouchedBlockView().getBlock());
+                                blockClickDialog.dismiss();
+                            }else{
                             mListener.onBlockClick(pendingDrag);
                             if (copyCheck != null){
                                 Log.e("in! hi","copyCheck");
                                 copyCheck.onCopyCheck(false);
+                                blockClickDialog.dismiss();
+                                }
                             }
+                            blockClickDialog.dismiss();
 
                         }
-                    });
+                    };
 
-                    AlertDialog alertDialog = builder.create();
+                    copy_listener = new View.OnClickListener() {
+                        public void onClick(View v) {
+                            blockClickDialog.delete_btn.setChecked(false);
+                            delete_check = false;
+                        }
+                    };
 
-                    alertDialog.show();
+                    delete_listener = new View.OnClickListener() {
+                        public void onClick(View v) {
+                            blockClickDialog.copy_btn.setChecked(false);
+                            delete_check = true;
+                        }
+                    };
+
+
+                    blockClickDialog = new BlockClickDialog(getContext(),finish_confirm,error_confirm,copy_listener,delete_listener);
+                    blockClickDialog.show();
+
+
                 }
-                //블록 복사
-//                if (mBlockCopyCheck) {
-//                    mListener.onBlockClick(pendingDrag);
-//                    if (copyCheck != null){
-//                        Log.e("in! hi","copyCheck");
-//                        copyCheck.onCopyCheck(false);
-//                    }
-//
-//                }
+
         }
             Log.e("block clicked","in !!!");
             return false;
     }
     };
+
+
+
+
+
     private final BlockTouchHandler mTouchHandler;
 
     /**

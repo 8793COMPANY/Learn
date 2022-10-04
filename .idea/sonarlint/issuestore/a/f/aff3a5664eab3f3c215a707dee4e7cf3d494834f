@@ -1,133 +1,50 @@
 
-‡
-java:S1192µ"kDefine a constant instead of duplicating this literal "Cannot set UIs without a BlockViewFactory." 3 times.(³¦Œ¡ùÿÿÿÿ
-F
-java:S1066Ş"/Merge this if statement with the enclosing one.(ãûĞÄ
 E
-java:S1066Ş	"/Merge this if statement with the enclosing one.(¥¯’&
+java:S1066
+"/Merge this if statement with the enclosing one.(¥¯’&
 F
-java:S1066ú	"/Merge this if statement with the enclosing one.(ª´º
+java:S1066
+"/Merge this if statement with the enclosing one.(ª´º
 K
-java:S1066
+java:S1066Á
 "/Merge this if statement with the enclosing one.(ÒĞ•‘ÿÿÿÿÿ
 Q
-java:S1141¸"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+java:S1141Û"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
 D
-java:S1604¦"(Make this anonymous inner class a lambda(Ãç²üÿÿÿÿ
-?
-java:S1604¿"(Make this anonymous inner class a lambda(ïÑ¬ 
-D
-java:S1604"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604¡"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604ç"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604û"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604 "(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604µ"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604Ë"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604â"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604ò"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604˜"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604­"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604À"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604ö"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
-D
-java:S1604¥	"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
+java:S1604È	"(Make this anonymous inner class a lambda(üê¿éÿÿÿÿÿ
 x
-java:S1488â	"aImmediately return this expression instead of assigning it to the temporary variable "finalName".(›ÁŠ¼
-k
-java:S1104n"UMake copyCheck a static final constant or non-public and provide accessors if needed.(ƒî
-E
-java:S1444n"/Make this "public static copyCheck" field final(ƒî
+java:S1488…
+"aImmediately return this expression instead of assigning it to the temporary variable "finalName".(›ÁŠ¼
 S
-java:S4973¤
+java:S4973Ç
 "<Strings and Boxed types should be compared using "equals()".(Ú—Œ÷
 N
-java:S2589º"7Remove this expression which always evaluates to "true"(¾åÎœ
-N
-java:S2589İ"7Remove this expression which always evaluates to "true"(†Úéâ
-Q
-java:S2696s"6Make the enclosing method "static" or remove this set.(˜ãŸ›üÿÿÿÿ
-P
-java:S2209s"5Change this instance-reference to a static reference.(˜ãŸ›üÿÿÿÿ
-V	java:S125t"<This block of commented-out lines of code should be removed.(Ó»¦úşÿÿÿÿ
-3
-java:S1116µ"Remove this empty statement.( Ğê¼
+java:S2589€"7Remove this expression which always evaluates to "true"(†Úéâ
+R	java:S125©	"<This block of commented-out lines of code should be removed.(Êô…Ì
+W	java:S125¯	"<This block of commented-out lines of code should be removed.(ÎÄ÷ıÿÿÿÿ
 I
-java:S1135Ú"2Complete the task associated to this TODO comment.(Õ×˜ğ
-R	java:S125Ü"<This block of commented-out lines of code should be removed.(ĞæÜ´
+java:S1135†
+"2Complete the task associated to this TODO comment.(å»œ
+i
+java:S3776’
+"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚ŒõÔ
 I
-java:S1135•"2Complete the task associated to this TODO comment.(š–¥³
-W	java:S125Ş"<This block of commented-out lines of code should be removed.(´Ûó×üÿÿÿÿ
+java:S1135®
+"2Complete the task associated to this TODO comment.(Ûïä“
+n
+java:S3776¿
+"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(»ıóªûÿÿÿÿ
 N
-java:S1135ö"2Complete the task associated to this TODO comment.(¾€—°şÿÿÿÿ
-F
-java:S2093Ê"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+java:S1135Ñ"2Complete the task associated to this TODO comment.(äÈ–ÿÿÿÿÿ
+n
+java:S3776¤"RRefactor this method to reduce its Cognitive Complexity from 35 to the 15 allowed.(­ë±¼ûÿÿÿÿ
+I
+java:S1135­"2Complete the task associated to this TODO comment.(˜À¾ˆ
 N
-java:S1135Ù"2Complete the task associated to this TODO comment.(ÇÆ¨Áøÿÿÿÿ
-N
-java:S1135„"2Complete the task associated to this TODO comment.(¯Ÿó¿ùÿÿÿÿ
-F
-java:S1197"*Move the array designators [] to the type.(îæµùÿÿÿÿ
-A
-java:S1197ú"*Move the array designators [] to the type.(üÿ€­
-F
-java:S1197Œ"*Move the array designators [] to the type.(ÜÈ³Ëøÿÿÿÿ
-A
-java:S1197´"*Move the array designators [] to the type.(üÿ€­
-A
-java:S1197Ê"*Move the array designators [] to the type.(üÿ€­
-H
-java:S1135ª"2Complete the task associated to this TODO comment.(ÁÛÙL
-A
-java:S1197¬"*Move the array designators [] to the type.(¹¨×Ó
-A
-java:S1197¿"*Move the array designators [] to the type.(¹¨×Ó
-N
-java:S1135Ô"2Complete the task associated to this TODO comment.(˜’ı–ıÿÿÿÿ
-N
-java:S1135Õ"2Complete the task associated to this TODO comment.(¯…ƒ«ùÿÿÿÿ
-A
-java:S1197õ"*Move the array designators [] to the type.(âŞ™Ö
-X	java:S125ì"<This block of commented-out lines of code should be removed.(¡ş½8àˆïÃ¤0
-Y	java:S125†	"<This block of commented-out lines of code should be removed.(Êô…Ì8ÔåèÃ¤0
-^	java:S125Œ	"<This block of commented-out lines of code should be removed.(ÎÄ÷ıÿÿÿÿ8ÖåèÃ¤0
-P
-java:S1135ã	"2Complete the task associated to this TODO comment.(å»œ8ÚåèÃ¤0
-p
-java:S3776ï	"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚ŒõÔ8ÛåèÃ¤0
-P
-java:S1135‹
-"2Complete the task associated to this TODO comment.(Ûïä“8İåèÃ¤0
-u
-java:S3776œ
-"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(»ıóªûÿÿÿÿ8ŞåèÃ¤0
-U
-java:S1135®"2Complete the task associated to this TODO comment.(äÈ–ÿÿÿÿÿ8æåèÃ¤0
-u
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 35 to the 15 allowed.(­ë±¼ûÿÿÿÿ8îåèÃ¤0
-P
-java:S1135Š"2Complete the task associated to this TODO comment.(˜À¾ˆ8ğåèÃ¤0
-U
-java:S1135¦"2Complete the task associated to this TODO comment.(àÃŒˆüÿÿÿÿ8ıåèÃ¤0
-g
-java:S1854¶"DRemove this useless assignment to local variable "fromClausePeriod".(¶Øë¿ûÿÿÿÿ8„æèÃ¤0
-]
-java:S1610Ì"@Convert the abstract class "VariableCallback" into an interface.(Ö…©8†æèÃ¤0
-N
-java:S1172Õ"+Remove this unused method parameter "info".(íĞæ¹øÿÿÿÿ8‡æèÃ¤0
+java:S1135É"2Complete the task associated to this TODO comment.(àÃŒˆüÿÿÿÿ
+`
+java:S1854Ù"DRemove this useless assignment to local variable "fromClausePeriod".(¶Øë¿ûÿÿÿÿ
+V
+java:S1610ï"@Convert the abstract class "VariableCallback" into an interface.(Ö…©
+G
+java:S1172ø"+Remove this unused method parameter "info".(íĞæ¹øÿÿÿÿ

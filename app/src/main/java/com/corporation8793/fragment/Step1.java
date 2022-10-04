@@ -3,6 +3,8 @@ package com.corporation8793.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +14,13 @@ import android.widget.TextView;
 
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
+import com.corporation8793.activity.RecyclerDecoration_Width;
 import com.corporation8793.custom.AnswerItem;
+import com.corporation8793.dto.Supplies;
+import com.corporation8793.recyclerview.SuppliesAdapter;
+import com.google.blockly.android.ui.ItemSpacingDecoration;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,9 +39,13 @@ public class Step1 extends Fragment {
     private String mParam2;
 
     AnswerItem supplies1,supplies2;
+    RecyclerView supplies;
     TextView name,comment;
 
     String contents_name;
+    SuppliesAdapter suppliesAdapter;
+    private ArrayList<Supplies> supplies_list = new ArrayList<>();
+    int previous_num = 0;
 
     public Step1() {
         // Required empty public constructor
@@ -88,28 +100,60 @@ public class Step1 extends Fragment {
         MySharedPreferences.setInt(getContext(), contents_name, 1);
 
         String msg = "점퍼선은 납땜없이도 센서와 센서를 연결하거나 센서와 전류를 연결해주는 선입니다.";
-        supplies1 = view.findViewById(R.id.supplies1);
-        supplies2 = view.findViewById(R.id.supplies2);
+//        supplies1 = view.findViewById(R.id.supplies1);
+//        supplies2 = view.findViewById(R.id.supplies2);
+
+        supplies = view.findViewById(R.id.supplies);
         name = view.findViewById(R.id.supplies_name);
         comment = view.findViewById(R.id.supplies_comment);
 
-        supplies1.setType("default");
-        supplies2.setType("default");
-        supplies1.setSelected(true);
-        supplies2.setSelected(false);
+        supplies_list.add(new Supplies(R.drawable.supplies_img1,true));
+        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
+//        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
+//        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
 
-        supplies1.setOnClickListener(v->{
-            supplies1.setSelected(true);
-            supplies2.setSelected(false);
-            name.setText("LED");
-            comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
+        suppliesAdapter = new SuppliesAdapter(getContext(),supplies_list);
+
+        supplies.setAdapter(suppliesAdapter);
+
+        RecyclerDecoration_Width decoration_height = new RecyclerDecoration_Width(70,supplies_list.size());
+        supplies.addItemDecoration(decoration_height);
+
+
+        supplies.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+
+        suppliesAdapter.setOnItemClickListener((position, click) -> {
+            Log.e("position",position+"");
+            if (previous_num != position) {
+                suppliesAdapter.notifyItemChanged(previous_num, "no");
+                suppliesAdapter.notifyItemChanged(position, "click");
+                previous_num = position;
+                if (position ==0) {
+                    name.setText("LED");
+                    comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
+                }else{
+                    name.setText("점퍼선");
+                    comment.setText(msg);
+                }
+            }
         });
-        supplies2.setOnClickListener(v->{
-            supplies1.setSelected(false);
-            supplies2.setSelected(true);
-            name.setText("점퍼선");
-            comment.setText(msg);
-        });
+//        supplies1.setType("default");
+//        supplies2.setType("default");
+//        supplies1.setSelected(true);
+//        supplies2.setSelected(false);
+
+//        supplies1.setOnClickListener(v->{
+//            supplies1.setSelected(true);
+//            supplies2.setSelected(false);
+//            name.setText("LED");
+//            comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
+//        });
+//        supplies2.setOnClickListener(v->{
+//            supplies1.setSelected(false);
+//            supplies2.setSelected(true);
+//            name.setText("점퍼선");
+//            comment.setText(msg);
+//        });
 
 
         return view;

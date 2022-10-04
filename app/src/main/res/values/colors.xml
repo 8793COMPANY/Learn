@@ -14,4 +14,7 @@
     <color name="copy_on">#1DDB16</color>
     <color name="copy_off">#FF0000</color>
 
+    <color name="orange_f78f43">#f78f43</color>
+    <color name="orange_ffc865">#ffc865</color>
+
 </resources>

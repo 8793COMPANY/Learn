@@ -452,33 +452,33 @@
         android:layout_height="86dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/bot_test"
-        app:layout_constraintBottom_toTopOf="@id/reset_btn"
-        app:layout_constraintRight_toRightOf="@id/reset_btn"
-        app:layout_constraintLeft_toLeftOf="@id/reset_btn"/>
+        app:layout_constraintBottom_toTopOf="@id/blockly_overlay_buttons"
+        app:layout_constraintRight_toRightOf="@id/blockly_overlay_buttons"
+        app:layout_constraintLeft_toLeftOf="@id/blockly_overlay_buttons"/>
 
-    <Button
-        android:id="@+id/block_copy_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.17"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintWidth_percent="0.09"
-        android:background="@drawable/block_copy_btn_off"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintTop_toTopOf="@+id/category_block"
-        app:layout_constraintBottom_toTopOf="@+id/blockly_overlay_buttons"
-        blockly:layout_constraintEnd_toEndOf="parent"
-        blockly:layout_constraintStart_toStartOf="parent"></Button>
+<!--    <Button-->
+<!--        android:id="@+id/block_copy_btn"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintHeight_percent="0.17"-->
+<!--        app:layout_constraintVertical_bias="1"-->
+<!--        app:layout_constraintWidth_percent="0.09"-->
+<!--        android:background="@drawable/block_copy_btn_off"-->
+<!--        app:layout_constraintHorizontal_bias="0.97"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/category_block"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/blockly_overlay_buttons"-->
+<!--        blockly:layout_constraintEnd_toEndOf="parent"-->
+<!--        blockly:layout_constraintStart_toStartOf="parent"></Button>-->
 
-    <Button
-        android:id="@+id/reset_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="reset"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintBottom_toTopOf="@+id/block_copy_btn"
-        blockly:layout_constraintEnd_toEndOf="parent"
-        blockly:layout_constraintStart_toStartOf="parent"></Button>
+<!--    <Button-->
+<!--        android:id="@+id/reset_btn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="reset"-->
+<!--        app:layout_constraintHorizontal_bias="0.97"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/block_copy_btn"-->
+<!--        blockly:layout_constraintEnd_toEndOf="parent"-->
+<!--        blockly:layout_constraintStart_toStartOf="parent"></Button>-->
 
 
     <LinearLayout

@@ -15,10 +15,12 @@ import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.room.AppDatabase;
 import com.corporation8793.room.entity.Contents;
 import com.google.blockly.model.Input;
+import com.learn.wp_rest.data.wp.users.User;
 import com.learn.wp_rest.repository.acf.AcfRepository;
 import com.learn.wp_rest.repository.auth.AuthRepository;
 import com.learn.wp_rest.repository.wp.media.MediaRepository;
 import com.learn.wp_rest.repository.wp.posts.PostsRepository;
+import com.learn.wp_rest.repository.wp.users.UsersRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +45,8 @@ public class Application extends android.app.Application {
     private static Application instance = null;
 
     public static AcfRepository acfRepository;
+    public static User user;
+    public static UsersRepository usersRepository;
     public static AuthRepository authRepository;
     public static MediaRepository mediaRepository;
     public static PostsRepository postsRepository;
@@ -89,11 +93,13 @@ public class Application extends android.app.Application {
         Thread.setDefaultUncaughtExceptionHandler(logHelper);
 
 
-
     }
 
 
     public void setAuth(String auth){
+        usersRepository = new UsersRepository(auth);
+        user = usersRepository.whoAmI().getSecond();
+        Log.e("user",user.getName());
         acfRepository = new AcfRepository(auth);
         mediaRepository = new MediaRepository(auth);
         postsRepository = new PostsRepository(auth);

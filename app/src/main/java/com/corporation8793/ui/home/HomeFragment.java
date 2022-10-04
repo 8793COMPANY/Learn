@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.corporation8793.Application;
 import com.corporation8793.R;
+import com.corporation8793.activity.BlockDictionaryActivity;
 import com.corporation8793.activity.ContentsActivity;
 import com.corporation8793.activity.MainActivity;
 
@@ -27,7 +28,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     LinearLayout free_mode,content_mode;
     Application myApplication;
-    Button free_btn,contents_btn;
+    Button free_btn,contents_btn,dictionary_btn;
+    TextView user_name;
 
 
 
@@ -42,6 +44,10 @@ public class HomeFragment extends Fragment {
         content_mode = root.findViewById(R.id.content_mode);
         contents_btn = root.findViewById(R.id.contents_btn);
         free_btn = root.findViewById(R.id.free_btn);
+        dictionary_btn = root.findViewById(R.id.dictionary_btn);
+        user_name = root.findViewById(R.id.user_name);
+
+//        user_name.setText(Application.user.getName());
 
         free_btn.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -61,6 +67,12 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ContentsActivity.class);
             startActivity(intent);
         });
+
+        dictionary_btn.setOnClickListener(v->{
+            Intent intent = new Intent(getActivity(), BlockDictionaryActivity.class);
+            startActivity(intent);
+        });
+
 //        final TextView textView = root.findViewById(R.id.text_home);
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override

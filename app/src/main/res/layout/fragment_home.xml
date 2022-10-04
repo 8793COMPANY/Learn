@@ -8,6 +8,31 @@
     android:background="#fcf1de"
     android:clipToPadding="false">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/name_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98"></androidx.constraintlayout.widget.Guideline>
+
+
+
+    <TextView
+        android:id="@+id/user_name"
+        android:text="김이름"
+        android:textColor="#b45611"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="@+id/name_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="13dp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeStepGranularity="2dp"
+        app:layout_constraintHorizontal_bias="1"
+        ></TextView>
+
 
     <LinearLayout
         android:id="@+id/free_mode"
@@ -18,10 +43,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/guide_left"
         app:layout_constraintRight_toLeftOf="@+id/content_mode"
-        app:layout_constraintWidth_percent="0.25"
-        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintDimensionRatio="300:352"
+        app:layout_constraintWidth_percent="0.24"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintVertical_bias="0.2">
 
         <Button
             android:id="@+id/free_btn"
@@ -39,13 +64,13 @@
         android:layout_height="0dp"
         android:background="@drawable/shadow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintWidth_percent="0.25"
-        app:layout_constraintHeight_percent="0.7"
+        app:layout_constraintDimensionRatio="300:352"
+        app:layout_constraintWidth_percent="0.24"
         app:layout_constraintLeft_toRightOf="@+id/free_mode"
         app:layout_constraintRight_toLeftOf="@+id/dictionary_mode"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintVertical_bias="0.2">
     <Button
         android:id="@+id/contents_btn"
         android:layout_width="match_parent"
@@ -61,13 +86,14 @@
         android:background="@drawable/shadow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="@+id/guide_right"
-        app:layout_constraintWidth_percent="0.25"
-        app:layout_constraintHeight_percent="0.68"
+        app:layout_constraintDimensionRatio="300:352"
+        app:layout_constraintWidth_percent="0.24"
         app:layout_constraintLeft_toRightOf="@+id/content_mode"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintVertical_bias="0.2">
         <Button
+            android:id="@+id/dictionary_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/dictionary_mode_icon"
@@ -103,7 +129,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1"></androidx.constraintlayout.widget.Guideline>
+        app:layout_constraintGuide_percent="0.08"></androidx.constraintlayout.widget.Guideline>
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -111,6 +137,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9"></androidx.constraintlayout.widget.Guideline>
+        app:layout_constraintGuide_percent="0.92"></androidx.constraintlayout.widget.Guideline>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

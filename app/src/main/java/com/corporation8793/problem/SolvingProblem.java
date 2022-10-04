@@ -34,6 +34,8 @@ import com.learn.wp_rest.repository.acf.AcfRepository;
 import com.learn.wp_rest.repository.auth.AuthRepository;
 import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 
+import java.io.IOException;
+
 import kotlin.Pair;
 import okhttp3.Credentials;
 
@@ -144,29 +146,35 @@ public class SolvingProblem extends AppCompatActivity {
                     Log.e("data","in");
                 }else{
                     Log.e("data","none");
-                    new Thread(()->{
-                        String post_id = Application.postsRepository.createQuizReport(
-                                chapter_id+"-5. "+"LED 문제",
-                                answers[0],
-                                answers[1],
-                                answers[2],
-                                answers[3],
-                                answers[4]
-                        ).getSecond().getId();
-                        Pair<String, QuizReportJson> check = Application.acfRepository.updateQuizReportAcf(
-                                post_id,
-                                3,
-                                answers[0],
-                                answers[1],
-                                answers[2],
-                                answers[3],
-                                answers[4]
-                        );
-                        Log.e("end", "thread");
-                        Log.e("upload_check", check.getFirst());
-                        Log.e("upload_check", check.getSecond().getAcf().toString());
-                        MySharedPreferences.setBoolean(this,"solving_problem"+chapter_id,true);
-                    }).start();
+                    try {
+                        new Thread(()->{
+                            String post_id = Application.postsRepository.createQuizReport(
+                                    chapter_id+"-5. "+"LED 문제",
+                                    Application.user.getId(),
+                                    answers[0],
+                                    answers[1],
+                                    answers[2],
+                                    answers[3],
+                                    answers[4]
+                            ).getSecond().getId();
+                            Pair<String, QuizReportJson> check = Application.acfRepository.updateQuizReportAcf(
+                                    post_id,
+                                    3,
+                                    answers[0],
+                                    answers[1],
+                                    answers[2],
+                                    answers[3],
+                                    answers[4]
+                            );
+                            Log.e("end", "thread");
+                            Log.e("upload_check", check.getFirst());
+                            Log.e("upload_check", check.getSecond().getAcf().toString());
+                            MySharedPreferences.setBoolean(this,"solving_problem"+chapter_id,true);
+                        }).start();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }
 
                 Intent intent = new Intent(this, RightAnswerActivity.class);

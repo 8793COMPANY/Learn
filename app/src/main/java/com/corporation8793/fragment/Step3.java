@@ -23,18 +23,22 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.palette.graphics.Palette;
 
 import com.corporation8793.Application;
 import com.corporation8793.MySharedPreferences;
 import com.corporation8793.R;
 import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.dialog.RetakeDialog;
+import com.learn.wp_rest.data.acf.UploadReportJson;
 import com.learn.wp_rest.data.wp.media.Media;
+import com.learn.wp_rest.data.wp.posts.UploadReport;
 import com.learn.wp_rest.repository.wp.media.MediaRepository;
 
 import static android.app.Activity.RESULT_OK;
@@ -43,6 +47,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -76,6 +81,9 @@ public class Step3 extends Fragment {
 
     String contents_name, chapter_id;
     String mCurrentPhotoPath = "";
+    String [] chapter_id_split;
+
+    boolean black_color_check = false;
 
 
     public Step3() {
@@ -86,6 +94,7 @@ public class Step3 extends Fragment {
         // Required empty public constructor
         this.contents_name = contents_name;
         this.chapter_id = chapter_id;
+        chapter_id_split = chapter_id.split("-");
     }
 
     /**
@@ -120,6 +129,9 @@ public class Step3 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.e("hi","!!");
+        Log.e("hi","//");
+
+
         View view = inflater.inflate(R.layout.fragment_step3, container, false);
         MySharedPreferences.setInt(getContext(),contents_name,2);
         upload_area = view.findViewById(R.id.upload_area);
@@ -152,6 +164,10 @@ public class Step3 extends Fragment {
 
 
         });
+
+        Log.e("chapter_id",chapter_id);
+
+
         return view;
     }
 
@@ -190,18 +206,51 @@ public class Step3 extends Fragment {
 //            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
 //            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
 //            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            try {
+                new Thread(()->{
 
-            new Thread(()->{
-                Log.e("in","thread");
-            Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
-                Log.e("in","thread2");
-            MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
-                Log.e("in","thread3");
+//                File file = new File("src/test/kotlin/com/learn/wp_rest/wp/media/unsubmission_img.png");
+//                Log.e("in","file");
+//                Pair<String, Media> response_unsubmission_img = Application.mediaRepository.uploadMedia(file);
+//
+//                Log.e("response_unsubmission_img",response_unsubmission_img.getFirst());
+//                Log.e("response_unsubmission_img",response_unsubmission_img.getSecond().toString());
+                    //미제출 이미지 = http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg
 
-            Log.e("response_ci",response_ci.getFirst());
-            Log.e("response_ci",response_ci.getSecond().toString());
-            customProgressDialog.dismiss();
-            }).start();
+                    Log.e("in","thread");
+                    Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
+
+                    Log.e("in","thread2");
+                    MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+                    Log.e("in","thread3");
+
+                    Log.e("response_ci",response_ci.getFirst());
+                    Log.e("response_ci",response_ci.getSecond().toString());
+
+                    Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+                            chapter_id+". "+contents_name,
+                            response_ci.getSecond().getGuid().getRendered(),
+                            "http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg"
+                    );
+                    Log.e("response",response.getFirst());
+                    Log.e("response",response.getSecond().toString());
+                    Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
+                            response.getSecond().getId(),
+                            Integer.parseInt(chapter_id_split[0]),
+                            Integer.parseInt(chapter_id_split[1]),
+                            response_ci.getSecond().getGuid().getRendered(),
+                            "http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg"
+                    );
+
+
+                    Log.e("response",upload_result.getFirst());
+                    customProgressDialog.dismiss();
+                }).start();
+            }catch (Exception e){
+                Log.e("error","!");
+                e.printStackTrace();
+            }
+
 
 //            Log.e("imageUri",imageUri.toString());
 //            fos = resolver.openOutputStream(Objects.requireNonNull(imageUri));
@@ -247,13 +296,40 @@ public class Step3 extends Fragment {
             Log.e("hi file start","!!");
             File file = new File(mCurrentPhotoPath);
             Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+
+
             upload_img.setImageBitmap(imageBitmap);
             Log.e("hi file end","!!");
             try {
                 Log.e("hi dialog start","!!");
                 customProgressDialog.show();
                 Log.e("hi dialog show","!!");
-                saveImage(file,imageBitmap,"check");
+//                Palette.from(imageBitmap).generate(palette -> {
+//                    if(palette==null)
+//                        return;
+//
+//
+//                    Palette.Swatch vibrantSwatch = palette.getDominantSwatch();
+//                    if(vibrantSwatch!=null)
+//                    {
+//                        Log.e("vibrantSwatch","not null");
+//                        int color = vibrantSwatch.getRgb();//swatch에서 대표색 추출
+//                        Log.e("color",color+"");
+//                        if (color != -15724528)
+//                            black_color_check = true;
+//                        upload_area.setBackgroundColor(color);
+//                    }else{
+//                        Log.e("vibrantSwatch","null");
+//                    }
+//
+//                });
+
+//                if (!black_color_check) {
+                    saveImage(file, imageBitmap, "check");
+//                }else{
+//                    customProgressDialog.dismiss();
+//                    Toast.makeText(getContext(),"사진을 다시 찍어주세요",Toast.LENGTH_SHORT).show();
+//                }
                 Log.e("hi dialog end","!!");
 
             } catch (Exception e) {
