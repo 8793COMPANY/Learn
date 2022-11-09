@@ -1,33 +1,33 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:1-7:12
+ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
 	package
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:2:5-30
-		INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-		INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:2:5-30
+		INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
 	android:versionName
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:4:5-35
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:4:5-35
 	xmlns:android
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:1:11-69
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:11-69
 	android:versionCode
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:3:5-32
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:3:5-32
 uses-permission#android.permission.BLUETOOTH
-ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:5-68
+ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-68
 	android:name
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml:6:22-65
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:22-65
 uses-sdk
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-		INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-		ADDED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
-		INJECTED from /Volumes/APFS S1/Project/AndroidStudioProjects/JavaProject/Learn/PhysicaloidLibrary/AndroidManifest.xml
+		INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		ADDED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml
+		INJECTED from D:\doodong\Documents\Project\AndroidStudioProjects\JavaProject\Learn\PhysicaloidLibrary\AndroidManifest.xml

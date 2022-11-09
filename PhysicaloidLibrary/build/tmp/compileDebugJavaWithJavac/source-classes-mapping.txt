@@ -7,11 +7,11 @@ com/physicaloid/lib/Boards.java
  com.physicaloid.lib.Boards$ChipTypes
  com.physicaloid.lib.Boards$ComProtocols
  com.physicaloid.lib.Boards$UploadProtocols
-com/physicaloid/lib/programmer/avr/AvrUploader.java
- com.physicaloid.lib.programmer.avr.AvrUploader
 com/physicaloid/lib/usb/driver/uart/UartCdcAcm.java
  com.physicaloid.lib.usb.driver.uart.UartCdcAcm
  com.physicaloid.lib.usb.driver.uart.UartCdcAcm$1
+com/physicaloid/lib/programmer/avr/AvrUploader.java
+ com.physicaloid.lib.programmer.avr.AvrUploader
 com/physicaloid/lib/usb/driver/uart/UartCp210x.java
  com.physicaloid.lib.usb.driver.uart.UartCp210x
  com.physicaloid.lib.usb.driver.uart.UartCp210x$1
@@ -33,18 +33,18 @@ cz/jaybee/intelhex/IntelHexParserRun.java
 com/physicaloid/lib/usb/driver/uart/UartWinCH34x.java
  com.physicaloid.lib.usb.driver.uart.UartWinCH34x
  com.physicaloid.lib.usb.driver.uart.UartWinCH34x$1
-com/physicaloid/lib/programmer/avr/UploadProtocol.java
- com.physicaloid.lib.programmer.avr.UploadProtocol
 cz/jaybee/intelhex/IntelHexRecordType.java
  cz.jaybee.intelhex.IntelHexRecordType
-com/physicaloid/lib/usb/driver/uart/ReadLisener.java
- com.physicaloid.lib.usb.driver.uart.ReadLisener
-com/physicaloid/lib/framework/SerialCommunicator.java
- com.physicaloid.lib.framework.SerialCommunicator
+com/physicaloid/lib/programmer/avr/UploadProtocol.java
+ com.physicaloid.lib.programmer.avr.UploadProtocol
 cz/jaybee/intelhex/IntelHexParser.java
  cz.jaybee.intelhex.IntelHexParser
  cz.jaybee.intelhex.IntelHexParser$1
  cz.jaybee.intelhex.IntelHexParser$Record
+com/physicaloid/lib/usb/driver/uart/ReadLisener.java
+ com.physicaloid.lib.usb.driver.uart.ReadLisener
+com/physicaloid/lib/framework/SerialCommunicator.java
+ com.physicaloid.lib.framework.SerialCommunicator
 com/physicaloid/lib/fpga/PhysicaloidFpgaConst.java
  com.physicaloid.lib.fpga.PhysicaloidFpgaConst
 com/physicaloid/lib/fpga/PhysicaloidFpgaPacketFilter.java
@@ -87,19 +87,19 @@ com/physicaloid/lib/usb/driver/uart/ReadListener.java
  com.physicaloid.lib.usb.driver.uart.ReadListener
 com/physicaloid/lib/UsbVidList.java
  com.physicaloid.lib.UsbVidList
-com/physicaloid/lib/programmer/avr/AVRConfMemFuse.java
- com.physicaloid.lib.programmer.avr.AVRConfMemFuse
 cz/jaybee/intelhex/IntelHexDataListener.java
  cz.jaybee.intelhex.IntelHexDataListener
+com/physicaloid/lib/programmer/avr/AVRConfMemFuse.java
+ com.physicaloid.lib.programmer.avr.AVRConfMemFuse
 com/physicaloid/lib/usb/driver/uart/UartConfig.java
  com.physicaloid.lib.usb.driver.uart.UartConfig
 com/physicaloid/lib/fpga/PhysicaloidFpgaConfigurator.java
  com.physicaloid.lib.fpga.PhysicaloidFpgaConfigurator
 com/physicaloid/BuildConfig.java
  com.physicaloid.BuildConfig
+com/physicaloid/misc/Misc.java
+ com.physicaloid.misc.Misc
 com/physicaloid/lib/Physicaloid.java
  com.physicaloid.lib.Physicaloid
  com.physicaloid.lib.Physicaloid$1
  com.physicaloid.lib.Physicaloid$UploadCallBack
-com/physicaloid/misc/Misc.java
- com.physicaloid.misc.Misc
