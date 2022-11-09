@@ -446,12 +446,11 @@
         blockly:scrollOrientation="vertical"></fragment>
 
     <ImageView
-        android:visibility="gone"
         android:id="@+id/block_bot_btn"
         android:layout_width="59dp"
         android:layout_height="86dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/bot_test"
+        android:src="@drawable/bot_image"
         app:layout_constraintBottom_toTopOf="@id/blockly_overlay_buttons"
         app:layout_constraintRight_toRightOf="@id/blockly_overlay_buttons"
         app:layout_constraintLeft_toLeftOf="@id/blockly_overlay_buttons"/>

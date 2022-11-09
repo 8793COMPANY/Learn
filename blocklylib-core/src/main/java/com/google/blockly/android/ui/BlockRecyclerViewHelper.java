@@ -391,11 +391,26 @@ public class BlockRecyclerViewHelper {
 
                         block_width = toolbox_bg.getWidth();
                         Log.e("block_width",block_width+"");
-                        if (block_width != 0)
-                            if (block_width > width)
+                        Log.e("block_width",width+"");
+                        if (block_width != 0 && widths[aIndex] < block_width)
+                            if (block_width > width) {
+                                Log.e("block_width","width");
                                 widths[aIndex] = width;
-                            else
+                            }else {
+                                Log.e("block_width","block_width");
                                 widths[aIndex] = block_width;
+                            }
+
+                        Log.e("block_width pos",aIndex+"");
+//                        if (aIndex == 2) {
+//                            Log.e("block_width","들어옴");
+//                            widths[aIndex] = width;
+//                        }
+                        if (aIndex == 2)
+                            widths[aIndex] = ViewGroup.LayoutParams.MATCH_PARENT;
+
+                        if (aIndex == 0 && widths[1] != 0)
+                            widths[0] = widths[1];
 
                         Log.e(TAG, "width = " + block_width);
 
@@ -403,7 +418,10 @@ public class BlockRecyclerViewHelper {
                         try {
 //                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
-                            marginLayoutParams.width = block_width;
+                            if (aIndex == 2)
+                                marginLayoutParams.width =ViewGroup.LayoutParams.MATCH_PARENT;
+                            else
+                                marginLayoutParams.width = block_width;
                             marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                             toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 //                            removeOnGlobalLayoutListener(toolbox_bg.getViewTreeObserver(), mGlobalLayoutListener);
