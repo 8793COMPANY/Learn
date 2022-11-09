@@ -332,8 +332,11 @@ public class CategoryTabs extends RecyclerView {
 
             if (category.getCategoryName().equals("upload")) {
                 categoryData.setUpload_btn(holder.mLabel);
+            }else if(category.getCategoryName().equals("reset")){
+                categoryData.setReset_btn(holder.mLabel);
+            }else if(category.getCategoryName().equals("home")){
+                categoryData.setHome_btn(holder.mLabel);
             }
-
             holder.mLabel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View label) {

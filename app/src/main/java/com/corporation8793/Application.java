@@ -1,6 +1,9 @@
 package com.corporation8793;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -14,6 +17,7 @@ import androidx.room.Room;
 import com.corporation8793.dialog.ProgressDialog;
 import com.corporation8793.room.AppDatabase;
 import com.corporation8793.room.entity.Contents;
+import com.google.blockly.android.ui.CategoryData;
 import com.google.blockly.model.Input;
 import com.learn.wp_rest.data.wp.users.User;
 import com.learn.wp_rest.repository.acf.AcfRepository;
@@ -21,6 +25,7 @@ import com.learn.wp_rest.repository.auth.AuthRepository;
 import com.learn.wp_rest.repository.wp.media.MediaRepository;
 import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 import com.learn.wp_rest.repository.wp.users.UsersRepository;
+import com.physicaloid.lib.Physicaloid;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +56,9 @@ public class Application extends android.app.Application {
     public static MediaRepository mediaRepository;
     public static PostsRepository postsRepository;
 
-
+    public static boolean usb_check = false;
+    public static Physicaloid mPhysicaloid ;
+    CategoryData categoryData;
 
     public static com.corporation8793.Application getInstance(Context context){
 //        this.context = context;
@@ -67,7 +74,9 @@ public class Application extends android.app.Application {
         super.onCreate();
         Log.e("application","oncreate");
 //        db = AppDatabase.Companion.getInstance(getApplicationContext());
-
+        mPhysicaloid = new Physicaloid(getApplicationContext());
+        this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
+        this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
 //        Contents contents = new Contents(0,3," 초음파 센서 사용하기",
 //                "초음파 센서로 거리 측정하기","거리에 따라 LED 빠르게 깜빡이기","거리에 따라 피에조 부저 소리 조정하기",
@@ -124,7 +133,55 @@ public class Application extends android.app.Application {
     }
 
 
+    BroadcastReceiver uploadEventReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.e("action",action);
+            if (categoryData == null)
+                categoryData = CategoryData.getInstance();
 
+            Toast.makeText(getApplicationContext(), "hey", Toast.LENGTH_SHORT).show();
+
+
+            if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
+                // USB was connected
+                Log.e("USB 감지 : ", "연결연결");
+                mPhysicaloid.open();
+                usb_check = true;
+                try {
+                    if (categoryData.getUpload_btn() != null) {
+                        categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
+                        categoryData.getUpload_btn().setSelected(true);
+                        categoryData.getUpload_btn().setEnabled(true);
+                    }
+                }catch (NullPointerException e){
+                    Log.e("upload btn","null!");
+                }
+
+            }
+
+            if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
+                // USB was disconnected
+                Log.e("USB 감지 : ", "해제해제");
+                mPhysicaloid.close();
+                usb_check = false;
+
+                try {
+                    if (categoryData.getUpload_btn() != null) {
+                        categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
+                        categoryData.getUpload_btn().setSelected(false);
+                        categoryData.getUpload_btn().setEnabled(false);
+                    }
+                }catch (NullPointerException e){
+                    Log.e("upload btn","null!");
+                }
+            }
+
+
+
+        }
+    };
 
 
 }

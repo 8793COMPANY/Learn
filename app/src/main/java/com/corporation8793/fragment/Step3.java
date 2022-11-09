@@ -14,6 +14,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -43,6 +46,8 @@ import com.learn.wp_rest.repository.wp.media.MediaRepository;
 
 import static android.app.Activity.RESULT_OK;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,6 +79,8 @@ public class Step3 extends Fragment {
 
     LinearLayout upload_area;
     ImageView upload_img;
+
+    Uri photURI;
 
     private static final int REQUEST_IMAGE_CODE = 101;
     boolean check = false;
@@ -190,12 +197,37 @@ public class Step3 extends Fragment {
             }
 
             if (photoFile != null) {
-                Uri photURI = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".fileprovider", photoFile);
+                Log.e("photo file","not null");
+                photURI = FileProvider.getUriForFile(getContext(), getActivity().getPackageName() + ".fileprovider", photoFile);
+                Log.e("photUri",photURI+"");
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CODE);
             }
         }
     }
+
+
+    private String getRealPathFromURI(Uri contentUri) {
+        if (contentUri.getPath().startsWith("/storage")) {
+            return contentUri.getPath();
+        }
+
+        String id = DocumentsContract.getDocumentId(contentUri).split(":")[1];
+        String[] columns = { MediaStore.Files.FileColumns.DATA };
+        String selection = MediaStore.Files.FileColumns._ID + " = " + id;
+        Cursor cursor = getContext().getContentResolver().query(MediaStore.Files.getContentUri("external"), columns, selection, null, null);
+        try {
+            int columnIndex = cursor.getColumnIndex(columns[0]);
+            if (cursor.moveToFirst()) {
+                return cursor.getString(columnIndex);
+            }
+        } finally {
+            cursor.close();
+        }
+        return null;
+    }
+
+
 
     private void saveImage(File imageFile, Bitmap bitmap, @NonNull String name) throws IOException {
         OutputStream fos;
@@ -206,8 +238,7 @@ public class Step3 extends Fragment {
 //            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg");
 //            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM+"/배울래");
 //            Uri imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-            try {
-                new Thread(()->{
+            new Thread(()->{
 
 //                File file = new File("src/test/kotlin/com/learn/wp_rest/wp/media/unsubmission_img.png");
 //                Log.e("in","file");
@@ -215,10 +246,13 @@ public class Step3 extends Fragment {
 //
 //                Log.e("response_unsubmission_img",response_unsubmission_img.getFirst());
 //                Log.e("response_unsubmission_img",response_unsubmission_img.getSecond().toString());
-                    //미제출 이미지 = http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg
+                //미제출 이미지 = http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg
 
-                    Log.e("in","thread");
+                Log.e("in","thread");
+                try {
                     Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
+//                        File file = new File(getRealPathFromURI(photURI));
+//                        Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(file);
 
                     Log.e("in","thread2");
                     MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
@@ -227,10 +261,14 @@ public class Step3 extends Fragment {
                     Log.e("response_ci",response_ci.getFirst());
                     Log.e("response_ci",response_ci.getSecond().toString());
 
+                    String block_img ="http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg";
+                    if (MySharedPreferences.getString(getContext(),"block_img"+chapter_id) != null)
+                        block_img = MySharedPreferences.getString(getContext(),"block_img"+chapter_id);
+
                     Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
                             chapter_id+". "+contents_name,
                             response_ci.getSecond().getGuid().getRendered(),
-                            "http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg"
+                            block_img
                     );
                     Log.e("response",response.getFirst());
                     Log.e("response",response.getSecond().toString());
@@ -239,17 +277,35 @@ public class Step3 extends Fragment {
                             Integer.parseInt(chapter_id_split[0]),
                             Integer.parseInt(chapter_id_split[1]),
                             response_ci.getSecond().getGuid().getRendered(),
-                            "http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg"
+                            block_img
                     );
-
-
                     Log.e("response",upload_result.getFirst());
                     customProgressDialog.dismiss();
-                }).start();
-            }catch (Exception e){
-                Log.e("error","!");
-                e.printStackTrace();
-            }
+                    if (!check) {
+
+                        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {
+                            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 3);
+                        }
+                        MySharedPreferences.setInt(getContext(), contents_name, 3);
+
+                        check = true;
+                    }
+                }catch (NullPointerException e){
+                    Log.e("error","null error");
+                    customProgressDialog.dismiss();
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(getContext(),"사진을 다시 찍어주세요",Toast.LENGTH_SHORT).show();
+                        }
+                    }, 0);
+                }
+
+
+            }).start();
+
 
 
 //            Log.e("imageUri",imageUri.toString());
@@ -270,17 +326,55 @@ public class Step3 extends Fragment {
 
     }
 
-    public static String uri2path(Context context, Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-
-        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+    public String getPathFromUri(Uri uri){
+        Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null );
         cursor.moveToNext();
-        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA));
-        Uri uri = Uri.fromFile(new File(path));
-
+        @SuppressLint("Range") String path = cursor.getString( cursor.getColumnIndex( "_data" ) );
         cursor.close();
         return path;
     }
+
+    private Bitmap compressImage(Bitmap image) {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//Compression quality, here 100 means no compression, the storage of compressed data to baos
+        int options = 90;
+        Log.e("check byte",baos.toByteArray().length+"");
+        while (baos.toByteArray().length / 1024 > 400) {  //Loop if compressed picture is greater than 400kb, than to compression
+            baos.reset();//Reset baos is empty baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//The compression options%, storing the compressed data to the baos
+            options -= 10;//Every time reduced by 10
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//The storage of compressed data in the baos to ByteArrayInputStream
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//The ByteArrayInputStream data generation
+        return bitmap;
+    }
+
+//    public static boolean reduceImage(String path, long maxSize) {
+//        File img = new File(path);
+//        boolean result = false;
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        Bitmap bitmap = null;
+//        options.inSampleSize=1;
+//        while (img.length()>maxSize) {
+//            options.inSampleSize = options.inSampleSize+1;
+//            bitmap = BitmapFactory.decodeFile(path, options);
+//            img.delete();
+//            try
+//            {
+//                FileOutputStream fos = new FileOutputStream(path);
+//                img.compress(path.toLowerCase().endsWith("png")?
+//                        Bitmap.CompressFormat.PNG:
+//                        Bitmap.CompressFormat.JPEG, 100, fos);
+//                fos.close();
+//                result = true;
+//            }catch (Exception errVar) {
+//                errVar.printStackTrace();
+//            }
+//        };
+//        return result;
+//    }
+
 
 
     @Override
@@ -293,11 +387,12 @@ public class Step3 extends Fragment {
 //            Bundle extras = data.getExtras();
 //            Bitmap imageBitmap = (Bitmap) extras.get("data");
 //            upload_img.setImageBitmap(imageBitmap);
-            Log.e("hi file start","!!");
             File file = new File(mCurrentPhotoPath);
             Bitmap imageBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+            imageBitmap = compressImage(imageBitmap);
 
 
+//            upload_img.setImageURI(photURI);
             upload_img.setImageBitmap(imageBitmap);
             Log.e("hi file end","!!");
             try {
@@ -325,7 +420,8 @@ public class Step3 extends Fragment {
 //                });
 
 //                if (!black_color_check) {
-                    saveImage(file, imageBitmap, "check");
+                saveImage(file, imageBitmap, "check");
+
 //                }else{
 //                    customProgressDialog.dismiss();
 //                    Toast.makeText(getContext(),"사진을 다시 찍어주세요",Toast.LENGTH_SHORT).show();
@@ -337,15 +433,7 @@ public class Step3 extends Fragment {
                 customProgressDialog.dismiss();
             }
 
-            if (!check) {
 
-                if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {
-                    MySharedPreferences.setInt(getContext(), contents_name+" MAX", 3);
-                }
-                    MySharedPreferences.setInt(getContext(), contents_name, 3);
-
-                check = true;
-            }
         }
     }
 

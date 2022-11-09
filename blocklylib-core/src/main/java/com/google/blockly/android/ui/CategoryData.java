@@ -26,7 +26,26 @@ public class CategoryData {
         this.upload_btn = upload_btn;
     }
 
+    public View getHome_btn() {
+        return home_btn;
+    }
+
+    public void setHome_btn(View home_btn) {
+        this.home_btn = home_btn;
+    }
+    public View getReset_btn() {
+        return reset_btn;
+    }
+
+    public void setReset_btn(View reset_btn) {
+        this.reset_btn = reset_btn;
+    }
+
     View upload_btn = null;
+
+    View home_btn = null;
+
+    View reset_btn = null;
 
     WorkspacePoint rtp, ptp, ntp;
 

@@ -662,7 +662,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
-            BusProvider.getInstance().post(new PushEvent(8, true, false));
+            BusProvider.getInstance().post(new PushEvent(10, true, false));
             return callOnClick();
         }
     }
