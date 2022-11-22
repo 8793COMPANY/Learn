@@ -42,6 +42,8 @@ public class LogHelper implements Thread.UncaughtExceptionHandler {
 
         mLogger.error(errorReport);
 
+        // TODO : log4j Exception 발생 시 CE 로 전송
+
 
 
         //   android.os.Process.killProcess(android.os.Process.myPid());
