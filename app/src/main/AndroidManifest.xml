@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.corporation8793">
+    package="com.learn4">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,7 +16,7 @@
         android:required="true" />
 
     <application
-        android:name=".Application"
+        android:name="com.learn4.Application"
         android:allowBackup="false"
         android:configChanges="orientation|screenSize"
         android:hardwareAccelerated="true"
@@ -28,13 +28,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.BlockDictionaryActivity"
+            android:name="com.learn4.activity.BlockDictionaryActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.corporation8793.fileprovider"
+            android:authorities="com.learn4.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -43,23 +43,23 @@
         </provider>
 
         <activity
-            android:name=".problem.RightAnswerActivity"
+            android:name="com.learn4.problem.RightAnswerActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".activity.ChapterActivity"
+            android:name="com.learn4.activity.ChapterActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".activity.ProblemActivity"
+            android:name="com.learn4.activity.ProblemActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".problem.SolvingProblem"
+            android:name="com.learn4.problem.SolvingProblem"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".activity.ContentsActivity"
+            android:name="com.learn4.activity.ContentsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".activity.ModeSelect"
+            android:name="com.learn4.activity.ModeSelect"
             android:label="@string/title_activity_mode_select"
             android:screenOrientation="sensorLandscape" />
 
@@ -68,8 +68,9 @@
             android:required="false" />
 
         <activity
-            android:name=".activity.LoginActivity"
-            android:screenOrientation="sensorLandscape">
+            android:name="com.learn4.activity.LoginActivity"
+            android:screenOrientation="sensorLandscape"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -77,10 +78,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.IntroActivity"
+            android:name="com.learn4.activity.IntroActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.learn4.activity.MainActivity"
             android:screenOrientation="sensorLandscape" />
     </application>
 

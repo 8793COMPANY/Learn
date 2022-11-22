@@ -90,7 +90,7 @@
     </androidx.cardview.widget.CardView>
 
 
-    <com.corporation8793.custom.TextAnswerItem
+    <com.learn4.custom.TextAnswerItem
         android:id="@+id/answer"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -100,10 +100,10 @@
         app:layout_constraintBottom_toTopOf="@+id/answer2"
         app:layout_constraintLeft_toLeftOf="@id/guide_left"
         app:layout_constraintRight_toRightOf="@id/guide_right"
-        app:layout_constraintVertical_chainStyle="spread_inside"></com.corporation8793.custom.TextAnswerItem>
+        app:layout_constraintVertical_chainStyle="spread_inside"></com.learn4.custom.TextAnswerItem>
 
 
-    <com.corporation8793.custom.TextAnswerItem
+    <com.learn4.custom.TextAnswerItem
         android:id="@+id/answer2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -112,10 +112,10 @@
         app:layout_constraintTop_toBottomOf="@+id/answer"
         app:layout_constraintBottom_toTopOf="@+id/answer3"
         app:layout_constraintLeft_toLeftOf="@id/guide_left"
-        app:layout_constraintRight_toRightOf="@id/guide_right"></com.corporation8793.custom.TextAnswerItem>
+        app:layout_constraintRight_toRightOf="@id/guide_right"></com.learn4.custom.TextAnswerItem>
 
 
-    <com.corporation8793.custom.TextAnswerItem
+    <com.learn4.custom.TextAnswerItem
         android:id="@+id/answer3"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -124,7 +124,7 @@
         app:layout_constraintTop_toBottomOf="@+id/answer2"
         app:layout_constraintBottom_toBottomOf="@+id/guide_bottom"
         app:layout_constraintLeft_toLeftOf="@id/guide_left"
-        app:layout_constraintRight_toRightOf="@id/guide_right"></com.corporation8793.custom.TextAnswerItem>
+        app:layout_constraintRight_toRightOf="@id/guide_right"></com.learn4.custom.TextAnswerItem>
 
 
     <androidx.constraintlayout.widget.Guideline
