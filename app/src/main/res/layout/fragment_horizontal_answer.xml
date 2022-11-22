@@ -53,7 +53,7 @@
             android:background="#f7f7f7"
            >
 
-            <com.corporation8793.custom.ImgAnswerItem
+            <com.learn4.custom.ImgAnswerItem
                 android:id="@+id/supplies1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -67,10 +67,10 @@
                 app:layout_constraintHorizontal_bias="0"
                 android:background="@drawable/supplies_img1"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
-                android:elevation="20dp"></com.corporation8793.custom.ImgAnswerItem>
+                android:elevation="20dp"></com.learn4.custom.ImgAnswerItem>
 
 
-            <com.corporation8793.custom.ImgAnswerItem
+            <com.learn4.custom.ImgAnswerItem
                 android:background="@drawable/supplies_img2"
                 android:id="@+id/supplies2"
                 android:layout_width="0dp"
@@ -83,10 +83,10 @@
                 app:layout_constraintWidth_percent="0.2"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintHorizontal_bias="1"
-                ></com.corporation8793.custom.ImgAnswerItem>
+                ></com.learn4.custom.ImgAnswerItem>
 
 
-            <com.corporation8793.custom.ImgAnswerItem
+            <com.learn4.custom.ImgAnswerItem
                 android:background="@drawable/supplies_img2"
                 android:id="@+id/supplies3"
                 android:layout_width="0dp"
@@ -99,9 +99,9 @@
                 app:layout_constraintWidth_percent="0.2"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintHorizontal_bias="1"
-                ></com.corporation8793.custom.ImgAnswerItem>
+                ></com.learn4.custom.ImgAnswerItem>
 
-            <com.corporation8793.custom.ImgAnswerItem
+            <com.learn4.custom.ImgAnswerItem
                 android:background="@drawable/supplies_img2"
                 android:id="@+id/supplies4"
                 android:layout_width="0dp"
@@ -114,7 +114,7 @@
                 app:layout_constraintWidth_percent="0.2"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintHorizontal_bias="1"
-                ></com.corporation8793.custom.ImgAnswerItem>
+                ></com.learn4.custom.ImgAnswerItem>
 
 
 

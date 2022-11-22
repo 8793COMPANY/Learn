@@ -8,11 +8,11 @@ android {
     buildToolsVersion '30.0.3'
 
     defaultConfig {
-        applicationId "com.corporation8793"
+        applicationId "com.learn4"
         minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 14
-        versionName "0.9.7"
+        targetSdkVersion 31
+        versionCode 16
+        versionName "0.9.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

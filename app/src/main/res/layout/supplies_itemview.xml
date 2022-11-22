@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.corporation8793.custom.AnswerItem
+    <com.learn4.custom.AnswerItem
         android:elevation="20dp"
         android:id="@+id/supplies"
         android:layout_width="0dp"
@@ -13,6 +13,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"></com.corporation8793.custom.AnswerItem>
+        app:layout_constraintRight_toRightOf="parent"></com.learn4.custom.AnswerItem>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

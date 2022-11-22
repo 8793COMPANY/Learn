@@ -90,7 +90,7 @@
 <!--        app:layout_constraintLeft_toLeftOf="parent"-->
 <!--        app:layout_constraintRight_toRightOf="parent"></TextView>-->
 
-    <com.corporation8793.custom.ScoreItem
+    <com.learn4.custom.ScoreItem
         android:id="@+id/problem1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -102,9 +102,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/problem2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"></com.corporation8793.custom.ScoreItem>
+        app:layout_constraintVertical_bias="0.15"></com.learn4.custom.ScoreItem>
 
-    <com.corporation8793.custom.ScoreItem
+    <com.learn4.custom.ScoreItem
         android:id="@+id/problem2"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -114,9 +114,9 @@
         app:layout_constraintLeft_toRightOf="@+id/problem1"
         app:layout_constraintRight_toLeftOf="@+id/problem3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"></com.corporation8793.custom.ScoreItem>
+        app:layout_constraintVertical_bias="0.15"></com.learn4.custom.ScoreItem>
 
-    <com.corporation8793.custom.ScoreItem
+    <com.learn4.custom.ScoreItem
         android:id="@+id/problem3"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -126,10 +126,10 @@
         app:layout_constraintLeft_toRightOf="@+id/problem2"
         app:layout_constraintRight_toLeftOf="@+id/problem4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"></com.corporation8793.custom.ScoreItem>
+        app:layout_constraintVertical_bias="0.15"></com.learn4.custom.ScoreItem>
 
 
-    <com.corporation8793.custom.ScoreItem
+    <com.learn4.custom.ScoreItem
         android:id="@+id/problem4"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -139,9 +139,9 @@
         app:layout_constraintLeft_toRightOf="@+id/problem3"
         app:layout_constraintRight_toLeftOf="@+id/problem5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"></com.corporation8793.custom.ScoreItem>
+        app:layout_constraintVertical_bias="0.15"></com.learn4.custom.ScoreItem>
 
-    <com.corporation8793.custom.ScoreItem
+    <com.learn4.custom.ScoreItem
         android:id="@+id/problem5"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -151,7 +151,7 @@
         app:layout_constraintLeft_toRightOf="@+id/problem4"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.15"></com.corporation8793.custom.ScoreItem>
+        app:layout_constraintVertical_bias="0.15"></com.learn4.custom.ScoreItem>
 
 
     <androidx.appcompat.widget.AppCompatButton
