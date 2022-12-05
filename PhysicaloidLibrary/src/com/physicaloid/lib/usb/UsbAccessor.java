@@ -59,7 +59,8 @@ public enum UsbAccessor {
         }
 
         if(mPermissionIntent == null) {
-            mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent("USB_PERMISSION"), 0);
+            // TODO : SDK32 대응
+            mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent("USB_PERMISSION"), PendingIntent.FLAG_IMMUTABLE);
         }
     }
 

@@ -33,6 +33,10 @@ object RestClient {
      * 게시물 카테고리(퀴즈 리포트)
      */
     const val POST_CATEGORY_QUIZ_REPORT = "414"
+    /**
+     * 게시물 카테고리(에러 리포트)
+     */
+    const val POST_CATEGORY_ERROR_REPORT = "418"
 
     /**
      * baseUrl 정보로 초기화된 [Retrofit]
