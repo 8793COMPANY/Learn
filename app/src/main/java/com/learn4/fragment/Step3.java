@@ -200,6 +200,8 @@ public class Step3 extends Fragment {
     }
 
 
+
+
     private String getRealPathFromURI(Uri contentUri) {
         if (contentUri.getPath().startsWith("/storage")) {
             return contentUri.getPath();
