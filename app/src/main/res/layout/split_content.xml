@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
         <include android:id="@+id/blockly_workspace" layout="@layout/blockly_unified_workspace" />
-    </FrameLayout><!--
+    </FrameLayout>
+    <!--
 
     <TextView
         android:id="@+id/generated_code"

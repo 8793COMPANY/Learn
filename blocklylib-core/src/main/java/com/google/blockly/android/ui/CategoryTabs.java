@@ -15,6 +15,7 @@
 
 package com.google.blockly.android.ui;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -34,6 +35,8 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.blockly.android.R;
+import com.google.blockly.android.TabItemClick;
+import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.model.BlocklyCategory;
 
 import java.util.ArrayList;
@@ -55,13 +58,20 @@ public class CategoryTabs extends RecyclerView {
         void onItemClick(View v, int pos);
     }
 
+    private UploadBtnCheck btnCheck;
+
+
+    public void setEnableCheck(UploadBtnCheck btnCheck){
+        this.btnCheck = btnCheck;
+    }
+
     public static final int HORIZONTAL = OrientationHelper.HORIZONTAL;
     public static final int VERTICAL = OrientationHelper.VERTICAL;
 
     public static CategoryData categoryData = CategoryData.getInstance();
 
     int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
-    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn
+    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
             , R.drawable.reset_btn, R.drawable.home_btn, R.drawable.code_dictionary_btn_selector};
 
     private final LinearLayoutManager mLayoutManager;
@@ -329,9 +339,12 @@ public class CategoryTabs extends RecyclerView {
                 holder.mLabel.setSelected(false);
             //holder.mRotator.setChildRotation(mLabelRotation);
             holder.mRotator.setTag(holder);  // For getTabLabelHolder() and deselection
-
+            if (category.getCategoryName().equals("Logic")){
+                categoryData.setSetup_btn(holder.mLabel);
+            }
             if (category.getCategoryName().equals("upload")) {
                 categoryData.setUpload_btn(holder.mLabel);
+                btnCheck.onCheckEnabled();
             }else if(category.getCategoryName().equals("reset")){
                 categoryData.setReset_btn(holder.mLabel);
             }else if(category.getCategoryName().equals("home")){

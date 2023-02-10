@@ -2380,7 +2380,9 @@ Blockly.defineBlocksWithJsonArray([{
     tooltip: "%{BKY_VARIABLES_SET_TOOLTIP}",
     helpUrl: "%{BKY_VARIABLES_SET_HELPURL}",
     extensions: ["contextMenu_variableSetterGetter"]
-}]);
+},
+
+]);
 Blockly.Constants.Variables.CUSTOM_CONTEXT_MENU_VARIABLE_GETTER_SETTER_MIXIN = {
     customContextMenu: function(a) {
         if (!this.isInFlyout) {

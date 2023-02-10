@@ -16,7 +16,7 @@
         android:required="true" />
 
     <application
-        android:name="com.learn4.Application"
+        android:name="com.learn4.util.Application"
         android:allowBackup="false"
         android:configChanges="orientation|screenSize"
         android:hardwareAccelerated="true"
@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.learn4.activity.BlockDictionaryActivity"
+            android:name="com.learn4.view.dictionary.BlockDictionaryActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape"/>
 
@@ -43,23 +43,23 @@
         </provider>
 
         <activity
-            android:name="com.learn4.problem.RightAnswerActivity"
+            android:name="com.learn4.view.problem.solve.RightAnswerActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.activity.ChapterActivity"
+            android:name="com.learn4.view.chapter.ChapterActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.activity.ProblemActivity"
+            android:name="com.learn4.view.problem.basic.ProblemActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.problem.SolvingProblem"
+            android:name="com.learn4.view.problem.solve.SolvingProblem"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.activity.ContentsActivity"
+            android:name="com.learn4.view.contents.ContentsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.activity.ModeSelect"
+            android:name="com.learn4.view.mode_select.ModeSelect"
             android:label="@string/title_activity_mode_select"
             android:screenOrientation="sensorLandscape" />
 
@@ -68,7 +68,7 @@
             android:required="false" />
 
         <activity
-            android:name="com.learn4.activity.LoginActivity"
+            android:name="com.learn4.view.onboarding.LoginActivity"
             android:screenOrientation="sensorLandscape"
             android:exported="true">
             <intent-filter>
@@ -78,10 +78,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.learn4.activity.IntroActivity"
+            android:name="com.learn4.view.onboarding.IntroActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.activity.MainActivity"
+            android:name="com.learn4.view.MainActivity"
             android:screenOrientation="sensorLandscape" />
     </application>
 

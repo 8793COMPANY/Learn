@@ -104,6 +104,9 @@
         </block>
 
 
+
+
+
         <block type="inout_analog_write">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -337,6 +340,49 @@
             </value>
         </block>
 
+        <block type="neo_pixel">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+            <value name="angle">
+                <block type="math_number" id="116">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="neo_pixel_setup">
+        </block>
+
+        <block type="neo_pixel_brightness">
+            <value name="angle">
+                <block type="math_number" id="116">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="neo_pixel_begin">
+        </block>
+
+        <block type="neo_pixel_show">
+        </block>
+
+        <block type="neo_pixel_color">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+            <value name="angle">
+                <block type="math_number" id="116">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
+        </block>
+
 
         <block type="tone_notone">
             <value name="PIN">
@@ -405,6 +451,7 @@
         </block>
 
 
+<!--        <block type="neo_pixel_set"></block>-->
         <block type="variables_set"></block>
         <block type="variables_get"></block>
         <block type="variables_change"></block>

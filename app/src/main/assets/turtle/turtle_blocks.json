@@ -624,6 +624,115 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
+  {
+    "type": "neo_pixel",
+    "message0": "NeoPixel %1 %2 pin %3 angle %4",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_value",
+        "name": "channel",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "angle",
+        "check": "Number"
+      }
+
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_brightness",
+    "message0": "setBrightness  pin %1 ",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "angle",
+        "check": "Number"
+      }
+
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_setup",
+    "message0": "NeoPixel setup",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_begin",
+    "message0": "NeoPixel Begin",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+
+  {
+    "type": "neo_pixel_show",
+    "message0": "NeoPixel Show",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_color",
+    "message0": "NeoPixel setPixelColor %1, %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "channel",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "angle",
+        "check": "Number"
+      }
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+
+
   {
     "type": "tone_notone",
     "message0": "Tone %1 pin %2 frequency %3 delay %4",
@@ -761,6 +870,7 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
 
   {
     "type": "inout_digital_write",

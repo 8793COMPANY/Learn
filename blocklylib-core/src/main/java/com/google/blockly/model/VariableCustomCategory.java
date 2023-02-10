@@ -33,6 +33,8 @@ public final class VariableCustomCategory implements CustomCategory {
 
     public static final String ACTION_CREATE_VARIABLE = "CREATE_VARIABLE";
 
+
+
     private static final BlockTemplate GET_VAR_TEMPLATE = new BlockTemplate("variables_get");
     private static final BlockTemplate SET_VAR_TEMPLATE = new BlockTemplate("variables_set");
     private static final BlockTemplate CHANGE_VAR_TEMPLATE = new BlockTemplate("math_change");

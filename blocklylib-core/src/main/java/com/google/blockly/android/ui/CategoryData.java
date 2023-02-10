@@ -22,6 +22,9 @@ public class CategoryData {
         return upload_btn;
     }
 
+    public void setSetup_btn(View setup_btn) {
+        this.setup_btn = setup_btn;
+    }
     public void setUpload_btn(View upload_btn) {
         this.upload_btn = upload_btn;
     }
@@ -36,11 +39,16 @@ public class CategoryData {
     public View getReset_btn() {
         return reset_btn;
     }
+    public View getSetUp_btn() {
+        return setup_btn;
+    }
 
     public void setReset_btn(View reset_btn) {
         this.reset_btn = reset_btn;
     }
 
+    View setup_btn = null;
+    View loop_btn = null;
     View upload_btn = null;
 
     View home_btn = null;

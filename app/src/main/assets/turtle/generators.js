@@ -111,6 +111,7 @@ Blockly.JavaScript['lcd'] = function (block) {
   return code;
 };
 
+
 Blockly.JavaScript['clear_lcd'] = function (block) {
   //  Assemble JavaScript into code variable.
   var code = 'lcd.clear();\n';
@@ -161,6 +162,83 @@ Blockly.JavaScript['servo'] = function (block) {
     var code = 'servo' + value_channel + '.write(' + value_angle + ');\n';
     return code;
  };
+
+ Blockly.JavaScript['neo_pixel'] = function (block) {
+   var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
+   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+//   var neo_name = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+
+   //define sonar settings
+   Blockly.JavaScript.definitions_['define_neo_h'] = "#include <Adafruit_NeoPixel.h>\n";
+   Blockly.JavaScript.definitions_['define_neo_' + value_channel] = "Adafruit_NeoPixel strip"+" = Adafruit_NeoPixel(" + value_channel + ","+value_angle+", NEO_GRB + NEO_KHZ800)"+";\n";
+
+
+     var code = "";
+     return code;
+  };
+
+
+  Blockly.JavaScript['neo_pixel_setup'] = function (block) {
+     Blockly.JavaScript.setups_['define_neo_setup'] =  " strip.begin();"+
+                   "\nstrip.setBrightness(20);"+
+                   "\nstrip.setPixelColor(0, 0xff0000);"+
+                   "\nstrip.setPixelColor(2, 0xff0000);"+
+                   "\nstrip.setPixelColor(4, 0xff0000);"+
+                   "\nstrip.setPixelColor(6, 0xff0000);"+
+                   "\nstrip.setPixelColor(8, 0xff0000);"+
+                   "\nstrip.setPixelColor(10, 0xff0000);"+
+                   "\nstrip.show();"+
+                   "\nstrip.setPixelColor(0, 0xff0000);"+
+                   "\nstrip.setPixelColor(2, 0xff0000);"+
+                   "\nstrip.setPixelColor(4, 0xff0000);"+
+                   "\nstrip.setPixelColor(6, 0xff0000);"+
+                   "\nstrip.setPixelColor(8, 0xff0000);"+
+                   "\nstrip.setPixelColor(10, 0xff0000);"+
+                   "\nstrip.show();"+
+                   "\nstrip.clear();"+
+                   "\nstrip.show();\n";
+
+       var code = ""
+
+       return code;
+    };
+
+
+        Blockly.JavaScript['neo_pixel_begin'] = function (block) {
+
+           var code = "strip.begin();\n"
+
+           return code;
+        };
+
+      Blockly.JavaScript['neo_pixel_brightness'] = function (block) {
+       var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+
+           var code = "strip.setBrightness("+ value_angle + ");\n"
+
+           return code;
+        };
+
+
+ Blockly.JavaScript['neo_pixel_color'] = function (block) {
+   var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
+   var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+//   var neo_name = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+
+     var code = "strip.setPixelColor("+value_channel+","+"0xff0000);\n";
+     return code;
+  };
+
+   Blockly.JavaScript['neo_pixel_show'] = function (block) {
+  //   var neo_name = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+
+       var code = "strip.show();\n";
+       return code;
+    };
+
+
+
+
 
 Blockly.JavaScript['logic_calculation'] = function(a) {
     var b = {
@@ -374,6 +452,8 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       var code =  'map(' + variable+','+in_min +','+in_max+','+out_min +','+out_max + ')';
       return [code, Blockly.JavaScript.ORDER_ATOMIC];
         };
+
+
 
 
    Blockly.JavaScript['serial_println_int'] = function(block) {
