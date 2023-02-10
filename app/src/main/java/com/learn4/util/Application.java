@@ -25,6 +25,7 @@ import com.physicaloid.lib.Physicaloid;
 public class Application extends android.app.Application  {
     public static int indicator_index = -1;
     Context context;
+    // TODO : log4j Exception 발생 시 CE 로 전송
     private LogHelper logHelper;
     private ProgressDialog loadingDialog;
 
