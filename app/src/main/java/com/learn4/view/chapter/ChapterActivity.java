@@ -39,6 +39,7 @@ public class ChapterActivity extends AppCompatActivity {
         int width = (int)(display.widthPixels / 4);
 
         //id : chapter_id+"_1",
+        //contents 번호는 3부터 시작 / chapter 번호는 2부터 시작
         subject_list.add(new Contents(
                 "3-2",
                 R.drawable.default_problem_image,

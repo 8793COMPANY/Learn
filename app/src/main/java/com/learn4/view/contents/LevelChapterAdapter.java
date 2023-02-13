@@ -44,19 +44,16 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-//        Chapter chapter = chapters.get(position);
-//        holder.tvChapterName.setText(chapter.chapterName);
+
         if (!chapters.get(position).chapterName.equals("none")){
-            int resID = context.getResources().getIdentifier("chapter"+String.valueOf(chapters.get(position).id) , "drawable" ,
+            int resID = context.getResources().getIdentifier("contents"+String.valueOf(chapters.get(position).id) , "drawable" ,
                     context.getPackageName());
             holder.ivChapter.setBackgroundResource(resID);
-//            holder.ivChapter.setBackgroundColor(chapters.get(position).image);
         }else{
             if (Build.VERSION.SDK_INT >= 21) {
                 holder.ivChapter.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffdca2")));
             }
         }
-//        Picasso.get().load(chapter.imageUrl).into(holder.ivChapter);
 
         Log.e("id",String.valueOf(chapters.get(position).id));
 

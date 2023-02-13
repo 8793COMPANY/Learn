@@ -240,12 +240,5 @@ public class DataSetting {
         }
     }
 
-    public Chapter settingChapter(int id, String name){
-        Chapter chapter = new Chapter();
-        chapter.id = id;
-        chapter.chapterName = name;
-        chapter.image = R.drawable.chapter1;
-        return chapter;
-    }
 
 }
