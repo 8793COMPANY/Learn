@@ -27,6 +27,7 @@ import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
+import com.learn4.view.simulator.SimulatorDialog;
 import com.learn4.view.dictionary.CodeDictionaryAdapter;
 import com.learn4.view.custom.dialog.FinishDialog;
 import com.learn4.view.custom.dialog.ProgressDialog;
@@ -164,6 +165,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     ImageView block_bot_btn;
+    Button simulator_btn;
     MediaPlayer mediaPlayer;
     Bitmap bitmapWorkspace;
 
@@ -195,6 +197,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     private UploadDialog uploadListener, error_Listener;
     private FinishDialog finishListener, resetListener;
+    private SimulatorDialog simulatorDialog;
 
     int current_pos =0;
 
@@ -989,6 +992,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         resetListener = new FinishDialog(this,"정말 초기화하시겠습니까?",reset_confirm,reset_cancel);
         error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
 
+        // 시뮬레이터 초기화
+
+
         Display display2;  // in Activity
         display2 = getWindowManager().getDefaultDisplay();
         /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
@@ -1100,6 +1106,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
 
         block_bot_btn = blockly_workspace.findViewById(R.id.block_bot_btn);
+        simulator_btn = blockly_workspace.findViewById(R.id.go_simulator_btn);
+
+        simulator_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                simulatorDialog = new SimulatorDialog(MainActivity.this,code);
+                simulatorDialog.show();
+            }
+        });
+
         // 봇 메시지 초기화
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_test_sound);
 

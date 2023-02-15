@@ -455,6 +455,16 @@
         app:layout_constraintRight_toRightOf="@id/blockly_overlay_buttons"
         app:layout_constraintLeft_toLeftOf="@id/blockly_overlay_buttons"/>
 
+    <Button
+        android:id="@+id/go_simulator_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.07"
+        app:layout_constraintLeft_toLeftOf="@+id/block_bot_btn"
+        app:layout_constraintRight_toRightOf="@+id/block_bot_btn"
+        app:layout_constraintBottom_toTopOf="@+id/block_bot_btn"></Button>
+
 <!--    <Button-->
 <!--        android:id="@+id/block_copy_btn"-->
 <!--        android:layout_width="0dp"-->
