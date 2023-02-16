@@ -61,7 +61,13 @@
         <activity
             android:name="com.learn4.view.mode_select.ModeSelect"
             android:label="@string/title_activity_mode_select"
-            android:screenOrientation="sensorLandscape" >
+            android:screenOrientation="sensorLandscape"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <uses-library
@@ -72,11 +78,7 @@
             android:name="com.learn4.view.onboarding.LoginActivity"
             android:screenOrientation="sensorLandscape"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.learn4.view.onboarding.IntroActivity"
