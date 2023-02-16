@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.learn4.data.room.AppDatabase;
+import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.view.recyclerview.RecyclerDecoration_Height;
 import com.learn4.view.custom.view.CustomView;
@@ -17,6 +20,7 @@ import com.learn4.R;
 import com.learn4.data.dto.Contents;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChapterActivity extends AppCompatActivity {
     private View decorView;
@@ -27,6 +31,11 @@ public class ChapterActivity extends AppCompatActivity {
     ChapterAdapter chapterAdapter;
     ArrayList<Contents> subject_list = new ArrayList<>();
     Boolean lock_check = false;
+
+    AppDatabase db = null;
+    public ContentsDao contentsDao;
+    List<com.learn4.data.room.entity.Contents> contentsList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +47,21 @@ public class ChapterActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(display);
         int width = (int)(display.widthPixels / 4);
 
+        db = AppDatabase.getInstance(this);
+        contentsDao = db.contentsDao();
+        contentsList = contentsDao.findAll();
+
+        // 여기에서 챕터별로 다르게 소챕터들이 나와야함
+        uploadChapter(chapter_id);
+
+
         //id : chapter_id+"_1",
         //contents 번호는 3부터 시작 / chapter 번호는 2부터 시작
-        subject_list.add(new Contents(
+        /*subject_list.add(new Contents(
                 "3-2",
                 R.drawable.default_problem_image,
                 "LED 깜빡이기",
-                R.drawable.chapter_content1,
+                R.drawable.chapter_content1_1,
                 MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이기 MAX"),true));
 
         if(MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이기 MAX") == 5)
@@ -54,7 +71,7 @@ public class ChapterActivity extends AppCompatActivity {
                 "3-3",
                 R.drawable.advanced_problem_image,
                 "LED 깜빡이는 시간 바꾸기",
-                R.drawable.chapter_content2,
+                R.drawable.chapter_content1_2,
                 MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이는 시간 바꾸기 MAX"),lock_check));
 
 
@@ -62,15 +79,15 @@ public class ChapterActivity extends AppCompatActivity {
                 "3-4",
                 R.drawable.advanced_problem_image2,
                 "LED 핀 번호 바꾸기",
-                R.drawable.chapter_content3,
+                R.drawable.chapter_content1_3,
                 MySharedPreferences.getInt(getApplicationContext(),"LED 핀 번호 바꾸기 MAX"),lock_check));
 
         subject_list.add(new Contents(
                 "3-5",
                 R.drawable.advanced_problem_image3,
                 "문제풀이",
-                R.drawable.chapter_content1,
-                MySharedPreferences.getInt(getApplicationContext(),"문제풀이3"),lock_check));
+                R.drawable.chapter_content1_1,
+                MySharedPreferences.getInt(getApplicationContext(),"문제풀이3"),lock_check));*/
         // 문제풀이 +chapter_id
 
 //        chapter1 = findViewById(R.id.chapter1);
@@ -106,6 +123,66 @@ public class ChapterActivity extends AppCompatActivity {
         });
     }
 
+    public void uploadChapter(String id) {
+        // id가 챕터 기준 +2 되어야 함
+        //id : chapter_id+"_1",
+        //contents 번호는 3부터 시작 / chapter 번호는 2부터 시작
+
+        int num = Integer.parseInt(id);
+        String totalNum = Integer.toString(num + 2);
+
+        Log.e("test", totalNum);
+
+        //chapter_content11_2
+        int[] rID = new int[3];
+
+        String basic_problem = "";
+        String deep_problem1 = "";
+        String deep_problem2 = "";
+
+        for (int i = 0; i < 3; i++) {
+            rID[i] = getResources().getIdentifier("chapter_content" + String.valueOf(num) + "_" + String.valueOf(i + 1), "drawable", getPackageName());
+        }
+
+        for (int i = 0; i < contentsList.size(); i++) {
+            if (i == (num - 1)) {
+                basic_problem = contentsList.get(i).getBasic_problem();
+                deep_problem1 = contentsList.get(i).getDeep_problem1();
+                deep_problem2 = contentsList.get(i).getDeep_problem2();
+            }
+        }
+
+        subject_list.add(new Contents(
+                totalNum + "-2",
+                R.drawable.default_problem_image,
+                basic_problem,
+                rID[0],
+                MySharedPreferences.getInt(getApplicationContext(), basic_problem + " MAX"),true));
+
+        if(MySharedPreferences.getInt(getApplicationContext(),basic_problem + " MAX") == 5)
+            lock_check = true;
+
+        subject_list.add(new Contents(
+                totalNum + "-3",
+                R.drawable.advanced_problem_image,
+                deep_problem1,
+                rID[1],
+                MySharedPreferences.getInt(getApplicationContext(),deep_problem1 + " MAX"),lock_check));
+
+        subject_list.add(new Contents(
+                totalNum + "-4",
+                R.drawable.advanced_problem_image2,
+                deep_problem2,
+                rID[2],
+                MySharedPreferences.getInt(getApplicationContext(),deep_problem2 + " MAX"),lock_check));
+
+        subject_list.add(new Contents(
+                totalNum + "-5",
+                R.drawable.advanced_problem_image3,
+                "문제풀이",
+                rID[0],
+                MySharedPreferences.getInt(getApplicationContext(),"문제풀이" + totalNum),lock_check));
+    }
 
 
     public void addData(int id,String group, String title, int img, int percentage){

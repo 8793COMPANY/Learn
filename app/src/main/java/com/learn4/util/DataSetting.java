@@ -3,8 +3,6 @@ package com.learn4.util;
 import android.content.Context;
 import android.util.Log;
 
-
-import com.learn4.R;
 import com.learn4.data.dto.Chapter;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ComponentDao;
@@ -16,7 +14,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -60,7 +57,6 @@ public class DataSetting {
 
 
     public boolean dataCheck(){
-
 //        contentsDao.
         boolean check = contentsDao.findAll().size() >0;
         Log.e("check",contentsDao.findAll().size()+"");
@@ -87,7 +83,6 @@ public class DataSetting {
 
     public void insert_component_data(Component component){
         componentDao.insert(component);
-
     }
 
     public void printList(){
@@ -98,7 +93,6 @@ public class DataSetting {
             Log.e("contents",contents.get(i).getBasic_supplies());
             Log.e("----------","------------");
         }
-
     }
 
     public void settingChapterByLevel(int level){
@@ -126,8 +120,6 @@ public class DataSetting {
         }
 
         chapter_list.put(String.valueOf(level),chapters);
-
-
     }
 
     public void printChapter(){
@@ -138,10 +130,52 @@ public class DataSetting {
 
     public void readComponent(){
         try{
-            is = context.getResources().getAssets().open("contents_mode_info.xls");
+            is = context.getResources().getAssets().open("test.xls");
             workbook = Workbook.getWorkbook(is);
+            if (workbook != null) {
+                Sheet sheet = workbook.getSheet(1);
+
+                if (sheet != null) {
+                    int colTotal = sheet.getColumns();
+                    Log.e("check","colTotal : " + colTotal+"");
+                    int rowTotal = sheet.getRows();
+                    Log.e("check","rowTotal : " + rowTotal+"");
+
+                    int rowIndexStart = 1;
+                    boolean plus;
+
+                    for (int row = rowIndexStart; row < rowTotal; row++) {
+                        plus = true;
+
+                        // 부품 번호 not null 확인
+                        String plusCheck = sheet.getCell(2, row).getContents();
+                        if (plusCheck.equals("")) {
+                            plus = false;
+                        }
+                        // -가 있는 경우 _로 바꾸기
+
+                        if (plus) {
+                            // 부품 사진 제외
+                            String[] components = new String[4];
+                            for (int col = 1; col < 5; col++) {
+                                components[col - 1] = sheet.getCell(col, row).getContents();
+
+                                Log.e("test", components[col - 1]);
+                            }
+
+                            // 부품 번호, 부품 이름, 부품 설명 저장
+                            Component component = new Component(components[1],components[2],components[3]);
+                            insert_component_data(component);
+                        }
+                    }
+                }
+            }
+            /*is = context.getResources().getAssets().open("contents_mode_info.xls");
+            workbook = Workbook.getWorkbook(is);
+
             if (workbook != null){
                 Sheet sheet = workbook.getSheet(1);
+
                 if (sheet != null){
                     int colTotal = sheet.getColumns();
                     int rowIndexStart = 1;
@@ -161,14 +195,13 @@ public class DataSetting {
                                 Log.e("content check ", components[col - 1]);
                             }
                         }
+                        // number, name, msg
                         Component component = new Component(components[1],components[2],components[3]);
                         insert_component_data(component);
 //                        this.components.put(num,components);
                     }
-
                 }
-
-            }
+            }*/
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -176,6 +209,71 @@ public class DataSetting {
 
     public void readContents(){
         try{
+            is = context.getResources().getAssets().open("test.xls");
+            workbook = Workbook.getWorkbook(is);
+            if (workbook != null){
+                Sheet sheet = workbook.getSheet(0);
+
+                if (sheet != null){
+                    int colTotal = sheet.getColumns();
+                    Log.e("check","colTotal : " + colTotal+"");
+                    int rowTotal = sheet.getRows();
+                    Log.e("check","rowTotal : " + rowTotal+"");
+
+                    int rowIndexStart = 2;
+                    String values;
+                    boolean plus;
+
+                    for (int row = rowIndexStart; row < rowTotal; row++) {
+                        values = "";
+                        plus = false;
+
+                        String plusCheck = sheet.getCell(2, row).getContents();
+                        if (plusCheck.equals("LMS/콘텐츠")) {
+                            plus = true;
+                        }
+
+                        if (plus) {
+                            for (int col = 1; col < colTotal; col++) {
+                                String contents = sheet.getCell(col, row).getContents();
+
+                                if (col == colTotal - 1) {
+                                    if (contents.equals("")) {
+                                        values += "none";
+                                    } else {
+                                        values += contents;
+                                    }
+                                } else {
+                                    if (contents.equals("")) {
+                                        values += "none" + "~";
+                                    } else {
+                                        values += contents + "~";
+                                    }
+                                }
+                            }
+
+                            if (!values.equals("")) {
+                                String[] value = values.split("~");
+
+                                for (int i = 0; i < value.length; i++) {
+                                    Log.e("value" + i, "value" + i + " : " + value[i]);
+                                }
+
+                                Contents contents = new Contents(
+                                        Integer.parseInt(value[2]), value[3], value[4], value[5], value[6], value[8], value[9], value[10]);
+
+
+                                Log.e("contents check",contents.getDeep_problem1());
+
+                                insert_contents_data(contents);
+                            }
+                        }
+                    }
+                    printList();
+                }
+            }
+
+        /*try{
             is = context.getResources().getAssets().open("contents_mode_info.xls");
             workbook = Workbook.getWorkbook(is);
             if (workbook != null){
@@ -200,17 +298,12 @@ public class DataSetting {
                             }else{
                                 Log.e("col "+col+":", contents);
 
-
                                 if (col == colTotal - 1) {
                                     values += contents;
                                 } else {
                                     values += contents + "/";
                                 }
-
-
-
                             }
-
                         }
 //                        Log.e("col len",values.length+"");
                         if (!values.equals("")) {
@@ -219,26 +312,20 @@ public class DataSetting {
                                 Log.e("value"+i, value[i]);
                             }
 
-
                             Contents contents = new Contents(
                                     Integer.parseInt(value[1]), value[2], value[3], value[4], value[5], value[6], value[7], value[8]);
-
 
                             Log.e("contents check",contents.getDeep_problem1());
 
                             insert_contents_data(contents);
                             count++;
-
                         }
                     }
                     printList();
-
                 }
-            }
+            }*/
         }catch (Exception e){
             Log.e("runtime",e.toString());
         }
     }
-
-
 }

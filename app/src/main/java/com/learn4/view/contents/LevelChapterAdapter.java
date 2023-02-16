@@ -63,13 +63,16 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
         holder.itemView.requestLayout();
 
         holder.itemView.setOnClickListener(v->{
-            if (chapters.get(position).chapterName.equals("LED 깜빡이기")){
+            Intent intent = new Intent(context.getApplicationContext(), ChapterActivity.class);
+            intent.putExtra("id",String.valueOf(chapters.get(position).id));
+            context.startActivity(intent);
+            /*if (chapters.get(position).chapterName.equals("LED 깜빡이기")){
                 Intent intent = new Intent(context.getApplicationContext(), ChapterActivity.class);
                 intent.putExtra("id",String.valueOf(chapters.get(position).id));
                 context.startActivity(intent);
             }else{
                 Toast.makeText(context,"아직 열람할 수 없습니다.",Toast.LENGTH_SHORT).show();
-            }
+            }*/
         });
 
     }

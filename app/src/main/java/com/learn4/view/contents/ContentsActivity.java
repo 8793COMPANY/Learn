@@ -136,14 +136,14 @@ public class ContentsActivity extends AppCompatActivity {
 
 
 
-        Chapter chapter7 = new Chapter();
+        /*Chapter chapter7 = new Chapter();
         chapter7.id = 7;
         chapter7.chapterName = "none";
         chapter7.image = Color.parseColor("#ffdca2");
 
 
 
-        level.chapters.add(chapter7);
+        level.chapters.add(chapter7);*/
 
         subjects.add(level);
 
@@ -156,7 +156,7 @@ public class ContentsActivity extends AppCompatActivity {
 
 
 //        level3.chapters.add(chapter6);
-        level3.chapters.add(chapter7);
+//        level3.chapters.add(chapter7);
 
 //        level3.chapters.add(chapter7);
 //        level3.chapters.add(chapter7);

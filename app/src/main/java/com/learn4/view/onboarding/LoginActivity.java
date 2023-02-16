@@ -107,7 +107,13 @@ public class LoginActivity extends AppCompatActivity {
 
         login_btn.setOnClickListener(v -> {
             customProgressDialog.show();
-            new Thread(()->{
+
+            Intent intent = new Intent(this, ModeSelect.class);
+            startActivity(intent);
+            finish();
+
+            customProgressDialog.dismiss();
+            /*new Thread(()->{
                 AuthRepository auth = new AuthRepository();
                 String nonce = auth.getNonce().getSecond().getNonce();
                 String cookie = auth.getAuthCookie(nonce,login_id_input_box.getText().toString(),login_pw_input_box.getText().toString()).getSecond().getCookie();
@@ -143,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }, 0);
                 }
-            }).start();
+            }).start();*/
         });
 
 

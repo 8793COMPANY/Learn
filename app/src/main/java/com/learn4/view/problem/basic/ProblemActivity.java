@@ -66,7 +66,11 @@ public class ProblemActivity extends AppCompatActivity {
         int step = getIntent().getIntExtra("step",1);
         chapter_id = getIntent().getStringExtra("id");
 
-        Log.e("id",chapter_id);
+        // 받아온 아이디와 내용에 따라 준비물 다르게 준비시키기
+        // 이미지 넣기
+        // 연결시키기 이미지랑랑
+
+       Log.e("id",chapter_id);
         Log.e("step",step+"");
         contents_name = contents[step];
 
