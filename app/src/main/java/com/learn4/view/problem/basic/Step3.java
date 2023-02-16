@@ -245,36 +245,36 @@ public class Step3 extends Fragment {
 
                 Log.e("in","thread");
                 try {
-                    Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
+//                    Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(imageFile);
 //                        File file = new File(getRealPathFromURI(photURI));
 //                        Pair<String, Media> response_ci = Application.mediaRepository.uploadMedia(file);
 
                     Log.e("in","thread2");
-                    MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
-                    Log.e("in","thread3");
-
-                    Log.e("response_ci",response_ci.getFirst());
-                    Log.e("response_ci",response_ci.getSecond().toString());
+//                    MySharedPreferences.setString(getContext(),"circuit_img"+chapter_id,response_ci.getSecond().getGuid().getRendered());
+//                    Log.e("in","thread3");
+//
+//                    Log.e("response_ci",response_ci.getFirst());
+//                    Log.e("response_ci",response_ci.getSecond().toString());
 
                     String block_img ="http://baeulrae.kr/wp-content/uploads/2022/09/unsubmission_img.jpg";
                     if (MySharedPreferences.getString(getContext(),"block_img"+chapter_id) != null)
                         block_img = MySharedPreferences.getString(getContext(),"block_img"+chapter_id);
 
-                    Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
-                            chapter_id+". "+contents_name,
-                            response_ci.getSecond().getGuid().getRendered(),
-                            block_img
-                    );
-                    Log.e("response",response.getFirst());
-                    Log.e("response",response.getSecond().toString());
-                    Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
-                            response.getSecond().getId(),
-                            Integer.parseInt(chapter_id_split[0]),
-                            Integer.parseInt(chapter_id_split[1]),
-                            response_ci.getSecond().getGuid().getRendered(),
-                            block_img
-                    );
-                    Log.e("response",upload_result.getFirst());
+//                    Pair<String, UploadReport> response =Application.postsRepository.createUploadReport(
+//                            chapter_id+". "+contents_name,
+//                            response_ci.getSecond().getGuid().getRendered(),
+//                            block_img
+//                    );
+//                    Log.e("response",response.getFirst());
+//                    Log.e("response",response.getSecond().toString());
+//                    Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
+//                            response.getSecond().getId(),
+//                            Integer.parseInt(chapter_id_split[0]),
+//                            Integer.parseInt(chapter_id_split[1]),
+//                            response_ci.getSecond().getGuid().getRendered(),
+//                            block_img
+//                    );
+//                    Log.e("response",upload_result.getFirst());
                     customProgressDialog.dismiss();
                     if (!check) {
 
@@ -286,7 +286,7 @@ public class Step3 extends Fragment {
                         check = true;
                     }
                 }catch (NullPointerException e){
-                    Log.e("error","null error");
+                    Log.e("error",e.getMessage());
                     customProgressDialog.dismiss();
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
