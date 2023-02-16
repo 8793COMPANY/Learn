@@ -61,7 +61,8 @@
         <activity
             android:name="com.learn4.view.mode_select.ModeSelect"
             android:label="@string/title_activity_mode_select"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape" >
+        </activity>
 
         <uses-library
             android:name="org.apache.http.legacy"

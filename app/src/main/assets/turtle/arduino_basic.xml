@@ -14,6 +14,7 @@
   -->
 
 <toolbox>
+    <!-- setup() 카테고리 안에 들어갈 블록   -->
     <category name="Logic" colour="210">
 
 
@@ -87,7 +88,7 @@
         <block type="logic_negate"></block>
         <block type="logic_boolean"></block>-->
     </category>
-
+    <!-- loop() 카테고리 안에 들어갈 블록   -->
     <category name="Loops" colour="120">
 
         <block type="inout_digital_write">
@@ -182,7 +183,7 @@
         </block>
 
     </category>
-
+    <!-- 함수 카테고리 안에 들어갈 블록   -->
     <category name="Math" colour="230"><!--
         <block type="math_number" gap="32">
             <field name="NUM">123</field>
@@ -433,7 +434,7 @@
 <!--        </block>-->
 
     </category>
-
+    <!-- 기타 카테고리 안에 들어갈 블록   -->
     <category name="Text" colour="130">
 
         <block type="math_random_int">
@@ -512,6 +513,8 @@
 
 <!--    </category>-->
 
+
+    <!-- 밑에 있는 카테고리 안에는 블록 생성 하지 말아주세요   -->
     <category name="Code" colour="330">
 
     </category>
