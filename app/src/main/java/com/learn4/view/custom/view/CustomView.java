@@ -140,7 +140,7 @@ public class CustomView extends ConstraintLayout {
     }
 
     public void setBackground(int chapter){
-        setBackground(chapter,R.drawable.chapter_content1);
+        setBackground(chapter,R.drawable.chapter_content1_1);
     }
 
     private void setBackground(int chapter, int value){
