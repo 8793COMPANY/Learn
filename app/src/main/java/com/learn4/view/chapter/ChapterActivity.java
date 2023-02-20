@@ -17,7 +17,7 @@ import com.learn4.util.MySharedPreferences;
 import com.learn4.view.recyclerview.RecyclerDecoration_Height;
 import com.learn4.view.custom.view.CustomView;
 import com.learn4.R;
-import com.learn4.data.dto.Contents;
+import com.learn4.data.dto.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class ChapterActivity extends AppCompatActivity {
     Button back_btn;
     RecyclerView chapter_list;
     ChapterAdapter chapterAdapter;
-    ArrayList<Contents> subject_list = new ArrayList<>();
+    ArrayList<Subject> subject_list = new ArrayList<>();
     Boolean lock_check = false;
 
     AppDatabase db = null;
@@ -129,8 +129,8 @@ public class ChapterActivity extends AppCompatActivity {
         //contents 번호는 3부터 시작 / chapter 번호는 2부터 시작
 
         int num = Integer.parseInt(id);
-        String totalNum = Integer.toString(num + 2);
 
+        String totalNum = Integer.toString(num + (num + 1));
         Log.e("test", totalNum);
 
         //chapter_content11_2
@@ -152,7 +152,7 @@ public class ChapterActivity extends AppCompatActivity {
             }
         }
 
-        subject_list.add(new Contents(
+        subject_list.add(new Subject(
                 totalNum + "-2",
                 R.drawable.default_problem_image,
                 basic_problem,
@@ -162,21 +162,21 @@ public class ChapterActivity extends AppCompatActivity {
         if(MySharedPreferences.getInt(getApplicationContext(),basic_problem + " MAX") == 5)
             lock_check = true;
 
-        subject_list.add(new Contents(
+        subject_list.add(new Subject(
                 totalNum + "-3",
                 R.drawable.advanced_problem_image,
                 deep_problem1,
                 rID[1],
                 MySharedPreferences.getInt(getApplicationContext(),deep_problem1 + " MAX"),lock_check));
 
-        subject_list.add(new Contents(
+        subject_list.add(new Subject(
                 totalNum + "-4",
                 R.drawable.advanced_problem_image2,
                 deep_problem2,
                 rID[2],
                 MySharedPreferences.getInt(getApplicationContext(),deep_problem2 + " MAX"),lock_check));
 
-        subject_list.add(new Contents(
+        subject_list.add(new Subject(
                 totalNum + "-5",
                 R.drawable.advanced_problem_image3,
                 "문제풀이",

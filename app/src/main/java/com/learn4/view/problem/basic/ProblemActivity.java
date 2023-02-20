@@ -14,9 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.learn4.data.room.AppDatabase;
+import com.learn4.data.room.dao.ContentsDao;
+import com.learn4.data.room.entity.Contents;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.MainActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProblemActivity extends AppCompatActivity {
 
@@ -37,6 +43,8 @@ public class ProblemActivity extends AppCompatActivity {
     int diagram_img = R.drawable.all_diagram_img;
     String contents_name = "";
     String chapter_id = "";
+
+    String chapter_name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +74,13 @@ public class ProblemActivity extends AppCompatActivity {
         int step = getIntent().getIntExtra("step",1);
         chapter_id = getIntent().getStringExtra("id");
 
-        // 받아온 아이디와 내용에 따라 준비물 다르게 준비시키기
-        // 이미지 넣기
-        // 연결시키기 이미지랑랑
+        chapter_name = getIntent().getStringExtra("title");
+        Log.e("chapter_name", "chapter_name : " + chapter_name);
 
-       Log.e("id",chapter_id);
+        Log.e("id","chapter_id : " + chapter_id);
         Log.e("step",step+"");
-        contents_name = contents[step];
+        //contents_name = contents[step];
+        contents_name = chapter_name;
 
         Log.e("check",step +"");
 //        if (step == 2){

@@ -152,13 +152,26 @@ public class DataSetting {
                         if (plusCheck.equals("")) {
                             plus = false;
                         }
-                        // -가 있는 경우 _로 바꾸기
 
                         if (plus) {
                             // 부품 사진 제외
                             String[] components = new String[4];
                             for (int col = 1; col < 5; col++) {
-                                components[col - 1] = sheet.getCell(col, row).getContents();
+                                if (col == 2) {
+                                    // -가 있는 경우 _로 바꾸기
+                                    if (sheet.getCell(col, row).getContents().contains("-")) {
+                                        String cString = sheet.getCell(col, row).getContents().replace("-", "_");
+                                        components[col - 1] = cString;
+                                    } else {
+                                        components[col - 1] = sheet.getCell(col, row).getContents();
+                                    }
+                                } else if (col == 4) {
+                                    String cString = sheet.getCell(col, row).getContents().replaceAll(System.getProperty("line.separator"), " ");
+                                    cString = cString.replaceAll("  ", " ");
+                                    components[col - 1] = cString;
+                                } else {
+                                    components[col - 1] = sheet.getCell(col, row).getContents();
+                                }
 
                                 Log.e("test", components[col - 1]);
                             }
@@ -237,17 +250,34 @@ public class DataSetting {
                             for (int col = 1; col < colTotal; col++) {
                                 String contents = sheet.getCell(col, row).getContents();
 
+                                // 여기에 추가하기 부품번호 - >> _ 로
+                                // 9, 10, 11
                                 if (col == colTotal - 1) {
+                                    // col == 11인 경우
                                     if (contents.equals("")) {
                                         values += "none";
                                     } else {
-                                        values += contents;
+                                        if (contents.contains("-")) {
+                                            String cContents = contents.replace("-", "_");
+                                            values += cContents;
+                                        } else {
+                                            values += contents;
+                                        }
                                     }
                                 } else {
                                     if (contents.equals("")) {
                                         values += "none" + "~";
                                     } else {
-                                        values += contents + "~";
+                                        if (col == 9 || col == 10) {
+                                            if (contents.contains("-")) {
+                                                String cContents = contents.replace("-", "_");
+                                                values += cContents + "~";
+                                            } else {
+                                                values += contents + "~";
+                                            }
+                                        } else {
+                                            values += contents + "~";
+                                        }
                                     }
                                 }
                             }
@@ -261,7 +291,6 @@ public class DataSetting {
 
                                 Contents contents = new Contents(
                                         Integer.parseInt(value[2]), value[3], value[4], value[5], value[6], value[8], value[9], value[10]);
-
 
                                 Log.e("contents check",contents.getDeep_problem1());
 

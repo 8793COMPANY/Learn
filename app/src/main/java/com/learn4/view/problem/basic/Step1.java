@@ -12,6 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.learn4.data.room.AppDatabase;
+import com.learn4.data.room.dao.ComponentDao;
+import com.learn4.data.room.dao.ContentsDao;
+import com.learn4.data.room.entity.Component;
+import com.learn4.data.room.entity.Contents;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.recyclerview.RecyclerDecoration_Width;
@@ -19,6 +24,7 @@ import com.learn4.view.custom.view.AnswerItem;
 import com.learn4.data.dto.Supplies;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +51,13 @@ public class Step1 extends Fragment {
     private ArrayList<Supplies> supplies_list = new ArrayList<>();
     int previous_num = 0;
 
+    AppDatabase db = null;
+    public ContentsDao contentsDao;
+    List<Contents> contentsList = new ArrayList<>();
+    String suppliesNum = "";
+    public ComponentDao componentDao;
+    List<Component> componentsList = new ArrayList<>();
+
     public Step1() {
         // Required empty public constructor
     }
@@ -53,8 +66,6 @@ public class Step1 extends Fragment {
         this.contents_name = contents_name;
         // Required empty public constructor
     }
-
-
 
     /**
      * Use this factory method to create a new instance of
@@ -89,13 +100,73 @@ public class Step1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step1, container, false);
 
-        Log.e("contents",contents_name);
+        Log.e("contents:",contents_name);
+        db = AppDatabase.getInstance(requireContext());
+
+        contentsDao = db.contentsDao();
+        contentsList = contentsDao.findAll();
+        Log.e("contentsList", "contentsList : " + contentsList.size()+"");
+
+        componentDao = db.componentDao();
+        componentsList = componentDao.findAll();
+        Log.e("componentsList", "componentsList : " + componentsList.size()+"");
 
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
         }
 
         MySharedPreferences.setInt(getContext(), contents_name, 1);
+
+        for (int i = 0; i < contentsList.size(); i++) {
+            if (contentsList.get(i).getBasic_problem().equals(contents_name)) {
+                suppliesNum = contentsList.get(i).getBasic_supplies();
+                Log.e("suppliesNum", "suppliesNum : " + suppliesNum);
+            } else if (contentsList.get(i).getDeep_problem1().equals(contents_name)) {
+                suppliesNum = contentsList.get(i).getDeepening_supplies1();
+                Log.e("suppliesNum", "suppliesNum : " + suppliesNum);
+            } else if (contentsList.get(i).getDeep_problem2().equals(contents_name)) {
+                suppliesNum = contentsList.get(i).getDeepening_supplies2();
+                Log.e("suppliesNum", "suppliesNum : " + suppliesNum);
+            }
+        }
+
+        // none 체크
+        String [] suppliesSplit = new String[10];
+        String [] suppliesName = new String[10];
+        String [] suppliesMsg = new String[10];
+
+        int count = 0;
+        if (!suppliesNum.equals("none")) {
+            suppliesNum = suppliesNum.replace(" ", "");
+            suppliesSplit = suppliesNum.split(",");
+        }
+
+        for (int i = 0; i < suppliesSplit.length; i++) {
+            if (suppliesSplit[i] != null) {
+                count++;
+                Log.e("check", "suppliesSplit loop : " + suppliesSplit[i]);
+            }
+        }
+
+        Log.e("check", "count : " + count+"");
+        for (int i = 0; i < componentsList.size(); i++) {
+            for (int j = 0; j < count ; j++) {
+                if (suppliesSplit[j].equals(componentsList.get(i).getNumber())) {
+                    // int rID[i] = getResources().getIdentifier("chapter_content" + String.valueOf(num) + "_" + String.valueOf(i + 1), "drawable", getPackageName());
+                    // Log.e("check", "suppliesSplit image : " + componentsList.get(i).getNumber());
+                    int sImage = getResources().getIdentifier("supplies_img" + componentsList.get(i).getNumber(), "drawable", requireActivity().getPackageName());
+                    suppliesName[j] = componentsList.get(i).getName();
+                    suppliesMsg[j] = componentsList.get(i).getComponent_msg();
+                    // supplies_list.add()
+                    if (j == 0) {
+                        supplies_list.add(new Supplies(sImage, true));
+                    } else {
+                        supplies_list.add(new Supplies(sImage, false));
+                    }
+                }
+            }
+        }
+
 
         String msg = "점퍼선은 납땜없이도 센서와 센서를 연결하거나 센서와 전류를 연결해주는 선입니다.";
 //        supplies1 = view.findViewById(R.id.supplies1);
@@ -105,8 +176,8 @@ public class Step1 extends Fragment {
         name = view.findViewById(R.id.supplies_name);
         comment = view.findViewById(R.id.supplies_comment);
 
-        supplies_list.add(new Supplies(R.drawable.supplies_img1,true));
-        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
+        /*supplies_list.add(new Supplies(R.drawable.supplies_img1,true));
+        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));*/
 //        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
 //        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
 
@@ -117,8 +188,10 @@ public class Step1 extends Fragment {
         RecyclerDecoration_Width decoration_height = new RecyclerDecoration_Width(70,supplies_list.size());
         supplies.addItemDecoration(decoration_height);
 
-
         supplies.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+
+        name.setText(suppliesName[0]);
+        comment.setText(suppliesMsg[0]);
 
         suppliesAdapter.setOnItemClickListener((position, click) -> {
             Log.e("position",position+"");
@@ -127,11 +200,15 @@ public class Step1 extends Fragment {
                 suppliesAdapter.notifyItemChanged(position, "click");
                 previous_num = position;
                 if (position ==0) {
-                    name.setText("LED");
-                    comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
+                    name.setText(suppliesName[position]);
+                    comment.setText(suppliesMsg[position]);
+                    //name.setText("LED");
+                    //comment.setText("LED(Light Emitting Diode)는 우리 말로는 '발광 다이오드' 라고 하며,\n전류를 가하면 빛을 발하는 센서입니다.");
                 }else{
-                    name.setText("점퍼선");
-                    comment.setText(msg);
+                    name.setText(suppliesName[position]);
+                    comment.setText(suppliesMsg[position]);
+                    //name.setText("점퍼선");
+                    //comment.setText(msg);
                 }
             }
         });

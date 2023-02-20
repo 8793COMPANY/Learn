@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.problem.basic.ProblemActivity;
-import com.learn4.data.dto.Contents;
+import com.learn4.data.dto.Subject;
 import com.learn4.view.problem.solve.SolvingProblem;
 
 import java.util.ArrayList;
@@ -27,13 +27,13 @@ import java.util.List;
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<Contents> listData = new ArrayList<>();
+    private ArrayList<Subject> listData = new ArrayList<>();
     private int width = 0;
     private String chapter_id = "0";
     Context context;
     public static int current_chapter =0;
 
-    public ChapterAdapter(Context context, ArrayList<Contents> arrayList, int width, String chapter_id){
+    public ChapterAdapter(Context context, ArrayList<Subject> arrayList, int width, String chapter_id){
         listData = arrayList;
         this.width = width;
         this.context = context;
@@ -117,7 +117,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
             lock_check = itemView.findViewById(R.id.lock_check);
         }
 
-        void onBind(Contents contents) {
+        void onBind(Subject contents) {
 
             chapter_content_title.setText(contents.getTitle());
             percentage.setText(contents.getPercentage()*20+"%");
@@ -135,11 +135,17 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
                         intent.putExtra("step", 1);
                         intent.putExtra("id", contents.getId());
                         intent.putExtra("chapter_id", chapter_id);
+
+                        intent.putExtra("title", contents.title);
+
                         context.startActivity(intent);
                     } else {
                         Intent intent = new Intent(context, ProblemActivity.class);
                         intent.putExtra("step", getAdapterPosition());
                         intent.putExtra("id", contents.getId());
+
+                        intent.putExtra("title", contents.title);
+
                         context.startActivity(intent);
                     }
                 }
