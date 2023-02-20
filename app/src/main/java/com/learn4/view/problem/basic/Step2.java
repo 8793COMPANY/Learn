@@ -1,6 +1,7 @@
 package com.learn4.view.problem.basic;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -11,8 +12,14 @@ import android.widget.RadioButton;
 
 import androidx.fragment.app.Fragment;
 
+import com.learn4.data.room.AppDatabase;
+import com.learn4.data.room.dao.ContentsDao;
+import com.learn4.data.room.entity.Contents;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,10 +40,17 @@ public class Step2 extends Fragment {
     int diagram =0;
     String contents_name ="";
 
-
     ScaleGestureDetector mScaleGestureDetector;
     float mScaleFactor =1.0f;
     ImageView diagram_img;
+
+    AppDatabase db = null;
+    public ContentsDao contentsDao;
+    List<Contents> contentsList = new ArrayList<>();
+    String diagramNum = "";
+    // 모듈형 추가되면 배열로 선언해서 넣기
+    int rID = 0;
+
     public Step2(){
 
     }
@@ -80,7 +94,9 @@ public class Step2 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step2, container, false);
 
-
+        db = AppDatabase.getInstance(requireContext());
+        contentsDao = db.contentsDao();
+        contentsList = contentsDao.findAll();
 
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
@@ -89,10 +105,28 @@ public class Step2 extends Fragment {
             MySharedPreferences.setInt(getContext(),contents_name,2);
 
         diagram_img = view.findViewById(R.id.diagram_img);
-        diagram_img.setBackgroundResource(diagram);
+        /*diagram_img.setBackgroundResource(diagram);
 
         if (contents_name.equals("LED 핀 번호 바꾸기"))
-            diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
+            diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);*/
+
+        for (int i = 0; i < contentsList.size(); i++) {
+            if (contentsList.get(i).getBasic_problem().equals(contents_name)) {
+                diagramNum = contentsList.get(i).getId() + "_1";
+                Log.e("diagramNum", "diagramNum : " + diagramNum);
+                rID = getResources().getIdentifier("diagram_contents" + diagramNum, "drawable", requireActivity().getPackageName());
+            } else if (contentsList.get(i).getDeep_problem1().equals(contents_name)) {
+                diagramNum = contentsList.get(i).getId() + "_2";
+                Log.e("diagramNum", "diagramNum : " + diagramNum);
+                rID = getResources().getIdentifier("diagram_contents" + diagramNum, "drawable", requireActivity().getPackageName());
+            } else if (contentsList.get(i).getDeep_problem2().equals(contents_name)) {
+                diagramNum = contentsList.get(i).getId() + "_3";
+                Log.e("diagramNum", "diagramNum : " + diagramNum);
+                rID = getResources().getIdentifier("diagram_contents" + diagramNum, "drawable", requireActivity().getPackageName());
+            }
+        }
+
+        diagram_img.setBackgroundResource(rID);
 
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
 
@@ -107,16 +141,18 @@ public class Step2 extends Fragment {
         RadioButton bigboard_btn = view.findViewById(R.id.bigboard_btn);
 
         bigboard_btn.setOnCheckedChangeListener((compoundButton, b) -> {
-            if (b) {
-                if (contents_name.equals("LED 핀 번호 바꾸기"))
+            if (b) {    // 빅보드형
+                /*if (contents_name.equals("LED 핀 번호 바꾸기"))
                     diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
                 else
-                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);
-            }else {
-                if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);*/
+                diagram_img.setBackgroundResource(rID);
+            }else {     // 모듈형
+                /*if (contents_name.equals("LED 핀 번호 바꾸기"))
                     diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
                 else
-                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);*/
+                diagram_img.setBackgroundResource(R.drawable.diagram_module_crop_img);
             }
         });
 
