@@ -60,7 +60,7 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name="com.learn4.view.mode_select.ModeSelect"
-            android:label="@string/title_activity_mode_select"
+            android:label="배울래?"
             android:screenOrientation="sensorLandscape"
             android:exported="true">
             <intent-filter>

@@ -456,6 +456,7 @@
         app:layout_constraintLeft_toLeftOf="@id/blockly_overlay_buttons"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/go_simulator_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"

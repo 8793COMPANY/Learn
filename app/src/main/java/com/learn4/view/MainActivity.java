@@ -1400,7 +1400,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     dictionaryAdapter.notifyDataSetChanged();
                     tempTab[position - 4].setSelected(true);
                     if (current_pos <4){
-                        block_tempTab[current_pos].setSelected(false);
+                        if(block_tempTab[current_pos] != null)
+                            block_tempTab[current_pos].setSelected(false);
                     }
                 }
 
@@ -1437,7 +1438,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 dictionaryAdapter.notifyDataSetChanged();
                 tempTab[position - 4].setSelected(true);
                 if (current_pos <4){
-                    block_tempTab[current_pos].setSelected(false);
+                    if(block_tempTab[current_pos] != null)
+                        block_tempTab[current_pos].setSelected(false);
                 }
             }
             view_check[position] = false;
@@ -1587,6 +1589,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 break;
             case 9: // 코드사전
                 blockly_monitor.setVisibility(View.GONE);
+//                current_pos = 9;
                 setCloseWindow(pos,"dictionary");
 
                 break;
@@ -1699,6 +1702,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     );
                     Log.e("response",response.getFirst());
                     Log.e("response",response.getSecond().toString());
+
                     Pair<String, UploadReportJson> upload_result = Application.acfRepository.updateUploadReportAcf(
                             response.getSecond().getId(),
                             Integer.parseInt(chapter_id_split[0]),

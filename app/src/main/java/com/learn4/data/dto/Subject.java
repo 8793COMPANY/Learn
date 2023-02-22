@@ -1,6 +1,6 @@
 package com.learn4.data.dto;
 
-public class Contents {
+public class Subject {
     public String id;
     public int group;
     public String title;
@@ -26,7 +26,7 @@ public class Contents {
 
 
 
-    public Contents(String id, int group, String title, int image, int percentage,boolean open) {
+    public Subject(String id, int group, String title, int image, int percentage, boolean open) {
         this.id = id;
         this.group = group;
         this.title = title;

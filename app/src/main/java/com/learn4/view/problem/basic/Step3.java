@@ -167,6 +167,11 @@ public class Step3 extends Fragment {
 
         Log.e("chapter_id",chapter_id);
 
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 3);
+        }
+        MySharedPreferences.setInt(getContext(), contents_name, 3);
+
 
         return view;
     }

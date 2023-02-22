@@ -1,5 +1,6 @@
 package com.learn4.view.mode_select;
 
+import android.Manifest;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -17,6 +18,7 @@ import com.learn4.util.Application;
 import com.learn4.util.DataSetting;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -50,6 +52,8 @@ public class ModeSelect extends AppCompatActivity {
             uiOption |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         decorView.setSystemUiVisibility( uiOption );
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
