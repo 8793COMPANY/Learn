@@ -1,6 +1,7 @@
 package com.learn4.view.dictionary;
 
 import android.content.Context;
+import android.opengl.Matrix;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,8 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 
         Log.e("codedictionary",block.getType());
 //        if (block.getType().equals("turtle_setup_loop")) {
+        Log.e("위치", "전x : " + group.getX()+"");
+        Log.e("위치", "전y : " + holder.block_name.getX()+"");
             group.setScaleX(0.8f);
             group.setScaleY(0.8f);
 //        }
