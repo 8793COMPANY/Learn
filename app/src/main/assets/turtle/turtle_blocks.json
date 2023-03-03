@@ -336,7 +336,8 @@
           [
             "LOW ",
             "LOW "
-          ]
+          ],
+
           ]
           },
       {
@@ -398,7 +399,8 @@
           [
             "INPUT ",
             "INPUT "
-          ]
+          ],
+
         ]
       },
       {
@@ -934,6 +936,22 @@
   },
 
   {
+    "type": "inout_digital_read",
+    "message0": "DigitalRead(number) on pin %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      }
+    ],
+    "output": "Number",
+    "colour": "#FDB900",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
     "type": "inout_analog_read",
     "message0": "AnalogRead on pin %1",
     "args0": [
@@ -1145,7 +1163,7 @@
         "type": "field_dropdown",
         "name": "LOGIC",
         "options": [
-          ["OUTPUT", "OUTPUT"], ["INPUT", "INPUT"]
+          ["OUTPUT", "OUTPUT"], ["INPUT", "INPUT"], ["INPUT_PULLUP", "INPUT_PULLUP"]
         ]
       }
     ],

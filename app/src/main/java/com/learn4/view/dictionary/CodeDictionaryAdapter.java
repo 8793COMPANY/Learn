@@ -90,8 +90,9 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 
         Log.e("codedictionary",block.getType());
 //        if (block.getType().equals("turtle_setup_loop")) {
-            group.setScaleX(0.8f);
-            group.setScaleY(0.8f);
+//            group.setScaleX(0.8f);
+//            group.setScaleY(0.8f);
+//            group.setPadding(0,0,0,0);
 //        }
 
         holder.blockView.addView(group);

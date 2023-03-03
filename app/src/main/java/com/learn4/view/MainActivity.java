@@ -953,7 +953,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.mCategoryTabs.setEnableCheck(this);
 //        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
-        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(1).getItems();
         for (BlocklyCategory.CategoryItem item : blocks) {
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 // Clean up the old views

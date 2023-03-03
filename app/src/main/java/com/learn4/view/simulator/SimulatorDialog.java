@@ -50,6 +50,7 @@ public class SimulatorDialog extends Dialog {
            @Override
            public void onClick(View view) {
                Log.e("title",title);
+               title="hi";
                webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView,title.replace("\n","")),"android");
                webView.loadUrl("http://192.168.0.5:3000/");
            }
