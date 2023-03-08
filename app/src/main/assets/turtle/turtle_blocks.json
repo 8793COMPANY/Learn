@@ -439,7 +439,7 @@
 
 
   {
-    "type": "test",
+    "type": "pinMode",
     "message0": "pinMode %1 value %2 ",
     "inputsInline": true,
     "args0": [

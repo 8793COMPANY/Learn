@@ -1,6 +1,7 @@
 package com.learn4.view.dictionary;
 
 import android.content.Context;
+import android.opengl.Matrix;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,11 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            group.setScaleX(0.8f);
 //            group.setScaleY(0.8f);
 //            group.setPadding(0,0,0,0);
+
+        Log.e("위치", "전x : " + group.getX()+"");
+        Log.e("위치", "전y : " + holder.block_name.getX()+"");
+            group.setScaleX(0.8f);
+            group.setScaleY(0.8f);
 //        }
 
         holder.blockView.addView(group);

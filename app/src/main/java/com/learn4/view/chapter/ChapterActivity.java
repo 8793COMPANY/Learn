@@ -159,8 +159,11 @@ public class ChapterActivity extends AppCompatActivity {
                 rID[0],
                 MySharedPreferences.getInt(getApplicationContext(), basic_problem + " MAX"),true));
 
-        if(MySharedPreferences.getInt(getApplicationContext(),basic_problem + " MAX") == 5)
+        if(MySharedPreferences.getInt(getApplicationContext(),basic_problem + " MAX") == 5) {
             lock_check = true;
+        } else {
+            lock_check = true;
+        }
 
         subject_list.add(new Subject(
                 totalNum + "-3",

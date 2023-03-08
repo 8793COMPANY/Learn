@@ -165,81 +165,81 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.9"></androidx.constraintlayout.widget.Guideline>
 
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:id="@+id/block_setup_btn"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:text="setup()"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="12dp"-->
-<!--            android:gravity="center"-->
-<!--            android:background="@drawable/block_category_btn_selector"-->
-<!--            app:layout_constraintWidth_percent="0.12"-->
-<!--            app:layout_constraintHorizontal_bias="0"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/close_btn"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/close_btn"-->
-<!--            app:layout_constraintLeft_toLeftOf="@+id/block_category_btn_left_guide"-->
-<!--            app:layout_constraintRight_toLeftOf="@+id/block_loop_btn"-->
-<!--            app:layout_constraintVertical_bias="0.1"-->
-<!--            ></androidx.appcompat.widget.AppCompatButton>-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/block_setup_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="setup()"
+            android:textColor="#b45611"
+            android:textSize="12dp"
+            android:gravity="center"
+
+            app:layout_constraintWidth_percent="0.12"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="@+id/close_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/close_btn"
+            app:layout_constraintLeft_toLeftOf="@+id/block_category_btn_left_guide"
+            app:layout_constraintRight_toLeftOf="@+id/block_loop_btn"
+            app:layout_constraintVertical_bias="0.1"
+            ></androidx.appcompat.widget.AppCompatButton>
 
 
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:id="@+id/block_loop_btn"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:text="loop()"-->
-<!--            android:textColor="#b45611"-->
-<!--            android:textSize="12dp"-->
-<!--            android:gravity="center"-->
-<!--            android:background="@drawable/block_category_btn_selector"-->
-<!--            app:layout_constraintDimensionRatio="156:50"-->
-<!--            app:layout_constraintWidth_percent="0.12"-->
-<!--            app:layout_constraintHorizontal_bias="0"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/close_btn"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/close_btn"-->
-<!--            app:layout_constraintLeft_toRightOf="@+id/block_setup_btn"-->
-<!--            app:layout_constraintRight_toLeftOf="@+id/block_method_btn"-->
-<!--            app:layout_constraintVertical_bias="0.07"-->
-<!--            ></androidx.appcompat.widget.AppCompatButton>-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/block_loop_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="loop()"
+            android:textColor="#b45611"
+            android:textSize="12dp"
+            android:gravity="center"
 
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:id="@+id/block_method_btn"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:text="함수"-->
-<!--            android:textColor="#b45611"-->
-<!--            android:textSize="12dp"-->
-<!--            android:gravity="center"-->
-<!--            android:background="@drawable/block_category_btn_selector"-->
-<!--            app:layout_constraintDimensionRatio="156:50"-->
-<!--            app:layout_constraintWidth_percent="0.12"-->
-<!--            app:layout_constraintHorizontal_bias="0"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/close_btn"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/close_btn"-->
-<!--            app:layout_constraintLeft_toRightOf="@+id/block_loop_btn"-->
-<!--            app:layout_constraintRight_toRightOf="@+id/block_etc_btn"-->
-<!--            app:layout_constraintVertical_bias="0.07"-->
-<!--            ></androidx.appcompat.widget.AppCompatButton>-->
+            app:layout_constraintDimensionRatio="156:50"
+            app:layout_constraintWidth_percent="0.12"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="@+id/close_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/close_btn"
+            app:layout_constraintLeft_toRightOf="@+id/block_setup_btn"
+            app:layout_constraintRight_toLeftOf="@+id/block_method_btn"
+            app:layout_constraintVertical_bias="0.07"
+            ></androidx.appcompat.widget.AppCompatButton>
 
-<!--        <androidx.appcompat.widget.AppCompatButton-->
-<!--            android:id="@+id/block_etc_btn"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:text="기타"-->
-<!--            android:textColor="#b45611"-->
-<!--            android:textSize="12dp"-->
-<!--            android:gravity="center"-->
-<!--            android:background="@drawable/block_category_btn_selector"-->
-<!--            app:layout_constraintDimensionRatio="156:50"-->
-<!--            app:layout_constraintWidth_percent="0.12"-->
-<!--            app:layout_constraintHorizontal_bias="0"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/close_btn"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/close_btn"-->
-<!--            app:layout_constraintLeft_toRightOf="@+id/block_method_btn"-->
-<!--            app:layout_constraintRight_toRightOf="@+id/block_category_btn_right_guide"-->
-<!--            app:layout_constraintVertical_bias="0.07"-->
-<!--            ></androidx.appcompat.widget.AppCompatButton>-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/block_method_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="함수"
+            android:textColor="#b45611"
+            android:textSize="12dp"
+            android:gravity="center"
+
+            app:layout_constraintDimensionRatio="156:50"
+            app:layout_constraintWidth_percent="0.12"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="@+id/close_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/close_btn"
+            app:layout_constraintLeft_toRightOf="@+id/block_loop_btn"
+            app:layout_constraintRight_toRightOf="@+id/block_etc_btn"
+            app:layout_constraintVertical_bias="0.07"
+            ></androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/block_etc_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="기타"
+            android:textColor="#b45611"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:background="@drawable/check_selector"
+            app:layout_constraintDimensionRatio="156:50"
+            app:layout_constraintWidth_percent="0.12"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="@+id/close_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/close_btn"
+            app:layout_constraintLeft_toRightOf="@+id/block_method_btn"
+            app:layout_constraintRight_toRightOf="@+id/block_category_btn_right_guide"
+            app:layout_constraintVertical_bias="0.07"
+            ></androidx.appcompat.widget.AppCompatButton>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/close_btn"
@@ -269,6 +269,137 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:id="@+id/block_simulator"
+        android:background="@drawable/radius"
+        android:elevation="7dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/category_block"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/component_close_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/block_dictionary_close_btn"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.04"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintVertical_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.98"/>
+
+        <TextView
+            android:id="@+id/guide_text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="부품을 눌러 동작시켜보세요"
+            android:textColor="#b45611"
+            android:textSize="13dp"
+            android:gravity="center"
+            android:background="@drawable/guide_text_background"
+            android:layout_marginTop="10dp"
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintHeight_percent="0.11"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toTopOf="@+id/component_close_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
+            app:layout_constraintRight_toRightOf="@+id/recyclerview_end_guide" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/component_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:overScrollMode="never"
+            app:layout_constraintHeight_percent="0.65"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toBottomOf="@+id/guide_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
+            app:layout_constraintRight_toRightOf="@+id/recyclerview_end_guide"/>
+
+        <WebView
+            android:id="@+id/simulator_web_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintHeight_percent="0.7"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toBottomOf="@+id/guide_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
+            app:layout_constraintRight_toRightOf="@+id/recyclerview_end_guide" />
+
+        <TextView
+            android:id="@+id/code_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:padding="15dp"
+            android:background="@drawable/code_view_background"
+            android:text="test text\ntest text\ntest text\ntest text\ntest text\n
+            test text\ntest text\ntest text\ntest text\ntest text\ntest text\n"
+            android:textColor="#000000"
+            android:scrollbars="vertical"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintVertical_bias="0"
+            app:layout_constraintTop_toBottomOf="@+id/component_close_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/code_view_start_guide"
+            app:layout_constraintRight_toRightOf="@+id/end_right_guide"/>
+
+        <Button
+            android:id="@+id/move_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/simulator_btn_custom"
+            android:text="동작하기"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            app:layout_constraintHeight_percent="0.18"
+            app:layout_constraintTop_toBottomOf="@+id/code_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/code_view_start_guide"
+            app:layout_constraintRight_toRightOf="@+id/end_right_guide"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_left_guide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.02"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/recyclerview_end_guide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/code_view_start_guide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.67"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end_right_guide"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.98"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:visibility="gone"
@@ -449,22 +580,23 @@
         android:id="@+id/block_bot_btn"
         android:layout_width="59dp"
         android:layout_height="86dp"
-        android:layout_marginBottom="10dp"
         android:src="@drawable/bot_image"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintBottom_toTopOf="@id/blockly_overlay_buttons"
         app:layout_constraintRight_toRightOf="@id/blockly_overlay_buttons"
         app:layout_constraintLeft_toLeftOf="@id/blockly_overlay_buttons"/>
 
     <Button
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/go_simulator_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.07"
+        android:layout_width="57dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/simulator_with_text_btn"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintLeft_toLeftOf="@+id/block_bot_btn"
         app:layout_constraintRight_toRightOf="@+id/block_bot_btn"
-        app:layout_constraintBottom_toTopOf="@+id/block_bot_btn"></Button>
+        app:layout_constraintBottom_toTopOf="@+id/block_bot_btn"/>
 
 <!--    <Button-->
 <!--        android:id="@+id/block_copy_btn"-->

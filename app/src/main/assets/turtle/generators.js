@@ -44,7 +44,7 @@ Blockly.JavaScript['set_leds'] = function (block) {
     return 'pinMode(11, OUTPUT);\npinMode(12, OUTPUT);\npinMode(13, OUTPUT);\ndigitalWrite(11,'+value1+');\ndigitalWrite(12,'+value2+');\ndigitalWrite(13,'+value3+');\n';
 };
 
-Blockly.JavaScript['test'] = function (block) {
+Blockly.JavaScript['pinMode'] = function (block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "VALUE1", Blockly.JavaScript.ORDER_ATOMIC);
    var code = "\npinMode(" + value_pin + ", " + value_num + ");\n";

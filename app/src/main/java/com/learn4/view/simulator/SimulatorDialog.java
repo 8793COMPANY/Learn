@@ -25,12 +25,15 @@ public class SimulatorDialog extends Dialog {
     private View.OnClickListener Cancel_Btn;
     TextView textView;
     private String title;
+    private String chapter_id;
     Context context;
 
 
-    public SimulatorDialog(@NonNull Context context, String text) {
+
+    public SimulatorDialog(@NonNull Context context, String chapter_id, String text) {
         super(context);
         this.context = context;
+        this.chapter_id = chapter_id;
         title = text;
     }
 
@@ -42,17 +45,21 @@ public class SimulatorDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         setContentView(R.layout.dialog_simulator);
-        WebView webView = findViewById(R.id.webview);
-        Button upload_btn = findViewById(R.id.send_button);
+        WebView webView = findViewById(R.id.simulator_web_view);
+        Button upload_btn = findViewById(R.id.upload_btn);
+        TextView code_view  = findViewById(R.id.code_view);
+
+
 
 
        upload_btn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               Log.e("title",title);
-               title="hi";
-               webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView,title.replace("\n","")),"android");
-               webView.loadUrl("http://192.168.0.5:3000/");
+               Log.e("title",title.replace("\n",""));
+//               title="hi";
+               webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view,
+                       chapter_id,title.replace("\n","")),"android");
+               webView.loadUrl("http://15.165.237.187:8000/");
            }
        });
 //
@@ -68,9 +75,13 @@ public class SimulatorDialog extends Dialog {
 //                " }");
 
 
+
         webView.getSettings().setJavaScriptEnabled(true);
 
-        webView.loadUrl("http://192.168.0.5:3000/");
+        webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view,
+                chapter_id,"contents_id:"+chapter_id),"android");
+
+        webView.loadUrl("http://15.165.237.187:8000/");
 
 //        confirm_btn.setOnClickListener(Confirm_Btn);
 //        if (Cancel_Btn != null) {

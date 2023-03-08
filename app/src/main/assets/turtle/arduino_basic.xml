@@ -29,7 +29,7 @@
 
         <block type="turtle_setup_loop"></block>
 
-        <block type="test">
+        <block type="pinMode">
             <value name="PIN">
                 <block type="base_pins_list">
                     <field name="PIN">0</field>
