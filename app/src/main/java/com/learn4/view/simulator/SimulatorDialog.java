@@ -5,10 +5,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ public class SimulatorDialog extends Dialog {
     private String title;
     private String chapter_id;
     Context context;
+    Button component_close_btn;
 
 
 
@@ -48,8 +53,71 @@ public class SimulatorDialog extends Dialog {
         WebView webView = findViewById(R.id.simulator_web_view);
         Button upload_btn = findViewById(R.id.upload_btn);
         TextView code_view  = findViewById(R.id.code_view);
+        component_close_btn = findViewById(R.id.component_close_btn);
+
+        code_view.setMovementMethod(new ScrollingMovementMethod());
+
+        component_close_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
 
 
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+
+                int errorCode = error.getErrorCode();
+                Log.e("errorCode",errorCode+"");
+
+
+
+                webView.loadData("현재 사용이 불가능합니다.","text/html; charset=utf-8","UTF-8");
+
+
+//                switch (errorCode) {
+//                    case ERROR_AUTHENTICATION:
+//                        break;               // 서버에서 사용자 인증 실패
+//                    case ERROR_BAD_URL:
+//                        break;                           // 잘못된 URL
+//                    case ERROR_CONNECT:
+//                        break;                          // 서버로 연결 실패
+//                    case ERROR_FAILED_SSL_HANDSHAKE:
+//                        break;    // SSL handshake 수행 실패
+//                    case ERROR_FILE:
+//                        break;                                  // 일반 파일 오류
+//                    case ERROR_FILE_NOT_FOUND:
+//                        break;               // 파일을 찾을 수 없습니다
+//                    case ERROR_HOST_LOOKUP:
+//                        break;           // 서버 또는 프록시 호스트 이름 조회 실패
+//                    case ERROR_IO:
+//                        break;                              // 서버에서 읽거나 서버로 쓰기 실패
+//                    case ERROR_PROXY_AUTHENTICATION:
+//                        break;   // 프록시에서 사용자 인증 실패
+//                    case ERROR_REDIRECT_LOOP:
+//                        break;               // 너무 많은 리디렉션
+//                    case ERROR_TIMEOUT:
+//                        break;                          // 연결 시간 초과
+//                    case ERROR_TOO_MANY_REQUESTS:
+//                        break;     // 페이지 로드중 너무 많은 요청 발생
+//                    case ERROR_UNKNOWN:
+//                        break;                        // 일반 오류
+//                    case ERROR_UNSUPPORTED_AUTH_SCHEME:
+//                        break; // 지원되지 않는 인증 체계
+//                    case ERROR_UNSUPPORTED_SCHEME:
+//                        break;          // URI가 지원되지 않는 방식
+//                }
+//                Log.d(TAG, "(WEBVIEW)onReceivedError : " + errorCode );
+            }
+
+        });
 
 
        upload_btn.setOnClickListener(new View.OnClickListener() {
@@ -59,9 +127,11 @@ public class SimulatorDialog extends Dialog {
 //               title="hi";
                webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view,
                        chapter_id,title.replace("\n","")),"android");
-               webView.loadUrl("http://15.165.237.187:8000/");
+               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
            }
        });
+
+
 //
 //        arduino_code.setText(" void setup() {\n" +
 //                "   pinMode(7, OUTPUT); \n" +
@@ -81,7 +151,7 @@ public class SimulatorDialog extends Dialog {
         webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view,
                 chapter_id,"contents_id:"+chapter_id),"android");
 
-        webView.loadUrl("http://15.165.237.187:8000/");
+        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 
 //        confirm_btn.setOnClickListener(Confirm_Btn);
 //        if (Cancel_Btn != null) {

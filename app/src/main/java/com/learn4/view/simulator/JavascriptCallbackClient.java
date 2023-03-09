@@ -50,57 +50,43 @@ public class JavascriptCallbackClient {
     @JavascriptInterface
     public void showToastMessage(final String message) {
         Log.e("message",message);
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @JavascriptInterface
+    public void showSerialMessage(final String message) {
+        Log.e("push check",message);
     }
 
 
+
+    // react에서 serial 값 넘어오는 부분
     @JavascriptInterface
     public void showToastLog(final String message)
     {
-        str += message+"\n";
-        if (count > 5){
-            serial_monitor.setText(str.substring(str.indexOf("\n"),str.length()));
-        }else{
-            serial_monitor.setText(str);
-            count++;
+
+        Log.e("message",message);
+        serial_text.append(message+"\n");
+
+        if (serial_text.length() > 100){
+            serial_text.delete(0,50);
         }
 
+        serial_monitor.setText(serial_text);
+        scrollBottom(serial_monitor);
+//        str += message+"\n";
+//        if (count > 5){
+//            serial_monitor.setText(str.substring(str.indexOf("\n"),str.length()));
+//        }else{
+//            serial_monitor.setText(str);
+//            count++;
+//        }
+
 
     }
-
-    @JavascriptInterface
-    public void callBtnScriptFunction() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("hi","callBtnScriptFunction()");
-                webView.postDelayed(() -> {
-                webView.evaluateJavascript(publishEvent("javascriptFunction", "No more color"),
-                        (result) -> {
-                            Toast.makeText(mContext, "button click!" + result, Toast.LENGTH_SHORT).show();
-                        }
-                );
-
-                }, 5000);
-            }
-        });
-    }
-
-
     @JavascriptInterface
     public void callJavaScriptFunction() {
         Log.e("hi","callJavaScriptFunction()");
 
-//        code = " void setup() {\n" +
-//                "   pinMode(7, OUTPUT); \n" +
-//                " }\n" +
-//                "\n" +
-//                " void loop() {\n" +
-//                "   digitalWrite(7, HIGH);\n" +
-//                "   delay(5000);\n" +
-//                "   digitalWrite(7, LOW);\n" +
-//                "   delay(5000);\n" +
-//                " }";
         Log.e("code", code);
         int delay = 0;
 
@@ -130,5 +116,15 @@ public class JavascriptCallbackClient {
             stringBuilder.append(charToHex);
         }
         return  stringBuilder.toString();
+    }
+
+    private void scrollBottom(TextView textView) {
+        int lineTop =  textView.getLayout().getLineTop(textView.getLineCount()) ;
+        int scrollY = lineTop - textView.getHeight();
+        if (scrollY > 0) {
+            textView.scrollTo(0, scrollY);
+        } else {
+            textView.scrollTo(0, 0);
+        }
     }
 }
