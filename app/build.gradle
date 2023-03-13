@@ -97,4 +97,8 @@ dependencies {
     implementation 'oauth.signpost:signpost-core:1.2.1.2'
 
     implementation 'androidx.palette:palette:1.0.0'
+
+
+    //tutor
+    implementation 'org.xmlunit:xmlunit-core:2.6.4'
 }
