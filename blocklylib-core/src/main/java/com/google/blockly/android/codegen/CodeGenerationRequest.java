@@ -85,7 +85,7 @@ public class CodeGenerationRequest {
          *
          * @param generatedCode The string containing all of the generated code.
          */
-        void onFinishCodeGeneration(String generatedCode);
+        void onFinishCodeGeneration(String generatedCode, String submittedXml);
     }
 
 }

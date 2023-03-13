@@ -334,14 +334,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new CodeGenerationRequest.CodeGeneratorCallback() {
                 @Override
-                public void onFinishCodeGeneration(final String generatedCode) {
+                public void onFinishCodeGeneration(final String generatedCode, String xml) {
                     Log.e("start!","onFinishCodeGeneration");
 
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             code = generatedCode;
-                            submittedXml = submittedXml;
+                            submittedXml = xml;
 //                            updateTextMinWidth();
                         }
                     });
@@ -377,7 +377,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                        System.out.println(generatedCode);
 //                        Log.e("generated",generatedCode);
                         code = generatedCode;
-                        submittedXml = generatedCode;
+                        submittedXml = xml;
                         Log.e("code",code);
 
                         create_file(generatedCode, "code.ino");
@@ -1383,6 +1383,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
 //        });
 
+
         block_bot_btn.setOnClickListener(v -> {
             // 봇 메시지 초기화
             if (mediaPlayer != null) {
@@ -1404,6 +1405,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }else{
                 solutionXmlAssetFilePath = "lv1_blink.xml";
             }
+
+            //TODO: 소영님 파일변경은 solutionXmlAssetFilePath 값 변경만 하시면 됩니다.
+            solutionXmlAssetFilePath = "lv5_2.xml";
 
             Log.e("solutionXmlAssetFilePath",solutionXmlAssetFilePath);
 
@@ -1503,7 +1507,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("e check",e.getElementsByTagName("field").item(0).getTextContent()+"");
 
             if (e != null) {
-                // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
+
                 // 또는, " 답안지가 정답지와 일치 " 했을때 정답처리
 
                 if (solution_str.equals(submitted_str)){
@@ -1533,6 +1537,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     alertDialog.show();
                 }
 
+                // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
                 /*
                 if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                         e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")

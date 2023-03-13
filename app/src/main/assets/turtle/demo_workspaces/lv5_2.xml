@@ -1,64 +1,70 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
     <block type="turtle_setup_loop" x="8.0" y="128.0">
         <statement name="DO">
-            <block type="test">
+            <block type="pinMode">
                 <value name="PIN">
                     <block type="base_pins_list">
-                        <field name="PIN">8</field>
+                        <field name="PIN">7</field>
                     </block>
                 </value>
                 <value name="VALUE1">
                     <block type="base_output_list">
-                        <field name="LOGIC">OUTPUT</field>
+                        <field name="LOGIC">INPUT</field>
                     </block>
                 </value>
             </block>
         </statement>
         <statement name="DO1">
-            <block type="inout_digital_write">
-                <value name="PIN">
-                    <block type="base_pins_list">
-                        <field name="PIN">8</field>
-                    </block>
-                </value>
-                <value name="NUM">
-                    <block type="base_logic_list">
-                        <field name="LOGIC">HIGH</field>
-                    </block>
-                </value>
-                <next>
-                    <block type="base_delay">
-                        <value name="DELAY_TIME">
-                            <block type="math_number">
-                                <field name="NUM">1000</field>
-                            </block>
-                        </value>
-                        <next>
-                            <block type="inout_digital_write">
+            <block type="controls_ifelse">
+                <value name="IF0">
+                    <block type="logic_compare">
+                        <value name="A">
+                            <block type="inout_digital_read">
                                 <value name="PIN">
                                     <block type="base_pins_list">
-                                        <field name="PIN">8</field>
+                                        <field name="PIN">7</field>
                                     </block>
                                 </value>
-                                <value name="NUM">
-                                    <block type="base_logic_list">
-                                        <field name="LOGIC">LOW</field>
-                                    </block>
-                                </value>
-                                <next>
-                                    <block type="base_delay">
-                                        <value name="DELAY_TIME">
-                                            <block type="math_number">
-                                                <field name="NUM">1000</field>
-                                            </block>
-                                        </value>
-                                    </block>
-                                </next>
                             </block>
-                        </next>
+                        </value>
+                        <value name="B">
+                            <block type="logic_boolean">
+                                <field name="BOOL">TRUE</field>
+                            </block>
+                        </value>
+                        <field name="OP">EQ</field>
                     </block>
+                </value>
+                <statement name="DO0">
+                    <block type="serial_println">
+                        <value name="STRING">
+                            <block type="type_string">
+                                <field name="STRING_TEXT">on</field>
+                            </block>
+                        </value>
+                    </block>
+                </statement>
+                <statement name="ELSE">
+                    <block type="serial_println">
+                        <value name="STRING">
+                            <block type="type_string">
+                                <field name="STRING_TEXT">off</field>
+                            </block>
+                        </value>
+                    </block>
+                </statement>
+                <next>
+            <block type="base_delay">
+                <value name="DELAY_TIME">
+                    <block type="math_number">
+                        <field name="NUM">100</field>
+                    </block>
+                </value>
+            </block>
+
                 </next>
             </block>
+
         </statement>
     </block>
 </xml>

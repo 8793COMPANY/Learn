@@ -31,7 +31,7 @@ public class LoggingCodeGeneratorCallback implements CodeGenerationRequest.CodeG
     }
 
     @Override
-    public void onFinishCodeGeneration(String generatedCode) {
+    public void onFinishCodeGeneration(String generatedCode, String xml) {
         // Sample callback.
         if (generatedCode.isEmpty()) {
             Toast.makeText(mContext,

@@ -63,6 +63,7 @@ public class CodeGeneratorService extends Service {
     private List<String> mDefinitions = new ArrayList<>();
     private List<String> mGenerators = new ArrayList<>();
     private String mAllBlocks;
+    static String submittedXml;
 
     @Override
     public void onCreate() {
@@ -180,6 +181,7 @@ public class CodeGeneratorService extends Service {
             }
         } else {
             String jsEscapedXml = xml.replace("'", "\\'");
+            submittedXml = jsEscapedXml;
             return "javascript:generate('" + jsEscapedXml + "', " + generatorObject + ");";
         }
     }
@@ -193,7 +195,7 @@ public class CodeGeneratorService extends Service {
                 mReady = true;
             }
             if (cb != null) {
-                cb.onFinishCodeGeneration(program);
+                cb.onFinishCodeGeneration(program, submittedXml);
             }
             handleRequest();
         }
