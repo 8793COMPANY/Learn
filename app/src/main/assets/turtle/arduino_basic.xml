@@ -138,37 +138,43 @@
             </value>
         </block>
 
-        <block type="serial_print">
+        <!--<block type="serial_print">
             <value name="text">
                 <block type="text">
                     <field name="TEXT"></field>
+                </block>
+            </value>
+        </block>-->
+
+        <block type="serial_print">
+            <value name="text">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
                 </block>
             </value>
         </block>
 
 
         <block type="serial_println">
-<!--            <value name="baud">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">9600</field>-->
-<!--                </block>-->
-<!--            </value>-->
-            <value name="text">
-                <block type="text">
-                    <field name="TEXT"></field>
+            <value name="STRING">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
                 </block>
             </value>
         </block>
 
         <block type="serial_println_int">
-<!--            <value name="baud">-->
-<!--                <block type="math_number">-->
-<!--                    <field name="NUM">9600</field>-->
-<!--                </block>-->
-<!--            </value>-->
-            <value name="NUM">
-                <block type="math_number">
-                    <field name="NUM">0</field>
+            <value name="INT">
+                <block type="type_int">
+                    <field name="INT_TEXT">0</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="serial_println_boolean">
+            <value name="BOOLEAN">
+                <block type="type_boolean">
+                    <field name="BOOLEAN_TEXT">true</field>
                 </block>
             </value>
         </block>
@@ -477,6 +483,20 @@
 
         <block type="base_output_list">
             <field name="LOGIC">OUTPUT</field>
+        </block>
+
+
+
+        <block type="type_string">
+            <field name="STRING_TEXT"></field>
+        </block>
+
+        <block type="type_int">
+            <field name="INT_TEXT">0</field>
+        </block>
+
+        <block type="type_boolean">
+            <field name="BOOLEAN_TEXT">true</field>
         </block>
 
 

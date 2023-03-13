@@ -1,6 +1,66 @@
 [
 
   {
+    "type": "type_string",
+    "message0": "String : %1 %2 %3",
+    "args0": [
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC",
+        "width": 12,
+        "height": 12,
+        "alt": "\u201C"
+      },
+      {
+        "type": "field_input",
+        "name": "STRING_TEXT",
+        "text": ""
+      },
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg==",
+        "width": 12,
+        "height": 12,
+        "alt": "\u201D"
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF"
+  },
+
+  {
+    "type": "type_int",
+    "message0" : "Int : %1",
+    "args0" : [
+      {
+        "type" : "field_number",
+        "name" : "INT_TEXT",
+        "text" : "0"
+      }
+    ],
+    "output": "Number",
+    "colour": "#6BABEF"
+  },
+
+  {
+    "type": "type_boolean",
+    "message0" : "Boolean : %1",
+    "args0" : [
+      {
+        "type" : "field_dropdown",
+        "name" : "BOOLEAN_TEXT",
+        "options": [
+          ["true", "true"], ["false", "false"]
+        ]
+      }
+    ],
+    "output": "Boolean",
+    "colour": "#6BABEF"
+  },
+
+
+
+  {
     "type": "turtle_move_internal",
     "message0": "move %1 %2",
     "args0": [
@@ -336,7 +396,7 @@
           [
             "LOW ",
             "LOW "
-          ],
+          ]
 
           ]
           },
@@ -399,7 +459,7 @@
           [
             "INPUT ",
             "INPUT "
-          ],
+          ]
 
         ]
       },
@@ -1067,7 +1127,7 @@
     "args0": [
       {
         "type": "input_value",
-        "name": "text",
+        "name": "STRING",
         "check": "String"
       }
 
@@ -1085,7 +1145,7 @@
     "args0": [
       {
         "type": "input_value",
-        "name": "NUM",
+        "name": "INT",
         "check": "Number"
       }
 
@@ -1097,6 +1157,23 @@
     "tooltip": ""
   },
 
+  {
+    "type": "serial_println_boolean",
+    "message0": "Serial Println(Boolean) : %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "BOOLEAN",
+        "check": "Boolean"
+      }
+
+    ],
+    "colour": "#FDB900",
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
 
   {
     "type": "base_pins_list",

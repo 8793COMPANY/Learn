@@ -25,13 +25,13 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textColor="#f78f43"
-        android:text="배울래"
+        android:text="배울래?"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="코딩 공부를 시작해 보세요 !"
+        android:text="코딩 공부를 시작해 보세요!"
         android:textColor="#f78f43"/>
 </LinearLayout>

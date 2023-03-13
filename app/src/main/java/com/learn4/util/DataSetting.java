@@ -5,8 +5,11 @@ import android.util.Log;
 
 import com.learn4.data.dto.Chapter;
 import com.learn4.data.room.AppDatabase;
+import com.learn4.data.room.AppDatabase2;
+import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.dao.ComponentDao;
 import com.learn4.data.room.dao.ContentsDao;
+import com.learn4.data.room.entity.BlockDictionary;
 import com.learn4.data.room.entity.Component;
 import com.learn4.data.room.entity.Contents;
 
@@ -26,18 +29,22 @@ public class DataSetting {
     public HashMap<String,List<Chapter>> chapter_list  = new HashMap<>();
     
     AppDatabase db = null;
+    AppDatabase2 db2 = null;
     Context context;
 
     public ComponentDao componentDao;
     public ContentsDao contentsDao;
+    public BlockDictionaryDao blockDictionaryDao;
 
     public DataSetting(Context context){
         this.context = context;
         Log.e("setting","init!");
         db = AppDatabase.getInstance(this.context);
+        db2 = AppDatabase2.getInstance(this.context);
 
         componentDao = db.componentDao();
         contentsDao = db.contentsDao();
+        blockDictionaryDao = db2.blockDictionaryDao();
 
 //        chapter_list = new ArrayList<Chapter>();
     }
@@ -67,6 +74,7 @@ public class DataSetting {
             Log.e("no data","!!");
             readContents();
             readComponent();
+            readBlock();
         }
 
         settingChapterByLevel(1);
@@ -83,6 +91,10 @@ public class DataSetting {
 
     public void insert_component_data(Component component){
         componentDao.insert(component);
+    }
+
+    public void insert_blockDictionary_data(BlockDictionary blockDictionary) {
+        blockDictionaryDao.insert(blockDictionary);
     }
 
     public void printList(){
@@ -125,6 +137,56 @@ public class DataSetting {
     public void printChapter(){
         for (int i=0; i< chapter_list.size(); i++){
             Log.e("checking",chapter_list.get(String.valueOf(i+1)).size()+"");
+        }
+    }
+
+    public void readBlock() {
+        try {
+            is = context.getResources().getAssets().open("test2.xls");
+            workbook = Workbook.getWorkbook(is);
+
+            if (workbook != null) {
+                Sheet sheet = workbook.getSheet(5);
+
+                if (sheet != null) {
+                    int colTotal = sheet.getColumns();
+                    Log.e("check","colTotal : " + colTotal+"");
+                    int rowTotal = sheet.getRows();
+                    Log.e("check","rowTotal : " + rowTotal+"");
+
+                    int rowIndexStart = 2;
+                    boolean plus;
+
+                    for (int row = rowIndexStart; row < rowTotal; row++) {
+                        plus = true;
+
+                        // 블록 이름 not null 확인
+                        String plusCheck = sheet.getCell(2, row).getContents();
+
+                        if (plusCheck.equals("")) {
+                            plus = false;
+                        }
+
+                        if (plus) {
+                            // 블록 순번 제외
+                            String[] blocks = new String[5];
+
+                            for (int col = 2; col <= 6; col++) {
+                                blocks[col - 2] = sheet.getCell(col, row).getContents();
+
+                                Log.e("test", blocks[col - 2]);
+                            }
+
+                            // 블록 설명 저장
+                            BlockDictionary blockDictionary = new BlockDictionary(blocks[0], blocks[1], blocks[2], blocks[3], blocks[4]);
+                            insert_blockDictionary_data(blockDictionary);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("test","error");
+            e.printStackTrace();
         }
     }
 

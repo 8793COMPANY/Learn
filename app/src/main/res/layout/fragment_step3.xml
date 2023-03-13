@@ -32,7 +32,25 @@
         app:layout_constraintStart_toStartOf="@+id/background_area"
         app:layout_constraintEnd_toEndOf="@+id/background_area"
         app:layout_constraintWidth_percent="0.8"
-        app:layout_constraintHeight_percent="0.85"></ImageView>
+        app:layout_constraintHeight_percent="0.85">
+    </ImageView>
+
+    <TextView
+        android:id="@+id/upload_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFF"
+        android:text="다음으로 넘어가 주세요"
+        android:textColor="#707070"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@+id/background_area"
+        app:layout_constraintBottom_toBottomOf="@+id/background_area"
+        app:layout_constraintStart_toStartOf="@+id/background_area"
+        app:layout_constraintEnd_toEndOf="@+id/background_area"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.85">
+    </TextView>
 
 
 

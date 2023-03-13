@@ -10,10 +10,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.util.MySharedPreferences;
+import com.learn4.view.custom.dialog.ContinueDialog;
 import com.learn4.view.recyclerview.RecyclerDecoration_Height;
 import com.learn4.view.custom.view.CustomView;
 import com.learn4.R;
@@ -35,6 +37,8 @@ public class ChapterActivity extends AppCompatActivity {
     AppDatabase db = null;
     public ContentsDao contentsDao;
     List<com.learn4.data.room.entity.Contents> contentsList = new ArrayList<>();
+
+    String basic_problem = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +140,6 @@ public class ChapterActivity extends AppCompatActivity {
         //chapter_content11_2
         int[] rID = new int[3];
 
-        String basic_problem = "";
         String deep_problem1 = "";
         String deep_problem2 = "";
 
@@ -152,18 +155,37 @@ public class ChapterActivity extends AppCompatActivity {
             }
         }
 
-        subject_list.add(new Subject(
+        if (num > 10) {
+            ContinueDialog continueDialog = new ContinueDialog(this, "준비 중인 콘텐츠입니다");
+            continueDialog.show();
+
+            subject_list.add(new Subject(
+                    totalNum + "-2",
+                    R.drawable.default_problem_image,
+                    basic_problem,
+                    rID[0],
+                    MySharedPreferences.getInt(getApplicationContext(), basic_problem + " MAX"),false));
+        } else {
+            subject_list.add(new Subject(
+                    totalNum + "-2",
+                    R.drawable.default_problem_image,
+                    basic_problem,
+                    rID[0],
+                    MySharedPreferences.getInt(getApplicationContext(), basic_problem + " MAX"),true));
+        }
+
+        /*subject_list.add(new Subject(
                 totalNum + "-2",
                 R.drawable.default_problem_image,
                 basic_problem,
                 rID[0],
-                MySharedPreferences.getInt(getApplicationContext(), basic_problem + " MAX"),true));
+                MySharedPreferences.getInt(getApplicationContext(), basic_problem + " MAX"),true));*/
 
         if(MySharedPreferences.getInt(getApplicationContext(),basic_problem + " MAX") == 5) {
             lock_check = true;
-        } else {
+        }/* else {
             lock_check = true;
-        }
+        }*/
 
         subject_list.add(new Subject(
                 totalNum + "-3",
@@ -184,7 +206,7 @@ public class ChapterActivity extends AppCompatActivity {
                 R.drawable.advanced_problem_image3,
                 "문제풀이",
                 rID[0],
-                MySharedPreferences.getInt(getApplicationContext(),"문제풀이" + totalNum),lock_check));
+                MySharedPreferences.getInt(getApplicationContext(),"문제풀이" + totalNum),false));
     }
 
 
@@ -196,9 +218,9 @@ public class ChapterActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         chapterAdapter.notifyItemChanged(chapterAdapter.current_chapter,"update");
-        if (MySharedPreferences.getInt(getApplicationContext(),"LED 깜빡이기 MAX") == 5){
+        if (MySharedPreferences.getInt(getApplicationContext(),basic_problem + " MAX") == 5){
 
-            chapterAdapter.notifyItemRangeChanged(1, subject_list.size()-1,"lock_check");
+            chapterAdapter.notifyItemRangeChanged(1, subject_list.size()-2,"lock_check");
         }
 //        if(MySharedPreferences.getInt(getApplicationContext(),"LED 1초간 껐다 켜기 MAX")==5){
 //            chapter3.setOpen(true,false);

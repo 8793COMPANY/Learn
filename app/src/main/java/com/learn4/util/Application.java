@@ -124,12 +124,13 @@ public class Application extends android.app.Application  {
             if (categoryData == null)
                 categoryData = CategoryData.getInstance();
 
-            Toast.makeText(getApplicationContext(), "hey", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "hey", Toast.LENGTH_SHORT).show();
 
 
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
                 Log.e("USB 감지 : ", "연결연결");
+                Toast.makeText(getApplicationContext(), "USB 연결", Toast.LENGTH_SHORT).show();
                 mPhysicaloid.open();
                 usb_check = true;
                 try {
@@ -145,6 +146,7 @@ public class Application extends android.app.Application  {
             if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
                 // USB was disconnected
                 Log.e("USB 감지 : ", "해제해제");
+                Toast.makeText(getApplicationContext(), "USB 해제", Toast.LENGTH_SHORT).show();
                 mPhysicaloid.close();
                 usb_check = false;
 
@@ -167,12 +169,12 @@ public class Application extends android.app.Application  {
             categoryData = CategoryData.getInstance();
 
         if (wifi_check&& usb_check){
-            Log.e("checkUploadBtn","true");
+            Log.e("checkUploadBtn","true1");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
             categoryData.getUpload_btn().setSelected(true);
             categoryData.getUpload_btn().setEnabled(true);
         }else{
-            Log.e("checkUploadBtn","false");
+            Log.e("checkUploadBtn","false1");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
             categoryData.getUpload_btn().setSelected(false);
             categoryData.getUpload_btn().setEnabled(false);

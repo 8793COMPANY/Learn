@@ -24,6 +24,9 @@ import android.content.DialogInterface;
 import com.android.volley.error.TimeoutError;
 import com.google.blockly.android.UploadBtnCheck;
 import com.learn4.data.dto.SimulatorComponent;
+import com.learn4.data.room.AppDatabase2;
+import com.learn4.data.room.dao.BlockDictionaryDao;
+import com.learn4.data.room.entity.BlockDictionary;
 import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
@@ -167,9 +170,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Button serial_send_btn;
     public Button  close_btn;
 
-
     Button block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn;
-
 
     ImageView block_bot_btn;
     Button simulator_btn, component_close_btn, move_btn;
@@ -214,6 +215,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     int current_pos =0;
     boolean simulator_check = false;
 
+    AppDatabase2 db2 = null;
+    public BlockDictionaryDao blockDictionaryDao;
+    List<BlockDictionary> blockDictionaryList = new ArrayList<>();
 
     //시니얼 모니터 slow 방지 문자열
     StringBuilder stringBuilder = new StringBuilder();
@@ -222,8 +226,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     CodeDictionaryAdapter dictionaryAdapter;
     SimulatorAdapter simulatorAdapter;
-
-
 
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -913,7 +915,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         super.onCreate(savedInstanceState);
         NetworkConnection networkConnection = new NetworkConnection(this);
         networkConnection.observe(this, aBoolean -> {
-            Toast.makeText(getApplicationContext(), aBoolean+"", Toast.LENGTH_SHORT).show();
+            //
+            // Toast.makeText(getApplicationContext(), aBoolean+"", Toast.LENGTH_SHORT).show();
             if (aBoolean){
                 Application.wifi_check = true;
             }else{
@@ -922,6 +925,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Application.checkUploadBtn();
         });
 
+        db2 = AppDatabase2.getInstance(getBaseContext());
+
+        blockDictionaryDao = db2.blockDictionaryDao();
+        blockDictionaryList = blockDictionaryDao.findAll();
+        Log.e("blockDictionaryList", "blockDictionaryList : " + blockDictionaryList.size()+"");
 
         contents_name = getIntent().getStringExtra("contents_name");
         chapter_id = getIntent().getStringExtra("id");
@@ -980,22 +988,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mCategoryView.mCategoryTabs.setEnableCheck(this);
 //        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
 
-        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(1).getItems();
-        for (BlocklyCategory.CategoryItem item : blocks) {
-            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
-                // Clean up the old views
-                BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
-//                controller.getBlockViewFactory().getView()
-                Block block = blockItem.getBlock();
-                if (block != null)
-                    Log.e("block item", "not null");
-                Log.e("block", blockItem.getBlock().toString());
-                dictionary_block_list.add(new CodeBlock("0", "Setup", "아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳", R.drawable.problem_block2, block));
-//                dictionary_block_list.add(new CodeBlock("1","digitalWrite","정해진 PIN 번호를 HIGH 또는 LOW로 설정하는 블록",R.drawable.problem_block4));
-//                dictionary_block_list.add(new CodeBlock("2","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block5));
-
-            }
-        }
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1013,7 +1005,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         clickEvent(3);
                         break;
                 }
-
             }
         };
 
@@ -1092,6 +1083,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(num).getItems();
 
         for (BlocklyCategory.CategoryItem item : blocks) {
+            String title = "";
+            String info = "";
+            boolean check = false;
+
             if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
                 // Clean up the old views
                 BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
@@ -1100,8 +1095,23 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Log.e("block item","not null");
                 }
                 Log.e("block",blockItem.getBlock().toString());
+
+                String [] splitBlock = blockItem.getBlock().toString().split("\"");
+                Log.e("block", splitBlock[1]);
+
                 // 엑셀 파일 내용과 어떻게 맞춰서 넣을지
-                dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
+                for (int i = 0; i < blockDictionaryList.size(); i++) {
+                    if (blockDictionaryList.get(i).getBlock_type().equals(splitBlock[1])) {
+                        title = blockDictionaryList.get(i).getBlock_name();
+                        info = blockDictionaryList.get(i).getBlock_explanation();
+                        check = true;
+                    }
+                }
+
+                if (check) {
+                    dictionary_block_list.add(new CodeBlock("0", title, info, R.drawable.problem_block2, block));
+                }
+                //dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
             }
         }
         dictionaryAdapter = new CodeDictionaryAdapter(getApplicationContext(), controller, dictionary_block_list);
@@ -1221,10 +1231,23 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         simulator_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (getController().getWorkspace().hasBlocks()) {
+                    mBlocklyActivityHelper.requestCodeGeneration(
+                            getBlockGeneratorLanguage(),
+                            getBlockDefinitionsJsonPaths(),
+                            getGeneratorsJsPaths(),
+                            getCodeGenerationCallback());
+                }
 
+                Log.e("code",code);
                 Log.e("chapter_id",chapter_id);
-                simulatorDialog = new SimulatorDialog(MainActivity.this,chapter_id,code);
-                simulatorDialog.show();
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    simulatorDialog = new SimulatorDialog(MainActivity.this,chapter_id,code);
+                    simulatorDialog.show();
+                }, 500);
+
 //                block_simulator.setVisibility(View.VISIBLE);
 //                simulator_btn.setVisibility(View.GONE);
 //                trashcan_btn.setVisibility(View.GONE);
@@ -1941,6 +1964,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void upload_btn(int pos) {
         hideSystemUI();
+        Toast.makeText(getApplicationContext(), "in", Toast.LENGTH_SHORT).show();
         Log.e("upload_btn","in");
             if (Application.wifi_check) {
 

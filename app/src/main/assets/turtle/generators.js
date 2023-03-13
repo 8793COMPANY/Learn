@@ -23,6 +23,50 @@
 
 
 // Extensions to Blockly's language and JavaScript generator.
+
+
+
+Blockly.JavaScript['type_string'] = function(block) {
+  var value_string = block.getFieldValue("STRING_TEXT");
+  return ['"' + value_string + '"', Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['type_int'] = function(block) {
+  var value_int = block.getFieldValue('INT_TEXT');
+  return [value_int, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['type_boolean'] = function(block) {
+  var value_boolean = block.getFieldValue('BOOLEAN_TEXT');
+  return [value_boolean, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['serial_print'] = function(block) {
+  var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
+  var code = "Serial.print("+value_text+");\n";
+  return code;
+};
+
+Blockly.JavaScript['serial_println'] = function(block) {
+  var value_text = Blockly.JavaScript.valueToCode(block, "STRING", Blockly.JavaScript.ORDER_ATOMIC);
+  var code = "Serial.println("+value_text+");\n";
+  return code;
+};
+
+Blockly.JavaScript['serial_println_int'] = function(block) {
+  var value_num = Blockly.JavaScript.valueToCode(block, "INT", Blockly.JavaScript.ORDER_ATOMIC);
+  var code = "Serial.println("+value_num+");\n";
+  return code;
+};
+
+Blockly.JavaScript['serial_println_boolean'] = function(block) {
+  var value_num = Blockly.JavaScript.valueToCode(block, "BOOLEAN", Blockly.JavaScript.ORDER_ATOMIC);
+  var code = "Serial.println("+value_num+");\n";
+  return code;
+};
+
+
+
 Blockly.JavaScript['turtle_move_internal'] = function(block) {
   // Generate JavaScript for moving forward or backwards.
   var value = block.getFieldValue('VALUE');
@@ -387,13 +431,13 @@ Blockly.JavaScript['inout_analog_read'] = function(block) {
    return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-Blockly.JavaScript['serial_print'] = function(block) {
+/*Blockly.JavaScript['serial_print'] = function(block) {
    var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
    var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
 //   Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
    var code = "Serial.print("+value_text+");\n";
    return code;
- };
+ };*/
 
 
  Blockly.JavaScript['variables_change'] = function() {
@@ -415,13 +459,13 @@ Blockly.JavaScript['serial_begin'] = function(block) {
  };
 
 
- Blockly.JavaScript['serial_println'] = function(block) {
+/* Blockly.JavaScript['serial_println'] = function(block) {
     var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
     var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
 //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
     var code = "Serial.println("+value_text+");\n";
     return code;
-  };
+  };*/
 
    Blockly.JavaScript['random_number'] = function(block) {
       var from_num = Blockly.JavaScript.valueToCode(block, "from_num", Blockly.JavaScript.ORDER_ATOMIC);
@@ -456,13 +500,13 @@ Blockly.JavaScript['serial_begin'] = function(block) {
 
 
 
-   Blockly.JavaScript['serial_println_int'] = function(block) {
+/*   Blockly.JavaScript['serial_println_int'] = function(block) {
       var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
       var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
   //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
       var code = "Serial.println("+value_num+");\n";
       return code;
-    };
+    };*/
 
 Blockly.JavaScript['base_pins_list'] = function() {
   var dropdown_value = this.getFieldValue('PIN');

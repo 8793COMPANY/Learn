@@ -144,7 +144,7 @@ public class Step3 extends Fragment {
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
         retakeDialog = new RetakeDialog(getContext(), retake_ok,retake_cancel);
-        upload_area.setOnClickListener(v->{
+        /*upload_area.setOnClickListener(v->{
             if (check){
                 retakeDialog.show();
                 Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -163,7 +163,7 @@ public class Step3 extends Fragment {
             }
 
 
-        });
+        });*/
 
         Log.e("chapter_id",chapter_id);
 

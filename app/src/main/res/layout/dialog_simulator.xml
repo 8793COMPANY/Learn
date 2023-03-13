@@ -14,8 +14,6 @@
     app:layout_constraintRight_toRightOf="parent"
     tools:ignore="MissingDefaultResource">
 
-
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/component_close_btn"
             android:layout_width="0dp"
@@ -83,8 +81,8 @@
             android:text=""
             android:textColor="#000000"
             android:scrollbars="vertical"
-            app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintVertical_bias="0"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintVertical_bias="0.05"
             app:layout_constraintTop_toBottomOf="@+id/component_close_btn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/code_view_start_guide"
@@ -98,7 +96,7 @@
             android:text="동작하기"
             android:textColor="#ffffff"
             android:textSize="15dp"
-            app:layout_constraintHeight_percent="0.18"
+            app:layout_constraintHeight_percent="0.15"
             app:layout_constraintTop_toBottomOf="@+id/code_view"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/code_view_start_guide"
@@ -109,7 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.02"/>
+            app:layout_constraintGuide_percent="0.03"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/recyclerview_end_guide"
@@ -130,7 +128,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.98"/>
+            app:layout_constraintGuide_percent="0.97"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

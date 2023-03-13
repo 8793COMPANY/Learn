@@ -49,13 +49,17 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
             int resID = context.getResources().getIdentifier("contents"+String.valueOf(chapters.get(position).id) , "drawable" ,
                     context.getPackageName());
             holder.ivChapter.setBackgroundResource(resID);
+
+            if (chapters.get(position).id > 10) {
+                holder.chapter_background.setBackgroundResource(R.drawable.chapter_lock_image);
+            } else {
+                holder.chapter_background.setBackgroundResource(0);
+            }
         }else{
             if (Build.VERSION.SDK_INT >= 21) {
                 holder.ivChapter.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#ffdca2")));
             }
         }
-
-        Log.e("id",String.valueOf(chapters.get(position).id));
 
         ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
         layoutParams.width = 400;
@@ -63,6 +67,15 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
         holder.itemView.requestLayout();
 
         holder.itemView.setOnClickListener(v->{
+            Log.e("idddd", chapters.get(position).id+"");
+
+            /*if (chapters.get(position).id > 10) {
+                Toast.makeText(context,"아직 열람할 수 없습니다.",Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(context.getApplicationContext(), ChapterActivity.class);
+                intent.putExtra("id",String.valueOf(chapters.get(position).id));
+                context.startActivity(intent);
+            }*/
             Intent intent = new Intent(context.getApplicationContext(), ChapterActivity.class);
             intent.putExtra("id",String.valueOf(chapters.get(position).id));
             context.startActivity(intent);
@@ -84,10 +97,12 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivChapter;
+        public ImageView chapter_background;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
             ivChapter = itemView.findViewById(R.id.chapter);
+            chapter_background = itemView.findViewById(R.id.chapter_background);
         }
     }
 }

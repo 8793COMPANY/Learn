@@ -152,7 +152,7 @@ public class Step2 extends Fragment {
                     diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
                 else
                     diagram_img.setBackgroundResource(R.drawable.diagram_module_img);*/
-                diagram_img.setBackgroundResource(R.drawable.diagram_module_crop_img);
+                diagram_img.setBackgroundResource(0);
             }
         });
 
