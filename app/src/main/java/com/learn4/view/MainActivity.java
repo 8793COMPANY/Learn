@@ -31,6 +31,7 @@ import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
+import com.learn4.view.custom.dialog.UploadFalseDialog;
 import com.learn4.view.simulator.SimulatorAdapter;
 import com.learn4.view.simulator.SimulatorDialog;
 import com.learn4.view.dictionary.CodeDictionaryAdapter;
@@ -1964,47 +1965,48 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     public void upload_btn(int pos) {
         hideSystemUI();
-        Toast.makeText(getApplicationContext(), "in", Toast.LENGTH_SHORT).show();
         Log.e("upload_btn","in");
-            if (Application.wifi_check) {
+        Log.e("upload_btn",Application.all_check+"");
 
-                mMonitorHandler.sendEmptyMessage(1);
-                customProgressDialog.show();
+        if (Application.all_check) {
+            mMonitorHandler.sendEmptyMessage(1);
+            customProgressDialog.show();
 
-                blockly_monitor.setVisibility(View.GONE);
-                mBlocklyActivityHelper.getFlyoutController();
-                categoryData.setPosition(6);
-                current_pos = 6;
+            blockly_monitor.setVisibility(View.GONE);
+            mBlocklyActivityHelper.getFlyoutController();
+            categoryData.setPosition(6);
+            current_pos = 6;
 
-                compileCheck = true;
-                if (getController().getWorkspace().hasBlocks()) {
-                    Log.e("??", "들어옴");
-                    mBlocklyActivityHelper.requestCodeGeneration(
-                            getBlockGeneratorLanguage(),
-                            getBlockDefinitionsJsonPaths(),
-                            getGeneratorsJsPaths(),
-                            getCodeGenerationCallback());
-                }
+            compileCheck = true;
 
-                Log.e("MainActivity chapter_id",chapter_id+"");
-                // TODO : 화면 캡쳐 트리거
-                if(!chapter_id.equals("0")) {
-                    Log.e("MainActivity", "captureWorkspace: start");
-                    bitmapWorkspace = controller.captureWorkspace();
-
-                    try {
-                        saveImage(bitmapWorkspace, "captureWorkspace");
-                        Log.e("MainActivity", "captureWorkspace: save ok");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            } else {
-                Toast.makeText(getApplicationContext(), "WIFI를 연결해주세요!", Toast.LENGTH_SHORT).show();
+            if (getController().getWorkspace().hasBlocks()) {
+                Log.e("??", "들어옴");
+                mBlocklyActivityHelper.requestCodeGeneration(
+                        getBlockGeneratorLanguage(),
+                        getBlockDefinitionsJsonPaths(),
+                        getGeneratorsJsPaths(),
+                        getCodeGenerationCallback());
             }
 
+            Log.e("MainActivity chapter_id",chapter_id+"");
+            // TODO : 화면 캡쳐 트리거
+            if(!chapter_id.equals("0")) {
+                Log.e("MainActivity", "captureWorkspace: start");
+                bitmapWorkspace = controller.captureWorkspace();
 
+                try {
+                    saveImage(bitmapWorkspace, "captureWorkspace");
+                    Log.e("MainActivity", "captureWorkspace: save ok");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } else {
+            //Toast.makeText(getApplicationContext(), "WIFI 및 USB를 연결해주세요!", Toast.LENGTH_SHORT).show();
+            UploadFalseDialog uploadFalseDialog = new UploadFalseDialog(this);
+            uploadFalseDialog.show();
+        }
 
         current_pos = 6;
     }
@@ -2019,7 +2021,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }else{
             Log.e("checkUploadBtn","false");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
-            categoryData.getUpload_btn().setEnabled(false);
+            //categoryData.getUpload_btn().setEnabled(false);
         }
     }
 }

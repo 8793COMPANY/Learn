@@ -40,6 +40,7 @@ public class Application extends android.app.Application  {
 
     public static boolean usb_check = false;
     public static boolean wifi_check = false;
+    public static boolean all_check = false;
     public static Physicaloid mPhysicaloid ;
     public static CategoryData categoryData;
 
@@ -140,7 +141,6 @@ public class Application extends android.app.Application  {
                 }catch (NullPointerException e){
                     Log.e("upload btn","null!");
                 }
-
             }
 
             if (action.equals("android.hardware.usb.action.USB_DEVICE_DETACHED")) {
@@ -173,11 +173,14 @@ public class Application extends android.app.Application  {
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
             categoryData.getUpload_btn().setSelected(true);
             categoryData.getUpload_btn().setEnabled(true);
+
+            all_check = true;
         }else{
             Log.e("checkUploadBtn","false1");
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
             categoryData.getUpload_btn().setSelected(false);
-            categoryData.getUpload_btn().setEnabled(false);
+            //categoryData.getUpload_btn().setEnabled(false);
+            all_check = false;
         }
     }
 
