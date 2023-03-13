@@ -341,7 +341,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         @Override
                         public void run() {
                             code = generatedCode;
-                            submittedXml = generatedCode;
+                            submittedXml = submittedXml;
 //                            updateTextMinWidth();
                         }
                     });
