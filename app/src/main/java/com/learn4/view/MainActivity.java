@@ -28,6 +28,7 @@ import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
+import com.learn4.tutor.TutorCheck;
 import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
@@ -181,7 +182,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     Button block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn;
 
-    ImageView block_bot_btn;
+    public ImageView block_bot_btn;
     Button simulator_btn, component_close_btn, move_btn;
     TextView code_view;
     MediaPlayer mediaPlayer;
@@ -1388,141 +1389,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             @Override
             public void onClick(View v) {
                 application = (Application) getApplication();
-                
 
                 if (simulator_check) {
                     application.showLoadingScreen(MainActivity.this);
                 }
 
-                // 봇 메시지 초기화
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                }
-
                 // 답안지 갱신
                 loadXmlFromWorkspace();
-
-                solutionXmlAssetFilePath ="";
-                if(chapter_id.equals("3-2")){
-                    solutionXmlAssetFilePath = "lv1_blink.xml";
-                }else if (chapter_id.equals("3-3")){
-                    solutionXmlAssetFilePath = "lv2_blink.xml";
-                }else if (chapter_id.equals("3-4")){
-                    solutionXmlAssetFilePath = "lv3_blink.xml";
-                }else if (chapter_id.equals("5-2")) {
-                    solutionXmlAssetFilePath = "lv5_2.xml";
-                }else if (chapter_id.equals("5-3")) {
-                    solutionXmlAssetFilePath = "lv5_3.xml";
-                }else if (chapter_id.equals("5-4")) {
-                    solutionXmlAssetFilePath = "lv5_4.xml";
-                }else{
-                    solutionXmlAssetFilePath = "lv1_blink.xml";
-                }
-
-                //TODO: 소영님 파일변경은 solutionXmlAssetFilePath 값 변경만 하시면 됩니다.
-                //solutionXmlAssetFilePath = "lv5_4.xml";
-
-                Log.e("solutionXmlAssetFilePath",solutionXmlAssetFilePath);
 
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     application.hideLoadingScreen();
-                    // TODO : block compare test
-                    ParentXml parentXml = new ParentXml(getApplicationContext(),
-                            "turtle/demo_workspaces/"+solutionXmlAssetFilePath, submittedXml);
 
-                    Source solution_src = parentXml.getSolutionSource();
-                    Source submitted_src = parentXml.getSubmittedSource();
-
-                    String solution_str = parentXml.getSolutionString();
-                    String submitted_str = parentXml.getSubmittedString();
-
-                    Log.e("solution_str",solution_str);
-                    Log.e("submitted_str",submitted_str);
-
-                    // 채점
-                    Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
-                    Log.d("Build Bot", "===============================");
-
-                    // 정답지, 답안지 IS 초기화
-                    InputSource solution_is = parentXml.getSolutionInputSource();
-                    InputSource submitted_is = parentXml.getSubmittedInputSource();
-
-                    // 정답지, 답안지 DOM 생성
-                    parentXml.initDocument();
-
-                    Document solution_doc = parentXml.getSolutionDocument();
-                    Document submitted_doc = parentXml.getSubmittedDocument();
-
-                    // 답안지 파싱 작업 시작
-                    NodeList submitted_statement_nl = submitted_doc.getElementsByTagName("statement");
-                    NodeList solution_statement_nl = submitted_doc.getElementsByTagName("statement");
-                    Node submitted_setup_node = null;
-                    NodeList submitted_setup_nl = null;
-                    Node submitted_loop_node = null;
-                    NodeList submitted_loop_nl = null;
-
-                    // 1. Setup 이랑 Loop 노드 분리
-                    for (int i = 0; i < submitted_statement_nl.getLength(); i++) {
-                        Node n = submitted_statement_nl.item(i);
-
-                        // turtle_setup_loop - statement node details (for debug log)
-                        Log.d("Build Bot", i + " - n0 name : " + n.getNodeName());
-                        Log.d("Build Bot", i + " - n0 attr name : " + n.getAttributes().getNamedItem("name").getNodeValue());
-
-                        // attr name : DO - Setup node
-                        // attr name : DO1 - Loop node
-                        switch (n.getAttributes().getNamedItem("name").getNodeValue()) {
-                            case "DO":
-                                submitted_setup_node = n;
-                            case "DO1":
-                                submitted_loop_node = n;
-                        }
-                    }
-
-                    // TODO : 2. Setup 노드 테스트 케이스 작성
-                    Element e = (Element) submitted_statement_nl.item(0);
-
-                    if (e != null) {
-                        // 또는, " 답안지가 정답지와 일치 " 했을때 정답처리
-                        if (solution_str.equals(submitted_str)){
-                            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
-                            mediaPlayer.start();
-
-                            showCustomDialog(1);
-
-                            /*block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
-
-                            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                            alertDialog.setTitle("블록 코딩 튜터");
-                            alertDialog.setMessage("정답입니다. 참 잘했어요~!");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                    (dialog, which) -> {
-                                        block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
-                                        dialog.dismiss();
-                                    });
-                            alertDialog.show();*/
-                        }else{
-                            showCustomDialog(2);
-                            /*AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                            alertDialog.setTitle("블록 코딩 튜터");
-                            alertDialog.setMessage("틀렸습니다. 다시 한번 해보세요~!");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                    (dialog, which) -> {
-                                        block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
-                                        dialog.dismiss();
-                                    });
-                            alertDialog.show();*/
-                        }
-
-                        Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
-                        Log.d("Build Bot pin IO", e.getElementsByTagName("field").item(1).getTextContent());
-                        Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
-                    } else {
-                        if (simulator_check) {
-                            showCustomDialog(3);
-                        }
-                    }
+                    TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
                 }, 1000);
             }
         });
