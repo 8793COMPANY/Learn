@@ -49,6 +49,7 @@ import android.graphics.Bitmap;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -272,8 +273,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     Handler mHandler = new Handler();
-
-
+    String solutionXmlAssetFilePath ="";
+    Application application;
 
 
     public void read_code() {
@@ -1383,8 +1384,161 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
 //        });
 
+        block_bot_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                application = (Application) getApplication();
+                
 
-        block_bot_btn.setOnClickListener(v -> {
+                if (simulator_check) {
+                    application.showLoadingScreen(MainActivity.this);
+                }
+
+                // 봇 메시지 초기화
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+
+                // 답안지 갱신
+                loadXmlFromWorkspace();
+
+                solutionXmlAssetFilePath ="";
+                if(chapter_id.equals("3-2")){
+                    solutionXmlAssetFilePath = "lv1_blink.xml";
+                }else if (chapter_id.equals("3-3")){
+                    solutionXmlAssetFilePath = "lv2_blink.xml";
+                }else if (chapter_id.equals("3-4")){
+                    solutionXmlAssetFilePath = "lv3_blink.xml";
+                }else if (chapter_id.equals("5-2")) {
+                    solutionXmlAssetFilePath = "lv5_2.xml";
+                }else if (chapter_id.equals("5-3")) {
+                    solutionXmlAssetFilePath = "lv5_3.xml";
+                }else if (chapter_id.equals("5-4")) {
+                    solutionXmlAssetFilePath = "lv5_4.xml";
+                }else{
+                    solutionXmlAssetFilePath = "lv1_blink.xml";
+                }
+
+                //TODO: 소영님 파일변경은 solutionXmlAssetFilePath 값 변경만 하시면 됩니다.
+                //solutionXmlAssetFilePath = "lv5_4.xml";
+
+                Log.e("solutionXmlAssetFilePath",solutionXmlAssetFilePath);
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    application.hideLoadingScreen();
+                    // TODO : block compare test
+                    ParentXml parentXml = new ParentXml(getApplicationContext(),
+                            "turtle/demo_workspaces/"+solutionXmlAssetFilePath, submittedXml);
+
+                    Source solution_src = parentXml.getSolutionSource();
+                    Source submitted_src = parentXml.getSubmittedSource();
+
+                    String solution_str = parentXml.getSolutionString();
+                    String submitted_str = parentXml.getSubmittedString();
+
+                    Log.e("solution_str",solution_str);
+                    Log.e("submitted_str",submitted_str);
+
+                    // 채점
+                    Log.d("Build Bot", "Is that the right answer? : " + solution_str.equals(submitted_str));
+                    Log.d("Build Bot", "===============================");
+
+                    // 정답지, 답안지 IS 초기화
+                    InputSource solution_is = parentXml.getSolutionInputSource();
+                    InputSource submitted_is = parentXml.getSubmittedInputSource();
+
+                    // 정답지, 답안지 DOM 생성
+                    parentXml.initDocument();
+
+                    Document solution_doc = parentXml.getSolutionDocument();
+                    Document submitted_doc = parentXml.getSubmittedDocument();
+
+                    // 답안지 파싱 작업 시작
+                    NodeList submitted_statement_nl = submitted_doc.getElementsByTagName("statement");
+                    NodeList solution_statement_nl = submitted_doc.getElementsByTagName("statement");
+                    Node submitted_setup_node = null;
+                    NodeList submitted_setup_nl = null;
+                    Node submitted_loop_node = null;
+                    NodeList submitted_loop_nl = null;
+
+                    // 1. Setup 이랑 Loop 노드 분리
+                    for (int i = 0; i < submitted_statement_nl.getLength(); i++) {
+                        Node n = submitted_statement_nl.item(i);
+
+                        // turtle_setup_loop - statement node details (for debug log)
+                        Log.d("Build Bot", i + " - n0 name : " + n.getNodeName());
+                        Log.d("Build Bot", i + " - n0 attr name : " + n.getAttributes().getNamedItem("name").getNodeValue());
+
+                        // attr name : DO - Setup node
+                        // attr name : DO1 - Loop node
+                        switch (n.getAttributes().getNamedItem("name").getNodeValue()) {
+                            case "DO":
+                                submitted_setup_node = n;
+                            case "DO1":
+                                submitted_loop_node = n;
+                        }
+                    }
+
+                    // TODO : 2. Setup 노드 테스트 케이스 작성
+                    Element e = (Element) submitted_statement_nl.item(0);
+
+                    if (e != null) {
+                        // 또는, " 답안지가 정답지와 일치 " 했을때 정답처리
+                        if (solution_str.equals(submitted_str)){
+                            mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.bot_true_answer);
+                            mediaPlayer.start();
+
+                            showCustomDialog(1);
+
+                            /*block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                            alertDialog.setTitle("블록 코딩 튜터");
+                            alertDialog.setMessage("정답입니다. 참 잘했어요~!");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    (dialog, which) -> {
+                                        block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                                        dialog.dismiss();
+                                    });
+                            alertDialog.show();*/
+                        }else{
+                            showCustomDialog(2);
+                            /*AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                            alertDialog.setTitle("블록 코딩 튜터");
+                            alertDialog.setMessage("틀렸습니다. 다시 한번 해보세요~!");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    (dialog, which) -> {
+                                        block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                                        dialog.dismiss();
+                                    });
+                            alertDialog.show();*/
+                        }
+
+                        Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
+                        Log.d("Build Bot pin IO", e.getElementsByTagName("field").item(1).getTextContent());
+                        Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
+                    } else {
+                        if (simulator_check) {
+                            showCustomDialog(3);
+                        }
+                    }
+                }, 1000);
+            }
+        });
+
+        /*block_bot_btn.setOnClickListener(v -> {
+            if (getController().getWorkspace().hasBlocks()) {
+                mBlocklyActivityHelper.requestCodeGeneration(
+                        getBlockGeneratorLanguage(),
+                        getBlockDefinitionsJsonPaths(),
+                        getGeneratorsJsPaths(),
+                        getCodeGenerationCallback());
+            }
+
+            Log.e("code",code);
+            Log.e("chapter_id",chapter_id);
+
             // 봇 메시지 초기화
             if (mediaPlayer != null) {
                 mediaPlayer.release();
@@ -1393,8 +1547,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // 답안지 갱신
             loadXmlFromWorkspace();
 
-
-
             String solutionXmlAssetFilePath ="";
             if(chapter_id.equals("3-2")){
                 solutionXmlAssetFilePath = "lv1_blink.xml";
@@ -1402,12 +1554,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 solutionXmlAssetFilePath = "lv2_blink.xml";
             }else if (chapter_id.equals("3-4")){
                 solutionXmlAssetFilePath = "lv3_blink.xml";
+            }else if (chapter_id.equals("5-2")) {
+                solutionXmlAssetFilePath = "lv5_2.xml";
+            }else if (chapter_id.equals("5-3")) {
+                solutionXmlAssetFilePath = "lv5_3.xml";
+            }else if (chapter_id.equals("5-4")) {
+                solutionXmlAssetFilePath = "lv5_4.xml";
             }else{
                 solutionXmlAssetFilePath = "lv1_blink.xml";
             }
 
             //TODO: 소영님 파일변경은 solutionXmlAssetFilePath 값 변경만 하시면 됩니다.
-            solutionXmlAssetFilePath = "lv5_2.xml";
+            //solutionXmlAssetFilePath = "lv5_4.xml";
 
             Log.e("solutionXmlAssetFilePath",solutionXmlAssetFilePath);
 
@@ -1538,7 +1696,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
 
                 // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
-                /*
+                *//*
                 if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                         e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
                         ||
@@ -1614,7 +1772,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             });
                     alertDialog.show();
                 }
-                */
+                *//*
 
 
                 Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
@@ -1623,7 +1781,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
 
 
-        });
+        });*/
 
         // 테스트 메시지 재생 완료
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
@@ -2284,5 +2442,86 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
             categoryData.getUpload_btn().setEnabled(false);
         }
+    }
+
+    private void showCustomDialog(int num) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
+
+        View view = LayoutInflater.from(MainActivity.this).inflate(
+                R.layout.dialog_tutor, (ConstraintLayout)findViewById(R.id.tutor_dialog));
+
+        builder.setView(view);
+
+        if (num == 1) {
+            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
+            ((TextView)view.findViewById(R.id.title)).setText("정답입니다. 참 잘했어요~!");
+        } else if (num == 2) {
+            ((TextView)view.findViewById(R.id.title)).setText("틀렸습니다. 다시 한번 해보세요~!");
+        } else {
+            ((TextView)view.findViewById(R.id.title)).setText("빈 블록입니다. 블록 코딩을 해주세요~!");
+        }
+
+        AlertDialog alertDialog = builder.create();
+
+        view.findViewById(R.id.bottom_section).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                alertDialog.dismiss();
+            }
+        });
+
+        view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                alertDialog.dismiss();
+            }
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+
+        alertDialog.show();
+
+        /*Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params.width = size.x * 500/1280;
+        params.height = size.y * 300/720;
+        alertDialog.getWindow().setAttributes(params);*/
+
+        ViewGroup.LayoutParams params = alertDialog.getWindow().getAttributes();
+        params.width = (int) (335*2.6);
+        alertDialog.getWindow().setAttributes((WindowManager.LayoutParams) params);
+
+        //alertDialog.getWindow().setLayout(335*3, 170*3);
+
+        /*WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+
+        if (Build.VERSION.SDK_INT < 30) {
+            Display display = windowManager.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+
+            Window window = alertDialog.getWindow();
+
+            int x = (int) (size.x * 0.5f);
+            int y = (int) (size.y * 0.5f);
+
+            window.setLayout(x, y);
+        } else {
+            Rect rect = windowManager.getCurrentWindowMetrics().getBounds();
+
+            Window window = alertDialog.getWindow();
+
+            int x = (int) (rect.width() * 0.5f);
+            int y = (int) (rect.height() * 0.5f);
+
+            window.setLayout(x, y);
+        }*/
     }
 }

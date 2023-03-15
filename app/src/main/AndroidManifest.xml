@@ -16,7 +16,7 @@
         android:required="true" />
 
     <application
-        android:name="com.learn4.util.Application"
+        android:name=".util.Application"
         android:allowBackup="false"
         android:configChanges="orientation|screenSize"
         android:hardwareAccelerated="true"
@@ -27,10 +27,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name="com.learn4.view.dictionary.BlockDictionaryActivity"
+            android:name=".view.dictionary.BlockDictionaryActivity"
             android:exported="false"
-            android:screenOrientation="sensorLandscape"/>
+            android:screenOrientation="sensorLandscape" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -43,26 +44,26 @@
         </provider>
 
         <activity
-            android:name="com.learn4.view.problem.solve.RightAnswerActivity"
+            android:name=".view.problem.solve.RightAnswerActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.view.chapter.ChapterActivity"
+            android:name=".view.chapter.ChapterActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.view.problem.basic.ProblemActivity"
+            android:name=".view.problem.basic.ProblemActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.view.problem.solve.SolvingProblem"
+            android:name=".view.problem.solve.SolvingProblem"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.view.contents.ContentsActivity"
+            android:name=".view.contents.ContentsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.view.mode_select.ModeSelect"
+            android:name=".view.mode_select.ModeSelect"
+            android:exported="true"
             android:label="배울래?"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,16 +76,14 @@
             android:required="false" />
 
         <activity
-            android:name="com.learn4.view.onboarding.LoginActivity"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true">
-
-        </activity>
+            android:name=".view.onboarding.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name="com.learn4.view.onboarding.IntroActivity"
+            android:name=".view.onboarding.IntroActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.learn4.view.MainActivity"
+            android:name=".view.MainActivity"
             android:screenOrientation="sensorLandscape" />
     </application>
 
