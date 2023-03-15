@@ -30,7 +30,7 @@
                     <block type="base_delay">
                         <value name="DELAY_TIME">
                             <block type="math_number">
-                                <field name="NUM">100</field>
+                                <field name="NUM">500</field>
                             </block>
                         </value>
                         <next>
@@ -49,7 +49,7 @@
                                     <block type="base_delay">
                                         <value name="DELAY_TIME">
                                             <block type="math_number">
-                                                <field name="NUM">50</field>
+                                                <field name="NUM">500</field>
                                             </block>
                                         </value>
                                     </block>
