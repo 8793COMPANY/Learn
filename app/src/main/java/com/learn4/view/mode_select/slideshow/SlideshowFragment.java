@@ -1,6 +1,7 @@
 package com.learn4.view.mode_select.slideshow;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class SlideshowFragment extends Fragment {
         slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
+                Log.e("slideshowfragment text",s);
                 textView.setText(s);
             }
         });

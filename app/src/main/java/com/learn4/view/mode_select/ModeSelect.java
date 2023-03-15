@@ -69,6 +69,8 @@ public class ModeSelect extends AppCompatActivity {
         DataSetting setting = DataSetting.getInstance(getApplicationContext());
         setting.dataCheck();
 
+
+
         //layout을 가지고 와서 actionbar에 포팅을 시킵니다.
 //        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
 //        View actionbar = inflater.inflate(R.layout.custom_actionbar, null);
@@ -140,24 +142,7 @@ public class ModeSelect extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-        @Override
-        public void onAvailable(Network network) {
-            Toast.makeText(getApplicationContext(), "network 연결", Toast.LENGTH_SHORT).show();
-            Application.wifi_check = true;
-            Application.checkUploadBtn();
 
-        }
-
-        @Override
-        public void onLost(Network network) {
-            Toast.makeText(getApplicationContext(), "network 해제", Toast.LENGTH_SHORT).show();
-            Application.wifi_check = false;
-            Application.checkUploadBtn();
-
-        }
-
-    };
 
     @Override
     protected void onResume() {

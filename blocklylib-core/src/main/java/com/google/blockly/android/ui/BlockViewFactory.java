@@ -20,6 +20,8 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
+
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -215,6 +217,8 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
         mBlockIdToView.put(block.getId(), new WeakReference<>(blockView));
 
         parentGroup.addView((View) blockView);
+
+        Log.e("inputViews",inputViews.size()+"");
 
         Block next = block.getNextBlock();
         if (next != null) {
