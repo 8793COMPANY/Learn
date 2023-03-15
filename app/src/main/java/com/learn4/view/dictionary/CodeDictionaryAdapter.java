@@ -1,9 +1,12 @@
 package com.learn4.view.dictionary;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.opengl.Matrix;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -72,11 +75,17 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            controller.addRootBlock(listData.get(position).getBlock());
 //        }
 
+
+
         if (holder.blockView != null)
             holder.blockView.removeAllViews();
 
-        BlockView blockView = controller.getBlockViewFactory().getView(listData.get(position).getBlock());
+        View blockView = (View) controller.getBlockViewFactory().getView(listData.get(position).getBlock());
         BlockGroup group = controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
+
+
+
+
         if (group != null)
             Log.e("codedictionary","getParentBlockGroup not null");
         else {
@@ -84,6 +93,22 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
             group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
 //            controller.addRootBlock(listData.get(position).getBlock());
         }
+
+
+
+
+//        group.setOnClickListener(null);
+//        group.setOnTouchListener(null);
+//        group.setClickable(false);
+//        group.setFocusable(false);
+//        group.setEnabled(false);
+//        group.setFocusableInTouchMode(false);
+//
+//        if (group.getFocusedChild() != null){
+//            group.getFocusedChild().setClickable(false);
+//            group.getFocusedChild().setFocusable(false);
+//        }
+
 
         if(group.getParent() != null) {
             ((ViewGroup)group.getParent()).removeView(group); // <- fix
@@ -97,11 +122,52 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 
         Log.e("위치", "전x : " + group.getX()+"");
         Log.e("위치", "전y : " + holder.block_name.getX()+"");
-            group.setScaleX(0.8f);
-            group.setScaleY(0.8f);
+//            group.setScaleX(0.8f);
+//            group.setScaleY(0.8f);
+
+
+
+
+
+
 //        }
 
-        holder.blockView.addView(group);
+
+        View view = (View) group;
+
+//        block.getController().mHelper.getWorkspaceViewScale();
+        view.setScaleX(0.7f);
+        view.setScaleY(0.7f);
+        view.setPivotX(0);
+
+
+        holder.blockView.addView(view);
+
+//        group.setDrawingCacheEnabled(true);
+//        group.buildDrawingCache();
+//        Bitmap bm = group.getDrawingCache();
+////        Log.e("bm width",bm.getWidth()+"");
+
+
+        holder.block_img.post(new Runnable() {
+            @Override
+            public void run() {
+
+                holder.block_img.setImageBitmap(getBitmapFromView(holder.blockView));
+                holder.blockView.removeView(view);
+
+            }
+        });
+
+
+
+
+//        holder.block_img.setImageBitmap();
+
+//        holder.block_img.setImageBitmap();
+
+
+
 
 //        BlockGroup group = new BlockGroup(context,controller.getWorkspaceHelper());
 
@@ -157,13 +223,20 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //        holder.blockView.addView(listData.get(position).getBlock());
 //        holder.blockView.addView(listData.get(position).getBlock());
     }
-
+    public Bitmap getBitmapFromView(View v){
+        Bitmap b = Bitmap.createBitmap(v.getWidth(), v.getHeight() ,
+                Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+         v.draw(c);
+         return b;
+    }
 
     @Override
     public int getItemCount() {
         // RecyclerView의 총 개수 입니다.
         return listData.size();
     }
+
 
 
 
@@ -182,7 +255,7 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
             super(itemView);
             block_name = itemView.findViewById(R.id.block_name);
             block_info = itemView.findViewById(R.id.block_info);
-//            block_img = itemView.findViewById(R.id.block_img);
+            block_img = itemView.findViewById(R.id.block_img);
             blockView = itemView.findViewById(R.id.block_view);
 //            parent_layout = itemView.findViewById(R.id.parent_layout);
 

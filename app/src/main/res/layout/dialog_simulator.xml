@@ -35,6 +35,8 @@
             android:text="부품을 눌러 동작시켜보세요"
             android:textColor="#b45611"
             android:textSize="13dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:includeFontPadding="false"
             android:gravity="center"
             android:background="@drawable/guide_text_background"
             android:layout_marginTop="10dp"
@@ -59,6 +61,8 @@
             app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
             app:layout_constraintRight_toRightOf="@+id/recyclerview_end_guide"/>
 
+
+
         <WebView
             android:id="@+id/simulator_web_view"
             android:layout_width="0dp"
@@ -70,6 +74,32 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
             app:layout_constraintRight_toRightOf="@+id/recyclerview_end_guide" />
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:text="잠시만 기다려주세요 !"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="@color/brown_b45611"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@+id/simulator_web_view"
+            app:layout_constraintRight_toRightOf="@id/simulator_web_view"
+            app:layout_constraintTop_toTopOf="@+id/simulator_web_view"
+            app:layout_constraintBottom_toBottomOf="@+id/simulator_web_view"
+            ></TextView>
+
+        <TextView
+            android:id="@+id/hint_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/sb_aggro_l"
+            app:layout_constraintLeft_toLeftOf="@+id/simulator_web_view"
+            app:layout_constraintRight_toRightOf="@+id/simulator_web_view"
+            app:layout_constraintTop_toBottomOf="@+id/simulator_web_view"
+            ></TextView>
 
         <TextView
             android:id="@+id/code_view"
@@ -92,7 +122,7 @@
             android:id="@+id/upload_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/simulator_btn_custom"
+            android:background="@drawable/simulator_upload_btn_selector"
             android:text="동작하기"
             android:textColor="#ffffff"
             android:textSize="15dp"

@@ -53,9 +53,28 @@ public class SimulatorDialog extends Dialog {
         WebView webView = findViewById(R.id.simulator_web_view);
         Button upload_btn = findViewById(R.id.upload_btn);
         TextView code_view  = findViewById(R.id.code_view);
+        TextView hint_text  = findViewById(R.id.hint_text);
+        TextView loading_text = findViewById(R.id.loading_text);
         component_close_btn = findViewById(R.id.component_close_btn);
 
         code_view.setMovementMethod(new ScrollingMovementMethod());
+
+        upload_btn.setSelected(true);
+
+        if (chapter_id.equals("3-2")){
+            hint_text.setText("LED = 8번, 시간 = 1초");
+        }else if (chapter_id.equals("3-3")){
+            hint_text.setText("LED = 8번, 시간 = 0.5초");
+        }else if (chapter_id.equals("3-4")){
+            hint_text.setText("LED = 13번, 시간 = 1초");
+        }else if (chapter_id.equals("5-2")){
+            hint_text.setText("스위치 = 7번");
+        }else if (chapter_id.equals("5-3")){
+            hint_text.setText("스위치 = 5번");
+        }else{
+            hint_text.setText("스위치 = 5번, LED = 10번");
+        }
+
 
         component_close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +144,9 @@ public class SimulatorDialog extends Dialog {
            public void onClick(View view) {
                Log.e("title",title.replace("\n",""));
 //               title="hi";
-               webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view,
+               upload_btn.setSelected(false);
+               upload_btn.setEnabled(false);
+               webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn,
                        chapter_id,title.replace("\n","")),"android");
                webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
            }
@@ -148,7 +169,7 @@ public class SimulatorDialog extends Dialog {
 
         webView.getSettings().setJavaScriptEnabled(true);
 
-        webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view,
+        webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn,
                 chapter_id,"contents_id:"+chapter_id),"android");
 
         webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");

@@ -14,22 +14,26 @@ public class JavascriptCallbackClient {
 
     private Context mContext;
     private WebView webView;
-    private Button button;
+    private Button upload_btn;
     private String code;
     private String chapter_id;
     private String hex2str = "";
     private TextView serial_monitor;
+    private TextView loading_text;
     private StringBuffer serial_text = new StringBuffer("");
     int count = 0;
     String str="";
 
 
-    public JavascriptCallbackClient(Context context, WebView webView,TextView serial_monitor,String chapter_id, String code) {
+    public JavascriptCallbackClient(Context context, WebView webView,TextView serial_monitor,
+                                    TextView loading_text, Button upload_btn, String chapter_id, String code) {
         this.mContext = context;
         this.webView = webView;
         this.chapter_id = chapter_id;
         this.code = code;
         this.serial_monitor = serial_monitor;
+        this.loading_text = loading_text;
+        this.upload_btn = upload_btn;
     }
 
     private String publishEvent(String functionName, String data) {
@@ -49,6 +53,11 @@ public class JavascriptCallbackClient {
 
     @JavascriptInterface
     public void showToastMessage(final String message) {
+        if (message.equals("enabled")){
+            upload_btn.setSelected(true);
+            upload_btn.setEnabled(true);
+            Log.e("isEanbled",upload_btn.isEnabled()+"");
+        }
         Log.e("message",message);
     }
 
@@ -100,7 +109,11 @@ public class JavascriptCallbackClient {
         webView.postDelayed(() -> {
             webView.evaluateJavascript(publishEvent("javascriptFunction", "\""+hex2str+"\""),
                     (result) -> {
-                        Toast.makeText(mContext, "in "+result, Toast.LENGTH_SHORT).show();
+                        Log.e("result",result);
+                        if (result.equals("true") && loading_text.getVisibility() == View.VISIBLE){
+                            loading_text.setVisibility(View.GONE);
+                        }
+//                        Toast.makeText(mContext, "in "+result, Toast.LENGTH_SHORT).show();
                     }
             );
         }, 0);
