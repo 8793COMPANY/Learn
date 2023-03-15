@@ -1,6 +1,7 @@
 package com.google.blockly.android.ui;
 
 import android.view.View;
+import android.widget.Button;
 
 import com.google.blockly.model.WorkspacePoint;
 
@@ -43,6 +44,13 @@ public class CategoryData {
         return setup_btn;
     }
 
+    public void setSimulator_btn(Button simulator_btn) {
+        this.simulator_btn = simulator_btn;
+    }
+    public View getSimulator_btn() {
+        return simulator_btn;
+    }
+
     public void setReset_btn(View reset_btn) {
         this.reset_btn = reset_btn;
     }
@@ -54,6 +62,8 @@ public class CategoryData {
     View home_btn = null;
 
     View reset_btn = null;
+
+    Button simulator_btn = null;
 
     WorkspacePoint rtp, ptp, ntp;
 

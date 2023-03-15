@@ -597,7 +597,7 @@
         android:layout_width="57dp"
         android:layout_height="70dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/simulator_with_text_btn"
+        android:background="@drawable/simulator_btn_selector"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintLeft_toLeftOf="@+id/block_bot_btn"
         app:layout_constraintRight_toRightOf="@+id/block_bot_btn"

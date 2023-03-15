@@ -98,6 +98,22 @@ public class Application extends android.app.Application  {
         postsRepository = new PostsRepository(auth);
     }
 
+    public static void setSimulatorEnabled(boolean check){
+        if (categoryData == null)
+            categoryData = CategoryData.getInstance();
+
+        if (categoryData.getSimulator_btn() != null){
+            if (check){
+                categoryData.getSimulator_btn().setSelected(true);
+                categoryData.getSimulator_btn().setEnabled(true);
+            }else{
+                categoryData.getSimulator_btn().setSelected(false);
+                categoryData.getSimulator_btn().setEnabled(false);
+            }
+        }
+
+    }
+
 
 
 

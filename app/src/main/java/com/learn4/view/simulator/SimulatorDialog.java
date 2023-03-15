@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ public class SimulatorDialog extends Dialog {
         TextView code_view  = findViewById(R.id.code_view);
         TextView hint_text  = findViewById(R.id.hint_text);
         TextView loading_text = findViewById(R.id.loading_text);
+        LinearLayout code_upload_progress = findViewById(R.id.code_upload_progress);
         component_close_btn = findViewById(R.id.component_close_btn);
 
         code_view.setMovementMethod(new ScrollingMovementMethod());
@@ -144,9 +146,10 @@ public class SimulatorDialog extends Dialog {
            public void onClick(View view) {
                Log.e("title",title.replace("\n",""));
 //               title="hi";
+               code_upload_progress.setVisibility(View.VISIBLE);
                upload_btn.setSelected(false);
                upload_btn.setEnabled(false);
-               webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn,
+               webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                        chapter_id,title.replace("\n","")),"android");
                webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
            }
@@ -169,7 +172,7 @@ public class SimulatorDialog extends Dialog {
 
         webView.getSettings().setJavaScriptEnabled(true);
 
-        webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn,
+        webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                 chapter_id,"contents_id:"+chapter_id),"android");
 
         webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");

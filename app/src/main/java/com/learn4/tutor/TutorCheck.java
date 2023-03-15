@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.corporation8793.learn.xml.ParentXml;
 import com.learn4.R;
+import com.learn4.util.Application;
 import com.learn4.view.MainActivity;
 
 import org.w3c.dom.Document;
@@ -142,6 +143,7 @@ public class TutorCheck {
 
         if (num == 1) {
             ((TextView)view.findViewById(R.id.title)).setText("정답입니다. 참 잘했어요~!");
+            Application.setSimulatorEnabled(true);
         } else if (num == 2) {
             ((TextView)view.findViewById(R.id.title)).setText("틀렸습니다. 다시 한번 해보세요~!");
         } else {

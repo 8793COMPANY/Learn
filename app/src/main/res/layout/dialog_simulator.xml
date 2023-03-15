@@ -89,6 +89,35 @@
             app:layout_constraintBottom_toBottomOf="@+id/simulator_web_view"
             ></TextView>
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/code_upload_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="#65000000"
+            android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateDrawable="@drawable/progress_image"
+                    android:indeterminateTint="@color/orange_f78f43"/>
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="코드 업로드 중 ..."
+                    android:textColor="@color/orange_f78f43" />
+
+
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/hint_text"
             android:layout_width="0dp"

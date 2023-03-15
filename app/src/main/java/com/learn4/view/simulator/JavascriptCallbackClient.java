@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +24,11 @@ public class JavascriptCallbackClient {
     private StringBuffer serial_text = new StringBuffer("");
     int count = 0;
     String str="";
+    LinearLayout code_upload_progress;
 
 
     public JavascriptCallbackClient(Context context, WebView webView,TextView serial_monitor,
-                                    TextView loading_text, Button upload_btn, String chapter_id, String code) {
+                                    TextView loading_text, Button upload_btn,LinearLayout code_upload_progress, String chapter_id, String code) {
         this.mContext = context;
         this.webView = webView;
         this.chapter_id = chapter_id;
@@ -34,6 +36,7 @@ public class JavascriptCallbackClient {
         this.serial_monitor = serial_monitor;
         this.loading_text = loading_text;
         this.upload_btn = upload_btn;
+        this.code_upload_progress = code_upload_progress;
     }
 
     private String publishEvent(String functionName, String data) {
@@ -54,6 +57,7 @@ public class JavascriptCallbackClient {
     @JavascriptInterface
     public void showToastMessage(final String message) {
         if (message.equals("enabled")){
+            code_upload_progress.setVisibility(View.GONE);
             upload_btn.setSelected(true);
             upload_btn.setEnabled(true);
             Log.e("isEanbled",upload_btn.isEnabled()+"");

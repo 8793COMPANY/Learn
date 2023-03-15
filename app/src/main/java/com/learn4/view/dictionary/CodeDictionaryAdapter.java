@@ -126,10 +126,6 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            group.setScaleY(0.8f);
 
 
-
-
-
-
 //        }
 
 

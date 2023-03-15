@@ -964,9 +964,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if ((chapter_id.split("-")[0].equals("3") || chapter_id.split("-")[0].equals("5"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
+            block_bot_btn.setVisibility(View.VISIBLE);
         }else{
             simulator_check = false;
             simulator_btn.setVisibility(View.GONE);
+            block_bot_btn.setVisibility(View.GONE);
         }
 
 
@@ -1193,9 +1195,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 initTabCheck();
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
+                    block_bot_btn.setVisibility(View.VISIBLE);
                 }
                 trashcan_btn.setVisibility(View.VISIBLE);
-                block_bot_btn.setVisibility(View.VISIBLE);
+
                 blockly_monitor.setVisibility(View.GONE);
                 view_check[current_pos] = true;
                 break;
@@ -1233,6 +1236,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         simulator_btn = blockly_workspace.findViewById(R.id.go_simulator_btn);
         move_btn = blockly_workspace.findViewById(R.id.move_btn);
         code_view = blockly_workspace.findViewById(R.id.code_view);
+
+
+
 
         code_view.setMovementMethod(new ScrollingMovementMethod());
 
@@ -1287,9 +1293,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 block_simulator.setVisibility(View.GONE);
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
+                    block_bot_btn.setVisibility(View.VISIBLE);
                 }
                 trashcan_btn.setVisibility(View.VISIBLE);
-                block_bot_btn.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -1344,9 +1351,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             tempTab[5].setSelected(false);
             if (simulator_check) {
                 simulator_btn.setVisibility(View.VISIBLE);
+                block_bot_btn.setVisibility(View.VISIBLE);
             }
             trashcan_btn.setVisibility(View.VISIBLE);
-            block_bot_btn.setVisibility(View.VISIBLE);
+
         });
 
 
@@ -1675,6 +1683,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
 
         categoryData = CategoryData.getInstance();
+
+        categoryData.setSimulator_btn(simulator_btn);
+        Application.setSimulatorEnabled(false);
+
+//        Application.setSimulatorEnabled(false);
 //        categoryData.setClosed(false);
         BusProvider.getInstance().register(this);
 
@@ -1887,9 +1900,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.INVISIBLE);
+                    block_bot_btn.setVisibility(View.INVISIBLE);
                 }
                 trashcan_btn.setVisibility(View.INVISIBLE);
-                block_bot_btn.setVisibility(View.INVISIBLE);
+
                 view_check[position] = false;
 
             }else {
@@ -1907,9 +1921,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
+                    block_bot_btn.setVisibility(View.VISIBLE);
                 }
                 trashcan_btn.setVisibility(View.VISIBLE);
-                block_bot_btn.setVisibility(View.VISIBLE);
+
                 view_check[position] = true;
             }
 
@@ -1930,9 +1945,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
             view_check[position] = false;
             trashcan_btn.setVisibility(View.INVISIBLE);
-            block_bot_btn.setVisibility(View.INVISIBLE);
+
             if (simulator_check) {
                 simulator_btn.setVisibility(View.INVISIBLE);
+                block_bot_btn.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -2133,9 +2149,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.e("hi","zz");
                 view_check[current_pos] = true;
                 trashcan_btn.setVisibility(View.VISIBLE);
-                block_bot_btn.setVisibility(View.VISIBLE);
+
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
+                    block_bot_btn.setVisibility(View.VISIBLE);
                 }
             }
         }catch (ArrayIndexOutOfBoundsException e){
