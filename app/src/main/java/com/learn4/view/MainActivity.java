@@ -1622,7 +1622,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
             }
 
-
         });
 
         // 테스트 메시지 재생 완료
