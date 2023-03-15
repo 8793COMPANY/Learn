@@ -28,6 +28,7 @@ import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
+import com.learn4.tutor.TutorCheck;
 import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
@@ -49,6 +50,7 @@ import android.graphics.Bitmap;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -180,7 +182,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     Button block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn;
 
-    ImageView block_bot_btn;
+    public ImageView block_bot_btn;
     Button simulator_btn, component_close_btn, move_btn;
     TextView code_view;
     MediaPlayer mediaPlayer;
@@ -272,8 +274,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     Handler mHandler = new Handler();
-
-
+    String solutionXmlAssetFilePath ="";
+    Application application;
 
 
     public void read_code() {
@@ -1383,8 +1385,39 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Toast.makeText(this, "디지털라이트의 블록의 핀은 십삼번핀에 연결해주세요", Toast.LENGTH_SHORT).show();
 //        });
 
+        block_bot_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                application = (Application) getApplication();
 
-        block_bot_btn.setOnClickListener(v -> {
+                if (simulator_check) {
+                    application.showLoadingScreen(MainActivity.this);
+                }
+
+                // 답안지 갱신
+                loadXmlFromWorkspace();
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    application.hideLoadingScreen();
+
+                    TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+                }, 1000);
+            }
+        });
+
+        /*block_bot_btn.setOnClickListener(v -> {
+            if (getController().getWorkspace().hasBlocks()) {
+                mBlocklyActivityHelper.requestCodeGeneration(
+                        getBlockGeneratorLanguage(),
+                        getBlockDefinitionsJsonPaths(),
+                        getGeneratorsJsPaths(),
+                        getCodeGenerationCallback());
+            }
+
+            Log.e("code",code);
+            Log.e("chapter_id",chapter_id);
+
             // 봇 메시지 초기화
             if (mediaPlayer != null) {
                 mediaPlayer.release();
@@ -1393,8 +1426,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             // 답안지 갱신
             loadXmlFromWorkspace();
 
-
-
             String solutionXmlAssetFilePath ="";
             if(chapter_id.equals("3-2")){
                 solutionXmlAssetFilePath = "lv1_blink.xml";
@@ -1402,12 +1433,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 solutionXmlAssetFilePath = "lv2_blink.xml";
             }else if (chapter_id.equals("3-4")){
                 solutionXmlAssetFilePath = "lv3_blink.xml";
+            }else if (chapter_id.equals("5-2")) {
+                solutionXmlAssetFilePath = "lv5_2.xml";
+            }else if (chapter_id.equals("5-3")) {
+                solutionXmlAssetFilePath = "lv5_3.xml";
+            }else if (chapter_id.equals("5-4")) {
+                solutionXmlAssetFilePath = "lv5_4.xml";
             }else{
                 solutionXmlAssetFilePath = "lv1_blink.xml";
             }
 
             //TODO: 소영님 파일변경은 solutionXmlAssetFilePath 값 변경만 하시면 됩니다.
-            solutionXmlAssetFilePath = "lv5_2.xml";
+            //solutionXmlAssetFilePath = "lv5_4.xml";
 
             Log.e("solutionXmlAssetFilePath",solutionXmlAssetFilePath);
 
@@ -1538,7 +1575,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
 
                 // Setup 의 pinMode " 핀 번호가 13이고 핀 IO가 OUTPUT " 인지, 아닌지 검증
-                /*
+                *//*
                 if (e.getElementsByTagName("field").item(0).getTextContent().equals("13") &&
                         e.getElementsByTagName("field").item(1).getTextContent().equals("OUTPUT")
                         ||
@@ -1614,7 +1651,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             });
                     alertDialog.show();
                 }
-                */
+                *//*
 
 
                 Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
@@ -1622,7 +1659,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
             }
 
+<<<<<<< HEAD
         });
+=======
+
+        });*/
+
 
         // 테스트 메시지 재생 완료
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
@@ -2283,5 +2325,86 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
             categoryData.getUpload_btn().setEnabled(false);
         }
+    }
+
+    private void showCustomDialog(int num) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
+
+        View view = LayoutInflater.from(MainActivity.this).inflate(
+                R.layout.dialog_tutor, (ConstraintLayout)findViewById(R.id.tutor_dialog));
+
+        builder.setView(view);
+
+        if (num == 1) {
+            block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
+            ((TextView)view.findViewById(R.id.title)).setText("정답입니다. 참 잘했어요~!");
+        } else if (num == 2) {
+            ((TextView)view.findViewById(R.id.title)).setText("틀렸습니다. 다시 한번 해보세요~!");
+        } else {
+            ((TextView)view.findViewById(R.id.title)).setText("빈 블록입니다. 블록 코딩을 해주세요~!");
+        }
+
+        AlertDialog alertDialog = builder.create();
+
+        view.findViewById(R.id.bottom_section).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                alertDialog.dismiss();
+            }
+        });
+
+        view.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_normal));
+                alertDialog.dismiss();
+            }
+        });
+
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+
+        alertDialog.show();
+
+        /*Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params.width = size.x * 500/1280;
+        params.height = size.y * 300/720;
+        alertDialog.getWindow().setAttributes(params);*/
+
+        ViewGroup.LayoutParams params = alertDialog.getWindow().getAttributes();
+        params.width = (int) (335*2.6);
+        alertDialog.getWindow().setAttributes((WindowManager.LayoutParams) params);
+
+        //alertDialog.getWindow().setLayout(335*3, 170*3);
+
+        /*WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+
+        if (Build.VERSION.SDK_INT < 30) {
+            Display display = windowManager.getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+
+            Window window = alertDialog.getWindow();
+
+            int x = (int) (size.x * 0.5f);
+            int y = (int) (size.y * 0.5f);
+
+            window.setLayout(x, y);
+        } else {
+            Rect rect = windowManager.getCurrentWindowMetrics().getBounds();
+
+            Window window = alertDialog.getWindow();
+
+            int x = (int) (rect.width() * 0.5f);
+            int y = (int) (rect.height() * 0.5f);
+
+            window.setLayout(x, y);
+        }*/
     }
 }
