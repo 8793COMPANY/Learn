@@ -48,6 +48,8 @@ public class TutorCheck {
             mediaPlayer.release();
         }
 
+        Log.e("check", chapter_id);
+
         if(chapter_id.equals("3-2")){
             solutionXmlAssetFilePath = "lv1_blink.xml";
         }else if (chapter_id.equals("3-3")){
@@ -60,6 +62,30 @@ public class TutorCheck {
             solutionXmlAssetFilePath = "lv5_3.xml";
         }else if (chapter_id.equals("5-4")) {
             solutionXmlAssetFilePath = "lv5_4.xml";
+        }else if (chapter_id.equals("7-2")) {
+            solutionXmlAssetFilePath = "lv7_2.xml";
+        }else if (chapter_id.equals("7-3")) {
+            solutionXmlAssetFilePath = "lv7_3.xml";
+        }else if (chapter_id.equals("7-4")) {
+            solutionXmlAssetFilePath = "lv7_4.xml";
+        }else if (chapter_id.equals("9-2")) {
+            solutionXmlAssetFilePath = "lv9_2.xml";
+        }else if (chapter_id.equals("9-3")) {
+            solutionXmlAssetFilePath = "lv9_3.xml";
+        }else if (chapter_id.equals("9-4")) {
+            solutionXmlAssetFilePath = "lv9_4.xml";
+        }else if (chapter_id.equals("11-2")) {
+            solutionXmlAssetFilePath = "lv11_2.xml";
+        }else if (chapter_id.equals("11-3")) {
+            solutionXmlAssetFilePath = "lv11_3.xml";
+        }else if (chapter_id.equals("11-4")) {
+            solutionXmlAssetFilePath = "lv11_4.xml";
+        }else if (chapter_id.equals("13-2")) {
+            solutionXmlAssetFilePath = "lv13_2.xml";
+        }else if (chapter_id.equals("13-3")) {
+            solutionXmlAssetFilePath = "lv13_3.xml";
+        }else if (chapter_id.equals("13-4")) {
+            solutionXmlAssetFilePath = "lv13_4.xml";
         }else{
             chapter_check = false;
             solutionXmlAssetFilePath = "lv1_blink.xml";
@@ -69,6 +95,8 @@ public class TutorCheck {
 
         String solution_str = parentXml.getSolutionString();
         String submitted_str = parentXml.getSubmittedString();
+
+        Log.e("submittedXml",submittedXml);
 
         Log.e("solution_str",solution_str);
         Log.e("submitted_str",submitted_str);

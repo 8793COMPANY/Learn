@@ -1,7 +1,7 @@
 <xml xmlns="http://www.w3.org/1999/xhtml">
     <block type="turtle_setup_loop" x="8.0" y="128.0">
         <statement name="DO">
-            <block type="test">
+            <block type="pinMode">
                 <value name="PIN">
                     <block type="base_pins_list">
                         <field name="PIN">13</field>

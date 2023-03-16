@@ -961,7 +961,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         Log.e(TAG, ">>> block_width size.x : " + size.x + ", size.y : " + size.y);
 
-        if ((chapter_id.split("-")[0].equals("3") || chapter_id.split("-")[0].equals("5"))){
+        if ((chapter_id.split("-")[0].equals("3") || chapter_id.split("-")[0].equals("5")
+                || chapter_id.split("-")[0].equals("7") || chapter_id.split("-")[0].equals("9")
+                || chapter_id.split("-")[0].equals("11") || chapter_id.split("-")[0].equals("13"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
             block_bot_btn.setVisibility(View.VISIBLE);
@@ -1411,7 +1413,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     application.hideLoadingScreen();
 
                     TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
-                }, 1000);
+                }, 1500);
             }
         });
 
@@ -2311,17 +2313,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             Log.e("MainActivity chapter_id",chapter_id+"");
             // TODO : 화면 캡쳐 트리거
-            if(!chapter_id.equals("0")) {
-                Log.e("MainActivity", "captureWorkspace: start");
-                bitmapWorkspace = controller.captureWorkspace();
-
-                try {
-                    saveImage(bitmapWorkspace, "captureWorkspace");
-                    Log.e("MainActivity", "captureWorkspace: save ok");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+//            if(!chapter_id.equals("0")) {
+//                Log.e("MainActivity", "captureWorkspace: start");
+//                bitmapWorkspace = controller.captureWorkspace();
+//
+//                try {
+//                    saveImage(bitmapWorkspace, "captureWorkspace");
+//                    Log.e("MainActivity", "captureWorkspace: save ok");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
         } else {
             //Toast.makeText(getApplicationContext(), "WIFI 및 USB를 연결해주세요!", Toast.LENGTH_SHORT).show();
