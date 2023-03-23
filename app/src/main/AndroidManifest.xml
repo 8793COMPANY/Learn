@@ -29,6 +29,11 @@
         android:usesCleartextTraffic="true">
 
         <activity
+            android:name=".view.dictionary.BlockDictionaryActivity2"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape" />
+
+        <activity
             android:name=".view.dictionary.BlockDictionaryActivity"
             android:exported="false"
             android:screenOrientation="sensorLandscape" />
@@ -78,7 +83,7 @@
         <activity
             android:name=".view.onboarding.LoginActivity"
             android:exported="true"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.onboarding.IntroActivity"
             android:screenOrientation="sensorLandscape" />
