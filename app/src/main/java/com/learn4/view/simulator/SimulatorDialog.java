@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.learn4.R;
 import com.learn4.view.simulator.JavascriptCallbackClient;
@@ -138,6 +140,11 @@ public class SimulatorDialog extends Dialog {
 //                Log.d(TAG, "(WEBVIEW)onReceivedError : " + errorCode );
             }
 
+            @Nullable
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                return super.shouldInterceptRequest(view, request);
+            }
         });
 
 
