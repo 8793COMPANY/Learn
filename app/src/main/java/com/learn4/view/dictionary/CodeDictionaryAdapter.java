@@ -27,12 +27,10 @@ import com.google.blockly.model.Block;
 import java.util.ArrayList;
 
 public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAdapter.ItemViewHolder> {
-
     // adapter에 들어갈 list 입니다.
     private ArrayList<CodeBlock> listData = new ArrayList<>();
     Context context;
     BlocklyController controller;
-    boolean check = true;
 
     public CodeDictionaryAdapter(Context context, BlocklyController controller, ArrayList<CodeBlock> arrayList){
         listData = arrayList;
@@ -63,8 +61,6 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 
         holder.block_name.setTextColor(listData.get(position).getBlock().getColor());
 
-
-
         controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
 
         Block block = listData.get(position).getBlock();
@@ -75,16 +71,11 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            controller.addRootBlock(listData.get(position).getBlock());
 //        }
 
-
-
         if (holder.blockView != null)
             holder.blockView.removeAllViews();
 
         View blockView = (View) controller.getBlockViewFactory().getView(listData.get(position).getBlock());
         BlockGroup group = controller.mHelper.getParentBlockGroup(listData.get(position).getBlock());
-
-
-
 
         if (group != null)
             Log.e("codedictionary","getParentBlockGroup not null");
@@ -93,9 +84,6 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
             group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
 //            controller.addRootBlock(listData.get(position).getBlock());
         }
-
-
-
 
 //        group.setOnClickListener(null);
 //        group.setOnTouchListener(null);
@@ -109,7 +97,6 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            group.getFocusedChild().setFocusable(false);
 //        }
 
-
         if(group.getParent() != null) {
             ((ViewGroup)group.getParent()).removeView(group); // <- fix
         }
@@ -119,15 +106,12 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //            group.setScaleX(0.8f);
 //            group.setScaleY(0.8f);
 //            group.setPadding(0,0,0,0);
-
-        Log.e("위치", "전x : " + group.getX()+"");
-        Log.e("위치", "전y : " + holder.block_name.getX()+"");
+//
+//        Log.e("위치", "전x : " + group.getX()+"");
+//        Log.e("위치", "전y : " + holder.block_name.getX()+"");
 //            group.setScaleX(0.8f);
 //            group.setScaleY(0.8f);
-
-
 //        }
-
 
         View view = (View) group;
 
@@ -136,14 +120,12 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
         view.setScaleY(0.7f);
         view.setPivotX(0);
 
-
         holder.blockView.addView(view);
 
 //        group.setDrawingCacheEnabled(true);
 //        group.buildDrawingCache();
 //        Bitmap bm = group.getDrawingCache();
 ////        Log.e("bm width",bm.getWidth()+"");
-
 
         holder.block_img.post(new Runnable() {
             @Override
@@ -155,15 +137,9 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
             }
         });
 
-
-
-
 //        holder.block_img.setImageBitmap();
 
 //        holder.block_img.setImageBitmap();
-
-
-
 
 //        BlockGroup group = new BlockGroup(context,controller.getWorkspaceHelper());
 
@@ -206,15 +182,12 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
 //        }else
 //            Log.e("hi null","in!");
 
-
 //        if(copyView.getParent() != null && check) {
 //            Log.e("in", "getParent not null");
 //            ((ViewGroup)copyView.getParent()).removeView(copyView); // <- fix
 //            check = false;
 //            holder.blockView.addView(copyView);
 //        }
-
-
 
 //        holder.blockView.addView(listData.get(position).getBlock());
 //        holder.blockView.addView(listData.get(position).getBlock());
@@ -233,9 +206,6 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
         return listData.size();
     }
 
-
-
-
     // RecyclerView의 핵심인 ViewHolder 입니다.
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -246,7 +216,6 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
         private FrameLayout blockView;
         private ConstraintLayout parent_layout;
 
-
         ItemViewHolder(View itemView) {
             super(itemView);
             block_name = itemView.findViewById(R.id.block_name);
@@ -254,12 +223,10 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
             block_img = itemView.findViewById(R.id.block_img);
             blockView = itemView.findViewById(R.id.block_view);
 //            parent_layout = itemView.findViewById(R.id.parent_layout);
-
         }
 
         void onBind(CodeBlock block) {
             Log.e("block hi","hey");
-
 
 
 //            blockView.addView();

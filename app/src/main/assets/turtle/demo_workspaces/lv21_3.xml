@@ -1,0 +1,239 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="pinMode">
+                <value name="PIN">
+                    <block type="base_pins_list">
+                        <field name="PIN">12</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="pinMode">
+                        <value name="PIN">
+                            <block type="base_pins_list">
+                                <field name="PIN">7</field>
+                            </block>
+                        </value>
+                        <value name="VALUE1">
+                            <block type="base_output_list">
+                                <field name="LOGIC">OUTPUT</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="pinMode">
+                                <value name="PIN">
+                                    <block type="base_pins_list">
+                                        <field name="PIN">8</field>
+                                    </block>
+                                </value>
+                                <value name="VALUE1">
+                                    <block type="base_output_list">
+                                        <field name="LOGIC">INPUT</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="inout_digital_write">
+                <value name="PIN">
+                    <block type="base_pins_list">
+                        <field name="PIN">7</field>
+                    </block>
+                </value>
+                <value name="NUM">
+                    <block type="base_logic_list">
+                        <field name="LOGIC">LOW</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="base_delay">
+                        <value name="DELAY_TIME">
+                            <block type="math_number">
+                                <field name="NUM">2</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="inout_digital_write">
+                                <value name="PIN">
+                                    <block type="base_pins_list">
+                                        <field name="PIN">7</field>
+                                    </block>
+                                </value>
+                                <value name="NUM">
+                                    <block type="base_logic_list">
+                                        <field name="LOGIC">HIGH</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="base_delay">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number">
+                                                <field name="NUM">10</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="inout_digital_write">
+                                                <value name="PIN">
+                                                    <block type="base_pins_list">
+                                                        <field name="PIN">7</field>
+                                                    </block>
+                                                </value>
+                                                <value name="NUM">
+                                                    <block type="base_logic_list">
+                                                        <field name="LOGIC">LOW</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="variables_set">
+                                                        <field name="VAR">duration</field>
+                                                        <value name="VALUE">
+                                                            <block type="pulseIn">
+                                                                <value name="PIN">
+                                                                    <block type="base_pins_list">
+                                                                        <field name="PIN">8</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="NUM">
+                                                                    <block type="base_logic_list">
+                                                                        <field name="LOGIC">HIGH</field>
+                                                                    </block>
+                                                                </value>
+                                                            </block>
+                                                        </value>
+                                                        <field name="TYPE">int</field>
+                                                        <next>
+                                                            <block type="variables_set">
+                                                                <field name="VAR">distance</field>
+                                                                <value name="VALUE">
+                                                                    <block type="logic_calculation">
+                                                                        <value name="A">
+                                                                            <block type="logic_calculation">
+                                                                                <value name="A">
+                                                                                    <block type="variables_get">
+                                                                                        <field name="VAR">duration</field>
+                                                                                    </block>
+                                                                                </value>
+                                                                                <value name="B">
+                                                                                    <block type="math_number">
+                                                                                        <field name="NUM">17</field>
+                                                                                    </block>
+                                                                                </value>
+                                                                                <field name="OP">GT</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <value name="B">
+                                                                            <block type="math_number">
+                                                                                <field name="NUM">1000</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <field name="OP">GTE</field>
+                                                                    </block>
+                                                                </value>
+                                                                <field name="TYPE">int</field>
+                                                                <next>
+                                                                    <block type="serial_print">
+                                                                        <value name="text">
+                                                                            <block type="type_string">
+                                                                                <field name="STRING_TEXT">time : </field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <next>
+                                                                            <block type="serial_println">
+                                                                                <value name="STRING">
+                                                                                    <block type="variables_get">
+                                                                                        <field name="VAR">duration</field>
+                                                                                    </block>
+                                                                                </value>
+                                                                                <next>
+                                                                                    <block type="serial_print">
+                                                                                        <value name="text">
+                                                                                            <block type="type_string">
+                                                                                                <field name="STRING_TEXT">distance : </field>
+                                                                                            </block>
+                                                                                        </value>
+                                                                                        <next>
+                                                                                            <block type="serial_print">
+                                                                                                <value name="text">
+                                                                                                    <block type="variables_get">
+                                                                                                        <field name="VAR">distance</field>
+                                                                                                    </block>
+                                                                                                </value>
+                                                                                                <next>
+                                                                                                    <block type="inout_digital_write">
+                                                                                                        <value name="PIN">
+                                                                                                            <block type="base_pins_list">
+                                                                                                                <field name="PIN">12</field>
+                                                                                                            </block>
+                                                                                                        </value>
+                                                                                                        <value name="NUM">
+                                                                                                            <block type="base_logic_list">
+                                                                                                                <field name="LOGIC">HIGH</field>
+                                                                                                            </block>
+                                                                                                        </value>
+                                                                                                        <next>
+                                                                                                            <block type="base_delay">
+                                                                                                                <value name="DELAY_TIME">
+                                                                                                                    <block type="variables_get">
+                                                                                                                        <field name="VAR">distance</field>
+                                                                                                                    </block>
+                                                                                                                </value>
+                                                                                                                <next>
+                                                                                                                    <block type="inout_digital_write">
+                                                                                                                        <value name="PIN">
+                                                                                                                            <block type="base_pins_list">
+                                                                                                                                <field name="PIN">12</field>
+                                                                                                                            </block>
+                                                                                                                        </value>
+                                                                                                                        <value name="NUM">
+                                                                                                                            <block type="base_logic_list">
+                                                                                                                                <field name="LOGIC">LOW</field>
+                                                                                                                            </block>
+                                                                                                                        </value>
+                                                                                                                        <next>
+                                                                                                                            <block type="base_delay">
+                                                                                                                                <value name="DELAY_TIME">
+                                                                                                                                    <block type="variables_get">
+                                                                                                                                        <field name="VAR">distance</field>
+                                                                                                                                    </block>
+                                                                                                                                </value>
+                                                                                                                            </block>
+                                                                                                                        </next>
+                                                                                                                    </block>
+                                                                                                                </next>
+                                                                                                            </block>
+                                                                                                        </next>
+                                                                                                    </block>
+                                                                                                </next>
+                                                                                            </block>
+                                                                                        </next>
+                                                                                    </block>
+                                                                                </next>
+                                                                            </block>
+                                                                        </next>
+                                                                    </block>
+                                                                </next>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

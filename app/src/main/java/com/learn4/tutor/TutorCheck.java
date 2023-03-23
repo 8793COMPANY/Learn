@@ -86,6 +86,36 @@ public class TutorCheck {
             solutionXmlAssetFilePath = "lv13_3.xml";
         }else if (chapter_id.equals("13-4")) {
             solutionXmlAssetFilePath = "lv13_4.xml";
+        }else if (chapter_id.equals("15-2")) {
+            solutionXmlAssetFilePath = "lv15_2.xml";
+        }else if (chapter_id.equals("15-3")) {
+            solutionXmlAssetFilePath = "lv15_3.xml";
+        }else if (chapter_id.equals("15-4")) {
+            solutionXmlAssetFilePath = "lv15_4.xml";
+        }else if (chapter_id.equals("17-2")) {
+            solutionXmlAssetFilePath = "lv17_2.xml";
+        }else if (chapter_id.equals("17-3")) {
+            solutionXmlAssetFilePath = "lv17_3.xml";
+        }else if (chapter_id.equals("17-4")) {
+            solutionXmlAssetFilePath = "lv17_4.xml";
+        }else if (chapter_id.equals("19-2")) {
+            solutionXmlAssetFilePath = "lv19_2.xml";
+        }else if (chapter_id.equals("19-3")) {
+            solutionXmlAssetFilePath = "lv19_3.xml";
+        }else if (chapter_id.equals("19-4")) {
+            solutionXmlAssetFilePath = "lv19_4.xml";
+        }else if (chapter_id.equals("21-2")) {
+            solutionXmlAssetFilePath = "lv21_2.xml";
+        }else if (chapter_id.equals("21-3")) {
+            solutionXmlAssetFilePath = "lv21_3.xml";
+        }else if (chapter_id.equals("21-4")) {
+            solutionXmlAssetFilePath = "lv21_4.xml";
+        }else if (chapter_id.equals("23-2")) {
+            solutionXmlAssetFilePath = "lv23_2.xml";
+        }else if (chapter_id.equals("23-3")) {
+            solutionXmlAssetFilePath = "lv23_3.xml";
+        }else if (chapter_id.equals("23-4")) {
+            solutionXmlAssetFilePath = "lv23_4.xml";
         }else{
             chapter_check = false;
             solutionXmlAssetFilePath = "lv1_blink.xml";

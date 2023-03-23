@@ -963,7 +963,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         if ((chapter_id.split("-")[0].equals("3") || chapter_id.split("-")[0].equals("5")
                 || chapter_id.split("-")[0].equals("7") || chapter_id.split("-")[0].equals("9")
-                || chapter_id.split("-")[0].equals("11") || chapter_id.split("-")[0].equals("13"))){
+                || chapter_id.split("-")[0].equals("11") || chapter_id.split("-")[0].equals("13")
+                || chapter_id.split("-")[0].equals("15") || chapter_id.split("-")[0].equals("17")
+                || chapter_id.split("-")[0].equals("19") || chapter_id.split("-")[0].equals("21")
+                || chapter_id.split("-")[0].equals("23") || chapter_id.split("-")[0].equals("25"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
             block_bot_btn.setVisibility(View.VISIBLE);
@@ -971,6 +974,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             simulator_check = false;
             simulator_btn.setVisibility(View.GONE);
             block_bot_btn.setVisibility(View.GONE);
+        }
+
+        if (chapter_id.split("-")[0].equals("25")) {
+            simulator_btn.setSelected(true);
+            simulator_btn.setEnabled(true);
         }
 
 

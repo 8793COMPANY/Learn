@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.dictionary.BlockDictionaryActivity">
+    tools:context=".view.dictionary.BlockDictionaryActivity2">
 
     <Button
         android:id="@+id/back_btn"
@@ -26,7 +26,7 @@
         android:elevation="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="블럭설명사전"
+        android:text="\t블럭설명사전\t"
         android:textSize="14dp"
         android:textColor="#f78f43"
         android:fontFamily="@font/sb_aggro_m"
@@ -48,9 +48,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="182:566"
-        app:layout_constraintWidth_percent="0.14"
+        app:layout_constraintWidth_percent="0.135"
         app:layout_constraintTop_toBottomOf="@+id/back_btn"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="14dp"
         android:background="@drawable/corner_round_14dp_background"
         android:backgroundTint="#fcf1de"
         app:layout_constraintStart_toStartOf="@+id/back_btn"
@@ -112,14 +112,22 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/block_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.7"
+        android:scrollbars="vertical"
+        android:scrollbarSize="7dp"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbarTrackVertical="@drawable/block_dictionary_scrollbar_track"
+        android:scrollbarThumbVertical="@drawable/block_dictionary_scrollbar_thumb"
+        app:layout_constraintWidth_percent="0.8"
         app:layout_constraintTop_toTopOf="@+id/category_section"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/category_section"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.2">
+        app:layout_constraintHorizontal_bias="1">
     </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

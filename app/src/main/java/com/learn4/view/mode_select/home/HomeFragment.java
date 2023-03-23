@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,10 +16,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.learn4.util.Application;
 import com.learn4.R;
-import com.learn4.view.custom.dialog.ContinueDialog;
-import com.learn4.view.dictionary.BlockDictionaryActivity;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
+import com.learn4.view.dictionary.BlockDictionaryActivity2;
 
 public class HomeFragment extends Fragment {
 
@@ -68,10 +66,10 @@ public class HomeFragment extends Fragment {
         });
 
         dictionary_btn.setOnClickListener(v->{
-            ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
-            continueDialog.show();
-            /*Intent intent = new Intent(getActivity(), BlockDictionaryActivity.class);
-            startActivity(intent);*/
+            /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
+            continueDialog.show();*/
+            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+            startActivity(intent);
         });
 
 //        final TextView textView = root.findViewById(R.id.text_home);
