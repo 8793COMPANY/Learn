@@ -65,7 +65,7 @@
             android:name=".view.contents.ContentsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".view.mode_select.ModeSelect"
+            android:name=".view.onboarding.IntroActivity"
             android:exported="true"
             android:label="배울래?"
             android:screenOrientation="sensorLandscape">
@@ -85,7 +85,7 @@
             android:exported="true"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".view.onboarding.IntroActivity"
+            android:name=".view.mode_select.ModeSelect"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.MainActivity"
