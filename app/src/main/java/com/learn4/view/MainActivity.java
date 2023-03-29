@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.android.volley.error.TimeoutError;
-import com.corporation8793.learn.xml.ParentXml;
 import com.google.blockly.android.UploadBtnCheck;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
@@ -51,7 +50,6 @@ import android.graphics.Bitmap;
 
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -71,7 +69,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
@@ -123,11 +120,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -145,8 +137,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.xml.transform.Source;
 
 import kotlin.Pair;
 
@@ -927,18 +917,32 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NetworkConnection networkConnection = new NetworkConnection(this);
+        NetworkConnection networkConnection = new NetworkConnection(getApplicationContext());
         networkConnection.observe(this, aBoolean -> {
-            //
-            // Toast.makeText(getApplicationContext(), aBoolean+"", Toast.LENGTH_SHORT).show();
-            if (aBoolean){
-                Application.wifi_check = true;
-            }else{
+            //Toast.makeText(getApplicationContext(), aBoolean+"", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), Build.VERSION.SDK_INT+"", Toast.LENGTH_SHORT).show();
+            if (aBoolean != null) {
+                if (aBoolean){
+                    Application.wifi_check = true;
+                    //Log.e("checkkk", "network avail2222");
+                }else{
+                    Application.wifi_check = false;
+                    //Log.e("checkkk", "network unavail2222");
+                }
+            } else {
                 Application.wifi_check = false;
             }
+
             Application.checkUploadBtn();
         });
+        /*ConnectivityManager connectivityManager = getBaseContext().getSystemService(ConnectivityManager.class);
+        Network currentNetwork = connectivityManager.getActiveNetwork();
 
+        if (currentNetwork != null) {
+            Log.e("checkkk", "network avail2");
+        } else {
+            Log.e("checkkk", "network unavail2");
+        }*/
         db2 = AppDatabase2.getInstance(getBaseContext());
 
         blockDictionaryDao = db2.blockDictionaryDao();
@@ -966,7 +970,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 || chapter_id.split("-")[0].equals("11") || chapter_id.split("-")[0].equals("13")
                 || chapter_id.split("-")[0].equals("15") || chapter_id.split("-")[0].equals("17")
                 || chapter_id.split("-")[0].equals("19") || chapter_id.split("-")[0].equals("21")
-                || chapter_id.split("-")[0].equals("23") || chapter_id.split("-")[0].equals("25"))){
+                || chapter_id.split("-")[0].equals("23") || chapter_id.split("-")[0].equals("25")
+                || chapter_id.split("-")[0].equals("27"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
             block_bot_btn.setVisibility(View.VISIBLE);
@@ -976,7 +981,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             block_bot_btn.setVisibility(View.GONE);
         }
 
-        if (chapter_id.split("-")[0].equals("25")) {
+        if (chapter_id.split("-")[0].equals("25") || chapter_id.split("-")[0].equals("27")) {
             simulator_btn.setSelected(true);
             simulator_btn.setEnabled(true);
         }
@@ -2366,11 +2371,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         if (num == 1) {
             block_bot_btn.setImageDrawable(getResources().getDrawable(R.drawable.bot_test_2_ok));
-            ((TextView)view.findViewById(R.id.title)).setText("정답입니다. 참 잘했어요~!");
+            ((TextView)view.findViewById(R.id.tutor_text)).setText("정답입니다. 참 잘했어요~!");
         } else if (num == 2) {
-            ((TextView)view.findViewById(R.id.title)).setText("틀렸습니다. 다시 한번 해보세요~!");
+            ((TextView)view.findViewById(R.id.tutor_text)).setText("틀렸습니다. 다시 한번 해보세요~!");
         } else {
-            ((TextView)view.findViewById(R.id.title)).setText("빈 블록입니다. 블록 코딩을 해주세요~!");
+            ((TextView)view.findViewById(R.id.tutor_text)).setText("빈 블록입니다. 블록 코딩을 해주세요~!");
         }
 
         AlertDialog alertDialog = builder.create();
