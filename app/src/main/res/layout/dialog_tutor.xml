@@ -3,42 +3,101 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tutor_dialog"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minHeight="150dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:background="@drawable/radius"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/main_title"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:paddingTop="5dp"
         android:fontFamily="@font/sb_aggro_l"
-        android:text="블록 코딩 튜터"
+        android:background="@drawable/tutor_dialog_title_custom"
+        android:text="학습 목표"
         android:textColor="#af6400"
-        android:textSize="20dp"
-        app:layout_constraintVertical_bias="0.15"
+        android:textSize="18dp"
+        app:layout_constraintVertical_bias="0.1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:id="@+id/main_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:fontFamily="@font/sb_aggro_l"
-        android:text="정답입니다. 참 잘했어요~!"
+        android:inputType="textMultiLine"
+        android:text="르지 않았을 때 OFF가 출력되도록 코딩하세요."
         android:textColor="#000000"
-        android:textSize="18dp"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:textSize="16dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_title"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/condition_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/sb_aggro_l"
+        android:inputType="textMultiLine"
+        android:text="(조건 LED = 8번, 시간 = 1초)"
+        android:textColor="#f48d42"
+        android:textSize="16dp"
+        app:layout_constraintWidth_percent="0.85"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_text"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.005" />
+
+    <TextView
+        android:id="@+id/tutor_title"
+        android:layout_width="160dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:lineSpacingExtra="5dp"
+        android:paddingTop="5dp"
+        android:fontFamily="@font/sb_aggro_l"
+        android:background="@drawable/tutor_dialog_title_custom"
+        android:text="블록 코딩 튜터"
+        android:textColor="#af6400"
+        android:textSize="18dp"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/condition_text" />
+
+    <TextView
+        android:id="@+id/tutor_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:fontFamily="@font/sb_aggro_l"
+        android:inputType="textMultiLine"
+        android:text="빈 블록입니다. 블록 코딩을 해주세요~!"
+        android:textColor="#000000"
+        android:textSize="16dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tutor_title"
+        app:layout_constraintVertical_bias="0.1" />
 
     <LinearLayout
         android:id="@+id/bottom_section"
@@ -46,14 +105,22 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:background="@drawable/bottom_radius"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintHeight_percent="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/tutor_text"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintWidth_default="percent"
-        android:weightSum="15" />
+        android:weightSum="15">
+        
+        <ImageView
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#dbdbdb"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/confirm"
@@ -62,11 +129,11 @@
         android:fontFamily="@font/sb_aggro_l"
         android:text="확인"
         android:textColor="#b57014"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toTopOf="@+id/bottom_section"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_section"
-        app:layout_constraintLeft_toLeftOf="@+id/title"
-        app:layout_constraintRight_toRightOf="@+id/title"
+        app:layout_constraintLeft_toLeftOf="@+id/tutor_text"
+        app:layout_constraintRight_toRightOf="@+id/tutor_text"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         android:gravity="center" />
 

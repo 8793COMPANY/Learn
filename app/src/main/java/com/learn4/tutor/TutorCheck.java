@@ -200,12 +200,12 @@ public class TutorCheck {
         builder.setView(view);
 
         if (num == 1) {
-            ((TextView)view.findViewById(R.id.title)).setText("정답입니다. 참 잘했어요~!");
+            ((TextView)view.findViewById(R.id.tutor_text)).setText("정답입니다. 참 잘했어요~!");
             Application.setSimulatorEnabled(true);
         } else if (num == 2) {
-            ((TextView)view.findViewById(R.id.title)).setText("틀렸습니다. 다시 한번 해보세요~!");
+            ((TextView)view.findViewById(R.id.tutor_text)).setText("틀렸습니다. 다시 한번 해보세요~!");
         } else {
-            ((TextView)view.findViewById(R.id.title)).setText("빈 블록입니다. 블록 코딩을 해주세요~!");
+            ((TextView)view.findViewById(R.id.tutor_text)).setText("빈 블록입니다. 블록 코딩을 해주세요~!");
         }
 
         AlertDialog alertDialog = builder.create();
@@ -230,8 +230,8 @@ public class TutorCheck {
 
         alertDialog.show();
 
-        ViewGroup.LayoutParams params = alertDialog.getWindow().getAttributes();
+        /*ViewGroup.LayoutParams params = alertDialog.getWindow().getAttributes();
         params.width = (int) (335*2.6);
-        alertDialog.getWindow().setAttributes((WindowManager.LayoutParams) params);
+        alertDialog.getWindow().setAttributes((WindowManager.LayoutParams) params);*/
     }
 }
