@@ -33,7 +33,8 @@ public class ProblemActivity extends AppCompatActivity {
 
     TextView title, title2;
 
-    String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
+//    String [] titles = {"준비물","전체 회로도","회로도 구성","회로도 구성"};
+    String [] titles = {"학습목표","준비물","전체 회로도","전체 회로도"};
     String [] contents = {"LED 깜빡이기","LED 깜빡이는 시간 바꾸기","LED 핀 번호 바꾸기","문제풀이",};
     int pos = 0;
 
@@ -97,25 +98,28 @@ public class ProblemActivity extends AppCompatActivity {
         replaceFragment(0);
 
         back_btn.setOnClickListener(v->{
-            next_btn.setVisibility(View.VISIBLE);
-            pos--;
-            replaceFragment(pos);
-            Log.e("pos",pos+"");
+            if (pos== 0){
+                finish();
+            }else{
+                next_btn.setVisibility(View.VISIBLE);
+                pos--;
+                replaceFragment(pos);
+                Log.e("pos",pos+"");
 
-            if (pos ==0){
+                if (pos ==0){
 //                if (chapter_step.equals("deep")){
 //                    background.setBackgroundColor(Color.WHITE);
 //                    title2.setVisibility(View.VISIBLE);
 //                    title_background.setVisibility(View.INVISIBLE);
 //                }else{
                     title.setText(titles[pos]);
-//                }
-                back_btn.setVisibility(View.INVISIBLE);
-            }else{
-                title_background.setVisibility(View.VISIBLE);
-                title.setText(titles[pos]);
-                title2.setVisibility(View.INVISIBLE);
+                }else{
+                    title_background.setVisibility(View.VISIBLE);
+                    title.setText(titles[pos]);
+                    title2.setVisibility(View.INVISIBLE);
+                }
             }
+
 
         });
 
@@ -179,17 +183,22 @@ public class ProblemActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (pos == 0){
 //            if (chapter_step.equals("default")){
-                transaction.replace(R.id.fragment, new Step1(contents_name));
+                transaction.replace(R.id.fragment, new Step5(chapter_id,contents_name));
+//                transaction.replace(R.id.fragment, new Step1(contents_name));
 //            }
 //            else{
 //                transaction.replace(R.id.fragment, new Step4(contents_name));
 //            }
 
-        }else if (pos ==1){
-            transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));
+        }else if(pos ==1){
+            transaction.replace(R.id.fragment, new Step1(contents_name));
         }else if (pos ==2){
-            transaction.replace(R.id.fragment, new Step3(contents_name,chapter_id));
+            transaction.replace(R.id.fragment, new Step2(contents_name,diagram_img));
         }
+
+//        else if (pos ==2){
+//            transaction.replace(R.id.fragment, new Step3(contents_name,chapter_id));
+//        }
 
         transaction.commit();
 

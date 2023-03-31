@@ -931,6 +931,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         networkConnection.observe(this, aBoolean -> {
             //
             // Toast.makeText(getApplicationContext(), aBoolean+"", Toast.LENGTH_SHORT).show();
+
             if (aBoolean){
                 Application.wifi_check = true;
             }else{
@@ -1274,7 +1275,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
-                    simulatorDialog = new SimulatorDialog(MainActivity.this,chapter_id,code);
+                    simulatorDialog = new SimulatorDialog(MainActivity.this,chapter_id,contents_name,code);
                     simulatorDialog.show();
                 }, 500);
 

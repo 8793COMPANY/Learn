@@ -98,11 +98,11 @@ public class Step2 extends Fragment {
         contentsDao = db.contentsDao();
         contentsList = contentsDao.findAll();
 
-        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
-            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 3);
         }
 
-            MySharedPreferences.setInt(getContext(),contents_name,2);
+            MySharedPreferences.setInt(getContext(),contents_name,3);
 
         diagram_img = view.findViewById(R.id.diagram_img);
         /*diagram_img.setBackgroundResource(diagram);
@@ -138,7 +138,30 @@ public class Step2 extends Fragment {
             }
         });
 
+        RadioButton module_btn = view.findViewById(R.id.module_btn);
         RadioButton bigboard_btn = view.findViewById(R.id.bigboard_btn);
+        RadioButton zikco_btn = view.findViewById(R.id.zikco_btn);
+        bigboard_btn.setChecked(true);
+
+        module_btn.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {    // 빅보드형
+//                module_btn.setChecked(true);
+                /*if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
+                else
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);*/
+//                diagram_img.setBackgroundResource(rID);
+                                diagram_img.setBackgroundResource(0);
+            }else {     // 모듈형
+//                module_btn.setChecked(false);
+                /*if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
+                else
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);*/
+//                diagram_img.setBackgroundResource(0);
+            }
+        });
+
 
         bigboard_btn.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {    // 빅보드형
@@ -146,13 +169,31 @@ public class Step2 extends Fragment {
                     diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
                 else
                     diagram_img.setBackgroundResource(R.drawable.all_diagram_img);*/
+//                bigboard_btn.setChecked(true);
                 diagram_img.setBackgroundResource(rID);
             }else {     // 모듈형
                 /*if (contents_name.equals("LED 핀 번호 바꾸기"))
                     diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
                 else
                     diagram_img.setBackgroundResource(R.drawable.diagram_module_img);*/
-                diagram_img.setBackgroundResource(0);
+//                diagram_img.setBackgroundResource(0);
+            }
+        });
+
+        zikco_btn.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {    // 빅보드형
+                /*if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img2);
+                else
+                    diagram_img.setBackgroundResource(R.drawable.all_diagram_img);*/
+//                diagram_img.setBackgroundResource(rID);
+                                diagram_img.setBackgroundResource(0);
+            }else {     // 모듈형
+                /*if (contents_name.equals("LED 핀 번호 바꾸기"))
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);
+                else
+                    diagram_img.setBackgroundResource(R.drawable.diagram_module_img);*/
+//                diagram_img.setBackgroundResource(0);
             }
         });
 

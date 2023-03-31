@@ -12,6 +12,7 @@ import android.view.Window;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.learn4.R;
+import com.learn4.util.MySharedPreferences;
 import com.learn4.view.simulator.JavascriptCallbackClient;
 
 public class SimulatorDialog extends Dialog {
@@ -32,17 +34,18 @@ public class SimulatorDialog extends Dialog {
     private View.OnClickListener Cancel_Btn;
     TextView textView;
     private String title;
-    private String chapter_id;
+    private String chapter_id, contents_name;
     Context context;
     Button component_close_btn;
 
 
 
-    public SimulatorDialog(@NonNull Context context, String chapter_id, String text) {
+    public SimulatorDialog(@NonNull Context context, String chapter_id, String contents_name, String text) {
         super(context);
         this.context = context;
         this.chapter_id = chapter_id;
         title = text;
+        this.contents_name = contents_name;
     }
 
 
@@ -103,7 +106,7 @@ public class SimulatorDialog extends Dialog {
                 Log.e("errorCode",errorCode+"");
 
 
-
+                loading_text.setVisibility(View.GONE);
                 webView.loadData("현재 사용이 불가능합니다.","text/html; charset=utf-8","UTF-8");
 
 
@@ -160,7 +163,14 @@ public class SimulatorDialog extends Dialog {
                upload_btn.setEnabled(false);
                webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                        chapter_id,title.replace("\n","")),"android");
-               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+               webView.loadUrl("http://192.168.0.5:8080/");
+//               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+               if (!contents_name.equals("none")) {
+                   if (MySharedPreferences.getInt(context, contents_name + " MAX") < 5) {
+                       MySharedPreferences.setInt(context, contents_name + " MAX", 5);
+                   }
+               }
+               MySharedPreferences.setInt(context,contents_name,5);
                //webView.loadUrl("http://192.168.0.8:8081/");
            }
        });
@@ -181,12 +191,15 @@ public class SimulatorDialog extends Dialog {
 
 
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE,null);
 
         webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                 chapter_id,"contents_id:"+chapter_id),"android");
 
-        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
-        //webView.loadUrl("http://192.168.0.8:8081/");
+//        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+        webView.loadUrl("http://192.168.0.5:8080/");
 //        confirm_btn.setOnClickListener(Confirm_Btn);
 //        if (Cancel_Btn != null) {
 //            cancel_btn.setOnClickListener(Cancel_Btn);

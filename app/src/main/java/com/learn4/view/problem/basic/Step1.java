@@ -111,11 +111,11 @@ public class Step1 extends Fragment {
         componentsList = componentDao.findAll();
         Log.e("componentsList", "componentsList : " + componentsList.size()+"");
 
-        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
-            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
+        if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 2) {
+            MySharedPreferences.setInt(getContext(), contents_name+" MAX", 2);
         }
 
-        MySharedPreferences.setInt(getContext(), contents_name, 1);
+        MySharedPreferences.setInt(getContext(), contents_name, 2);
 
         for (int i = 0; i < contentsList.size(); i++) {
             if (contentsList.get(i).getBasic_problem().equals(contents_name)) {

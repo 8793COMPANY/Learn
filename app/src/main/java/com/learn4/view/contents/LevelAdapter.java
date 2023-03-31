@@ -27,11 +27,13 @@ public class LevelAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Context context;
     private ArrayList<Level> levels;
     private LayoutInflater inflater;
+    int width = 0;
 
-    public LevelAdapter(Context context, ArrayList<Level> levels) {
+    public LevelAdapter(Context context, ArrayList<Level> levels, int width) {
         this.context = context;
         this.levels = levels;
         this.inflater = LayoutInflater.from(context);
+        this.width = width;
     }
 
     @NonNull
@@ -46,7 +48,7 @@ public class LevelAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        ((HorizonViewHolder) holder).recyclerView.setAdapter(new LevelChapterAdapter(context, levels.get(position).chapters));
+        ((HorizonViewHolder) holder).recyclerView.setAdapter(new LevelChapterAdapter(context, levels.get(position).chapters, width));
         ((HorizonViewHolder) holder).recyclerView.addItemDecoration(new RecyclerDecoration(36));
         ((HorizonViewHolder) holder).recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         ((HorizonViewHolder) holder).recyclerView.setHasFixedSize(true);

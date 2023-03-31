@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.blockly.android.UploadBtnCheck;
 import com.learn4.R;
+import com.learn4.data.dto.LearningObjective;
 import com.learn4.view.custom.dialog.ProgressDialog;
 import com.google.blockly.android.ui.CategoryData;
 import com.learn.wp_rest.data.wp.users.User;
@@ -21,6 +22,8 @@ import com.learn.wp_rest.repository.wp.media.MediaRepository;
 import com.learn.wp_rest.repository.wp.posts.PostsRepository;
 import com.learn.wp_rest.repository.wp.users.UsersRepository;
 import com.physicaloid.lib.Physicaloid;
+
+import java.util.ArrayList;
 
 public class Application extends android.app.Application  {
     public static int indicator_index = -1;
@@ -43,6 +46,7 @@ public class Application extends android.app.Application  {
     public static boolean all_check = false;
     public static Physicaloid mPhysicaloid ;
     public static CategoryData categoryData;
+    public static ArrayList<LearningObjective> learningObjectives;
 
     public static Application getInstance(Context context){
 //        this.context = context;
@@ -59,6 +63,7 @@ public class Application extends android.app.Application  {
         Log.e("application","oncreate");
 //        db = AppDatabase.Companion.getInstance(getApplicationContext());
         mPhysicaloid = new Physicaloid(getApplicationContext());
+        learningObjectives = new ArrayList<>();
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 

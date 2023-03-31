@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.learn4.data.dto.Chapter;
+import com.learn4.data.dto.LearningObjective;
+import com.learn4.data.dto.Subclass;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
@@ -77,6 +79,8 @@ public class DataSetting {
             readBlock();
         }
 
+        readLearningObjective();
+
         settingChapterByLevel(1);
         settingChapterByLevel(2);
         settingChapterByLevel(3);
@@ -139,6 +143,60 @@ public class DataSetting {
             Log.e("checking",chapter_list.get(String.valueOf(i+1)).size()+"");
         }
     }
+
+    public void readLearningObjective() {
+        Log.e("learning in","check");
+        try {
+            is = context.getResources().getAssets().open("test2.xls");
+            workbook = Workbook.getWorkbook(is);
+
+            if (workbook != null) {
+                Log.e("learning in","sheet");
+                Sheet sheet = workbook.getSheet(6);
+
+                if (sheet != null) {
+                    int colTotal = sheet.getColumns();
+                    Log.e("learning check","colTotal : " + colTotal+"");
+                    int rowTotal = sheet.getRows();
+                    Log.e("learning check","rowTotal : " + rowTotal+"");
+
+                    int rowIndexStart = 2;
+                    boolean plus;
+
+                    for (int row = rowIndexStart; row < rowTotal; row+=3) {
+                        plus = true;
+
+                        // 블록 이름 not null 확인
+                        String plusCheck = sheet.getCell(1, row).getContents();
+
+                            // 블록 순번 제외
+                        ArrayList<Subclass> subclass = new ArrayList<>();
+
+                            String id = sheet.getCell(1, row).getContents();
+                            String title = sheet.getCell(2, row).getContents();
+
+
+
+                            // 소분류 데이터 가져오기  ex: LED 깜박이기의 1,2,3번 콘텐츠 가져오기
+                            for (int subrow = row; subrow <= row+2; subrow++) {
+
+                                subclass.add(  new Subclass(sheet.getCell(3,subrow).getContents(),
+                                        sheet.getCell(4,subrow).getContents(),
+                                        sheet.getCell(5,subrow).getContents(),
+                                        sheet.getCell(6,subrow).getContents()));
+                            }
+
+                            Application.learningObjectives.add(new LearningObjective(id,title,subclass));
+
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("test","error");
+            e.printStackTrace();
+        }
+    }
+
 
     public void readBlock() {
         try {

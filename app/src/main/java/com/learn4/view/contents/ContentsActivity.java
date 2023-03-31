@@ -8,11 +8,13 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.learn4.R;
+import com.learn4.util.Application;
 import com.learn4.util.DataSetting;
 import com.learn4.data.dto.Chapter;
 import com.learn4.data.dto.Level;
@@ -84,8 +86,10 @@ public class ContentsActivity extends AppCompatActivity {
         rvSubject = findViewById(R.id.level_list);
         back_btn = findViewById(R.id.back_btn);
 
-
-        levelAdapter = new LevelAdapter(ContentsActivity.this, subjects);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int devicewidth = (int) (displaymetrics.widthPixels / 4.9);
+        levelAdapter = new LevelAdapter(ContentsActivity.this, subjects, devicewidth);
         LinearLayoutManager manager = new LinearLayoutManager(ContentsActivity.this);
         rvSubject.setLayoutManager(manager);
         rvSubject.setAdapter(levelAdapter);

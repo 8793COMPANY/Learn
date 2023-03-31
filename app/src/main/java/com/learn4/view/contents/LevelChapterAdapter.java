@@ -26,11 +26,13 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
     private Context context;
     private ArrayList<Chapter> chapters;
     private LayoutInflater inflater;
+    private int width =0;
 
-    public LevelChapterAdapter(Context context, ArrayList<Chapter> chapters) {
+    public LevelChapterAdapter(Context context, ArrayList<Chapter> chapters, int width) {
         this.context = context;
         this.chapters = chapters;
         this.inflater = LayoutInflater.from(context);
+        this.width = width;
     }
 
     @NonNull
@@ -63,8 +65,8 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
         }
 
         ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
-        layoutParams.width = 400;
-        layoutParams.height = 400;
+        layoutParams.width = width;
+        layoutParams.height = width;
         holder.itemView.requestLayout();
 
         holder.itemView.setOnClickListener(v->{
