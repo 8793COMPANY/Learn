@@ -144,7 +144,8 @@ public class Dragger {
      */
     private boolean mWithinOnTouchBlockImpl = false;
 
-    private PendingDrag mPendingDrag;
+    //public change
+    public PendingDrag mPendingDrag;
     private Runnable mLogPending = (LOG_TOUCH_EVENTS || LOG_DRAG_EVENTS) ? new Runnable() {
         @Override
         public void run() {

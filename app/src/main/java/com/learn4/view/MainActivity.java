@@ -23,6 +23,10 @@ import android.content.DialogInterface;
 
 import com.android.volley.error.TimeoutError;
 import com.google.blockly.android.UploadBtnCheck;
+import com.google.blockly.android.ui.BlockDropdownClick;
+import com.google.blockly.android.ui.PendingDrag;
+import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
+import com.google.blockly.model.BlockFactory;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
@@ -64,6 +68,7 @@ import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -144,8 +149,9 @@ import kotlin.Pair;
 /**
  * Demo app with the Blockly Games turtle game in a webview.
  */
-public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener , UploadBtnCheck {
+public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener , UploadBtnCheck, BlockDropdownClick {
     //2021.07.23 제일 최신 버전
+
 
     private static final String TAG = "TurtleActivity";
 
@@ -155,6 +161,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private TextView mGeneratedErrorTextView;
     private FrameLayout mGeneratedFrameLayout;
 
+    BasicFieldDropdownView basicFieldDropdownView;
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] block_tempTab = {null, null, null,null};
@@ -935,6 +942,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             Application.checkUploadBtn();
         });
+
+        basicFieldDropdownView = new BasicFieldDropdownView(this);
+        basicFieldDropdownView.setOnBlockDropdownClickListener(this);
+        basicFieldDropdownView.setOnBlockDropdownClickListener(new BlockDropdownClick() {
+            @Override
+            public void onBlockDropdownClick(int position) {
+                Log.e("test", "hihihi");
+            }
+        });
         /*ConnectivityManager connectivityManager = getBaseContext().getSystemService(ConnectivityManager.class);
         Network currentNetwork = connectivityManager.getActiveNetwork();
 
@@ -1097,6 +1113,73 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        int userAction = event.getAction();
+
+        // 블럭 드래그 체크
+        if (getController().mDragger.mPendingDrag != null) {
+            boolean test = getController().mDragger.mPendingDrag.isDragging();
+            Log.e("test", "event test: " + userAction + "");
+
+            loadXmlFromWorkspace();
+
+            // userAction 여기서 찍어보기(밑에는 참고하기)
+            /*public static final int ACTION_DOWN             = 0;
+            public static final int ACTION_UP               = 1;
+            public static final int ACTION_MOVE             = 2;
+            public static final int ACTION_CANCEL           = 3;*/
+            if (userAction != 2) {
+                // 2만 뜨다가 3이 마지막에 뜸
+                Log.e("test", "drag test: " + test + "");
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    Log.e("test", code);
+                }, 2000);
+            }
+        }
+
+        // 블럭 드롭다운 & 입력 체크
+        getController().setOnBlockClickListener(new BlocklyController.OnBlockClickListener() {
+            @Override
+            public void onBlockClick(PendingDrag pendingDrag) {
+                Log.e("test", "block click test : ok");
+            }
+        });
+
+
+        //Log.e("test", "drag: " + userAction+"");
+        //if (getController().getWorkspace().hasBlocks()) {
+            //BlockFactory blockFactory = getController().getWorkspace().getBlockFactory();
+
+            //Log.e(TAG, "blockFactory : " + blockFactory.getAllBlockDefinitions());
+            //Log.e(TAG, "mTouchHandler : " + getController().mWorkspaceView.setDragger(getController().mDragger)+"");
+            //getController().mWorkspaceView.setDragger(getController().mDragger.mPendingDrag.isDragging());
+            /*if (getController().mDragger.mPendingDrag != null) {
+                boolean test = getController().mDragger.mPendingDrag.isDragging();
+                Log.e("test", "drag test: " + test+"");
+            }*/
+            //Log.e(TAG, "drag check : " + getController().mDragger.mPendingDrag.isDragging() + "");
+        //}
+        /*switch (userAction) {
+
+            case MotionEvent.ACTION_DOWN:
+                Log.e(TAG, "화면 누름");
+                break;
+
+            case MotionEvent.ACTION_UP:
+                Log.e(TAG, "화면에서 손 뗌");
+                break;
+
+            default:
+                break;
+        }*/
+        return super.dispatchTouchEvent(event);
+    }
+
     public void clickEvent(int num) {
         Button [] button = {block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn};
 
@@ -1109,6 +1192,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 button[i].setTextColor(Color.parseColor("#b45611"));
             }
         }
+
 
         dictionary_block_list.clear();
         List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(num).getItems();
@@ -2441,4 +2525,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             window.setLayout(x, y);
         }*/
     }
+
+    @Override
+    public void onBlockDropdownClick(int position) {
+        Log.e("test","inin");
+    }
+
+//    @Override
+//    public void onDropdownClick() {
+//        Log.e("test","in");
+//    }
 }

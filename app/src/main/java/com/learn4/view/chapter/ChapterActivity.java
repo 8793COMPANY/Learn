@@ -156,7 +156,7 @@ public class ChapterActivity extends AppCompatActivity {
         }
 
         // 변경 필요 13 >> 10
-        if (num > 10) {
+        if (num > 13) {
             ContinueDialog continueDialog = new ContinueDialog(this, "준비 중인 콘텐츠입니다");
             continueDialog.show();
 

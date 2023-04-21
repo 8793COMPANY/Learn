@@ -19,9 +19,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.appcompat.widget.AppCompatSpinner;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.blockly.android.R;
+import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.ui.BlockDropdownClick;
 import com.google.blockly.model.Field;
 import com.google.blockly.model.FieldDropdown;
 
@@ -43,6 +46,13 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
     protected FieldDropdown mDropdownField;
     protected int mItemLayout;
     protected int mItemDropdownLayout;
+
+
+    private BlockDropdownClick mListener;
+    public void setOnBlockDropdownClickListener(BlockDropdownClick listener) {
+        this.mListener = listener;
+    }
+
 
     /**
      * Constructs a new {@link BasicFieldDropdownView}.
@@ -114,13 +124,22 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
 
     @Override
     public void setSelection(int position) {
+        Log.e("test", "onnnn");
+        Log.e("test", mListener+"");
+
         if (position == getSelectedItemPosition()) {
             return;
         }
         super.setSelection(position);
         if (mDropdownField != null) {
+            Log.e("test", "on");
             mDropdownField.setSelectedIndex(position);
         }
+        if(mListener != null) {
+            mListener.onBlockDropdownClick(position);
+            Log.e("test", "on2");
+        }
+
     }
 
     @Override
