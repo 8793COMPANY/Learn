@@ -92,10 +92,12 @@ public class Step5 extends Fragment {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
         }
 
+
         MySharedPreferences.setInt(getContext(), contents_name, 1);
-        if (number[0].equals("3") || number[0].equals("5")){
+//        if (number[0].equals("3") || number[0].equals("5")){
             Log.e("contents","in");
             int contents_num = (Integer.parseInt(number[0]) -3) / 2;
+            Log.e("contents_num",contents_num+"");
             Subclass subclass = Application.learningObjectives.get(contents_num).getSubclasses().get(Integer.parseInt(number[1])-2);
             Log.e("id",subclass.getLearning_objective());
 
@@ -105,7 +107,7 @@ public class Step5 extends Fragment {
             contents_condition.setText(subclass.getCondition());
 
 
-        }
+//        }
         Log.e("contents_name",contents_name);
         Log.e("contents_name",chapter_id);
 

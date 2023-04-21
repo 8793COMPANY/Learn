@@ -21,6 +21,7 @@ import android.os.Handler;
 import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;

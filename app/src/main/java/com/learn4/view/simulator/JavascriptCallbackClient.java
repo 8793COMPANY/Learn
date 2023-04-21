@@ -11,6 +11,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.UiThread;
+
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+
 public class JavascriptCallbackClient {
 
     private Context mContext;

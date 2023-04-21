@@ -7,7 +7,6 @@ import android.net.NetworkInfo
 import android.net.NetworkRequest
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 
 class NetworkConnection(
@@ -43,7 +42,6 @@ class NetworkConnection(
                 super.onLost(network)
                 postValue(false)
             }
-
             override fun onUnavailable() {
                 super.onUnavailable()
                 Log.e("check", "network unavail")
@@ -54,19 +52,18 @@ class NetworkConnection(
                 Log.e("check", "network avail")
                 postValue(true)
             }
-
         }
         return networkCallback
     }
 
-
     private fun updateConnection() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             postValue(connectivityManager.isDefaultNetworkActive)
         }else {
             val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
             postValue(activeNetwork?.isConnected)
-        }
+        }*/
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        postValue(activeNetwork?.isConnected)
     }
-
 }

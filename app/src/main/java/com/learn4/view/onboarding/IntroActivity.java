@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.learn4.R;
+import com.learn4.view.mode_select.ModeSelect;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class IntroActivity extends AppCompatActivity {
         Handler handler = new Handler();
         
         handler.postDelayed(() -> {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, ModeSelect.class);
             startActivity(intent);
             finish();
         }, 2000);

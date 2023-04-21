@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.appcompat.widget.AppCompatSpinner;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.blockly.android.R;
@@ -92,6 +93,8 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
         mDropdownField = dropdownField;
         if (mDropdownField != null) {
             List<String> items = mDropdownField.getDisplayNames();
+            //여기 체크
+            Log.e("items name check",items.get(0));
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<>(getContext(), mItemLayout, items);
             adapter.setDropDownViewResource(mItemDropdownLayout);
@@ -114,6 +117,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
 
     @Override
     public void setSelection(int position) {
+        Log.e("set selection","in");
         if (position == getSelectedItemPosition()) {
             return;
         }

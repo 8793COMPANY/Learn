@@ -78,12 +78,15 @@ public class SimulatorDialog extends Dialog {
             hint_text.setText("스위치 = 7번");
         }else if (chapter_id.equals("5-3")){
             hint_text.setText("스위치 = 5번");
+        }else if (chapter_id.equals("7-2")){
+            hint_text.setText("3색 LED");
         }else if (chapter_id.equals("25-2")) {
             hint_text.setText("서보모터");
+        }else if (chapter_id.equals("27-2")) {
+            hint_text.setText("불꽃감지센서");
         }else{
             hint_text.setText("스위치 = 5번, LED = 10번");
         }
-
 
         component_close_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,15 +166,15 @@ public class SimulatorDialog extends Dialog {
                upload_btn.setEnabled(false);
                webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                        chapter_id,title.replace("\n","")),"android");
-               webView.loadUrl("http://192.168.0.5:8080/");
-//               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+//               webView.loadUrl("http://192.168.0.5:8080/");
                if (!contents_name.equals("none")) {
                    if (MySharedPreferences.getInt(context, contents_name + " MAX") < 5) {
                        MySharedPreferences.setInt(context, contents_name + " MAX", 5);
                    }
                }
                MySharedPreferences.setInt(context,contents_name,5);
-               //webView.loadUrl("http://192.168.0.8:8081/");
+
            }
        });
 
@@ -198,8 +201,8 @@ public class SimulatorDialog extends Dialog {
         webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                 chapter_id,"contents_id:"+chapter_id),"android");
 
-//        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
-        webView.loadUrl("http://192.168.0.5:8080/");
+        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+
 //        confirm_btn.setOnClickListener(Confirm_Btn);
 //        if (Cancel_Btn != null) {
 //            cancel_btn.setOnClickListener(Cancel_Btn);

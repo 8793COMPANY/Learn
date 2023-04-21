@@ -17,6 +17,7 @@ package com.google.blockly.android.ui.vertical;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
