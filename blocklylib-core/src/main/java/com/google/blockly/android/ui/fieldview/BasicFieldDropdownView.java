@@ -15,6 +15,7 @@
 
 package com.google.blockly.android.ui.fieldview;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.TypedArray;
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.google.blockly.android.R;
+import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.model.Field;
 import com.google.blockly.model.FieldDropdown;
 
@@ -34,16 +36,34 @@ import java.util.List;
 public class BasicFieldDropdownView extends AppCompatSpinner implements FieldView {
     private static final String TAG = "BasicFieldDropdownView";
 
-    private Field.Observer mFieldObserver = new Field.Observer() {
+    public Field.Observer mFieldObserver = new Field.Observer() {
         @Override
         public void onValueChanged(Field field, String oldValue, String newValue) {
             setSelection(mDropdownField.getSelectedIndex());
+            Log.e("test observer",context_name);
+
         }
     };
+
 
     protected FieldDropdown mDropdownField;
     protected int mItemLayout;
     protected int mItemDropdownLayout;
+    public boolean main_check;
+    String context_name="";
+
+
+    public BlockDropdownClick mListener;
+    public void setOnBlockDropdownClickListener(BlockDropdownClick listener) {
+        Log.e("test in","setonblockdropdown");
+        this.mListener = listener;
+        main_check = true;
+        Log.e("test main_check", main_check+"");
+
+    }
+
+
+
 
     /**
      * Constructs a new {@link BasicFieldDropdownView}.
@@ -52,7 +72,21 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
      */
     public BasicFieldDropdownView(Context context) {
         super(context);
+
         loadAttributes(null, 0);
+    }
+
+    public BasicFieldDropdownView(Context context, Boolean check) {
+        super(context);
+        loadAttributes(null, 0);
+        main_check = check;
+    }
+    public void setMainCheck(Boolean check){
+        main_check = check;
+    }
+
+    public Boolean getMainCheck(){
+        return main_check;
     }
 
     public BasicFieldDropdownView(Context context, AttributeSet attrs) {
@@ -117,14 +151,28 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
 
     @Override
     public void setSelection(int position) {
-        Log.e("set selection","in");
+
+        Log.e("test", "onnnn");
+        Log.e("test", mListener+"");
+        Log.e("test main_check", main_check+"");
+
         if (position == getSelectedItemPosition()) {
             return;
         }
         super.setSelection(position);
         if (mDropdownField != null) {
+            Log.e("test", "on");
             mDropdownField.setSelectedIndex(position);
+
         }
+
+        if (getMainCheck()){
+            mListener.onBlockDropdownClick(position);
+            Log.e("test", "on2");
+        }
+
+
+
     }
 
     @Override

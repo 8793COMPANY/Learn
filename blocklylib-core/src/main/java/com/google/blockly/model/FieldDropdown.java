@@ -19,6 +19,7 @@ import android.database.Observable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.blockly.utils.BlockLoadingException;
 
@@ -178,10 +179,15 @@ public final class FieldDropdown extends Field {
 
     public FieldDropdown(String name, @Nullable Options options) {
         super(name, TYPE_DROPDOWN);
+        Log.e("test check","type dropdown");
+
         setOptions((options != null) ? options : new Options(Collections.<Option>emptyList()));
         if (!options.isEmpty()) {
             mSelectedIndex = 0;
             mSelectedOption = mOptions.get(mSelectedIndex);
+            Log.e("test option",name);
+            Log.e("test option",mOptions.get(mSelectedIndex).value);
+            Log.e("test option","--------------");
         }
     }
 
@@ -350,6 +356,7 @@ public final class FieldDropdown extends Field {
             mSelectedIndex = index;
             mSelectedOption = mOptions.get(mSelectedIndex);
             String newValue = getSerializedValue();
+            Log.e("when in","this method");
             fireValueChanged(oldValue, newValue);
         }
     }

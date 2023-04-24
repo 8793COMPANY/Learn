@@ -203,6 +203,10 @@ public class SimulatorDialog extends Dialog {
 
         webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 
+        //webView.loadUrl("http://192.168.0.8:8080/");
+
+        //webView.loadUrl("http://192.168.0.8:3000/");
+
 //        confirm_btn.setOnClickListener(Confirm_Btn);
 //        if (Cancel_Btn != null) {
 //            cancel_btn.setOnClickListener(Cancel_Btn);

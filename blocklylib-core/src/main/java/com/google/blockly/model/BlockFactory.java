@@ -626,6 +626,7 @@ public class BlockFactory {
      */
     public void updateDropdownOptions(String blockType, String fieldName,
                                       List<FieldDropdown.Option> optionList) {
+
         BlockTypeFieldName key = new BlockTypeFieldName(blockType, fieldName);
         WeakReference<FieldDropdown.Options> sharedOptionsRef = mDropdownOptions.get(key);
         FieldDropdown.Options sharedOptions =

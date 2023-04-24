@@ -156,14 +156,17 @@ public class BlocklyController {
     private int mEventCallbackMask = 0;
 
     private VirtualWorkspaceView mVirtualWorkspaceView;
-    private WorkspaceView mWorkspaceView;
+    // public change
+    public WorkspaceView mWorkspaceView;
     private WorkspaceFragment mWorkspaceFragment = null;
-    private Dragger mDragger;
+    // public change
+    public Dragger mDragger;
     private VariableCallback mVariableCallback = null;
     Block testblock = null;
     long delay = 0;
 
     private int centerX = 0, centerY = 0;
+
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
@@ -316,7 +319,7 @@ public class BlocklyController {
 
 
 
-    private final BlockTouchHandler mTouchHandler;
+    public final BlockTouchHandler mTouchHandler;
 
     /**
      * Creates a new Controller with Workspace and WorkspaceHelper. Most controllers will require

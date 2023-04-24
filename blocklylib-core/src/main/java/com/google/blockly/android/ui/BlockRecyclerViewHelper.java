@@ -125,6 +125,7 @@ public class BlockRecyclerViewHelper {
             @Override
             public void onBlockClick(PendingDrag pendingDrag) {
                 BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+
                 Block rootBlock = touchedBlockView.getBlock().getRootBlock();
                 if (!rootBlock.getType().trim().equals("turtle_setup_loop")){
 //                    getWorkspaceBlockGroupForTouch(pendingDrag);

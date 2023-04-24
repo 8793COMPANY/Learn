@@ -16,6 +16,8 @@
 package com.google.blockly.model;
 
 import android.database.Observable;
+import android.util.Log;
+
 import androidx.annotation.IntDef;
 
 import com.google.blockly.model.BlocklyEvent.ChangeEvent;
@@ -232,7 +234,9 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
         runAsPossibleEventGroup(new Runnable() {
             @Override
             public void run() {
+
                 if (mBlock != null) {
+                    Log.e("when in",oldValueString+","+newValueString);
                     mBlock.maybeAddPendingChangeEvent(
                             BlocklyEvent.ELEMENT_FIELD, Field.this, oldValueString, newValueString);
                 }

@@ -364,6 +364,7 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
      */
     protected FieldView buildFieldView(Field field) {
         @Field.FieldType int type = field.getType();
+        Log.e("test check !!",type+"");
         switch (type) {
             case Field.TYPE_ANGLE: {
                 BasicFieldAngleView fieldAngleView = new BasicFieldAngleView(mContext);
@@ -386,7 +387,9 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
                 return fieldDateView;
             }
             case Field.TYPE_DROPDOWN: {
-                BasicFieldDropdownView fieldDropdownView = new BasicFieldDropdownView(mContext);
+
+                BasicFieldDropdownView fieldDropdownView = new BasicFieldDropdownView(mContext,true);
+                fieldDropdownView.setMainCheck(true);
 
                 fieldDropdownView.setField(field);
 
@@ -450,6 +453,7 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
             List<FieldView> fieldViews = new ArrayList<>(fields.size());
             for (int  j = 0; j < fields.size(); j++) {
                 fieldViews.add(buildFieldView(fields.get(j)));
+
             }
             InputView inputView = buildInputView(input, fieldViews);
 
