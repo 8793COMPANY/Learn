@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
 
 import com.google.blockly.android.FlyoutFragment;
@@ -387,6 +388,16 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
             case Field.TYPE_DROPDOWN: {
                 BasicFieldDropdownView fieldDropdownView = new BasicFieldDropdownView(mContext);
                 fieldDropdownView.setField(field);
+                fieldDropdownView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("test", "hello");
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        Log.e("test", "hello2");
+                    }
+                });
                 return fieldDropdownView;
             }
             case Field.TYPE_IMAGE: {

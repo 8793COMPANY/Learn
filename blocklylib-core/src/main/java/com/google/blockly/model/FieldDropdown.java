@@ -19,7 +19,9 @@ import android.database.Observable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.google.blockly.android.ui.BlockDropdownClick;
 import com.google.blockly.utils.BlockLoadingException;
 
 import org.json.JSONArray;
@@ -33,8 +35,14 @@ import java.util.List;
 /**
  * Adds a dropdown list to an Input.
  */
-public final class FieldDropdown extends Field {
-    private static final String TAG = "FieldDropdown";
+public class FieldDropdown extends Field {
+    private static
+    String TAG = "FieldDropdown";
+
+    private BlockDropdownClick mListener;
+    public void setOnBlockDropdownClickListener(BlockDropdownClick listener) {
+        this.mListener = listener;
+    }
 
     /**
      * An option for a block's dropdown field.
@@ -304,17 +312,29 @@ public final class FieldDropdown extends Field {
      * @param newValue The value of the option to select.
      */
     public void setSelectedValue(String newValue) {
+        Log.e("test", "Listener : " + mListener);
+
         if (mOptions.isEmpty()) {
             String oldValue = getSerializedValue();
             mSelectedIndex = -1;
             mSelectedOption = null;
             fireValueChanged(oldValue, null);
+
+            if(mListener != null) {
+                mListener.onBlockDropdownClick();
+                Log.e("test", "on2");
+            }
         } else {
             int index = mOptions.getIndexForValue(newValue);
             if (index == -1) {
                 index = 0;
             }
             setSelectedIndex(index);
+
+            if(mListener != null) {
+                mListener.onBlockDropdownClick();
+                Log.e("test", "on3");
+            }
         }
     }
 
@@ -351,7 +371,11 @@ public final class FieldDropdown extends Field {
             mSelectedOption = mOptions.get(mSelectedIndex);
             String newValue = getSerializedValue();
             fireValueChanged(oldValue, newValue);
+            testTest();
         }
+
+        Log.e("test", "setSelectedIndex");
+        Log.e("test", "listener : " + mListener);
     }
 
     /**

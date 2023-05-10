@@ -36,22 +36,24 @@ import java.util.List;
 public class BasicFieldDropdownView extends AppCompatSpinner implements FieldView {
     private static final String TAG = "BasicFieldDropdownView";
 
-    private Field.Observer mFieldObserver = new Field.Observer() {
+    public Field.Observer mFieldObserver = new Field.Observer() {
         @Override
         public void onValueChanged(Field field, String oldValue, String newValue) {
             setSelection(mDropdownField.getSelectedIndex());
+            Log.e("test", "observer");
+
         }
     };
 
-    protected FieldDropdown mDropdownField;
+    public FieldDropdown mDropdownField;
     protected int mItemLayout;
     protected int mItemDropdownLayout;
 
 
-    private BlockDropdownClick mListener;
+    /*private BlockDropdownClick mListener;
     public void setOnBlockDropdownClickListener(BlockDropdownClick listener) {
         this.mListener = listener;
-    }
+    }*/
 
 
     /**
@@ -90,6 +92,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
     }
 
     @Override
+
     public void setField(Field field) {
         FieldDropdown dropdownField = (FieldDropdown) field;
         if (mDropdownField == dropdownField) {
@@ -125,7 +128,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
     @Override
     public void setSelection(int position) {
         Log.e("test", "onnnn");
-        Log.e("test", mListener+"");
+        //Log.e("test", mListener+"");
 
         if (position == getSelectedItemPosition()) {
             return;
@@ -135,10 +138,10 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
             Log.e("test", "on");
             mDropdownField.setSelectedIndex(position);
         }
-        if(mListener != null) {
+        /*if(mListener != null) {
             mListener.onBlockDropdownClick(position);
             Log.e("test", "on2");
-        }
+        }*/
 
     }
 

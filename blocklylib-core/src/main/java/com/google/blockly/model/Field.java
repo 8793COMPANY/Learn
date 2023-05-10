@@ -16,6 +16,8 @@
 package com.google.blockly.model;
 
 import android.database.Observable;
+import android.util.Log;
+
 import androidx.annotation.IntDef;
 
 import com.google.blockly.model.BlocklyEvent.ChangeEvent;
@@ -235,12 +237,20 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
                 if (mBlock != null) {
                     mBlock.maybeAddPendingChangeEvent(
                             BlocklyEvent.ELEMENT_FIELD, Field.this, oldValueString, newValueString);
+                    mBlock.testDropdown();
+                    //Log.e("test", "block not null~");
+                } else {
+                    //Log.e("test", "block null~");
                 }
                 for (int i = 0; i < mObservers.size(); i++) {
                     mObservers.get(i).onValueChanged(Field.this, oldValueString, newValueString);
                 }
             }
         });
+    }
+
+    protected void testTest() {
+        Log.e("test", "block dropdown test~");
     }
 
     /**
@@ -250,8 +260,10 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
     private void runAsPossibleEventGroup(Runnable runnable) {
         if (mBlock != null) {
             mBlock.runAsPossibleEventGroup(runnable);
+            //Log.e("test", "block not null");
         } else {
             runnable.run();
+            //Log.e("test", "block null");
         }
     }
 }
