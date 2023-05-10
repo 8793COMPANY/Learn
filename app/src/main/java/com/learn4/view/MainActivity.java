@@ -337,16 +337,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     //private WebView mTurtleWebview;
     private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new CodeGenerationRequest.CodeGeneratorCallback() {
-
                 @Override
                 public void onFinishCodeGeneration(final String generatedCode, String xml) {
                     Log.e("start!","onFinishCodeGeneration");
-                    Log.e("test","onfinishcodegeneration");
 
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.e("test","onfinishcodegeneration run code");
                             code = generatedCode;
                             submittedXml = xml;
 //                            updateTextMinWidth();
@@ -502,14 +499,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
-                                    customProgressDialog.dismiss();
+            customProgressDialog.dismiss();
             uploadListener.show();
 
         } else {
             Boolean value = OpenUSB();
             if (value) {
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
-                                        customProgressDialog.dismiss();
+                customProgressDialog.dismiss();
                 uploadListener.show();
             }
             else {
@@ -574,34 +571,34 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         //System.out.println(response);
                     }
                 }, error -> {
-                    Log.e("error","in!");
-                    if (error instanceof TimeoutError) {
-                        Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    if (error.getMessage() != null) {
-                        Log.e("서버 에러", "remotecompile: " + error.getMessage());
-                        if(error.toString().equals("com.android.volley.error.ServerError")) {
-                            Log.e("server error log",error.getMessage());
-                            //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                            //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
-                        }
-                        else if(error.getMessage().contains("java.net.ConnectException")) {
-                            Log.e("Remote error log",error.getMessage());
-                            Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                            //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                            //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
-    //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                            //  mGeneratedErrorTextView.setText(error.getMessage());
+            Log.e("error","in!");
+            if (error instanceof TimeoutError) {
+                Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+            if (error.getMessage() != null) {
+                Log.e("서버 에러", "remotecompile: " + error.getMessage());
+                if(error.toString().equals("com.android.volley.error.ServerError")) {
+                    Log.e("server error log",error.getMessage());
+                    //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                    //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
+                }
+                else if(error.getMessage().contains("java.net.ConnectException")) {
+                    Log.e("Remote error log",error.getMessage());
+                    Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                    //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
+                    //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                    //  mGeneratedErrorTextView.setText(error.getMessage());
 
-                            Log.e("error log",error.getMessage());
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
+                    Log.e("error log",error.getMessage());
+                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
 
-                });
+        });
 
 //        Map<String,String> Headers = new HashMap<>();
 //        Headers.put("board", "uno");
@@ -882,7 +879,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     MySharedPreferences.setInt(getApplicationContext(), contents_name + " MAX", 5);
                 }
             }
-                MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
+            MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
             uploadListener.dismiss();
 
         }
@@ -1220,16 +1217,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         //Log.e("test", "drag: " + userAction+"");
         //if (getController().getWorkspace().hasBlocks()) {
-            //BlockFactory blockFactory = getController().getWorkspace().getBlockFactory();
+        //BlockFactory blockFactory = getController().getWorkspace().getBlockFactory();
 
-            //Log.e(TAG, "blockFactory : " + blockFactory.getAllBlockDefinitions());
-            //Log.e(TAG, "mTouchHandler : " + getController().mWorkspaceView.setDragger(getController().mDragger)+"");
-            //getController().mWorkspaceView.setDragger(getController().mDragger.mPendingDrag.isDragging());
+        //Log.e(TAG, "blockFactory : " + blockFactory.getAllBlockDefinitions());
+        //Log.e(TAG, "mTouchHandler : " + getController().mWorkspaceView.setDragger(getController().mDragger)+"");
+        //getController().mWorkspaceView.setDragger(getController().mDragger.mPendingDrag.isDragging());
             /*if (getController().mDragger.mPendingDrag != null) {
                 boolean test = getController().mDragger.mPendingDrag.isDragging();
                 Log.e("test", "drag test: " + test+"");
             }*/
-            //Log.e(TAG, "drag check : " + getController().mDragger.mPendingDrag.isDragging() + "");
+        //Log.e(TAG, "drag check : " + getController().mDragger.mPendingDrag.isDragging() + "");
         //}
         /*switch (userAction) {
 
@@ -1294,8 +1291,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 String [] splitBlock = blockItem.getBlock().toString().split("\"");
                 Log.e("block", splitBlock[1]);
-
-
 
                 // 엑셀 파일 내용과 어떻게 맞춰서 넣을지
                 for (int i = 0; i < blockDictionaryList.size(); i++) {

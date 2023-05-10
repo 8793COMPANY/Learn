@@ -155,7 +155,7 @@ Blockly.JavaScript['turtle_jikco_internal'] = function(block) {
     code += "neo.setPixelColor(8,"+color+");\n";
   }
 
-   code += "neo.clear();\nneo.show();";
+   code += "\nneo.show();\n";
 
   return code;
 };
@@ -309,11 +309,9 @@ Blockly.JavaScript['servo'] = function (block) {
 
 
   Blockly.JavaScript['neo_pixel_setup'] = function (block) {
-<<<<<<< HEAD
-     Blockly.JavaScript.setups_['define_neo_setup'] =  " strip.begin();"+
-=======
+
+
      Blockly.JavaScript.setups_['define_neo_setup'] =  " neo.begin();"+
->>>>>>> master
                    "\nneo.setBrightness(20);"+
                    "\nneo.setPixelColor(0, 0xff0000);"+
                    "\nneo.setPixelColor(2, 0xff0000);"+
