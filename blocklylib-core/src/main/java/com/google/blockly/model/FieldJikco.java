@@ -15,7 +15,10 @@
 
 package com.google.blockly.model;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -24,45 +27,50 @@ import com.google.blockly.utils.BlockLoadingException;
 import org.json.JSONObject;
 
 /**
- * Adds a color picker to an Input.
+ * Adds a toggleable checkbox to an Input.
  */
-public final class FieldColor extends Field {
+public final class FieldJikco extends Field {
     public static final int DEFAULT_COLOR = 0xff0000;  // Red
 
     private int mColor;
+    private String mCheck ="";
 
-    public FieldColor(String name) {
+    public FieldJikco(String name) {
         this(name, DEFAULT_COLOR);
+        Log.e("???","when in");
     }
 
-    public FieldColor(String name, int color) {
-        super(name, TYPE_COLOR);
+    public FieldJikco(String name, int color) {
+        super(name, TYPE_JIKCO);
         setColor(color);
     }
 
-    public static FieldColor fromJson(JSONObject json) throws BlockLoadingException {
+    public static FieldJikco fromJson(JSONObject json) throws BlockLoadingException {
         String name = json.optString("name");
         if (TextUtils.isEmpty(name)) {
-            throw new BlockLoadingException("field_colour \"name\" attribute must not be empty.");
+            throw new BlockLoadingException("field_jikco \"name\" attribute must not be empty.");
         }
         int color = DEFAULT_COLOR;
 
-        String colourString = json.optString("colour");
+        String colourString = json.optString("jikco");
+        Log.e("colourString",colourString);
         if (!TextUtils.isEmpty(colourString)) {
             color = Color.parseColor(colourString);
         }
-        return new FieldColor(name, color);
+        return new FieldJikco(name, color);
     }
 
     @Override
-    public FieldColor clone() {
-        return new FieldColor(getName(), mColor);
+    public FieldJikco clone() {
+        return new FieldJikco(getName(), mColor);
     }
 
     @Override
     public boolean setFromString(String text) {
+        Log.e("text",text);
         try {
-            setColor(Color.parseColor(text));
+            setColor(text);
+//            setColor(Color.parseColor("#ff6565"));
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -91,9 +99,20 @@ public final class FieldColor extends Field {
         }
     }
 
+    public void setColor(String check) {
+        if (!mCheck.equals(check)) {
+            String oldValue = getSerializedValue();
+//            mColor = newColor;
+            mCheck = check;
+            String newValue = getSerializedValue();
+            fireValueChanged(oldValue, newValue);
+        }
+    }
+
+
+
     @Override
     public String getSerializedValue() {
-        return String.format("#%02x%02x%02x",
-                Color.red(mColor), Color.green(mColor), Color.blue(mColor));
+        return mCheck;
     }
 }

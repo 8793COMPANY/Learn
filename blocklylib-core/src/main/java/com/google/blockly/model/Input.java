@@ -15,6 +15,8 @@
 
 package com.google.blockly.model;
 
+import android.util.Log;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -126,6 +128,7 @@ public abstract class Input implements Cloneable {
         mType = type;
         mFields = (fields == null) ? Collections.<Field>emptyList()
                 : Collections.unmodifiableList(new ArrayList<Field>(fields));
+
         mAlign = align;
         mConnection = connection;
 
@@ -156,6 +159,7 @@ public abstract class Input implements Cloneable {
         List<Field> inputFields = in.getFields();
         for (int i = 0; i < inputFields.size(); i++) {
             try {
+                Log.e("in ","input");
                 mFields.add(inputFields.get(i).clone());
             } catch (CloneNotSupportedException e) {
                 throw new IllegalStateException("Error cloning field "
@@ -298,9 +302,18 @@ public abstract class Input implements Cloneable {
         if (mConnection != null) {
             mConnection.setBlock(block);
         }
+
+        try{
+            Log.e("field",mFields.size()+"");
+        }catch (RuntimeException e){
+            Log.e("field","null");
+        }
         for (int i = 0; i < mFields.size(); i++) {
+            Log.e("field",block.getType()+","+i);
+            Log.e("field",mFields.get(i)+"");
             mFields.get(i).setBlock(block);
         }
+        Log.e("field","end");
     }
 
     /**
@@ -344,6 +357,7 @@ public abstract class Input implements Cloneable {
         } catch (JSONException e) {
             throw new BlockLoadingException("Input definition missing \"type\".", e);
         }
+
 
         switch (type) {
             case TYPE_VALUE_STRING:

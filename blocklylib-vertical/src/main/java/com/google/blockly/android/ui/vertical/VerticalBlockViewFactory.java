@@ -278,6 +278,8 @@ public class VerticalBlockViewFactory extends BlockViewFactory<BlockView, InputV
             setFieldLayout(Field.TYPE_COLOR, R.layout.default_field_color);
             setFieldLayout(Field.TYPE_INPUT, R.layout.default_field_input);
             setFieldLayout(Field.TYPE_VARIABLE, R.layout.default_field_variable);
+
+            setFieldLayout(Field.TYPE_JIKCO, R.layout.default_field_jikco);
         } finally {
             styles.recycle();
         }

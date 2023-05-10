@@ -73,10 +73,12 @@ public final class BlockDefinition {
      * @throws BlockLoadingException If JSON does not include expected attributes.
      */
     public BlockDefinition(JSONObject json) throws BlockLoadingException {
+        Log.e("blockdefinition","in");
         mJson = json;
 
         // Validate or create type id.
         String tmpName = mJson.optString("type");
+        Log.e("blockdefinition",tmpName);
         String logPrefix = "";
         if (tmpName == null) {
             // Generate definition name that will be consistent across runs
@@ -116,6 +118,8 @@ public final class BlockDefinition {
         }
 
         mStyle = mJson.optJSONObject("style");
+
+        Log.e("blockdefinition","end");
     }
 
     /**
@@ -140,6 +144,7 @@ public final class BlockDefinition {
      */
     @Nullable
     protected Connection createOutputConnection() {
+        Log.e("blockdefinition","createOutputConnection in");
         return !mHasOutput ? null :
                 new Connection(Connection.CONNECTION_TYPE_OUTPUT, mOutputChecks);
     }
@@ -150,6 +155,7 @@ public final class BlockDefinition {
      */
     @Nullable
     protected Connection createPreviousConnection() {
+        Log.e("blockdefinition","createPreviousConnection in");
         return !mHasPrevious ? null :
                 new Connection(Connection.CONNECTION_TYPE_PREVIOUS, mPreviousChecks);
     }
@@ -160,6 +166,8 @@ public final class BlockDefinition {
      */
     @Nullable
     protected Connection createNextConnection() {
+        Log.e("blockdefinition","createNextConnection in");
+
         return !mHasNext ? null :
                 new Connection(Connection.CONNECTION_TYPE_NEXT, mNextChecks);
     }
@@ -169,6 +177,7 @@ public final class BlockDefinition {
      *         fields.
      */
     protected ArrayList<Input> createInputList(BlockFactory factory) throws BlockLoadingException {
+        Log.e("blockdefinition","createInputList in");
         ArrayList<Input> inputs = new ArrayList<>();
         ArrayList<Field> fields = new ArrayList<>();
         for (int i = 0; ; i++) {
@@ -184,7 +193,7 @@ public final class BlockDefinition {
                 // If there's no args for this message use an empty array.
                 args = new JSONArray();
             }
-
+            Log.e("blockdefinition","createInputList "+message);
             if (message.matches("^%[a-zA-Z][a-zA-Z_0-9]*$")) {
                 // TODO(#83): load the message from resources.
             }
@@ -220,6 +229,7 @@ public final class BlockDefinition {
                         if (TextUtils.isEmpty(elementType)) {
                             throw new BlockLoadingException("No type for arg %" + index);
                         }
+
 
                         if (Field.isFieldType(elementType)) {
                             fields.add(factory.loadFieldFromJson(mTypeName, element));
@@ -258,6 +268,7 @@ public final class BlockDefinition {
             }
         }
 
+        Log.e("blockdefinition","createInputList end");
         return  inputs;
     }
 

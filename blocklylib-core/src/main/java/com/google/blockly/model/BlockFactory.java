@@ -382,6 +382,7 @@ public class BlockFactory {
                 field = FieldCheckbox.fromJson(json);
                 break;
             case Field.TYPE_COLOR_STRING:
+                Log.e("test blockFactory","TYPE_COLOR_STRING");
                 field = FieldColor.fromJson(json);
                 break;
             case Field.TYPE_DATE_STRING:
@@ -406,6 +407,9 @@ public class BlockFactory {
                 break;
             case Field.TYPE_NUMBER_STRING:
                 field = FieldNumber.fromJson(json);
+                break;
+            case Field.TYPE_JIKCO_STRING:
+                field = FieldJikco.fromJson(json);
                 break;
             default:
                 Log.w(TAG, "Unknown field type.");

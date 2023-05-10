@@ -331,13 +331,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     //private WebView mTurtleWebview;
     private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
             new CodeGenerationRequest.CodeGeneratorCallback() {
+
                 @Override
                 public void onFinishCodeGeneration(final String generatedCode, String xml) {
                     Log.e("start!","onFinishCodeGeneration");
+                    Log.e("test","onfinishcodegeneration");
 
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Log.e("test","onfinishcodegeneration run code");
                             code = generatedCode;
                             submittedXml = xml;
 //                            updateTextMinWidth();
@@ -1220,6 +1223,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 String [] splitBlock = blockItem.getBlock().toString().split("\"");
                 Log.e("block", splitBlock[1]);
+
+
 
                 // 엑셀 파일 내용과 어떻게 맞춰서 넣을지
                 for (int i = 0; i < blockDictionaryList.size(); i++) {

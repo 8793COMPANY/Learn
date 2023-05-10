@@ -136,7 +136,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
             if (items.size() > 0) {
                 setSelection(mDropdownField.getSelectedIndex());
             }
-
+            Log.e("hello in ",mDropdownField.getSelectedIndex()+"");
             mDropdownField.registerObserver(mFieldObserver);
         } else {
             setSelection(0);
@@ -161,7 +161,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
         }
         super.setSelection(position);
         if (mDropdownField != null) {
-            Log.e("test", "on");
+            Log.e("test", "on??");
             mDropdownField.setSelectedIndex(position);
 
         }

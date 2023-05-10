@@ -39,6 +39,7 @@ import com.google.blockly.android.ui.fieldview.BasicFieldDateView;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 import com.google.blockly.android.ui.fieldview.BasicFieldImageView;
 import com.google.blockly.android.ui.fieldview.BasicFieldInputView;
+import com.google.blockly.android.ui.fieldview.BasicFieldJikcoView;
 import com.google.blockly.android.ui.fieldview.BasicFieldLabelView;
 import com.google.blockly.android.ui.fieldview.BasicFieldNumberView;
 import com.google.blockly.android.ui.fieldview.BasicFieldVariableView;
@@ -386,13 +387,16 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
                 fieldDateView.setField(field);
                 return fieldDateView;
             }
-            case Field.TYPE_DROPDOWN: {
 
+            case Field.TYPE_JIKCO:{
+                BasicFieldJikcoView fieldJikcoView = new BasicFieldJikcoView(mContext);
+                fieldJikcoView.setField(field);
+                return fieldJikcoView;
+            }
+            case Field.TYPE_DROPDOWN: {
                 BasicFieldDropdownView fieldDropdownView = new BasicFieldDropdownView(mContext,true);
                 fieldDropdownView.setMainCheck(true);
-
                 fieldDropdownView.setField(field);
-
                 return fieldDropdownView;
             }
             case Field.TYPE_IMAGE: {
@@ -430,6 +434,7 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
     }
 
     protected SpinnerAdapter getVariableAdapter() {
+        Log.e("test","getvariableadapter");
         if (mVariableNameManager == null) {
             throw new IllegalStateException("NameManager must be set before variable field is "
                     + "instantiated.");

@@ -158,6 +158,7 @@ public class Block extends Observable<Block.Observer> {
                 definition.createOutputConnection(),
                 definition.createPreviousConnection(),
                 definition.createNextConnection());
+        Log.e("blockdefinition","the end");
         if (isShadow && containsVariableField()) {
             throw new BlockLoadingException("Shadow blocks may not contain variable fields.");
         }
@@ -1037,10 +1038,12 @@ public class Block extends Observable<Block.Observer> {
                         "updatedOutput Connection type is not CONNECTION_TYPE_OUTPUT");
             }
         }
+
         if (updatedPrev != null && updatedPrev.getType() != Connection.CONNECTION_TYPE_PREVIOUS) {
             throw new IllegalArgumentException(
                     "updatedPrev Connection type is not CONNECTION_TYPE_PREVIOUS");
         }
+
         if (updatedNext != null && updatedNext.getType() != Connection.CONNECTION_TYPE_NEXT) {
             throw new IllegalArgumentException(
                     "updatedNext Connection type is not CONNECTION_TYPE_NEXT");
@@ -1064,6 +1067,8 @@ public class Block extends Observable<Block.Observer> {
                 in.setBlock(null); // Reset the block reference in removed Inputs and Fields.
             }
         }
+
+        //여기서 에러
         for (Input in : newInputList) {
             if (!oldInputs.contains(in)) {
                 if (in.getConnectedBlock() != null) {
@@ -1072,7 +1077,9 @@ public class Block extends Observable<Block.Observer> {
                     throw new IllegalStateException(
                             "Cannot add input \"" + in.getName() + "\" while connected.");          // TODO: Make test for this
                 }
+
                 in.setBlock(this);
+
             }
             Connection inputConn = in.getConnection();
             if (inputConn != null) {
@@ -1100,6 +1107,7 @@ public class Block extends Observable<Block.Observer> {
         mConnectionList = Collections.unmodifiableList(connectionList);
 
         fireUpdate(UPDATE_INPUTS_FIELDS_CONNECTIONS);
+        Log.e("blockdefinition","reshape end");
     }
 
     /**

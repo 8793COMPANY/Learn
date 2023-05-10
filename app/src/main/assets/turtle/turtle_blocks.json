@@ -58,6 +58,89 @@
     "colour": "#6BABEF"
   },
 
+  {
+    "type": "turtle_color_internal",
+    "message0": "move %1",
+    "args0": [
+      {
+        "type": "field_colour",
+        "name": "DIR",
+        "colour": "#ff4040",
+        "colourOptions":
+        ["#ff4040", "#ff8080", "#ffc0c0",
+          "#4040ff", "#8080ff", "#c0c0ff"],
+        "colourTitles":
+        ["dark pink", "pink", "light pink",
+          "dark blue", "blue", "light blue"],
+        "columns": 3
+      }
+
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 160,
+    "tooltip": "Moves the turtle forward or backward by the specified amount."
+  },
+
+  {
+    "type": "turtle_jikco_internal",
+    "message0": "네오픽셀 LED %1 모양 %2 으로 출력",
+    "args0": [
+      {
+        "type": "field_jikco",
+        "name": "DIR",
+        "columns": 3
+      },
+      {
+        "type": "field_dropdown",
+        "name": "COL",
+        "options": [
+          [
+            "빨간색",
+            "빨간색"
+          ],
+          [
+            "주황색",
+            "주황색"
+          ],
+          [
+            "노란색",
+            "노란색"
+          ],
+          [
+            "초록색",
+            "초록색"
+          ],
+          [
+            "파란색",
+            "파란색"
+          ],
+          [
+            "갈색",
+            "갈색"
+          ],
+          [
+            "보라색",
+            "보라색"
+          ],
+          [
+            "검은색",
+            "검은색"
+          ],
+          [
+            "흰색",
+            "흰색"
+          ]
+        ]
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": "Moves the turtle forward or backward by the specified amount."
+  },
+
+
 
 
   {

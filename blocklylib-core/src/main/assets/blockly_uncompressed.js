@@ -18703,6 +18703,17 @@ Blockly.FieldCheckbox.prototype.showEditor_ = function() {
     null !== a && this.setValue(String(a).toUpperCase())
 };
 Blockly.Field.register("field_checkbox", Blockly.FieldCheckbox);
+
+//Blockly.FieldJikco = function(a, b) {
+//    Blockly.FieldJikco.superClass_.constructor.call(this, a, b);
+//    this.setText(Blockly.Field.NBSP + Blockly.Field.NBSP + Blockly.Field.NBSP)
+//};
+//goog.inherits(Blockly.FieldJikco, Blockly.Field);
+//Blockly.FieldJikco.fromJson = function(a) {
+//    return new Blockly.FieldJikco(a.checked)
+//};
+//Blockly.Field.register("field_jikco", Blockly.FieldJikco);
+
 Blockly.FieldColour = function(a, b) {
     Blockly.FieldColour.superClass_.constructor.call(this, a, b);
     this.setText(Blockly.Field.NBSP + Blockly.Field.NBSP + Blockly.Field.NBSP)
@@ -18775,6 +18786,83 @@ Blockly.FieldColour.widgetDispose_ = function() {
     Blockly.Events.setGroup(!1)
 };
 Blockly.Field.register("field_colour", Blockly.FieldColour);
+
+// start
+
+Blockly.FieldJikco = function(a, b) {
+    Blockly.FieldJikco.superClass_.constructor.call(this, a, b);
+    this.setText(Blockly.Field.NBSP + Blockly.Field.NBSP + Blockly.Field.NBSP)
+};
+goog.inherits(Blockly.FieldJikco, Blockly.Field);
+Blockly.FieldJikco.fromJson = function(a) {
+    return new Blockly.FieldJikco(a.jikco)
+};
+Blockly.FieldJikco.prototype.colours_ = null;
+Blockly.FieldJikco.prototype.columns_ = 0;
+Blockly.FieldJikco.prototype.init = function() {
+    Blockly.FieldJikco.superClass_.init.call(this);
+    this.borderRect_.style.fillOpacity = 1;
+    this.setValue(this.getValue())
+};
+Blockly.FieldJikco.prototype.CURSOR = "default";
+Blockly.FieldJikco.prototype.dispose = function() {
+    Blockly.WidgetDiv.hideIfOwner(this);
+    Blockly.FieldJikco.superClass_.dispose.call(this)
+};
+Blockly.FieldJikco.prototype.getValue = function() {
+    return this.colour_
+};
+Blockly.FieldJikco.prototype.setValue = function(a) {
+    this.sourceBlock_ && Blockly.Events.isEnabled() && this.colour_ != a && Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_, "field", this.name, this.colour_, a));
+    this.colour_ = a;
+    this.borderRect_ && (this.borderRect_.style.fill = a)
+};
+Blockly.FieldJikco.prototype.getText = function() {
+    var a = this.colour_,
+        b = a.match(/^#(.)\1(.)\2(.)\3$/);
+    b && (a = "#" + b[1] + b[2] + b[3]);
+    return a
+};
+Blockly.FieldJikco.COLOURS = goog.ui.ColorPicker.SIMPLE_GRID_COLORS;
+Blockly.FieldJikco.COLUMNS = 7;
+Blockly.FieldJikco.prototype.setColours = function(a) {
+    this.colours_ = a;
+    return this
+};
+Blockly.FieldJikco.prototype.setColumns = function(a) {
+    this.columns_ = a;
+    return this
+};
+Blockly.FieldJikco.prototype.showEditor_ = function() {
+    Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL, Blockly.FieldJikco.widgetDispose_);
+    var a = Blockly.utils.getViewportBBox(),
+        b = this.getScaledBBox_(),
+        c = this.createWidget_(),
+        d = goog.style.getSize(c.getElement());
+    Blockly.WidgetDiv.positionWithAnchor(a, b, d, this.sourceBlock_.RTL);
+    var e = this;
+    Blockly.FieldJikco.changeEventKey_ = goog.events.listen(c, goog.ui.ColorPicker.EventType.CHANGE, function(a) {
+        a = a.target.getSelectedColor() || "#000000";
+        Blockly.WidgetDiv.hide();
+        e.sourceBlock_ && (a = e.callValidator(a));
+        null !== a && e.setValue(a)
+    })
+};
+Blockly.FieldJikco.prototype.createWidget_ = function() {
+    var a = new goog.ui.ColorPicker;
+    a.setSize(this.columns_ || Blockly.FieldColour.COLUMNS);
+    a.setColors(this.colours_ || Blockly.FieldColour.COLOURS);
+    a.render(Blockly.WidgetDiv.DIV);
+    a.setSelectedColor(this.getValue());
+    return a
+};
+Blockly.FieldJikco.widgetDispose_ = function() {
+    Blockly.FieldJikco.changeEventKey_ && goog.events.unlistenByKey(Blockly.FieldColour.changeEventKey_);
+    Blockly.Events.setGroup(!1)
+};
+Blockly.Field.register("field_jikco", Blockly.FieldJikco);
+
+// end
 Blockly.FieldDropdown = function(a, b) {
     this.menuGenerator_ = a;
     this.trimOptions_();
