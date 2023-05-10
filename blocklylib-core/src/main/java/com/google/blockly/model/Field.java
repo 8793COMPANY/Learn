@@ -270,7 +270,7 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
      * Runs the runnable immediately, as an event group if connected to a block & controller.
      * @param runnable
      */
-    private void runAsPossibleEventGroup(Runnable runnable) {
+    public void runAsPossibleEventGroup(Runnable runnable) {
         if (mBlock != null) {
             mBlock.runAsPossibleEventGroup(runnable);
             //Log.e("test", "block not null");
