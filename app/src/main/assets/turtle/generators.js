@@ -247,139 +247,6 @@ Blockly.JavaScript['servo'] = function (block) {
        return code;
     };
 
-    Blockly.JavaScript['neo_pixel_happy'] = function (block) {
-         /*Blockly.JavaScript.setups_['define_neo_setup'] =  " neo.begin();"+
-                       "neo.clear();"+
-                       "\nneo.setBrightness(20);"+
-                       "\nneo.setPixelColor(0, 0xff0000);"+
-                       "\nneo.setPixelColor(2, 0xff0000);"+
-                       "\nneo.setPixelColor(4, 0xff0000);"+
-                       "\nneo.setPixelColor(6, 0xff0000);"+
-                       "\nneo.setPixelColor(8, 0xff0000);"+
-                       "\nneo.setPixelColor(10, 0xff0000);"+
-                       "\nneo.show();"+
-                       "\nneo.setPixelColor(0, 0xff0000);"+
-                       "\nneo.setPixelColor(2, 0xff0000);"+
-                       "\nneo.setPixelColor(4, 0xff0000);"+
-                       "\nneo.setPixelColor(6, 0xff0000);"+
-                       "\nneo.setPixelColor(8, 0xff0000);"+
-                       "\nneo.setPixelColor(10, 0xff0000);"+
-                       "\nneo.show();"+
-                       "\nneo.clear();"+
-                       "\nneo.show();\n";*/
-
-           var code = "\nneo.clear();"+
-           "\nneo.show();" +
-           "\nneo.setPixelColor(0, 0xff8c00);"+
-           "\nneo.setPixelColor(2, 0xff0000);"+
-           "\nneo.setPixelColor(4, 0xffff00);"+
-           "\nneo.setPixelColor(6, 0x008000);"+
-           "\nneo.setPixelColor(8, 0x0000ff);"+
-           "\nneo.setPixelColor(10, 0x964B00);"+
-           "\nneo.show();\n";
-
-
-           return code;
-        };
-
-        Blockly.JavaScript['neo_pixel_sad'] = function (block) {
-                   var code = "\nneo.clear();"+
-                   "\nneo.show();" +
-                   "\nneo.setPixelColor(1, 0xff0000);"+
-                   "\nneo.setPixelColor(3, 0xff0000);"+
-                   "\nneo.setPixelColor(4, 0xff0000);"+
-                   "\nneo.setPixelColor(5, 0xff0000);"+
-                   "\nneo.setPixelColor(7, 0xff0000);"+
-                   "\nneo.setPixelColor(9, 0xff0000);"+
-                   "\nneo.setPixelColor(10, 0xff0000);"+
-                   "\nneo.setPixelColor(11, 0xff0000);"+
-                   "\nneo.show();\n";
-
-                   return code;
-                };
-
-        Blockly.JavaScript['neo_pixel_sulk'] = function (block) {
-                           var code = "\nneo.clear();"+
-                           "\nneo.show();" +
-                           "\nneo.setPixelColor(0, 0xff0000);"+
-                           "\nneo.setPixelColor(1, 0xff0000);"+
-                           "\nneo.setPixelColor(2, 0xff0000);"+
-                           "\nneo.setPixelColor(6, 0xff0000);"+
-                           "\nneo.setPixelColor(7, 0xff0000);"+
-                           "\nneo.setPixelColor(8, 0xff0000);"+
-                           "\nneo.show();\n";
-
-                           return code;
-                        };
-
-        Blockly.JavaScript['neo_pixel_thrill'] = function (block) {
-                                   var code = "\nneo.clear();"+
-                                   "\nneo.show();" +
-                                   "\nneo.setPixelColor(1, 0xff0000);"+
-                                   "\nneo.setPixelColor(3, 0xff0000);"+
-                                   "\nneo.setPixelColor(5, 0xff0000);"+
-                                   "\nneo.setPixelColor(7, 0xff0000);"+
-                                   "\nneo.setPixelColor(9, 0xff0000);"+
-                                   "\nneo.setPixelColor(11, 0xff0000);"+
-                                   "\nneo.show();\n";
-
-                                   return code;
-                                };
-
-        Blockly.JavaScript['neo_pixel_surprise'] = function (block) {
-                                           var code = "\nneo.clear();"+
-                                           "\nneo.show();" +
-                                           "\nneo.setPixelColor(0, 0xff0000);"+
-                                           "\nneo.setPixelColor(1, 0xff0000);"+
-                                           "\nneo.setPixelColor(2, 0xff0000);"+
-                                           "\nneo.setPixelColor(3, 0xff0000);"+
-                                           "\nneo.setPixelColor(4, 0xff0000);"+
-                                           "\nneo.setPixelColor(5, 0xff0000);"+
-                                           "\nneo.setPixelColor(6, 0xff0000);"+
-                                           "\nneo.setPixelColor(7, 0xff0000);"+
-                                           "\nneo.setPixelColor(8, 0xff0000);"+
-                                           "\nneo.setPixelColor(9, 0xff0000);"+
-                                           "\nneo.setPixelColor(10, 0xff0000);"+
-                                           "\nneo.setPixelColor(11, 0xff0000);"+
-                                           "\nneo.show();\n";
-
-                                           return code;
-                                        };
-
-        Blockly.JavaScript['neo_pixel_sleep'] = function (block) {
-                           var code = "\nneo.clear();"+
-                           "\nneo.show();" +
-                           "\nneo.setPixelColor(0, 0xff0000);"+
-                           "\nneo.setPixelColor(1, 0xff0000);"+
-                           "\nneo.setPixelColor(2, 0xff0000);"+
-                           "\nneo.setPixelColor(3, 0xff0000);"+
-                           "\nneo.setPixelColor(5, 0xff0000);"+
-                           "\nneo.setPixelColor(6, 0xff0000);"+
-                           "\nneo.setPixelColor(7, 0xff0000);"+
-                           "\nneo.setPixelColor(8, 0xff0000);"+
-                           "\nneo.setPixelColor(9, 0xff0000);"+
-                           "\nneo.setPixelColor(11, 0xff0000);"+
-                           "\nneo.show();\n";
-
-                           return code;
-                        };
-
-        Blockly.JavaScript['neo_pixel_sad'] = function (block) {
-                           var code = "\nneo.clear();"+
-                           "\nneo.show();" +
-                           "\nneo.setPixelColor(1, 0xff0000);"+
-                           "\nneo.setPixelColor(3, 0xff0000);"+
-                           "\nneo.setPixelColor(4, 0xff0000);"+
-                           "\nneo.setPixelColor(5, 0xff0000);"+
-                           "\nneo.setPixelColor(7, 0xff0000);"+
-                           "\nneo.setPixelColor(9, 0xff0000);"+
-                           "\nneo.setPixelColor(10, 0xff0000);"+
-                           "\nneo.setPixelColor(11, 0xff0000);"+
-                           "\nneo.show();\n";
-
-                           return code;
-        };
-
         Blockly.JavaScript['neo_pixel_begin'] = function (block) {
 
            var code = "neo.begin();\n"
@@ -409,145 +276,45 @@ Blockly.JavaScript['neo_pixel_custom'] = function (block) {
    var value_face = Blockly.JavaScript.valueToCode(block, 'face', Blockly.JavaScript.ORDER_ATOMIC);
    var value_color = Blockly.JavaScript.valueToCode(block, 'color', Blockly.JavaScript.ORDER_ATOMIC);
 
-   var set_color = "";
    var code = "";
+   var code_text = "";
+   var set_color = "";
+   var light_num = [];
 
-   if(value_color == '빨간색') {
-        set_color = "0xff0000";
-      } else if(value_color == '주황색') {
-        set_color = "0xff8c00";
-      } else if(value_color == '노란색') {
-        set_color = "0xffff00";
-      } else if(value_color == '초록색') {
-        set_color = "0x008000";
-      } else if(value_color == '파란색') {
-        set_color = "0x0000ff";
-      } else if(value_color == '갈색') {
-        set_color = "0x964B00";
-      } else if(value_color == '보라색') {
-        set_color = "0x800080";
-      } else if(value_color == '검은색') {
-        set_color = "0x000000";
-      } else if(value_color == '흰색') {
-        set_color = "0xffffff";
-      }
-
-   if(value_face == '기쁜') {
-     /*var list_num = {0, 2, 4, 6, 8, 10};
-
-     for(var i=0; i<list_num.size; i++) {
-
-     }*/
-     code = "\nneo.clear();"+
-            "\nneo.show();" +
-            "\nneo.setPixelColor(0, 0xff0000);"+
-            "\nneo.setPixelColor(2, 0xff8c00);"+
-            "\nneo.setPixelColor(4, 0xffff00);"+
-            "\nneo.setPixelColor(6, 0x008000);"+
-            "\nneo.setPixelColor(8, 0x0000ff);"+
-            "\nneo.setPixelColor(10, 0x964B00);"+
-            "\nneo.show();\n";
-   } else if(value_face == '슬픈') {
-     code = "\nneo.clear();"+
-            "\nneo.show();" +
-            "\nneo.setPixelColor(1,"+set_color+");"+
-            "\nneo.setPixelColor(3,"+set_color+");"+
-            "\nneo.setPixelColor(4,"+set_color+");"+
-            "\nneo.setPixelColor(5,"+set_color+");"+
-            "\nneo.setPixelColor(7,"+set_color+");"+
-            "\nneo.setPixelColor(9,"+set_color+");"+
-            "\nneo.setPixelColor(10,"+set_color+");"+
-            "\nneo.setPixelColor(11,"+set_color+");"+
-            "\nneo.show();\n";
-   } else if(value_face == '삐진') {
-          code = "\nneo.clear();"+
-                             "\nneo.show();" +
-                             "\nneo.setPixelColor(0,"+set_color+");"+
-                             "\nneo.setPixelColor(1,"+set_color+");"+
-                             "\nneo.setPixelColor(2,"+set_color+");"+
-                             "\nneo.setPixelColor(6,"+set_color+");"+
-                             "\nneo.setPixelColor(7,"+set_color+");"+
-                             "\nneo.setPixelColor(8,"+set_color+");"+
-                             "\nneo.show();\n";
-   } else if(value_face == '짜릿한') {
-          code = "\nneo.clear();"+
-                             "\nneo.show();" +
-                             "\nneo.setPixelColor(1,"+set_color+");"+
-                             "\nneo.setPixelColor(3,"+set_color+");"+
-                             "\nneo.setPixelColor(5,"+set_color+");"+
-                             "\nneo.setPixelColor(7,"+set_color+");"+
-                             "\nneo.setPixelColor(9,"+set_color+");"+
-                             "\nneo.setPixelColor(11,"+set_color+");"+
-                             "\nneo.show();\n";
-   } else if(value_face == '놀란') {
-          code = "\nneo.clear();"+
-                             "\nneo.show();" +
-                             "\nneo.setPixelColor(0,"+set_color+");"+
-                             "\nneo.setPixelColor(1,"+set_color+");"+
-                             "\nneo.setPixelColor(2,"+set_color+");"+
-                             "\nneo.setPixelColor(3,"+set_color+");"+
-                             "\nneo.setPixelColor(4,"+set_color+");"+
-                             "\nneo.setPixelColor(5,"+set_color+");"+
-                             "\nneo.setPixelColor(6,"+set_color+");"+
-                             "\nneo.setPixelColor(7,"+set_color+");"+
-                             "\nneo.setPixelColor(8,"+set_color+");"+
-                             "\nneo.setPixelColor(9,"+set_color+");"+
-                             "\nneo.setPixelColor(10,"+set_color+");"+
-                             "\nneo.setPixelColor(11,"+set_color+");"+
-                             "\nneo.show();\n";
-   } else if(value_face == '졸린') {
-          code = "\nneo.clear();"+
-                             "\nneo.show();" +
-                             "\nneo.setPixelColor(0,"+set_color+");"+
-                             "\nneo.setPixelColor(1,"+set_color+");"+
-                             "\nneo.setPixelColor(2,"+set_color+");"+
-                             "\nneo.setPixelColor(3,"+set_color+");"+
-                             "\nneo.setPixelColor(5,"+set_color+");"+
-                             "\nneo.setPixelColor(6,"+set_color+");"+
-                             "\nneo.setPixelColor(7,"+set_color+");"+
-                             "\nneo.setPixelColor(8,"+set_color+");"+
-                             "\nneo.setPixelColor(9,"+set_color+");"+
-                             "\nneo.setPixelColor(11,"+set_color+");"+
-                             "\nneo.show();\n";
-   } else if(value_face == '웃는') {
-          code = "\nneo.clear();"+
-                             "\nneo.show();" +
-                             "\nneo.setPixelColor(0,"+set_color+");"+
-                             "\nneo.setPixelColor(2,"+set_color+");"+
-                             "\nneo.setPixelColor(3,"+set_color+");"+
-                             "\nneo.setPixelColor(4,"+set_color+");"+
-                             "\nneo.setPixelColor(5,"+set_color+");"+
-                             "\nneo.setPixelColor(6,"+set_color+");"+
-                             "\nneo.setPixelColor(8,"+set_color+");"+
-                             "\nneo.setPixelColor(9,"+set_color+");"+
-                             "\nneo.setPixelColor(10,"+set_color+");"+
-                             "\nneo.setPixelColor(11,"+set_color+");"+
-                             "\nneo.show();\n";
-   } else if(value_face == '멍한') {
-          code = "\nneo.clear();"+
-                             "\nneo.show();" +
-                             "\nneo.setPixelColor(0,"+set_color+");"+
-                             "\nneo.setPixelColor(1,"+set_color+");"+
-                             "\nneo.setPixelColor(3,"+set_color+");"+
-                             "\nneo.setPixelColor(4,"+set_color+");"+
-                             "\nneo.setPixelColor(7,"+set_color+");"+
-                             "\nneo.setPixelColor(8,"+set_color+");"+
-                             "\nneo.setPixelColor(10,"+set_color+");"+
-                             "\nneo.setPixelColor(11,"+set_color+");"+
-                             "\nneo.show();\n";
-   } else if(value_face == '속상한') {
-               code = "\nneo.clear();"+
-                                  "\nneo.show();" +
-                                  "\nneo.setPixelColor(2,"+set_color+");"+
-                                  "\nneo.setPixelColor(3,"+set_color+");"+
-                                  "\nneo.setPixelColor(4,"+set_color+");"+
-                                  "\nneo.setPixelColor(6,"+set_color+");"+
-                                  "\nneo.setPixelColor(10,"+set_color+");"+
-                                  "\nneo.setPixelColor(11,"+set_color+");"+
-                                  "\nneo.show();\n";
+   switch(value_color) {
+     case '빨간색' : set_color = "0xff0000"; break;
+     case '주황색' : set_color = "0xff8c00"; break;
+     case '노란색' : set_color = "0xffff00"; break;
+     case '초록색' : set_color = "0x008000"; break;
+     case '파란색' : set_color = "0x0000ff"; break;
+     case '갈색' : set_color = "0x964B00"; break;
+     case '보라색' : set_color = "0x800080"; break;
+     case '검은색' : set_color = "0x000000"; break;
+     case '흰색' : set_color = "0xffffff"; break;
    }
-     //var code = "neo.setPixelColor("+value_face+","+value_color+");\n";
-     return code;
+
+   switch(value_face) {
+     case '기쁜' : light_num = ['0', '2', '4', '6', '8', '10']; break;
+     case '슬픈' : light_num = ['1', '3', '4', '5', '7', '9', '10', '11']; break;
+     case '삐진' : light_num = ['0', '1', '2', '6', '7', '8']; break;
+     case '짜릿한' : light_num = ['1', '3', '5', '7', '9', '11']; break;
+     case '놀란' : light_num = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']; break;
+     case '졸린' : light_num = ['0', '1', '2', '3', '5', '6', '7', '8', '9', '11']; break;
+     case '웃는' : light_num = ['0', '2', '3', '4', '5', '6', '8', '9', '10', '11']; break;
+     case '멍한' : light_num = ['0', '1', '3', '4', '7', '8', '10', '11']; break;
+     case '속상한' : light_num = ['2', '3', '4', '6', '10', '11']; break;
+   }
+
+   for(var i=0; i<light_num.length; i++) {
+     code_text = code_text + "\nneo.setPixelColor(" + light_num[i] + "," + set_color + ");";
+   }
+
+   code = "\nneo.clear();"+
+          "\nneo.show();" +
+          code_text +
+          "\nneo.show();\n";
+
+   return code;
   };
 
  Blockly.JavaScript['neo_pixel_color'] = function (block) {

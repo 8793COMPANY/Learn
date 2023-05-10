@@ -380,24 +380,6 @@
         <block type="neo_pixel_clear">
         </block>
 
-        <block type="neo_pixel_happy">
-        </block>
-
-        <block type="neo_pixel_sad">
-        </block>
-
-        <block type="neo_pixel_sulk">
-        </block>
-
-        <block type="neo_pixel_thrill">
-        </block>
-
-        <block type="neo_pixel_surprise">
-        </block>
-
-        <block type="neo_pixel_sleep">
-        </block>
-
         <block type="neo_pixel_custom">
             <value name="face">
                 <block type="face_list">
