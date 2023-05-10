@@ -397,6 +397,19 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
                 BasicFieldDropdownView fieldDropdownView = new BasicFieldDropdownView(mContext,true);
                 fieldDropdownView.setMainCheck(true);
                 fieldDropdownView.setField(field);
+
+
+                fieldDropdownView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        Log.e("test", "hello");
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        Log.e("test", "hello2");
+                    }
+                });
+
                 return fieldDropdownView;
             }
             case Field.TYPE_IMAGE: {

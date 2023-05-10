@@ -829,6 +829,78 @@
   },
 
   {
+    "type": "neo_pixel_happy",
+    "message0": "NeoPixel smile",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_sad",
+    "message0": "NeoPixel sad",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_sulk",
+    "message0": "NeoPixel sulk",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_thrill",
+    "message0": "NeoPixel thrill",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_surprise",
+    "message0": "NeoPixel surprise",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_sleep",
+    "message0": "NeoPixel sleep",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
     "type": "neo_pixel_begin",
     "message0": "NeoPixel Begin",
     "args0": [
@@ -845,6 +917,74 @@
     "type": "neo_pixel_show",
     "message0": "NeoPixel Show",
     "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_clear",
+    "message0": "NeoPixel Clear",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "color_list",
+    "message0": "%1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "color",
+        "options": [
+          ["빨간색", "빨간색"], ["주황색", "주황색"], ["노란색", "노란색"], ["초록색", "초록색"], ["파란색", "파란색"],
+          ["갈색", "갈색"], ["보라색", "보라색"], ["검은색", "검은색"],["흰색", "흰색"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF",
+    "tooltip": ""
+  },
+
+  {
+    "type": "face_list",
+    "message0": "%1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "face",
+        "options": [
+          ["기쁜", "기쁜"], ["슬픈", "슬픈"], ["삐진", "삐진"], ["짜릿한", "짜릿한"], ["놀란", "놀란"],
+          ["졸린", "졸린"], ["웃는", "웃는"], ["멍한", "멍한"], ["속상한", "속상한"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF",
+    "tooltip": ""
+  },
+
+  {
+    "type": "neo_pixel_custom",
+    "message0": "네오픽셀 LED %1 표정 %2 으로 출력",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "face"
+      },
+      {
+        "type": "input_value",
+        "name": "color"
+      }
     ],
     "inputsInline": true,
     "colour": 220,

@@ -166,7 +166,7 @@ public class BasicFieldJikcoView extends FrameLayout implements FieldView {
 
 
         mColorField = colorField;
-        Log.e("field check",mColorField.getSerializedValue());
+
         if (mColorField != null) {
 //            setColor(mColorField.getColor());
             String[] parts = mColorField.getSerializedValue().split(",");

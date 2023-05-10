@@ -104,6 +104,8 @@ public class BlocklyController {
     private static final String SNAPSHOT_BUNDLE_KEY = "com.google.blockly.snapshot";
     private static final String SERIALIZED_WORKSPACE_KEY = "SERIALIZED_WORKSPACE";
 
+    public boolean dropdownBooleanCheck = false;
+
     /**
      * Callback interface for {@link BlocklyEvent}s.
      */
@@ -138,7 +140,8 @@ public class BlocklyController {
     private final Context mContext;
     private final Looper mMainLooper;
     private final BlockFactory mModelFactory;
-    private final BlockViewFactory mViewFactory;
+    // type change : private > public
+    public final BlockViewFactory mViewFactory;
     public final WorkspaceHelper mHelper;
     private final BlockClipDataHelper mClipHelper;
 
@@ -151,14 +154,16 @@ public class BlocklyController {
     private boolean mInEventGroup = false;
     private boolean mBlockCopyCheck = false;
 
-    private ArrayList<BlocklyEvent> mPendingEvents;
+    // public change
+    public ArrayList<BlocklyEvent> mPendingEvents;
     private int mPendingEventsMask = 0;
     private int mEventCallbackMask = 0;
 
     private VirtualWorkspaceView mVirtualWorkspaceView;
     // public change
     public WorkspaceView mWorkspaceView;
-    private WorkspaceFragment mWorkspaceFragment = null;
+    // public change
+    public WorkspaceFragment mWorkspaceFragment = null;
     // public change
     public Dragger mDragger;
     private VariableCallback mVariableCallback = null;
@@ -725,6 +730,15 @@ public class BlocklyController {
             // Outside a prior event group.  Fire immediately.
             firePendingEvents();
         }
+
+        Log.e("test", "addPendingEvent");
+
+    }
+
+    public void dropDownCheck() {
+        Log.e("test", "controller check");
+        //
+        dropdownBooleanCheck = true;
     }
 
     /**

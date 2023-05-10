@@ -250,12 +250,20 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
                     Log.e("when in",oldValueString+","+newValueString);
                     mBlock.maybeAddPendingChangeEvent(
                             BlocklyEvent.ELEMENT_FIELD, Field.this, oldValueString, newValueString);
+                    mBlock.testDropdown();
+                    //Log.e("test", "block not null~");
+                } else {
+                    //Log.e("test", "block null~");
                 }
                 for (int i = 0; i < mObservers.size(); i++) {
                     mObservers.get(i).onValueChanged(Field.this, oldValueString, newValueString);
                 }
             }
         });
+    }
+
+    protected void testTest() {
+        Log.e("test", "block dropdown test~");
     }
 
     /**
@@ -265,8 +273,10 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
     private void runAsPossibleEventGroup(Runnable runnable) {
         if (mBlock != null) {
             mBlock.runAsPossibleEventGroup(runnable);
+            //Log.e("test", "block not null");
         } else {
             runnable.run();
+            //Log.e("test", "block null");
         }
     }
 }

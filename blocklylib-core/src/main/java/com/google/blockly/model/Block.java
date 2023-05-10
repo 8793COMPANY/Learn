@@ -158,7 +158,9 @@ public class Block extends Observable<Block.Observer> {
                 definition.createOutputConnection(),
                 definition.createPreviousConnection(),
                 definition.createNextConnection());
+
         Log.e("blockdefinition","the end");
+
         if (isShadow && containsVariableField()) {
             throw new BlockLoadingException("Shadow blocks may not contain variable fields.");
         }
@@ -1345,6 +1347,12 @@ public class Block extends Observable<Block.Observer> {
             mController.addPendingEvent(
                     new BlocklyEvent.ChangeEvent(element, this, field, oldValue, newValue));
         }
+    }
+
+    public void testDropdown() {
+        //mController
+        Log.e("test", "Block class dropdown test");
+        mController.dropDownCheck();
     }
 
     /**
