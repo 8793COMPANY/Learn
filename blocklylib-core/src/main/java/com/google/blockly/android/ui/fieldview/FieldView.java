@@ -28,6 +28,7 @@ import com.google.blockly.model.Field;
 public interface FieldView {
     /**
      * @return The field represented by this view.
+     *
      */
     Field getField();
 

@@ -26,6 +26,11 @@ import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.android.ui.PendingDrag;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
+
+import com.google.blockly.model.BlockFactory;
+import com.google.blockly.model.Field;
+import com.google.blockly.model.FieldDropdown;
+
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
@@ -160,6 +165,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private FrameLayout mGeneratedFrameLayout;
 
     BasicFieldDropdownView basicFieldDropdownView;
+    FieldDropdown fieldDropdown;
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] block_tempTab = {null, null, null,null};
@@ -943,12 +949,59 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
 
+
 //        basicFieldDropdownView.setOnBlockDropdownClickListener(new BlockDropdownClick() {
 //            @Override
 //            public void onBlockDropdownClick(int position) {
 //                Log.e("test", "hihihi");
 //            }
 //        });
+
+        //Log.e("test", getController().mPendingEvents+"");
+
+        /*
+        fieldDropdown = new FieldDropdown("test");
+        fieldDropdown.setOnBlockDropdownClickListener(this);
+        fieldDropdown.setOnBlockDropdownClickListener(new BlockDropdownClick() {
+            @Override
+            public void onBlockDropdownClick() {
+                Log.e("test", "hihiho!!!");
+            }
+        });
+         */
+
+        /*basicFieldDropdownView = new BasicFieldDropdownView(this);
+
+        //asicFieldDropdownView.mDropdownField.
+
+        basicFieldDropdownView.mFieldObserver = new Field.Observer() {
+            @Override
+            public void onValueChanged(Field field, String oldValue, String newValue) {
+                Log.e("test", "hihiho!!!");
+            }
+        };
+
+        basicFieldDropdownView.setOnBlockDropdownClickListener(this);
+        basicFieldDropdownView.setOnBlockDropdownClickListener(new BlockDropdownClick() {
+            @Override
+            public void onBlockDropdownClick(int position) {
+                Log.e("test", "hihihi");
+            }
+        });
+
+        basicFieldDropdownView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("testtest", "hihihi yes");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.e("testtest", "hihihi no");
+            }
+        });*/
+
+
         /*ConnectivityManager connectivityManager = getBaseContext().getSystemService(ConnectivityManager.class);
         Network currentNetwork = connectivityManager.getActiveNetwork();
 
@@ -1123,6 +1176,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         int userAction = event.getAction();
+        Log.e("test", "test test : "+getController().mPendingEvents+"");
 
         // 블럭 드래그 체크
         if (getController().mDragger.mPendingDrag != null) {
@@ -1154,6 +1208,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.e("test", "block click test : ok");
             }
         });
+
+        Log.e("test", "boolean check : " + getController().dropdownBooleanCheck);
+
+        // test2
+        //getController()
 
 
         //Log.e("test", "drag: " + userAction+"");
@@ -1212,7 +1271,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
                 Block block = blockItem.getBlock();
 
+
 //                block.getController().getBlockViewFactory().
+
+                /*if(block.getType() == Field.TYPE_VARIABLE) {
+
+                }*/
+
+                Log.e("test", "test : " + block.getNextBlock());
+
+                Log.e("test", "block type : " + block.getType());
+
+
+
                 if (block !=null) {
                     Log.e("block item","not null");
                 }
@@ -2534,7 +2605,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     @Override
-    public void onBlockDropdownClick(int position) {
+    public void onBlockDropdownClick() {
         Log.e("test","inin");
     }
 

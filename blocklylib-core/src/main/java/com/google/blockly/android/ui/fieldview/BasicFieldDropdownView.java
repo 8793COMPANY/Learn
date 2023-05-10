@@ -40,27 +40,43 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
         @Override
         public void onValueChanged(Field field, String oldValue, String newValue) {
             setSelection(mDropdownField.getSelectedIndex());
+
             Log.e("test observer",context_name);
+
+            Log.e("test", "observer");
+
 
         }
     };
 
 
-    protected FieldDropdown mDropdownField;
+
+//    protected FieldDropdown mDropdownField;
+
+    public FieldDropdown mDropdownField;
+
     protected int mItemLayout;
     protected int mItemDropdownLayout;
     public boolean main_check;
     String context_name="";
 
 
+
     public BlockDropdownClick mListener;
+
+    /*private BlockDropdownClick mListener;
+>>>>>>> 1cb9472eb191ca1cb270664424def900f8231cfe
     public void setOnBlockDropdownClickListener(BlockDropdownClick listener) {
         Log.e("test in","setonblockdropdown");
         this.mListener = listener;
+<<<<<<< HEAD
         main_check = true;
         Log.e("test main_check", main_check+"");
 
     }
+=======
+    }*/
+
 
 
 
@@ -115,6 +131,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
     }
 
     @Override
+
     public void setField(Field field) {
         FieldDropdown dropdownField = (FieldDropdown) field;
         if (mDropdownField == dropdownField) {
@@ -153,8 +170,12 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
     public void setSelection(int position) {
 
         Log.e("test", "onnnn");
+
         Log.e("test", mListener+"");
         Log.e("test main_check", main_check+"");
+
+        //Log.e("test", mListener+"");
+
 
         if (position == getSelectedItemPosition()) {
             return;
@@ -166,10 +187,14 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
 
         }
 
-        if (getMainCheck()){
-            mListener.onBlockDropdownClick(position);
-            Log.e("test", "on2");
-        }
+
+//        if (getMainCheck()){
+//=======
+//        /*if(mListener != null) {
+//>>>>>>> 1cb9472eb191ca1cb270664424def900f8231cfe
+//            mListener.onBlockDropdownClick(position);
+//            Log.e("test", "on2");
+//        }*/
 
 
 
