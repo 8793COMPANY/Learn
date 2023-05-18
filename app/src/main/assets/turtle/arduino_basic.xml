@@ -489,10 +489,10 @@
                     <field name="DIR">#ff0000</field>
                 </block>
 
-        <block type="turtle_jikco_internal">
-            <field name="DIR">#f2bc66</field>
-            <field name="COL">#ff0000</field>
-        </block>
+<!--        <block type="turtle_jikco_internal">-->
+<!--            <field name="DIR">#f2bc66</field>-->
+<!--            <field name="COL">#ff0000</field>-->
+<!--        </block>-->
 
 
         <!--
