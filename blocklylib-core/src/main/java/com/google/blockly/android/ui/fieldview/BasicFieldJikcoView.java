@@ -163,8 +163,6 @@ public class BasicFieldJikcoView extends FrameLayout implements FieldView {
             mColorField.unregisterObserver(mFieldObserver);
         }
 
-
-
         mColorField = colorField;
 
         if (mColorField != null) {

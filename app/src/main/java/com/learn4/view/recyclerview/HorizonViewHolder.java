@@ -15,5 +15,7 @@ public class HorizonViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         recyclerView = itemView.findViewById(R.id.level_contents);
         level = itemView.findViewById(R.id.level);
+
+        recyclerView.addItemDecoration(new RecyclerDecoration(36));
     }
 }

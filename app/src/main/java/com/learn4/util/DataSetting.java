@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.learn4.data.dto.Chapter;
 import com.learn4.data.dto.LearningObjective;
+import com.learn4.data.dto.Project;
 import com.learn4.data.dto.Subclass;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.AppDatabase2;
@@ -33,6 +34,7 @@ public class DataSetting {
     AppDatabase db = null;
     AppDatabase2 db2 = null;
     Context context;
+    public List<Project> project_contents_list = new ArrayList<>();
 
     public ComponentDao componentDao;
     public ContentsDao contentsDao;
@@ -77,9 +79,11 @@ public class DataSetting {
             readContents();
             readComponent();
             readBlock();
+
         }
 
         readLearningObjective();
+        readProjectContents();
 
         settingChapterByLevel(1);
         settingChapterByLevel(2);
@@ -246,6 +250,72 @@ public class DataSetting {
             Log.e("test","error");
             e.printStackTrace();
         }
+    }
+
+
+    public void readProjectContents() {
+        try {
+            is = context.getResources().getAssets().open("test2.xls");
+            workbook = Workbook.getWorkbook(is);
+
+            if (workbook != null) {
+                Sheet sheet = workbook.getSheet(8);
+
+                if (sheet != null) {
+                    int colTotal = sheet.getColumns();
+                    Log.e("check","colTotal : " + colTotal+"");
+                    int rowTotal = sheet.getRows();
+                    Log.e("check","rowTotal : " + rowTotal+"");
+
+                    int rowIndexStart = 2;
+                    int id_num = 2;
+                    int before = 0;
+                    String project_name ="";
+                    String contents_list = "";
+                    boolean check = true;
+
+                    for (int row = rowIndexStart; row < rowTotal; row++) {
+
+                        // 콘텐츠 순번 더 이상 없을 때 나감
+                        if (sheet.getCell(3, row).getContents().equals("")){
+                            if (before !=0){
+                                Log.e("check project in no more contents",contents_list);
+                                project_contents_list.add(new Project(id_num, project_name,contents_list));
+                                before = 0;
+                            }
+                            break;
+                        }
+
+
+                        Log.e("check project",row+"");
+                        //콘텐츠 순번 다시 1부터 시작할 때 체크
+                        if (before >Integer.parseInt(sheet.getCell(3, row).getContents())) {
+                            Log.e("check project in ",contents_list);
+                            Project project = new Project(id_num, project_name,contents_list);
+                            check = true;
+                        }
+
+                        before = Integer.parseInt(sheet.getCell(3, row).getContents());
+
+                        //프로젝트명, 순번 저장
+                        if (check){
+                            project_name = sheet.getCell(3, row).getContents();
+                            id_num = Integer.parseInt(sheet.getCell(3, row).getContents());
+                            check = false;
+                        }
+
+
+                        contents_list += sheet.getCell(4, row).getContents() + ",";
+
+
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e("test","error");
+            e.printStackTrace();
+        }
+        Log.e("project_list size",project_contents_list.size()+"");
     }
 
     public void readComponent(){

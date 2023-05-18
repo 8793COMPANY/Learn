@@ -25,9 +25,10 @@ import java.util.ArrayList;
 public class LevelAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private ArrayList<Level> levels;
+    public ArrayList<Level> levels;
     private LayoutInflater inflater;
     int width = 0;
+    public boolean deco_check = true;
 
     public LevelAdapter(Context context, ArrayList<Level> levels, int width) {
         this.context = context;
@@ -49,7 +50,6 @@ public class LevelAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         ((HorizonViewHolder) holder).recyclerView.setAdapter(new LevelChapterAdapter(context, levels.get(position).chapters, width));
-        ((HorizonViewHolder) holder).recyclerView.addItemDecoration(new RecyclerDecoration(36));
         ((HorizonViewHolder) holder).recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         ((HorizonViewHolder) holder).recyclerView.setHasFixedSize(true);
         String [] level_split = levels.get(position).level.split(" ");

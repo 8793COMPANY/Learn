@@ -84,7 +84,7 @@
 
   {
     "type": "turtle_jikco_internal",
-    "message0": "네오픽셀 LED %1 모양 %2 으로 출력",
+    "message0": "NeoPixel LED %1 Shape %2 OUT PUT",
     "args0": [
       {
         "type": "field_jikco",
@@ -96,40 +96,40 @@
         "name": "COL",
         "options": [
           [
-            "빨간색",
-            "빨간색"
+            "Red",
+            "Red"
           ],
           [
-            "주황색",
-            "주황색"
+            "Orange",
+            "Orange"
           ],
           [
-            "노란색",
-            "노란색"
+            "Yellow",
+            "Yellow"
           ],
           [
-            "초록색",
-            "초록색"
+            "Green",
+            "Green"
           ],
           [
-            "파란색",
-            "파란색"
+            "Blue",
+            "Blue"
           ],
           [
-            "갈색",
-            "갈색"
+            "Brown",
+            "Brown"
           ],
           [
-            "보라색",
-            "보라색"
+            "Purple",
+            "Purple"
           ],
           [
-            "검은색",
-            "검은색"
+            "Off",
+            "Off"
           ],
           [
-            "흰색",
-            "흰색"
+            "White",
+            "White"
           ]
         ]
       }
@@ -829,78 +829,6 @@
   },
 
   {
-    "type": "neo_pixel_happy",
-    "message0": "NeoPixel smile",
-    "args0": [
-    ],
-    "inputsInline": true,
-    "colour": 220,
-    "tooltip": "",
-    "previousStatement": null,
-    "nextStatement": null
-  },
-
-  {
-    "type": "neo_pixel_sad",
-    "message0": "NeoPixel sad",
-    "args0": [
-    ],
-    "inputsInline": true,
-    "colour": 220,
-    "tooltip": "",
-    "previousStatement": null,
-    "nextStatement": null
-  },
-
-  {
-    "type": "neo_pixel_sulk",
-    "message0": "NeoPixel sulk",
-    "args0": [
-    ],
-    "inputsInline": true,
-    "colour": 220,
-    "tooltip": "",
-    "previousStatement": null,
-    "nextStatement": null
-  },
-
-  {
-    "type": "neo_pixel_thrill",
-    "message0": "NeoPixel thrill",
-    "args0": [
-    ],
-    "inputsInline": true,
-    "colour": 220,
-    "tooltip": "",
-    "previousStatement": null,
-    "nextStatement": null
-  },
-
-  {
-    "type": "neo_pixel_surprise",
-    "message0": "NeoPixel surprise",
-    "args0": [
-    ],
-    "inputsInline": true,
-    "colour": 220,
-    "tooltip": "",
-    "previousStatement": null,
-    "nextStatement": null
-  },
-
-  {
-    "type": "neo_pixel_sleep",
-    "message0": "NeoPixel sleep",
-    "args0": [
-    ],
-    "inputsInline": true,
-    "colour": 220,
-    "tooltip": "",
-    "previousStatement": null,
-    "nextStatement": null
-  },
-
-  {
     "type": "neo_pixel_begin",
     "message0": "NeoPixel Begin",
     "args0": [
@@ -911,7 +839,6 @@
     "previousStatement": null,
     "nextStatement": null
   },
-
 
   {
     "type": "neo_pixel_show",
@@ -945,8 +872,8 @@
         "type": "field_dropdown",
         "name": "color",
         "options": [
-          ["빨간색", "빨간색"], ["주황색", "주황색"], ["노란색", "노란색"], ["초록색", "초록색"], ["파란색", "파란색"],
-          ["갈색", "갈색"], ["보라색", "보라색"], ["검은색", "검은색"],["흰색", "흰색"]
+          ["Red", "Red"], ["Orange", "Orange"], ["Yellow", "Yellow"], ["Green", "Green"], ["Blue", "Blue"],
+          ["Brown", "Brown"], ["Purple", "Purple"], ["Off", "Off"],["White", "White"]
         ]
       }
     ],
@@ -963,8 +890,8 @@
         "type": "field_dropdown",
         "name": "face",
         "options": [
-          ["기쁜", "기쁜"], ["슬픈", "슬픈"], ["삐진", "삐진"], ["짜릿한", "짜릿한"], ["놀란", "놀란"],
-          ["졸린", "졸린"], ["웃는", "웃는"], ["멍한", "멍한"], ["속상한", "속상한"]
+          ["happy", "happy"], ["sad", "sad"], ["sulk", "sulk"], ["thrilling", "thrilling"], ["amazed", "amazed"],
+          ["sleepy", "sleepy"], ["smile", "smile"], ["vacant", "vacant"], ["upset", "upset"]
         ]
       }
     ],
@@ -975,7 +902,7 @@
 
   {
     "type": "neo_pixel_custom",
-    "message0": "네오픽셀 LED %1 표정 %2 으로 출력",
+    "message0": "NeoPixel LED %1 Face %2 OUT PUT",
     "args0": [
       {
         "type": "input_value",

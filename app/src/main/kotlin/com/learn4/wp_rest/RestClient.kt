@@ -8,8 +8,14 @@ import com.learn.wp_rest.repository.wp.users.UsersService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer
-import se.akerfeldt.okhttp.signpost.SigningInterceptor
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+
 
 /**
  * [Retrofit] 사용을 위한 [object] 클래스
@@ -43,6 +49,7 @@ object RestClient {
      */
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
+        .client(getUnsafeOkHttpClient()?.build())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -70,4 +77,39 @@ object RestClient {
      * [retrofit]의 [AcfService]
      */
     val acfService = retrofit.create(AcfService::class.java)
+
+    fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {
+        return try {
+            val trustAllCerts = arrayOf<TrustManager>(
+                object : X509TrustManager {
+                    @Throws(CertificateException::class)
+                    override fun checkClientTrusted(
+                        chain: Array<X509Certificate>,
+                        authType: String
+                    ) {
+                    }
+
+                    @Throws(CertificateException::class)
+                    override fun checkServerTrusted(
+                        chain: Array<X509Certificate>,
+                        authType: String
+                    ) {
+                    }
+
+                    override fun getAcceptedIssuers(): Array<X509Certificate> {
+                        return arrayOf()
+                    }
+                }
+            )
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+            val sslSocketFactory: SSLSocketFactory = sslContext.socketFactory
+            val builder = OkHttpClient.Builder()
+            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            builder.hostnameVerifier { hostname, session -> true }
+            builder
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+    }
 }

@@ -380,33 +380,15 @@
         <block type="neo_pixel_clear">
         </block>
 
-        <block type="neo_pixel_happy">
-        </block>
-
-        <block type="neo_pixel_sad">
-        </block>
-
-        <block type="neo_pixel_sulk">
-        </block>
-
-        <block type="neo_pixel_thrill">
-        </block>
-
-        <block type="neo_pixel_surprise">
-        </block>
-
-        <block type="neo_pixel_sleep">
-        </block>
-
         <block type="neo_pixel_custom">
             <value name="face">
                 <block type="face_list">
-                    <field name="face">기쁜</field>
+                    <field name="face">happy</field>
                 </block>
             </value>
             <value name="color">
                 <block type="color_list" id="116">
-                    <field name="color">빨간색</field>
+                    <field name="color">Red</field>
                 </block>
             </value>
         </block>

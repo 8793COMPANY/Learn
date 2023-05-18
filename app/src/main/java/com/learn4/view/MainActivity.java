@@ -2488,17 +2488,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             Log.e("MainActivity chapter_id",chapter_id+"");
             // TODO : 화면 캡쳐 트리거
-//            if(!chapter_id.equals("0")) {
-//                Log.e("MainActivity", "captureWorkspace: start");
-//                bitmapWorkspace = controller.captureWorkspace();
-//
-//                try {
-//                    saveImage(bitmapWorkspace, "captureWorkspace");
-//                    Log.e("MainActivity", "captureWorkspace: save ok");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
+            if(!chapter_id.equals("0")) {
+                Log.e("MainActivity", "captureWorkspace: start");
+                bitmapWorkspace = controller.captureWorkspace();
+
+                try {
+                    saveImage(bitmapWorkspace, "captureWorkspace");
+                    Log.e("MainActivity", "captureWorkspace: save ok");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
         } else {
             //Toast.makeText(getApplicationContext(), "WIFI 및 USB를 연결해주세요!", Toast.LENGTH_SHORT).show();

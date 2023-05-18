@@ -124,10 +124,12 @@ public class BlockRecyclerViewHelper {
         controller.setOnBlockClickListener(new BlocklyController.OnBlockClickListener() {
             @Override
             public void onBlockClick(PendingDrag pendingDrag) {
+                Log.e("block click","in 1 ");
                 BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
 
                 Block rootBlock = touchedBlockView.getBlock().getRootBlock();
                 if (!rootBlock.getType().trim().equals("turtle_setup_loop")){
+                    Log.e("block click","in");
 //                    getWorkspaceBlockGroupForTouch(pendingDrag);
                     copyBlock(pendingDrag);
 //                    removeBlock(pendingDrag);

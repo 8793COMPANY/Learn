@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="334.4dp"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:background="@drawable/radius"
+    android:backgroundTint="#fafafa"
+    android:orientation="vertical">
+
+    <RadioButton
+        android:id="@+id/default_mode"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.07"
+        android:background="@drawable/radio_btn_selector"
+        android:button="@null"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.15"></RadioButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기본모드"
+        android:fontFamily="@font/sb_aggro_l"
+        android:textSize="14dp"
+        android:textColor="#af6400"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/default_mode"
+        app:layout_constraintTop_toTopOf="@+id/default_mode"
+        app:layout_constraintBottom_toBottomOf="@+id/default_mode"></TextView>
+
+    <RadioButton
+        android:id="@+id/jikco_mode"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.07"
+        android:background="@drawable/radio_btn_selector"
+        android:button="@null"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/default_mode"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintVertical_bias="0.07"></RadioButton>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="직코 애니멀 코딩 키링"
+        android:fontFamily="@font/sb_aggro_l"
+        android:textSize="14dp"
+        android:textColor="#af6400"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/jikco_mode"
+        app:layout_constraintTop_toTopOf="@+id/jikco_mode"
+        app:layout_constraintBottom_toBottomOf="@+id/jikco_mode"></TextView>
+
+
+
+    <LinearLayout
+        android:id="@+id/bottom_section"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bottom_radius"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delete_btn"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintWidth_default="percent">
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/cancel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toTopOf="@+id/bottom_section"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_section"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/confirm"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sb_aggro_l"
+            android:text="취소"
+            android:textColor="#868686"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/confirm"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@+id/bottom_section"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_section"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/cancel"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sb_aggro_l"
+            android:text="확인"
+            android:textColor="#b57014"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
