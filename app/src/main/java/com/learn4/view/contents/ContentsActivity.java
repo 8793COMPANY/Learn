@@ -92,7 +92,7 @@ public class ContentsActivity extends AppCompatActivity {
 
         decorView.setSystemUiVisibility( uiOption );
 
-
+        Application.mode = 1;
 
         subjects = prepareData();
 
@@ -129,6 +129,7 @@ public class ContentsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 modeSelectDialog.jikco_mode.setChecked(false);
                 mode = 1;
+                Application.mode = 1;
             }
         };
 
@@ -136,6 +137,7 @@ public class ContentsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 modeSelectDialog.default_mode.setChecked(false);
                 mode = 2;
+                Application.mode = 2;
             }
         };
 

@@ -47,6 +47,7 @@ public class Application extends android.app.Application  {
     public static Physicaloid mPhysicaloid ;
     public static CategoryData categoryData;
     public static ArrayList<LearningObjective> learningObjectives;
+    public static int mode = 1;
 
     public static Application getInstance(Context context){
 //        this.context = context;

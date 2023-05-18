@@ -183,7 +183,9 @@ public class DataSetting {
 
                             // 소분류 데이터 가져오기  ex: LED 깜박이기의 1,2,3번 콘텐츠 가져오기
                             for (int subrow = row; subrow <= row+2; subrow++) {
-
+                                Log.e("check learning",sheet.getCell(3,subrow).getContents());
+                                Log.e("check learning",sheet.getCell(4,subrow).getContents());
+                                Log.e("check learning","-------------");
                                 subclass.add(  new Subclass(sheet.getCell(3,subrow).getContents(),
                                         sheet.getCell(4,subrow).getContents(),
                                         sheet.getCell(5,subrow).getContents(),

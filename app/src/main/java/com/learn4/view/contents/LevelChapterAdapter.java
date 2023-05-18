@@ -53,7 +53,7 @@ public class LevelChapterAdapter extends RecyclerView.Adapter<LevelChapterAdapte
             holder.ivChapter.setBackgroundResource(resID);
 
             // 변경 필요 13 >> 10
-            if (chapters.get(position).id > 13) {
+            if (chapters.get(position).id > 13 && chapters.get(position).id != 21) {
                 holder.chapter_background.setBackgroundResource(R.drawable.chapter_lock_image);
             } else {
                 holder.chapter_background.setBackgroundResource(0);

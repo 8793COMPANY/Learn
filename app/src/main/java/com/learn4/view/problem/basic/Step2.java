@@ -126,7 +126,7 @@ public class Step2 extends Fragment {
             }
         }
 
-        diagram_img.setBackgroundResource(rID);
+        diagram_img.setBackgroundResource(R.drawable.diagram_jikco);
 
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
 
@@ -141,7 +141,8 @@ public class Step2 extends Fragment {
         RadioButton module_btn = view.findViewById(R.id.module_btn);
         RadioButton bigboard_btn = view.findViewById(R.id.bigboard_btn);
         RadioButton zikco_btn = view.findViewById(R.id.zikco_btn);
-        bigboard_btn.setChecked(true);
+//        bigboard_btn.setChecked(true);
+        zikco_btn.setChecked(true);
 
         module_btn.setOnCheckedChangeListener((compoundButton, b) -> {
             if (b) {    // 빅보드형
@@ -187,7 +188,7 @@ public class Step2 extends Fragment {
                 else
                     diagram_img.setBackgroundResource(R.drawable.all_diagram_img);*/
 //                diagram_img.setBackgroundResource(rID);
-                                diagram_img.setBackgroundResource(0);
+                                diagram_img.setBackgroundResource(R.drawable.diagram_jikco);
             }else {     // 모듈형
                 /*if (contents_name.equals("LED 핀 번호 바꾸기"))
                     diagram_img.setBackgroundResource(R.drawable.diagram_module_img2);

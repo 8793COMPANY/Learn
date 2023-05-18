@@ -23,7 +23,7 @@
                 android:id="@+id/diagram_img"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/all_diagram_img"
+                android:background="@drawable/diagram_jikco"
                 app:layout_constraintWidth_percent="0.5"
                 app:layout_constraintHeight_percent="0.85"
                 app:layout_constraintTop_toTopOf="parent"

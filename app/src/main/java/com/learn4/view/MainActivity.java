@@ -1038,7 +1038,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 || chapter_id.split("-")[0].equals("15") || chapter_id.split("-")[0].equals("17")
                 || chapter_id.split("-")[0].equals("19") || chapter_id.split("-")[0].equals("21")
                 || chapter_id.split("-")[0].equals("23") || chapter_id.split("-")[0].equals("25")
-                || chapter_id.split("-")[0].equals("27"))){
+                || chapter_id.split("-")[0].equals("27") || chapter_id.split("-")[0].equals("43"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
             block_bot_btn.setVisibility(View.VISIBLE);
