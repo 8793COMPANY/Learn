@@ -42,6 +42,7 @@ public class BasicFieldDropdownView extends AppCompatSpinner implements FieldVie
             setSelection(mDropdownField.getSelectedIndex());
             Log.e("test", "observer");
 
+
         }
     };
 

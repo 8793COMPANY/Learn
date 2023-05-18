@@ -374,8 +374,8 @@ public class FieldDropdown extends Field {
             testTest();
         }
 
-        Log.e("test", "setSelectedIndex");
-        Log.e("test", "listener : " + mListener);
+        //Log.e("test", "setSelectedIndex");
+        //Log.e("test", "listener : " + mListener);
     }
 
     /**

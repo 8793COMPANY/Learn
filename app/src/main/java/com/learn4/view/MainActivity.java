@@ -26,8 +26,6 @@ import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.ui.BlockDropdownClick;
 import com.google.blockly.android.ui.PendingDrag;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
-import com.google.blockly.model.BlockFactory;
-import com.google.blockly.model.Field;
 import com.google.blockly.model.FieldDropdown;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
@@ -70,7 +68,6 @@ import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -1234,6 +1231,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 button[i].setSelected(false);
                 button[i].setTextColor(Color.parseColor("#b45611"));
             }
+
         }
 
 

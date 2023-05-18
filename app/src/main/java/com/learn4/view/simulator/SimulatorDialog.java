@@ -59,6 +59,8 @@ public class SimulatorDialog extends Dialog {
         LinearLayout code_upload_progress = findViewById(R.id.code_upload_progress);
         component_close_btn = findViewById(R.id.component_close_btn);
 
+        webView.getSettings().setDefaultTextEncodingName("UTF-8");
+
         code_view.setMovementMethod(new ScrollingMovementMethod());
 
         upload_btn.setSelected(true);

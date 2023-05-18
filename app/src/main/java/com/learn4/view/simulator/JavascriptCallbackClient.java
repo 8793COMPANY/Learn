@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.UiThread;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 
@@ -24,6 +26,7 @@ public class JavascriptCallbackClient {
     private String code;
     private String chapter_id;
     private String hex2str = "";
+    private String testText = "";
     private TextView serial_monitor;
     private TextView loading_text;
     private StringBuffer serial_text = new StringBuffer("");
@@ -109,10 +112,16 @@ public class JavascriptCallbackClient {
         int delay = 0;
 
         if (!code.contains("contents_id:")){
-
+            //testText = convertString2Hex(chapter_id+"@@"+code);
+            //hex2str = convertString2Hex(chapter_id+"@@"+code+"//테스트");
             hex2str = convertString2Hex(chapter_id+"@@"+code);
+            //Log.e("testtest", "if : " + hex2str);
         }else{
-            hex2str = code;
+            //hex2str = code;
+            // ":"를 넣어서 vscode에서 split 가능하도록 함
+            hex2str = code+":";
+            //hex2str = convertString2Hex(code);
+            //Log.e("testtest", "else : " + hex2str);
         }
         //  "\""+code.replace("\n","").getBytes()+"\""
         webView.postDelayed(() -> {
@@ -130,14 +139,41 @@ public class JavascriptCallbackClient {
 
     private String convertString2Hex(String str){
         StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder2 = new StringBuilder();
+
+        //Log.e("testtest", Arrays.toString(str.getBytes(StandardCharsets.UTF_8)));
+        //str.getBytes(StandardCharsets.UTF_8);
 
         char[] charArray = str.toCharArray();
+        int i = 0;
+
+        /*String charTo = "";
+
+        for (char c : charArray) {
+            charTo = charTo + c;
+            Log.e("testtest", i+"번째 문자 : "+charTo+"");
+            i++;
+        }*/
 
         for (char c : charArray) {
             String charToHex = Integer.toHexString(c);
             stringBuilder.append(charToHex);
+            if (charToHex.equals(Integer.toHexString('@'))){
+                stringBuilder2.append(charToHex);
+            } else {
+                stringBuilder2.append(Integer.toHexString('%')).append(charToHex);
+            }
+
+            /*if (charToHex >= '\uAC00' && charToHex <= '\uD7A3') {
+
+            } else {
+                stringBuilder.append(charToHex);
+            }
+*/
+            //Log.e("testtest", i+"번째 문자 : "+stringBuilder+"");
+            i++;
         }
-        return  stringBuilder.toString();
+        return  stringBuilder.toString() + Integer.toHexString('@') + Integer.toHexString('@') + stringBuilder2.toString();
     }
 
     private void scrollBottom(TextView textView) {

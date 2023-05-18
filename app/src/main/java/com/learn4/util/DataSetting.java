@@ -9,8 +9,10 @@ import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.dao.ComponentDao;
 import com.learn4.data.room.dao.ContentsDao;
+import com.learn4.data.room.dao.ContentsGoalDao;
 import com.learn4.data.room.entity.BlockDictionary;
 import com.learn4.data.room.entity.Component;
+import com.learn4.data.room.entity.ContentGoal;
 import com.learn4.data.room.entity.Contents;
 
 import java.io.InputStream;
@@ -35,6 +37,7 @@ public class DataSetting {
     public ComponentDao componentDao;
     public ContentsDao contentsDao;
     public BlockDictionaryDao blockDictionaryDao;
+    public ContentsGoalDao contentsGoalDao;
 
     public DataSetting(Context context){
         this.context = context;
@@ -45,6 +48,7 @@ public class DataSetting {
         componentDao = db.componentDao();
         contentsDao = db.contentsDao();
         blockDictionaryDao = db2.blockDictionaryDao();
+        contentsGoalDao = db2.contentsGoalDao();
 
 //        chapter_list = new ArrayList<Chapter>();
     }
@@ -75,6 +79,7 @@ public class DataSetting {
             readContents();
             readComponent();
             readBlock();
+            readGoal();
         }
 
         settingChapterByLevel(1);
@@ -95,6 +100,10 @@ public class DataSetting {
 
     public void insert_blockDictionary_data(BlockDictionary blockDictionary) {
         blockDictionaryDao.insert(blockDictionary);
+    }
+
+    public void insert_contentsGoal_data(ContentGoal contentGoal) {
+        contentsGoalDao.insert(contentGoal);
     }
 
     public void printList(){
@@ -137,6 +146,58 @@ public class DataSetting {
     public void printChapter(){
         for (int i=0; i< chapter_list.size(); i++){
             Log.e("checking",chapter_list.get(String.valueOf(i+1)).size()+"");
+        }
+    }
+
+    public void readGoal() {
+        try {
+            is = context.getResources().getAssets().open("testtest.xls");
+            workbook = Workbook.getWorkbook(is);
+
+            if (workbook != null) {
+                Sheet sheet = workbook.getSheet(6);
+
+                if (sheet != null) {
+                    int colTotal = sheet.getColumns();
+                    Log.e("check","colTotal : " + colTotal+"");
+                    int rowTotal = sheet.getRows();
+                    Log.e("check","rowTotal : " + rowTotal+"");
+
+                    int rowIndexStart = 2;
+                    boolean plus;
+
+                    for (int row = rowIndexStart; row < rowTotal; row++) {
+                        plus = true;
+
+                        // 블록 이름 not null 확인
+                        String plusCheck = sheet.getCell(1, row).getContents();
+
+                        if (plusCheck.equals("")) {
+                            plus = false;
+                        }
+
+                        if (plus) {
+                            // 대분류 및 소분류 제목 제외
+                            String[] blocks = new String[6];
+                            String totalCategory = "";
+
+                            for (int col = 1; col <= 6; col++) {
+                                blocks[col - 1] = sheet.getCell(col, row).getContents();
+
+                                Log.e("test", blocks[col - 1]);
+                            }
+
+                            //totalCategory = blocks[1] + "-" + Integer.toString(Integer.parseInt(blocks[3]) + 1);
+
+                            // 콘텐츠 목표 및 조건 저장
+                            ContentGoal contentGoal = new ContentGoal(blocks[1], blocks[3],"none" ,blocks[4], blocks[5]);
+                            insert_contentsGoal_data(contentGoal);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
