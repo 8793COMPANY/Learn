@@ -7,11 +7,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.learn4.data.room.dao.BlockDictionaryDao;
+import com.learn4.data.room.dao.ContentsGoalDao;
 import com.learn4.data.room.entity.BlockDictionary;
+import com.learn4.data.room.entity.ContentGoal;
 
-@Database(entities = {BlockDictionary.class}, version = 1)
+@Database(entities = {BlockDictionary.class, ContentGoal.class}, version = 1)
 public abstract class AppDatabase2 extends RoomDatabase {
     public abstract BlockDictionaryDao blockDictionaryDao();
+    public abstract ContentsGoalDao contentsGoalDao();
 
     private static AppDatabase2 INSTANCE = null;
 

@@ -16,9 +16,6 @@
 <toolbox>
     <!-- setup() 카테고리 안에 들어갈 블록   -->
     <category name="Logic" colour="210">
-
-
-
         <!--<block type="set_led">
 
                 <block type="base_pins_list">
@@ -35,21 +32,18 @@
                     <field name="PIN">0</field>
                 </block>
             </value>
-<!--
-            <field name="VALUE1">OUTPUT</field>-->
+            <!--<field name="VALUE1">OUTPUT</field>-->
             <value name="VALUE1">
                 <block type="base_output_list">
                     <field name="LOGIC">OUTPUT</field>
                 </block>
             </value>
-
             <!--
             <value name="NUM">
                 <block type="base_logic_list">
                     <field name="LOGIC">low</field>
                 </block>
             </value>-->
-
         </block>
 
         <block type="serial_begin">
@@ -68,17 +62,11 @@
             </value>
         </block>
 
-
-
-
-
 <!--        <block type="number">-->
 <!--            <value name="num">-->
 <!--               -->
 <!--            </value>-->
 <!--        </block>-->
-
-
 
         <!--
         <block type="controls_if"></block>
@@ -88,9 +76,9 @@
         <block type="logic_negate"></block>
         <block type="logic_boolean"></block>-->
     </category>
+
     <!-- loop() 카테고리 안에 들어갈 블록   -->
     <category name="Loops" colour="120">
-
         <block type="inout_digital_write">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -103,10 +91,6 @@
                 </block>
             </value>
         </block>
-
-
-
-
 
         <block type="inout_analog_write">
             <value name="PIN">
@@ -129,7 +113,6 @@
             </value>
         </block>
 
-
         <block type="inout_analog_read">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -137,7 +120,6 @@
                 </block>
             </value>
         </block>
-
         <!--<block type="serial_print">
             <value name="text">
                 <block type="text">
@@ -145,7 +127,6 @@
                 </block>
             </value>
         </block>-->
-
         <block type="serial_print">
             <value name="text">
                 <block type="type_string">
@@ -153,7 +134,6 @@
                 </block>
             </value>
         </block>
-
 
         <block type="serial_println">
             <value name="STRING">
@@ -179,7 +159,6 @@
             </value>
         </block>
 
-
         <block type="base_delay">
             <value name="DELAY_TIME">
                 <block type="math_number" gap="32">
@@ -187,8 +166,8 @@
                 </block>
             </value>
         </block>
-
     </category>
+
     <!-- 함수 카테고리 안에 들어갈 블록   -->
     <category name="Math" colour="230"><!--
         <block type="math_number" gap="32">
@@ -206,9 +185,6 @@
                 </shadow>
             </value>
         </block>-->
-
-
-
         <block type="controls_for">
             <value name="FROM">
                 <block type="math_number">
@@ -230,15 +206,12 @@
         <block type="logic_compare"></block>
         <block type="logic_operation"></block>
 
-
-
         <block type="controls_if">
             <value name="IF0">
                 <block type="logic_compare"></block>
             </value>
         </block>
         <block type="controls_ifelse"></block>
-
 
         <block type="map_number">
             <value name="var">
@@ -270,8 +243,6 @@
 
         <block type="logic_calculation"></block>
 
-
-
         <block type="controls_whileUntil">
             <value name="BOOL">
                 <shadow type="logic_boolean">
@@ -279,7 +250,6 @@
                 </shadow>
             </value>
         </block>
-
 <!--                <block type="inout_tone_pin">-->
 <!--                    <value name="PIN">-->
 <!--                        <block type="base_pins_list">-->
@@ -301,8 +271,6 @@
 <!--                    </value>-->
 <!--                </block>-->
 
-
-
 <!--        <block type="dc_motor">-->
 <!--            <field name="channel">1</field>-->
 <!--            <value name="speed">-->
@@ -319,7 +287,6 @@
 <!--                        </block>-->
 <!--                    </value>-->
 <!--        </block>-->
-
         <block type="pulseIn">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -332,7 +299,6 @@
                 </block>
             </value>
         </block>
-
 
         <block type="servo">
             <value name="channel">
@@ -406,7 +372,6 @@
             </value>
         </block>
 
-
         <block type="tone_notone">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -425,7 +390,6 @@
             </value>
         </block>
 
-
         <block type="bluetooth_sensor">
             <value name="baud">
                 <block type="math_number">
@@ -437,11 +401,8 @@
         <block type="read_temp">
         </block>
 
-
         <block type="read_humidity">
         </block>
-
-
 <!--        <block type="inout_tone_pin">-->
 <!--                    <value name="PIN">-->
 <!--                        <block type="base_pins_list">-->
@@ -454,11 +415,10 @@
 <!--                        </block>-->
 <!--                    </value>-->
 <!--        </block>-->
-
     </category>
+
     <!-- 기타 카테고리 안에 들어갈 블록   -->
     <category name="Text" colour="130">
-
         <block type="math_random_int">
             <value name="FROM">
                 <block type="math_number">
@@ -473,21 +433,17 @@
             </value>
         </block>
 
-
 <!--        <block type="neo_pixel_set"></block>-->
         <block type="variables_set"></block>
         <block type="variables_get"></block>
         <block type="variables_change"></block>
 
-
         <block type="logic_negate"></block>
         <block type="logic_boolean"></block>
-
 
         <block type="base_logic_list"></block>
         <block type="base_pins_list"></block>
         <block type="serial_begin_list"></block>
-
 
         <block type="text">
             <field name="TEXT"></field>
@@ -501,8 +457,6 @@
             <field name="LOGIC">OUTPUT</field>
         </block>
 
-
-
         <block type="type_string">
             <field name="STRING_TEXT"></field>
         </block>
@@ -514,8 +468,6 @@
         <block type="type_boolean">
             <field name="BOOLEAN_TEXT">true</field>
         </block>
-
-
 
         <block type="lcd">
             <value name="text">
@@ -532,6 +484,7 @@
         </block>
         <block type="clear_lcd"></block>
 
+
                 <block type="turtle_color_internal">
                     <field name="DIR">#ff0000</field>
                 </block>
@@ -540,6 +493,7 @@
             <field name="DIR">#f2bc66</field>
             <field name="COL">#ff0000</field>
         </block>
+
 
         <!--
         <block type="text">
@@ -556,7 +510,6 @@
 
 <!--    </category>-->
 
-
     <!-- 밑에 있는 카테고리 안에는 블록 생성 하지 말아주세요   -->
     <category name="Code" colour="330">
 
@@ -565,7 +518,6 @@
     <category name="Serial" colour="330">
 
     </category>
-
 
     <category name="upload" colour="330">
 
@@ -714,5 +666,4 @@
 <!--&lt;!&ndash;            <field name="VALUE">90</field>&ndash;&gt;-->
 <!--&lt;!&ndash;        </block>&ndash;&gt;&ndash;&gt;-->
 <!--    </category>-->
-
 </toolbox>

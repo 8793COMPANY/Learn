@@ -116,6 +116,12 @@ public class TutorCheck {
             solutionXmlAssetFilePath = "lv23_3.xml";
         }else if (chapter_id.equals("23-4")) {
             solutionXmlAssetFilePath = "lv23_4.xml";
+        }else if (chapter_id.equals("27-2")) {
+            solutionXmlAssetFilePath = "lv43_2.xml";
+        }else if (chapter_id.equals("27-3")) {
+            solutionXmlAssetFilePath = "lv43_3.xml";
+        }else if (chapter_id.equals("27-4")) {
+            solutionXmlAssetFilePath = "lv43_4.xml";
         }else{
             chapter_check = false;
             solutionXmlAssetFilePath = "lv1_blink.xml";
@@ -178,9 +184,9 @@ public class TutorCheck {
                     showCustomDialog(2);
                 }
 
-                Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
-                Log.d("Build Bot pin IO", e.getElementsByTagName("field").item(1).getTextContent());
-                Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
+                //Log.d("Build Bot pin number", e.getElementsByTagName("field").item(0).getTextContent());
+                //Log.d("Build Bot pin IO", e.getElementsByTagName("field").item(1).getTextContent());
+                //Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
             } else {
                 if (simulator_check) {
                     showCustomDialog(3);

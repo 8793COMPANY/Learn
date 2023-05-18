@@ -1,5 +1,4 @@
 [
-
   {
     "type": "type_string",
     "message0": "String : %1 %2 %3",
@@ -57,6 +56,7 @@
     "output": "Boolean",
     "colour": "#6BABEF"
   },
+
 
   {
     "type": "turtle_color_internal",
@@ -143,6 +143,7 @@
 
 
 
+
   {
     "type": "turtle_move_internal",
     "message0": "move %1 %2",
@@ -189,6 +190,7 @@
     "colour": 160,
     "tooltip": "Moves the turtle forward or backward by the specified amount."
   },
+
   {
     "type": "turtle_turn_internal",
     "message0": "turn %1 %2",
@@ -243,6 +245,7 @@
     "colour": 160,
     "tooltip": "Turns the turtle left or right by the specified number of degrees."
   },
+
   {
     "type": "turtle_pen",
     "message0": "pen %1",
@@ -267,6 +270,7 @@
     "colour": 160,
     "tooltip": "Lifts or lowers the pen, to stop or start drawing."
   },
+
   {
     "type": "turtle_colour_internal",
     "message0": "set colour to %1",
@@ -282,6 +286,7 @@
     "colour": 20,
     "tooltip": "Changes the colour of the pen."
   },
+
   {
     "type": "turtle_visibility",
     "message0": "%1 turtle",
@@ -300,6 +305,7 @@
     "colour": 160,
     "tooltip": "Makes the turtle (circle and arrow) visible or invisible."
   },
+
   {
     "type": "turtle_print",
     "message0": "print %1",
@@ -315,6 +321,7 @@
     "tooltip": "Draws text in the turtle's direction at its location.",
     "helpUrl": "https://en.wikipedia.org/wiki/Printing"
   },
+
   {
     "type": "turtle_font",
     "message0": "font %1 %2 font size %3 %4 %5",
@@ -361,6 +368,7 @@
     "tooltip": "",
     "helpUrl": "http://www.example.com/"
   },
+
   {
     "type": "turtle_repeat_internal",
     "message0": "repeat %1 times %2 %3",
@@ -461,6 +469,7 @@
     "tooltip": "",
     "helpUrl": ""
   },
+
   {
     "type": "set_leds",
     "message0": "LEDS %1 D11 %2 %3 D12 %4 %5 D13 %6",
@@ -524,6 +533,7 @@
     "tooltip": "Set LEDS",
     "helpUrl": "http://www.example.com/"
   },
+
   {
     "type": "set_led",
     "message0": "pinMode %1 D13 %2 %3",
@@ -579,7 +589,6 @@
     "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
   },
 
-
   {
     "type": "pinMode",
     "message0": "pinMode %1 value %2 ",
@@ -602,7 +611,6 @@
     "nextStatement": null,
     "tooltip": ""
   },
-  
 
   {
     "type": "lcd",
@@ -650,6 +658,7 @@
     "colour": 220,
     "tooltip": ""
   },
+
   {
   "type": "clear_lcd",
   "message0": "Clear LCD",
@@ -659,6 +668,7 @@
   "colour": 120,
   "tooltip": ""
   },
+
   {
     "type": "bluetooth_sensor",
     "message0": "Bluetooth %1 %2 %3 baud %4",
@@ -683,6 +693,7 @@
     "output": "String",
     "tooltip": ""
   },
+
   {
     "type": "sonar_sensor",
     "message0": "Sonar %1 %2 %3 trig %4 echo %5",
@@ -714,6 +725,7 @@
     "output": "String",
     "tooltip": ""
   },
+
   {
     "type": "remote_sensor",
     "message0": "Remote %1 %2 %3 signal %4",
@@ -741,6 +753,7 @@
     "output": "String",
     "tooltip": ""
   },
+
   {
     "type": "servo",
     "message0": "Servo %1 %2 pin %3 angle %4",
@@ -942,8 +955,6 @@
     "nextStatement": null
   },
 
-
-
   {
     "type": "tone_notone",
     "message0": "Tone %1 pin %2 frequency %3 delay %4",
@@ -1002,6 +1013,7 @@
     "tooltip": "",
     "helpUrl": "https://en.wikipedia.org/wiki/Equality_(mathematics)"
   },
+
   {
     "type": "DHT11",
     "message0": "DHT INIT %1 ",
@@ -1044,6 +1056,7 @@
     "inputsInline": true,
     "tooltip": ""
   },
+
   {
     "type": "inout_tone_pin",
     "message0": "Tone on pin %1 frequency %2",
@@ -1066,6 +1079,7 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
   {
     "type": "inout_notone_pin",
     "message0": "No Tone on pin %1",
@@ -1081,7 +1095,6 @@
     "nextStatement": null,
     "tooltip": ""
   },
-
 
   {
     "type": "inout_digital_write",
@@ -1128,6 +1141,7 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
   {
     "type": "inout_digital_read",
     "message0": "DigitalRead on pin %1",
@@ -1270,7 +1284,6 @@
     "tooltip": ""
   },
 
-
   {
     "type": "serial_println",
     "message0": "Serial Println(String) : %1",
@@ -1344,7 +1357,6 @@
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
 
-
   {
     "type": "serial_begin_list",
     "message0": "Baud: %1",
@@ -1414,6 +1426,7 @@
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
+
   {
     "type": "pulseIn",
     "message0": "pulseIn %1 , %2",
@@ -1435,7 +1448,6 @@
     "inputsInline": true,
     "tooltip": ""
   },
-
 
   {
     "type": "turtle_move",
@@ -1466,6 +1478,7 @@
     "tooltip": "Move the turtle forward or backward",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#metkk9"
   },
+
   {
     "type": "turtle_turn",
     "message0": "turn %1 %2",
@@ -1495,6 +1508,7 @@
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#nwzsuj"
   },
+
   {
     "type": "turtle_width",
     "message0": "set width to %1",
@@ -1510,6 +1524,7 @@
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
+
   {
     "type": "turtle_colour",
     "message0": "set colour to %1",
