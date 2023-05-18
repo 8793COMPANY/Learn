@@ -1,0 +1,44 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="neo_pixel_setup" />
+        </statement>
+        <statement name="DO1">
+            <block type="neo_pixel">
+                <value name="channel">
+                    <block type="base_pins_list">
+                        <field name="PIN">12</field>
+                    </block>
+                </value>
+                <value name="angle">
+                    <block type="math_number">
+                        <field name="NUM">10</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="neo_pixel_brightness">
+                        <value name="angle">
+                            <block type="math_number">
+                                <field name="NUM">100</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="neo_pixel_custom">
+                                <value name="face">
+                                    <block type="face_list">
+                                        <field name="face">&#44592;&#49244;</field>
+                                    </block>
+                                </value>
+                                <value name="color">
+                                    <block type="color_list">
+                                        <field name="color">&#48744;&#44036;&#49353;</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
