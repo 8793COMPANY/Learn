@@ -50,17 +50,11 @@ public class CategoryView extends RelativeLayout {
 
     BlocklyActivityHelper mBlocklyActivityHelper;
 
-
-
-
     private TabItemClick itemClick;
-
 
     public void setItemClick(TabItemClick itemClick){
         this.itemClick = itemClick;
     }
-
-
 
     // Whether we prefer having toolboxes that are closeable if there are tabs.
     private boolean mPreferCloseable = true;

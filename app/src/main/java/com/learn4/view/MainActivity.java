@@ -27,8 +27,6 @@ import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.android.ui.PendingDrag;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
-import com.google.blockly.model.BlockFactory;
-import com.google.blockly.model.Field;
 import com.google.blockly.model.FieldDropdown;
 
 import com.learn4.data.dto.SimulatorComponent;
@@ -1255,6 +1253,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 button[i].setSelected(false);
                 button[i].setTextColor(Color.parseColor("#b45611"));
             }
+
         }
 
 

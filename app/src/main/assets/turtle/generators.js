@@ -19,12 +19,7 @@
  */
 'use strict';
 
-
-
-
 // Extensions to Blockly's language and JavaScript generator.
-
-
 
 Blockly.JavaScript['type_string'] = function(block) {
   var value_string = block.getFieldValue("STRING_TEXT");
@@ -65,14 +60,13 @@ Blockly.JavaScript['serial_println_boolean'] = function(block) {
   return code;
 };
 
-
-
 Blockly.JavaScript['turtle_move_internal'] = function(block) {
   // Generate JavaScript for moving forward or backwards.
   var value = block.getFieldValue('VALUE');
   return 'Turtle.' + block.getFieldValue('DIR') +
       '(' + value + ', \'block_id_' + block.id + '\');\n';
 };
+
 Blockly.JavaScript['turtle_turn_internal'] = function(block) {
   // Generate JavaScript for turning left or right.
   var value = block.getFieldValue('VALUE');
@@ -155,7 +149,6 @@ Blockly.JavaScript['lcd'] = function (block) {
   return code;
 };
 
-
 Blockly.JavaScript['clear_lcd'] = function (block) {
   //  Assemble JavaScript into code variable.
   var code = 'lcd.clear();\n';
@@ -216,11 +209,9 @@ Blockly.JavaScript['servo'] = function (block) {
    Blockly.JavaScript.definitions_['define_neo_h'] = "#include <Adafruit_NeoPixel.h>\n";
    Blockly.JavaScript.definitions_['define_neo_' + value_channel] = "Adafruit_NeoPixel neo"+" = Adafruit_NeoPixel(" + value_channel + ","+value_angle+", NEO_GRB + NEO_KHZ800)"+";\n";
 
-
      var code = "";
      return code;
   };
-
 
   Blockly.JavaScript['neo_pixel_setup'] = function (block) {
      Blockly.JavaScript.setups_['define_neo_setup'] =  " neo.begin();"+
@@ -341,10 +332,6 @@ Blockly.JavaScript['neo_pixel_custom'] = function (block) {
            return code;
         };
 
-
-
-
-
 Blockly.JavaScript['logic_calculation'] = function(a) {
     var b = {
             EQ: "+",
@@ -358,7 +345,6 @@ Blockly.JavaScript['logic_calculation'] = function(a) {
     return [d + " " + b + " " + a, c]
 };
 
-
  Blockly.JavaScript['tone_notone'] = function (block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
@@ -368,7 +354,6 @@ Blockly.JavaScript['logic_calculation'] = function(a) {
      var code = "tone(" + value_pin + ", " + value_num + ");\ndelay("+ delay_time + ');\n'+"noTone("+value_pin+");\n";
      return code;
   };
-
 
  Blockly.JavaScript['DHT11'] = function (block) {
    var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
@@ -390,7 +375,6 @@ Blockly.JavaScript['logic_calculation'] = function(a) {
   };
 
    Blockly.JavaScript['read_temp'] = function (block) {
-
 
   //   Blockly.JavaScript.setups_['define_servo' + value_channel] = '\n servo' + value_channel + '.attach('+value_channel+');\n';
   //   if( (value_angle < 0 ) || (value_angle > 180 )) {
@@ -459,7 +443,6 @@ Blockly.JavaScript['inout_digital_read'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-
 Blockly.JavaScript['serial_begin_list'] = function(block) {
     //var num = parseInt(Blockly.JavaScript.valueToCode(block, 'SB',Blockly.JavaScript.ORDER_NONE));
 
@@ -475,15 +458,12 @@ Blockly.JavaScript['serial_begin_list'] = function(block) {
 //    return num;
 //};
 
-
-
 //Blockly.JavaScript['inout_analog_read'] = function(block) {
 //  var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
 //  Blockly.JavaScript.definitions_['analog_read'] = "int anaRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return analogRead(" + value_pin + ");\n}\n"
 //    var code = "anaRead(" + value_pin + ")";
 //    return [code, Blockly.JavaScript.ORDER_ATOMIC];
 //};
-
 
 Blockly.JavaScript['inout_analog_read'] = function(block) {
   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
@@ -499,7 +479,6 @@ Blockly.JavaScript['inout_analog_read'] = function(block) {
    var code = "Serial.print("+value_text+");\n";
    return code;
  };*/
-
 
  Blockly.JavaScript['variables_change'] = function() {
    // Variable setter.
@@ -519,7 +498,6 @@ Blockly.JavaScript['serial_begin'] = function(block) {
    return code;
  };
 
-
 /* Blockly.JavaScript['serial_println'] = function(block) {
     var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
     var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
@@ -536,7 +514,6 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       return code;
     };
 
-
   Blockly.JavaScript['map_number'] = function(block) {
 
            var variable = Blockly.JavaScript.valueToCode(block, "var", Blockly.JavaScript.ORDER_ATOMIC);
@@ -544,7 +521,6 @@ Blockly.JavaScript['serial_begin'] = function(block) {
            var in_max = Blockly.JavaScript.valueToCode(block, "in_max", Blockly.JavaScript.ORDER_ATOMIC);
            var out_min = Blockly.JavaScript.valueToCode(block, "out_min", Blockly.JavaScript.ORDER_ATOMIC);
            var out_max = Blockly.JavaScript.valueToCode(block, "out_max", Blockly.JavaScript.ORDER_ATOMIC);
-
 
 //      var functionName = Blockly.JavaScript.provideFunction_(
 //          'map_number',
@@ -557,9 +533,6 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       var code =  'map(' + variable+','+in_min +','+in_max+','+out_min +','+out_max + ')';
       return [code, Blockly.JavaScript.ORDER_ATOMIC];
         };
-
-
-
 
 /*   Blockly.JavaScript['serial_println_int'] = function(block) {
       var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
@@ -594,12 +567,9 @@ Blockly.JavaScript['pulseIn'] = function(block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
    var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
 
-
    var code = "pulseIn(" + value_pin + ", " + value_num + ")";
    return [code, Blockly.JavaScript.ORDER_ATOMIC];
  };
-
-
 
 Blockly.JavaScript['turtle_colour_internal'] = function(block) {
   // Generate JavaScript for setting the colour.
@@ -679,8 +649,6 @@ Blockly.JavaScript['turtle_colour'] = function(block) {
 Blockly.JavaScript['turtle_repeat_internal'] = Blockly.JavaScript['controls_repeat'];
 
 Blockly.JavaScript['turtle_setup_loop'] = Blockly.JavaScript['setup_loop'];
-
-
 
 /**
  * The generated code for turtle blocks includes block ID strings.  These are useful for
