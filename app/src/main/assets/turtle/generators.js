@@ -67,7 +67,7 @@ Blockly.JavaScript['turtle_move_internal'] = function(block) {
       '(' + value + ', \'block_id_' + block.id + '\');\n';
 };
 
-<<<<<<< HEAD
+
 Blockly.JavaScript['turtle_color_internal'] = function(block) {
   // Generate JavaScript for moving forward or backwards.
 
@@ -153,8 +153,7 @@ Blockly.JavaScript['turtle_jikco_internal'] = function(block) {
 
   return code;
 };
-=======
->>>>>>> master
+
 Blockly.JavaScript['turtle_turn_internal'] = function(block) {
   // Generate JavaScript for turning left or right.
   var value = block.getFieldValue('VALUE');
