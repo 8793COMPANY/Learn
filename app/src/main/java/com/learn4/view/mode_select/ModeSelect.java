@@ -67,7 +67,7 @@ public class ModeSelect extends AppCompatActivity {
         actionBar.setDisplayShowTitleEnabled(false);        //액션바에 표시되는 제목의 표시유무를 설정합니다.
         actionBar.setDisplayShowHomeEnabled(false);            //홈 아이콘을 숨김처리합니다.
         DataSetting setting = DataSetting.getInstance(getApplicationContext());
-//        setting.dataCheck();
+        setting.dataCheck();
 
 
 

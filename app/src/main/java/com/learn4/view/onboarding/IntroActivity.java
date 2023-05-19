@@ -21,7 +21,7 @@ public class IntroActivity extends AppCompatActivity {
         Handler handler = new Handler();
         
         handler.postDelayed(() -> {
-            Intent intent = new Intent(this, ModeSelect.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }, 2000);

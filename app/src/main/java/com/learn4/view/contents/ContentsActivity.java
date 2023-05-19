@@ -141,13 +141,13 @@ public class ContentsActivity extends AppCompatActivity {
             }
         };
 
-        contents_mode_select_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                modeSelectDialog = new ModeSelectDialog(ContentsActivity.this,cancel_listener,confirm_listener,default_mode_listener,jikco_mode_listener,mode);
-                modeSelectDialog.show();
-            }
-        });
+//        contents_mode_select_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                modeSelectDialog = new ModeSelectDialog(ContentsActivity.this,cancel_listener,confirm_listener,default_mode_listener,jikco_mode_listener,mode);
+//                modeSelectDialog.show();
+//            }
+//        });
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);

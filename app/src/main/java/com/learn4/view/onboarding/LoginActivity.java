@@ -71,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 //        Setting setting = new Setting(getApplicationContext());
-        DataSetting setting = DataSetting.getInstance(getApplicationContext());
-        setting.dataCheck();
+//        DataSetting setting = DataSetting.getInstance(getApplicationContext());
+//        setting.dataCheck();
 
 //        setting.settingChapterByLevel(1);
 //        setting.settingChapterByLevel(2);
