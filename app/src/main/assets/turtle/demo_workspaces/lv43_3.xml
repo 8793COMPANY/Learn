@@ -27,7 +27,7 @@
                 </value>
                 <value name="angle">
                     <block type="math_number">
-                        <field name="NUM">10</field>
+                        <field name="NUM">100</field>
                     </block>
                 </value>
                 <next>
@@ -62,12 +62,12 @@
                                     <block type="neo_pixel_custom">
                                         <value name="face">
                                             <block type="face_list">
-                                                <field name="face">&#51676;&#47551;&#54620;</field>
+                                                <field name="face">thrilling</field>
                                             </block>
                                         </value>
                                         <value name="color">
                                             <block type="color_list">
-                                                <field name="color">&#48744;&#44036;&#49353;</field>
+                                                <field name="color">Yellow</field>
                                             </block>
                                         </value>
                                     </block>
@@ -76,12 +76,12 @@
                                     <block type="neo_pixel_custom">
                                         <value name="face">
                                             <block type="face_list">
-                                                <field name="face">&#44592;&#49244;</field>
+                                                <field name="face">happy</field>
                                             </block>
                                         </value>
                                         <value name="color">
                                             <block type="color_list">
-                                                <field name="color">&#48744;&#44036;&#49353;</field>
+                                                <field name="color">Green</field>
                                             </block>
                                         </value>
                                     </block>

@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.corporation8793.learn.xml.ParentXml;
 import com.learn4.R;
+import com.learn4.data.dto.Subclass;
 import com.learn4.util.Application;
 import com.learn4.view.MainActivity;
 
@@ -33,6 +34,37 @@ public class TutorCheck {
     String solutionXmlAssetFilePath = "";
     String submittedXml = "";
     MainActivity mainActivity;
+
+    String project_contents_learning[][] = {
+            {"LED(Pin 13)을 1초동안 켜지고 1초동안 꺼지도록 코딩하세요.","LED = 13번, 시간 = 1초"},
+            {"LED(Pin 13)을 0.5초동안 켜지고 0.2초동안 꺼지도록 코딩하세요." ,"LED = 13번, 시간 = 0.5초"},
+            {"LED(Pin 13)을 0.2초동안 켜지고 0.4초동안 꺼지도록 코딩하세요." ,"LED = 13번, 시간 = 1초"},
+
+            {"스위치(Pin 3)을 눌렀을 때 시리얼 모니터(9600)에 ON이 출력되고 " +
+                    "누르지 않았을 때 OFF가 출력되도록 코딩하세요.","스위치 = 3번"},
+            {"스위치(Pin 2)을 눌렀을 때 시리얼 모니터(9600)에 ON이 출력되고 " +
+                    "누르지 않았을 때 OFF가 출력되도록 코딩하세요." ,"스위치 = 2번"},
+            {"스위치(Pin 3)을 눌렀을 때 시리얼 모니터(9600)에 LED(Pin 13)이 켜지고 " +
+                    "누르지 않았을 때 LED(Pin 10)이 꺼지도록 코딩하세요." ,"스위치 = 3번, LED = 10번"},
+
+            {"Tone 블록을 사용하여 피에조 부저(Pin 6)에서 1초동안 도( 523 )음이 " +
+                    "울리도록 코딩하세요.","피에조 부저= 6, " +
+                    "시간 = 1초"},
+            {"Tone 블록을 사용하여 피에조 부저(Pin 6)에서 노래 음계에 맞춰 " +
+                    "연주 되도록 코딩하세요." ,"피에조 부저= 6, " +
+                    "시간 = 0.5~2초"},
+            {"스위치(Pin 6)를 눌렀을 때 특정한 음계가 나오도록 " +
+                    "코딩하세요." ,"피에조 부저= A1, " +
+                    "스위치 = 6번"},
+
+            {"네오픽셀(Pin 12)를 조작하여 웃는 표정을 나타나도록 코딩하세요.","네오픽셀 = 12번"},
+            {"왼쪽 스위치(Pin 3)을 눌렀을 때 네오픽셀(Pin 12)에서 Yellow/thriling 표정이 " +
+                    " 누르지 않을 때는 Green/happy 표정이 나오도록 코딩하세요." ,"스위치 = 3번 " +
+                    "네오픽셀 = 12번"},
+            {"네오픽셀(Pin 12)를 조작하여 다양한 색상에 다른 표정을 만들어 코딩하세요." ,"네오픽셀 = 12번"},
+    };
+    String goal = "";
+    String condition = "";
 
     public TutorCheck(Context context, boolean simulator_check, String chapter_id, String submittedXml) {
         this.context = context;
@@ -52,16 +84,28 @@ public class TutorCheck {
 
         if(chapter_id.equals("3-2")){
             solutionXmlAssetFilePath = "lv1_blink.xml";
+            goal = project_contents_learning[0][0];
+            condition = project_contents_learning[0][1];
         }else if (chapter_id.equals("3-3")){
             solutionXmlAssetFilePath = "lv2_blink.xml";
+            goal = project_contents_learning[1][0];
+            condition = project_contents_learning[1][1];
         }else if (chapter_id.equals("3-4")){
             solutionXmlAssetFilePath = "lv3_blink.xml";
+            goal = project_contents_learning[2][0];
+            condition = project_contents_learning[2][1];
         }else if (chapter_id.equals("5-2")) {
             solutionXmlAssetFilePath = "lv5_2.xml";
+            goal = project_contents_learning[3][0];
+            condition = project_contents_learning[3][1];
         }else if (chapter_id.equals("5-3")) {
             solutionXmlAssetFilePath = "lv5_3.xml";
+            goal = project_contents_learning[4][0];
+            condition = project_contents_learning[4][1];
         }else if (chapter_id.equals("5-4")) {
             solutionXmlAssetFilePath = "lv5_4.xml";
+            goal = project_contents_learning[5][0];
+            condition = project_contents_learning[5][1];
         }else if (chapter_id.equals("7-2")) {
             solutionXmlAssetFilePath = "lv7_2.xml";
         }else if (chapter_id.equals("7-3")) {
@@ -70,10 +114,16 @@ public class TutorCheck {
             solutionXmlAssetFilePath = "lv7_4.xml";
         }else if (chapter_id.equals("9-2")) {
             solutionXmlAssetFilePath = "lv9_2.xml";
+            goal = project_contents_learning[6][0];
+            condition = project_contents_learning[6][1];
         }else if (chapter_id.equals("9-3")) {
             solutionXmlAssetFilePath = "lv9_3.xml";
+            goal = project_contents_learning[7][0];
+            condition = project_contents_learning[7][1];
         }else if (chapter_id.equals("9-4")) {
             solutionXmlAssetFilePath = "lv9_4.xml";
+            goal = project_contents_learning[8][0];
+            condition = project_contents_learning[8][1];
         }else if (chapter_id.equals("11-2")) {
             solutionXmlAssetFilePath = "lv11_2.xml";
         }else if (chapter_id.equals("11-3")) {
@@ -116,12 +166,18 @@ public class TutorCheck {
             solutionXmlAssetFilePath = "lv23_3.xml";
         }else if (chapter_id.equals("23-4")) {
             solutionXmlAssetFilePath = "lv23_4.xml";
-        }else if (chapter_id.equals("27-2")) {
+        }else if (chapter_id.equals("43-2")) {
             solutionXmlAssetFilePath = "lv43_2.xml";
-        }else if (chapter_id.equals("27-3")) {
+            goal = project_contents_learning[9][0];
+            condition = project_contents_learning[9][1];
+        }else if (chapter_id.equals("43-3")) {
             solutionXmlAssetFilePath = "lv43_3.xml";
-        }else if (chapter_id.equals("27-4")) {
+            goal = project_contents_learning[10][0];
+            condition = project_contents_learning[10][1];
+        }else if (chapter_id.equals("43-4")) {
             solutionXmlAssetFilePath = "lv43_4.xml";
+            goal = project_contents_learning[11][0];
+            condition = project_contents_learning[11][1];
         }else{
             chapter_check = false;
             solutionXmlAssetFilePath = "lv1_blink.xml";
@@ -204,6 +260,24 @@ public class TutorCheck {
                 R.layout.dialog_tutor, (ConstraintLayout) ((Activity)context).findViewById(R.id.tutor_dialog));
 
         builder.setView(view);
+
+        String [] number = chapter_id.split("-");
+        int contents_num = (Integer.parseInt(number[0]) -3) / 2;
+        if (number[0].equals("43")){
+            contents_num = 10;
+        }
+        Subclass subclass = Application.learningObjectives.get(contents_num).getSubclasses().get(Integer.parseInt(number[1])-2);
+
+        if (Application.mode == 2){
+            ((TextView)view.findViewById(R.id.main_text)).setText(goal);
+            ((TextView)view.findViewById(R.id.condition_text)).setText(condition);
+        }else{
+            ((TextView)view.findViewById(R.id.main_text)).setText(subclass.getLearning_objective());
+            ((TextView)view.findViewById(R.id.condition_text)).setText(subclass.getCondition());
+        }
+
+        //((TextView)view.findViewById(R.id.main_text)).setText(goal);
+        //((TextView)view.findViewById(R.id.condition_text)).setText(condition);
 
         if (num == 1) {
             ((TextView)view.findViewById(R.id.tutor_text)).setText("정답입니다. 참 잘했어요~!");
