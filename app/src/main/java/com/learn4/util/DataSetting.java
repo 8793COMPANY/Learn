@@ -250,21 +250,30 @@ public class DataSetting {
                         }
 
                         if (plus) {
-                            // 대분류 및 소분류 제목 제외
-                            String[] blocks = new String[6];
+                            String[] blocks = new String[4];
                             String totalCategory = "";
 
-                            for (int col = 1; col <= 6; col++) {
-                                blocks[col - 1] = sheet.getCell(col, row).getContents();
+                            for (int subrow = row; subrow <= row+2; subrow++) {
+                                String changeText = "";
 
-                                Log.e("test", blocks[col - 1]);
+                                for (int col = 3; col <= 6; col++) {
+                                    if (col == 5 || col == 6) {
+                                        changeText = sheet.getCell(col, subrow).getContents();
+                                        changeText = changeText.replaceAll(System.getProperty("line.separator"), " ");
+
+                                        blocks[col - 3] = changeText;
+                                    } else {
+                                        blocks[col - 3] = sheet.getCell(col, subrow).getContents();
+                                    }
+                                }
+
+                                int plusNum = Integer.parseInt(blocks[0]) + 1;
+                                totalCategory = plusCheck + "-" + Integer.toString(plusNum);
+
+                                // 콘텐츠 목표 및 조건 저장
+                                ContentGoal contentGoal = new ContentGoal(plusCheck, blocks[1], totalCategory, blocks[2], blocks[3]);
+                                insert_contentsGoal_data(contentGoal);
                             }
-
-                            //totalCategory = blocks[1] + "-" + Integer.toString(Integer.parseInt(blocks[3]) + 1);
-
-                            // 콘텐츠 목표 및 조건 저장
-                            ContentGoal contentGoal = new ContentGoal(blocks[1], blocks[3],"none" ,blocks[4], blocks[5]);
-                            insert_contentsGoal_data(contentGoal);
                         }
                     }
                 }
