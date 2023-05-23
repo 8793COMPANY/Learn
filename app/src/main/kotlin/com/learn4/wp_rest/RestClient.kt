@@ -49,9 +49,11 @@ object RestClient {
      */
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
-        .client(getUnsafeOkHttpClient()?.build())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    //ssl인증서 관련 에러가 났을 때 추가해주면 됨
+    //.client(getUnsafeOkHttpClient()?.build())
 
 
 
