@@ -169,8 +169,8 @@ public class SimulatorDialog extends Dialog {
                webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                        chapter_id,title.replace("\n","")),"android");
 
-               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
-//               webView.loadUrl("http://192.168.0.5:8080/");
+//               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+               webView.loadUrl("http://192.168.0.5:8080/");
                if (!contents_name.equals("none")) {
                    if (MySharedPreferences.getInt(context, contents_name + " MAX") < 5) {
                        MySharedPreferences.setInt(context, contents_name + " MAX", 5);
@@ -209,9 +209,9 @@ public class SimulatorDialog extends Dialog {
                 chapter_id,"contents_id:"+chapter_id),"android");
 
 
-        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+//        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 
-        //webView.loadUrl("http://192.168.0.8:8080/");
+        webView.loadUrl("http://192.168.0.5:8080/");
 
         //webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 //        webView.loadUrl("http://192.168.0.8:8080/");
