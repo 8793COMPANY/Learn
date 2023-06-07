@@ -88,8 +88,10 @@ public class Application extends android.app.Application  {
 //        readComponent();
 //        readContents();
 //        AppDatabase db = AppDatabase.getInstance(context);
-        logHelper = new LogHelper();
-        Thread.setDefaultUncaughtExceptionHandler(logHelper);
+
+        //log 수집
+//        logHelper = new LogHelper();
+//        Thread.setDefaultUncaughtExceptionHandler(logHelper);
 
 
     }

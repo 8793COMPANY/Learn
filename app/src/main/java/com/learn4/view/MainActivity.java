@@ -1386,7 +1386,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     break;
                 } else if (mPushEvent.getPos() >= 4 ){
                     initTabColor();
-
                     break;
                 }
         }
@@ -1402,9 +1401,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 //        mBlocklyActivityHelper.getmCategoryView().getCurrentCategory().getCategoryName();
 
-
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
-
 
 //        block_copy_btn = blockly_workspace.findViewById(R.id.block_copy_btn);
 
@@ -2220,7 +2217,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("getCompiler Error",e.toString());
 //        }
         // TODO : 컴파일러 세팅
-        return "http://learnserver24-lb-1900786351.ap-northeast-2.elb.amazonaws.com:5000";
+        return "http://learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com:5000";
     }
 
 
@@ -2487,17 +2484,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             Log.e("MainActivity chapter_id",chapter_id+"");
             // TODO : 화면 캡쳐 트리거
-            if(!chapter_id.equals("0")) {
-                Log.e("MainActivity", "captureWorkspace: start");
-                bitmapWorkspace = controller.captureWorkspace();
-
-                try {
-                    saveImage(bitmapWorkspace, "captureWorkspace");
-                    Log.e("MainActivity", "captureWorkspace: save ok");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+//            if(!chapter_id.equals("0")) {
+//                Log.e("MainActivity", "captureWorkspace: start");
+//                bitmapWorkspace = controller.captureWorkspace();
+//
+//                try {
+//                    saveImage(bitmapWorkspace, "captureWorkspace");
+//                    Log.e("MainActivity", "captureWorkspace: save ok");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
         } else {
             //Toast.makeText(getApplicationContext(), "WIFI 및 USB를 연결해주세요!", Toast.LENGTH_SHORT).show();

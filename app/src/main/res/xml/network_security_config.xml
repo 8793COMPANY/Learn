@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">learnserver24-lb-1900786351.ap-northeast-2.elb.amazonaws.com</domain>
-        <domain includeSubdomains="true">learnserver24.com</domain>
+        <domain includeSubdomains="true">learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com</domain>
     </domain-config>
 </network-security-config>

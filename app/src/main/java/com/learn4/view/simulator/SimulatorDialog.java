@@ -37,6 +37,7 @@ public class SimulatorDialog extends Dialog {
     private String chapter_id, contents_name;
     Context context;
     Button component_close_btn;
+    WebView webView;
 
 
 
@@ -56,7 +57,7 @@ public class SimulatorDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         setContentView(R.layout.dialog_simulator);
-        WebView webView = findViewById(R.id.simulator_web_view);
+        webView = findViewById(R.id.simulator_web_view);
         Button upload_btn = findViewById(R.id.upload_btn);
         TextView code_view  = findViewById(R.id.code_view);
         TextView hint_text  = findViewById(R.id.hint_text);
@@ -169,8 +170,11 @@ public class SimulatorDialog extends Dialog {
                webView.addJavascriptInterface(new JavascriptCallbackClient(context, webView, code_view, loading_text, upload_btn, code_upload_progress,
                        chapter_id,title.replace("\n","")),"android");
 
-//               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
-               webView.loadUrl("http://192.168.0.5:8080/");
+               webView.removeJavascriptInterface("searchBoxJavaBridge_");
+               webView.removeJavascriptInterface("accessibility");
+               webView.removeJavascriptInterface("accessibilityTraversal");
+               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+//               webView.loadUrl("http://192.168.0.5:8080/");
                if (!contents_name.equals("none")) {
                    if (MySharedPreferences.getInt(context, contents_name + " MAX") < 5) {
                        MySharedPreferences.setInt(context, contents_name + " MAX", 5);
@@ -209,9 +213,12 @@ public class SimulatorDialog extends Dialog {
                 chapter_id,"contents_id:"+chapter_id),"android");
 
 
-//        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+        webView.removeJavascriptInterface("searchBoxJavaBridge_");
+        webView.removeJavascriptInterface("accessibility");
+        webView.removeJavascriptInterface("accessibilityTraversal");
+        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 
-        webView.loadUrl("http://192.168.0.5:8080/");
+//        webView.loadUrl("http://192.168.0.5:8080/");
 
         //webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 //        webView.loadUrl("http://192.168.0.8:8080/");
@@ -229,4 +236,9 @@ public class SimulatorDialog extends Dialog {
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        webView.removeJavascriptInterface("android");
+    }
 }
