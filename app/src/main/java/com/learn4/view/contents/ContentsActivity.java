@@ -108,7 +108,7 @@ public class ContentsActivity extends AppCompatActivity {
 
         confirm_listener = new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), mode+"", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), mode+"", Toast.LENGTH_SHORT).show();
 //                levelAdapter.levels.clear();
                 levelAdapter.deco_check = false;
                 if (mode == 1){

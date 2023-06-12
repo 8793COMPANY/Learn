@@ -110,18 +110,18 @@ public class TutorCheck {
         //ParentXml testparentXml = new ParentXml(context, "turtle/demo_workspaces/lv"+changeChapterId+".xml", submittedXml);
 
         if(chapter_id.equals("3-2")){
-            solutionXmlAssetFilePath = "lv3_2.xml";
-            //solutionXmlAssetFilePath = "lv1_blink.xml";
+            //solutionXmlAssetFilePath = "lv3_2.xml";
+            solutionXmlAssetFilePath = "lv1_blink.xml";
             //goal = project_contents_learning[0][0];
             //condition = project_contents_learning[0][1];
         }else if (chapter_id.equals("3-3")){
-            solutionXmlAssetFilePath = "lv3_3.xml";
-            //solutionXmlAssetFilePath = "lv2_blink.xml";
+            //solutionXmlAssetFilePath = "lv3_3.xml";
+            solutionXmlAssetFilePath = "lv2_blink.xml";
             //goal = project_contents_learning[1][0];
             //condition = project_contents_learning[1][1];
         }else if (chapter_id.equals("3-4")){
-            solutionXmlAssetFilePath = "lv3_4.xml";
-            //solutionXmlAssetFilePath = "lv3_blink.xml";
+            //solutionXmlAssetFilePath = "lv3_4.xml";
+            solutionXmlAssetFilePath = "lv3_blink.xml";
             //goal = project_contents_learning[2][0];
             //condition = project_contents_learning[2][1];
         }else if (chapter_id.equals("5-2")) {
