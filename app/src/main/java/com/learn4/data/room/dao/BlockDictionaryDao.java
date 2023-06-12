@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.learn4.data.room.entity.BlockDictionary;
+import com.learn4.data.room.entity.Component;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ public interface BlockDictionaryDao {
 
     @Query("SELECT * FROM blockDictionary")
     List<BlockDictionary> findAll();
+
+    @Query("SELECT * FROM blockDictionary where block_name=:name")
+    BlockDictionary findBlockByName(String name);
 
     @Insert
     void insert(BlockDictionary blockDictionary);

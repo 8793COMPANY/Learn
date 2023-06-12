@@ -19,6 +19,9 @@ public interface ContentsDao {
     @Query("SELECT * FROM contents where level=:level")
     List<Contents> findByLevel(int level);
 
+    @Query("SELECT * FROM contents where name=:name")
+    Contents findByName(String name);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Contents contents);
 

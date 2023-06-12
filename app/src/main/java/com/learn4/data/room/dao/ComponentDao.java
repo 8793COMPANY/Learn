@@ -18,6 +18,9 @@ public interface ComponentDao {
     @Query("SELECT * FROM component where number=:num")
     Component findById(String num);
 
+    @Query("SELECT * FROM component where name=:name")
+    Component findByName(String name);
+
     @Insert
     void insert(Component component);
 

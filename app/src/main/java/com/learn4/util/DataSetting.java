@@ -75,18 +75,22 @@ public class DataSetting {
 //        contentsDao.
         boolean check = contentsDao.findAll().size() >0;
         Log.e("check",contentsDao.findAll().size()+"");
-        if (check){
-            Log.e("already save data in db","!!");
-//            return true;
-        }else{
-            Log.e("no data","!!");
-            readContents();
-            readComponent();
-            readBlock();
 
-            readGoal();
+//        if (check){
+//            Log.e("already save data in db","!!");
+////            return true;
+//        }else{
+//            Log.e("no data","!!");
+//
+//
+//
+//        }
 
-        }
+        readContents();
+        readComponent();
+        readBlock();
+        readGoal();
+
 
         readLearningObjective();
         readProjectContents();
@@ -270,9 +274,26 @@ public class DataSetting {
                                 int plusNum = Integer.parseInt(blocks[0]) + 1;
                                 totalCategory = plusCheck + "-" + Integer.toString(plusNum);
 
+
+
+                                ContentGoal check = contentsGoalDao.findByGoal(blocks[1]);
+
+                                Log.e("contents goal",blocks[1]);
+                                try{
+                                    if (check != null){
+                                        Log.e("check contentGoalDao","check in");
+                                    }else{
+                                        Log.e("check contentGoalDao","check out");
+                                        // 블록 설명 저장
+                                        ContentGoal contentGoal = new ContentGoal(plusCheck, blocks[1], totalCategory, blocks[2], blocks[3]);
+                                        insert_contentsGoal_data(contentGoal);
+                                    }
+                                }catch (NullPointerException e){
+
+                                }
+
                                 // 콘텐츠 목표 및 조건 저장
-                                ContentGoal contentGoal = new ContentGoal(plusCheck, blocks[1], totalCategory, blocks[2], blocks[3]);
-                                insert_contentsGoal_data(contentGoal);
+
                             }
                         }
                     }
@@ -321,9 +342,23 @@ public class DataSetting {
                                 Log.e("test", blocks[col - 2]);
                             }
 
-                            // 블록 설명 저장
-                            BlockDictionary blockDictionary = new BlockDictionary(blocks[0], blocks[1], blocks[2], blocks[3], blocks[4]);
-                            insert_blockDictionary_data(blockDictionary);
+                            BlockDictionary check = blockDictionaryDao.findBlockByName(blocks[0]);
+
+                            Log.e("contents name",blocks[0]);
+                            try{
+                                if (check != null){
+                                    Log.e("check blockDao","check in");
+                                }else{
+                                    Log.e("check blockDao","check out");
+                                    // 블록 설명 저장
+                                    BlockDictionary blockDictionary = new BlockDictionary(blocks[0], blocks[1], blocks[2], blocks[3], blocks[4]);
+                                    insert_blockDictionary_data(blockDictionary);
+                                }
+                            }catch (NullPointerException e){
+
+                            }
+
+
                         }
                     }
                 }
@@ -448,9 +483,23 @@ public class DataSetting {
                                 Log.e("test", components[col - 1]);
                             }
 
-                            // 부품 번호, 부품 이름, 부품 설명 저장
-                            Component component = new Component(components[1],components[2],components[3]);
-                            insert_component_data(component);
+                            Component check = componentDao.findByName(components[2]);
+
+                            Log.e("contents name",components[2]);
+                            try{
+                                if (check != null){
+                                    Log.e("check componentDao","check in");
+                                }else{
+                                    Log.e("check componentDao","check out");
+                                    // 부품 번호, 부품 이름, 부품 설명 저장
+                                    Component component = new Component(components[1],components[2],components[3]);
+                                    insert_component_data(component);
+                                }
+                            }catch (NullPointerException e){
+
+                            }
+
+
                         }
                     }
                 }
@@ -509,6 +558,8 @@ public class DataSetting {
                     String values;
                     boolean plus;
 
+                    Log.e("rowTotal",rowTotal+"");
+
                     for (int row = rowIndexStart; row < rowTotal; row++) {
                         values = "";
                         plus = false;
@@ -561,12 +612,26 @@ public class DataSetting {
                                     Log.e("value" + i, "value" + i + " : " + value[i]);
                                 }
 
-                                Contents contents = new Contents(
+                                Contents check = contentsDao.findByName(value[3]);
+
+                                Log.e("contents name",value[3]);
+                                try{
+                                    if (check != null){
+                                        Log.e("check contentsDao","check in");
+                                    }else{
+                                        Log.e("check contentsDao","check out");
+                                        Contents contents = new Contents(
                                         Integer.parseInt(value[2]), value[3], value[4], value[5], value[6], value[8], value[9], value[10]);
 
-                                Log.e("contents check",contents.getDeep_problem1());
+                                        Log.e("contents check",contents.getDeep_problem1());
 
-                                insert_contents_data(contents);
+                                        insert_contents_data(contents);
+                                    }
+                                }catch (NullPointerException e){
+
+                                }
+
+
                             }
                         }
                     }

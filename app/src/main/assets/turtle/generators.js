@@ -660,12 +660,12 @@ Blockly.JavaScript['pulseIn'] = function(block) {
    return [code, Blockly.JavaScript.ORDER_ATOMIC];
  };
 
-Blockly.JavaScript['turtle_colour_internal'] = function(block) {
-  // Generate JavaScript for setting the colour.
-  var colour = block.getFieldValue('COLOUR');
-  return 'Turtle.penColour(\'' + colour + '\', \'block_id_' +
-      block.id + '\');\n';
-};
+//Blockly.JavaScript['turtle_colour_internal'] = function(block) {
+//  // Generate JavaScript for setting the colour.
+//  var colour = block.getFieldValue('COLOUR');
+//  return 'Turtle.penColour(\'' + colour + '\', \'block_id_' +
+//      block.id + '\');\n';
+//};
 
 Blockly.JavaScript['turtle_pen'] = function(block) {
   // Generate JavaScript for pen up/down.

@@ -51,6 +51,7 @@ import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 
@@ -177,7 +178,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private EditText editURL;
     EditText serial_input_box;
 
-    Button serial_send_btn;
+    Button serial_send_btn, translate_btn;
     public Button  close_btn;
 
     Button block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn;
@@ -222,7 +223,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private FinishDialog finishListener, resetListener;
     private SimulatorDialog simulatorDialog;
 
-    int current_pos =0;
+    int current_pos =0, turtle_pos = 0;
     boolean simulator_check = false;
 
     AppDatabase2 db2 = null;

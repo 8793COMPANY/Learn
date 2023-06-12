@@ -1,4 +1,128 @@
 [
+  {
+    "type": "type_string",
+    "message0": "글자 : %1 %2 %3",
+    "args0": [
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC",
+        "width": 12,
+        "height": 12,
+        "alt": "\u201C"
+      },
+      {
+        "type": "field_input",
+        "name": "STRING_TEXT",
+        "text": ""
+      },
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg==",
+        "width": 12,
+        "height": 12,
+        "alt": "\u201D"
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF"
+  },
+
+  {
+    "type": "type_int",
+    "message0" : "숫자 : %1",
+    "args0" : [
+      {
+        "type" : "field_number",
+        "name" : "INT_TEXT",
+        "text" : "0"
+      }
+    ],
+    "output": "Number",
+    "colour": "#6BABEF"
+  },
+
+  {
+    "type": "type_boolean",
+    "message0" : "비교값 : %1",
+    "args0" : [
+      {
+        "type" : "field_dropdown",
+        "name" : "BOOLEAN_TEXT",
+        "options": [
+          ["참", "true"], ["거짓", "false"]
+        ]
+      }
+    ],
+    "output": "Boolean",
+    "colour": "#6BABEF"
+  },
+
+
+
+
+
+
+  {
+    "type": "turtle_jikco_internal",
+    "message0": "네오픽셀 LED %1 모양 %2 으로 출력",
+    "args0": [
+      {
+        "type": "field_jikco",
+        "name": "DIR",
+        "columns": 3
+      },
+      {
+        "type": "field_dropdown",
+        "name": "COL",
+        "options": [
+          [
+            "빨간색",
+            "Red"
+          ],
+          [
+            "주황색",
+            "Orange"
+          ],
+          [
+            "노란색",
+            "Yellow"
+          ],
+          [
+            "초록색",
+            "Green"
+          ],
+          [
+            "파란색",
+            "Blue"
+          ],
+          [
+            "갈색",
+            "Brown"
+          ],
+          [
+            "보라색",
+            "Purple"
+          ],
+          [
+            "검은색",
+            "Off"
+          ],
+          [
+            "흰색",
+            "White"
+          ]
+        ]
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": "Moves the turtle forward or backward by the specified amount."
+  },
+
+
+
+
 
   {
     "type": "turtle_move_internal",
@@ -46,6 +170,7 @@
     "colour": 160,
     "tooltip": "Moves the turtle forward or backward by the specified amount."
   },
+
   {
     "type": "turtle_turn_internal",
     "message0": "turn %1 %2",
@@ -100,6 +225,7 @@
     "colour": 160,
     "tooltip": "Turns the turtle left or right by the specified number of degrees."
   },
+
   {
     "type": "turtle_pen",
     "message0": "pen %1",
@@ -124,6 +250,7 @@
     "colour": 160,
     "tooltip": "Lifts or lowers the pen, to stop or start drawing."
   },
+
   {
     "type": "turtle_colour_internal",
     "message0": "set colour to %1",
@@ -139,6 +266,7 @@
     "colour": 20,
     "tooltip": "Changes the colour of the pen."
   },
+
   {
     "type": "turtle_visibility",
     "message0": "%1 turtle",
@@ -157,6 +285,7 @@
     "colour": 160,
     "tooltip": "Makes the turtle (circle and arrow) visible or invisible."
   },
+
   {
     "type": "turtle_print",
     "message0": "print %1",
@@ -172,6 +301,7 @@
     "tooltip": "Draws text in the turtle's direction at its location.",
     "helpUrl": "https://en.wikipedia.org/wiki/Printing"
   },
+
   {
     "type": "turtle_font",
     "message0": "font %1 %2 font size %3 %4 %5",
@@ -218,6 +348,7 @@
     "tooltip": "",
     "helpUrl": "http://www.example.com/"
   },
+
   {
     "type": "turtle_repeat_internal",
     "message0": "repeat %1 times %2 %3",
@@ -302,14 +433,14 @@
             "2",
             "2"
           ]
-          ]
+        ]
       },
       {
         "type": "input_dummy"
       },
       {
-            "type": "input_value",
-            "name": "speed"
+        "type": "input_value",
+        "name": "speed"
       }
     ],
     "previousStatement": null,
@@ -318,6 +449,7 @@
     "tooltip": "",
     "helpUrl": ""
   },
+
   {
     "type": "set_leds",
     "message0": "LEDS %1 D11 %2 %3 D12 %4 %5 D13 %6",
@@ -337,8 +469,9 @@
             "LOW ",
             "LOW "
           ]
-          ]
-          },
+
+        ]
+      },
       {
         "type": "input_dummy"
       },
@@ -373,13 +506,14 @@
           ]
         ]
       }
-        ],
+    ],
     "previousStatement": null,
     "nextStatement": null,
     "colour": 220,
     "tooltip": "Set LEDS",
     "helpUrl": "http://www.example.com/"
   },
+
   {
     "type": "set_led",
     "message0": "pinMode %1 D13 %2 %3",
@@ -399,6 +533,7 @@
             "INPUT ",
             "INPUT "
           ]
+
         ]
       },
       {
@@ -413,8 +548,30 @@
   },
 
   {
-    "type": "test",
-    "message0": "핀 설정 %1 기능 %2 ",
+    "type": "variables_change",
+    "message0": "change %1 %2",
+    "args0": [
+      {
+        "type": "field_variable",
+        "name": "VAR",
+        "variable": "item"
+      },
+      {
+        "type": "input_value",
+        "name": "VALUE"
+      }
+
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#6BABEF",
+    "tooltip": "",
+    "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
+  },
+
+  {
+    "type": "pinMode",
+    "message0": "핀모드 %1 값 %2 ",
     "inputsInline": true,
     "args0": [
       {
@@ -434,7 +591,6 @@
     "nextStatement": null,
     "tooltip": ""
   },
-  
 
   {
     "type": "lcd",
@@ -482,15 +638,17 @@
     "colour": 220,
     "tooltip": ""
   },
+
   {
-  "type": "clear_lcd",
-  "message0": "Clear LCD",
-  "args0": [],
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 120,
-  "tooltip": ""
+    "type": "clear_lcd",
+    "message0": "Clear LCD",
+    "args0": [],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 120,
+    "tooltip": ""
   },
+
   {
     "type": "bluetooth_sensor",
     "message0": "Bluetooth %1 %2 %3 baud %4",
@@ -515,6 +673,7 @@
     "output": "String",
     "tooltip": ""
   },
+
   {
     "type": "sonar_sensor",
     "message0": "Sonar %1 %2 %3 trig %4 echo %5",
@@ -546,6 +705,7 @@
     "output": "String",
     "tooltip": ""
   },
+
   {
     "type": "remote_sensor",
     "message0": "Remote %1 %2 %3 signal %4",
@@ -573,6 +733,7 @@
     "output": "String",
     "tooltip": ""
   },
+
   {
     "type": "servo",
     "message0": "Servo %1 %2 pin %3 angle %4",
@@ -600,6 +761,282 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
+  {
+    "type": "neo_pixel",
+    "message0": "NeoPixel %1 %2 pin %3 angle %4",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_value",
+        "name": "channel",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "angle",
+        "check": "Number"
+      }
+
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_brightness",
+    "message0": "setBrightness  pin %1 ",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "angle",
+        "check": "Number"
+      }
+
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_setup",
+    "message0": "네오픽셀 설정",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_begin",
+    "message0": "NeoPixel Begin",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_show",
+    "message0": "NeoPixel Show",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_clear",
+    "message0": "NeoPixel Clear",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "color_list",
+    "message0": "%1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "color",
+        "options": [
+          ["빨간색", "Red"], ["주황색", "Orange"], ["노란색", "Yellow"], ["초록색", "Green"], ["파란색", "Blue"],
+          ["갈색", "Brown"], ["보라색", "Purple"], ["검은색", "Off"],["흰색", "White"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF",
+    "tooltip": ""
+  },
+
+  {
+    "type": "face_list",
+    "message0": "%1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "face",
+        "options": [
+          ["기쁜", "happy"], ["슬픈", "sad"], ["삐진", "sulk"], ["짜릿한", "thrilling"], ["놀란", "amazed"],
+          ["졸린", "sleepy"], ["웃는", "smile"], ["멍한", "vacant"], ["속상한", "upset"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF",
+    "tooltip": ""
+  },
+
+  {
+    "type": "neo_pixel_custom",
+    "message0": "네오픽셀 LED %1 표정 %2 으로 출력",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "face"
+      },
+      {
+        "type": "input_value",
+        "name": "color"
+      }
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "neo_pixel_color",
+    "message0": "네오픽셀 색 설정 %1, %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "channel",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "angle",
+        "check": "Number"
+      }
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "tone_notone",
+    "message0": "Tone %1 pin %2 frequency %3 delay %4",
+    "args0": [
+      {
+        "type": "input_dummy"
+      },
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "NUM",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "DELAY_TIME"
+      }
+
+    ],
+    "colour": 220,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "logic_calculation",
+    "message0": "%1 %2 %3",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "A"
+      },
+      {
+        "type": "field_dropdown",
+        "name": "OP",
+        "options": [
+          ["+", "EQ"],
+          ["-", "LT"],
+          ["*", "GT"],
+          ["/", "GTE"]
+        ]
+      },
+      {
+        "type": "input_value",
+        "name": "B"
+      }
+    ],
+    "inputsInline": true,
+    "output": "Number",
+    "colour": "#6CD4DB",
+    "tooltip": "",
+    "helpUrl": "https://en.wikipedia.org/wiki/Equality_(mathematics)"
+  },
+
+  {
+    "type": "DHT11",
+    "message0": "온습도 센서 %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "channel",
+        "check": "Number"
+      }
+
+    ],
+    "colour": 220,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "read_temp",
+    "message0": "read temperature",
+    "args0": [
+
+
+    ],
+    "colour": 220,
+    "output": "Number",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
+  {
+    "type": "read_humidity",
+    "message0": "read humidity",
+    "args0": [
+
+    ],
+
+    "colour": 220,
+    "output": "Number",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
   {
     "type": "inout_tone_pin",
     "message0": "Tone on pin %1 frequency %2",
@@ -622,6 +1059,7 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
   {
     "type": "inout_notone_pin",
     "message0": "No Tone on pin %1",
@@ -640,7 +1078,7 @@
 
   {
     "type": "inout_digital_write",
-    "message0": "디지털 쓰기 %1 기능 %2",
+    "message0": "디지털 출력 %1 값 %2",
     "args0": [
       {
         "type": "input_value",
@@ -663,7 +1101,7 @@
 
   {
     "type": "inout_analog_write",
-    "message0": "아날로그 쓰기  %1 기능 %2",
+    "message0": "아날로그 출력 %1 값 %2",
     "args0": [
       {
         "type": "input_value",
@@ -683,9 +1121,10 @@
     "nextStatement": null,
     "tooltip": ""
   },
+
   {
     "type": "inout_digital_read",
-    "message0": "핀의 디지털 값 %1",
+    "message0": "디지털 입력 %1",
     "args0": [
       {
         "type": "input_value",
@@ -700,8 +1139,24 @@
   },
 
   {
+    "type": "inout_digital_read",
+    "message0": "디지털 읽기(숫자) %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      }
+    ],
+    "output": "Number",
+    "colour": "#FDB900",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
     "type": "inout_analog_read",
-    "message0": "핀의 아날로그 값 %1",
+    "message0": "아날로그 입력 %1",
     "args0": [
       {
         "type": "input_value",
@@ -717,13 +1172,8 @@
 
   {
     "type": "serial_print",
-    "message0": "가로 프린터 %1 전송데이터 %2",
+    "message0": "시리얼모니터 글자 출력 : %1",
     "args0": [
-      {
-        "type": "input_value",
-        "name": "baud",
-        "check": "Number"
-      },
       {
         "type": "input_value",
         "name": "text",
@@ -740,7 +1190,7 @@
 
   {
     "type": "serial_begin",
-    "message0": "직렬 통신 %1",
+    "message0": "시리얼모니터  %1",
     "args0": [
       {
         "type": "input_value",
@@ -755,19 +1205,72 @@
     "tooltip": ""
   },
 
-
   {
-    "type": "serial_println",
-    "message0": "세로 프린터 %1 전송 데이터 %2",
+    "type": "map_number",
+    "message0": "map %1 %2 %3 %4 %5",
     "args0": [
       {
         "type": "input_value",
-        "name": "baud",
+        "name": "var",
         "check": "Number"
       },
       {
         "type": "input_value",
-        "name": "text",
+        "name": "in_min",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "in_max",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "out_min",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "out_max",
+        "check": "Number"
+      }
+    ],
+
+    "output": "Number",
+    "colour": "#A8D93D",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
+  {
+    "type": "random_number",
+    "message0": "random from %1 to %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "from_num",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "to_num",
+        "check": "Number"
+      }
+    ],
+
+    "output": "Number",
+    "colour": "#A8D93D",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
+  {
+    "type": "serial_println",
+    "message0": "시리얼모니터(줄바꿈) 글자 출력 : %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "STRING",
         "check": "String"
       }
 
@@ -780,8 +1283,44 @@
   },
 
   {
+    "type": "serial_println_int",
+    "message0": "시리얼모니터(줄바꿈) 숫자 출력 : %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "INT",
+        "check": "Number"
+      }
+
+    ],
+    "colour": "#FDB900",
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "serial_println_boolean",
+    "message0": "시리얼모니터(줄바꿈) 비교값 출력 : %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "BOOLEAN",
+        "check": "Boolean"
+      }
+
+    ],
+    "colour": "#FDB900",
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
     "type": "base_pins_list",
-    "message0": "연결 핀: %1",
+    "message0": "핀: %1",
     "args0": [
       {
         "type": "field_dropdown",
@@ -789,19 +1328,18 @@
         "options": [
           ["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"],
           ["11", "11"], ["12", "12"], ["13", "13"],["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]
-          ]
+        ]
       }
-      ],
+    ],
     "output": "Number",
     "colour": "#6BABEF",
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
 
-
   {
     "type": "serial_begin_list",
-    "message0": "속도: %1",
+    "message0": "시리얼 채널: %1",
     "args0": [
       {
         "type": "field_dropdown",
@@ -819,13 +1357,13 @@
 
   {
     "type": "base_logic_list",
-    "message0": "핀 종류: %1",
+    "message0": "디지털 값: %1",
     "args0": [
       {
         "type": "field_dropdown",
         "name": "LOGIC",
         "options": [
-          ["전류 off", "LOW"], ["전류 on", "HIGH"]
+          ["LOW", "LOW"], ["HIGH", "HIGH"]
         ]
       }
     ],
@@ -837,13 +1375,13 @@
 
   {
     "type": "base_output_list",
-    "message0": "핀 입출력: %1",
+    "message0": "입/출력: %1",
     "args0": [
       {
         "type": "field_dropdown",
         "name": "LOGIC",
         "options": [
-          ["정보 쓰기", "OUTPUT"], ["정보 읽기", "INPUT"]
+          ["OUTPUT", "OUTPUT"], ["INPUT", "INPUT"], ["INPUT_PULLUP", "INPUT_PULLUP"]
         ]
       }
     ],
@@ -855,7 +1393,7 @@
 
   {
     "type": "base_delay",
-    "message0": "동작 멈춤 %1",
+    "message0": "delay %1",
     "args0": [
       {
         "type": "input_value",
@@ -868,6 +1406,29 @@
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
+
+  {
+    "type": "pulseIn",
+    "message0": "pulseIn %1 , %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "NUM",
+        "check": "Number"
+      }
+
+    ],
+    "output": "Number",
+    "colour": "#FDB900",
+    "inputsInline": true,
+    "tooltip": ""
+  },
+
   {
     "type": "turtle_move",
     "message0": "move %1 %2",
@@ -897,6 +1458,7 @@
     "tooltip": "Move the turtle forward or backward",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#metkk9"
   },
+
   {
     "type": "turtle_turn",
     "message0": "turn %1 %2",
@@ -926,6 +1488,7 @@
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#nwzsuj"
   },
+
   {
     "type": "turtle_width",
     "message0": "set width to %1",
@@ -941,6 +1504,7 @@
     "tooltip": "",
     "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
   },
+
   {
     "type": "turtle_colour",
     "message0": "set colour to %1",
