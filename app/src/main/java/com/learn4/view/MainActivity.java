@@ -1172,7 +1172,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         int userAction = event.getAction();
         Log.e("test", "test test : "+getController().mPendingEvents+"");
@@ -1185,10 +1185,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             loadXmlFromWorkspace();
 
             // userAction 여기서 찍어보기(밑에는 참고하기)
-            /*public static final int ACTION_DOWN             = 0;
+            *//*public static final int ACTION_DOWN             = 0;
             public static final int ACTION_UP               = 1;
             public static final int ACTION_MOVE             = 2;
-            public static final int ACTION_CANCEL           = 3;*/
+            public static final int ACTION_CANCEL           = 3;*//*
             if (userAction != 2) {
                 // 2만 뜨다가 3이 마지막에 뜸
                 Log.e("test", "drag test: " + test + "");
@@ -1221,13 +1221,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         //Log.e(TAG, "blockFactory : " + blockFactory.getAllBlockDefinitions());
         //Log.e(TAG, "mTouchHandler : " + getController().mWorkspaceView.setDragger(getController().mDragger)+"");
         //getController().mWorkspaceView.setDragger(getController().mDragger.mPendingDrag.isDragging());
-            /*if (getController().mDragger.mPendingDrag != null) {
+            *//*if (getController().mDragger.mPendingDrag != null) {
                 boolean test = getController().mDragger.mPendingDrag.isDragging();
                 Log.e("test", "drag test: " + test+"");
-            }*/
+            }*//*
         //Log.e(TAG, "drag check : " + getController().mDragger.mPendingDrag.isDragging() + "");
         //}
-        /*switch (userAction) {
+        *//*switch (userAction) {
 
             case MotionEvent.ACTION_DOWN:
                 Log.e(TAG, "화면 누름");
@@ -1239,9 +1239,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             default:
                 break;
-        }*/
+        }*//*
         return super.dispatchTouchEvent(event);
-    }
+    }*/
 
     public void clickEvent(int num) {
         Button [] button = {block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn};

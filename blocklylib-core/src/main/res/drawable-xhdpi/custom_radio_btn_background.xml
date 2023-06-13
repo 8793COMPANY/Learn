@@ -3,6 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:shape="oval">
 
-    <gradient android:startColor="#ffc865" android:endColor="#ff872e" android:angle="1"></gradient>
+    <gradient android:startColor="#ffc865" android:endColor="#ff872e"></gradient>
 
 </shape>

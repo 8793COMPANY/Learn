@@ -552,20 +552,20 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/translate_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/kor_btn_img"
-        app:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
-        app:layout_constraintDimensionRatio="170:65"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/blockly_workspace"
-        app:layout_constraintVertical_bias="0.939"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.135" />
+<!--    <Button-->
+<!--        android:id="@+id/translate_btn"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:background="@drawable/kor_btn_img"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"-->
+<!--        app:layout_constraintDimensionRatio="170:65"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.971"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/blockly_workspace"-->
+<!--        app:layout_constraintVertical_bias="0.939"-->
+<!--        app:layout_constraintWidth_default="percent"-->
+<!--        app:layout_constraintWidth_percent="0.135" />-->
 
     <fragment
         android:id="@+id/blockly_toolbox_ui"
