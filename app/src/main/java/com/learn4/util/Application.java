@@ -48,6 +48,7 @@ public class Application extends android.app.Application  {
     public static CategoryData categoryData;
     public static ArrayList<LearningObjective> learningObjectives;
     public static int mode = 1;
+    public static boolean translate_check = false;
 
     public static Application getInstance(Context context){
 //        this.context = context;

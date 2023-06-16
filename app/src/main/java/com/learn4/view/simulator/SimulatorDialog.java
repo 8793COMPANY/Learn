@@ -173,8 +173,8 @@ public class SimulatorDialog extends Dialog {
                webView.removeJavascriptInterface("searchBoxJavaBridge_");
                webView.removeJavascriptInterface("accessibility");
                webView.removeJavascriptInterface("accessibilityTraversal");
-               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
-//               webView.loadUrl("http://192.168.0.5:8080/");
+//               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+               webView.loadUrl("http://192.168.0.5:8080/");
                if (!contents_name.equals("none")) {
                    if (MySharedPreferences.getInt(context, contents_name + " MAX") < 5) {
                        MySharedPreferences.setInt(context, contents_name + " MAX", 5);
@@ -216,9 +216,9 @@ public class SimulatorDialog extends Dialog {
         webView.removeJavascriptInterface("searchBoxJavaBridge_");
         webView.removeJavascriptInterface("accessibility");
         webView.removeJavascriptInterface("accessibilityTraversal");
-        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+//        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 
-//        webView.loadUrl("http://192.168.0.5:8080/");
+        webView.loadUrl("http://192.168.0.5:8080/");
 
         //webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 //        webView.loadUrl("http://192.168.0.8:8080/");

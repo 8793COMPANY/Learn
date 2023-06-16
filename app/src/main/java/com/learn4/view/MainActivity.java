@@ -223,7 +223,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private FinishDialog finishListener, resetListener;
     private SimulatorDialog simulatorDialog;
 
-    int current_pos =0, turtle_pos = 0;
+    int current_pos =0;
+    static int turtle_pos = 0;
     boolean simulator_check = false;
 
     AppDatabase2 db2 = null;
@@ -252,7 +253,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     // 배울래 블록 한글로 번역할 때 필요한 것
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
-    String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default6/variable_blocks.json", "turtle/turtle_blocks.json"};
+    String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -1480,7 +1481,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         blockly_monitor = blockly_workspace.findViewById(R.id.blockly_monitor);
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
-//        translate_btn = blockly_workspace.findViewById(R.id.translate_btn);
+        translate_btn = blockly_workspace.findViewById(R.id.translate_btn);
         monitor_text.setMovementMethod(new ScrollingMovementMethod());
 
         serial_input_box = blockly_workspace.findViewById(R.id.serial_input_box);
@@ -1508,6 +1509,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 //        block_setup_btn.setSelected(true);
+//
+        if (turtle_pos == 0){
+            translate_btn.setBackgroundResource(R.drawable.translate_kor_btn);
+
+        }else{
+            translate_btn.setBackgroundResource(R.drawable.translate_eng_btn);
+        }
 
 
         arrayList = new ArrayList<>();
@@ -1611,11 +1619,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             String solutionXmlAssetFilePath ="";
             if(chapter_id.equals("3-2")){
-                solutionXmlAssetFilePath = "lv1_blink.xml";
+                solutionXmlAssetFilePath = "lv3_2.xml";
             }else if (chapter_id.equals("3-3")){
-                solutionXmlAssetFilePath = "lv2_blink.xml";
+                solutionXmlAssetFilePath = "lv3_3.xml";
             }else if (chapter_id.equals("3-4")){
-                solutionXmlAssetFilePath = "lv3_blink.xml";
+                solutionXmlAssetFilePath = "lv3_4.xml";
             }else if (chapter_id.equals("5-2")) {
                 solutionXmlAssetFilePath = "lv5_2.xml";
             }else if (chapter_id.equals("5-3")) {
@@ -1623,7 +1631,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }else if (chapter_id.equals("5-4")) {
                 solutionXmlAssetFilePath = "lv5_4.xml";
             }else{
-                solutionXmlAssetFilePath = "lv1_blink.xml";
+                solutionXmlAssetFilePath = "lv3_2.xml";
             }
 
             //TODO: 소영님 파일변경은 solutionXmlAssetFilePath 값 변경만 하시면 됩니다.
@@ -1912,35 +1920,37 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
 
-//        translate_btn.setOnClickListener(v ->{
+        translate_btn.setOnClickListener(v ->{
+
+            if (turtle_pos == 0) {
+                turtle_pos = 1;
+                TURTLE_BLOCK_DEFINITIONS.set(1,turtle_files_kor[0]);
+                TURTLE_BLOCK_DEFINITIONS.set(2,turtle_files_kor[1]);
+                TURTLE_BLOCK_DEFINITIONS.set(3,turtle_files_kor[2]);
+                TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_kor[3]);
+                TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_kor[4]);
+//                translate_btn.setBackgroundResource(R.drawable.translate_kor_btn);
+            }else {
+                turtle_pos = 0;
+                TURTLE_BLOCK_DEFINITIONS.set(1,turtle_files_eng[0]);
+                TURTLE_BLOCK_DEFINITIONS.set(2,turtle_files_eng[1]);
+                TURTLE_BLOCK_DEFINITIONS.set(3,turtle_files_eng[2]);
+                TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_eng[3]);
+                TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_eng[4]);
+//                translate_btn.setBackgroundResource(R.drawable.translate__btn);
+            }
 //
-//            if (turtle_pos == 0) {
-//                turtle_pos = 1;
-//                TURTLE_BLOCK_DEFINITIONS.set(1,turtle_files_kor[0]);
-//                TURTLE_BLOCK_DEFINITIONS.set(2,turtle_files_kor[1]);
-//                TURTLE_BLOCK_DEFINITIONS.set(3,turtle_files_kor[2]);
-//                TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_kor[3]);
-//                TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_kor[4]);
-//            }else {
-//                turtle_pos = 0;
-//                TURTLE_BLOCK_DEFINITIONS.set(1,turtle_files_eng[0]);
-//                TURTLE_BLOCK_DEFINITIONS.set(2,turtle_files_eng[1]);
-//                TURTLE_BLOCK_DEFINITIONS.set(3,turtle_files_eng[2]);
-//                TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_eng[3]);
-//                TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_eng[4]);
-//            }
-////
-////
-////
-//            Intent intent = getIntent();
-//            overridePendingTransition(0, 0);
-//            // 플래그 설정
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent); //현재 액티비티 재실행 실시
-//            overridePendingTransition(0, 0);
-//            finish(); //현재 액티비티 종료 실시
-//        });
+//
+//
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            // 플래그 설정
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent); //현재 액티비티 재실행 실시
+            overridePendingTransition(0, 0);
+            finish(); //현재 액티비티 종료 실시
+        });
 
 
 //        BlocklyController controller = getController();

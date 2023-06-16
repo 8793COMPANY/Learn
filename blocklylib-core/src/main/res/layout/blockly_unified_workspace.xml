@@ -552,20 +552,20 @@
 
     </LinearLayout>
 
-<!--    <Button-->
-<!--        android:id="@+id/translate_btn"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@drawable/kor_btn_img"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"-->
-<!--        app:layout_constraintDimensionRatio="170:65"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.971"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/blockly_workspace"-->
-<!--        app:layout_constraintVertical_bias="0.939"-->
-<!--        app:layout_constraintWidth_default="percent"-->
-<!--        app:layout_constraintWidth_percent="0.135" />-->
+    <Button
+        android:id="@+id/translate_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/translate_kor_btn"
+        app:layout_constraintBottom_toTopOf="@+id/go_simulator_btn"
+        app:layout_constraintDimensionRatio="110:50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_block"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1" />
 
     <fragment
         android:id="@+id/blockly_toolbox_ui"
@@ -586,22 +586,20 @@
         android:layout_width="59dp"
         android:layout_height="86dp"
         android:src="@drawable/bot_image"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintVertical_bias="1"
         app:layout_constraintTop_toBottomOf="@+id/go_simulator_btn"
         app:layout_constraintBottom_toTopOf="@id/blockly_overlay_buttons"
-        app:layout_constraintRight_toRightOf="@id/blockly_overlay_buttons"
-        app:layout_constraintLeft_toLeftOf="@id/blockly_overlay_buttons"/>
+        app:layout_constraintRight_toRightOf="@id/translate_btn"
+        app:layout_constraintLeft_toLeftOf="@id/translate_btn"/>
 
     <Button
         android:id="@+id/go_simulator_btn"
         android:layout_width="57dp"
         android:layout_height="70dp"
-        android:layout_marginBottom="5dp"
         android:background="@drawable/simulator_btn_selector"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintTop_toBottomOf="@+id/category_block"
-        app:layout_constraintLeft_toLeftOf="@+id/block_bot_btn"
-        app:layout_constraintRight_toRightOf="@+id/block_bot_btn"
+        app:layout_constraintTop_toBottomOf="@+id/translate_btn"
+        app:layout_constraintLeft_toLeftOf="@+id/translate_btn"
+        app:layout_constraintRight_toRightOf="@+id/translate_btn"
         app:layout_constraintBottom_toTopOf="@+id/block_bot_btn"/>
 
 <!--    <Button-->
@@ -649,12 +647,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/translucent"
-            android:scaleX="1.4"
-            android:scaleY="1.4"
+            android:scaleX="1.1"
+            android:scaleY="1.1"
             android:paddingLeft="50dp"
-            android:paddingBottom="30dp"
-            android:paddingTop="40dp"
-            android:paddingRight="15dp" />
+            android:paddingBottom="20dp"
+            android:paddingRight="10dp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
