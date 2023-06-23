@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -105,17 +106,21 @@ public class UartBluetooth extends SerialCommunicator {
                                                         */
 
                                                         // BT Module <- Phone
-                                                        pairedDevices = mBluetoothAdapter.getBondedDevices();
-                                                        if (pairedDevices.size() > 0) {
-                                                                // There are paired devices. Get the name and address of each paired device.
-                                                                for (BluetoothDevice device : pairedDevices) {
-                                                                        Log.d(TAG, "targetDevices name : " + mBlueName);
-                                                                        Log.d(TAG, "pairedDevices name : " + device.getName());
-                                                                        if (device.getName().equals(mBlueName)) {
-                                                                                deviceName = device.getName();
-                                                                                deviceHardwareAddress = device.getAddress(); // MAC address
+                                                        try {
+                                                                pairedDevices = mBluetoothAdapter.getBondedDevices();
+                                                                if (pairedDevices.size() > 0) {
+                                                                        // There are paired devices. Get the name and address of each paired device.
+                                                                        for (BluetoothDevice device : pairedDevices) {
+                                                                                Log.d(TAG, "targetDevices name : " + mBlueName);
+                                                                                Log.d(TAG, "pairedDevices name : " + device.getName());
+                                                                                if (device.getName().equals(mBlueName)) {
+                                                                                        deviceName = device.getName();
+                                                                                        deviceHardwareAddress = device.getAddress(); // MAC address
+                                                                                }
                                                                         }
                                                                 }
+                                                        }catch (SecurityException e){
+                                                                e.printStackTrace();
                                                         }
 
                                                         boolean flag = true;
@@ -130,6 +135,8 @@ public class UartBluetooth extends SerialCommunicator {
                                                         } catch (IOException e) {
                                                                 flag = false;
                                                                 Log.e(TAG, "connection failed!", e);
+                                                                e.printStackTrace();
+                                                        }catch (SecurityException e){
                                                                 e.printStackTrace();
                                                         }
 

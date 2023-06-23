@@ -1,8 +1,8 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
-INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-7:12
+ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-8:12
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-8:12
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-8:12
 	package
 		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:2:5-30
 		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
@@ -17,6 +17,10 @@ uses-permission#android.permission.BLUETOOTH
 ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:5-68
 	android:name
 		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:6:22-65
+uses-permission#android.permission.BLUETOOTH_CONNECT
+ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:7:5-76
+	android:name
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:7:22-73
 uses-sdk
 INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
