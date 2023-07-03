@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".view.simulator.TeachableActivity">
+
+    <TextView
+        android:id="@+id/guide_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="티처블 머신 테스트"
+        android:textColor="#b45611"
+        android:textSize="13dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:includeFontPadding="false"
+        android:gravity="center"
+        android:background="@drawable/guide_text_background"
+        android:layout_marginTop="10dp"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintHeight_percent="0.11"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
+        app:layout_constraintRight_toRightOf="@+id/end_right_guide" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/code_upload_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="#65000000"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/loading_text"
+        android:text="잠시만 기다려주세요 !"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="@color/brown_b45611"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/code_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/code_view_background"
+        android:textColor="#000000"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/upload_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/simulator_upload_btn_selector"
+        android:text="동작하기"
+        android:textColor="#ffffff"
+        android:textSize="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/end_right_guide"/>
+
+    <WebView
+        android:id="@+id/ai_web_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@+id/guide_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
+        app:layout_constraintRight_toRightOf="@+id/end_right_guide" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/loading_text"-->
+<!--        android:text="잠시만 기다려주세요 !"-->
+<!--        android:fontFamily="@font/pretendard_medium"-->
+<!--        android:textColor="@color/brown_b45611"-->
+<!--        android:textSize="20dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintLeft_toLeftOf="@+id/simulator_web_view"-->
+<!--        app:layout_constraintRight_toRightOf="@id/simulator_web_view"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/simulator_web_view"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/simulator_web_view"-->
+<!--        ></TextView>-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_left_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/recyclerview_end_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.65"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/code_view_start_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.67"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/end_right_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

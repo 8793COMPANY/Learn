@@ -2,6 +2,10 @@ package com.learn4.view.simulator;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -11,14 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 
-public class JavascriptCallbackClient {
+public class JavascriptCallbackClient extends AppCompatActivity {
 
     private Context mContext;
     private WebView webView;
@@ -72,6 +78,69 @@ public class JavascriptCallbackClient {
         }
         Log.e("message",message);
     }
+
+
+    @JavascriptInterface
+    public void takePicture() {
+        try {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                //startActivityForResult(takePictureIntent, 101);
+            }
+        } catch (Exception e) {}
+    }
+
+    @JavascriptInterface
+    public void getImage() {
+        webView.postDelayed(() -> {
+            webView.evaluateJavascript(publishEvent("javascriptFunction", "\""+code+"\""),
+                    (result) -> {
+                        Log.e("result",result);
+                        Log.e("message",result);
+                        //Log.e("message",code);
+                        Log.e("message","완료");
+                    }
+            );
+        }, 0);
+    }
+
+    @JavascriptInterface
+    public void getImage2(String base64) {
+        webView.postDelayed(() -> {
+            webView.evaluateJavascript(publishEvent("javascriptFunction", "\""+base64+"\""),
+                    (result) -> {
+                        Log.e("result",result);
+                        Log.e("message",result);
+                        //Log.e("message",code);
+                        Log.e("message","완료");
+                    }
+            );
+        }, 0);
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == 101 && resultCode == RESULT_OK) {
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            //이미지 파일 보내기
+//            webView.postDelayed(() -> {
+//                webView.evaluateJavascript(publishEvent("javascriptFunction", "\""+imageBitmap+"\""),
+//                        (result) -> {
+//                            Log.e("result",result);
+//                            if (result.equals("true") && loading_text.getVisibility() == View.VISIBLE){
+//                                loading_text.setVisibility(View.GONE);
+//                            }
+//                        }
+//                );
+//            }, 0);
+//        }
+//    }
+
+
 
     @JavascriptInterface
     public void showSerialMessage(final String message) {

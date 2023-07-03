@@ -39,6 +39,7 @@ import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.custom.dialog.UploadFalseDialog;
+import com.learn4.view.problem.basic.ProblemActivity;
 import com.learn4.view.simulator.SimulatorAdapter;
 import com.learn4.view.simulator.SimulatorDialog;
 import com.learn4.view.dictionary.CodeDictionaryAdapter;
@@ -120,6 +121,7 @@ import com.learn.wp_rest.data.acf.UploadReportJson;
 import com.learn.wp_rest.data.wp.media.Media;
 import com.learn.wp_rest.data.wp.posts.UploadReport;
 import com.learn4.util.Constants;
+import com.learn4.view.simulator.TeachableActivity;
 import com.physicaloid.lib.Boards;
 import com.squareup.otto.Subscribe;
 
@@ -178,7 +180,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private EditText editURL;
     EditText serial_input_box;
 
-    Button serial_send_btn, translate_btn;
+    Button serial_send_btn, translate_btn, ai_test_btn;
     public Button  close_btn;
 
     Button block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn;
@@ -1482,6 +1484,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
         translate_btn = blockly_workspace.findViewById(R.id.translate_btn);
+        ai_test_btn = blockly_workspace.findViewById(R.id.ai_test_btn);
         monitor_text.setMovementMethod(new ScrollingMovementMethod());
 
         serial_input_box = blockly_workspace.findViewById(R.id.serial_input_box);
@@ -1950,6 +1953,21 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             startActivity(intent); //현재 액티비티 재실행 실시
             overridePendingTransition(0, 0);
             finish(); //현재 액티비티 종료 실시
+        });
+
+        // teachable machine test
+        ai_test_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, TeachableActivity.class);
+            startActivity(intent);
+            //finish();
+
+//            Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
+//            intent.putExtra("contents_name",contents_name);
+//            intent.putExtra("id",chapter_id);
+//            Log.e("contents_name",contents_name);
+//            Log.e("id",chapter_id);
+//            startActivity(intent);
+//            finish();
         });
 
 

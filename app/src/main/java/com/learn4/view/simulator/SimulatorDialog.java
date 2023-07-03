@@ -1,14 +1,23 @@
 package com.learn4.view.simulator;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -21,10 +30,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 
 import com.learn4.R;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.view.simulator.JavascriptCallbackClient;
+
+import java.io.File;
 
 public class SimulatorDialog extends Dialog {
 
@@ -38,6 +51,13 @@ public class SimulatorDialog extends Dialog {
     Context context;
     Button component_close_btn;
     WebView webView;
+
+
+    public ValueCallback<Uri> filePathCallbackNormal;
+    public ValueCallback<Uri[]> filePathCallbackLollipop;
+    public final static int FILECHOOSER_NORMAL_REQ_CODE = 2001;
+    public final static int FILECHOOSER_LOLLIPOP_REQ_CODE = 2002;
+    private Uri cameraImageUri = null;
 
 
 
@@ -95,6 +115,50 @@ public class SimulatorDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
+            }
+        });
+
+
+        webView.setWebChromeClient(new WebChromeClient() {
+//            // For Android < 3.0
+//            public void openFileChooser( ValueCallback<Uri> uploadMsg) {
+//                Log.d("MainActivity", "3.0 <");
+//                openFileChooser(uploadMsg, "");
+//            }
+//
+//            // For Android 3.0+
+//            public void openFileChooser( ValueCallback<Uri> uploadMsg, String acceptType) {
+//                Log.d("MainActivity", "3.0+");
+//                m_oInstance.filePathCallbackNormal = uploadMsg;
+//                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+//                i.addCategory(Intent.CATEGORY_OPENABLE);
+//                i.setType("image/*");
+//                m_oInstance.startActivityForResult(Intent.createChooser(i, "File Chooser"), m_oInstance.FILECHOOSER_NORMAL_REQ_CODE);
+//            }
+//
+//            // For Android 4.1+
+//            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+//                Log.d("MainActivity", "4.1+");
+//                openFileChooser(uploadMsg, acceptType);
+//            }
+
+            // For Android 5.0+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            public boolean onShowFileChooser(
+                    WebView webView, ValueCallback<Uri[]> filePathCallback,
+                    FileChooserParams fileChooserParams) {
+                Log.d("MainActivity", "5.0+");
+
+                // Callback 초기화 (중요!)
+                if (filePathCallbackLollipop != null) {
+                    filePathCallbackLollipop.onReceiveValue(null);
+                    filePathCallbackLollipop = null;
+                }
+                filePathCallbackLollipop = filePathCallback;
+
+                boolean isCapture = fileChooserParams.isCaptureEnabled();
+                runCamera(isCapture);
+                return true;
             }
         });
 
@@ -173,8 +237,8 @@ public class SimulatorDialog extends Dialog {
                webView.removeJavascriptInterface("searchBoxJavaBridge_");
                webView.removeJavascriptInterface("accessibility");
                webView.removeJavascriptInterface("accessibilityTraversal");
-//               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
-               webView.loadUrl("http://192.168.0.5:8080/");
+               webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+               //webView.loadUrl("http://192.168.0.5:8080/");
                if (!contents_name.equals("none")) {
                    if (MySharedPreferences.getInt(context, contents_name + " MAX") < 5) {
                        MySharedPreferences.setInt(context, contents_name + " MAX", 5);
@@ -185,6 +249,7 @@ public class SimulatorDialog extends Dialog {
 
                //webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 //               webView.loadUrl("http://192.168.0.8:8080/");
+               //webView.loadUrl("http://192.168.0.8:3000/");
 
            }
        });
@@ -216,9 +281,10 @@ public class SimulatorDialog extends Dialog {
         webView.removeJavascriptInterface("searchBoxJavaBridge_");
         webView.removeJavascriptInterface("accessibility");
         webView.removeJavascriptInterface("accessibilityTraversal");
-//        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
+        webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 
-        webView.loadUrl("http://192.168.0.5:8080/");
+        //webView.loadUrl("http://192.168.0.5:8080/");
+        //webView.loadUrl("http://192.168.0.8:3000/");
 
         //webView.loadUrl("https://master.d3u1psek9w7brx.amplifyapp.com/");
 //        webView.loadUrl("http://192.168.0.8:8080/");
@@ -234,6 +300,109 @@ public class SimulatorDialog extends Dialog {
 //        }
 
     }
+
+
+    private void runCamera(boolean _isCapture)
+    {
+        if (!_isCapture)
+        {// 갤러리 띄운다.
+            Intent pickIntent = new Intent(Intent.ACTION_PICK);
+            pickIntent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+            pickIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+            String pickTitle = "사진 가져올 방법을 선택하세요.";
+            Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+
+            ((Activity)context).startActivityForResult(chooserIntent, FILECHOOSER_LOLLIPOP_REQ_CODE);
+            return;
+        }
+
+        Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        File path = ((Activity)context).getFilesDir();
+        File file = new File(path, "fokCamera.png");
+        // File 객체의 URI 를 얻는다.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        {
+            String strpa = ((Activity)context).getApplicationContext().getPackageName();
+            cameraImageUri = FileProvider.getUriForFile(((Activity)context), ((Activity)context).getApplicationContext().getPackageName() + ".fileprovider", file);
+        }
+        else
+        {
+            cameraImageUri = Uri.fromFile(file);
+        }
+        intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
+
+        if (!_isCapture)
+        { // 선택팝업 카메라, 갤러리 둘다 띄우고 싶을 때..
+            Intent pickIntent = new Intent(Intent.ACTION_PICK);
+            pickIntent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+            pickIntent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+            String pickTitle = "사진 가져올 방법을 선택하세요.";
+            Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+
+            // 카메라 intent 포함시키기..
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{intentCamera});
+            ((Activity)context).startActivityForResult(chooserIntent, FILECHOOSER_LOLLIPOP_REQ_CODE);
+        }
+        else
+        {// 바로 카메라 실행..
+            ((Activity)context).startActivityForResult(intentCamera, FILECHOOSER_LOLLIPOP_REQ_CODE);
+        }
+    }
+
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        //super.onActivityResult(requestCode, resultCode, data);
+//
+//        switch (requestCode)
+//        {
+//            case FILECHOOSER_NORMAL_REQ_CODE:
+//                if (resultCode == RESULT_OK)
+//                {
+//                    if (filePathCallbackNormal == null) return;
+//                    Uri result = (data == null || resultCode != RESULT_OK) ? null : data.getData();
+//                    filePathCallbackNormal.onReceiveValue(result);
+//                    filePathCallbackNormal = null;
+//                }
+//                break;
+//            case FILECHOOSER_LOLLIPOP_REQ_CODE:
+//                if (resultCode == RESULT_OK)
+//                {
+//                    if (filePathCallbackLollipop == null) return;
+//                    if (data == null)
+//                        data = new Intent();
+//                    if (data.getData() == null)
+//                        data.setData(cameraImageUri);
+//
+//                    filePathCallbackLollipop.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data));
+//                    filePathCallbackLollipop = null;
+//                }
+//                else
+//                {
+//                    if (filePathCallbackLollipop != null)
+//                    {
+//                        filePathCallbackLollipop.onReceiveValue(null);
+//                        filePathCallbackLollipop = null;
+//                    }
+//
+//                    if (filePathCallbackNormal != null)
+//                    {
+//                        filePathCallbackNormal.onReceiveValue(null);
+//                        filePathCallbackNormal = null;
+//                    }
+//                }
+//                break;
+//            default:
+//
+//                break;
+//        }
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
 
     @Override
