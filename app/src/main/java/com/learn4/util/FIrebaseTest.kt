@@ -36,7 +36,6 @@ class FIrebaseTest {
         db.get().addOnCompleteListener {
             if (it.isSuccessful){
                 it.getResult().forEach {
-                    //
                     Log.e("it", it.data.get("deepen_problem2").toString())
                 }
             }else{
