@@ -736,7 +736,7 @@
 
   {
     "type": "servo",
-    "message0": "Servo %1 %2 pin %3 angle %4",
+    "message0": "서보모터 %1 %2 핀 %3 각도 %4",
     "args0": [
       {
         "type": "input_dummy"
@@ -937,7 +937,7 @@
 
   {
     "type": "tone_notone",
-    "message0": "Tone %1 pin %2 frequency %3 delay %4",
+    "message0": "피에조 부저 %1 핀 %2 음정 %3 지연 %4",
     "args0": [
       {
         "type": "input_dummy"
@@ -1207,7 +1207,7 @@
 
   {
     "type": "map_number",
-    "message0": "map %1 %2 %3 %4 %5",
+    "message0": "맵 함수 %1 %2 %3 %4 %5",
     "args0": [
       {
         "type": "input_value",
@@ -1244,7 +1244,7 @@
 
   {
     "type": "random_number",
-    "message0": "random from %1 to %2",
+    "message0": "랜덤함수 from %1 to %2",
     "args0": [
       {
         "type": "input_value",
@@ -1393,7 +1393,7 @@
 
   {
     "type": "base_delay",
-    "message0": "delay %1",
+    "message0": "지연 %1",
     "args0": [
       {
         "type": "input_value",
@@ -1409,7 +1409,7 @@
 
   {
     "type": "pulseIn",
-    "message0": "pulseIn %1 , %2",
+    "message0": "펄스 입력 %1 , %2",
     "args0": [
       {
         "type": "input_value",

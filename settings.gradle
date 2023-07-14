@@ -4,3 +4,9 @@ include ':app'
 include ':PhysicaloidLibrary'
 project(':PhysicaloidLibrary').projectDir = new File(rootDir, 'PhysicaloidLibrary/')
 rootProject.name = "learn4"
+
+dependencyResolutionManagement{
+    repositories{
+        maven { url "https://jitpack.io" }
+    }
+}
