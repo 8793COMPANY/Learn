@@ -412,7 +412,7 @@ public class TeachableActivity extends AppCompatActivity {
                         boolean success = file1[1].delete();
 
                         if (success) {
-                            Log.e("testtest", "삭제 성공1");
+                            Log.e("testtest", "삭제 성공11");
                         } else {
                             Log.e("testtest", "삭제 실패1");
                         }
