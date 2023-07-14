@@ -37,7 +37,7 @@ public class JavascriptCallbackClient2 {
     @JavascriptInterface
     public void showToastMessage(final String message) {
         //Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-        Log.e("testtest", message);
+        Log.e("testtestt", message);
     }
 
     @JavascriptInterface
