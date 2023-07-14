@@ -396,7 +396,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         }
 
 
-                        //  execute_shell("ls");
+                        try {
+                            execute_shell("ls");
+                                                        execute_shell("touch Blink.cpp");
+                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
+
+                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
+                            execute_shell("avr-g++");
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+
 
 
 //                            execute_shell("touch Blink.cpp");
@@ -640,6 +650,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     public void execute_shell(String cmd) throws IOException {
+        Log.e("??","in execute");
         String s = null;
         String[] path = {"PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin:/data/data/"+this.getPackageName()+"/local/bin"};
         Log.e("path check","/data/data/"+this.getPackageName()+"/");
@@ -669,8 +680,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         String ori_str = str.toString();
         if(!ori_str.equals(null) && !ori_str.equals("") && !ori_str.contains("warning")){
             System.out.println(str.toString());
-        }
 
+        }
+        Log.e("?? ori str",ori_str);
 
     }
 
