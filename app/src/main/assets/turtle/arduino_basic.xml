@@ -127,6 +127,10 @@
                 </block>
             </value>
         </block>-->
+
+        <block type="serial_read">
+        </block>
+
         <block type="serial_print">
             <value name="text">
                 <block type="type_string">
@@ -327,6 +331,10 @@
         </block>
 
         <block type="neo_pixel_setup">
+        </block>
+
+
+        <block type="serial_read_test">
         </block>
 
         <block type="neo_pixel_brightness">

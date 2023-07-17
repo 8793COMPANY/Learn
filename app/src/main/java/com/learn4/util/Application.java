@@ -158,6 +158,7 @@ public class Application extends android.app.Application  {
                 Log.e("USB 감지 : ", "연결연결");
                 Toast.makeText(getApplicationContext(), "USB 연결", Toast.LENGTH_SHORT).show();
                 mPhysicaloid.open();
+                Log.e("mphysicaloid", mPhysicaloid.isOpened()+"");
                 usb_check = true;
                 try {
                     if (categoryData.getUpload_btn() != null) {

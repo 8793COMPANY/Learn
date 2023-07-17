@@ -807,6 +807,30 @@
   },
 
   {
+    "type": "serial_read",
+    "message0": "Serial read",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 220,
+    "tooltip": "",
+  },
+
+  {
+    "type": "serial_read_test",
+    "message0": "Teachable Machine Test",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
     "type": "neo_pixel_setup",
     "message0": "NeoPixel setup",
     "args0": [

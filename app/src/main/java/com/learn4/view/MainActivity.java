@@ -299,6 +299,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         try {
             Application.mPhysicaloid.open();
+            Log.e("Application physicaloid",Application.mPhysicaloid.isOpened()+"");
 
             byte[] buf = new byte[256];
             Application.mPhysicaloid.read(buf, buf.length);
@@ -346,6 +347,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Log.e("code check codegeneration",generatedCode);
                             code = generatedCode;
                             submittedXml = xml;
 //                            updateTextMinWidth();
@@ -398,16 +400,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         }
 
 
-                        try {
-                            execute_shell("ls");
-                                                        execute_shell("touch Blink.cpp");
-                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
-
-                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
-                            execute_shell("avr-g++");
-                        }catch (IOException e){
-                            e.printStackTrace();
-                        }
+//                        try {
+//                            execute_shell("ls");
+//                                                        execute_shell("touch Blink.cpp");
+//                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
+//
+//                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
+//                            execute_shell("avr-g++");
+//                        }catch (IOException e){
+//                            e.printStackTrace();
+//                        }
 
 
 
@@ -487,12 +489,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             };
 
     public void serial_write(String str){
+        Application.mPhysicaloid.open();
+        Log.e("open! check",Application.mPhysicaloid.isOpened()+"");
         if (Application.mPhysicaloid.isOpened()) {
-            if(Application.mPhysicaloid.open()) {
-                byte[] buf = str.getBytes();
+            Log.e("open!","isOpen()");
+//            if(Application.mPhysicaloid.open()) {
+                Log.e("open!","physicaloid");
+
+                byte[] buf = str.trim().getBytes();
                 Application.mPhysicaloid.write(buf, buf.length);
                 Application.mPhysicaloid.close();
-            }
+//            }
         }
     }
 
@@ -2485,6 +2492,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             String size1 = "file size : "+getFileSize()+"bytes\n\n\n";
 //                    monitor_text.setText(size+mFormat.format(first_time)+"\n"+mFormat.format(last_time)+"\n"+code);
             monitor_text.setText(code);
+            Log.e("code",code);
         }, 500);
 
 

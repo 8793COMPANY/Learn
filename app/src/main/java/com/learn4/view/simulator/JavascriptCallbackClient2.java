@@ -7,6 +7,8 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.learn4.util.Application;
+
 public class JavascriptCallbackClient2 {
 
     private Context mContext;
@@ -49,5 +51,19 @@ public class JavascriptCallbackClient2 {
                     }
             );
         }, 0);
+    }
+
+
+
+    //serial.write 기능
+    public void serial_write(String str){
+        if (Application.mPhysicaloid.isOpened()) {
+            if(Application.mPhysicaloid.open()) {
+                byte[] buf = "1".getBytes();
+                Application.mPhysicaloid.write(buf,1);
+                Application.mPhysicaloid.write(buf, buf.length);
+                Application.mPhysicaloid.close();
+            }
+        }
     }
 }

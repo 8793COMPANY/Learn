@@ -300,32 +300,78 @@ Blockly.JavaScript['servo'] = function (block) {
      return code;
   };
 
-  Blockly.JavaScript['neo_pixel_setup'] = function (block) {
+   Blockly.JavaScript['neo_pixel_setup'] = function (block) {
 
 
-     Blockly.JavaScript.setups_['define_neo_setup'] =  " neo.begin();"+
-                   "\nneo.setBrightness(20);"+
-                   "\nneo.setPixelColor(0, 0xff0000);"+
-                   "\nneo.setPixelColor(2, 0xff0000);"+
-                   "\nneo.setPixelColor(4, 0xff0000);"+
-                   "\nneo.setPixelColor(6, 0xff0000);"+
-                   "\nneo.setPixelColor(8, 0xff0000);"+
-                   "\nneo.setPixelColor(10, 0xff0000);"+
-                   "\nneo.show();"+
-                   "\nneo.setPixelColor(0, 0xff0000);"+
-                   "\nneo.setPixelColor(2, 0xff0000);"+
-                   "\nneo.setPixelColor(4, 0xff0000);"+
-                   "\nneo.setPixelColor(6, 0xff0000);"+
-                   "\nneo.setPixelColor(8, 0xff0000);"+
-                   "\nneo.setPixelColor(10, 0xff0000);"+
-                   "\nneo.show();"+
-                   "\nneo.clear();"+
-                   "\nneo.show();\n";
+       Blockly.JavaScript.setups_['define_neo_setup'] =  " neo.begin();"+
+                     "\nneo.setBrightness(20);"+
+                     "\nneo.setPixelColor(0, 0xff0000);"+
+                     "\nneo.setPixelColor(2, 0xff0000);"+
+                     "\nneo.setPixelColor(4, 0xff0000);"+
+                     "\nneo.setPixelColor(6, 0xff0000);"+
+                     "\nneo.setPixelColor(8, 0xff0000);"+
+                     "\nneo.setPixelColor(10, 0xff0000);"+
+                     "\nneo.show();"+
+                     "\nneo.setPixelColor(0, 0xff0000);"+
+                     "\nneo.setPixelColor(2, 0xff0000);"+
+                     "\nneo.setPixelColor(4, 0xff0000);"+
+                     "\nneo.setPixelColor(6, 0xff0000);"+
+                     "\nneo.setPixelColor(8, 0xff0000);"+
+                     "\nneo.setPixelColor(10, 0xff0000);"+
+                     "\nneo.show();"+
+                     "\nneo.clear();"+
+                     "\nneo.show();\n";
 
-       var code = ""
+         var code = ""
 
-       return code;
-    };
+         return code;
+      };
+
+
+//  Blockly.JavaScript['serial_read_test'] = function (block) {
+//
+//
+//     var code = "if(Serial.available() > 0){\n"}+
+//     "byte actionCode = Serial.read();\n"+
+//     "switch (actionCode) { \n"+
+//     "case 1 : \n"+
+//     "Serial.println("+'"'+"apple"+'"'+");\nbreak;\n"+
+//     "case 2 : \n"+
+//     "Serial.println("+'"'+"apple"+'"'+");\nbreak;\n"+
+//     "case 3 : \n"+
+//     "Serial.println("+'"'+"apple"+'"'+");\nbreak;\n"+
+//     "}\n"+
+//     "}"
+//
+//       return code;
+//    };
+
+        Blockly.JavaScript['serial_read_test'] = function (block) {
+
+               var code =
+               "if(Serial.available() > 0){\n"+
+               "char actionCode = Serial.read();\n"+
+               "Serial.println(actionCode);\n"+
+                  "    switch (actionCode) { \n"+
+                              "    case '1' : \n"+
+                              "    Serial.println("+'"'+"apple"+'"'+");\n  break;\n"+
+                              "    case '2' : \n"+
+                              "    Serial.println("+'"'+"banana"+'"'+");\n  break;\n"+
+                              "    case '3' : \n"+
+                              "    Serial.println("+'"'+"grape"+'"'+");\n  break;\n"+
+                              "    }\n"+
+
+               "}\n"
+
+           return code;
+        };
+
+          Blockly.JavaScript['serial_read'] = function (block) {
+
+                       var code = "Serial.read()"
+
+                   return code;
+                };
 
         Blockly.JavaScript['neo_pixel_begin'] = function (block) {
 
