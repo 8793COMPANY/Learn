@@ -56,8 +56,27 @@ public class CategoryData {
     }
 
     View setup_btn = null;
+
+    public View getLoop_btn() {
+        return loop_btn;
+    }
+
+    public void setLoop_btn(View loop_btn) {
+        this.loop_btn = loop_btn;
+    }
+
     View loop_btn = null;
     View upload_btn = null;
+
+    public View getMethod_btn() {
+        return method_btn;
+    }
+
+    public void setMethod_btn(View method_btn) {
+        this.method_btn = method_btn;
+    }
+
+    View method_btn = null;
 
     View home_btn = null;
 

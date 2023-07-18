@@ -659,10 +659,12 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         mGridRenderer.setGridDotRadius(gridDotRadius);
     }
 
+
+    //tab 추가시 여기 pushPosition도 +1 해주세요
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
-            BusProvider.getInstance().post(new PushEvent(10, true, false));
+            BusProvider.getInstance().post(new PushEvent(11, true, false));
             return callOnClick();
         }
     }

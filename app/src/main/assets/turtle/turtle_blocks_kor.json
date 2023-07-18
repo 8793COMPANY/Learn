@@ -1,4 +1,18 @@
 [
+
+  {
+    "type": "type_char",
+    "message0": "한 글자 : ' %1 '",
+    "args0": [
+      {
+        "type": "field_input",
+        "name": "CHAR_TEXT",
+        "text": ""
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF"
+  },
   {
     "type": "type_string",
     "message0": "글자 : %1 %2 %3",
@@ -226,6 +240,27 @@
     "tooltip": "Turns the turtle left or right by the specified number of degrees."
   },
 
+  {
+    "type": "serial_read",
+    "message0": "시리얼 읽기",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "Number",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
+    "type": "serial_available",
+    "message0": "시리얼 값",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "String",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
   {
     "type": "turtle_pen",
     "message0": "pen %1",

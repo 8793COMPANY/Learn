@@ -567,7 +567,7 @@ public class TeachableActivity extends AppCompatActivity {
 //                            }
                             //Log.e("testtest","end camera1");
                             try {
-                                webView.addJavascriptInterface(new JavascriptCallbackClient2(getBaseContext(), webView,
+                                webView.addJavascriptInterface(new JavascriptCallbackClient2(getApplicationContext(), webView,
                                         URLEncoder.encode(resultString, "UTF-8")), "android");
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();

@@ -26,6 +26,11 @@ Blockly.JavaScript['type_string'] = function(block) {
   return ['"' + value_string + '"', Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+Blockly.JavaScript['type_char'] = function(block) {
+  var value_string = block.getFieldValue("CHAR_TEXT");
+  return ["'" + value_string + "'", Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 Blockly.JavaScript['type_int'] = function(block) {
   var value_int = block.getFieldValue('INT_TEXT');
   return [value_int, Blockly.JavaScript.ORDER_ATOMIC];
@@ -346,6 +351,15 @@ Blockly.JavaScript['servo'] = function (block) {
 //       return code;
 //    };
 
+
+
+        Blockly.JavaScript['serial_available'] = function (block) {
+
+               var code = "Serial.available()"
+
+           return [code, Blockly.JavaScript.ORDER_ATOMIC];
+        };
+
         Blockly.JavaScript['serial_read_test'] = function (block) {
 
                var code =
@@ -354,10 +368,13 @@ Blockly.JavaScript['servo'] = function (block) {
                "Serial.println(actionCode);\n"+
                   "    switch (actionCode) { \n"+
                               "    case '1' : \n"+
+                              "    digitalWrite(13,HIGH);\n"+
                               "    Serial.println("+'"'+"apple"+'"'+");\n  break;\n"+
                               "    case '2' : \n"+
+                              "    digitalWrite(13,HIGH);\n"+
                               "    Serial.println("+'"'+"banana"+'"'+");\n  break;\n"+
                               "    case '3' : \n"+
+                              "    digitalWrite(13,LOW);\n"+
                               "    Serial.println("+'"'+"grape"+'"'+");\n  break;\n"+
                               "    }\n"+
 
@@ -370,7 +387,7 @@ Blockly.JavaScript['servo'] = function (block) {
 
                        var code = "Serial.read()"
 
-                   return code;
+                   return [code, Blockly.JavaScript.ORDER_ATOMIC];
                 };
 
         Blockly.JavaScript['neo_pixel_begin'] = function (block) {

@@ -170,8 +170,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] block_tempTab = {null, null, null,null};
-    View [] tempTab = {null, null, null,null,null,null};
-    Boolean [] tempTabCheck = {false, false, false,false,false,false};
+    View [] tempTab = {null, null, null,null,null,null,null};
+    Boolean [] tempTabCheck = {false, false, false,false,false,false,false};
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
@@ -250,7 +250,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     // TODO : ONLY USB
     //Physicaloid mPhysicaloid = new Physicaloid(this);
 
-    Boolean [] view_check = {true,true,true,true,true,true,true,true,true,true,false};
+    Boolean [] view_check = {true,true,true,true,true,true,true,true,true,true,true,false};
 
 
     // 배울래 블록 한글로 번역할 때 필요한 것
@@ -313,9 +313,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Log.e("num:",num+"");
                 Log.e("length",stringBuilder.toString().length()+"");
                 if (num < 60) {
-                    stringBuilder.append(new String(buf));
+                    stringBuilder.append(new String(buf).trim());
                 } else if (num >= 60) {
-                    stringBuilder.append(new String(buf));
+                    stringBuilder.append(new String(buf).trim());
                     num = 50;
                     stringBuilder.delete(0,2560);
                     Log.e("length delete","OK");
@@ -326,6 +326,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Log.e("length delete MAX","OK");
                 }
 
+                Log.e("text",stringBuilder.toString());
                 monitor_text.setText(stringBuilder);
                 num++;
             }
@@ -1388,7 +1389,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         switch (mPushEvent.getPos()) {
             // 어택땅
-            case 10:
+            case 11:
                 mMonitorHandler.sendEmptyMessage(1);
                 initTabColor();
                 initTabCheck();
@@ -1937,7 +1938,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             serial_input = serial_input_box.getText().toString();
             serial_input_box.setText("");
 
-            monitor_text.append(serial_input + "\n");
+//            monitor_text.append(serial_input + "\n");
+            stringBuilder.append(serial_input + "\n");
+//            monitor_text.setText(stringBuilder);
 
             serial_write(serial_input);
             imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
@@ -1978,19 +1981,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
         // teachable machine test
-        ai_test_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TeachableActivity.class);
-            startActivity(intent);
-            //finish();
-
-//            Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
-//            intent.putExtra("contents_name",contents_name);
-//            intent.putExtra("id",chapter_id);
-//            Log.e("contents_name",contents_name);
-//            Log.e("id",chapter_id);
+//        ai_test_btn.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, TeachableActivity.class);
 //            startActivity(intent);
-//            finish();
-        });
+//            //finish();
+//
+////            Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
+////            intent.putExtra("contents_name",contents_name);
+////            intent.putExtra("id",chapter_id);
+////            Log.e("contents_name",contents_name);
+////            Log.e("id",chapter_id);
+////            startActivity(intent);
+////            finish();
+//        });
 
 
 //        BlocklyController controller = getController();
@@ -2179,7 +2182,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
         }
 
+
+
         current_pos = position;
+        Log.e("current_pos",current_pos+"");
     }
 
 
@@ -2284,6 +2290,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.e("pos",pos+"");
             tempTab[pos-4] = v;
             mBlocklyActivityHelper.getFlyoutController(); // setup() ~ 기타 탭의 블록창이 닫힘
+            Log.e("tempTabCheck length",tempTabCheck.length+"");
             Log.e("before case", tempTabCheck[pos-4] + "");
             //Log.e("in case", tempTabCheck[pos-4] + "");
         } else {
@@ -2319,9 +2326,27 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 finishListener.show();
                 break;
             case 9: // 코드사전
+                Log.e("9 in","come");
+                CategoryData.getInstance().getSetUp_btn().setSelected(false);
+                CategoryData.getInstance().getLoop_btn().setSelected(false);
+                CategoryData.getInstance().getMethod_btn().setSelected(false);
                 blockly_monitor.setVisibility(View.GONE);
-//                current_pos = 9;
+                current_pos = 9;
                 setCloseWindow(pos,"dictionary");
+                break;
+            case 10: // 티처블머신
+                Log.e("10 in","come");
+                current_pos = 10;
+                CategoryData.getInstance().getSetUp_btn().setSelected(false);
+                CategoryData.getInstance().getLoop_btn().setSelected(false);
+                CategoryData.getInstance().getMethod_btn().setSelected(false);
+
+
+                Intent intent = new Intent(MainActivity.this, TeachableActivity.class);
+                startActivity(intent);
+//                current_pos = 9;
+
+
 
                 break;
         }
@@ -2337,7 +2362,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     public void initTabCheck() {
-        tempTabCheck = new Boolean[] {false, false, false,false,false,false};
+        tempTabCheck = new Boolean[] {false, false, false,false,false,false,false};
         Log.e("initTabCheck - case", tempTabCheck[0] + ", " + tempTabCheck[1] + ", " + tempTabCheck[2] + ", ");
     }
 
