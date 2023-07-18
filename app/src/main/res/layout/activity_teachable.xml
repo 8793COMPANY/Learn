@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="#ffffff"
     tools:context=".view.simulator.TeachableActivity">
 
     <TextView
         android:id="@+id/guide_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:text="티처블 머신 테스트"
         android:textColor="#b45611"
         android:textSize="13dp"
@@ -44,6 +45,7 @@
         android:fontFamily="@font/pretendard_medium"
         android:textColor="@color/brown_b45611"
         android:textSize="20dp"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -68,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/simulator_upload_btn_selector"
+        android:visibility="gone"
         android:text="동작하기"
         android:textColor="#ffffff"
         android:textSize="15dp"
@@ -81,15 +84,30 @@
         android:id="@+id/ai_web_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintHeight_percent="0.8"
+        android:background="@drawable/predict_view_corner"
+        app:layout_constraintHeight_percent="0.9"
         app:layout_constraintWidth_percent="0.5"
-        app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintTop_toBottomOf="@+id/guide_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
         app:layout_constraintRight_toRightOf="@+id/end_right_guide" />
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/predict_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/predict_chart_background"
+        android:padding="10dp"
+        android:scrollbars="vertical"
+        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintWidth_percent="0.41"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/guide_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/start_left_guide"
+        app:layout_constraintRight_toRightOf="@+id/end_right_guide" />
+    
 
 <!--    <TextView-->
 <!--        android:id="@+id/loading_text"-->
