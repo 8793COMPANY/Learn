@@ -1,16 +1,21 @@
 package com.learn4.view.simulator;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -36,23 +41,27 @@ import com.learn4.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Random;
 
-public class TeachableActivity extends AppCompatActivity{
+public class TeachableActivity extends AppCompatActivity {
 
     WebView webView;
-
+    //public ValueCallback<Uri> filePathCallbackNormal;
     public ValueCallback<Uri[]> filePathCallbackLollipop;
+    //public final static int FILECHOOSER_NORMAL_REQ_CODE = 2001;
     public final static int FILECHOOSER_LOLLIPOP_REQ_CODE = 2002;
+    //public ValueCallback<Uri[]> filePathCallback;
+    //public final static int REQ_SELECT_IMAGE  = 2001;
 
     private Uri cameraImageUri = null;
     Uri imageUri;
 
-    TextView code_view, loading_text, guide_text;
+    TextView code_view, loading_text;
     Button upload_btn;
     LinearLayout code_upload_progress;
 
@@ -60,8 +69,6 @@ public class TeachableActivity extends AppCompatActivity{
     boolean btn_check = false;
 
     HorizontalBarChart predict_view;
-    //JavascriptCallbackClient2 javascriptCallbackClient2;
-
     String predict_result = "";
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -72,21 +79,12 @@ public class TeachableActivity extends AppCompatActivity{
 
         code_view = findViewById(R.id.code_view);
         loading_text = findViewById(R.id.loading_text);
-        guide_text = findViewById(R.id.guide_text);
         upload_btn = findViewById(R.id.upload_btn);
         code_upload_progress = findViewById(R.id.code_upload_progress);
-        webView = findViewById(R.id.ai_web_view);
         predict_view = findViewById(R.id.predict_view);
 
-        webView.setBackgroundColor(0);
 
-//        javascriptCallbackClient2 = new JavascriptCallbackClient2(getBaseContext());
-//        //javascriptCallbackClient2 = new JavascriptCallbackClient2(getBaseContext(), webView, "yes");
-//        javascriptCallbackClient2.setTestListener(this);
-
-        //testtest(predict_result);
-//        configureChartAppearance(predict_result);
-//        prepareChartData(createChartData(predict_result));
+        webView = findViewById(R.id.ai_web_view);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -111,6 +109,7 @@ public class TeachableActivity extends AppCompatActivity{
 
         webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView, "no"), "android");
         webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+
 
         webView.setWebChromeClient(new WebChromeClient() {
 //            // For Android < 3.0
@@ -146,6 +145,7 @@ public class TeachableActivity extends AppCompatActivity{
                 boolean isCapture = fileChooserParams.isCaptureEnabled();
 
                 runCamera(isCapture);
+
                 return true;
             }
         });
@@ -198,12 +198,10 @@ public class TeachableActivity extends AppCompatActivity{
             mode= 2;
             file = new File(path, "fokCamera.jpg");
         }
-
-        // File 객체의 URI 얻기
+        // File 객체의 URI 를 얻는다.
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
             cameraImageUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".fileprovider", file);
-
             switch (mode) {
                 case 1:
                     if (file1[0].exists()) {
