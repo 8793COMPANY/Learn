@@ -27,7 +27,6 @@ public class JavascriptCallbackClient2 {
         this.activity = activity;
     }
 
-
     private String publishEvent(String functionName, String data) {
         StringBuffer buffer = new StringBuffer()
                 .append("window.dispatchEvent(\n")
@@ -42,9 +41,9 @@ public class JavascriptCallbackClient2 {
     }
 
     @JavascriptInterface
-    public void showToastMessage(final String message) {
-        //Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+    public void showToastMessage(final String message, final String link) {
         Log.e("testtestt", message);
+
         String [] lists = message.split("\n");
         int max_index =0;
         double max =0;
@@ -60,21 +59,17 @@ public class JavascriptCallbackClient2 {
 
         serial_write(send_data[max_index]+"");
 
-        ((TeachableActivity)activity).testSetting(message);
+        ((TeachableActivity)activity).testSetting(message, link);
     }
 
     @JavascriptInterface
     public void callJavaScriptFunction() {
         webView.postDelayed(() -> {
             webView.evaluateJavascript(publishEvent("javascriptFunction", "\"" + testString + "\""),
-                    (result) -> {
-                        //Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
-                    }
+                    (result) -> {}
             );
         }, 0);
     }
-
-
 
     //serial.write 기능
     public void serial_write(String str){
@@ -87,7 +82,6 @@ public class JavascriptCallbackClient2 {
             byte[] buf = str.trim().getBytes();
             Application.mPhysicaloid.write(buf, buf.length);
             Application.mPhysicaloid.close();
-
 //            }
         }
     }

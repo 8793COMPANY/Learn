@@ -98,7 +98,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/predict_chart_background"
-        android:padding="10dp"
+        android:padding="15dp"
         android:scrollbars="vertical"
         app:layout_constraintHeight_percent="0.8"
         app:layout_constraintWidth_percent="0.41"
