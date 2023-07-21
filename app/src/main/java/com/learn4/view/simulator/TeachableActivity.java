@@ -284,6 +284,7 @@ public class TeachableActivity extends AppCompatActivity {
                         imageUri = data.getData();
                     }
 
+                    Log.e("속도 체크","1 in");
                     try {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                             Dsource = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), imageUri));
@@ -294,9 +295,13 @@ public class TeachableActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    Log.e("속도 체크","2 in");
                     if (Dsource != null) {
+
+                        Log.e("속도 체크","3 in");
                         resultString = bitmapToString(Dsource);
 
+                        Log.e("속도 체크","4 in");
                         try {
                             webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView,
                                     URLEncoder.encode(resultString, "UTF-8")), "android");
