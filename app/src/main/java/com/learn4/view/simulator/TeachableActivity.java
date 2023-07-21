@@ -1,21 +1,17 @@
 package com.learn4.view.simulator;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -41,8 +37,6 @@ import com.learn4.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -51,12 +45,9 @@ import java.util.ArrayList;
 public class TeachableActivity extends AppCompatActivity {
 
     WebView webView;
-    //public ValueCallback<Uri> filePathCallbackNormal;
+
     public ValueCallback<Uri[]> filePathCallbackLollipop;
-    //public final static int FILECHOOSER_NORMAL_REQ_CODE = 2001;
     public final static int FILECHOOSER_LOLLIPOP_REQ_CODE = 2002;
-    //public ValueCallback<Uri[]> filePathCallback;
-    //public final static int REQ_SELECT_IMAGE  = 2001;
 
     private Uri cameraImageUri = null;
     Uri imageUri;
@@ -71,19 +62,22 @@ public class TeachableActivity extends AppCompatActivity {
     HorizontalBarChart predict_view;
     String predict_result = "";
 
+    SharedPreferences preferences;
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teachable);
 
+        preferences = getSharedPreferences("predict_model_link", MODE_PRIVATE);
+        boolean first = preferences.getBoolean("isFirstLink", false);
+
         code_view = findViewById(R.id.code_view);
         loading_text = findViewById(R.id.loading_text);
         upload_btn = findViewById(R.id.upload_btn);
         code_upload_progress = findViewById(R.id.code_upload_progress);
         predict_view = findViewById(R.id.predict_view);
-
-
         webView = findViewById(R.id.ai_web_view);
 
         webView.setWebViewClient(new WebViewClient() {
@@ -107,32 +101,17 @@ public class TeachableActivity extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView, "no"), "android");
-        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+        if(first){
+            webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView,
+                    "no" + "@@" + preferences.getString("link", "no link")), "android");
+        } else {
+            webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView, "no" + "@@" +""), "android");
+        }
+        //webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+        webView.loadUrl("http://192.168.0.8:3000/");
 
 
         webView.setWebChromeClient(new WebChromeClient() {
-//            // For Android < 3.0
-//            public void openFileChooser( ValueCallback<Uri> uploadMsg) {
-//                Log.d("MainActivity", "3.0 <");
-//                openFileChooser(uploadMsg, "");
-//            }
-//
-//            // For Android 3.0+
-//            public void openFileChooser( ValueCallback<Uri> uploadMsg, String acceptType) {
-//                Log.d("MainActivity", "3.0+");
-//                m_oInstance.filePathCallbackNormal = uploadMsg;
-//                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-//                i.addCategory(Intent.CATEGORY_OPENABLE);
-//                i.setType("image/*");
-//                m_oInstance.startActivityForResult(Intent.createChooser(i, "File Chooser"), m_oInstance.FILECHOOSER_NORMAL_REQ_CODE);
-//            }
-//
-//            // For Android 4.1+
-//            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-//                Log.d("MainActivity", "4.1+");
-//                openFileChooser(uploadMsg, acceptType);
-//            }
             // For Android 5.0+
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
                 // Callback 초기화 (중요!)
@@ -161,7 +140,8 @@ public class TeachableActivity extends AppCompatActivity {
                 }
 
                 webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView, "yes"), "android");
-                webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+                //webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+                webView.loadUrl("http://192.168.0.8:3000/");
             }
         });
     }
@@ -254,12 +234,19 @@ public class TeachableActivity extends AppCompatActivity {
         }
     }
 
-    public void testSetting(String s) {
+    public void testSetting(String message, String link) {
         Log.e("testtestt", "실행됨2");
-        Log.e("testtestt", s);
-        predict_result = s;
+        Log.e("testtestt", message);
+        Log.e("testtestt", link);
+
+        predict_result = message;
         configureChartAppearance(predict_result);
         prepareChartData(createChartData(predict_result));
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isFirstLink",true);
+        editor.putString("link", link);
+        editor.commit();
     }
 
 //    @Override
@@ -304,13 +291,13 @@ public class TeachableActivity extends AppCompatActivity {
                         Log.e("속도 체크","4 in");
                         try {
                             webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView,
-                                    URLEncoder.encode(resultString, "UTF-8")), "android");
+                                    URLEncoder.encode(resultString, "UTF-8") + "@@"), "android");
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
 
-                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
-
+                        //webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+                        webView.loadUrl("http://192.168.0.8:3000/");
                     }
                 } else {
                     if (filePathCallbackLollipop == null) {
@@ -347,7 +334,7 @@ public class TeachableActivity extends AppCompatActivity {
         predict_view.getDescription().setEnabled(false); // chart 밑에 description 표시 유무
         predict_view.setTouchEnabled(false); // 터치 유무
         predict_view.getLegend().setEnabled(false); // Legend는 차트의 범례
-        predict_view.setExtraOffsets(10f, 0f, 40f, 0f);
+        predict_view.setExtraOffsets(20f, 0f, 90f, 0f);
 
         // XAxis (수평 막대 기준 왼쪽) - 선 유무, 사이즈, 색상, 축 위치 설정
         XAxis xAxis = predict_view.getXAxis();
@@ -379,7 +366,9 @@ public class TeachableActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return APPS[(int) value];
+                if (APPS.length > (int) value) {
+                    return APPS[(int) value];
+                } else return null;
             }
         });
     }
