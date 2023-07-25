@@ -19,6 +19,20 @@ public class CategoryData {
     int position = -1;
     boolean selection = false;
 
+    View setup_btn = null;
+    View loop_btn = null;
+    View upload_btn = null;
+
+    View method_btn = null;
+
+    View home_btn = null;
+
+    View reset_btn = null;
+
+    Button simulator_btn = null;
+
+    WorkspacePoint rtp, ptp, ntp;
+
     public View getUpload_btn() {
         return upload_btn;
     }
@@ -55,7 +69,7 @@ public class CategoryData {
         this.reset_btn = reset_btn;
     }
 
-    View setup_btn = null;
+
 
     public View getLoop_btn() {
         return loop_btn;
@@ -65,8 +79,7 @@ public class CategoryData {
         this.loop_btn = loop_btn;
     }
 
-    View loop_btn = null;
-    View upload_btn = null;
+
 
     public View getMethod_btn() {
         return method_btn;
@@ -76,15 +89,7 @@ public class CategoryData {
         this.method_btn = method_btn;
     }
 
-    View method_btn = null;
 
-    View home_btn = null;
-
-    View reset_btn = null;
-
-    Button simulator_btn = null;
-
-    WorkspacePoint rtp, ptp, ntp;
 
     public WorkspacePoint getRtp() {
         return rtp;

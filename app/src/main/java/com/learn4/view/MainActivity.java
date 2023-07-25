@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.android.volley.error.TimeoutError;
+import com.google.blockly.android.BlockClickDialog;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.android.ui.PendingDrag;
@@ -34,10 +35,13 @@ import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
 import com.learn4.tutor.TutorCheck;
+import com.learn4.util.FileSharedPreferences;
 import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
+import com.learn4.view.custom.dialog.BuildBotDialog;
+import com.learn4.view.custom.dialog.NameInputDialog;
 import com.learn4.view.custom.dialog.UploadFalseDialog;
 import com.learn4.view.problem.basic.ProblemActivity;
 import com.learn4.view.simulator.SimulatorAdapter;
@@ -181,6 +185,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     EditText serial_input_box;
 
     Button serial_send_btn, translate_btn, ai_test_btn;
+    Button code_save_btn, code_load_btn;
     public Button  close_btn;
 
     Button block_setup_btn, block_loop_btn, block_method_btn, block_etc_btn;
@@ -214,6 +219,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     WebView simulator_web_view;
 
+    ArrayList<String> file_list;
     ArrayList<Integer> arrayList;
     ArrayList<CodeBlock> dictionary_block_list = new ArrayList<>();
     ArrayList<SimulatorComponent> simulator_component_list = new ArrayList<>();
@@ -224,8 +230,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private UploadDialog uploadListener, error_Listener;
     private FinishDialog finishListener, resetListener;
     private SimulatorDialog simulatorDialog;
+    private BuildBotDialog buildbotDialog;
+    private NameInputDialog nameInputDialog;
 
-    int current_pos =0;
+    int current_pos =0, check_num = 1;
     static int turtle_pos = 0;
     boolean simulator_check = false;
 
@@ -304,7 +312,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             byte[] buf = new byte[256];
             Application.mPhysicaloid.read(buf, buf.length);
 //            monitor_text.append(new String(buf));
-            Log.e("buf",new String(buf).trim());
+            Log.e("buf",new String(buf).contains("\n")+"");
 
 //            monitor_text.append(num+"\n");
 //            str += new String(buf);
@@ -701,6 +709,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("in!","onLoadWorkspace");
         mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(SAVE_FILENAME);
     }
+    
+
 
     @Override
     public void onCompilerChoose() {
@@ -944,6 +954,127 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private View.OnClickListener finish_cancel = v -> {
         // TODO : LMS 서버 통신
         finishListener.dismiss();
+    };
+
+
+
+
+    //빌드봇 다이얼로그 관련 onclicklistener
+
+    private View.OnClickListener cancel_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            buildbotDialog.dismiss();
+
+        }
+    };
+
+    private View.OnClickListener ok_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            buildbotDialog.dismiss();
+            //
+
+
+
+            switch (check_num){
+                case 1:
+                    application = (Application) getApplication();
+
+                    if (simulator_check) {
+                        application.showLoadingScreen(MainActivity.this);
+                    }
+
+                    // 답안지 갱신
+                    loadXmlFromWorkspace();
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        application.hideLoadingScreen();
+
+                        TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+                    }, 1500);
+                    break;
+                case 2:
+                    boolean loadWorkspace = false;
+                    String filename = "";
+                    loadWorkspace = true;
+                    filename = "android.xml";
+
+                    String assetFilename = "turtle/demo_workspaces/" + filename;
+                    try {
+                        controller.loadWorkspaceContents(getAssets().open(assetFilename));
+                    } catch (IOException | BlockLoadingException e) {
+                        throw new IllegalStateException(
+                                "Couldn't load demo workspace from assets: " + assetFilename, e);
+                    }
+                    addDefaultVariables(controller);
+                    break;
+                case 3:
+                    nameInputDialog = new NameInputDialog(MainActivity.this,file_name_ok_listener);
+                    nameInputDialog.show();
+                    break;
+                case 4:
+                    mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely("안녕.xml");
+                    break;
+            }
+            Toast.makeText(getApplicationContext(), check_num+"", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private View.OnClickListener learning_goal_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            check_num = 1;
+            buildbotDialog.exercise_btn.setChecked(false);
+            buildbotDialog.code_save_btn.setChecked(false);
+            buildbotDialog.code_load_btn.setChecked(false);
+        }
+    };
+
+    private View.OnClickListener exercise_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+          check_num = 2;
+            buildbotDialog.learning_goal_btn.setChecked(false);
+            buildbotDialog.code_save_btn.setChecked(false);
+            buildbotDialog.code_load_btn.setChecked(false);
+        }
+    };
+
+    private View.OnClickListener code_save_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+           check_num = 3;
+            buildbotDialog.learning_goal_btn.setChecked(false);
+            buildbotDialog.exercise_btn.setChecked(false);
+            buildbotDialog.code_load_btn.setChecked(false);
+        }
+    };
+
+    private View.OnClickListener code_load_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            check_num = 4;
+            buildbotDialog.learning_goal_btn.setChecked(false);
+            buildbotDialog.exercise_btn.setChecked(false);
+            buildbotDialog.code_save_btn.setChecked(false);
+        }
+    };
+
+
+    // 파일 이름 저장 리스너
+
+    private View.OnClickListener file_name_ok_listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            if (nameInputDialog.name_input.getText().toString().trim().equals("")){
+                Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            }else{
+                file_list.add(nameInputDialog.name_input.getText().toString().trim());
+                FileSharedPreferences.setStringArrayList(getApplicationContext(), "files",file_list);
+                for (int i= 0; i< file_list.size(); i++){
+                    Log.e("file", file_list.get(i));
+                }
+                mBlocklyActivityHelper.saveWorkspaceToAppDirSafely(nameInputDialog.name_input.getText().toString().trim()+".xml");
+                nameInputDialog.dismiss();
+            }
+
+
+        }
     };
 
 
@@ -1424,6 +1555,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
         Log.e("oncreate","contentview");
 
+        file_list = new ArrayList<>();
+
+        file_list.addAll(FileSharedPreferences.getStringArrayList(getApplicationContext(),"files"));
+
+        for (int i= 0; i< file_list.size(); i++){
+            Log.e("file", file_list.get(i));
+        }
+
 //        mBlocklyActivityHelper.getmCategoryView().getCurrentCategory().getCategoryName();
 
         View blockly_workspace = root.findViewById(R.id.blockly_workspace);
@@ -1506,7 +1645,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         input_space = blockly_workspace.findViewById(R.id.input_space);
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
         translate_btn = blockly_workspace.findViewById(R.id.translate_btn);
-//        ai_test_btn = blockly_workspace.findViewById(R.id.ai_test_btn);
+        ai_test_btn = blockly_workspace.findViewById(R.id.ai_test_btn);
+
+        code_load_btn = blockly_workspace.findViewById(R.id.code_load_btn);
+        code_save_btn = blockly_workspace.findViewById(R.id.code_save_btn);
+
         monitor_text.setMovementMethod(new ScrollingMovementMethod());
 
         serial_input_box = blockly_workspace.findViewById(R.id.serial_input_box);
@@ -1541,7 +1684,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }else{
             translate_btn.setBackgroundResource(R.drawable.translate_eng_btn);
         }
-
 
         arrayList = new ArrayList<>();
         arrayList.add(9600);
@@ -1605,21 +1747,27 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_bot_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                application = (Application) getApplication();
 
-                if (simulator_check) {
-                    application.showLoadingScreen(MainActivity.this);
-                }
+                check_num = 1;
+                buildbotDialog = new BuildBotDialog(MainActivity.this,ok_listener,cancel_listener
+                        ,learning_goal_listener, exercise_listener, code_save_listener, code_load_listener);
+                buildbotDialog.show();
 
-                // 답안지 갱신
-                loadXmlFromWorkspace();
-
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    application.hideLoadingScreen();
-
-                    TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
-                }, 1500);
+//                application = (Application) getApplication();
+//
+//                if (simulator_check) {
+//                    application.showLoadingScreen(MainActivity.this);
+//                }
+//
+//                // 답안지 갱신
+//                loadXmlFromWorkspace();
+//
+//                Handler handler = new Handler();
+//                handler.postDelayed(() -> {
+//                    application.hideLoadingScreen();
+//
+//                    TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+//                }, 1500);
             }
         });
 
@@ -1940,7 +2088,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 //            monitor_text.append(serial_input + "\n");
             stringBuilder.append(serial_input + "\n");
-//            monitor_text.setText(stringBuilder);
+            monitor_text.setText(stringBuilder);
 
             serial_write(serial_input);
             imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
@@ -1981,19 +2129,43 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
         // teachable machine test
-//        ai_test_btn.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, TeachableActivity.class);
-//            startActivity(intent);
-//            //finish();
-//
-////            Intent intent = new Intent(ProblemActivity.this, MainActivity.class);
-////            intent.putExtra("contents_name",contents_name);
-////            intent.putExtra("id",chapter_id);
-////            Log.e("contents_name",contents_name);
-////            Log.e("id",chapter_id);
-////            startActivity(intent);
-////            finish();
-//        });
+        ai_test_btn.setOnClickListener(v -> {
+//            mBlocklyActivityHelper.saveWorkspaceToAppDirSafely("test1.xml");
+            mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely("test1.xml");
+
+            boolean loadWorkspace = false;
+            String filename = "";
+                loadWorkspace = true;
+                filename = "android.xml";
+
+//        else if (id == R.id.action_demo_lacey_curves) {
+//            loadWorkspace = true;
+//            filename = "lacey_curves.xml";
+//        } else if (id == R.id.action_demo_paint_strokes) {
+//            loadWorkspace = true;
+//            filename = "paint_strokes.xml";
+//        }
+
+                String assetFilename = "turtle/demo_workspaces/" + filename;
+                try {
+                    controller.loadWorkspaceContents(getAssets().open(assetFilename));
+                } catch (IOException | BlockLoadingException e) {
+                    throw new IllegalStateException(
+                            "Couldn't load demo workspace from assets: " + assetFilename, e);
+                }
+                addDefaultVariables(controller);
+        });
+
+        code_save_btn.setOnClickListener(v -> {
+            mBlocklyActivityHelper.saveWorkspaceToAppDirSafely("test1.xml");
+            mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely("test1.xml");
+
+        });
+
+        code_load_btn.setOnClickListener(v -> {
+            mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely("test1.xml");
+
+        });
 
 
 //        BlocklyController controller = getController();

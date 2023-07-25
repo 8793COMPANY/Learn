@@ -328,6 +328,7 @@ public class BlockRecyclerViewHelper {
     }
 
 
+    //블록 카테고리 창 크기
     public void getLargeSize(final int aIndex, int pos){
         Log.e("come","getLargeSize");
 
@@ -401,7 +402,8 @@ public class BlockRecyclerViewHelper {
                                 widths[aIndex] = width;
                             }else {
                                 Log.e("block_width","block_width");
-                                widths[aIndex] = block_width;
+                                if(block_width > 100)
+                                    widths[aIndex] = block_width;
                             }
 
                         Log.e("block_width pos",aIndex+"");
