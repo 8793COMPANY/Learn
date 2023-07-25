@@ -296,8 +296,8 @@ public class TeachableActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
-//                        webView.loadUrl("http://192.168.0.8:3000/");
+//                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+                        webView.loadUrl("http://192.168.0.8:3000/");
                     }
                 } else {
                     if (filePathCallbackLollipop == null) {

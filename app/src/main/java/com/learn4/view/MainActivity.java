@@ -22,10 +22,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.android.volley.error.TimeoutError;
-import com.google.blockly.android.BlockClickDialog;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
-import com.google.blockly.android.ui.PendingDrag;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
 import com.google.blockly.model.FieldDropdown;
@@ -41,9 +39,9 @@ import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.custom.dialog.BuildBotDialog;
-import com.learn4.view.custom.dialog.NameInputDialog;
+import com.learn4.view.custom.dialog.file.FileListDialog;
+import com.learn4.view.custom.dialog.file.NameInputDialog;
 import com.learn4.view.custom.dialog.UploadFalseDialog;
-import com.learn4.view.problem.basic.ProblemActivity;
 import com.learn4.view.simulator.SimulatorAdapter;
 import com.learn4.view.simulator.SimulatorDialog;
 import com.learn4.view.dictionary.CodeDictionaryAdapter;
@@ -232,6 +230,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private SimulatorDialog simulatorDialog;
     private BuildBotDialog buildbotDialog;
     private NameInputDialog nameInputDialog;
+    private FileListDialog fileListDialog;
 
     int current_pos =0, check_num = 1;
     static int turtle_pos = 0;
@@ -1013,12 +1012,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     nameInputDialog.show();
                     break;
                 case 4:
-                    mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely("안녕.xml");
+                    fileListDialog = new FileListDialog(MainActivity.this,MainActivity.this, file_list);
+                    fileListDialog.show();
+//
                     break;
             }
             Toast.makeText(getApplicationContext(), check_num+"", Toast.LENGTH_SHORT).show();
         }
     };
+
+    public void loadWorkspace(String name){
+        mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(name+".xml");
+    }
 
     private View.OnClickListener learning_goal_listener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -1064,11 +1069,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (nameInputDialog.name_input.getText().toString().trim().equals("")){
                 Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
             }else{
-                file_list.add(nameInputDialog.name_input.getText().toString().trim());
-                FileSharedPreferences.setStringArrayList(getApplicationContext(), "files",file_list);
-                for (int i= 0; i< file_list.size(); i++){
-                    Log.e("file", file_list.get(i));
+                if (!file_list.contains(nameInputDialog.name_input.getText().toString().trim())){
+                    file_list.add(nameInputDialog.name_input.getText().toString().trim());
+                    FileSharedPreferences.setStringArrayList(getApplicationContext(), "files",file_list);
+                    for (int i= 0; i< file_list.size(); i++){
+                        Log.e("file", file_list.get(i));
+                    }
                 }
+
                 mBlocklyActivityHelper.saveWorkspaceToAppDirSafely(nameInputDialog.name_input.getText().toString().trim()+".xml");
                 nameInputDialog.dismiss();
             }

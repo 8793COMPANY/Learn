@@ -1,4 +1,4 @@
-package com.learn4.view.custom.dialog;
+package com.learn4.view.custom.dialog.file;
 
 import android.app.Dialog;
 import android.content.Context;
