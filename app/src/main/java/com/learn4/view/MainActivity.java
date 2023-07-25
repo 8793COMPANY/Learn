@@ -41,6 +41,7 @@ import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.custom.dialog.BuildBotDialog;
+import com.learn4.view.custom.dialog.ContinueDialog;
 import com.learn4.view.custom.dialog.NameInputDialog;
 import com.learn4.view.custom.dialog.UploadFalseDialog;
 import com.learn4.view.problem.basic.ProblemActivity;
@@ -981,17 +982,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                     if (simulator_check) {
                         application.showLoadingScreen(MainActivity.this);
+
+                        // 답안지 갱신
+                        loadXmlFromWorkspace();
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            application.hideLoadingScreen();
+
+                            TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+                        }, 1500);
+                    } else {
+                        ContinueDialog continueDialog = new ContinueDialog(MainActivity.this, "자유모드에서\n지원하는 기능이 아닙니다.");
+                        continueDialog.show();
                     }
-
-                    // 답안지 갱신
-                    loadXmlFromWorkspace();
-
-                    Handler handler = new Handler();
-                    handler.postDelayed(() -> {
-                        application.hideLoadingScreen();
-
-                        TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
-                    }, 1500);
+//                    // 답안지 갱신
+//                    loadXmlFromWorkspace();
+//
+//                    Handler handler = new Handler();
+//                    handler.postDelayed(() -> {
+//                        application.hideLoadingScreen();
+//
+//                        TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+//                    }, 1500);
                     break;
                 case 2:
                     boolean loadWorkspace = false;
@@ -1194,11 +1207,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 || chapter_id.split("-")[0].equals("27") || chapter_id.split("-")[0].equals("43"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
-            block_bot_btn.setVisibility(View.VISIBLE);
+            //block_bot_btn.setVisibility(View.VISIBLE);
         }else{
             simulator_check = false;
             simulator_btn.setVisibility(View.GONE);
-            block_bot_btn.setVisibility(View.GONE);
+            //block_bot_btn.setVisibility(View.GONE);
         }
 
         if (chapter_id.split("-")[0].equals("25") || chapter_id.split("-")[0].equals("27")) {
