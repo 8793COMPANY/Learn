@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.learn4.R;
+import com.learn4.util.FileSharedPreferences;
 import com.learn4.view.MainActivity;
 
 import java.io.File;
@@ -35,6 +36,8 @@ public class FileListDialog extends Dialog {
 
     public LinearLayout close_btn;
 
+    public TextView main_title;
+
 
     public String name;
     public boolean check = false;
@@ -45,11 +48,14 @@ public class FileListDialog extends Dialog {
     ArrayList<String> files;
     Activity activity;
 
-    public FileListDialog(@NonNull Activity activity, Context context, ArrayList<String> files) {
+    String type ="";
+
+    public FileListDialog(@NonNull Activity activity, Context context, ArrayList<String> files, String type) {
         super(context);
         this.activity = activity;
         this.context = context;
         this.files = files;
+        this.type = type;
     }
 
 
@@ -65,22 +71,53 @@ public class FileListDialog extends Dialog {
 
         file_list = findViewById(R.id.file_list);
         close_btn = findViewById(R.id.bottom_section);
+        main_title = findViewById(R.id.main_title);
+
+
         TextView empty_save_code_text = findViewById(R.id.empty_save_code_text);
 
-        if (files.size() ==0){
+        if (type.equals("save_load") && files.size() ==0){
             empty_save_code_text.setVisibility(View.VISIBLE);
         }
 
-        fileLoadAdapter = new FileLoadAdapter(context,files);
+        if (type.equals("example_load")){
+            main_title.setText("학습예제");
+        }
+
+        fileLoadAdapter = new FileLoadAdapter(type,context,files);
 
         file_list.setAdapter(fileLoadAdapter);
         file_list.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        fileLoadAdapter.setOnItemClickListener(name1 -> {
-            ((MainActivity)activity).loadWorkspace(name1);
-            Log.e("name",name1);
-            dismiss();
+        fileLoadAdapter.setOnItemClickListener(new FileLoadAdapter.OnItemClickEventListener() {
+            @Override
+            public void onItemClick(String name) {
+                if (type.equals("example_load")){
+                    ((MainActivity)activity).loadExample(name);
+                }else{
+                    ((MainActivity)activity).loadWorkspace(name);
+                }
+
+
+                Log.e("name",name);
+                dismiss();
+            }
+
+            @Override
+            public void onItemDelete(int position, String name) {
+//                files.remove(position);
+                fileLoadAdapter.deleteItem(position);
+                FileSharedPreferences.setStringArrayList(context,"files", files);
+                if (files.size() == 0){
+                    empty_save_code_text.setVisibility(View.VISIBLE);
+                }
+
+            }
         });
+
+
+
+
 
 
         close_btn.setOnClickListener(v->{

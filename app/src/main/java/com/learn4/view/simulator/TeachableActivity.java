@@ -107,8 +107,8 @@ public class TeachableActivity extends AppCompatActivity {
         } else {
             webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView, "no" + "@@" +""), "android");
         }
-//        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
-        webView.loadUrl("http://192.168.0.8:3000/");
+        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+//        webView.loadUrl("http://192.168.0.8:3000/");
 
 
         webView.setWebChromeClient(new WebChromeClient() {
@@ -140,8 +140,8 @@ public class TeachableActivity extends AppCompatActivity {
                 }
 
                 webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView, "yes"), "android");
-//                webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
-                webView.loadUrl("http://192.168.0.8:3000/");
+                webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+//                webView.loadUrl("http://192.168.0.8:3000/");
             }
         });
     }
@@ -296,8 +296,8 @@ public class TeachableActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-//                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
-                        webView.loadUrl("http://192.168.0.8:3000/");
+                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+//                        webView.loadUrl("http://192.168.0.8:3000/");
                     }
                 } else {
                     if (filePathCallbackLollipop == null) {

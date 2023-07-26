@@ -39,8 +39,11 @@ import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.custom.dialog.BuildBotDialog;
+
+import com.learn4.view.custom.dialog.ContinueDialog;
 import com.learn4.view.custom.dialog.file.FileListDialog;
 import com.learn4.view.custom.dialog.file.NameInputDialog;
+
 import com.learn4.view.custom.dialog.UploadFalseDialog;
 import com.learn4.view.simulator.SimulatorAdapter;
 import com.learn4.view.simulator.SimulatorDialog;
@@ -218,6 +221,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     WebView simulator_web_view;
 
     ArrayList<String> file_list;
+    ArrayList<String> example_list;
     ArrayList<Integer> arrayList;
     ArrayList<CodeBlock> dictionary_block_list = new ArrayList<>();
     ArrayList<SimulatorComponent> simulator_component_list = new ArrayList<>();
@@ -980,49 +984,66 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                     if (simulator_check) {
                         application.showLoadingScreen(MainActivity.this);
+
+                        // 답안지 갱신
+                        loadXmlFromWorkspace();
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            application.hideLoadingScreen();
+
+                            TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+                        }, 1500);
+                    } else {
+                        ContinueDialog continueDialog = new ContinueDialog(MainActivity.this, "자유모드에서\n지원하는 기능이 아닙니다.");
+                        continueDialog.show();
                     }
-
-                    // 답안지 갱신
-                    loadXmlFromWorkspace();
-
-                    Handler handler = new Handler();
-                    handler.postDelayed(() -> {
-                        application.hideLoadingScreen();
-
-                        TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
-                    }, 1500);
+//                    // 답안지 갱신
+//                    loadXmlFromWorkspace();
+//
+//                    Handler handler = new Handler();
+//                    handler.postDelayed(() -> {
+//                        application.hideLoadingScreen();
+//
+//                        TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+//                    }, 1500);
                     break;
                 case 2:
-                    boolean loadWorkspace = false;
-                    String filename = "";
-                    loadWorkspace = true;
-                    filename = "android.xml";
-
-                    String assetFilename = "turtle/demo_workspaces/" + filename;
-                    try {
-                        controller.loadWorkspaceContents(getAssets().open(assetFilename));
-                    } catch (IOException | BlockLoadingException e) {
-                        throw new IllegalStateException(
-                                "Couldn't load demo workspace from assets: " + assetFilename, e);
-                    }
-                    addDefaultVariables(controller);
+                    fileListDialog = new FileListDialog(MainActivity.this,MainActivity.this, example_list, "example_load");
+                    fileListDialog.show();
                     break;
                 case 3:
                     nameInputDialog = new NameInputDialog(MainActivity.this,file_name_ok_listener);
                     nameInputDialog.show();
                     break;
                 case 4:
-                    fileListDialog = new FileListDialog(MainActivity.this,MainActivity.this, file_list);
+                    fileListDialog = new FileListDialog(MainActivity.this,MainActivity.this, file_list, "save_load");
                     fileListDialog.show();
 //
                     break;
             }
-            Toast.makeText(getApplicationContext(), check_num+"", Toast.LENGTH_SHORT).show();
         }
     };
 
     public void loadWorkspace(String name){
         mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(name+".xml");
+    }
+
+    public void loadExample(String name){
+
+        boolean loadWorkspace = false;
+        String filename = "";
+        loadWorkspace = true;
+        filename = "android.xml";
+
+        String assetFilename = "turtle/demo_workspaces/" + filename;
+        try {
+            controller.loadWorkspaceContents(getAssets().open(assetFilename));
+        } catch (IOException | BlockLoadingException e) {
+            throw new IllegalStateException(
+                    "Couldn't load demo workspace from assets: " + assetFilename, e);
+        }
+        addDefaultVariables(controller);
     }
 
     private View.OnClickListener learning_goal_listener = new View.OnClickListener() {
@@ -1202,11 +1223,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 || chapter_id.split("-")[0].equals("27") || chapter_id.split("-")[0].equals("43"))){
             simulator_check = true;
             simulator_btn.setVisibility(View.VISIBLE);
-            block_bot_btn.setVisibility(View.VISIBLE);
+            //block_bot_btn.setVisibility(View.VISIBLE);
         }else{
             simulator_check = false;
             simulator_btn.setVisibility(View.GONE);
-            block_bot_btn.setVisibility(View.GONE);
+            //block_bot_btn.setVisibility(View.GONE);
         }
 
         if (chapter_id.split("-")[0].equals("25") || chapter_id.split("-")[0].equals("27")) {
@@ -1534,8 +1555,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 initTabCheck();
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
-                    block_bot_btn.setVisibility(View.VISIBLE);
+
                 }
+                block_bot_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
                 translate_btn.setVisibility(View.VISIBLE);
 
@@ -1564,6 +1586,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("oncreate","contentview");
 
         file_list = new ArrayList<>();
+        example_list = new ArrayList<>();
+
+        example_list.add("Blink");
 
         file_list.addAll(FileSharedPreferences.getStringArrayList(getApplicationContext(),"files"));
 
@@ -1638,8 +1663,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 block_simulator.setVisibility(View.GONE);
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
-                    block_bot_btn.setVisibility(View.VISIBLE);
+
                 }
+                block_bot_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
                 translate_btn.setVisibility(View.VISIBLE);
 
@@ -1708,8 +1734,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             tempTab[5].setSelected(false);
             if (simulator_check) {
                 simulator_btn.setVisibility(View.VISIBLE);
-                block_bot_btn.setVisibility(View.VISIBLE);
+
             }
+            block_bot_btn.setVisibility(View.VISIBLE);
             trashcan_btn.setVisibility(View.VISIBLE);
             translate_btn.setVisibility(View.VISIBLE);
 
@@ -2307,8 +2334,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.INVISIBLE);
-                    block_bot_btn.setVisibility(View.INVISIBLE);
+
                 }
+                block_bot_btn.setVisibility(View.INVISIBLE);
                 trashcan_btn.setVisibility(View.INVISIBLE);
                 translate_btn.setVisibility(View.INVISIBLE);
 
@@ -2329,8 +2357,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
-                    block_bot_btn.setVisibility(View.VISIBLE);
+
                 }
+                block_bot_btn.setVisibility(View.VISIBLE);
                 trashcan_btn.setVisibility(View.VISIBLE);
                 translate_btn.setVisibility(View.VISIBLE);
 
@@ -2355,10 +2384,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             view_check[position] = false;
             trashcan_btn.setVisibility(View.INVISIBLE);
             translate_btn.setVisibility(View.INVISIBLE);
-
+            block_bot_btn.setVisibility(View.INVISIBLE);
             if (simulator_check) {
                 simulator_btn.setVisibility(View.INVISIBLE);
-                block_bot_btn.setVisibility(View.INVISIBLE);
+
             }
         }
 
@@ -2582,10 +2611,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 view_check[current_pos] = true;
                 trashcan_btn.setVisibility(View.VISIBLE);
                 translate_btn.setVisibility(View.VISIBLE);
-
+                block_bot_btn.setVisibility(View.VISIBLE);
                 if (simulator_check) {
                     simulator_btn.setVisibility(View.VISIBLE);
-                    block_bot_btn.setVisibility(View.VISIBLE);
+
                 }
             }
         }catch (ArrayIndexOutOfBoundsException e){

@@ -37,23 +37,26 @@ public class FileLoadAdapter extends RecyclerView.Adapter<FileLoadAdapter.ItemVi
     private ArrayList<String> listData = new ArrayList<>();
     private int width = 0;
     Context context;
+    String type ="";
 
 
     public interface OnItemClickEventListener {
         void onItemClick(String name);
+        void onItemDelete(int pos, String name);
     }
 
-    private AnswerAdapter.OnItemClickEventListener mItemClickListener;
+    private OnItemClickEventListener mItemClickListener;
 
-    public void setOnItemClickListener(AnswerAdapter.OnItemClickEventListener a_listener) {
+    public void setOnItemClickListener(OnItemClickEventListener a_listener) {
         mItemClickListener = a_listener;
     }
 
 
-    public FileLoadAdapter(Context context, ArrayList<String> arrayList){
+    public FileLoadAdapter(String type, Context context, ArrayList<String> arrayList){
         listData = arrayList;
         this.width = width;
         this.context = context;
+        this.type = type;
 
         Log.e("file", listData.size()+"");
     }
@@ -72,6 +75,10 @@ public class FileLoadAdapter extends RecyclerView.Adapter<FileLoadAdapter.ItemVi
         Log.e("file list check",listData.get(position));
         holder.file_name_area.setText(listData.get(position));
 
+        if (type.equals("save_load")){
+            holder.delete_btn.setVisibility(View.VISIBLE);
+        }
+
         holder.select_btn.setOnClickListener(v->{
             if (position != RecyclerView.NO_POSITION) {
                 if (mItemClickListener != null) {
@@ -79,7 +86,31 @@ public class FileLoadAdapter extends RecyclerView.Adapter<FileLoadAdapter.ItemVi
                 }
             }
         });
+
+        holder.delete_btn.setOnClickListener(v->{
+            Log.e("delete","in");
+            if (position != RecyclerView.NO_POSITION) {
+                if (mItemClickListener != null) {
+                    mItemClickListener.onItemDelete(position,listData.get(position));
+                }
+            }
+        });
+
+//        holder.itemView.setOnClickListener(v->{
+//            if (position != RecyclerView.NO_POSITION) {
+//                if (mItemClickListener != null) {
+//                    mItemClickListener.onItemDelete(position,listData.get(position));
+//                }
+//            }
+//        });
     }
+
+    public void deleteItem(int position) {
+        listData.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, listData.size());
+    }
+
 
 
     @Override
@@ -93,11 +124,13 @@ public class FileLoadAdapter extends RecyclerView.Adapter<FileLoadAdapter.ItemVi
 
         private TextView file_name_area;
         private Button select_btn;
+        private Button delete_btn;
         ItemViewHolder(View itemView) {
             super(itemView);
 
             file_name_area = itemView.findViewById(R.id.file_name);
             select_btn = itemView.findViewById(R.id.select_btn);
+            delete_btn = itemView.findViewById(R.id.delete_btn);
         }
 
     }
