@@ -1,202 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="370dp"
-    android:layout_height="200dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    android:background="@drawable/radius"
-    android:backgroundTint="#fafafa"
-    android:orientation="vertical">
+    android:layout_width="410dp"
+    android:layout_height="150dp"
+    android:layout_marginLeft="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RadioButton
-        android:id="@+id/learning_goal_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.07"
-        android:background="@drawable/radio_btn_selector"
-        android:button="@null"
-        android:checked="true"
-        app:layout_constraintHorizontal_bias="0.2"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buildbot_dialog"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/buildbot_click_radius"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.15"></RadioButton>
+        app:layout_constraintWidth_percent="0.88"
+        app:layout_constraintHorizontal_bias="0">
 
-    <TextView
-        android:id="@+id/learning_goal_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="코딩 튜터"
-        android:fontFamily="@font/sb_aggro_l"
-        android:textSize="14dp"
-        android:textColor="#af6400"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@+id/learning_goal_btn"
-        app:layout_constraintTop_toTopOf="@+id/learning_goal_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/learning_goal_btn"></TextView>
+        <Button
+            android:id="@+id/learning_goal_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/buildbot_btn_custom"
+            android:text="코딩 튜터"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            app:layout_constraintTop_toTopOf="@id/vertical_start"
+            app:layout_constraintLeft_toLeftOf="@id/horizontal_start"
+            app:layout_constraintHeight_percent="0.27"
+            app:layout_constraintWidth_percent="0.38" />
 
-    <RadioButton
-        android:id="@+id/exercise_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.07"
-        android:background="@drawable/radio_btn_selector"
-        android:button="@null"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/learning_goal_btn"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintVertical_bias="0.07"></RadioButton>
+        <Button
+            android:id="@+id/exercise_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/buildbot_btn_custom"
+            android:text="학습 예제"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            app:layout_constraintLeft_toLeftOf="@id/horizontal_start"
+            app:layout_constraintBottom_toBottomOf="@id/vertical_end"
+            app:layout_constraintHeight_percent="0.27"
+            app:layout_constraintWidth_percent="0.38" />
 
-    <TextView
-        android:id="@+id/exercise_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="예제"
-        android:fontFamily="@font/sb_aggro_l"
-        android:textSize="14dp"
-        android:textColor="#af6400"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@+id/exercise_btn"
-        app:layout_constraintTop_toTopOf="@+id/exercise_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/exercise_btn"></TextView>
+        <Button
+            android:id="@+id/code_save_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/buildbot_btn_custom"
+            android:text="코드 저장"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            app:layout_constraintTop_toTopOf="@id/vertical_start"
+            app:layout_constraintRight_toRightOf="@id/horizontal_end"
+            app:layout_constraintHeight_percent="0.27"
+            app:layout_constraintWidth_percent="0.38" />
 
+        <Button
+            android:id="@+id/code_load_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/buildbot_btn_custom"
+            android:text="코드 불러오기"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            app:layout_constraintRight_toRightOf="@id/horizontal_end"
+            app:layout_constraintBottom_toBottomOf="@id/vertical_end"
+            app:layout_constraintHeight_percent="0.27"
+            app:layout_constraintWidth_percent="0.38" />
 
-    <RadioButton
-        android:id="@+id/code_save_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.07"
-        android:background="@drawable/radio_btn_selector"
-        android:button="@null"
-        android:checked="false"
-        app:layout_constraintHorizontal_bias="0.2"
+<!--        <LinearLayout-->
+<!--            android:id="@+id/cancel"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:background="@drawable/bottom_radius_transparent"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:paddingLeft="3dp"-->
+<!--            android:paddingRight="3dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintHeight_default="percent"-->
+<!--            app:layout_constraintHeight_percent="0.3"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/exercise_btn"-->
+<!--            app:layout_constraintVertical_bias="1">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/divider"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1.5dp"-->
+<!--                android:background="#dbdbdb"/>-->
+<!--        </LinearLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/cancel_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/sb_aggro_l"-->
+<!--            android:text="닫기"-->
+<!--            android:textColor="#b57014"-->
+<!--            android:textSize="16sp"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/cancel"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/cancel"-->
+<!--            app:layout_constraintLeft_toLeftOf="@+id/cancel"-->
+<!--            app:layout_constraintRight_toRightOf="@+id/cancel" />-->
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.09"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/horizontal_end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.91"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_start"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.17"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_end"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.83"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/cancel_text2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/learning_goal_text"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.15"></RadioButton>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="코드 저장"
-        android:fontFamily="@font/sb_aggro_l"
-        android:textSize="14dp"
-        android:textColor="#af6400"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@+id/code_save_btn"
-        app:layout_constraintTop_toTopOf="@+id/code_save_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/code_save_btn"></TextView>
-
-
-    <RadioButton
-        android:id="@+id/code_load_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.07"
-        android:background="@drawable/radio_btn_selector"
-        android:button="@null"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/learning_goal_btn"
-        app:layout_constraintLeft_toLeftOf="@+id/code_save_btn"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0.07"></RadioButton>
-
-    <TextView
-        android:id="@+id/code_load_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="코드 불러오기"
-        android:fontFamily="@font/sb_aggro_l"
-        android:textSize="14dp"
-        android:textColor="#af6400"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintLeft_toRightOf="@+id/code_load_btn"
-        app:layout_constraintTop_toTopOf="@+id/code_load_btn"
-        app:layout_constraintBottom_toBottomOf="@+id/code_load_btn"></TextView>
-
-
-
-
-
-    <LinearLayout
-        android:id="@+id/bottom_section"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bottom_radius"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.35"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exercise_btn"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintWidth_default="percent">
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/cancel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-        app:layout_constraintTop_toTopOf="@+id/bottom_section"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_section"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/confirm"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-
-        android:gravity="center"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sb_aggro_l"
-            android:text="취소"
-            android:textColor="#868686"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/confirm"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@+id/bottom_section"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_section"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/cancel"
-        android:gravity="center"
-        >
+        android:background="@drawable/close_btn"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.1"
+        app:layout_constraintHorizontal_bias="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/sb_aggro_l"
-            android:text="확인"
-            android:textColor="#b57014"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:id="@+id/cancel"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+
+<!--        app:layout_constraintTop_toTopOf="@+id/bottom_section"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/bottom_section"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toLeftOf="@+id/confirm"-->
+<!--        app:layout_constraintHorizontal_chainStyle="spread_inside"-->
+
+<!--        android:gravity="center"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/sb_aggro_l"-->
+<!--            android:text="취소"-->
+<!--            android:textColor="#868686"-->
+<!--            android:textSize="18sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--    </LinearLayout>-->
+
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/confirm"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/bottom_section"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/bottom_section"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintLeft_toRightOf="@id/cancel"-->
+<!--        android:gravity="center"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/sb_aggro_l"-->
+<!--            android:text="확인"-->
+<!--            android:textColor="#b57014"-->
+<!--            android:textSize="18sp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+<!--    </LinearLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

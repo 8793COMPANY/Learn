@@ -1,5 +1,6 @@
 package com.learn4.view.custom.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -31,12 +33,12 @@ public class BuildBotDialog extends Dialog {
     public TextView Body;
     public TextView Title;
 
-    public RadioButton learning_goal_btn, exercise_btn, code_save_btn, code_load_btn;
+    public Button learning_goal_btn, exercise_btn, code_save_btn, code_load_btn, cancel_btn2;
 
     public String title;
     public String body;
 
-    public BuildBotDialog(@NonNull Context context, View.OnClickListener confirm_listener, View.OnClickListener cancel_listener,
+    public BuildBotDialog(@NonNull Context context,  View.OnClickListener cancel_listener,
                           View.OnClickListener learning_goal_listener, View.OnClickListener exercise_listener,
                           View.OnClickListener code_save_listener, View.OnClickListener code_load_listener) {
         super(context);
@@ -48,9 +50,7 @@ public class BuildBotDialog extends Dialog {
         this.code_load_listener = code_load_listener;
     }
 
-
-
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +58,18 @@ public class BuildBotDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         setContentView(R.layout.dialog_buildbot_click);
-        confirm_btn =findViewById(com.google.blockly.android.R.id.confirm);
-        cancel_btn = findViewById(com.google.blockly.android.R.id.cancel);
+        //confirm_btn =findViewById(com.google.blockly.android.R.id.confirm);
+        //cancel_btn = findViewById(com.google.blockly.android.R.id.cancel);
 
         learning_goal_btn = findViewById(R.id.learning_goal_btn);
         exercise_btn = findViewById(R.id.exercise_btn);
         code_save_btn = findViewById(R.id.code_save_btn);
         code_load_btn = findViewById(R.id.code_load_btn);
+        cancel_btn2 = findViewById(R.id.cancel_text2);
 
-        confirm_btn.setOnClickListener(confirm_listener);
-        cancel_btn.setOnClickListener(cancel_listener);
+        //confirm_btn.setOnClickListener(confirm_listener);
+        //cancel_btn.setOnClickListener(cancel_listener);
+        cancel_btn2.setOnClickListener(cancel_listener);
 
         learning_goal_btn.setOnClickListener(learning_goal_listener);
         exercise_btn.setOnClickListener(exercise_listener);
