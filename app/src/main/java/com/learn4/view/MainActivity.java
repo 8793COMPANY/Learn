@@ -973,9 +973,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         public void onClick(View v) {
             buildbotDialog.dismiss();
             //
-
-
-
             switch (check_num){
                 case 1:
                     application = (Application) getApplication();
@@ -1035,37 +1032,79 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     private View.OnClickListener learning_goal_listener = new View.OnClickListener() {
         public void onClick(View v) {
-            check_num = 1;
-            buildbotDialog.exercise_btn.setChecked(false);
-            buildbotDialog.code_save_btn.setChecked(false);
-            buildbotDialog.code_load_btn.setChecked(false);
+//            check_num = 1;
+//            buildbotDialog.exercise_btn.setChecked(false);
+//            buildbotDialog.code_save_btn.setChecked(false);
+//            buildbotDialog.code_load_btn.setChecked(false);
+            buildbotDialog.dismiss();
+
+            application = (Application) getApplication();
+
+            if (simulator_check) {
+                application.showLoadingScreen(MainActivity.this);
+
+                // 답안지 갱신
+                loadXmlFromWorkspace();
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    application.hideLoadingScreen();
+
+                    TutorCheck tutorCheck = new TutorCheck(MainActivity.this, simulator_check, chapter_id, submittedXml);
+                }, 1500);
+            } else {
+                ContinueDialog continueDialog = new ContinueDialog(MainActivity.this, "자유모드에서\n지원하는 기능이 아닙니다.");
+                continueDialog.show();
+            }
         }
     };
 
     private View.OnClickListener exercise_listener = new View.OnClickListener() {
         public void onClick(View v) {
-          check_num = 2;
-            buildbotDialog.learning_goal_btn.setChecked(false);
-            buildbotDialog.code_save_btn.setChecked(false);
-            buildbotDialog.code_load_btn.setChecked(false);
+//            check_num = 2;
+//            buildbotDialog.learning_goal_btn.setChecked(false);
+//            buildbotDialog.code_save_btn.setChecked(false);
+//            buildbotDialog.code_load_btn.setChecked(false);
+            buildbotDialog.dismiss();
+
+            boolean loadWorkspace = false;
+            String filename = "";
+            loadWorkspace = true;
+            filename = "android.xml";
+
+            String assetFilename = "turtle/demo_workspaces/" + filename;
+            try {
+                controller.loadWorkspaceContents(getAssets().open(assetFilename));
+            } catch (IOException | BlockLoadingException e) {
+                throw new IllegalStateException(
+                        "Couldn't load demo workspace from assets: " + assetFilename, e);
+            }
+            addDefaultVariables(controller);
         }
     };
 
     private View.OnClickListener code_save_listener = new View.OnClickListener() {
         public void onClick(View v) {
-           check_num = 3;
-            buildbotDialog.learning_goal_btn.setChecked(false);
-            buildbotDialog.exercise_btn.setChecked(false);
-            buildbotDialog.code_load_btn.setChecked(false);
+//            check_num = 3;
+//            buildbotDialog.learning_goal_btn.setChecked(false);
+//            buildbotDialog.exercise_btn.setChecked(false);
+//            buildbotDialog.code_load_btn.setChecked(false);
+            buildbotDialog.dismiss();
+
+            nameInputDialog = new NameInputDialog(MainActivity.this,file_name_ok_listener);
+            nameInputDialog.show();
         }
     };
 
     private View.OnClickListener code_load_listener = new View.OnClickListener() {
         public void onClick(View v) {
-            check_num = 4;
-            buildbotDialog.learning_goal_btn.setChecked(false);
-            buildbotDialog.exercise_btn.setChecked(false);
-            buildbotDialog.code_save_btn.setChecked(false);
+//            check_num = 4;
+//            buildbotDialog.learning_goal_btn.setChecked(false);
+//            buildbotDialog.exercise_btn.setChecked(false);
+//            buildbotDialog.code_save_btn.setChecked(false);
+            buildbotDialog.dismiss();
+
+            mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely("안녕.xml");
         }
     };
 
@@ -1765,6 +1804,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 buildbotDialog = new BuildBotDialog(MainActivity.this,ok_listener,cancel_listener
                         ,learning_goal_listener, exercise_listener, code_save_listener, code_load_listener);
                 buildbotDialog.show();
+                buildbotDialog.setCancelable(false);
 
 //                application = (Application) getApplication();
 //
