@@ -159,7 +159,7 @@ import kotlin.Pair;
  * Demo app with the Blockly Games turtle game in a webview.
  */
 public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener , UploadBtnCheck, BlockDropdownClick {
-    //2021.07.23 제일 최신 버전
+    //2022.08.08 제일 최신 버전
 
 
     private static final String TAG = "TurtleActivity";
