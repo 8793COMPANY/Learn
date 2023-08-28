@@ -309,6 +309,26 @@
             </value>
         </block>
 
+        <block type="ultrasonic_sensor_setup">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <!--<field name="VALUE1">OUTPUT</field>-->
+            <value name="PIN2">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="ultrasonic_sensor">
+        </block>
+
+        <block type="ultrasonic_sensor_serial_println">
+        </block>
+
         <block type="servo">
             <value name="channel">
                 <block type="base_pins_list">
@@ -457,6 +477,9 @@
         <block type="base_logic_list"></block>
         <block type="base_pins_list"></block>
         <block type="serial_begin_list"></block>
+
+        <block type="ultrasonic_sensors_read">
+        </block>
 
         <block type="text">
             <field name="TEXT"></field>

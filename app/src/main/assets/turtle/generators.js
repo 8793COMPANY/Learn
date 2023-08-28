@@ -41,6 +41,50 @@ Blockly.JavaScript['type_boolean'] = function(block) {
   return [value_boolean, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+
+
+
+Blockly.JavaScript['ultrasonic_sensor_setup'] = function (block) {
+
+   var trig_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+   var echo_num = Blockly.JavaScript.valueToCode(block, "PIN2", Blockly.JavaScript.ORDER_ATOMIC);
+   Blockly.JavaScript.definitions_["trig_variable"] = "int trig = "+ trig_pin+";";
+   Blockly.JavaScript.definitions_["echo_variable"] = "int echo = "+ echo_num+";";
+   var code =   "pinMode("+trig_pin+", OUTPUT);\npinMode("+echo_num+", INPUT);\n";
+   return code;
+};
+
+Blockly.JavaScript['ultrasonic_sensor'] = function (block) {
+
+ var code =   "digitalWrite(trig, LOW);\n"+
+                   "digitalWrite(echo, LOW);\n"+
+                   "delayMicroseconds(2);\n"+
+                   "digitalWrite(trig, HIGH);\n"+
+                   "delayMicroseconds(10);\n"+
+                   "digitalWrite(trig, LOW);\n\n"+
+                   "unsigned long duration = pulseIn(echo, HIGH);\n"+
+                   "float distance = duration / 29.0 / 2.0;\n"
+
+   return code;
+};
+//
+Blockly.JavaScript['ultrasonic_sensor_serial_println'] = function (block) {
+
+   var code =   "Serial.print(distance);\n"+
+                'Serial.println("cm");\n'+
+                "delay(200);\n"
+
+   return code;
+};
+
+
+
+Blockly.JavaScript['ultrasonic_sensors_read'] = function() {
+    var code =   "distance"
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
 Blockly.JavaScript['serial_print'] = function(block) {
   var value_text = Blockly.JavaScript.valueToCode(block, "text", Blockly.JavaScript.ORDER_ATOMIC);
   var code = "Serial.print("+value_text+");\n";
@@ -49,6 +93,7 @@ Blockly.JavaScript['serial_print'] = function(block) {
 
 Blockly.JavaScript['serial_println'] = function(block) {
   var value_text = Blockly.JavaScript.valueToCode(block, "STRING", Blockly.JavaScript.ORDER_ATOMIC);
+
   var code = "Serial.println("+value_text+");\n";
   return code;
 };

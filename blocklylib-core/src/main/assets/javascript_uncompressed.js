@@ -68,7 +68,7 @@ Blockly.JavaScript.finish = function(a) {
     var setup = [],
         d;
     for (c in Blockly.JavaScript.definitions_) b.push(Blockly.JavaScript.definitions_[c]);
-    setup.push("void setup() {");
+    setup.push("void setup() {\n");
     for (d in Blockly.JavaScript.setups_) setup.push(Blockly.JavaScript.setups_[d]);
     setup.push("\n}");
     delete Blockly.JavaScript.setups_;

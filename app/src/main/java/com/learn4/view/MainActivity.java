@@ -315,20 +315,55 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             byte[] buf = new byte[256];
             Application.mPhysicaloid.read(buf, buf.length);
 //            monitor_text.append(new String(buf));
-            Log.e("buf",new String(buf).contains("\n")+"");
+            boolean enter_check = false;
+            for (int i = 0; i < buf.length; i++) {
+                if (buf[i] == 0x0d){
+                    enter_check = true;
+                    Log.e("buf enter","in");
+                }
+                if (buf[i] == 0x0a){
+                    enter_check = true;
+                    Log.e("buf enter2","in");
+                }
 
+            }
+
+
+//            Log.e("buf2",new String(buf).contains("\n")+"");
+//            Log.e("buf text",new String(buf).trim());
 //            monitor_text.append(num+"\n");
 //            str += new String(buf);
+
+
 
             if (new String(buf).trim().length() != 0) {
                 Log.e("num:",num+"");
                 Log.e("length",stringBuilder.toString().length()+"");
-                if (num < 60) {
+                if (num < 15) {
                     stringBuilder.append(new String(buf).trim());
-                } else if (num >= 60) {
+                    if (enter_check){
+                        Log.e("buf text",new String(buf).trim());
+                        stringBuilder.append("\n");
+                        enter_check = false;
+                        num++;
+                    }
+
+                    Log.e("buf text",new String(buf).trim());
+
+                } else if (num >= 15) {
+                    stringBuilder.delete(0,stringBuilder.indexOf("\n",1));
+                    Log.e("buf stringBuilder len check",stringBuilder.length()+"");
                     stringBuilder.append(new String(buf).trim());
-                    num = 50;
-                    stringBuilder.delete(0,2560);
+                    Log.e("buf stringBuilder check",stringBuilder.toString());
+                    if (enter_check) {
+
+                        Log.e("buf text",new String(buf).trim());
+                        stringBuilder.append("\n");
+                        enter_check = false;
+                        num++;
+                    }
+                    num = 14;
+
                     Log.e("length delete","OK");
                 }
 
@@ -338,8 +373,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
 
                 Log.e("text",stringBuilder.toString());
+
                 monitor_text.setText(stringBuilder);
-                num++;
+
             }
         }catch (NullPointerException e){
             e.printStackTrace();

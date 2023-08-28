@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tutor_dialog"
+    android:layout_width="650dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:background="@drawable/radius"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/main_title"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:fontFamily="@font/sebang_gothic"
+        android:background="@drawable/notice_gradient_background"
+        android:text="공지사항"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/close_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toTopOf="@+id/main_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/main_title"
+        app:layout_constraintBottom_toBottomOf="@+id/main_title"
+        android:background="@drawable/close_btn"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintHorizontal_bias="0.98"/>
+
+    <ScrollView
+        android:id="@+id/surveys"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbarSize="8dp"
+        android:overScrollMode="never"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarTrackVertical="@drawable/block_dictionary_scrollbar_track"
+        android:scrollbarThumbVertical="@drawable/block_dictionary_scrollbar_thumb"
+        app:layout_constraintWidth_percent="0.955"
+        app:layout_constraintHeight_percent="0.68"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_section"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_title"
+        android:layout_marginTop="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_title"
+            android:layout_marginTop="3dp"
+            app:layout_constraintVertical_bias="0">
+
+
+            <TextView
+                android:id="@+id/main_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sb_aggro_m"
+                android:text="[사전/사후 설문지]"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintHorizontal_bias="0.1"/>
+
+            <TextView
+                android:id="@+id/condition_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sb_aggro_l"
+                android:inputType="textMultiLine"
+                android:text="안녕하세요! 조선대학교 디지털새싹캠프 사업단입니다:)\n원활한 캠프 진행을 위해 수업 전/캠프 종료 후 설문을 꼭! 꼭! 꼭! 진행해주세요😊"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/main_text"
+                app:layout_constraintVertical_bias="0.005" />
+
+
+            <TextView
+                android:id="@+id/st_beforehand_survey"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/sb_aggro_l"
+                android:text="참여학생용 사전 설문지(프로그램 시작 전)"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/main_text"
+                app:layout_constraintTop_toBottomOf="@+id/condition_text" />
+
+            <TextView
+                android:id="@+id/st_beforehand_survey_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/sb_aggro_l"
+                android:inputType="textMultiLine"
+                android:text="설문지 작성하기"
+                android:textColor="#fb9747"
+                android:textSize="13dp"
+                android:lineSpacingExtra="0dp"
+                android:drawableRight="@drawable/survey_go_btn_small_size"
+                android:drawablePadding="7dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_beforehand_survey"
+                app:layout_constraintTop_toBottomOf="@+id/st_beforehand_survey"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:id="@+id/st_after_survey"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/sb_aggro_l"
+                android:text="참여학생용 사후 설문지(프로그램 종료 후)"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/main_text"
+                app:layout_constraintTop_toBottomOf="@+id/st_beforehand_survey_write" />
+
+            <TextView
+                android:id="@+id/st_after_survey_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/sb_aggro_l"
+                android:inputType="textMultiLine"
+                android:text="설문지 작성하기"
+                android:textColor="#fb9747"
+                android:textSize="13dp"
+                android:lineSpacingExtra="0dp"
+                android:drawableRight="@drawable/survey_go_btn_small_size"
+                android:drawablePadding="7dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_after_survey"
+                app:layout_constraintTop_toBottomOf="@+id/st_after_survey"
+                app:layout_constraintVertical_bias="0" />
+
+
+
+            <TextView
+                android:id="@+id/st_satisfaction_survey"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/sb_aggro_l"
+                android:text="참여학생용 만족도 조사(프로그램 종료 후)"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_after_survey_write"
+                app:layout_constraintTop_toBottomOf="@+id/st_after_survey_write" />
+
+            <TextView
+                android:id="@+id/st_satisfaction_survey_elementary_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/sb_aggro_l"
+                android:inputType="textMultiLine"
+                android:text="만족도 조사 참여하기 (초등학생)"
+                android:textColor="#fb9747"
+                android:textSize="13dp"
+                android:lineSpacingExtra="0dp"
+                android:drawableRight="@drawable/survey_go_btn_small_size"
+                android:drawablePadding="7dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_satisfaction_survey"
+                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey"
+                app:layout_constraintVertical_bias="0" />
+
+            <TextView
+                android:id="@+id/st_satisfaction_survey_middle_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/sb_aggro_l"
+                android:inputType="textMultiLine"
+                android:text="만족도 조사 참여하기 (중학생)"
+                android:textColor="#fb9747"
+                android:textSize="13dp"
+                android:lineSpacingExtra="0dp"
+                android:drawableRight="@drawable/survey_go_btn_small_size"
+                android:drawablePadding="7dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_after_survey"
+                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_elementary_write"
+                app:layout_constraintVertical_bias="0" />
+
+
+            <TextView
+                android:id="@+id/st_satisfaction_survey_high_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:drawableRight="@drawable/survey_go_btn_small_size"
+                android:drawablePadding="7dp"
+                android:fontFamily="@font/sb_aggro_l"
+                android:gravity="center"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="0dp"
+                android:text="만족도 조사 참여하기 (고등학생)"
+                android:textColor="#fb9747"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_after_survey"
+                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_middle_write"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintWidth_percent="0.85" />
+
+            <TextView
+                android:id="@+id/tr_after_survey"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/sb_aggro_l"
+                android:text="해당학교 담당선생님 사후 설문지(프로그램 종료 후)"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/st_satisfaction_survey_high_write"
+                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_high_write" />
+
+            <TextView
+                android:id="@+id/tr_after_survey_write"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/sb_aggro_l"
+                android:inputType="textMultiLine"
+                android:text="설문지 작성하기"
+                android:textColor="#fb9747"
+                android:textSize="13dp"
+                android:lineSpacingExtra="0dp"
+                android:drawableRight="@drawable/survey_go_btn_small_size"
+                android:drawablePadding="7dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintWidth_percent="0.85"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tr_after_survey"
+                app:layout_constraintTop_toBottomOf="@+id/tr_after_survey"
+                app:layout_constraintVertical_bias="0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_section"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:background="@drawable/notice_bottom_background"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/surveys"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintWidth_default="percent"
+        android:weightSum="15">
+
+        <CheckBox
+            android:id="@+id/today_check"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:buttonTint="#af6400"
+            android:button="@color/translucent"
+            android:background="@drawable/notice_checkbox_custom"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.03"
+            app:layout_constraintHorizontal_bias="0.07"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"></CheckBox>
+
+        <TextView
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sb_aggro_l"
+            android:text="오늘 그만보기"
+            android:textColor="#af6400"
+            android:textSize="15dp"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toTopOf="@+id/bottom_section"
+            app:layout_constraintLeft_toRightOf="@+id/today_check"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_section"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:gravity="center" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
