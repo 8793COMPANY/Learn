@@ -1,0 +1,107 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="8d32874e-b4b2-4f58-bf8f-d5fa928da0ff" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="neo_pixel_setup" id="bf04c60e-b5c3-4f89-ba74-c74e725d8db2">
+                <next>
+                    <block type="neo_pixel" id="ceeca774-dc04-42fc-be86-d6b48c02e64c">
+                        <value name="channel">
+                            <block type="base_pins_list" id="b0a7c01c-bb44-4483-8842-242b896adaff">
+                                <field name="PIN">12</field>
+                            </block>
+                        </value>
+                        <value name="angle">
+                            <block type="math_number" id="ba41ce29-2ff2-4055-9b47-7704094eead3">
+                                <field name="NUM">10</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="neo_pixel_brightness" id="1f2a1d10-92b1-4fca-bbc2-ef7ad996edcf">
+                <value name="angle">
+                    <block type="math_number" id="75e66e6d-9d25-4293-909a-a1575d1fcaca">
+                        <field name="NUM">101</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="turtle_jikco_internal" id="826403af-f0fa-423b-92ab-082231b399f0">
+                        <field name="DIR">1,1,0,1,1,0,1,1,0,1,1,0,0,0</field>
+                        <field name="COL">Red</field>
+                        <next>
+                            <block type="base_delay" id="babb3ef1-ac19-4a24-975e-856ac287d126">
+                                <value name="DELAY_TIME">
+                                    <block type="math_number" id="d4cd039c-a871-47a9-b32f-09af8600523e">
+                                        <field name="NUM">100</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="turtle_jikco_internal" id="aab35230-90ff-4895-8785-7c104f5eb3b9">
+                                        <field name="DIR">1,0,1,1,0,1,0,1,0,0,1,0,0,0</field>
+                                        <field name="COL">Orange</field>
+                                        <next>
+                                            <block type="base_delay" id="944788c5-3e78-4b9b-a37a-249d7a30a32e">
+                                                <value name="DELAY_TIME">
+                                                    <block type="math_number" id="e4127196-16b7-4fa0-838c-155438f57344">
+                                                        <field name="NUM">100</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="turtle_jikco_internal" id="9874c0e4-4ce4-47be-97b2-41fe6df94d6d">
+                                                        <field name="DIR">0,1,0,0,1,0,1,1,1,1,1,1,0,0</field>
+                                                        <field name="COL">Green</field>
+                                                        <next>
+                                                            <block type="base_delay" id="65b381c2-006e-4d13-87d8-7b6341d976fe">
+                                                                <value name="DELAY_TIME">
+                                                                    <block type="math_number" id="f1103392-99b3-400c-a88f-886b34216c56">
+                                                                        <field name="NUM">100</field>
+                                                                    </block>
+                                                                </value>
+                                                                <next>
+                                                                    <block type="turtle_jikco_internal" id="00fb5644-49d6-4377-9984-99e2c59a533c">
+                                                                        <field name="DIR">1,0,1,0,1,0,1,0,1,0,1,0,0,0</field>
+                                                                        <field name="COL">Purple</field>
+                                                                        <next>
+                                                                            <block type="base_delay" id="b6e8449b-6f79-4b49-b5a0-e4ffc0c6b712">
+                                                                                <value name="DELAY_TIME">
+                                                                                    <block type="math_number" id="5b0bb5df-e541-41ac-aaa2-c9c71e5b8cbd">
+                                                                                        <field name="NUM">100</field>
+                                                                                    </block>
+                                                                                </value>
+                                                                                <next>
+                                                                                    2023-08-01 15:41:47.139 13056-13056/com.learn4 E/code check codegeneration:                                           <block type="turtle_jikco_internal" id="c38d05f1-affb-487f-8cda-dc88342254da">
+                                                                                    <field name="DIR">1,1,0,1,1,0,0,1,1,0,1,1,0,0</field>
+                                                                                    <field name="COL">Brown</field>
+                                                                                    <next>
+                                                                                        <block type="base_delay" id="175c42a8-0107-4491-80c3-1a4adde6ccbe">
+                                                                                            <value name="DELAY_TIME">
+                                                                                                <block type="math_number" id="8bb3f0e4-9e73-476f-9d39-bfa0d3b664f1">
+                                                                                                    <field name="NUM">100</field>
+                                                                                                </block>
+                                                                                            </value>
+                                                                                        </block>
+                                                                                    </next>
+                                                                                </block>
+                                                                                </next>
+                                                                            </block>
+                                                                        </next>
+                                                                    </block>
+                                                                </next>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
+

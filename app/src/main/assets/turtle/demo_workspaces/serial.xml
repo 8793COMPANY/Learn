@@ -1,0 +1,69 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="8d32874e-b4b2-4f58-bf8f-d5fa928da0ff" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="serial_begin" id="8e0837dd-583d-48d3-aaa9-9bef385f77b2">
+                <value name="baud">
+                    <block type="serial_begin_list" id="e599415d-cb7b-4669-b124-a4718f923bb4">
+                        <field name="SB">9600</field>
+                    </block>
+                </value>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="variables_set" id="5d18d9e5-7e52-42c7-b80d-82216ed3089e">
+                <field name="VAR">item</field>
+                <value name="VALUE">
+                    <block type="serial_read" id="82f2a3e1-a55c-48b0-a54e-5fae4514fd06" />
+                </value>
+                <field name="TYPE">char</field>
+                <next>
+                    <block type="controls_if" id="63531efe-7ba5-4751-bcb1-2180145833e2">
+                        <value name="IF0">
+                            <block type="logic_compare" id="58c9f221-ba67-4f07-a4aa-c228dc8555c5">
+                                <value name="A">
+                                    <block type="variables_get" id="816fed5d-62e5-401a-9354-e5ae1feb16fa">
+                                        <field name="VAR">item</field>
+                                    </block>
+                                </value>
+                                <value name="B">
+                                    <block type="type_char" id="21fa09a3-3ee1-44c8-bd00-3c60d2890fc0">
+                                        <field name="CHAR_TEXT">a</field>
+                                    </block>
+                                </value>
+                                <field name="OP">EQ</field>
+                            </block>
+                        </value>
+                        <statement name="DO0">
+                            <block type="serial_println" id="eb416b1e-2f03-4176-8a5b-6a47a8d9ac98">
+                                <value name="STRING">
+                                    <block type="variables_get" id="55f7a4be-5f43-4c05-8df3-058663076741">
+                                        <field name="VAR">item</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="base_delay" id="c57923f8-162c-4b8c-b61f-abf7db9b95f8">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="ed625c59-f438-42ec-a46a-c01cd080cc1c">
+                                                <field name="NUM">100</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="serial_println" id="1f154070-03e6-4f2f-95bc-ec9693c501dc">
+                                                <value name="STRING">
+                                                    <block type="type_string" id="62dff334-9b17-48d3-a250-e49fb50a79ad">
+                                                        <field name="STRING_TEXT">ok</field>
+                                                    </block>
+                                                </value>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </statement>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
+

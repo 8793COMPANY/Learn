@@ -1067,7 +1067,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         boolean loadWorkspace = false;
         String filename = "";
         loadWorkspace = true;
-        filename = "android.xml";
+        if (name == "Blink"){
+            filename = "android.xml";
+        }else if(name == "AnalogReadSerial") {
+            filename = "analog_read_serial.xml";
+        }else if(name == "3색 LED 깜박이기"){
+            filename = "3led_blink.xml";
+        }else if(name == "키링반짝"){
+            filename = "keyring_twinkle.xml";
+        }else if(name == "시리얼 통신"){
+            filename = "serial.xml";
+        }
 
         String assetFilename = "turtle/demo_workspaces/" + filename;
         try {
@@ -1654,6 +1664,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         example_list = new ArrayList<>();
 
         example_list.add("Blink");
+        example_list.add("AnalogReadSerial");
+        example_list.add("3색 LED 깜박이기");
+        example_list.add("키링반짝");
+        example_list.add("시리얼 통신");
 
         file_list.addAll(FileSharedPreferences.getStringArrayList(getApplicationContext(),"files"));
 
