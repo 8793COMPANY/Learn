@@ -90,12 +90,12 @@ public class HomeFragment extends Fragment {
         String current = format.format(currentTime);
         Log.e("current day",current);
 
-        if (!current.equals(MySharedPreferences.getString(getContext(),"notice_check_day"))){
-            MySharedPreferences.setBoolean(getContext(), "notice_today_check", false);
-        }
+//        if (!current.equals(MySharedPreferences.getString(getContext(),"notice_check_day"))){
+//            MySharedPreferences.setBoolean(getContext(), "notice_today_check", false);
+//        }
 
 
-        if (!MySharedPreferences.getBoolean(getContext(),"notice_today_check")){
+//        if (!MySharedPreferences.getBoolean(getContext(),"notice_today_check")){
             Dialog dialog01;
             dialog01 = new Dialog(getContext());
             dialog01.setCanceledOnTouchOutside(false);
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
 
             surveys.setAlwaysDrawnWithCacheEnabled(true);
 
-            CheckBox today_check = dialog01.findViewById(R.id.today_check);
+//            CheckBox today_check = dialog01.findViewById(R.id.today_check);
 
             st_beforehand_survey_write.setOnClickListener(view -> {
                 Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://url.kr/qrwj28"));
@@ -147,22 +147,22 @@ public class HomeFragment extends Fragment {
                 startActivity(intentUrl);
             });
 
-            today_check.setOnCheckedChangeListener((compoundButton, b) -> {
-                Log.e("b",b+"");
-                if (b) {
-
-                    MySharedPreferences.setString(getContext(), "notice_check_day", current);
-                    MySharedPreferences.setBoolean(getContext(), "notice_today_check", true);
-                }else {
-                    MySharedPreferences.setBoolean(getContext(), "notice_today_check", false);
-                }
-            });
+//            today_check.setOnCheckedChangeListener((compoundButton, b) -> {
+//                Log.e("b",b+"");
+//                if (b) {
+//
+//                    MySharedPreferences.setString(getContext(), "notice_check_day", current);
+//                    MySharedPreferences.setBoolean(getContext(), "notice_today_check", true);
+//                }else {
+//                    MySharedPreferences.setBoolean(getContext(), "notice_today_check", false);
+//                }
+//            });
 
 
             dialog01.findViewById(R.id.close_btn).setOnClickListener(v->{
                 dialog01.dismiss();
             });
-        }
+//        }
 
 
 //        final TextView textView = root.findViewById(R.id.text_home);

@@ -2635,8 +2635,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 startActivity(intent);
 //                current_pos = 9;
 
-
-
                 break;
         }
     }
