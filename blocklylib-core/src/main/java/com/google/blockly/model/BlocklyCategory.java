@@ -238,6 +238,15 @@ public class BlocklyCategory {
             String customType = parser.getAttributeValue("", "custom");
             category.mCategoryName = parser.getAttributeValue("", "name");
             String colourAttr = parser.getAttributeValue("", "colour");
+
+            try {
+                Log.e("xml input block check 1 ", category.mCategoryName);
+                Log.e("xml input block check 2 ", customType);
+                Log.e("xml input block check 3 ", colourAttr);
+            }catch (NullPointerException e){
+                Log.e("xml input error", "!");
+            }
+
             if (!TextUtils.isEmpty(colourAttr)) {
                 try {
                     category.mColor = ColorUtils.parseColor(colourAttr, TEMP_IO_THREAD_FLOAT_ARRAY);
@@ -250,13 +259,25 @@ public class BlocklyCategory {
             int eventType = parser.next();
             PARSER_LOOP: while (eventType != XmlPullParser.END_DOCUMENT) {
                 String tagname = parser.getName();
+                try {
+                    Log.e("input parser check",parser.getName());
+                }catch (NullPointerException e){
+                    Log.e("input parser error", "!");
+                }
+
                 switch (eventType) {
                     case XmlPullParser.START_TAG:
                         if (parser.getName().equalsIgnoreCase("category")) {
                             category.addSubcategory(BlocklyCategory.fromXml(parser, factory,
                                     workspaceId));
+
                         } else if (parser.getName().equalsIgnoreCase("block")) {
                             BlockItem blockItem = new BlockItem(factory.fromXml(parser));
+                            try {
+                                Log.e("xml input block check item ", blockItem.getBlock().getType());
+                            }catch (NullPointerException e){
+                                Log.e("xml input block error", "!");
+                            }
                             blockItem.getBlock().setEventWorkspaceId(workspaceId);
                             category.addItem(blockItem);
                         } else if (parser.getName().equalsIgnoreCase("shadow")) {

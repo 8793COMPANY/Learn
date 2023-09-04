@@ -109,6 +109,7 @@ public final class BlocklyXmlHelper {
         try {
             XmlPullParser parser = PARSER_FACTORY.newPullParser();
             parser.setInput(is, null);
+            Log.e("xml input name check",parser.getName()+"");
             return BlocklyCategory.fromXml(parser, blockFactory, workspaceId);
         } catch (XmlPullParserException e) {
             throw new BlockLoadingException(e);

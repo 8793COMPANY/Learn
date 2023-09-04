@@ -249,6 +249,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     int current_pos =0, check_num = 1;
     static int turtle_pos = 0;
     boolean simulator_check = false;
+    boolean graph_data_check = false;
 
     AppDatabase2 db2 = null;
     public BlockDictionaryDao blockDictionaryDao;
@@ -435,6 +436,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 try {
                     data = Float.parseFloat(new String(buf).trim());
                     Log.e("data check",data+"");
+                    graph_data_check = true;
                 }catch (Exception e){
                     Log.e("e check",e.getMessage());
                 }
@@ -1777,14 +1779,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         l.setEnabled(true);
         l.setFormSize(10f); // set the size of the legend forms/shapes
         l.setTextSize(12f);
-        l.setTextColor(Color.WHITE);
+        l.setTextColor(Color.BLUE);
 
 //Y축
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setEnabled(true);
-        leftAxis.setTextColor(getResources().getColor(R.color.white));
+        leftAxis.setTextColor(getResources().getColor(R.color.brown_b45611));
         leftAxis.setDrawGridLines(true);
-        leftAxis.setGridColor(getResources().getColor(R.color.white));
+        leftAxis.setGridColor(getResources().getColor(R.color.black));
+        leftAxis.setAxisMinimum(0f);
 
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -2458,16 +2461,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // let the chart know it's data has changed
         chart.notifyDataSetChanged();
 
-        chart.setVisibleXRangeMaximum(50);
+        chart.setVisibleXRangeMaximum(20);
         // this automatically refreshes the chart (calls invalidate())
         chart.moveViewTo(data.getEntryCount(), 50f, YAxis.AxisDependency.LEFT);
 
     }
 
     private LineDataSet createSet() {
-
-
-
         LineDataSet set = new LineDataSet(null, "Real-time Line Data");
 //        set.setLineWidth(2f);
 
@@ -2482,8 +2482,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         set.setValueTextColor(getResources().getColor(R.color.white));
         set.setColor(getResources().getColor(R.color.brown_b45611));
 //        set.setHighLightColor(Color.rgb(0, 190, 0));
-        set.setCircleColor(Color.rgb(0, 190, 0));
-        set.setCircleHoleColor(getResources().getColor(R.color.brown_b45611));
+        set.setCircleColor(getResources().getColor(R.color.orange_f78f43));
+        set.setCircleHoleColor(getResources().getColor(R.color.orange_f78f43));
+        set.setCircleSize(2f);
 
         return set;
     }
@@ -2540,7 +2541,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     break;
 
                 case 2:
-                    addEntry(read_data());
+//                    Log.e("read data check", read_data()+"");
+                    Float data = read_data();
+                    if (graph_data_check){
+                        addEntry(data);
+                        graph_data_check = false;
+                    }
+
                     sendEmptyMessage(2);
                     break;
             }

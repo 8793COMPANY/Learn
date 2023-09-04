@@ -505,8 +505,10 @@ public class BlocklyController {
      */
     public void loadToolboxContents(InputStream toolboxJsonStream)
             throws IOException, BlockLoadingException {
+//        Log.e("input check",toolboxJsonStream.read()+"");
         mWorkspace.loadToolboxContents(toolboxJsonStream);
         updateToolbox();
+        Log.e("xml input check",toolboxJsonStream.read()+"");
     }
 
     /**
