@@ -21,6 +21,11 @@
 
 // Extensions to Blockly's language and JavaScript generator.
 
+Blockly.JavaScript['block_test'] = function(block) {
+
+  return ['"' + "hi" + '"', Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 Blockly.JavaScript['type_string'] = function(block) {
   var value_string = block.getFieldValue("STRING_TEXT");
   return ['"' + value_string + '"', Blockly.JavaScript.ORDER_ATOMIC];

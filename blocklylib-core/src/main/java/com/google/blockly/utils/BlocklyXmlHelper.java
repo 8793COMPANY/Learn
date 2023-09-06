@@ -204,6 +204,9 @@ public final class BlocklyXmlHelper {
     public static void writeToXml(@NonNull List<Block> toSerialize, @NonNull OutputStream os,
                                   @Nullable IOOptions options)
             throws BlocklySerializerException {
+        for (int i=0; i< toSerialize.size(); i++) {
+            Log.e("toSerialize check", toSerialize.get(i).getType());
+        }
         writeToXmlImpl(toSerialize, os, null, options);
     }
 

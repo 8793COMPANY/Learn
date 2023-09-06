@@ -2,6 +2,23 @@
 
 
   {
+    "type": "block_test",
+    "message0": "Set Variable %1 ",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE"
+      }
+
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#6BABEF",
+    "tooltip": "",
+    "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
+  },
+
+  {
     "type": "type_char",
     "message0": "char : ' %1 '",
     "args0": [
