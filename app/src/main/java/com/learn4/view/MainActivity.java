@@ -22,6 +22,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.android.volley.error.TimeoutError;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
@@ -93,6 +101,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -180,7 +189,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SS");
 
-    private Boolean initial=true,  server_upload_check = true;
+    private Boolean initial=true, server_upload_check = true;
     Boolean compileCheck = false, copy_check = false;
     private EditText editURL;
     EditText serial_input_box;
@@ -195,10 +204,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Button simulator_btn, component_close_btn, move_btn;
     TextView code_view;
     MediaPlayer mediaPlayer;
-    Bitmap bitmapWorkspace;
 
     LinearLayout trashcan_btn;
-    LinearLayout blockly_monitor, input_space;
+    ConstraintLayout blockly_monitor;
+    LinearLayout  input_space;
     String code = "", serial_input="";
     TextView monitor_text;
     CategoryData categoryData;
@@ -239,6 +248,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     int current_pos =0, check_num = 1;
     static int turtle_pos = 0;
     boolean simulator_check = false;
+    boolean graph_data_check = false;
 
     AppDatabase2 db2 = null;
     public BlockDictionaryDao blockDictionaryDao;
@@ -251,6 +261,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     CodeDictionaryAdapter dictionaryAdapter;
     SimulatorAdapter simulatorAdapter;
+
+    LineChart chart;
+    ConstraintLayout text_view;
 
 
     byte[] buffer = new byte[1024];  // buffer store for the stream
@@ -289,7 +302,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
     Handler mHandler = new Handler();
-    String solutionXmlAssetFilePath ="";
     Application application;
 
 
@@ -383,6 +395,51 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mMonitorHandler.sendEmptyMessage(1);
         }
 
+    }
+
+
+    public Float read_data() {
+        float data = 0;
+        Log.e("generated", "리드");
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+
+        if(deviceList.isEmpty()){
+            Log.e("read_code generated : ", "isempty 디바이스 리스트");
+        }
+        else {
+            Set<String> keys = deviceList.keySet();
+            for (String key : keys) {
+                bigBoard = deviceList.get(key);
+            }
+        }
+
+        try {
+            Application.mPhysicaloid.open();
+            Log.e("Application physicaloid",Application.mPhysicaloid.isOpened()+"");
+
+            byte[] buf = new byte[256];
+            Application.mPhysicaloid.read(buf, buf.length);
+
+
+            if (new String(buf).trim().length() != 0) {
+
+                try {
+                    data = Float.parseFloat(new String(buf).trim());
+                    Log.e("data check",data+"");
+                    graph_data_check = true;
+                }catch (Exception e){
+                    Log.e("e check",e.getMessage());
+                }
+
+            }
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
+            mMonitorHandler.sendEmptyMessage(1);
+        }
+
+        return data;
     }
 
     //private WebView mTurtleWebview;
@@ -952,6 +1009,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
             MySharedPreferences.setInt(getApplicationContext(),contents_name,5);
             uploadListener.dismiss();
+//            mMonitorHandler.sendEmptyMessage(2);
 
         }
     };
@@ -1686,6 +1744,72 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         move_btn = blockly_workspace.findViewById(R.id.move_btn);
         code_view = blockly_workspace.findViewById(R.id.code_view);
 
+        text_view = blockly_workspace.findViewById(R.id.text_view);
+
+        LinearLayout baud = blockly_workspace.findViewById(R.id.baud);
+
+
+        chart = blockly_workspace.findViewById(R.id.graph_view);
+
+        chart.setDrawGridBackground(true);
+        chart.setBackgroundColor(Color.WHITE);
+        chart.setGridBackgroundColor(Color.WHITE);
+
+// description text
+        chart.getDescription().setEnabled(false);
+        Description des = chart.getDescription();
+        des.setEnabled(false);
+//        des.setText("Real-Time DATA");
+//        des.setTextSize(15f);
+//        des.setTextColor(Color.BLACK);
+
+// touch gestures (false-비활성화)
+        chart.setTouchEnabled(false);
+
+// scaling and dragging (false-비활성화)
+        chart.setDragEnabled(false);
+        chart.setScaleEnabled(false);
+
+//auto scale
+        chart.setAutoScaleMinMaxEnabled(true);
+
+// if disabled, scaling can be done on x- and y-axis separately
+        chart.setPinchZoom(false);
+
+//X축
+//        chart.getXAxis().setDrawGridLines(true);
+        chart.getXAxis().setDrawAxisLine(false);
+
+        chart.getXAxis().setEnabled(true);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setTextColor(getResources().getColor(R.color.gray_868686));
+//Legend
+        Legend l = chart.getLegend();
+        l.setEnabled(false);
+//        l.setFormSize(10f); // set the size of the legend forms/shapes
+//        l.setTextSize(12f);
+//        l.setTextColor(Color.BLUE);
+
+//Y축
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setEnabled(true);
+        leftAxis.setTextColor(getResources().getColor(R.color.gray_868686));
+//        leftAxis.setDrawGridLines(true);
+
+
+        leftAxis.setGridColor(getResources().getColor(R.color.gray_868686));
+        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        leftAxis.setAxisMinimum(0f);
+
+        YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setEnabled(false);
+//        rightAxis.setTextColor(getResources().getColor(R.color.gray_868686));
+
+
+// don't forget to refresh the drawing
+        chart.invalidate();
+
+
 
 
 
@@ -1732,6 +1856,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onClick(View v) {
                 //simulatorDialog = new SimulatorDialog(MainActivity.this,code);
                 //simulatorDialog.show();
+            }
+        });
+
+
+        RadioGroup radioGroup = blockly_workspace.findViewById(R.id.toggle);
+
+        radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
+            switch (i){
+                case R.id.text:
+                    chart.setVisibility(View.GONE);
+                    text_view.setVisibility(View.VISIBLE);
+                    baud_rate.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.graph:
+                    chart.setVisibility(View.VISIBLE);
+                    text_view.setVisibility(View.GONE);
+                    baud_rate.setVisibility(View.GONE);
+                    break;
             }
         });
 
@@ -2371,12 +2513,80 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 case 1:
                     removeMessages(0);
+                    removeMessages(2);
                     str ="";
                     monitor_text.setText("");
+                    break;
+
+
+
+                case 2:
+//                    Log.e("read data check", read_data()+"");
+                    Float data = read_data();
+                    if (graph_data_check){
+                        addEntry(data);
+                        graph_data_check = false;
+                    }
+
+                    sendEmptyMessage(2);
                     break;
             }
         }
     } ;
+
+
+    private void addEntry(double num) {
+
+        LineData data = chart.getData();
+
+        if (data == null) {
+            data = new LineData();
+            chart.setData(data);
+        }
+
+        ILineDataSet set = data.getDataSetByIndex(0);
+        // set.addEntry(...); // can be called as well
+
+        if (set == null) {
+            set = createSet();
+            data.addDataSet(set);
+        }
+
+
+
+        data.addEntry(new Entry((float)set.getEntryCount(), (float)num), 0);
+        data.notifyDataChanged();
+
+        // let the chart know it's data has changed
+        chart.notifyDataSetChanged();
+
+        chart.setVisibleXRangeMaximum(20);
+        // this automatically refreshes the chart (calls invalidate())
+        chart.moveViewTo(data.getEntryCount(), 50f, YAxis.AxisDependency.LEFT);
+
+    }
+
+    private LineDataSet createSet() {
+        LineDataSet set = new LineDataSet(null, "");
+//        set.setLineWidth(2f);
+
+        set.setLineWidth(3);
+        set.setCircleRadius(8);
+        set.setDrawValues(false);
+        set.setDrawCircleHole(true);
+        set.setDrawCircles(true);
+        set.setDrawHorizontalHighlightIndicator(false);
+        set.setDrawHighlightIndicators(false);
+        set.setDrawValues(false);
+        set.setValueTextColor(getResources().getColor(R.color.white));
+        set.setColor(getResources().getColor(R.color.orange_f78f43));
+//        set.setHighLightColor(Color.rgb(0, 190, 0));
+        set.setCircleColor(getResources().getColor(R.color.orange_f78f43));
+        set.setCircleHoleColor(getResources().getColor(R.color.orange_f78f43));
+        set.setCircleSize(2.5f);
+
+        return set;
+    }
 
     public void setLineForOtherCategoryTabs(int position) {
         //mMonitorHandler.sendEmptyMessage(1);
@@ -2823,6 +3033,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         stringBuilder.setLength(0);
         num = 0;
         mMonitorHandler.sendEmptyMessage(0);
+        mMonitorHandler.sendEmptyMessage(2);
     }
 
     public void upload_btn(int pos) {

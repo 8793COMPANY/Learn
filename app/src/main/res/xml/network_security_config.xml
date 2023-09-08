@@ -2,5 +2,11 @@
 <network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com</domain>
+        <domain includeSubdomains="true">st-beforehand.p-e.kr</domain>
+        <domain includeSubdomains="true">st-after.p-e.kr</domain>
+        <domain includeSubdomains="true">st-e-satisfaction.p-e.kr</domain>
+        <domain includeSubdomains="true">st-m-satisfaction.p-e.kr</domain>
+        <domain includeSubdomains="true">st-h-satisfaction.p-e.kr</domain>
+        <domain includeSubdomains="true">tr-after.p-e.kr</domain>
     </domain-config>
 </network-security-config>
