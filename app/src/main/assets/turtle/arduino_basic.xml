@@ -144,29 +144,31 @@
             </value>
         </block>
 
-        <block type="serial_println">
-            <value name="STRING">
-                <block type="type_string">
-                    <field name="STRING_TEXT"></field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="serial_println">-->
+<!--            <value name="STRING">-->
+<!--                <block type="type_string">-->
+<!--                    <field name="STRING_TEXT"></field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
 
-        <block type="serial_println_int">
-            <value name="INT">
-                <block type="type_int">
-                    <field name="INT_TEXT">0</field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="serial_println_int">-->
+<!--            <value name="INT">-->
+<!--                <block type="type_int">-->
+<!--                    <field name="INT_TEXT">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
 
-        <block type="serial_println_boolean">
-            <value name="BOOLEAN">
-                <block type="type_boolean">
-                    <field name="BOOLEAN_TEXT">true</field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="serial_println_boolean">-->
+<!--            <value name="BOOLEAN">-->
+<!--                <block type="type_boolean">-->
+<!--                    <field name="BOOLEAN_TEXT">true</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
+        <block type="variables_test"></block>
 
         <block type="base_delay">
             <value name="DELAY_TIME">
