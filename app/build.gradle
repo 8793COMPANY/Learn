@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+
 }
 
 android {
@@ -103,4 +104,12 @@ dependencies {
     //tutor
     implementation 'org.xmlunit:xmlunit-core:2.6.4'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-crashlytics:18.4.1")
+    implementation("com.google.firebase:firebase-analytics:21.3.0")
+
 }

@@ -81,8 +81,9 @@ public class HomeFragment extends Fragment {
         dictionary_btn.setOnClickListener(v->{
             /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
             continueDialog.show();*/
-            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
-            startActivity(intent);
+            throw new RuntimeException("Test Crash"); // Force a crash
+//            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+//            startActivity(intent);
         });
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
