@@ -2003,7 +2003,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_bot_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 check_num = 1;
                 buildbotDialog = new BuildBotDialog(MainActivity.this,cancel_listener
                         ,learning_goal_listener, exercise_listener, code_save_listener, code_load_listener);
