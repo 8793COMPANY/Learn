@@ -136,13 +136,13 @@
         <block type="serial_read">
         </block>
 
-        <block type="serial_print">
-            <value name="text">
-                <block type="type_string">
-                    <field name="STRING_TEXT"></field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="serial_print">-->
+<!--            <value name="text">-->
+<!--                <block type="type_string">-->
+<!--                    <field name="STRING_TEXT"></field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
 
 
 <!--        <block type="serial_println">-->
@@ -169,7 +169,9 @@
 <!--            </value>-->
 <!--        </block>-->
 
-        <block type="variables_test"></block>
+        <block type="serial_print2"></block>
+
+        <block type="serial_println2"></block>
 
         <block type="base_delay">
             <value name="DELAY_TIME">
