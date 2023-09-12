@@ -118,32 +118,32 @@ public class HomeFragment extends Fragment {
 //            CheckBox today_check = dialog01.findViewById(R.id.today_check);
 
             st_beforehand_survey_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://url.kr/qrwj28"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-beforehand.p-e.kr/"));
                 startActivity(intentUrl);
             });
 
             st_after_survey_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://url.kr/3fkh2l"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-after.p-e.kr/"));
                 startActivity(intentUrl);
             });
 
             st_satisfaction_survey_elementary_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/kwvCF2aKbzb1HUZg8"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-e-satisfaction.p-e.kr/"));
                 startActivity(intentUrl);
             });
 
             st_satisfaction_survey_middle_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/ZSJfAaMM18DsSm6v5"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-m-satisfaction.p-e.kr/"));
                 startActivity(intentUrl);
             });
 
             st_satisfaction_survey_high_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://forms.gle/XYh1uQpQVV8KiPcD9"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-h-satisfaction.p-e.kr/"));
                 startActivity(intentUrl);
             });
 
             tr_after_survey_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://url.kr/uzxbs8"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://tr-after.p-e.kr/"));
                 startActivity(intentUrl);
             });
 

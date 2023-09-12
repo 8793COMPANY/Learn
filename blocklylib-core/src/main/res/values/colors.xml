@@ -9,4 +9,20 @@
     <color name="blockly_spinner_dropdown_bg">#ffeeeeee</color>
     <color name="divider_color">#00ffffff</color>
     <color name="baeulrae_main_color">#f78f43</color>
+
+
+    <color name="gray_a0a0a0">#a0a0a0</color>
+
+    <color name="copy_on">#1DDB16</color>
+    <color name="copy_off">#FF0000</color>
+
+    <color name="orange_f78f43">#f78f43</color>
+    <color name="orange_ffc865">#ffc865</color>
+    <color name="orange_fffaf2">#fffaf2</color>
+    <color name="orange_ffa548">#ffa548</color>
+
+    <color name="brown_b45611">#b45611</color>
+    <color name="brown_af6401">#af6401</color>
+
+    <color name="black_383838">#383838</color>
 </resources>
