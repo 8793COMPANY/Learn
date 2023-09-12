@@ -687,7 +687,16 @@ Blockly.JavaScript['inout_analog_read'] = function(block) {
    return varName + ' = ' + varValue + ';\n';
  };
 
-  Blockly.JavaScript['variables_test'] = function() {
+ Blockly.JavaScript['serial_print2'] = function() {
+     var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+         Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+
+     var code = "Serial.print("+varValue+");\n";
+
+     return code;
+   };
+
+  Blockly.JavaScript['serial_println2'] = function() {
     var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
         Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
 
