@@ -691,6 +691,7 @@ Blockly.JavaScript['inout_analog_read'] = function(block) {
     var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
         Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
 
+
     var code = "Serial.println("+varValue+");\n";
 
     return code;

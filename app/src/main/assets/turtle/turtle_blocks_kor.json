@@ -1392,6 +1392,7 @@
     "tooltip": ""
   },
 
+
   {
     "type": "serial_println_int",
     "message0": "시리얼모니터(줄바꿈) 숫자 출력 : %1",
