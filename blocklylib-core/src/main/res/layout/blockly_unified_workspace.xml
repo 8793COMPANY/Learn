@@ -663,6 +663,20 @@
         app:layout_constraintWidth_percent="0.1" />
 
     <Button
+        android:id="@+id/test_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="커스텀 블럭"
+        app:layout_constraintBottom_toTopOf="@+id/go_simulator_btn"
+        app:layout_constraintDimensionRatio="110:50"
+        app:layout_constraintEnd_toStartOf="@+id/translate_btn"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category_block"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1" />
+
+    <Button
         android:visibility="gone"
         android:id="@+id/ai_test_btn"
         android:layout_width="0dp"

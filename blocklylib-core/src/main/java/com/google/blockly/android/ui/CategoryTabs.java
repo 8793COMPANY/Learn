@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.blockly.android.CaseNumCheck;
 import com.google.blockly.android.R;
 import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.UploadBtnCheck;
@@ -65,14 +66,36 @@ public class CategoryTabs extends RecyclerView {
         this.btnCheck = btnCheck;
     }
 
+    private CaseNumCheck caseNum;
+    private int caseNum2;
+
+    public void setTabImage(CaseNumCheck caseNum) {
+        this.caseNum = caseNum;
+    }
+
+    public void setChangeImg(int checkNum){
+        if (checkNum == 1) { // korean
+            image[0] = R.drawable.upload_btn_false;
+            image[1] = R.drawable.upload_btn_false;
+        } else if (checkNum == 2) { // english
+            image[0] = R.drawable.upload_btn_on;
+            image[1] = R.drawable.upload_btn_on;
+        }
+    }
+
     public static final int HORIZONTAL = OrientationHelper.HORIZONTAL;
     public static final int VERTICAL = OrientationHelper.VERTICAL;
 
     public static CategoryData categoryData = CategoryData.getInstance();
 
-    int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
-    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
-            , R.drawable.reset_btn, R.drawable.home_btn, R.drawable.code_dictionary_btn_selector,R.drawable.teachable_machine_btn};
+//    int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
+//    R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
+//            , R.drawable.reset_btn, R.drawable.home_btn, R.drawable.code_dictionary_btn_selector,R.drawable.teachable_machine_btn};
+
+    public static int [] image = {R.drawable.setup_btn_selector,R.drawable.loop_btn_selector, R.drawable.method_btn_selector,
+            R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
+            , R.drawable.reset_btn, R
+            .drawable.home_btn, R.drawable.code_dictionary_btn_selector,R.drawable.teachable_machine_btn};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -333,6 +356,10 @@ public class CategoryTabs extends RecyclerView {
            // ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
          //   layoutParams.width=100;
          //   holder.itemView.requestLayout();
+
+            // caseNum default value : 0
+            Log.e("testtesttt", "case : " + caseNum2);
+            caseNum.onCaseCheck();
 
             holder.mLabel.setBackgroundResource(image[tabPosition]);
             if (check)

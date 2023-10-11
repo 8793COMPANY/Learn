@@ -663,8 +663,25 @@
   },
 
   {
-    "type": "variables_test",
+    "type": "serial_print2",
     "message0": "시리얼모니터 출력 : %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE"
+      }
+
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": "",
+    "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
+  },
+
+  {
+    "type": "serial_println2",
+    "message0": "시리얼모니터(줄바꿈) 출력 : %1",
     "args0": [
       {
         "type": "input_value",

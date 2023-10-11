@@ -642,6 +642,9 @@ public class BlockRecyclerViewHelper {
         @Override
         public void onBindViewHolder(BlockViewHolder holder, int position) {
             Log.e("mcurrentcategory",mCurrentCategory.getCategoryName());
+
+            Log.e("testtesttt","test:"+mCurrentCategory.getCategoryName());
+
             List<BlocklyCategory.CategoryItem> items = mCurrentCategory == null
                     ? new ArrayList<BlocklyCategory.CategoryItem>()
                     : mCurrentCategory.getItems();

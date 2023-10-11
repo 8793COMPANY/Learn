@@ -30,12 +30,16 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.blockly.android.CaseNumCheck;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
+import com.google.blockly.model.BlockFactory;
+import com.google.blockly.model.BlocklyEvent;
 import com.google.blockly.model.FieldDropdown;
 
+import com.google.blockly.model.Workspace;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
@@ -143,6 +147,9 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -167,7 +174,7 @@ import kotlin.Pair;
 /**
  * Demo app with the Blockly Games turtle game in a webview.
  */
-public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener , UploadBtnCheck, BlockDropdownClick {
+public class MainActivity extends BlocklySectionsActivity implements TabItemClick , OnCloseCheckListener , UploadBtnCheck, CaseNumCheck, BlockDropdownClick {
     //2022.08.08 제일 최신 버전
 
 
@@ -179,6 +186,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private TextView mGeneratedErrorTextView;
     private FrameLayout mGeneratedFrameLayout;
 
+    BlocklyCategory mBlocklyCategory;
+    BlockFactory mBlockFactory;
     BasicFieldDropdownView basicFieldDropdownView;
     FieldDropdown fieldDropdown;
     private CategoryView mCategoryView;
@@ -1239,6 +1248,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     };
 
+    private static XmlPullParserFactory createParseFactory() {
+        XmlPullParserFactory parserFactory;
+        try {
+            parserFactory = XmlPullParserFactory.newInstance();
+        } catch (XmlPullParserException e) {
+            throw new IllegalStateException(e);
+        }
+        parserFactory.setNamespaceAware(true);
+        return parserFactory;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1395,10 +1415,71 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         flyoutFragment = new FlyoutFragment();
         flyoutFragment.setCloseCheck(this);
 
+        Log.e("testtest", "testt : "+ TURTLE_BLOCK_GENERATORS.size() +"");
+
+
+        Workspace mWorkspace = controller.getWorkspace();
+        //mWorkspace.getBlockFactory();
+        Log.e("testtestt", "testt : " + mWorkspace);
+        Log.e("testtestt", "testt : " + mWorkspace.getBlockFactory());
+
+        try {
+            InputStream inputStream = getAssets().open("turtle/" + LEVEL_TOOLBOX[0]);
+
+            String text = "<toolbox>\n" +
+                    "    <category name=\"Logic22\" colour=\"210\">\n" +
+                    "\n" +
+                    "        <block type=\"serial_begin22\">\n" +
+                    "            <value name=\"baud\">\n" +
+                    "                <block type=\"serial_begin_list\">\n" +
+                    "                    <field name=\"SB\">9600</field>\n" +
+                    "                </block>\n" +
+                    "            </value>\n" +
+                    "        </block>\n" +
+                    "\n" +
+                    "        <block type=\"DHT1122\">\n" +
+                    "            <value name=\"channel\">\n" +
+                    "                <block type=\"base_pins_list\">\n" +
+
+                    "                    <field name=\"PIN\">1</field>\n" +
+                    "                </block>\n" +
+                    "            </value>\n" +
+                    "        </block>\n" +
+                    "\n" +
+                    "    </category>\n" +
+                    "</toolbox>";
+
+            InputStream inputStream1 = new ByteArrayInputStream(text.getBytes());
+
+            XmlPullParserFactory PARSER_FACTORY = createParseFactory();
+            XmlPullParser parser = null;
+
+            parser = PARSER_FACTORY.newPullParser();
+            parser.setInput(inputStream1, null);
+
+
+            Log.e("testtestt", "testt : " + parser);
+
+            BlocklyCategory.fromXml2(parser, mWorkspace.getBlockFactory(), BlocklyEvent.WORKSPACE_ID_TOOLBOX);
+
+            //mWorkspace.loadToolboxContents(text);
+            mWorkspace.loadToolboxContents(inputStream);
+        } catch (IOException | XmlPullParserException | BlockLoadingException e) {
+            e.printStackTrace();
+        }
+
+
+        //mBlocklyCategory
+        //BlocklyCategory.fromXml();
+        //BlocklyCategory.BlockItem
+        //mBlockFactory.fromXml();
+
 
         // 코드 사전 설명 보여지는 부분
         this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
         mCategoryView.mCategoryTabs.setEnableCheck(this);
+
+        mCategoryView.mCategoryTabs.setTabImage(this);
 //        Log.e("hi",mCategoryView.mRootCategory.getSubcategories().get(0).getCategoryName());\'
 
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -1934,10 +2015,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        block_setup_btn.setSelected(true);
 //
         if (turtle_pos == 0){
+            // 한글
             translate_btn.setBackgroundResource(R.drawable.translate_kor_btn);
-
+            //mCategoryView.mCategoryTabs.setTabImage(1);
+            //mCategoryView.mCategoryTabs.setChangeImg(1);
         }else{
+            // 영어
             translate_btn.setBackgroundResource(R.drawable.translate_eng_btn);
+            //mCategoryView.mCategoryTabs.setTabImage(2);
+            //mCategoryView.mCategoryTabs.setChangeImg(2);
         }
 
         arrayList = new ArrayList<>();
@@ -2355,7 +2441,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         translate_btn.setOnClickListener(v ->{
 
-            if (turtle_pos == 0) {
+            if (turtle_pos == 0) { // korean
                 turtle_pos = 1;
                 TURTLE_BLOCK_DEFINITIONS.set(1,turtle_files_kor[0]);
                 TURTLE_BLOCK_DEFINITIONS.set(2,turtle_files_kor[1]);
@@ -2363,7 +2449,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_kor[3]);
                 TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_kor[4]);
 //                translate_btn.setBackgroundResource(R.drawable.translate_kor_btn);
-            }else {
+                mCategoryView.mCategoryTabs.setChangeImg(1);
+            }else { // english
                 turtle_pos = 0;
                 TURTLE_BLOCK_DEFINITIONS.set(1,turtle_files_eng[0]);
                 TURTLE_BLOCK_DEFINITIONS.set(2,turtle_files_eng[1]);
@@ -2371,6 +2458,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 TURTLE_BLOCK_DEFINITIONS.set(5,turtle_files_eng[3]);
                 TURTLE_BLOCK_DEFINITIONS.set(6,turtle_files_eng[4]);
 //                translate_btn.setBackgroundResource(R.drawable.translate__btn);
+                mCategoryView.mCategoryTabs.setChangeImg(2);
             }
 //
 //
@@ -3182,6 +3270,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     @Override
     public void onBlockDropdownClick() {
         Log.e("test","inin");
+    }
+
+    @Override
+    public void onCaseCheck() {
+        Log.e("testtesttt", "test on!");
     }
 
 //    @Override

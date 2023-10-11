@@ -189,6 +189,8 @@ public class Workspace {
      */
     public void loadToolboxContents(InputStream source) throws BlockLoadingException {
         mFlyoutCategory = BlocklyXmlHelper.loadToolboxFromXml(source, mBlockFactory, BlocklyEvent.WORKSPACE_ID_TOOLBOX);
+
+        Log.e("testtesttt", "testtt : " + "ok2");
     }
 
     /**
@@ -200,6 +202,8 @@ public class Workspace {
      */
     public void loadToolboxContents(String toolboxXml) throws BlockLoadingException {
         loadToolboxContents(new ByteArrayInputStream(toolboxXml.getBytes()));
+
+        Log.e("testtesttt", "testtt : " + "ok");
     }
 
     /**

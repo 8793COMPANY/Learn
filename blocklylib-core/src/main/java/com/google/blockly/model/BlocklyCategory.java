@@ -59,6 +59,7 @@ public class BlocklyCategory {
         mCallback = callback;
     }
 
+
     /**
      * @return The user visible name of this category.
      */
@@ -241,13 +242,28 @@ public class BlocklyCategory {
             if (!TextUtils.isEmpty(colourAttr)) {
                 try {
                     category.mColor = ColorUtils.parseColor(colourAttr, TEMP_IO_THREAD_FLOAT_ARRAY);
+
+                    Log.e("testtest", category.mCategoryName);
+                    Log.e("testtest", colourAttr);
+                    //Log.e("testtest", category.mSubcategories+"");
+                    //Log.e("testtest", category.mItems+"");
                 } catch (ParseException e) {
                     Log.w(TAG, "Invalid toolbox category colour \"" + colourAttr + "\"");
                 }
             }
 
+            //Log.e("testtset", parser.getName());
+            //Log.e("testtset", parser.getText());
+
+            Log.e("testtest", "gg" + parser+"");
+            Log.e("testtest", "gg" + factory+"");
+            Log.e("testtest", "gg" + workspaceId);
+
             // Load items and sub categories.
             int eventType = parser.next();
+
+            Log.e("testtest", eventType +"");
+
             PARSER_LOOP: while (eventType != XmlPullParser.END_DOCUMENT) {
                 String tagname = parser.getName();
                 switch (eventType) {
@@ -255,10 +271,16 @@ public class BlocklyCategory {
                         if (parser.getName().equalsIgnoreCase("category")) {
                             category.addSubcategory(BlocklyCategory.fromXml(parser, factory,
                                     workspaceId));
+
+                            Log.e("testtest", "mSubcategories" + category.mSubcategories+"");
                         } else if (parser.getName().equalsIgnoreCase("block")) {
                             BlockItem blockItem = new BlockItem(factory.fromXml(parser));
-                            blockItem.getBlock().setEventWorkspaceId(workspaceId);
+
+                            //Log.e("testtest", "fromXml" + factory.fromXml(parser));
+
                             category.addItem(blockItem);
+
+                            Log.e("testtest", "mItems1" + category.mItems);
                         } else if (parser.getName().equalsIgnoreCase("shadow")) {
                             throw new BlockLoadingException(
                                     "Shadow blocks may not be top level toolbox blocks. " +
@@ -271,6 +293,8 @@ public class BlocklyCategory {
                                         "(Line #" + parser.getLineNumber() + ")");
                             }
                             category.addItem(new LabelItem(text));
+
+                            Log.e("testtest", "mItems2" + category.mItems+"");
                         } else if (parser.getName().equalsIgnoreCase("button")) {
                             String text = parser.getAttributeValue(null, "text");
                             String callbackKey = parser.getAttributeValue(null, "callbackKey");
@@ -280,6 +304,111 @@ public class BlocklyCategory {
                                         " (Line #" + parser.getLineNumber() + ")");
                             }
                             category.addItem(new ButtonItem(text, callbackKey));
+
+                            Log.e("testtest", "mItems3" + category.mItems+"");
+                        }
+                        // TODO: Support <sep> separator
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if (tagname.equalsIgnoreCase("category")) {
+                            break PARSER_LOOP;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                eventType = parser.next();
+            }
+
+            // Process custom category.
+            if (customType != null && CUSTOM_CATEGORIES.containsKey(customType)) {
+                category.mCustomType = customType;
+                CUSTOM_CATEGORIES.get(customType).initializeCategory(category);
+            }
+
+            return category;
+
+        } catch (IOException | XmlPullParserException e) {
+            throw new BlockLoadingException(e);
+        }
+    }
+
+    public static BlocklyCategory fromXml2(XmlPullParser parser, BlockFactory factory,
+                                          String workspaceId)
+            throws BlockLoadingException {
+        try {
+            BlocklyCategory category = new BlocklyCategory();
+            String customType = parser.getAttributeValue("", "custom");
+            category.mCategoryName = parser.getAttributeValue("", "name");
+            String colourAttr = parser.getAttributeValue("", "colour");
+            if (!TextUtils.isEmpty(colourAttr)) {
+                try {
+                    category.mColor = ColorUtils.parseColor(colourAttr, TEMP_IO_THREAD_FLOAT_ARRAY);
+
+                    Log.e("testtesttt", category.mCategoryName);
+                    Log.e("testtesttt", colourAttr);
+                    //Log.e("testtest", category.mSubcategories+"");
+                    //Log.e("testtest", category.mItems+"");
+                } catch (ParseException e) {
+                    Log.w(TAG, "Invalid toolbox category colour \"" + colourAttr + "\"");
+                }
+            }
+
+            //Log.e("testtset", parser.getName());
+            //Log.e("testtset", parser.getText());
+
+            Log.e("testtesttt", parser+"");
+            Log.e("testtesttt", factory+"");
+            Log.e("testtesttt", workspaceId);
+
+            // Load items and sub categories.
+            int eventType = parser.next();
+
+            Log.e("testtesttt", eventType +"");
+
+            PARSER_LOOP: while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tagname = parser.getName();
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        if (parser.getName().equalsIgnoreCase("category")) {
+                            category.addSubcategory(BlocklyCategory.fromXml2(parser, factory,
+                                    workspaceId));
+
+                            Log.e("testtesttt", "mSubcategories" + category.mSubcategories+"");
+                        } else if (parser.getName().equalsIgnoreCase("block")) {
+                            BlockItem blockItem = new BlockItem(factory.fromXml2(parser));
+
+                            //Log.e("testtest", "fromXml" + factory.fromXml(parser));
+
+
+                            category.addItem(blockItem);
+
+                            Log.e("testtesttt", "mItems1" + category.mItems);
+                        } else if (parser.getName().equalsIgnoreCase("shadow")) {
+                            throw new BlockLoadingException(
+                                    "Shadow blocks may not be top level toolbox blocks. " +
+                                            "(Line #" + parser.getLineNumber() + ")");
+                        } else if (parser.getName().equalsIgnoreCase("label")) {
+                            String text = parser.getAttributeValue(null, "text");
+                            if (TextUtils.isEmpty(text)) {
+                                throw new BlockLoadingException(
+                                        "<label> missing text attribute. " +
+                                                "(Line #" + parser.getLineNumber() + ")");
+                            }
+                            category.addItem(new LabelItem(text));
+
+                            Log.e("testtesttt", "mItems2" + category.mItems+"");
+                        } else if (parser.getName().equalsIgnoreCase("button")) {
+                            String text = parser.getAttributeValue(null, "text");
+                            String callbackKey = parser.getAttributeValue(null, "callbackKey");
+                            if (TextUtils.isEmpty(text) || TextUtils.isEmpty(callbackKey)) {
+                                throw new BlockLoadingException(
+                                        "<button> missing text and/or callbackKey attributes." +
+                                                " (Line #" + parser.getLineNumber() + ")");
+                            }
+                            category.addItem(new ButtonItem(text, callbackKey));
+
+                            Log.e("testtesttt", "mItems3" + category.mItems+"");
                         }
                         // TODO: Support <sep> separator
                         break;
@@ -372,6 +501,11 @@ public class BlocklyCategory {
         public BlockItem(Block block) {
             super(TYPE_BLOCK);
             mBlock = block;
+
+            Log.e("testtest", "block : " + block);
+            Log.e("testtest", "block : " + block.getType());
+            Log.e("testtest", "block : " + block.getId());
+            Log.e("testtest", "block : " + block.getAllConnections());
         }
 
         public Block getBlock() {
