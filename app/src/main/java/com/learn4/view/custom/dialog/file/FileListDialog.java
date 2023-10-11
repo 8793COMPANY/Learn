@@ -91,7 +91,7 @@ public class FileListDialog extends Dialog {
 
         fileLoadAdapter.setOnItemClickListener(new FileLoadAdapter.OnItemClickEventListener() {
             @Override
-            public void onItemClick(String name) {
+            public void onItemClick(int pos, String name) {
                 if (type.equals("example_load")){
                     ((MainActivity)activity).loadExample(name);
                 }else{

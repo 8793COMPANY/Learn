@@ -62,6 +62,20 @@
             </value>
         </block>
 
+        <block type="ultrasonic_sensor_setup">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <!--<field name="VALUE1">OUTPUT</field>-->
+            <value name="PIN2">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
 <!--        <block type="number">-->
 <!--            <value name="num">-->
 <!--               -->
@@ -120,6 +134,7 @@
                 </block>
             </value>
         </block>
+
         <!--<block type="serial_print">
             <value name="text">
                 <block type="text">
@@ -136,13 +151,14 @@
         <block type="serial_read">
         </block>
 
-        <block type="serial_print">
-            <value name="text">
-                <block type="type_string">
-                    <field name="STRING_TEXT"></field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="serial_print">-->
+<!--            <value name="text">-->
+<!--                <block type="type_string">-->
+<!--                    <field name="STRING_TEXT"></field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
 
 <!--        <block type="serial_println">-->
 <!--            <value name="STRING">-->
@@ -168,7 +184,21 @@
 <!--            </value>-->
 <!--        </block>-->
 
-        <block type="variables_test"></block>
+        <block type="serial_print2">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
+        </block>
+
+        <block type="serial_println2">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
+        </block>
 
         <block type="base_delay">
             <value name="DELAY_TIME">
@@ -311,19 +341,7 @@
             </value>
         </block>
 
-        <block type="ultrasonic_sensor_setup">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
-            <!--<field name="VALUE1">OUTPUT</field>-->
-            <value name="PIN2">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
-        </block>
+
 
         <block type="ultrasonic_sensor">
         </block>
@@ -515,6 +533,20 @@
             <value name="text">
                 <block type="text">
                     <field name="TEXT">Hello World</field>
+                </block>
+            </value>
+            <field name="line_number">0</field>
+            <value name="character_number">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="lcd_I2C">
+            <value name="text">
+                <block type="text">
+                    <field name="TEXT">hello, baeulrae</field>
                 </block>
             </value>
             <field name="line_number">0</field>

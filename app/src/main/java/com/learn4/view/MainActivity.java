@@ -281,6 +281,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
+
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜"};
+
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
             DefaultBlocks.LOGIC_BLOCKS_PATH,
@@ -351,6 +354,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             if (new String(buf).trim().length() != 0) {
                 Log.e("num:",num+"");
                 Log.e("length",stringBuilder.toString().length()+"");
+                Log.e("text check",new String(buf).trim());
                 if (num < 15) {
                     stringBuilder.append(new String(buf).trim());
                     if (enter_check){
@@ -415,7 +419,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
 
         try {
-            Application.mPhysicaloid.open();
+//            Application.mPhysicaloid.open();
             Log.e("Application physicaloid",Application.mPhysicaloid.isOpened()+"");
 
             byte[] buf = new byte[256];
@@ -492,6 +496,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         code = generatedCode;
                         submittedXml = xml;
                         Log.e("code",code);
+                        Log.e("submittedXml",submittedXml);
 
                         create_file(generatedCode, "code.ino");
                         Log.e("compileCheck",compileCheck+"");
@@ -1135,6 +1140,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             filename = "keyring_twinkle.xml";
         }else if(name == "시리얼 통신"){
             filename = "serial.xml";
+        }else if(name =="스마트팜"){
+            filename = "smart_farm.xml";
         }
 
         String assetFilename = "turtle/demo_workspaces/" + filename;
@@ -1298,7 +1305,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         basicFieldDropdownView.setOnBlockDropdownClickListener(this);
         basicFieldDropdownView.setOnBlockDropdownClickListener(new BlockDropdownClick() {
-            @Override
+            @Overridep
             public void onBlockDropdownClick(int position) {
                 Log.e("test", "hihihi");
             }
@@ -1721,11 +1728,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         file_list = new ArrayList<>();
         example_list = new ArrayList<>();
 
-        example_list.add("Blink");
-        example_list.add("AnalogReadSerial");
-        example_list.add("3색 LED 깜박이기");
-        example_list.add("키링반짝");
-        example_list.add("시리얼 통신");
+//        example_list.add("Blink");
+//        example_list.add("AnalogReadSerial");
+//        example_list.add("3색 LED 깜박이기");
+//        example_list.add("키링반짝");
+//        example_list.add("시리얼 통신");
+
+        for (String example : example_list_array){
+            example_list.add(example);
+        }
 
         file_list.addAll(FileSharedPreferences.getStringArrayList(getApplicationContext(),"files"));
 

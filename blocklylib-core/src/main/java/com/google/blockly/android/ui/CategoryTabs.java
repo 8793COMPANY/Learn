@@ -323,7 +323,6 @@ public class CategoryTabs extends RecyclerView {
             final BlocklyCategory category = mCategories.get(tabPosition);
             isSelected = (category == mCurrentCategory);
             //Log.e("tabPosition",tabPosition+"");
-
             // These may throw a NPE, but that is an illegal state checked above.
 //
             mLabelAdapter.onBindLabel(holder.mLabel, category, tabPosition);

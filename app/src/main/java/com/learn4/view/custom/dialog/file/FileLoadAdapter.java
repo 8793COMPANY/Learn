@@ -41,7 +41,7 @@ public class FileLoadAdapter extends RecyclerView.Adapter<FileLoadAdapter.ItemVi
 
 
     public interface OnItemClickEventListener {
-        void onItemClick(String name);
+        void onItemClick(int pos,String name);
         void onItemDelete(int pos, String name);
     }
 
@@ -82,7 +82,7 @@ public class FileLoadAdapter extends RecyclerView.Adapter<FileLoadAdapter.ItemVi
         holder.select_btn.setOnClickListener(v->{
             if (position != RecyclerView.NO_POSITION) {
                 if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(listData.get(position));
+                    mItemClickListener.onItemClick(position,listData.get(position));
                 }
             }
         });

@@ -258,6 +258,9 @@
                 </block>
             </value>
         </block>
+
+
+
         <block type="clear_lcd"></block>
         <block type="bluetooth_sensor">
             <value name="baud">
