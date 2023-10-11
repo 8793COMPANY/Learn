@@ -759,6 +759,8 @@
     "tooltip": ""
   },
 
+
+
   {
     "type": "bluetooth_sensor",
     "message0": "Bluetooth %1 %2 %3 baud %4",
