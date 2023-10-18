@@ -286,6 +286,20 @@ Blockly.JavaScript['lcd'] = function (block) {
   return code;
 };
 
+Blockly.JavaScript['lcd_I2C'] = function (block) {
+  var text = Blockly.JavaScript.valueToCode(block, 'text', Blockly.JavaScript.ORDER_NONE) || '255';
+  var line_number = block.getFieldValue('line_number');
+  var character_number = parseInt(Blockly.JavaScript.valueToCode(block, 'character_number', Blockly.JavaScript.ORDER_NONE) || '0');
+
+  Blockly.JavaScript.setups_["%1"] = '\nlcd.init();\nlcd.backlight();\n';
+  Blockly.JavaScript.definitions_["includelib1"] = "#include <Arduino.h>";
+  Blockly.JavaScript.definitions_["includelib2"] = "#include <LiquidCrystal_I2C.h>";
+  Blockly.JavaScript.definitions_["definelcdpins"] = "LiquidCrystal_I2C lcd(0x27, 16, 2);"
+
+  var code = 'lcd.setCursor(' + character_number + ',' + line_number + ');\n'+'lcd.print(' + text + ');\n'
+  return code;
+};
+
 Blockly.JavaScript['clear_lcd'] = function (block) {
   //  Assemble JavaScript into code variable.
   var code = 'lcd.clear();\n';
