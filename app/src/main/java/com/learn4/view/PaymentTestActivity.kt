@@ -1,9 +1,9 @@
 package com.learn4.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.android.billingclient.api.*
 import com.google.common.collect.ImmutableList
 import com.learn4.R
@@ -12,12 +12,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-
 class PaymentTestActivity : AppCompatActivity(), PurchasesUpdatedListener {
 
     lateinit var billingClient : BillingClient
     private var skuDetailsList: List<SkuDetails> = mutableListOf()
     private var productDetailsList: List<ProductDetails> = mutableListOf()
+    private var productDetailsList2: List<Purchase> = mutableListOf()
     private lateinit var consumeListenser : ConsumeResponseListener
     var check = false
 
@@ -47,6 +47,8 @@ class PaymentTestActivity : AppCompatActivity(), PurchasesUpdatedListener {
                         Log.e("in","main")
 
                         querySkuDetails()
+//                        queryPurchases()
+//                        test()
                     }
 
                 }
@@ -54,8 +56,10 @@ class PaymentTestActivity : AppCompatActivity(), PurchasesUpdatedListener {
         })
 
         button.setOnClickListener {
+            val offerToken = productDetailsList[0].subscriptionOfferDetails?.get(0)?.offerToken!!
             var flowProductDetailParams = BillingFlowParams.ProductDetailsParams.newBuilder()
                 .setProductDetails(productDetailsList[0])
+                .setOfferToken(offerToken)
                 .build()
 
             var flowParams = BillingFlowParams.newBuilder()
@@ -74,29 +78,83 @@ class PaymentTestActivity : AppCompatActivity(), PurchasesUpdatedListener {
         }
     }
 
+    fun test(){
+        val queryProductDetailsParams =
+            QueryProductDetailsParams.newBuilder()
+                .setProductList(
+                    ImmutableList.of(
+                        QueryProductDetailsParams.Product.newBuilder()
+                            .setProductId("baeulrae_test1")
+                            .setProductType(BillingClient.ProductType.SUBS)
+                            .build()))
+                .build()
+
+        billingClient.queryProductDetailsAsync(queryProductDetailsParams) {
+                billingResult,
+                productDetailsList ->
+            // check billingResult
+            // process returned productDetailsList
+
+            Log.e("payment queryProductDetailsAsync data", productDetailsList.size.toString())
+        }
+
+    }
+
     private fun querySkuDetails() {
         Log.e("in","querySkuDetails")
+
+        val sku_contents_list: MutableList<QueryProductDetailsParams.Product> = ArrayList()
+        sku_contents_list.add(QueryProductDetailsParams.Product.newBuilder()
+            .setProductId(
+                    "baeulrae_test1")
+            .setProductType(BillingClient.ProductType.SUBS)
+            .build())
         val tempParam = QueryProductDetailsParams.newBuilder()
             .setProductList(
                 ImmutableList.of(
                     QueryProductDetailsParams.Product.newBuilder()
-                        .setProductId("test")
+                        .setProductId(
+                            "baeulrae_test1")
                         .setProductType(BillingClient.ProductType.SUBS)
                         .build()
-                )
-            ).build()
+            )).build()
+
+        Log.e("payment queryProductDetailAsync product", "baeulrae_test1")
 
 
 
         billingClient.queryProductDetailsAsync(tempParam) { billingResult, mutableList ->
-            Log.e("queryProductDetailsAsync in",billingResult.toString())
+            Log.e("payment queryProductDetailsAsync in",billingResult.toString())
+            Log.e("payment queryProductDetailsAsync size", mutableList.size.toString())
             productDetailsList = mutableList
             mutableList.forEach {
-                Log.e("queryProductDetailsAsync it", it.toString())
+                Log.e("payment queryProductDetailsAsync it", it.toString())
             }
         }
 
 
+    }
+
+    fun queryPurchases() {
+        if (!billingClient.isReady) {
+            Log.e("check queryPurchases", "queryPurchases: BillingClient is not ready")
+        }
+        // Query for existing subscription products that have been purchased.
+        billingClient.queryPurchasesAsync(
+            QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+        ) { billingResult, purchaseList ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+                Log.e("payment check queryPurchases size", purchaseList.size.toString())
+                if (!purchaseList.isNullOrEmpty()) {
+                    productDetailsList2 = purchaseList
+                } else {
+                    productDetailsList2 = emptyList()
+                }
+
+            } else {
+                Log.e("check queryPurchases error", billingResult.debugMessage)
+            }
+        }
     }
 
     override fun onPurchasesUpdated(p0: BillingResult, p1: MutableList<Purchase>?) {
@@ -110,7 +168,10 @@ class PaymentTestActivity : AppCompatActivity(), PurchasesUpdatedListener {
                     .setPurchaseToken(purchase.purchaseToken)
                     .build()
 
+
                 billingClient.consumeAsync(consumeParams, consumeListenser)
+
+                
 
             }
         } else if (p0.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {

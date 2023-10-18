@@ -296,6 +296,7 @@ public class BlocklyActivityHelper {
             CodeGenerationRequest.CodeGeneratorCallback codeGenerationCallback) {
 
         final StringOutputStream serialized = new StringOutputStream();
+
         try {
             mController.getWorkspace().serializeToXml(serialized);
         } catch (BlocklySerializerException e) {
