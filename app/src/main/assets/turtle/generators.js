@@ -286,6 +286,7 @@ Blockly.JavaScript['lcd'] = function (block) {
   return code;
 };
 
+
 Blockly.JavaScript['lcd_I2C'] = function (block) {
   var text = Blockly.JavaScript.valueToCode(block, 'text', Blockly.JavaScript.ORDER_NONE) || '255';
   var line_number = block.getFieldValue('line_number');

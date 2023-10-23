@@ -320,6 +320,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Set<String> keys = deviceList.keySet();
             for (String key : keys) {
                 bigBoard = deviceList.get(key);
+                try {
+                    Log.e("hi device",deviceList.get(key).getDeviceId()+"");
+                    Log.e("hi device",deviceList.get(key).getDeviceName()+"");
+                    Log.e("hi device serial number",deviceList.get(key).getSerialNumber());
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
             }
         }
 
@@ -635,6 +643,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Boolean value = OpenUSB();
             if (value) {
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+
+
                 customProgressDialog.dismiss();
                 uploadListener.show();
             }
