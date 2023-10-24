@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,16 +20,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.learn4.util.Application;
 import com.learn4.R;
-import com.learn4.util.MySharedPreferences;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
 import com.learn4.view.dictionary.BlockDictionaryActivity2;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment {
@@ -41,6 +48,8 @@ public class HomeFragment extends Fragment {
     Button free_btn,contents_btn,dictionary_btn;
     TextView user_name;
 
+    private AdView mAdView;
+    Button adDeleteBtn;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -58,6 +67,45 @@ public class HomeFragment extends Fragment {
         user_name = root.findViewById(R.id.user_name);
 
 //        user_name.setText(Application.user.getName());
+
+        adDeleteBtn = root.findViewById(R.id.adDeleteBtn);
+        adDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (adDeleteBtn.getText().equals("광고제거")) {
+                    adDeleteBtn.setText("광고표시");
+                    mAdView.setVisibility(View.GONE);
+                } else if (adDeleteBtn.getText().equals("광고표시")) {
+                    adDeleteBtn.setText("광고제거");
+                    mAdView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        MobileAds.initialize(requireContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+
+            }
+        });
+
+//        mAdView = root.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+//        AdView adView = new AdView(requireContext());
+//        adView.setAdSize(AdSize.BANNER);
+//        adView.setAdUnitId("\n" + "ca-app-pub-3940256099942544~3347511713");
+
+        //MobileAds.initialize(requireContext());
+        mAdView = root.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+//        List<String> testDeviceIds = Arrays.asList("33BE2250B43518CCDA7DE426D04EE231");
+//        RequestConfiguration configuration =
+//                new RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build();
+//        MobileAds.setRequestConfiguration(configuration);
+
 
         free_btn.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), MainActivity.class);
