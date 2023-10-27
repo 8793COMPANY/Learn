@@ -55,6 +55,10 @@ class PaymentTestActivity : AppCompatActivity(), PurchasesUpdatedListener {
             }
         })
 
+        var result : BillingResult =  BillingResult.newBuilder().build()
+        result.responseCode
+
+
         button.setOnClickListener {
             val offerToken = productDetailsList[0].subscriptionOfferDetails?.get(0)?.offerToken!!
             var flowProductDetailParams = BillingFlowParams.ProductDetailsParams.newBuilder()
