@@ -1,6 +1,7 @@
 package com.learn4.view.mode_select.home;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,17 +22,29 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.learn4.util.Application;
 import com.learn4.R;
 import com.learn4.util.MySharedPreferences;
+import com.learn4.view.PaymentTestActivity;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
 import com.learn4.view.dictionary.BlockDictionaryActivity2;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
+import kotlin.jvm.internal.Intrinsics;
 
 public class HomeFragment extends Fragment {
 
@@ -41,7 +54,7 @@ public class HomeFragment extends Fragment {
     Button free_btn,contents_btn,dictionary_btn;
     TextView user_name;
 
-
+    private InterstitialAd mInterstitialAd;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,12 +72,58 @@ public class HomeFragment extends Fragment {
 
 //        user_name.setText(Application.user.getName());
 
+        setupInterstitialAd();
+
         free_btn.setOnClickListener(v->{
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            intent.putExtra("contents_name","none");
-            intent.putExtra("id","0");
-            myApplication.showLoadingScreen(getContext());
-            startActivity(intent);
+            if (mInterstitialAd == null) {
+                Log.e("testtest", "The interstitial ad wasn't ready yet.");
+                return;
+            }
+
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdClicked() {
+                    Log.e("testtest", "Ad was clicked.");
+                }
+
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    Log.e("testtest", "Ad dismissed fullscreen content.");
+
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("contents_name","none");
+                    intent.putExtra("id","0");
+                    myApplication.showLoadingScreen(getContext());
+                    startActivity(intent);
+
+                    mInterstitialAd = null;
+                    setupInterstitialAd();
+                }
+
+                @Override
+                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                    Log.e("testtest", "Ad failed to show fullscreen content.");
+                    mInterstitialAd = null;
+                }
+
+                @Override
+                public void onAdImpression() {
+                    Log.e("testtest", "Ad recorded an impression.");
+                }
+
+                @Override
+                public void onAdShowedFullScreenContent() {
+                    Log.e("testtest", "Ad showed fullscreen content.");
+                }
+            });
+
+            mInterstitialAd.show(requireActivity());
+
+//            Intent intent = new Intent(getActivity(), MainActivity.class);
+//            intent.putExtra("contents_name","none");
+//            intent.putExtra("id","0");
+//            myApplication.showLoadingScreen(getContext());
+//            startActivity(intent);
         });
 
         content_mode.setOnClickListener(v->{
@@ -175,6 +234,29 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    private void setupInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(requireContext(),
+                //ca-app-pub-3940256099942544/6300978111 >> 배너
+                //ca-app-pub-3940256099942544/8691691433 >> 동영상(전면)
+                //ca-app-pub-3940256099942544/1033173712 >> 이미지(전면)
+                "ca-app-pub-3940256099942544/1033173712",
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        Log.d("DEBUG: ", loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        Log.d("DEBUG: ", "Ad was loaded.");
+                        mInterstitialAd = interstitialAd;
+                    }
+                });
+    }
 
     @Override
     public void onStop() {

@@ -30,6 +30,15 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
@@ -306,6 +315,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     Handler mHandler = new Handler();
     Application application;
+
+    private InterstitialAd mInterstitialAd;
 
 
     public void read_code() {
@@ -1269,6 +1280,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             Application.checkUploadBtn();
         });
+
+        setupInterstitialAd();
 
 
 
@@ -3046,44 +3059,165 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mMonitorHandler.sendEmptyMessage(2);
     }
 
+    private void setupInterstitialAd() {
+        Log.e("testtest", "setup ok");
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,
+                //ca-app-pub-3940256099942544/6300978111 >> 배너
+                //ca-app-pub-3940256099942544/8691691433 >> 동영상(전면)
+                //ca-app-pub-3940256099942544/1033173712 >> 이미지(전면)
+                "ca-app-pub-3940256099942544/8691691433",
+                adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        Log.d("DEBUG: ", loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        Log.d("DEBUG: ", "Ad was loaded.");
+                        mInterstitialAd = interstitialAd;
+                    }
+                });
+    }
+
+    private void test() {
+        if (mInterstitialAd == null) {
+            Log.e("testtest", "The interstitial ad wasn't ready yet.");
+            return;
+        } else {
+            mInterstitialAd.show(this);
+        }
+
+        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+            @Override
+            public void onAdClicked() {
+                Log.e("testtest", "Ad was clicked.");
+            }
+
+            @Override
+            public void onAdDismissedFullScreenContent() {
+                Log.e("testtest", "Ad dismissed fullscreen content.");
+                mInterstitialAd = null;
+                //setupInterstitialAd();
+                test2();
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                Log.e("testtest", "Ad failed to show fullscreen content.");
+                mInterstitialAd = null;
+            }
+
+            @Override
+            public void onAdImpression() {
+                Log.e("testtest", "Ad recorded an impression.");
+            }
+
+            @Override
+            public void onAdShowedFullScreenContent() {
+                Log.e("testtest", "Ad showed fullscreen content.");
+            }
+        });
+//        mMonitorHandler.sendEmptyMessage(1);
+//        customProgressDialog.show();
+//
+//        blockly_monitor.setVisibility(View.GONE);
+//        mBlocklyActivityHelper.getFlyoutController();
+//        categoryData.setPosition(6);
+//        current_pos = 6;
+//
+//        compileCheck = true;
+//
+//        if (getController().getWorkspace().hasBlocks()) {
+//            Log.e("??", "들어옴");
+//            mBlocklyActivityHelper.requestCodeGeneration(
+//                    getBlockGeneratorLanguage(),
+//                    getBlockDefinitionsJsonPaths(),
+//                    getGeneratorsJsPaths(),
+//                    getCodeGenerationCallback());
+//        }
+//
+//        Log.e("MainActivity chapter_id",chapter_id+"");
+    }
+
+    private void test2() {
+        mMonitorHandler.sendEmptyMessage(1);
+        customProgressDialog.show();
+
+        blockly_monitor.setVisibility(View.GONE);
+        mBlocklyActivityHelper.getFlyoutController();
+        categoryData.setPosition(6);
+        current_pos = 6;
+
+        compileCheck = true;
+
+        if (getController().getWorkspace().hasBlocks()) {
+            Log.e("??", "들어옴");
+            mBlocklyActivityHelper.requestCodeGeneration(
+                    getBlockGeneratorLanguage(),
+                    getBlockDefinitionsJsonPaths(),
+                    getGeneratorsJsPaths(),
+                    getCodeGenerationCallback());
+        } else {
+            Log.e("??", "false");
+        }
+
+        Log.e("MainActivity chapter_id",chapter_id+"");
+    }
+
     public void upload_btn(int pos) {
         hideSystemUI();
         Log.e("upload_btn","in");
         Log.e("upload_btn",Application.all_check+"");
 
+        // 밖으로 빼기(광고 부분만) >> 리스너 겹치니까
         if (Application.all_check) {
-            mMonitorHandler.sendEmptyMessage(1);
-            customProgressDialog.show();
+            //여기에 광고 넣기
+            test2();
 
-            blockly_monitor.setVisibility(View.GONE);
-            mBlocklyActivityHelper.getFlyoutController();
-            categoryData.setPosition(6);
-            current_pos = 6;
-
-            compileCheck = true;
-
-            if (getController().getWorkspace().hasBlocks()) {
-                Log.e("??", "들어옴");
-                mBlocklyActivityHelper.requestCodeGeneration(
-                        getBlockGeneratorLanguage(),
-                        getBlockDefinitionsJsonPaths(),
-                        getGeneratorsJsPaths(),
-                        getCodeGenerationCallback());
-            }
-
-            Log.e("MainActivity chapter_id",chapter_id+"");
-            // TODO : 화면 캡쳐 트리거
-//            if(!chapter_id.equals("0")) {
-//                Log.e("MainActivity", "captureWorkspace: start");
-//                bitmapWorkspace = controller.captureWorkspace();
+//            mMonitorHandler.sendEmptyMessage(1);
+//            customProgressDialog.show();
 //
-//                try {
-//                    saveImage(bitmapWorkspace, "captureWorkspace");
-//                    Log.e("MainActivity", "captureWorkspace: save ok");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+//            blockly_monitor.setVisibility(View.GONE);
+//            mBlocklyActivityHelper.getFlyoutController();
+//            categoryData.setPosition(6);
+//            current_pos = 6;
+//
+//            compileCheck = true;
+//
+//            if (getController().getWorkspace().hasBlocks()) {
+//                Log.e("??", "들어옴");
+//                mBlocklyActivityHelper.requestCodeGeneration(
+//                        getBlockGeneratorLanguage(),
+//                        getBlockDefinitionsJsonPaths(),
+//                        getGeneratorsJsPaths(),
+//                        getCodeGenerationCallback());
 //            }
+//
+//            Log.e("MainActivity chapter_id",chapter_id+"");
+//            // TODO : 화면 캡쳐 트리거
+////            if(!chapter_id.equals("0")) {
+////                Log.e("MainActivity", "captureWorkspace: start");
+////                bitmapWorkspace = controller.captureWorkspace();
+////
+////                try {
+////                    saveImage(bitmapWorkspace, "captureWorkspace");
+////                    Log.e("MainActivity", "captureWorkspace: save ok");
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                }
+////            }
 
         } else {
             //Toast.makeText(getApplicationContext(), "WIFI 및 USB를 연결해주세요!", Toast.LENGTH_SHORT).show();
@@ -3093,6 +3227,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         current_pos = 6;
     }
+//
+//    private void test2() {
+//        UploadFalseDialog uploadFalseDialog = new UploadFalseDialog(this);
+//        uploadFalseDialog.show();
+//    }
 
     @Override
     public void onCheckEnabled() {
