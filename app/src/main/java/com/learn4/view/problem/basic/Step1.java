@@ -1,5 +1,6 @@
 package com.learn4.view.problem.basic;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,11 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.learn.wp_rest.data.wp.media.Media;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ComponentDao;
 import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.data.room.entity.Component;
 import com.learn4.data.room.entity.Contents;
+import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.recyclerview.RecyclerDecoration_Width;
@@ -100,8 +103,13 @@ public class Step1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_step1, container, false);
 
-        Log.e("contents:",contents_name);
+        Log.e("contents name check",contents_name);
         db = AppDatabase.getInstance(requireContext());
+
+        if (contents_name.equals("LED 깜박이기") || contents_name.equals("LED 깜빡이는 시간 바꾸기") || contents_name.equals("LED 핀 번호 바꾸기")){
+            Application.mediaPlayer = MediaPlayer.create(getContext(),R.raw.led_3);
+            Application.mediaPlayer.start();
+        }
 
         contentsDao = db.contentsDao();
         contentsList = contentsDao.findAll();
@@ -233,5 +241,14 @@ public class Step1 extends Fragment {
 
         return view;
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Application.mediaPlayer != null) {
+            Application.mediaPlayer.release();
+            Application.mediaPlayer = null;
+        }
     }
 }

@@ -26,6 +26,10 @@
 
         <block type="turtle_setup_loop"></block>
 
+
+
+
+
         <block type="pinMode">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -75,6 +79,41 @@
                 </block>
             </value>
         </block>
+
+        <block type="pluse_sensor">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+
+        </block>
+
+<!--        <block type="get_weather">-->
+<!--            <value name="DATE">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="TIME">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="LOCAL">-->
+<!--                <block type="base_local_list">-->
+<!--                    <field name="LOCAL">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <value name="TYPE">-->
+<!--                <block type="base_type_list">-->
+<!--                    <field name="TYPE">온도</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
+
+
 
         <!--        <block type="number">-->
         <!--            <value name="num">-->
@@ -151,6 +190,19 @@
         <block type="serial_read">
         </block>
 
+        <block type="read_temperature_sensor">
+        </block>
+        <block type="serial_readString">
+        </block>
+
+<!--        <block type="serial_write">-->
+<!--            <value name="VALUE">-->
+<!--                <block type="type_string">-->
+<!--                    <field name="STRING_TEXT"></field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
         <!--        <block type="serial_print">-->
         <!--            <value name="text">-->
         <!--                <block type="type_string">-->
@@ -207,6 +259,19 @@
                 </block>
             </value>
         </block>
+
+
+        <block type="temperature_sensor">
+        <value name="PIN">
+            <block type="base_pins_list">
+                <field name="PIN">0</field>
+            </block>
+        </value>
+        <!--<field name="VALUE1">OUTPUT</field>-->
+
+        </block>
+
+
     </category>
 
     <!-- 함수 카테고리 안에 들어갈 블록   -->

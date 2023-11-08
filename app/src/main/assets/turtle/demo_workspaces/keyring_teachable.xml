@@ -1,0 +1,217 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="8d32874e-b4b2-4f58-bf8f-d5fa928da0ff" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="neo_pixel_setup" id="bf04c60e-b5c3-4f89-ba74-c74e725d8db2">
+                <next>
+                    <block type="neo_pixel" id="ceeca774-dc04-42fc-be86-d6b48c02e64c">
+                        <value name="channel">
+                            <block type="base_pins_list" id="b0a7c01c-bb44-4483-8842-242b896adaff">
+                                <field name="PIN">12</field>
+                            </block>
+                        </value>
+                        <value name="angle">
+                            <block type="math_number" id="ba41ce29-2ff2-4055-9b47-7704094eead3">
+                                <field name="NUM">10</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="neo_pixel_brightness" id="d776d048-c3d6-4adb-acc9-c5f99358729e">
+                <value name="angle">
+                    <block type="math_number" id="3f59ffaa-5555-4db3-8583-c41026171abf">
+                        <field name="NUM">100</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="controls_if" id="54381dc5-3732-48db-b943-18e6088efb28">
+                        <value name="IF0">
+                            <block type="logic_compare" id="6640498b-0e34-4f1f-8492-6d65cd01a322">
+                                <value name="A">
+                                    <block type="serial_read" id="eaaee628-2b55-4ce9-bbb9-e61d540e475e" />
+                                </value>
+                                <value name="B">
+                                    <block type="type_char" id="55c2ce3b-a5ae-46f0-a5fe-e04089af8335">
+                                        <field name="CHAR_TEXT">a</field>
+                                    </block>
+                                </value>
+                                <field name="OP">EQ</field>
+                            </block>
+                        </value>
+                        <statement name="DO0">
+                            <block type="neo_pixel_custom" id="2793c8a1-d8c2-4994-9d5b-4d497f56a017">
+                                <value name="face">
+                                    <block type="face_list" id="1aa60ff6-01c2-4414-a3e8-d168ec641d28">
+                                        <field name="face">happy</field>
+                                    </block>
+                                </value>
+                                <value name="color">
+                                    <block type="color_list" id="18d88ec2-d741-476e-bf86-d5fa246d14af">
+                                        <field name="color">Red</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </statement>
+                        <next>
+                            <block type="controls_if" id="a61339d5-8815-45b4-970a-20a86ece9e49">
+                                <value name="IF0">
+                                    <block type="logic_compare" id="19f190bf-9557-4a48-aee4-d368eb8a4d94">
+                                        <value name="A">
+                                            <block type="serial_read" id="63b8bdad-8eaf-435c-a444-09e98e896323" />
+                                        </value>
+                                        <value name="B">
+                                            <block type="type_char" id="1ce16df4-360a-4577-a276-27c87c5c3a5e">
+                                                <field name="CHAR_TEXT">b</field>
+                                            </block>
+                                        </value>
+                                        <field name="OP">EQ</field>
+                                    </block>
+                                </value>
+                                <statement name="DO0">
+                                    <block type="neo_pixel_custom" id="66d0c432-ede1-4ea8-a4ce-0b33c39113a4">
+                                        <value name="face">
+                                            <block type="face_list" id="58a9f8fc-0a10-4fae-9b80-fabd2606e760">
+                                                <field name="face">sad</field>
+                                            </block>
+                                        </value>
+                                        <value name="color">
+                                            <block type="color_list" id="325fe9fd-43b7-4cdc-8af7-055a73b787c4">
+                                                <field name="color">Orange</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </statement>
+                                <next>
+                                    <block type="controls_if" id="dd1bc975-9c4b-4a83-b8cf-84eb6920bbd2">
+                                        <value name="IF0">
+                                            <block type="logic_compare" id="6fb446ae-40a7-4f41-88f0-2b926f633980">
+                                                <value name="A">
+                                                    <block type="serial_read" id="07b36f2b-e1b1-4003-a3cd-fad91889d26d" />
+                                                </value>
+                                                <value name="B">
+                                                    <block type="type_char" id="4b637c12-47fc-4fd3-b24c-3a02cae9da8f">
+                                                        <field name="CHAR_TEXT">c</field>
+                                                    </block>
+                                                </value>
+                                                <field name="OP">EQ</field>
+                                            </block>
+                                        </value>
+                                        <statement name="DO0">
+                                            <block type="neo_pixel_custom" id="e491d2b8-dac3-4a44-abc7-998382ad9d82">
+                                                <value name="face">
+                                                    <block type="face_list" id="09379cf3-49db-47a8-8b9f-abb46f32c487">
+                                                        <field name="face">sulk</field>
+                                                    </block>
+                                                </value>
+                                                <value name="color">
+                                                    <block type="color_list" id="f61494a5-f5a0-46a5-8473-81fd29351782">
+                                                        <field name="color">Yellow</field>
+                                                    </block>
+                                                </value>
+                                            </block>
+                                        </statement>
+                                        <next>
+                                            <block type="controls_if" id="b0c56c8b-b151-4fdf-9374-706b977772d7">
+                                                <value name="IF0">
+                                                    <block type="logic_compare" id="8c83e2fc-20e0-43fe-a0c9-574af9680991">
+                                                        <value name="A">
+                                                            <block type="serial_read" id="6ecd1b3c-4b3c-4b4a-84a8-19c6753b4134" />
+                                                        </value>
+                                                        <value name="B">
+                                                            <block type="type_char" id="f77bf68d-84dc-4bfb-b1de-43cbb04648dc">
+                                                                <field name="CHAR_TEXT">d</field>
+                                                            </block>
+                                                        </value>
+                                                        <field name="OP">EQ</field>
+                                                    </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                    <block type="neo_pixel_custom" id="53231edf-764c-440f-b690-dad3ce504ac4">
+                                                        <value name="face">
+                                                            <block type="face_list" id="29d13abf-9bf9-449d-aca3-e2832095ed5d">
+                                                                <field name="face">thrilling</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="color">
+                                                            <block type="color_list" id="52fb43c0-3d42-46a1-b317-2d6a2a0e8c11">
+                                                                <field name="color">Brown</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </statement>
+                                                <next>
+                                                    <block type="controls_if" id="7aa9e87f-bd03-463c-84c5-5658a67a0685">
+                                                        <value name="IF0">
+                                                            <block type="logic_compare" id="9d094f84-071c-4a2f-abe2-020d52152682">
+                                                                <value name="A">
+                                                                    <block type="serial_read" id="8e461dd9-7d7c-41c5-9fb3-951a2add4f22" />
+                                                                </value>
+                                                                <value name="B">
+                                                                    <block type="type_char" id="d40c6fdc-3c3e-45f2-8cdc-b70667867ac2">
+                                                                        <field name="CHAR_TEXT">e</field>
+                                                                    </block>
+                                                                </value>
+                                                                <field name="OP">EQ</field>
+                                                            </block>
+                                                        </value>
+                                                        <statement name="DO0">
+                                                            <block type="neo_pixel_custom" id="e36d0690-eecc-4fc1-81fa-edcfd82eb346">
+                                                                <value name="face">
+                                                                    <block type="face_list" id="228ae891-dab3-4dba-8aac-97d0b50427e9">
+                                                                        <field name="face">amazed</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="color">
+                                                                    <block type="color_list" id="d720a559-de53-44cf-8607-cbb22385ac43">
+                                                                        <field name="color">Blue</field>
+                                                                    </block>
+                                                                </value>
+                                                            </block>
+                                                        </statement>
+                                                        <next>
+                                                            <block type="controls_if" id="28dd57ae-1ae4-4995-a544-aca6b5bc91c8">
+                                                                <value name="IF0">
+                                                                    <block type="logic_compare" id="f58359bf-77ab-465e-8006-eddf9cfa0762">
+                                                                        <value name="A">
+                                                                            <block type="serial_read" id="e7d7273c-571f-452d-a512-c8e3f358beed" />
+                                                                        </value>
+                                                                        <value name="B">
+                                                                            <block type="type_char" id="1b04c8cd-b398-481e-85cf-16c447bc6973">
+                                                                                <field name="CHAR_TEXT">f</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <field name="OP">EQ</field>
+                                                                    </block>
+                                                                </value>
+                                                                <statement name="DO0">
+                                                                    <block type="neo_pixel_custom" id="d3959a1a-2627-48b8-bd9a-02473f7293f8">
+                                                                        <value name="face">
+                                                                            <block type="face_list" id="3f00cb3d-83a4-49b8-a3b7-6905b0a08099">
+                                                                                <field name="face">smile</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <value name="color">
+                                                                            <block type="color_list" id="20c8d077-b479-4eec-95b6-9c560cbd3d3d">
+                                                                                <field name="color">Purple</field>
+                                                                            </block>
+                                                                        </value>
+                                                                    </block>
+                                                                </statement>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

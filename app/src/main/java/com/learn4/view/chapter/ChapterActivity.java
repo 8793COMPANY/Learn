@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ContentsDao;
+import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.view.custom.dialog.ContinueDialog;
 import com.learn4.view.recyclerview.RecyclerDecoration_Height;
@@ -57,7 +59,11 @@ public class ChapterActivity extends AppCompatActivity {
 
         // 여기에서 챕터별로 다르게 소챕터들이 나와야함
         uploadChapter(chapter_id);
-
+        Log.e("chapter_id",chapter_id);
+        if (chapter_id.equals("1")) {
+            Application.mediaPlayer = MediaPlayer.create(this, R.raw.led_1);
+            Application.mediaPlayer.start();
+        }
 
         //id : chapter_id+"_1",
         //contents 번호는 3부터 시작 / chapter 번호는 2부터 시작
@@ -229,5 +235,15 @@ public class ChapterActivity extends AppCompatActivity {
 //        chapter1.setPercentage(MySharedPreferences.getInt(getApplicationContext(),"LED 깜박이기 MAX"));
 //        chapter2.setPercentage(MySharedPreferences.getInt(getApplicationContext(), "LED 1초간 껐다 켜기 MAX"));
 //        chapter3.setPercentage(MySharedPreferences.getInt(getApplicationContext(), "LED 3개 깜박이기 MAX"));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (Application.mediaPlayer != null) {
+            Application.mediaPlayer.release();
+            Application.mediaPlayer = null;
+        }
+
     }
 }

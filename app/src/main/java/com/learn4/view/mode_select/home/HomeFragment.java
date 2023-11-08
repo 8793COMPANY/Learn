@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.learn4.WeatherData;
 import com.learn4.util.Application;
 import com.learn4.R;
 import com.learn4.util.MySharedPreferences;
@@ -28,6 +29,13 @@ import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
 import com.learn4.view.dictionary.BlockDictionaryActivity2;
 
+import org.json.JSONException;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,6 +64,20 @@ public class HomeFragment extends Fragment {
         free_btn = root.findViewById(R.id.free_btn);
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
         user_name = root.findViewById(R.id.user_name);
+
+//        new Thread(() -> {
+//                WeatherData weatherData = new WeatherData();
+//                try {
+//                    weatherData.lookUpWeather();
+//                }catch (IOException e){
+//                    e.printStackTrace();
+//                }catch (JSONException e){
+//                    e.printStackTrace();
+//                }
+//
+//        }).start();
+
+
 
 //        user_name.setText(Application.user.getName());
 

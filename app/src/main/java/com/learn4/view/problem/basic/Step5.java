@@ -1,5 +1,6 @@
 package com.learn4.view.problem.basic;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -147,6 +148,17 @@ public class Step5 extends Fragment {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);
         }
 
+        Log.e("number check",chapter_id);
+        if (number[0].equals("3")) {
+            if (chapter_id.equals("3-2")) {
+                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_2);
+            } else if (chapter_id.equals("3-3")) {
+                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_7);
+            } else if (chapter_id.equals("3-4")) {
+                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_8);
+            }
+            Application.mediaPlayer.start();
+        }
 
         MySharedPreferences.setInt(getContext(), contents_name, 1);
 //        if (number[0].equals("3") || number[0].equals("5")){
@@ -179,5 +191,14 @@ public class Step5 extends Fragment {
 
 
         return root;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Application.mediaPlayer != null) {
+            Application.mediaPlayer.release();
+            Application.mediaPlayer = null;
+        }
     }
 }

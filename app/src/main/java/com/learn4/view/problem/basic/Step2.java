@@ -1,5 +1,6 @@
 package com.learn4.view.problem.basic;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.data.room.entity.Contents;
+import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 
@@ -98,6 +100,11 @@ public class Step2 extends Fragment {
         contentsDao = db.contentsDao();
         contentsList = contentsDao.findAll();
 
+        if (contents_name.equals("LED 깜박이기") || contents_name.equals("LED 깜빡이는 시간 바꾸기") || contents_name.equals("LED 핀 번호 바꾸기")){
+            Application.mediaPlayer = MediaPlayer.create(getContext(),R.raw.led_4);
+            Application.mediaPlayer.start();
+        }
+
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 3);
         }
@@ -105,6 +112,7 @@ public class Step2 extends Fragment {
             MySharedPreferences.setInt(getContext(),contents_name,3);
 
         diagram_img = view.findViewById(R.id.diagram_img);
+        Log.e("diagram number",contentsList.get(0).getId()+"");
         /*diagram_img.setBackgroundResource(diagram);
 
         if (contents_name.equals("LED 핀 번호 바꾸기"))
@@ -236,5 +244,12 @@ public class Step2 extends Fragment {
     }
 
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Application.mediaPlayer != null) {
+            Application.mediaPlayer.release();
+            Application.mediaPlayer = null;
+        }
+    }
 }

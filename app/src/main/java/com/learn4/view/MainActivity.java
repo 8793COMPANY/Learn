@@ -15,6 +15,8 @@
 
 package com.learn4.view;
 
+import static android.security.KeyChain.getPrivateKey;
+
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -36,6 +38,7 @@ import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
 import com.google.blockly.model.FieldDropdown;
 
+import com.learn4.WeatherData;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
@@ -83,6 +86,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -153,7 +157,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramSocket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -221,6 +230,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String contents_name ="none", chapter_id = "none";
     String [] chapter_id_split;
     String id ="none";
+    String serial_text = "";
 
     Guideline guideline4;
 
@@ -283,7 +293,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜"};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-티처블"};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -321,14 +331,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Set<String> keys = deviceList.keySet();
             for (String key : keys) {
                 bigBoard = deviceList.get(key);
-                try {
-                    Log.e("hi device",deviceList.get(key).getDeviceId()+"");
-                    Log.e("hi device",deviceList.get(key).getDeviceName()+"");
-                    Log.e("hi device serial number",deviceList.get(key).getSerialNumber());
-                }catch (NullPointerException e){
-                    e.printStackTrace();
-                }
-
             }
         }
 
@@ -339,6 +341,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             byte[] buf = new byte[256];
             Application.mPhysicaloid.read(buf, buf.length);
 //            monitor_text.append(new String(buf));
+            serial_text += new String(buf,"UTF-8");
             boolean enter_check = false;
             for (int i = 0; i < buf.length; i++) {
                 if (buf[i] == 0x0d){
@@ -359,56 +362,86 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            str += new String(buf);
 
 
-
-            if (new String(buf).trim().length() != 0) {
+            if (serial_text.trim().length() != 0) {
                 Log.e("num:",num+"");
                 Log.e("length",stringBuilder.toString().length()+"");
-                Log.e("text check",new String(buf).trim());
-                if (num < 15) {
-                    stringBuilder.append(new String(buf).trim());
-                    if (enter_check){
+                Log.e("text check",serial_text.trim());
+
+                if(serial_text.trim().equals("b1@")){
+                    Log.e("hello serial","baeWe");
+//                    serial_text = "";
+//                    new Thread(() -> {
+//                        WeatherData weatherData = new WeatherData();
+//                        Log.e("code",code.indexOf("void loop()")+"");
+//
+//
+//                        try {
+//                            weatherData.lookUpWeather();
+//                            Log.e("temp check",weatherData.getTmperature());
+//                            serial_write(weatherData.getTmperature()+"/1/25.5");
+//                        }catch (IOException e){
+//                            e.printStackTrace();
+//                        }catch (JSONException e){
+//                            e.printStackTrace();
+//                        }
+//
+//                    }).start();
+
+                }else{
+                    if (num < 15) {
+                        stringBuilder.append(new String(buf).trim());
+                        if (enter_check){
+                            Log.e("buf text",new String(buf).trim());
+                            stringBuilder.append("\n");
+                            enter_check = false;
+                            serial_text = "";
+                            num++;
+                        }
+
                         Log.e("buf text",new String(buf).trim());
-                        stringBuilder.append("\n");
-                        enter_check = false;
-                        num++;
+
+                    } else if (num >= 15) {
+                        stringBuilder.delete(0,stringBuilder.indexOf("\n",1));
+                        Log.e("buf stringBuilder len check",stringBuilder.length()+"");
+                        stringBuilder.append(new String(buf).trim());
+                        Log.e("buf stringBuilder check",stringBuilder.toString());
+                        if (enter_check) {
+
+                            Log.e("buf text",new String(buf).trim());
+                            stringBuilder.append("\n");
+                            enter_check = false;
+                            num++;
+                            serial_text = "";
+                        }
+                        num = 14;
+
+                        Log.e("length delete","OK");
                     }
 
-                    Log.e("buf text",new String(buf).trim());
-
-                } else if (num >= 15) {
-                    stringBuilder.delete(0,stringBuilder.indexOf("\n",1));
-                    Log.e("buf stringBuilder len check",stringBuilder.length()+"");
-                    stringBuilder.append(new String(buf).trim());
-                    Log.e("buf stringBuilder check",stringBuilder.toString());
-                    if (enter_check) {
-
-                        Log.e("buf text",new String(buf).trim());
-                        stringBuilder.append("\n");
-                        enter_check = false;
-                        num++;
+                    if (Integer.parseInt(String.valueOf(stringBuilder.toString().length())) > 5120) {
+                        stringBuilder.delete(0,2560);
+                        Log.e("length delete MAX","OK");
                     }
-                    num = 14;
 
-                    Log.e("length delete","OK");
+
+
+                    monitor_text.setText(stringBuilder);
                 }
 
-                if (Integer.parseInt(String.valueOf(stringBuilder.toString().length())) > 5120) {
-                    stringBuilder.delete(0,2560);
-                    Log.e("length delete MAX","OK");
-                }
 
-                Log.e("text",stringBuilder.toString());
-
-                monitor_text.setText(stringBuilder);
 
             }
         }catch (NullPointerException e){
             e.printStackTrace();
             Toast.makeText(getApplicationContext(),"보드를 연결해주세요.",Toast.LENGTH_SHORT).show();
             mMonitorHandler.sendEmptyMessage(1);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
 
     }
+
+
 
 
     public Float read_data() {
@@ -639,15 +672,56 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mHandler.removeMessages(1);
             customProgressDialog.dismiss();
             uploadListener.show();
+            Log.e("hello code1",code);
+//            if (code.contains("getWeatherData(")){
+//                Log.e("hello","weather");
+//                serial_text = "";
+//                new Thread(() -> {
+//                    WeatherData weatherData = new WeatherData();
+//                    Log.e("code",code.indexOf("void loop()")+"");
+//
+//
+//                    try {
+//                        weatherData.lookUpWeather();
+//                        Log.e("temp check",weatherData.getTmperature());
+//                        serial_write(weatherData.getTmperature()+"/1/25.5");
+//                    }catch (IOException e){
+//                        e.printStackTrace();
+//                    }catch (JSONException e){
+//                        e.printStackTrace();
+//                    }
+//
+//                }).start();
+//            }
 
         } else {
             Boolean value = OpenUSB();
             if (value) {
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
 
-
+                Log.e("hello code",code);
                 customProgressDialog.dismiss();
                 uploadListener.show();
+//                if (code.contains("getWeatherData(")){
+//                    Log.e("hello","weather");
+//                    serial_text = "";
+//                    new Thread(() -> {
+//                        WeatherData weatherData = new WeatherData();
+//                        Log.e("code",code.indexOf("void loop()")+"");
+//
+//
+//                        try {
+//                            weatherData.lookUpWeather();
+//                            Log.e("temp check",weatherData.getTmperature());
+//                            serial_write(weatherData.getTmperature()+"/1/25.5");
+//                        }catch (IOException e){
+//                            e.printStackTrace();
+//                        }catch (JSONException e){
+//                            e.printStackTrace();
+//                        }
+//
+//                    }).start();
+//                }
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
@@ -1152,6 +1226,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             filename = "serial.xml";
         }else if(name =="스마트팜"){
             filename = "smart_farm.xml";
+        }else if(name == "키링-티처블"){
+            filename = "keyring_teachable.xml";
         }
 
         String assetFilename = "turtle/demo_workspaces/" + filename;
@@ -1713,6 +1789,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 blockly_monitor.setVisibility(View.GONE);
                 view_check[current_pos] = true;
+                serial_text ="";
                 break;
             default:
                 Log.e("code_btn in","어택땅");

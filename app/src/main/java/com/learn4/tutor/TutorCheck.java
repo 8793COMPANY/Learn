@@ -263,11 +263,14 @@ public class TutorCheck {
             if (e != null) {
                 // 또는, " 답안지가 정답지와 일치 " 했을때 정답처리
                 if (solution_str.equals(submitted_str)){
-                    mediaPlayer = MediaPlayer.create(context, R.raw.bot_true_answer);
+//                    mediaPlayer = MediaPlayer.create(context, R.raw.bot_true_answer);
+                    mediaPlayer = MediaPlayer.create(context, R.raw.led_5);
                     mediaPlayer.start();
 
                     showCustomDialog(1);
                 }else{
+                    mediaPlayer = MediaPlayer.create(context, R.raw.led_6);
+                    mediaPlayer.start();
                     showCustomDialog(2);
                 }
 
@@ -276,6 +279,8 @@ public class TutorCheck {
                 //Log.d("Build Bot first line", parentXml.getPreprocessedString(submitted_setup_node.getTextContent()));
             } else {
                 if (simulator_check) {
+                    mediaPlayer = MediaPlayer.create(context, R.raw.led_6);
+                    mediaPlayer.start();
                     showCustomDialog(3);
                 }
             }

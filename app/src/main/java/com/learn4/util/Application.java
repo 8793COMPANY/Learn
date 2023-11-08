@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.util.Log;
@@ -50,6 +51,8 @@ public class Application extends android.app.Application  {
     public static int mode = 1;
     public static boolean translate_check = false;
 
+    public static MediaPlayer mediaPlayer;
+
     public static Application getInstance(Context context){
 //        this.context = context;
         if (instance == null){
@@ -68,6 +71,8 @@ public class Application extends android.app.Application  {
         learningObjectives = new ArrayList<>();
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
+
+
 
 //        Contents contents = new Contents(0,3," 초음파 센서 사용하기",
 //                "초음파 센서로 거리 측정하기","거리에 따라 LED 빠르게 깜빡이기","거리에 따라 피에조 부저 소리 조정하기",

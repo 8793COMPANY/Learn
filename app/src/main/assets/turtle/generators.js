@@ -110,6 +110,29 @@ Blockly.JavaScript['serial_println_boolean'] = function(block) {
   return code;
 };
 
+Blockly.JavaScript['temperature_sensor'] = function(block) {
+   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+
+     Blockly.JavaScript.definitions_["includelib"] = "#include <OneWire.h>";
+     Blockly.JavaScript.definitions_["includelib2"] = "#include <DallasTemperature.h>";
+     Blockly.JavaScript.definitions_["definelcdpins"] = "#define TEMP_18B20 "+value_pin;
+
+     Blockly.JavaScript.definitions_["call_libs"] = "OneWire oneWire(TEMP_18B20);\nDallasTemperature sensors(&oneWire);";
+
+   var code = "sensors.requestTemperatures();\n"+
+                 "float temp_18b20 = sensors.getTempCByIndex(0);\n";
+   return code;
+ };
+
+ Blockly.JavaScript['read_temperature_sensor'] = function(block) {
+    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+
+
+    var code = "temp_18b20"
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  };
+
+
 Blockly.JavaScript['turtle_move_internal'] = function(block) {
   // Generate JavaScript for moving forward or backwards.
   var value = block.getFieldValue('VALUE');
@@ -225,6 +248,33 @@ Blockly.JavaScript['pinMode'] = function (block) {
    var code = "\npinMode(" + value_pin + ", " + value_num + ");\n";
    return code;
 };
+
+
+Blockly.JavaScript['pluse_sensor'] = function (block) {
+   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+
+
+    Blockly.JavaScript.definitions_["definefadepin"] = "#define USE_ARDUINO_INTERRUPTS true\n#include <PulseSensorPlayground.h>\n\nconst int PulseWire = "+value_pin+";\nconst int LED13 = 13; \nint Threshold = 550;\n\nPulseSensorPlayground pulseSensor;"
+    Blockly.JavaScript.setups_['setup_pin_mode_1'] =  "Serial.begin(9600);\npulseSensor.analogInput(PulseWire);\npulseSensor.blinkOnPulse(LED13);\npulseSensor.setThreshold(Threshold);\n"+
+    " if (pulseSensor.begin()) {\nSerial.println("+'"'+"We created a pulseSensor Object !"+'"'+");\n}\n";
+
+   var code = " int myBPM = pulseSensor.getBeatsPerMinute(); \n"+
+   "if (pulseSensor.sawStartOfBeat()){\n"+
+                      "     Serial.print("+'"'+"BPM: "+'"'+"); \n"+
+                      "     Serial.println(myBPM); \n}"+
+                      "\ndelay(20);\n"
+   return code;
+};
+
+
+
+
+Blockly.JavaScript['serial_write'] = function (block) {
+   var code = "Serial.write("+'"'+"hi"+'"'+");\n";
+
+     return code;
+};
+
 
 Blockly.JavaScript['set_led'] = function (block) {
      var value1 = block.getFieldValue('VALUE1');
@@ -450,6 +500,13 @@ Blockly.JavaScript['servo'] = function (block) {
                    return [code, Blockly.JavaScript.ORDER_ATOMIC];
                 };
 
+                          Blockly.JavaScript['serial_readString'] = function (block) {
+
+                                       var code = "Serial.readString()"
+
+                                   return [code, Blockly.JavaScript.ORDER_ATOMIC];
+                                };
+
         Blockly.JavaScript['neo_pixel_begin'] = function (block) {
 
            var code = "neo.begin();\n"
@@ -637,6 +694,19 @@ Blockly.JavaScript['inout_digital_write'] = function(block) {
    return code;
  };
 
+ Blockly.JavaScript['get_weather'] = function(block) {
+
+    var value_date = Blockly.JavaScript.valueToCode(block, "DATE", Blockly.JavaScript.ORDER_ATOMIC);
+    var value_time = Blockly.JavaScript.valueToCode(block, "TIME", Blockly.JavaScript.ORDER_ATOMIC);
+    var value_local = Blockly.JavaScript.valueToCode(block, "LOCAL", Blockly.JavaScript.ORDER_ATOMIC);
+    var value_type = Blockly.JavaScript.valueToCode(block, "TYPE", Blockly.JavaScript.ORDER_ATOMIC);
+
+    Blockly.JavaScript.definitions_['digital_read'] = "void getWeatherData(String date, String time, String local, String type)\n{\n Serial.println(date);\n Serial.println(time);\n}\n"
+
+    var code = "getWeatherData(" +'"'+ value_date +'"'+ ", " +'"'+ value_time +'"'+ ", " +'"'+ value_local +'"'+", " +'"'+ value_type +'"'+ ");\n";
+    return code;
+  };
+
 Blockly.JavaScript['inout_analog_write'] = function(block) {
     var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
     var value_num = Blockly.JavaScript.valueToCode(block, "NUM", Blockly.JavaScript.ORDER_ATOMIC);
@@ -780,6 +850,16 @@ Blockly.JavaScript['base_pins_list'] = function() {
 
 Blockly.JavaScript['base_logic_list'] = function() {
   var dropdown_value = this.getFieldValue('LOGIC');
+  return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['base_local_list'] = function() {
+  var dropdown_value = this.getFieldValue('LOCAL');
+  return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['base_type_list'] = function() {
+  var dropdown_value = this.getFieldValue('TYPE');
   return [dropdown_value, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
