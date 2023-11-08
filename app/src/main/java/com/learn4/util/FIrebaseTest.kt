@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FIrebaseTest {
-    val db = FirebaseFirestore.getInstance().collection("Contents")
+    val db = FirebaseFirestore.getInstance().collection("AdTest")
 
     fun add_data(){
         var dataToSave: MutableMap<String, Any> = mutableMapOf()
