@@ -1,0 +1,127 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="e186a2ce-8ef3-4904-a5fd-2f8521c15040" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="neo_pixel_setup" id="0e80153d-6362-4ee4-9dc2-4d0061d8f765">
+                <next>
+                    <block type="neo_pixel" id="2cab6f94-c1b9-489d-9051-cc5c90369b97">
+                        <value name="channel">
+                            <block type="base_pins_list" id="676a8a3f-f8b1-4c1d-afc4-49b1f69d3985">
+                                <field name="PIN">12</field>
+                            </block>
+                        </value>
+                        <value name="angle">
+                            <block type="math_number" id="02391b31-8f06-4566-a358-1cb03f04b085">
+                                <field name="NUM">10</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="pinMode" id="bdad59d8-b452-48d5-b69c-2f457e5590e8">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="20d3c67f-6820-46e8-88d6-775335c1706a">
+                                        <field name="PIN">6</field>
+                                    </block>
+                                </value>
+                                <value name="VALUE1">
+                                    <block type="base_output_list" id="83a44655-c671-497b-a752-3ce6de42e770">
+                                        <field name="LOGIC">OUTPUT</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="pluse_sensor" id="83164dac-7f8e-46dc-94b6-7d5d4551aa03">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="b934ad19-b2d6-404c-bfa1-8426456722d4">
+                                                <field name="PIN">A0</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="neo_pixel_brightness" id="e8a05f74-6d37-4351-bfba-d7d45deb06bd">
+                <value name="angle">
+                    <block type="math_number" id="497b598b-1dd0-4af6-a833-186c4380a11a">
+                        <field name="NUM">50</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="controls_ifelse" id="46fd5da6-c34a-40d2-8087-677be407b520">
+                        <value name="IF0">
+                            <block type="logic_compare" id="5a0d04cf-19bd-4be4-8838-d0c35667d6c9">
+                                <value name="A">
+                                    <block type="serial_read" id="e1528b7d-d934-4e2a-91b5-96b7f5b1939c" />
+                                </value>
+                                <value name="B">
+                                    <block type="type_char" id="b1cfc636-bf2e-469f-8bf2-6f2c3a1534a8">
+                                        <field name="CHAR_TEXT">a</field>
+                                    </block>
+                                </value>
+                                <field name="OP">EQ</field>
+                            </block>
+                        </value>
+                        <statement name="DO0">
+                            <block type="turtle_jikco_internal" id="83fa0df9-e12f-4898-8e13-06737552047f">
+                                <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                <field name="COL">Red</field>
+                                <next>
+                                    <block type="tone_notone" id="d6ad3634-2ac8-4e0c-9436-84dec48fe464">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="acc223aa-041c-4571-b71d-df8af80632a8">
+                                                <field name="PIN">6</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="math_number" id="4d2f8908-5bba-4dc2-b574-41b83aa2d8e7">
+                                                <field name="NUM">855</field>
+                                            </block>
+                                        </value>
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="bc950cba-d408-4f23-9c84-94d66301ca53">
+                                                <field name="NUM">1000</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="turtle_jikco_internal" id="398a29d4-6007-48ef-9d68-c58fbdd5b0c9">
+                                                <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                                <field name="COL">Blue</field>
+                                                <next>
+                                                    <block type="tone_notone" id="0b394a24-d29f-46c9-95f8-c082b19f16b4">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="f315b83f-fe49-4c1c-9070-4ecce6aa73a6">
+                                                                <field name="PIN">6</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="math_number" id="ef7ffbb0-ff73-4ec7-afd4-16111d31155a">
+                                                                <field name="NUM">417</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="DELAY_TIME">
+                                                            <block type="math_number" id="30550518-d6bb-40ea-9686-d93409d75b1f">
+                                                                <field name="NUM">1000</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </statement>
+                        <statement name="ELSE">
+                            <block type="turtle_jikco_internal" id="2bffbd22-3290-4400-aa06-912d8bfcbabc">
+                                <field name="DIR">0,1,0,0,1,0,1,0,1,1,0,1,0,0</field>
+                                <field name="COL">Orange</field>
+                            </block>
+                        </statement>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

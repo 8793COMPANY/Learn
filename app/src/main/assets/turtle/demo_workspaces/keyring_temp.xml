@@ -1,0 +1,118 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="2a0629d1-8c97-4ce3-a333-cd3090ad3cc9" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="neo_pixel_setup" id="8025bf43-239c-4ddf-a184-a3e7f6991420">
+                <next>
+                    <block type="neo_pixel" id="9afb779b-2ca2-4747-bba7-152ee6ca75ad">
+                        <value name="channel">
+                            <block type="base_pins_list" id="24bfb4d8-b3c3-460d-ad69-85b6b04b3160">
+                                <field name="PIN">12</field>
+                            </block>
+                        </value>
+                        <value name="angle">
+                            <block type="math_number" id="8ed81b21-1ce0-4ece-87d3-98feaab8416a">
+                                <field name="NUM">10</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="pinMode" id="3512c89f-59a9-4a10-916e-b102454f3926">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="1c42bece-77d9-4bbe-ad2a-1356f9bb1d69">
+                                        <field name="PIN">A2</field>
+                                    </block>
+                                </value>
+                                <value name="VALUE1">
+                                    <block type="base_output_list" id="ba8d42c3-54e6-40e8-8ffc-f9a2d9ea6ca4">
+                                        <field name="LOGIC">INPUT</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="temperature_sensor" id="17bbe3d4-e903-4430-810c-2166376e11d3">
+                <value name="PIN">
+                    <block type="base_pins_list" id="8babd597-5c21-4c01-8cef-57171028c186">
+                        <field name="PIN">A2</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="controls_ifelse" id="3511ce36-b714-4a63-bd47-33e161695cb2">
+                        <value name="IF0">
+                            <block type="logic_compare" id="e1ee6a77-44a1-4a9c-9893-d10ac6cd3939">
+                                <value name="A">
+                                    <block type="read_temperature_sensor" id="bfa8d03b-a8e7-4872-82ec-d193521fd056" />
+                                </value>
+                                <value name="B">
+                                    <block type="math_number" id="838e01d9-58b4-4ce4-9275-be4a9bfb35d7">
+                                        <field name="NUM">38</field>
+                                    </block>
+                                </value>
+                                <field name="OP">GTE</field>
+                            </block>
+                        </value>
+                        <statement name="DO0">
+                            <block type="turtle_jikco_internal" id="e26e1401-9d24-443e-b9a9-6fe5e5b21285">
+                                <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                <field name="COL">Red</field>
+                                <next>
+                                    <block type="tone_notone" id="2376631d-142c-4fe5-be0c-371c010cb965">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="d38e3ec0-0295-4278-9365-9daa2e052f4a">
+                                                <field name="PIN">6</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="math_number" id="b7cd8ac9-1dbd-4055-93b9-da447e8cbdb2">
+                                                <field name="NUM">855</field>
+                                            </block>
+                                        </value>
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="4f38dc2b-e330-4953-aadf-323b45aabe23">
+                                                <field name="NUM">1000</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="turtle_jikco_internal" id="6d7508d1-2f20-4630-b7a2-9b411303cc4a">
+                                                <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                                <field name="COL">Blue</field>
+                                                <next>
+                                                    <block type="tone_notone" id="f5b8f4ed-b633-43f1-9e1d-31566a1a9684">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="35819965-6853-4678-82bf-2f53c47f2e83">
+                                                                <field name="PIN">6</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="math_number" id="6322fe17-e08e-4efc-90b8-fa4c3bad88ac">
+                                                                <field name="NUM">417</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="DELAY_TIME">
+                                                            <block type="math_number" id="9b8063b1-3111-44b0-b73c-31b09bfa07b7">
+                                                                <field name="NUM">1000</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </statement>
+                        <statement name="ELSE">
+                            <block type="turtle_jikco_internal" id="edecf2a5-8a93-415b-947b-0df7a837dc1e">
+                                <field name="DIR">0,1,0,0,1,0,1,0,1,1,0,1,0,0</field>
+                                <field name="COL">Orange</field>
+                            </block>
+                        </statement>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

@@ -293,7 +293,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-티처블"};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블"};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -1228,6 +1228,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             filename = "smart_farm.xml";
         }else if(name == "키링-티처블"){
             filename = "keyring_teachable.xml";
+        }else if(name == "키링-심박"){
+            filename = "keyring_pulse.xml";
+        }else if(name == "키링-온도"){
+            filename = "keyring_temp.xml";
         }
 
         String assetFilename = "turtle/demo_workspaces/" + filename;
