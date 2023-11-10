@@ -44,5 +44,5 @@ allprojects {
 
 
     apply plugin: 'checkstyle'
-    apply plugin: 'com.google.gms.google-services'
+
 }

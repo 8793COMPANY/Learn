@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.learn4.R;
+import com.learn4.util.FIrebaseTest;
 import com.learn4.view.mode_select.ModeSelect;
 
 public class IntroActivity extends AppCompatActivity {
@@ -17,6 +18,9 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         hideSystemUI();
+
+        FIrebaseTest test = new FIrebaseTest();
+        test.read_data();
 
         Handler handler = new Handler();
         

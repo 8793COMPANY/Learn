@@ -33,14 +33,15 @@ class FIrebaseTest {
     }
 
     fun read_data(){
-        db.get().addOnCompleteListener {
-            if (it.isSuccessful){
-                it.getResult().forEach {
-                    Log.e("it", it.data.get("deepen_problem2").toString())
-                }
-            }else{
-
+        Log.e("hi","read");
+        db.document("gwangju").get().addOnSuccessListener {
+            if (it != null) {
+                Log.e("hi test", "DocumentSnapshot data: ${it.data}")
+            } else {
+                Log.e("hi test", "No such document")
             }
+        }.addOnFailureListener { exception ->
+            Log.e("hi fail", "get failed with ", exception)
         }
     }
 }
