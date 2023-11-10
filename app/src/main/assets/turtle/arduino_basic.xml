@@ -80,14 +80,7 @@
             </value>
         </block>
 
-        <block type="pluse_sensor">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
 
-        </block>
 
 <!--        <block type="get_weather">-->
 <!--            <value name="DATE">-->
@@ -268,6 +261,15 @@
             </block>
         </value>
         <!--<field name="VALUE1">OUTPUT</field>-->
+
+        </block>
+
+        <block type="pluse_sensor">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
 
         </block>
 
