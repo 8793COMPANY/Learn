@@ -36,6 +36,7 @@ import com.google.blockly.android.ui.fieldview.BasicFieldAngleView;
 import com.google.blockly.android.ui.fieldview.BasicFieldCheckboxView;
 import com.google.blockly.android.ui.fieldview.BasicFieldColorView;
 import com.google.blockly.android.ui.fieldview.BasicFieldDateView;
+import com.google.blockly.android.ui.fieldview.BasicFieldDateeView;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 import com.google.blockly.android.ui.fieldview.BasicFieldImageView;
 import com.google.blockly.android.ui.fieldview.BasicFieldInputView;
@@ -388,6 +389,12 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
                 return fieldDateView;
             }
 
+            case Field.TYPE_DATEE: {
+                BasicFieldDateeView fieldNumberView = new BasicFieldDateeView(mContext);
+                fieldNumberView.setField(field);
+                return fieldNumberView;
+            }
+
             case Field.TYPE_JIKCO:{
                 BasicFieldJikcoView fieldJikcoView = new BasicFieldJikcoView(mContext);
                 fieldJikcoView.setField(field);
@@ -439,6 +446,8 @@ public abstract class BlockViewFactory<BlockView extends com.google.blockly.andr
                 fieldNumberView.setField(field);
                 return fieldNumberView;
             }
+
+
 
             case Field.TYPE_UNKNOWN:
             default:

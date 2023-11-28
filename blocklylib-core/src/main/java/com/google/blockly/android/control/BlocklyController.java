@@ -940,14 +940,25 @@ public class BlocklyController {
      * @return The new variable name that was saved.
      */
     public String requestRenameVariable(final String variable, final String newVariable) {
+        //여기 변경
         final String resultVarName[] = {null};
+        final int[] count = {0};
         groupAndFireEvents(new Runnable() {
             @Override
             public void run() {
-                resultVarName[0] = renameVariableImpl(variable, newVariable, false);
+                if (resultVarName[0] != null){
+                    count[0] += 1;
+                    for (int i=0; i < resultVarName.length; i++){
+                        Log.e("check vari",resultVarName[i]);
+                    }
+
+                }
+
+                resultVarName[count[0]] = renameVariableImpl(variable, newVariable, false);
+                Log.e("result var name", resultVarName[count[0]]);
             }
         });
-        return resultVarName[0];
+        return resultVarName[count[0]];
     }
 
 

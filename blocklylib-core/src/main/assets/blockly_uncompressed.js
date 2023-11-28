@@ -18862,6 +18862,16 @@ Blockly.FieldJikco.widgetDispose_ = function() {
 };
 Blockly.Field.register("field_jikco", Blockly.FieldJikco);
 
+Blockly.FieldDatee = function(a, b) {
+    Blockly.FieldDatee.superClass_.constructor.call(this, a, b);
+    this.setText(Blockly.Field.NBSP + Blockly.Field.NBSP + Blockly.Field.NBSP)
+};
+goog.inherits(Blockly.FieldDatee, Blockly.Field);
+Blockly.FieldDatee.fromJson = function(a) {
+    return new Blockly.FieldDatee(a.datee)
+};
+Blockly.Field.register("field_datee", Blockly.FieldDatee);
+
 // end
 Blockly.FieldDropdown = function(a, b) {
     this.menuGenerator_ = a;

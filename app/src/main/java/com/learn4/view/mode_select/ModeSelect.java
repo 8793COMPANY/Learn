@@ -8,12 +8,14 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
 import com.learn4.R;
 import com.google.android.material.navigation.NavigationView;
+import com.learn4.WeatherData;
 import com.learn4.util.Application;
 import com.learn4.util.DataSetting;
 
@@ -28,6 +30,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.concurrent.Executors;
+
 public class ModeSelect extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -36,6 +43,7 @@ public class ModeSelect extends AppCompatActivity {
     private int	uiOption;
 
     NavigationView nav_view;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +108,8 @@ public class ModeSelect extends AppCompatActivity {
 //        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 //        NavigationUI.setupWithNavController(navigationView, navController);
+//        NewThread nt = new NewThread() ;
+//        nt.start() ;
 
     }
 
@@ -155,7 +165,39 @@ public class ModeSelect extends AppCompatActivity {
 //        unregisterNetworkCallback();
 //    }
 
+    class NewThread extends Thread {
+        WeatherData weatherData;
+        NewThread() {
+            weatherData = new WeatherData();
+        }
 
+        public void run() {
+            Log.e("run","start");
+            try {
+                weatherData.lookUpWeather("hi","hi","hi","기온");
+                String st = weatherData.getTmperature();
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+
+
+
+                    }
+                });
+
+
+
+//                Log.e("temp check",weatherData.getTmperature());
+
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        }
+    }
 
 
 }

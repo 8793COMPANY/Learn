@@ -59,6 +59,7 @@ public final class FieldDate extends Field {
 
     public static FieldDate fromJson(JSONObject json) throws BlockLoadingException {
         String name = json.optString("name");
+        Log.e("date json",json.toString());
         if (TextUtils.isEmpty(name)) {
             throw new BlockLoadingException("field_date \"name\" attribute must not be empty.");
         }

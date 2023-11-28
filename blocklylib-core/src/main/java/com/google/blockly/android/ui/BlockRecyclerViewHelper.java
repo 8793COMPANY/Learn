@@ -49,6 +49,7 @@ import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.WorkspacePoint;
 
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 /**
@@ -393,7 +394,8 @@ public class BlockRecyclerViewHelper {
 
                     public void onGlobalLayout() {
 
-                        block_width = toolbox_bg.getWidth();
+                        if (toolbox_bg.getWidth() != 0)
+                            block_width = toolbox_bg.getWidth();
                         Log.e("block_width",block_width+"");
                         Log.e("block_width",width+"");
                         if (block_width != 0 && widths[aIndex] < block_width)
@@ -411,11 +413,13 @@ public class BlockRecyclerViewHelper {
 //                            Log.e("block_width","들어옴");
 //                            widths[aIndex] = width;
 //                        }
-                        if (aIndex == 2)
-                            widths[aIndex] = ViewGroup.LayoutParams.MATCH_PARENT;
 
-                        if (aIndex == 0 && widths[1] != 0)
-                            widths[0] = widths[1];
+
+//                        if (aIndex == 0 && widths[1] != 0)
+//                            widths[0] = widths[1];
+
+                        if (aIndex == 2 || aIndex == 0)
+                            widths[aIndex] = ViewGroup.LayoutParams.MATCH_PARENT;
 
                         Log.e(TAG, "width = " + block_width);
 
@@ -423,7 +427,7 @@ public class BlockRecyclerViewHelper {
                         try {
 //                            toolbox_bg.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
-                            if (aIndex == 2)
+                            if (aIndex == 2 || aIndex == 0)
                                 marginLayoutParams.width =ViewGroup.LayoutParams.MATCH_PARENT;
                             else
                                 marginLayoutParams.width = block_width;
@@ -685,6 +689,16 @@ public class BlockRecyclerViewHelper {
                     bg.setPivotX(0);
                     bg.setPivotY(0);
                 }
+
+
+                if (block.getType().equals("get_weather")){
+                    bg.setScaleX(0.8f);
+                    bg.setScaleY(0.8f);
+                    bg.setPivotX(0);
+                    bg.setPivotY(0);
+                }
+
+
 //                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
                 //이부분 수정
                 if(bg.getParent() != null) {
@@ -696,6 +710,8 @@ public class BlockRecyclerViewHelper {
                     holder.mContainer.addView(bg, layoutParams);
                     holder.mContainer.setForegroundGravity(0);
                 }
+
+
 
 //                    ViewGroup.LayoutParams params = holder.mContainer.getLayoutParams();
 //                    holder.mContainer.setTouchDelegate(new TouchDelegate(new Rect(holder.mContainer.getWidth(),0,holder.mContainer.getWidth(),holder.mContainer.getHeight()), bg));

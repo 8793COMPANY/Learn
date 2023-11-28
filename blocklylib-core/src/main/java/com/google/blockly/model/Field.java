@@ -51,9 +51,11 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
 
     public static final int TYPE_JIKCO = 10;
 
+    public static final int TYPE_DATEE = 11;
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TYPE_UNKNOWN, TYPE_LABEL, TYPE_INPUT, TYPE_ANGLE, TYPE_CHECKBOX, TYPE_COLOR,
-            TYPE_DATE, TYPE_VARIABLE, TYPE_DROPDOWN, TYPE_IMAGE, TYPE_NUMBER, TYPE_JIKCO})
+            TYPE_DATE, TYPE_VARIABLE, TYPE_DROPDOWN, TYPE_IMAGE, TYPE_NUMBER, TYPE_JIKCO, TYPE_DATEE})
     public @interface FieldType {}
     // When adding fields, also update stringToFieldType() below.
 
@@ -68,6 +70,8 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
     public static final String TYPE_IMAGE_STRING = "field_image";
     public static final String TYPE_NUMBER_STRING = "field_number";
     public static final String TYPE_JIKCO_STRING = "field_jikco";
+
+    public static final String TYPE_DATEE_STRING = "field_datee";
     // Icon fields are not explicitly declared, so they have no string representation
 
     /**
@@ -214,6 +218,7 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
                 Log.e("test field","TYPE_COLOR_STRING");
                 return TYPE_COLOR;
             case TYPE_DATE_STRING:
+                Log.e("test field","TYPE_DATE_STRING");
                 return TYPE_DATE;
             case TYPE_VARIABLE_STRING:
                 return TYPE_VARIABLE;
@@ -227,6 +232,10 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
             case TYPE_JIKCO_STRING:
                 Log.e("test field","TYPE_JIKCO_STRING");
                 return TYPE_JIKCO;
+
+            case TYPE_DATEE_STRING:
+                Log.e("test field","TYPE_DATEE_STRING");
+                return TYPE_DATEE;
 
             default:
                 return TYPE_UNKNOWN;

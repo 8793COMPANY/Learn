@@ -386,6 +386,7 @@ public class BlockFactory {
                 field = FieldColor.fromJson(json);
                 break;
             case Field.TYPE_DATE_STRING:
+                Log.e("date in", "BlockFactory");
                 field = FieldDate.fromJson(json);
                 break;
             case Field.TYPE_VARIABLE_STRING:
@@ -410,6 +411,11 @@ public class BlockFactory {
                 break;
             case Field.TYPE_JIKCO_STRING:
                 field = FieldJikco.fromJson(json);
+                break;
+
+            case Field.TYPE_DATEE_STRING:
+                Log.e("datee in", "BlockFactory");
+                field = FieldDatee.fromJson(json);
                 break;
             default:
                 Log.w(TAG, "Unknown field type.");

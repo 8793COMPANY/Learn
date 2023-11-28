@@ -285,33 +285,169 @@
     "args0": [
       {
         "type": "input_value",
-        "name": "DATE",
-        "check": "Number"
+        "name": "DATEE",
+        "date": "2023-11-14"
       },
       {
         "type": "input_value",
-        "name": "TIME",
-        "check": "Number"
+        "name": "TIME"
       },
       {
         "type": "input_value",
-        "name": "LOCAL",
-        "check": "Number"
+        "name": "LOCAL"
       },
 
       {
         "type": "input_value",
-        "name": "TYPE",
-        "check": "Number"
+        "name": "TYPE"
       }
-
     ],
     "colour": "#FDB900",
     "inputsInline": true,
-    "previousStatement": null,
-    "nextStatement": null,
+    "output": "String",
     "tooltip": ""
   },
+  {
+    "type": "base_day_list",
+    "message0": "%1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "DAY",
+        "options": [
+          ["그저께", "그저께"], ["어제", "어제"], ["오늘", "오늘"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#FDB900",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+
+
+  {
+    "type": "base_local_list",
+    "message0": "Local: %1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "LOCAL",
+        "options": [
+          ["서울특별시", "서울특별시"], ["인천광역시", "인천광역시"], ["대전광역시", "대전광역시"], ["대구광역시", "대구광역시"], ["울산광역시", "울산광역시"], ["광주광역시", "광주광역시"], ["부산광역시", "부산광역시"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
+    "type": "base_time_list",
+    "message0": "Time: %1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "TIME",
+        "options": [
+          ["00시", "00시"], ["01시", "01시"],
+          ["02시", "02시"], ["03시", "03시"],
+          ["04시", "04시"], ["05시", "05시"],
+          ["06시", "06시"], ["07시", "07시"],
+          ["08시", "08시"], ["09시", "09시"],
+          ["10시", "10시"], ["11시", "11시"],
+          ["12시", "12시"], ["13시", "13시"],
+          ["14시", "14시"], ["15시", "15시"],
+          ["16시", "16시"], ["17시", "17시"],
+          ["18시", "18시"], ["19시", "19시"],
+          ["20시", "20시"], ["21시", "21시"],
+          ["22시", "22시"], ["23시", "23시"]
+        ]
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+
+
+  {
+    "type": "type_date",
+    "message0": "DATE : %1 ",
+    "args0": [
+      {
+        "type": "field_datee",
+        "name": "date",
+        "date": "2023-11-14"
+      }
+    ],
+    "output": "String",
+    "colour": "#6BABEF"
+  },
+
+  {
+    "type": "oled_block",
+    "message0": "OLED block %1",
+    "args0": [
+      {
+        "type": "field_dropdown",
+        "name": "weather",
+        "options": [
+          [
+            "맑음",
+            "맑음"
+          ],
+          [
+            "구름많음",
+            "구름많음"
+          ],
+          [
+            "흐림",
+            "흐림"
+          ],
+          [
+            "비",
+            "비"
+          ],
+          [
+            "비/눈",
+            "비/눈"
+          ],
+          [
+            "눈",
+            "눈"
+          ],
+          [
+            "소나기 ",
+            "소나기 "
+          ]
+        ]
+      }
+    ],
+    "inputsInline": true,
+    "colour": "#FDB900",
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "Adafruit_SSD1306",
+    "message0": "Adafruit SSD1306",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
 
   {
     "type": "turtle_turn_internal",

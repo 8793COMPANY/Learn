@@ -128,7 +128,9 @@ public class HomeFragment extends Fragment {
             dialog01.show();
 
             TextView st_beforehand_survey_write = dialog01.findViewById(R.id.st_beforehand_survey_write);
+            TextView st_beforehand_survey_write_set = dialog01.findViewById(R.id.st_beforehand_survey_write_set);
             TextView st_after_survey_write = dialog01.findViewById(R.id.st_after_survey_write);
+            TextView st_after_survey_write_set = dialog01.findViewById(R.id.st_after_survey_write_set);
             TextView st_satisfaction_survey_elementary_write = dialog01.findViewById(R.id.st_satisfaction_survey_elementary_write);
             TextView st_satisfaction_survey_middle_write = dialog01.findViewById(R.id.st_satisfaction_survey_middle_write);
             TextView st_satisfaction_survey_high_write = dialog01.findViewById(R.id.st_satisfaction_survey_high_write);
@@ -144,8 +146,18 @@ public class HomeFragment extends Fragment {
                 startActivity(intentUrl);
             });
 
+            st_beforehand_survey_write_set.setOnClickListener(view -> {
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-beforehand-set.p-e.kr/"));
+                startActivity(intentUrl);
+            });
+
             st_after_survey_write.setOnClickListener(view -> {
                 Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-after.p-e.kr/"));
+                startActivity(intentUrl);
+            });
+
+            st_after_survey_write_set.setOnClickListener(view -> {
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-after-set.p-e.kr/"));
                 startActivity(intentUrl);
             });
 

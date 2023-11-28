@@ -15,8 +15,6 @@
 
 package com.learn4.view;
 
-import static android.security.KeyChain.getPrivateKey;
-
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -40,6 +38,7 @@ import com.google.blockly.model.FieldDropdown;
 
 import com.learn4.WeatherData;
 import com.learn4.data.dto.SimulatorComponent;
+import com.learn4.data.dto.Weather;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
@@ -86,7 +85,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -158,16 +156,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.DatagramSocket;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
-import java.security.SignatureException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -248,7 +242,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     ArrayAdapter<Integer> arrayAdapter;
     Spinner baud_rate;
 
-
+    int first_index = 0;
+    int end_index =0;
     private UploadDialog uploadListener, error_Listener;
     private FinishDialog finishListener, resetListener;
     private SimulatorDialog simulatorDialog;
@@ -293,7 +288,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블"};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어"};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -512,6 +507,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         */
                         String[] alert = generatedCode.split("!!");
                         Log.e("in",alert[2]);
+
                         Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
                         code = generatedCode;
 
@@ -537,9 +533,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //                        Log.e("generated",generatedCode);
                         code = generatedCode;
                         submittedXml = xml;
-                        Log.e("code",code);
-                        Log.e("submittedXml",submittedXml);
+                        stringBuilder.append(xml);
+                        Log.e("stringBuilder",stringBuilder.toString());
 
+                        StringBuilder stringBuilder = new StringBuilder();
+
+                        Log.e("submittedXml builder",stringBuilder.substring(0,stringBuilder.length()/2));
+                        Log.e("submittedXml builder2",stringBuilder.substring(stringBuilder.length()/2,stringBuilder.length()));
+                        Log.e("submittedXml",stringBuilder.toString());
                         create_file(generatedCode, "code.ino");
                         Log.e("compileCheck",compileCheck+"");
                         //Log.e("!@","nono");
@@ -648,7 +649,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            if(Application.mPhysicaloid.open()) {
             Log.e("open!","physicaloid");
 
-            byte[] buf = str.trim().getBytes();
+            byte[] buf = str.getBytes();
+            Log.e("Str",str);
             Application.mPhysicaloid.write(buf, buf.length);
             Application.mPhysicaloid.close();
 //            }
@@ -673,60 +675,137 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             customProgressDialog.dismiss();
             uploadListener.show();
             Log.e("hello code1",code);
-//            if (code.contains("getWeatherData(")){
-//                Log.e("hello","weather");
-//                serial_text = "";
-//                new Thread(() -> {
-//                    WeatherData weatherData = new WeatherData();
-//                    Log.e("code",code.indexOf("void loop()")+"");
-//
-//
-//                    try {
-//                        weatherData.lookUpWeather();
-//                        Log.e("temp check",weatherData.getTmperature());
-//                        serial_write(weatherData.getTmperature()+"/1/25.5");
-//                    }catch (IOException e){
-//                        e.printStackTrace();
-//                    }catch (JSONException e){
-//                        e.printStackTrace();
-//                    }
-//
-//                }).start();
-//            }
+            int count = (code.length() - code.replace("getWeatherData(","").length())/15;
+            if (code.contains("getWeatherData(")){
+                Log.e("hello","weather");
+
+                new Thread(() -> {
+                    call_weather_api(count);
+                }).start();
+
+            }
 
         } else {
             Boolean value = OpenUSB();
             if (value) {
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
 
-                Log.e("hello code",code);
+                Log.e("hello code",(code.length() - code.replace("getWeatherData(","").length())/15+"");
                 customProgressDialog.dismiss();
                 uploadListener.show();
-//                if (code.contains("getWeatherData(")){
-//                    Log.e("hello","weather");
-//                    serial_text = "";
-//                    new Thread(() -> {
-//                        WeatherData weatherData = new WeatherData();
-//                        Log.e("code",code.indexOf("void loop()")+"");
-//
-//
-//                        try {
-//                            weatherData.lookUpWeather();
-//                            Log.e("temp check",weatherData.getTmperature());
-//                            serial_write(weatherData.getTmperature()+"/1/25.5");
-//                        }catch (IOException e){
-//                            e.printStackTrace();
-//                        }catch (JSONException e){
-//                            e.printStackTrace();
-//                        }
-//
-//                    }).start();
-//                }
+                int count = (code.length() - code.replace("getWeatherData(","").length())/15;
+                if (code.contains("getWeatherData(")){
+                    Log.e("hello","weather");
+
+                    new Thread(() -> {
+                    call_weather_api(count);
+                    }).start();
+                }
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
             }
             getFileSize();
+        }
+
+    }
+
+
+
+    
+    void call_weather_api(int count){
+        Map<Integer, WeatherData> weather_list = new HashMap<>();
+        ArrayList<Weather> weathers = new ArrayList<>();
+
+        int split_start, split_end;
+        // getWeatherData() 메소드가 몇개 사용되는지 체크 후 ArrayList에 저장
+        for (int i=0; i<count-1; i++) {
+            if (i ==0) {
+                split_start = code.indexOf("getWeatherData(", code.indexOf("void setup()"));
+                split_end = code.indexOf(");", split_start);
+            }else{
+                split_start = code.indexOf("getWeatherData(",first_index+1);
+                split_end = code.indexOf(");", split_start);
+            }
+            first_index = split_start;
+            end_index = split_end;
+            String[] datas = code.substring(split_start + 15, split_end).replace("\"", "").split(",");
+            Log.e("test_method datas check", datas[0] + "," + datas[1] + "," + datas[2] + "," + datas[3]);
+            weathers.add(new Weather(datas[0], datas[1], datas[2], datas[3]));
+        }
+
+        Log.e("test_method weathers size",weathers.size()+"");
+
+        boolean recall_data = false;
+        int recall_num =0;
+        for (int i=0; i<weathers.size(); i++){
+            recall_data = false;
+            if (i == 0){
+                Log.e("test_method 첫번째 데이터","불러오기");
+                //첫 번째 기상청 데이터 불러오기
+                try {
+                    WeatherData weatherData = new WeatherData();
+                    weatherData.lookUpWeather(weathers.get(i).getDate(),weathers.get(i).getTime(),weathers.get(i).getLocal(),weathers.get(i).getType());
+                    Log.e("test_method data type",weathers.get(i).getType());
+                    Log.e("test_method temp check",weatherData.getTmperature());
+                    if (weatherData.getTmperature().equals("NO_DATA")){
+                        serial_write("\n*start*\n");
+                        serial_write("NO"+"*END*");
+                    }else{
+                        serial_write("\n*start*\n");
+                        serial_write(weatherData.getTmperature()+"*END*");
+                        weather_list.put(i, weatherData);
+                    }
+
+
+
+                }catch (IOException e){
+                    e.printStackTrace();
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+            }else{
+                Log.e("test_method 첫번째 데이터 이후 ","불러오기");
+                for (int j=0; j<weathers.size(); j++){
+                    if (i == j)
+                        continue;
+                    Log.e("test_method get all data i",weathers.get(i).getAll_type());
+                    Log.e("test_method get all data j",weathers.get(j).getAll_type());
+                    if (weathers.get(i).getAll_type().equals(weathers.get(j).getAll_type())){
+                        // 세팅 값이 같기 때문에 다시 기상청 데이터를 받아올 필요가 없음
+                        recall_data = true;
+                        recall_num = j;
+                        break;
+                    }
+                }
+
+                if (recall_data){
+                    Log.e("test_method 앞에서 쓴 데이터", "in");
+                    Log.e("test_method data type",weathers.get(i).getType());
+                    Log.e("test_method weather_list recall data type",weather_list.get(recall_num).getData(weathers.get(i).getType()));
+                    // 앞에서 불러온 똑같은 설정의 기상청 데이터 가져오기
+                    serial_write("\n*start*\n");
+                    String send_data = weather_list.get(recall_num).getData(weathers.get(i).getType());
+                    serial_write(send_data+"*END*");
+                }else{
+                    // 새로 기상청 데이터 받아오기
+                    Log.e("test_method 새로운 기상청 데이터", "in");
+                    try {
+                        WeatherData weatherData = new WeatherData();
+                        weatherData.lookUpWeather(weathers.get(i).getDate(),weathers.get(i).getTime(),weathers.get(i).getLocal(),weathers.get(i).getType());
+                        Log.e("test_method temp check",weatherData.getTmperature());
+                        serial_write("\n*start*\n");
+                        serial_write(weatherData.getTmperature()+"*END*");
+                        weather_list.put(i, weatherData);
+
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
         }
 
     }
@@ -768,6 +847,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             //   mGeneratedErrorTextView.setText(response);
                             Log.e("simpleMultiPartRequest ??","in");
                             Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                            Log.e("check response",response);
                             customProgressDialog.dismiss();
 
 //                            uploadListener.dismiss();
@@ -1232,7 +1312,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             filename = "keyring_pulse.xml";
         }else if(name == "키링-온도"){
             filename = "keyring_temp.xml";
+        }else if(name == "키링-헬스케어"){
+            filename = "keyring_healthcare.xml";
         }
+
 
         String assetFilename = "turtle/demo_workspaces/" + filename;
         try {

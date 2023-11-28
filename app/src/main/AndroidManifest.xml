@@ -15,6 +15,7 @@
         android:name="android.hardware.usb.host"
         android:required="true" />
 
+
     <application
         android:name=".util.Application"
         android:allowBackup="false"

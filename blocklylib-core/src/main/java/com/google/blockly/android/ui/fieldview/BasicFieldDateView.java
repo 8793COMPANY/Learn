@@ -20,6 +20,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.google.blockly.model.Field;
 import com.google.blockly.model.FieldDate;
@@ -77,6 +78,7 @@ public class BasicFieldDateView extends AppCompatTextView implements FieldView {
 
     @Override
     public void setField(Field field) {
+        Log.e("date","field in");
         FieldDate dateField = (FieldDate) field;
         if (mDateField == dateField) {
             return;
