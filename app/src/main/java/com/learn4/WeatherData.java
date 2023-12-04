@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class WeatherData {
-
+    // TODO: 날씨블록 체크
     private String nx = "55";	//위도
     private String ny = "127";	//경도
     private String baseDate = "20231114";	//조회하고싶은 날짜
@@ -103,7 +103,9 @@ public class WeatherData {
         JSONObject jsonObj_header = new JSONObject(header);
         String resultMsg = jsonObj_header.getString("resultMsg");
 
-        if (resultMsg.equals("NO_DATA")){
+
+        // resultMsg
+        if (!resultMsg.equals("NORMAL_SERVICE")){
             tmperature = "NO_DATA";
             return;
         }

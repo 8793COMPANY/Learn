@@ -21,7 +21,9 @@ import com.learn4.data.room.entity.Contents;
 import com.learn4.data.room.entity.TestEntity;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +31,13 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 public class DataSetting {
+
+    public static final int TMP = 0;
+    public static final int PCP = 1;
+    public static final int SKY = 2;
+    public static final int REH = 3;
+    public static final int PTY = 4;
+    public static final int WSD = 5;
     InputStream is;
     Workbook workbook;
     public HashMap<String,String[]> components = new HashMap<>();
@@ -46,6 +55,11 @@ public class DataSetting {
     public ContentsGoalDao contentsGoalDao;
 
     public TestEntityDao testEntityDao;
+
+    long mNow;
+    Date mDate;
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh");
+    public String [] setting_weather = new String[8];
 
     public DataSetting(Context context){
         this.context = context;
@@ -74,6 +88,12 @@ public class DataSetting {
         }
 
         return settingManager;
+    }
+
+    public String getTime(){
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
     }
 
 

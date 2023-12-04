@@ -5,10 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 
 import com.learn4.R;
+import com.learn4.WeatherData;
+import com.learn4.util.DataSetting;
 import com.learn4.view.mode_select.ModeSelect;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -19,6 +27,31 @@ public class IntroActivity extends AppCompatActivity {
         hideSystemUI();
 
         Handler handler = new Handler();
+
+        Log.e("time check", DataSetting.getInstance(this).getTime());
+
+
+        // TODO: 날씨블록 체크
+        //데이터 저장 타입 변경 가능
+        String [] date = DataSetting.getInstance(this).getTime().split(" ");
+        new Thread(() -> {
+            try {
+                WeatherData weatherData = new WeatherData();
+                weatherData.lookUpWeather(date[0],date[1]+"시","광주광역시","기온");
+                DataSetting.getInstance(this).setting_weather[0] = weatherData.getData("기온");
+                DataSetting.getInstance(this).setting_weather[1] = weatherData.getData("강수량");
+                DataSetting.getInstance(this).setting_weather[2] = weatherData.getData("하늘상태");
+                DataSetting.getInstance(this).setting_weather[3] = weatherData.getData("습도");
+                DataSetting.getInstance(this).setting_weather[4] = weatherData.getData("강수형태");
+                DataSetting.getInstance(this).setting_weather[5] = weatherData.getData("풍속");
+            }catch (IOException e){
+                e.printStackTrace();
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }).start();
+
+
         
         handler.postDelayed(() -> {
             Intent intent = new Intent(this, ModeSelect.class);

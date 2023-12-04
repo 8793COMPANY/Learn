@@ -657,6 +657,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
     }
 
+
+    // TODO: 날씨블록 체크
     public void upload_code(String file){
         Log.e("generated", "업로드드");
         UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
@@ -711,8 +713,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     }
 
 
-
-    
+    // TODO: 날씨블록 체크
     void call_weather_api(int count){
         Map<Integer, WeatherData> weather_list = new HashMap<>();
         ArrayList<Weather> weathers = new ArrayList<>();
