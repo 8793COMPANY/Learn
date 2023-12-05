@@ -42,6 +42,8 @@ public class CodeGeneratorManager {
     private boolean mResumed = false;
     private boolean mIsConnecting = false;
 
+    public boolean testCheck = false;
+
     public CodeGeneratorManager(Context context) {
         this.mContext = context;
         this.mStoredRequests = new LinkedList<>();
@@ -76,8 +78,15 @@ public class CodeGeneratorManager {
      * Unbind the underlying service (if it is bound).
      */
     public void onPause() {
+        Log.e("testtest", "onPause()");
         mResumed = false;
         unbind();
+
+        if (testCheck) {
+            mResumed = true;
+        } else {
+            Log.e("testtest", "no");
+        }
     }
 
     /**
@@ -85,6 +94,7 @@ public class CodeGeneratorManager {
      * the service won't be bound until a new request comes in.
      */
     public void onResume() {
+        Log.e("testtest", "onResume():condeG");
         mResumed = true;
         mStoredRequests.clear();
     }
@@ -105,6 +115,8 @@ public class CodeGeneratorManager {
      * @param codeGenerationRequest the request to generate code.
      */
     public void requestCodeGeneration(CodeGenerationRequest codeGenerationRequest) {
+        Log.e("testtest", "requestCodeGeneration");
+
         if(!mResumed) {
             Log.w(TAG, "Code generation called while paused. Request ignored.");
             return;
@@ -114,10 +126,13 @@ public class CodeGeneratorManager {
             return;
         }
         if (isBound()) {
+            Log.w(TAG, "executeCodeGenerationRequest");
             executeCodeGenerationRequest(codeGenerationRequest);
         } else {
+            Log.w(TAG, "mStoredRequests");
             mStoredRequests.add(codeGenerationRequest);
             if (!mIsConnecting) {
+                Log.w(TAG, "connectToService");
                 connectToService();
             }
         }

@@ -10,6 +10,12 @@ import android.net.Network;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
 import com.google.blockly.android.UploadBtnCheck;
 import com.learn4.R;
 import com.learn4.data.dto.LearningObjective;
@@ -49,6 +55,11 @@ public class Application extends android.app.Application  {
     public static ArrayList<LearningObjective> learningObjectives;
     public static int mode = 1;
     public static boolean translate_check = false;
+
+    public static boolean ad_check = false;
+    public static boolean payment_check = false;
+
+    private BillingClient billingClient;
 
     public static Application getInstance(Context context){
 //        this.context = context;
@@ -97,6 +108,30 @@ public class Application extends android.app.Application  {
 
     }
 
+    public void checkPayment() {
+        billingClient = BillingClient.newBuilder(this)
+                .enablePendingPurchases()
+                .setListener(
+                        (billingResult, list) -> {
+
+                        }
+                ).build();
+
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingServiceDisconnected() {
+                // 연결 실패 시 재시도 로직 구현
+                Log.e("testtest",  "Connection Not Established");
+            }
+
+            @Override
+            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+
+                }
+            }
+        });
+    }
 
     public void setAuth(String auth){
         usersRepository = new UsersRepository(auth);

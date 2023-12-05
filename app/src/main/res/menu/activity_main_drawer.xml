@@ -9,5 +9,19 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
 
+        <item
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_payment" />
+
+        <item
+            android:id="@+id/nav_payment_cancel"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_payment_cancel" />
+
+        <item
+            android:id="@+id/nav_input_code"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/menu_input_code" />
     </group>
 </menu>

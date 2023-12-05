@@ -32,6 +32,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
@@ -41,6 +42,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.android.BlockDropdownClick;
+import com.google.blockly.android.codegen.CodeGeneratorManager;
 import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
 import com.google.blockly.model.FieldDropdown;
@@ -317,6 +319,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Application application;
 
     private InterstitialAd mInterstitialAd;
+
+    AdView adView;
+    boolean checkOnResume = false;
 
 
     public void read_code() {
@@ -640,14 +645,17 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
             customProgressDialog.dismiss();
-            uploadListener.show();
+            uploadListener.loading();
+            //uploadListener.show();
 
         } else {
             Boolean value = OpenUSB();
             if (value) {
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
                 customProgressDialog.dismiss();
-                uploadListener.show();
+
+                uploadListener.loading();
+                //uploadListener.show();
             }
             else {
                 Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
@@ -1018,6 +1026,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     private View.OnClickListener upload_confirm = new View.OnClickListener() {
         public void onClick(View v) {
+            Log.e("testtest", "upload_confirm");
             if (!contents_name.equals("none")) {
                 if (MySharedPreferences.getInt(getApplicationContext(), contents_name + " MAX") < 5) {
                     MySharedPreferences.setInt(getApplicationContext(), contents_name + " MAX", 5);
@@ -1283,7 +1292,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         setupInterstitialAd();
 
+        adView = findViewById(R.id.adView);
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
 //        basicFieldDropdownView.setOnBlockDropdownClickListener(new BlockDropdownClick() {
 //            @Override
@@ -1480,11 +1498,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
 
-        uploadListener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요");
+        uploadListener = new UploadDialog(this, upload_confirm, submit_confirm, "업로드 성공!","확인을 눌러주세요", this);
         uploadListener.setCancelable(false);
         finishListener = new FinishDialog(this,"단원을 종료하시겠습니까?",finish_confirm,finish_cancel);
         resetListener = new FinishDialog(this,"정말 초기화하시겠습니까?",reset_confirm,reset_cancel);
-        error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요");
+        error_Listener = new UploadDialog(this, upload_confirm, null, "인터넷 연결 불안정","WIFI를 확인을 해주세요", this);
 
         // 시뮬레이터 초기화
 
@@ -3109,8 +3127,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onAdDismissedFullScreenContent() {
                 Log.e("testtest", "Ad dismissed fullscreen content.");
                 mInterstitialAd = null;
-                //setupInterstitialAd();
-                test2();
+                setupInterstitialAd();
+//                if (checkOnResume) {
+//                    Log.e("testtest", "checkOnResume");
+//                    //test2();
+//                } else {
+//                    Log.e("testtest", "error");
+//                }
+                checkOnResume = true;
             }
 
             @Override
@@ -3151,9 +3175,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Log.e("MainActivity chapter_id",chapter_id+"");
     }
 
-    private void test2() {
+
+    public void test2() {
         mMonitorHandler.sendEmptyMessage(1);
-        customProgressDialog.show();
+        //customProgressDialog.show();
 
         blockly_monitor.setVisibility(View.GONE);
         mBlocklyActivityHelper.getFlyoutController();
@@ -3161,6 +3186,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         current_pos = 6;
 
         compileCheck = true;
+
+        //mBlocklyActivityHelper.onResume();
 
         if (getController().getWorkspace().hasBlocks()) {
             Log.e("??", "들어옴");
@@ -3184,7 +3211,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 밖으로 빼기(광고 부분만) >> 리스너 겹치니까
         if (Application.all_check) {
             //여기에 광고 넣기
-            test2();
+            //test();
+            uploadListener.show();
 
 //            mMonitorHandler.sendEmptyMessage(1);
 //            customProgressDialog.show();
@@ -3232,6 +3260,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        UploadFalseDialog uploadFalseDialog = new UploadFalseDialog(this);
 //        uploadFalseDialog.show();
 //    }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.e("testtest", "onRestart()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("testtest", "onResume():main");
+
+        //checkOnResume = true;
+
+        if (checkOnResume) {
+            test2();
+            checkOnResume = false;
+        } else {
+            Log.e("testtest", "checkOnResume:false");
+        }
+
+    }
 
     @Override
     public void onCheckEnabled() {

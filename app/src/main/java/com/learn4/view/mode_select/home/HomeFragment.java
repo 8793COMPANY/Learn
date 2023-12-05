@@ -75,49 +75,57 @@ public class HomeFragment extends Fragment {
         setupInterstitialAd();
 
         free_btn.setOnClickListener(v->{
-            if (mInterstitialAd == null) {
-                Log.e("testtest", "The interstitial ad wasn't ready yet.");
-                return;
+            if (Application.ad_check || Application.payment_check) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("contents_name","none");
+                intent.putExtra("id","0");
+                myApplication.showLoadingScreen(getContext());
+                startActivity(intent);
+            } else {
+                if (mInterstitialAd == null) {
+                    Log.e("testtest", "The interstitial ad wasn't ready yet.");
+                    return;
+                }
+
+                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    @Override
+                    public void onAdClicked() {
+                        Log.e("testtest", "Ad was clicked.");
+                    }
+
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        Log.e("testtest", "Ad dismissed fullscreen content.");
+
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("contents_name","none");
+                        intent.putExtra("id","0");
+                        myApplication.showLoadingScreen(getContext());
+                        startActivity(intent);
+
+                        mInterstitialAd = null;
+                        setupInterstitialAd();
+                    }
+
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                        Log.e("testtest", "Ad failed to show fullscreen content.");
+                        mInterstitialAd = null;
+                    }
+
+                    @Override
+                    public void onAdImpression() {
+                        Log.e("testtest", "Ad recorded an impression.");
+                    }
+
+                    @Override
+                    public void onAdShowedFullScreenContent() {
+                        Log.e("testtest", "Ad showed fullscreen content.");
+                    }
+                });
+
+                mInterstitialAd.show(requireActivity());
             }
-
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdClicked() {
-                    Log.e("testtest", "Ad was clicked.");
-                }
-
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    Log.e("testtest", "Ad dismissed fullscreen content.");
-
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra("contents_name","none");
-                    intent.putExtra("id","0");
-                    myApplication.showLoadingScreen(getContext());
-                    startActivity(intent);
-
-                    mInterstitialAd = null;
-                    setupInterstitialAd();
-                }
-
-                @Override
-                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                    Log.e("testtest", "Ad failed to show fullscreen content.");
-                    mInterstitialAd = null;
-                }
-
-                @Override
-                public void onAdImpression() {
-                    Log.e("testtest", "Ad recorded an impression.");
-                }
-
-                @Override
-                public void onAdShowedFullScreenContent() {
-                    Log.e("testtest", "Ad showed fullscreen content.");
-                }
-            });
-
-            mInterstitialAd.show(requireActivity());
 
 //            Intent intent = new Intent(getActivity(), MainActivity.class);
 //            intent.putExtra("contents_name","none");

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="360dp"
+    android:layout_height="180dp"
+    android:background="@drawable/file_dialog_background"
+    android:backgroundTint="@color/white">
+
+    <TextView
+        android:id="@+id/main_title"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:paddingTop="4dp"
+        android:fontFamily="@font/sb_aggro_l"
+        android:background="@drawable/tutor_dialog_title_custom"
+        android:text="코드 입력"
+        android:textColor="#af6400"
+        android:textSize="16dp"
+        app:layout_constraintVertical_bias="0.14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sub_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sb_aggro_l"
+        android:text="학교 코드를 입력하세요"
+        android:textSize="17dp"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@+id/main_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.17" />
+
+    <TextView
+        android:id="@+id/sub_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sb_aggro_l"
+        android:text="학교 코드"
+        android:textSize="17dp"
+        android:textColor="#000000"
+        app:layout_constraintVertical_bias="0.35"
+        app:layout_constraintTop_toBottomOf="@+id/sub_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    <EditText
+        android:id="@+id/code_input_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="@font/pretendard_regular"
+        android:background="@drawable/edittext_rounded_corner_rectangle"
+        android:textSize="17dp"
+        app:layout_constraintWidth_percent="0.6"
+        app:layout_constraintDimensionRatio="340:64"
+        app:layout_constraintTop_toBottomOf="@+id/sub_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/confirm_btn" />
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="확인"
+        android:textColor="@color/white"
+        android:fontFamily="@font/sb_aggro_l"
+        android:textSize="16dp"
+        android:background="@drawable/link_confirm_btn_custom"
+        app:layout_constraintDimensionRatio="94:64"
+        app:layout_constraintWidth_percent="0.16"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/code_input_box"
+        app:layout_constraintBottom_toBottomOf="@+id/code_input_box"
+        app:layout_constraintLeft_toRightOf="@+id/code_input_box"
+        android:layout_marginRight="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
