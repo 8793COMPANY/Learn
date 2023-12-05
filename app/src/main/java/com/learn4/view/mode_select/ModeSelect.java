@@ -93,6 +93,8 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
     CodeInputDialog codeInputDialog;
     Application application;
 
+    PurchaseHistoryResponseListener purchaseHistoryResponseListener;
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -229,6 +231,15 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
 
         application = (Application) this.getApplication();
 
+        purchaseHistoryResponseListener = new PurchaseHistoryResponseListener() {
+            @Override
+            public void onPurchaseHistoryResponse(@NonNull BillingResult billingResult, @Nullable List<PurchaseHistoryRecord> list) {
+                Log.e("testtest", "onPurchaseHistoryResponse");
+                Log.e("testtest", billingResult+"");
+                Log.e("testtest", list+"");
+            }
+        };
+
     }
 
     public void verifySubPurchase(Purchase purchase) {
@@ -314,8 +325,6 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
     public void SubPurchase() {
         String offerToken = productDetailsList.get(0).getSubscriptionOfferDetails().get(0).getOfferToken();
 
-
-
         BillingFlowParams.ProductDetailsParams flowProductDetailParams =
                 BillingFlowParams.ProductDetailsParams.newBuilder()
                         .setProductDetails(productDetailsList.get(0))
@@ -345,6 +354,14 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         startActivity(intent);
+
+        //billingClient.queryPurchaseHistoryAsync(BillingClient.ProductType.SUBS, purchaseHistoryResponseListener);
+
+        billingClient.queryPurchaseHistoryAsync(
+                QueryPurchaseHistoryParams.newBuilder()
+                        .setProductType(BillingClient.ProductType.SUBS)
+                        .build(), purchaseHistoryResponseListener
+        );
 
 //        billingClient.queryPurchaseHistoryAsync(
 //                QueryPurchaseHistoryParams.newBuilder()
