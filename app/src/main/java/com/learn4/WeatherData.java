@@ -17,6 +17,7 @@ import java.util.Date;
 
 public class WeatherData {
     // TODO: 날씨블록 체크
+    //  브랜치 확인 테스트 진행중
     private String nx = "55";	//위도
     private String ny = "127";	//경도
     private String baseDate = "20231114";	//조회하고싶은 날짜
