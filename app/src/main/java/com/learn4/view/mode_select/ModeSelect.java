@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
+import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -94,6 +95,7 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
     Application application;
 
     PurchaseHistoryResponseListener purchaseHistoryResponseListener;
+    AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener;
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -240,6 +242,14 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
             }
         };
 
+        acknowledgePurchaseResponseListener = new AcknowledgePurchaseResponseListener() {
+            @Override
+            public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
+                Log.e("testtest", "onAcknowledgePurchaseResponse");
+                Log.e("testtest", billingResult+"");
+                Log.e("testtest", "구매 처리");
+            }
+        };
     }
 
     public void verifySubPurchase(Purchase purchase) {
@@ -260,6 +270,18 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
                 }
             });
 
+        }
+    }
+
+    public void handlePurchase(Purchase purchase) {
+        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+            if (!purchase.isAcknowledged()) {
+                AcknowledgePurchaseParams acknowledgePurchaseParams =
+                        AcknowledgePurchaseParams.newBuilder()
+                                .setPurchaseToken(purchase.getPurchaseToken())
+                                .build();
+                billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
+            }
         }
     }
 
@@ -390,6 +412,20 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
 //                    }
 //                }
 //        );
+
+        billingClient.queryPurchasesAsync(
+                QueryPurchasesParams.newBuilder()
+                        .setProductType(BillingClient.ProductType.SUBS)
+                        .build(),
+                new PurchasesResponseListener() {
+                    @Override
+                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
+                        Log.e("testtest", "onQueryPurchasesResponse");
+                        Log.e("testtest", billingResult+"");
+                        Log.e("testtest", list+"");
+                    }
+                }
+        );
     }
 
     private View.OnClickListener code_input_listener = new View.OnClickListener() {
@@ -532,6 +568,7 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                 for (Purchase purchase : list) {
 //                    verifySubPurchase(purchase);
+                    handlePurchase(purchase);
 
                     Log.e("testtest", "for문 : " + purchase);
                     testPurchase = purchase;
