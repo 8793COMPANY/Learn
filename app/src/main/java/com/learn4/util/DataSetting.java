@@ -7,6 +7,7 @@ import com.learn4.data.dto.Chapter;
 import com.learn4.data.dto.LearningObjective;
 import com.learn4.data.dto.Project;
 import com.learn4.data.dto.Subclass;
+import com.learn4.data.dto.WeatherEx;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
@@ -61,6 +62,8 @@ public class DataSetting {
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh");
     public String [] setting_weather = new String[8];
 
+    public ArrayList<WeatherEx> weatherData_list = new ArrayList<>();
+
     public DataSetting(Context context){
         this.context = context;
         Log.e("setting","init!");
@@ -90,7 +93,8 @@ public class DataSetting {
         return settingManager;
     }
 
-    public String getTime(){
+    public String
+    getTime(){
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
@@ -430,7 +434,7 @@ public class DataSetting {
                             for (int col = 2; col <= 6; col++) {
                                 blocks[col - 2] = sheet.getCell(col, row).getContents();
 
-                                Log.e("test", blocks[col - 2]);
+                                //Log.e("test", blocks[col - 2]);
                             }
 
                             BlockDictionary check = blockDictionaryDao.findBlockByName(blocks[0]);
@@ -571,7 +575,7 @@ public class DataSetting {
                                     components[col - 1] = sheet.getCell(col, row).getContents();
                                 }
 
-                                Log.e("test", components[col - 1]);
+                                //Log.e("test", components[col - 1]);
                             }
 
                             Component check = componentDao.findByName(components[2]);
