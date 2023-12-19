@@ -46,6 +46,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.learn4.util.Application;
 import com.learn4.util.DataSetting;
 import com.learn4.util.MySharedPreferences;
+import com.learn4.util.PaymentCheck;
 import com.learn4.view.custom.dialog.CodeInputDialog;
 import com.learn4.view.custom.dialog.ProgressDialog;
 
@@ -105,11 +106,13 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
                 break;
             case R.id.nav_payment:
                 //Toast.makeText(this, "nav_payment", Toast.LENGTH_SHORT).show();
-                SubPurchase();
+                //SubPurchase();
+                PaymentCheck.getInstance(this).SubPurchase(this);
                 break;
             case R.id.nav_payment_cancel:
                 //Toast.makeText(this, "nav_payment_cancel", Toast.LENGTH_SHORT).show();
-                SubPurchaseCancel();
+                //SubPurchaseCancel();
+                PaymentCheck.getInstance(this).SubPurchaseCancel();
 //                if (testPurchase != null) {
 //                    Log.e("testtest", testPurchase.getPurchaseState()+"");
 //                } else {
@@ -568,12 +571,13 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
             if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
                 for (Purchase purchase : list) {
 //                    verifySubPurchase(purchase);
-                    handlePurchase(purchase);
+//                    handlePurchase(purchase);
 
                     Log.e("testtest", "for문 : " + purchase);
                     testPurchase = purchase;
                 }
                 Log.e("testtest", "소모 성공");
+                Application.payment_check = true;
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
                 Log.e("testtest", "이미 구매");
             } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {

@@ -31,6 +31,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.learn4.util.Application;
 import com.learn4.R;
 import com.learn4.util.MySharedPreferences;
+import com.learn4.util.PaymentCheck;
 import com.learn4.view.PaymentTestActivity;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
@@ -75,6 +76,8 @@ public class HomeFragment extends Fragment {
         setupInterstitialAd();
 
         free_btn.setOnClickListener(v->{
+            PaymentCheck.getInstance(getContext()).checkSub();
+
             if (Application.ad_check || Application.payment_check) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra("contents_name","none");
@@ -249,7 +252,7 @@ public class HomeFragment extends Fragment {
                 //ca-app-pub-3940256099942544/6300978111 >> 배너
                 //ca-app-pub-3940256099942544/8691691433 >> 동영상(전면)
                 //ca-app-pub-3940256099942544/1033173712 >> 이미지(전면)
-                "ca-app-pub-3940256099942544/1033173712",
+                "ca-app-pub-3940256099942544/8691691433",
                 adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override

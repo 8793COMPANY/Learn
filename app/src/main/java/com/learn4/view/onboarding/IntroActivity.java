@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.learn4.R;
 import com.learn4.util.Application;
 import com.learn4.util.MySharedPreferences;
+import com.learn4.util.PaymentCheck;
 import com.learn4.view.mode_select.ModeSelect;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class IntroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
         hideSystemUI();
+
+        PaymentCheck.getInstance(this).initSetting();
 
         Handler handler = new Handler();
         

@@ -27,6 +27,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.learn4.R;
 import com.learn4.util.Application;
+import com.learn4.util.PaymentCheck;
 import com.learn4.view.MainActivity;
 
 public class UploadDialog extends Dialog {
@@ -107,6 +108,8 @@ public class UploadDialog extends Dialog {
             }
         });
 
+        PaymentCheck.getInstance(getContext()).checkSub();
+
         if (Application.ad_check || Application.payment_check) {
             adView.setVisibility(View.GONE);
         } else {
@@ -145,6 +148,14 @@ public class UploadDialog extends Dialog {
         super.onStart();
         Log.e("testtest", "onStart()");
         mainActivity.test2();
+
+        PaymentCheck.getInstance(getContext()).checkSub();
+
+        if (Application.ad_check || Application.payment_check) {
+            adView.setVisibility(View.GONE);
+        } else {
+            adView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -159,7 +170,9 @@ public class UploadDialog extends Dialog {
         enable1.setVisibility(View.VISIBLE);
         enable2.setVisibility(View.VISIBLE);
 
-        if (Application.ad_check) {
+        PaymentCheck.getInstance(getContext()).checkSub();
+
+        if (Application.ad_check || Application.payment_check) {
             adView.setVisibility(View.GONE);
         } else {
             adView.setVisibility(View.VISIBLE);

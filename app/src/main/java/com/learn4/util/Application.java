@@ -59,8 +59,6 @@ public class Application extends android.app.Application  {
     public static boolean ad_check = false;
     public static boolean payment_check = false;
 
-    private BillingClient billingClient;
-
     public static Application getInstance(Context context){
 //        this.context = context;
         if (instance == null){
@@ -107,6 +105,8 @@ public class Application extends android.app.Application  {
 
 
     }
+
+    private BillingClient billingClient;
 
     public void checkPayment() {
         billingClient = BillingClient.newBuilder(this)
