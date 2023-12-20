@@ -1,7 +1,6 @@
 package com.learn4.view.mode_select.home;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -30,22 +28,15 @@ import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.learn4.util.Application;
 import com.learn4.R;
-import com.learn4.util.MySharedPreferences;
 import com.learn4.util.PaymentCheck;
-import com.learn4.view.PaymentTestActivity;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
 import com.learn4.view.dictionary.BlockDictionaryActivity2;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
-
-import kotlin.jvm.internal.Intrinsics;
 
 public class HomeFragment extends Fragment {
 
@@ -85,49 +76,50 @@ public class HomeFragment extends Fragment {
                 myApplication.showLoadingScreen(getContext());
                 startActivity(intent);
             } else {
-                if (mInterstitialAd == null) {
-                    Log.e("testtest", "The interstitial ad wasn't ready yet.");
-                    return;
-                }
-
-                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                    @Override
-                    public void onAdClicked() {
-                        Log.e("testtest", "Ad was clicked.");
-                    }
-
-                    @Override
-                    public void onAdDismissedFullScreenContent() {
-                        Log.e("testtest", "Ad dismissed fullscreen content.");
-
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
-                        intent.putExtra("contents_name","none");
-                        intent.putExtra("id","0");
-                        myApplication.showLoadingScreen(getContext());
-                        startActivity(intent);
-
-                        mInterstitialAd = null;
-                        setupInterstitialAd();
-                    }
-
-                    @Override
-                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                        Log.e("testtest", "Ad failed to show fullscreen content.");
-                        mInterstitialAd = null;
-                    }
-
-                    @Override
-                    public void onAdImpression() {
-                        Log.e("testtest", "Ad recorded an impression.");
-                    }
-
-                    @Override
-                    public void onAdShowedFullScreenContent() {
-                        Log.e("testtest", "Ad showed fullscreen content.");
-                    }
-                });
-
-                mInterstitialAd.show(requireActivity());
+                ad_play(1);
+//                if (mInterstitialAd == null) {
+//                    Log.e("testtest", "The interstitial ad wasn't ready yet.");
+//                    return;
+//                }
+//
+//                mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+//                    @Override
+//                    public void onAdClicked() {
+//                        Log.e("testtest", "Ad was clicked.");
+//                    }
+//
+//                    @Override
+//                    public void onAdDismissedFullScreenContent() {
+//                        Log.e("testtest", "Ad dismissed fullscreen content.");
+//
+//                        Intent intent = new Intent(getActivity(), MainActivity.class);
+//                        intent.putExtra("contents_name","none");
+//                        intent.putExtra("id","0");
+//                        myApplication.showLoadingScreen(getContext());
+//                        startActivity(intent);
+//
+//                        mInterstitialAd = null;
+//                        setupInterstitialAd();
+//                    }
+//
+//                    @Override
+//                    public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+//                        Log.e("testtest", "Ad failed to show fullscreen content.");
+//                        mInterstitialAd = null;
+//                    }
+//
+//                    @Override
+//                    public void onAdImpression() {
+//                        Log.e("testtest", "Ad recorded an impression.");
+//                    }
+//
+//                    @Override
+//                    public void onAdShowedFullScreenContent() {
+//                        Log.e("testtest", "Ad showed fullscreen content.");
+//                    }
+//                });
+//
+//                mInterstitialAd.show(requireActivity());
             }
 
 //            Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -144,15 +136,34 @@ public class HomeFragment extends Fragment {
 
         contents_btn.setOnClickListener(v->{
             Log.e("in!","!!");
-            Intent intent = new Intent(getActivity(), ContentsActivity.class);
-            startActivity(intent);
+
+            PaymentCheck.getInstance(getContext()).checkSub();
+
+            if (Application.ad_check || Application.payment_check) {
+                Intent intent = new Intent(getActivity(), ContentsActivity.class);
+                startActivity(intent);
+            } else {
+                ad_play(2);
+            }
+//            Intent intent = new Intent(getActivity(), ContentsActivity.class);
+//            startActivity(intent);
         });
 
         dictionary_btn.setOnClickListener(v->{
             /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
             continueDialog.show();*/
-            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
-            startActivity(intent);
+
+            PaymentCheck.getInstance(getContext()).checkSub();
+
+            if (Application.ad_check || Application.payment_check) {
+                Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+                startActivity(intent);
+            } else {
+                ad_play(3);
+            }
+
+//            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+//            startActivity(intent);
         });
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -163,7 +174,6 @@ public class HomeFragment extends Fragment {
 //        if (!current.equals(MySharedPreferences.getString(getContext(),"notice_check_day"))){
 //            MySharedPreferences.setBoolean(getContext(), "notice_today_check", false);
 //        }
-
 
 //        if (!MySharedPreferences.getBoolean(getContext(),"notice_today_check")){
             Dialog dialog01;
@@ -234,7 +244,6 @@ public class HomeFragment extends Fragment {
             });
 //        }
 
-
 //        final TextView textView = root.findViewById(R.id.text_home);
 //        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
@@ -243,6 +252,61 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
         return root;
+    }
+
+    private void ad_play(int num) {
+        if (mInterstitialAd == null) {
+            Log.e("testtest", "The interstitial ad wasn't ready yet.");
+            return;
+        }
+
+        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+            @Override
+            public void onAdClicked() {
+                Log.e("testtest", "Ad was clicked.");
+            }
+
+            @Override
+            public void onAdDismissedFullScreenContent() {
+                Log.e("testtest", "Ad dismissed fullscreen content.");
+
+                if (num == 1) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("contents_name","none");
+                    intent.putExtra("id","0");
+                    myApplication.showLoadingScreen(getContext());
+                    startActivity(intent);
+                } else if (num == 2) {
+                    Intent intent = new Intent(getActivity(), ContentsActivity.class);
+                    startActivity(intent);
+                } else {
+                    // num == 3
+                    Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+                    startActivity(intent);
+                }
+
+                mInterstitialAd = null;
+                setupInterstitialAd();
+            }
+
+            @Override
+            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                Log.e("testtest", "Ad failed to show fullscreen content.");
+                mInterstitialAd = null;
+            }
+
+            @Override
+            public void onAdImpression() {
+                Log.e("testtest", "Ad recorded an impression.");
+            }
+
+            @Override
+            public void onAdShowedFullScreenContent() {
+                Log.e("testtest", "Ad showed fullscreen content.");
+            }
+        });
+
+        mInterstitialAd.show(requireActivity());
     }
 
     private void setupInterstitialAd() {

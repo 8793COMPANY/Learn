@@ -161,13 +161,13 @@ public class PaymentCheck extends AppCompatActivity implements PurchasesUpdatedL
                 .setProductList(
                         ImmutableList.of(
                                 QueryProductDetailsParams.Product.newBuilder()
-                                        .setProductId("baeulrae_test1")
+                                        .setProductId("8793inc")
                                         .setProductType(BillingClient.ProductType.SUBS)
                                         .build()
                         )
                 ).build();
 
-        Log.e("payment queryProductDetailAsync product", "baeulrae_test1");
+        Log.e("payment queryProductDetailAsync product", "8793inc");
 
         billingClient.queryProductDetailsAsync(params, new ProductDetailsResponseListener() {
             @Override
@@ -277,7 +277,7 @@ public class PaymentCheck extends AppCompatActivity implements PurchasesUpdatedL
                         } else {
                             Log.e("testtest!", list.get(0).getProducts()+"");
 
-                            if (list.get(0).getProducts().toString().equals("[baeulrae_test1]")) {
+                            if (list.get(0).getProducts().toString().equals("[8793inc]")) {
                                 Application.payment_check = true;
                                 Log.e("testtest", "payment true");
                             } else {

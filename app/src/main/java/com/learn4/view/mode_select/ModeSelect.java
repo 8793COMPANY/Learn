@@ -1,12 +1,7 @@
 package com.learn4.view.mode_select;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,9 +27,6 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.QueryProductDetailsParams;
 import com.android.billingclient.api.QueryPurchaseHistoryParams;
 import com.android.billingclient.api.QueryPurchasesParams;
-import com.google.android.gms.common.GoogleSourceStampsChecker;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.collect.ImmutableList;
@@ -48,7 +40,6 @@ import com.learn4.util.DataSetting;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.util.PaymentCheck;
 import com.learn4.view.custom.dialog.CodeInputDialog;
-import com.learn4.view.custom.dialog.ProgressDialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,16 +54,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import retrofit2.http.Url;
 
 public class ModeSelect extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PurchasesUpdatedListener {
 
@@ -82,7 +68,6 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
     private int	uiOption;
 
     NavigationView nav_view;
-
 
     private BillingClient billingClient;
     private List<ProductDetails> productDetailsList;
@@ -100,6 +85,8 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        PaymentCheck.getInstance(this).checkSub();
+
         switch (item.getItemId()) {
             case R.id.nav_home:
                 //Toast.makeText(this, "nav_home", Toast.LENGTH_SHORT).show();
@@ -107,12 +94,21 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
             case R.id.nav_payment:
                 //Toast.makeText(this, "nav_payment", Toast.LENGTH_SHORT).show();
                 //SubPurchase();
-                PaymentCheck.getInstance(this).SubPurchase(this);
+                if (Application.payment_check) {
+                    Toast.makeText(this, "이미 구독중인 상품이 있습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    PaymentCheck.getInstance(this).SubPurchase(this);
+                }
+
                 break;
             case R.id.nav_payment_cancel:
                 //Toast.makeText(this, "nav_payment_cancel", Toast.LENGTH_SHORT).show();
                 //SubPurchaseCancel();
-                PaymentCheck.getInstance(this).SubPurchaseCancel();
+                if (Application.payment_check) {
+                    PaymentCheck.getInstance(this).SubPurchaseCancel();
+                } else {
+                    Toast.makeText(this, "현재 구독중인 상품이 없습니다.", Toast.LENGTH_SHORT).show();
+                }
 //                if (testPurchase != null) {
 //                    Log.e("testtest", testPurchase.getPurchaseState()+"");
 //                } else {
@@ -272,7 +268,6 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
                     Log.e("testtest", billingResult.getResponseCode()+"");
                 }
             });
-
         }
     }
 
@@ -364,7 +359,6 @@ public class ModeSelect extends AppCompatActivity implements NavigationView.OnNa
 
         Log.e("testtest2", responseCode+"");
     }
-
 
     public void SubPurchaseCancel() {
         if (testPurchase != null) {
