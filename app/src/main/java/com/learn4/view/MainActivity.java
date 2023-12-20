@@ -1985,7 +1985,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         leftAxis.setGridColor(getResources().getColor(R.color.gray_868686));
         leftAxis.enableGridDashedLine(10f, 10f, 0f);
-        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMinimum(0f); //최솟값
 
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);

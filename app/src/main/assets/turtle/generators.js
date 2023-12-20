@@ -264,7 +264,7 @@ Blockly.JavaScript['pluse_sensor'] = function (block) {
 
    var code = " int myBPM = pulseSensor.getBeatsPerMinute(); \n"+
    "if (pulseSensor.sawStartOfBeat()){\n"+
-                      "     Serial.print("+'"'+"BPM: "+'"'+"); \n"+
+//                      "     Serial.print("+'"'+"BPM: "+'"'+"); \n"+
                       "     Serial.println(myBPM); \n}"+
                       "\ndelay(20);\n"
    return code;

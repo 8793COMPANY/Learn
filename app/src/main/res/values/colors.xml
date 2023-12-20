@@ -25,4 +25,17 @@
 
     <color name="black_383838">#383838</color>
 
+
+    <color name="colorSeekR">#ED020B</color>
+    <color name="colorSeekG">#7FB005</color>
+    <color name="colorSeekB">#4078D3</color>
+    <color name="colorSeekRP">#F46528</color>
+    <color name="colorSeekGP">#B9D604</color>
+    <color name="colorSeekBP">#50A9E3</color>
+
+    <color name="colorSeekGet">#3b4044</color>
+
+    <color name="color_9C979797">#00676767</color>
+
+
 </resources>

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -21,21 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.learn4.WeatherData;
+import com.learn4.DroneActivity;
 import com.learn4.util.Application;
 import com.learn4.R;
-import com.learn4.util.MySharedPreferences;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
-import com.learn4.view.dictionary.BlockDictionaryActivity2;
 
-import org.json.JSONException;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -103,7 +93,10 @@ public class HomeFragment extends Fragment {
         dictionary_btn.setOnClickListener(v->{
             /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
             continueDialog.show();*/
-            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+//            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+//            startActivity(intent);
+
+            Intent intent = new Intent(getActivity(), DroneActivity.class);
             startActivity(intent);
         });
 
