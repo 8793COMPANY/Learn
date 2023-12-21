@@ -25,6 +25,7 @@ import com.learn4.util.Application;
 import com.learn4.R;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
+import com.learn4.view.dictionary.BlockDictionaryActivity2;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     LinearLayout free_mode,content_mode;
     Application myApplication;
-    Button free_btn,contents_btn,dictionary_btn;
+    Button free_btn,contents_btn,dictionary_btn,drone_btn;
     TextView user_name;
 
 
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment {
         contents_btn = root.findViewById(R.id.contents_btn);
         free_btn = root.findViewById(R.id.free_btn);
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
+        drone_btn = root.findViewById(R.id.drone_btn);
         user_name = root.findViewById(R.id.user_name);
 
 //        new Thread(() -> {
@@ -93,9 +95,12 @@ public class HomeFragment extends Fragment {
         dictionary_btn.setOnClickListener(v->{
             /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
             continueDialog.show();*/
-//            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
-//            startActivity(intent);
+            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+            startActivity(intent);
 
+        });
+
+        drone_btn.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), DroneActivity.class);
             startActivity(intent);
         });

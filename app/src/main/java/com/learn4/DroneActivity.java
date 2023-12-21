@@ -197,8 +197,6 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         //
         myHandler = new MyHandler();
 
-
-
         //controller
         layout_controller = findViewById(R.id.layout_controller);
         controller_section = findViewById(R.id.controller_section);

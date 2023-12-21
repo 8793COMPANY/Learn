@@ -108,6 +108,7 @@ public class WeatherData {
         // resultMsg
         if (!resultMsg.equals("NORMAL_SERVICE")){
             tmperature = "NO_DATA";
+            Log.e("testtest", "result message: " + resultMsg);
             return;
         }
 

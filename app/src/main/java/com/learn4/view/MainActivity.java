@@ -43,6 +43,7 @@ import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
 import com.learn4.tutor.TutorCheck;
+import com.learn4.util.DataSetting;
 import com.learn4.util.FileSharedPreferences;
 import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
@@ -741,32 +742,119 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         int recall_num =0;
         for (int i=0; i<weathers.size(); i++){
             recall_data = false;
-            if (i == 0){
+            if (i == 0){    // 날씨 데이터 블록이 한 개인 경우
                 Log.e("test_method 첫번째 데이터","불러오기");
                 //첫 번째 기상청 데이터 불러오기
                 try {
                     WeatherData weatherData = new WeatherData();
                     weatherData.lookUpWeather(weathers.get(i).getDate(),weathers.get(i).getTime(),weathers.get(i).getLocal(),weathers.get(i).getType());
                     Log.e("test_method data type",weathers.get(i).getType());
+                    Log.e("test_method data type",weathers.get(i).getType().trim());
                     Log.e("test_method temp check",weatherData.getTmperature());
+
                     if (weatherData.getTmperature().equals("NO_DATA")){
-                        serial_write("\n*start*\n");
-                        serial_write("NO"+"*END*");
+                        if(DataSetting.getInstance(this).weatherData_list != null && DataSetting.getInstance(this).weatherData_list.size() != 0) {
+                            Log.e("testtest", "NO_DATA");
+                            Log.e("testtest", DataSetting.getInstance(this).weatherData_list.size()+"");
+
+                            for (int j=0; j < DataSetting.getInstance(this).weatherData_list.size(); j++) {
+                                Log.e("testtest", "---");
+                                //Log.e("testtest", DataSetting.getInstance(this).weatherData_list.get(j).getLocal());
+                                //Log.e("testtest", weathers.get(i).getLocal().trim());
+
+                                if (DataSetting.getInstance(this).weatherData_list.get(j).getLocal().equals(weathers.get(i).getLocal().trim())) {
+                                    switch (weathers.get(i).getType().trim()) {
+                                        case "기온":
+                                            Log.e("testtest", "기온");
+                                            Log.e("testtest", DataSetting.getInstance(this).weatherData_list.get(j).getLocal());
+                                            Log.e("testtest", "기온 : " + DataSetting.getInstance(this).weatherData_list.get(j).getTMP());
+                                            serial_write("\n*start*\n");
+                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getTMP()+"*END*");
+                                            break;
+                                        case "강수량":
+                                            Log.e("testtest", "강수량");
+                                            Log.e("testtest", "강수량 : " + DataSetting.getInstance(this).weatherData_list.get(j).getPCP());
+                                            serial_write("\n*start*\n");
+                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getPCP()+"*END*");
+                                            break;
+                                        case "하늘상태":
+                                            Log.e("testtest", "하늘상태");
+                                            Log.e("testtest", "하늘상태 : " + DataSetting.getInstance(this).weatherData_list.get(j).getSKY());
+                                            serial_write("\n*start*\n");
+                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getSKY()+"*END*");
+                                            break;
+                                        case "습도":
+                                            Log.e("testtest", "습도");
+                                            Log.e("testtest", "습도 : " + DataSetting.getInstance(this).weatherData_list.get(j).getREH());
+                                            serial_write("\n*start*\n");
+                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getREH()+"*END*");
+                                            break;
+                                        case "강수형태":
+                                            Log.e("testtest", "강수형태");
+                                            Log.e("testtest", "강수형태 : " + DataSetting.getInstance(this).weatherData_list.get(j).getPTY());
+                                            serial_write("\n*start*\n");
+                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getPTY()+"*END*");
+                                            break;
+                                        case "풍속":
+                                            Log.e("testtest", "풍속");
+                                            Log.e("testtest", "풍속 : " + DataSetting.getInstance(this).weatherData_list.get(j).getWSD());
+                                            serial_write("\n*start*\n");
+                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getWSD()+"*END*");
+                                            break;
+                                    }
+                                } else {
+                                    //Log.e("testtest", "NO_DATA??");
+//                                    serial_write("\n*start*\n");
+//                                    serial_write("NO"+"*END*");
+                                }
+                                Log.e("testtest", "---");
+                            }
+                        } else {
+                            Log.e("testtest", "NO_DATA2");
+                            switch (weathers.get(i).getType().trim()) {
+                                case "기온":
+                                    serial_write("\n*start*\n");
+                                    serial_write(DataSetting.getInstance(this).setting_weather[0]+"*END*");
+                                    break;
+                                case "강수량":
+                                    serial_write("\n*start*\n");
+                                    serial_write(DataSetting.getInstance(this).setting_weather[1]+"*END*");
+                                    break;
+                                case "하늘상태":
+                                    serial_write("\n*start*\n");
+                                    serial_write(DataSetting.getInstance(this).setting_weather[2]+"*END*");
+                                    break;
+                                case "습도":
+                                    serial_write("\n*start*\n");
+                                    serial_write(DataSetting.getInstance(this).setting_weather[3]+"*END*");
+                                    break;
+                                case "강수형태":
+                                    serial_write("\n*start*\n");
+                                    serial_write(DataSetting.getInstance(this).setting_weather[4]+"*END*");
+                                    break;
+                                case "풍속":
+                                    serial_write("\n*start*\n");
+                                    serial_write(DataSetting.getInstance(this).setting_weather[5]+"*END*");
+                                    break;
+                            }
+//                            serial_write("\n*start*\n");
+//                            serial_write("NO"+"*END*");
+                        }
                     }else{
+                        Log.e("testtest", "YES_DATA");
                         serial_write("\n*start*\n");
                         serial_write(weatherData.getTmperature()+"*END*");
                         weather_list.put(i, weatherData);
                     }
-
-
 
                 }catch (IOException e){
                     e.printStackTrace();
                 }catch (JSONException e){
                     e.printStackTrace();
                 }
-            }else{
+            }else{ // 날씨 데이터 블록이 2개 이상인 경우
                 Log.e("test_method 첫번째 데이터 이후 ","불러오기");
+                Log.e("testtest", "다른경우");
                 for (int j=0; j<weathers.size(); j++){
                     if (i == j)
                         continue;
