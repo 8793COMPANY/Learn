@@ -318,9 +318,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Handler mHandler = new Handler();
     Application application;
 
-    private InterstitialAd mInterstitialAd;
-
-    AdView adView;
     boolean checkOnResume = false;
 
 
@@ -1289,19 +1286,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             Application.checkUploadBtn();
         });
-
-        setupInterstitialAd();
-
-        adView = findViewById(R.id.adView);
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
-            }
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
 
 //        basicFieldDropdownView.setOnBlockDropdownClickListener(new BlockDropdownClick() {
 //            @Override
@@ -3076,105 +3060,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         mMonitorHandler.sendEmptyMessage(0);
         mMonitorHandler.sendEmptyMessage(2);
     }
-
-    private void setupInterstitialAd() {
-        Log.e("testtest", "setup ok");
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
-            }
-        });
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        InterstitialAd.load(this,
-                //ca-app-pub-3940256099942544/6300978111 >> 배너
-                //ca-app-pub-3940256099942544/8691691433 >> 동영상(전면)
-                //ca-app-pub-3940256099942544/1033173712 >> 이미지(전면)
-                "ca-app-pub-3940256099942544/8691691433",
-                adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        Log.d("DEBUG: ", loadAdError.toString());
-                        mInterstitialAd = null;
-                    }
-
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        Log.d("DEBUG: ", "Ad was loaded.");
-                        mInterstitialAd = interstitialAd;
-                    }
-                });
-    }
-
-    private void test() {
-        if (mInterstitialAd == null) {
-            Log.e("testtest", "The interstitial ad wasn't ready yet.");
-            return;
-        } else {
-            mInterstitialAd.show(this);
-        }
-
-        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-            @Override
-            public void onAdClicked() {
-                Log.e("testtest", "Ad was clicked.");
-            }
-
-            @Override
-            public void onAdDismissedFullScreenContent() {
-                Log.e("testtest", "Ad dismissed fullscreen content.");
-                mInterstitialAd = null;
-                setupInterstitialAd();
-//                if (checkOnResume) {
-//                    Log.e("testtest", "checkOnResume");
-//                    //test2();
-//                } else {
-//                    Log.e("testtest", "error");
-//                }
-                checkOnResume = true;
-            }
-
-            @Override
-            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                Log.e("testtest", "Ad failed to show fullscreen content.");
-                mInterstitialAd = null;
-            }
-
-            @Override
-            public void onAdImpression() {
-                Log.e("testtest", "Ad recorded an impression.");
-            }
-
-            @Override
-            public void onAdShowedFullScreenContent() {
-                Log.e("testtest", "Ad showed fullscreen content.");
-            }
-        });
-//        mMonitorHandler.sendEmptyMessage(1);
-//        customProgressDialog.show();
-//
-//        blockly_monitor.setVisibility(View.GONE);
-//        mBlocklyActivityHelper.getFlyoutController();
-//        categoryData.setPosition(6);
-//        current_pos = 6;
-//
-//        compileCheck = true;
-//
-//        if (getController().getWorkspace().hasBlocks()) {
-//            Log.e("??", "들어옴");
-//            mBlocklyActivityHelper.requestCodeGeneration(
-//                    getBlockGeneratorLanguage(),
-//                    getBlockDefinitionsJsonPaths(),
-//                    getGeneratorsJsPaths(),
-//                    getCodeGenerationCallback());
-//        }
-//
-//        Log.e("MainActivity chapter_id",chapter_id+"");
-    }
-
 
     public void test2() {
         mMonitorHandler.sendEmptyMessage(1);
