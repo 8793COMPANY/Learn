@@ -12,6 +12,8 @@ import android.os.Message;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -245,10 +248,9 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(ContextCompat.getColor(this, R.color.black));
-        drawable.setSize(1, 1);
+        drawable.setSize(1, 2);
         linearLayout.setDividerPadding(45);
         linearLayout.setDividerDrawable(drawable);
-
 
 
 
@@ -275,8 +277,14 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                         break;
                     case 2:
                         optic = !optic;
-                        if (optic) tab.setText("optical");
-                        else tab.setText("flow");
+                        if (optic){
+                            TextView textView = drone_menu_tabs.getTabAt(2).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Optical");
+                        }
+                        else {
+                            TextView textView = drone_menu_tabs.getTabAt(2).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Flow");
+                        }
                         Log.e("touch", "optical");
                         break;
                     case 3:
@@ -285,17 +293,24 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                             left_btn.setTranslationY(0);
 //                            left_circle.setTranslationY(0);
                             throttle = (byte) 0x7d;
-                            tab.setIcon(R.drawable.drone_version2);
+//                            tab.setIcon(R.drawable.drone_version2);
+                            TextView textView = drone_menu_tabs.getTabAt(3).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Version2");
+                            textView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.drone_version2, 0, 0);
                         } else {
                             cont_version = 1;
                             left_btn.setTranslationY(0);
 //                            left_circle.setTranslationY(0);
                             fin_left_Y_diff = (int) (left_circle.getTranslationY() - left_btn.getTranslationY() + gap);
                             throttle = (byte) 0;
-                            tab.setIcon(R.drawable.drone_version1);
+//                            tab.setIcon(R.drawable.drone_version1);
+//                            tab_icon_setting(3, "Version1",R.drawable.drone_version1);
+                            TextView textView = drone_menu_tabs.getTabAt(3).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Version1");
+                            textView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.drone_version1, 0, 0);
                         }
 //                        txt_throttle.setText(Byte.toString(throttle));
-                        tab.setText("Version" + Integer.toString(cont_version));
+//                        tab.setText("Version" + Integer.toString(cont_version));
                         drone_menu_tabs.setClickable(true);
 
                         Log.e("touch", "version");
@@ -348,8 +363,14 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                         break;
                     case 2:
                         optic = !optic;
-                        if (optic) tab.setText("optical");
-                        else tab.setText("flow");
+                        if (optic){
+                            TextView textView = drone_menu_tabs.getTabAt(2).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Optical");
+                        }
+                        else {
+                            TextView textView = drone_menu_tabs.getTabAt(2).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Flow");
+                        }
                         Log.e("touch", "optical");
                         break;
                     case 3:
@@ -358,14 +379,18 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                             left_btn.setTranslationY(0);
 //                            left_circle.setTranslationY(0);
                             throttle = (byte) 0x7d;
-                            tab.setIcon(R.drawable.drone_version2);
+                            TextView textView = drone_menu_tabs.getTabAt(3).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Version2");
+                            textView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.drone_version2, 0, 0);
                         } else {
                             cont_version = 1;
                             left_btn.setTranslationY(w_left_circle_rad);
 //                            left_circle.setTranslationY(0);
                             fin_left_Y_diff = (int) (left_circle.getTranslationY() - left_btn.getTranslationY() + gap);
                             throttle = (byte) 0;
-                            tab.setIcon(R.drawable.drone_version1);
+                            TextView textView = drone_menu_tabs.getTabAt(3).getCustomView().findViewById(R.id.tab);
+                            textView.setText("Version1");
+                            textView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.drone_version1, 0, 0);
                         }
 //                        txt_throttle.setText(Byte.toString(throttle));
                         tab.setText("Version" + Integer.toString(cont_version));
@@ -432,6 +457,15 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         Log.e(TAG, "cen_w_left_btn : " + cen_w_left_btn);
         Log.e(TAG, "cen_w_left_circle : " + cen_w_left_circle);
 
+        final Snackbar snackbar = Snackbar.make(layout_controller, "배터리가 50% 이하면 비행이 불안정할 수 있습니다.", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("확인", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });
+        snackbar.show();
+
 //        //왼쪽 초기 위치 설정
 //        left_btn.setTranslationX(cen_w_left_btn);
 //        if (cont_version == 1) left_btn.setTranslationY(cen_h_left_btn + w_left_circle_rad);
@@ -448,6 +482,23 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 //        right_circle.setTranslationY(cen_h_left_circle);
 //        down_right_X_to_roll_origin = cen_w_left_btn + right_locate;
 //        down_right_Y_to_pitch_origin = cen_h_left_btn;
+
+        tab_icon_setting(0, "Home", R.drawable.drone_home);
+        tab_icon_setting(1, "Calibration", R.drawable.drone_calibration);
+        tab_icon_setting(2, "Optical", R.drawable.drone_optical);
+        tab_icon_setting(3, "Version2", R.drawable.drone_version2);
+        tab_icon_setting(4, "Battery", R.drawable.drone_battery);
+        tab_icon_setting(5, "WIFI", R.drawable.drone_wifi);
+        tab_icon_setting(6, "Setting", R.drawable.drone_setting);
+
+//
+//        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+//        tabThree.setText("Calibration");
+//        tabThree.setTextSize(15);
+//        tabThree.setGravity(Gravity.CENTER);
+//        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.drone_calibration, 0, 0);
+////        tabThree.setPadding(0,10,0,0);
+//        drone_menu_tabs.getTabAt(1).setCustomView(tabThree);
 
         controller_section.setOnTouchListener((view, motionEvent) -> {
             int pCnt = motionEvent.getPointerCount(); // 1개 닿으면 1, 두 개 닿으면 2
@@ -496,13 +547,6 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                             Y = (int) -(left_circle_y_pos -Y);
                         }
 
-
-                        // 왼쪽 circle과 btn은 손이 닿은 곳으로 이동
-//                        left_circle.setTranslationX(-(left_circle_x_pos-X));
-
-//                        if (cont_version == 1)
-//                            left_circle.setTranslationY(Y);
-//                        else left_circle.setTranslationY(Y);
                         left_btn.setTranslationX(-(left_circle_x_pos-X));
                         left_btn.setTranslationY(Y);
 
@@ -567,27 +611,15 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                             down_right_X_to_roll_origin = (LBX);
                             down_right_Y_to_pitch_origin = (LBY);
 
-                            if (Y < right_circle.getY()){
-                                Y = (int) (right_circle_y_pos -Y);
-                            }else {
-                                Y = (int) -(right_circle_y_pos -Y);
-                            }
-
 //                            right_circle.setTranslationX(-(left_circle_x_pos-X));
 //                            right_circle.setTranslationY(Y);
                             right_btn.setTranslationX(-(left_circle_x_pos-X));
-                            right_btn.setTranslationY(Y);
+                            right_btn.setTranslationY(-(right_circle_y_pos -Y));
                         } else { //오른쪽을 안 떼고, 왼쪽 손이 다시 닿았을 때
                             Log.e("ACTION_POINTER_DOWN", "2손 왼 down");
                             down_left_X_to_yaw_origin = (int) (motionEvent.getX(1) - w_left_btn_rad);
                             if (cont_version == 2)
                                 down_left_Y_to_throttle_origin = (int) (motionEvent.getY(1) - h_left_btn_rad);
-
-                            if (motionEvent.getY(1) < left_circle.getY()){
-                                Y = (int) (left_circle_y_pos - motionEvent.getY(1));
-                            }else {
-                                Y = (int) -(left_circle_y_pos -motionEvent.getY(1));
-                            }
 
 //                            left_circle.setTranslationX(-(left_circle_x_pos-motionEvent.getX(1)));
 //                            if (cont_version == 1)
@@ -595,7 +627,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 //                            else left_circle.setTranslationY(Y);
                             Log.e("ACTION Y",Y+"");
                             left_btn.setTranslationX(-(left_circle_x_pos-motionEvent.getX(1)));
-                            left_btn.setTranslationY(Y);
+                            left_btn.setTranslationY(-(left_circle_y_pos -motionEvent.getY(1)));
                         }
                     } else { // 두 번째 닿은 손이 오른쪽일 때
                         Log.e("ACTION_POINTER_DOWN", "2손 오른 down이거나  down중일 때");
@@ -604,33 +636,21 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                             down_left_X_to_yaw_origin = (LBX);
                             down_left_Y_to_throttle_origin = (LBY);
 
-                            if (Y < left_circle.getY()){
-                                Y = (int) (left_circle_y_pos -Y);
-                            }else {
-                                Y = (int) -(left_circle_y_pos -Y);
-                            }
-
 //                            left_circle.setTranslationX(-(left_circle_x_pos-X));
 //                            if (cont_version == 1)
 //                                left_circle.setTranslationY(Y);
 //                            else left_circle.setTranslationY(Y);
                             left_btn.setTranslationX(-(left_circle_x_pos-X));
-                            left_btn.setTranslationY(Y);
+                            left_btn.setTranslationY(-(left_circle_y_pos -Y));
                         } else { //왼쪽 안 떼고, 오른쪽 다시 닿음
                             Log.e("ACTION_POINTER_DOWN", "2손 오른 down");
                             down_right_X_to_roll_origin = (int) (motionEvent.getX(1) - w_left_btn_rad);
                             down_right_Y_to_pitch_origin = (int) (motionEvent.getY(1) - h_left_btn_rad);
 
-                            if (motionEvent.getY(1) < right_circle.getY()){
-                                Y = (int) (right_circle_y_pos -motionEvent.getY(1));
-                            }else {
-                                Y = (int) -(right_circle_y_pos -motionEvent.getY(1));
-                            }
-
 //                            right_circle.setTranslationX(-(right_circle_x_pos- motionEvent.getX(1)));
 //                            right_circle.setTranslationY(Y);
                             right_btn.setTranslationX(-(right_circle_x_pos- motionEvent.getX(1)));
-                            right_btn.setTranslationY(Y);
+                            right_btn.setTranslationY(-(right_circle_y_pos -motionEvent.getY(1)));
 
                         }
 
@@ -679,68 +699,29 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                     }
                     break;
                 case MotionEvent.ACTION_MOVE: //움직일 때
-                    Log.e("ACTION move","in");
                     if (pCnt == 1) {
-                        Log.e("ACTION y",Y+", "+left_circle.getY());
+//                        Log.e("ACTION y",Y+", "+left_circle.getY());
                         if (X < width / 2) {
-                            if (Y < left_btn.getY()){
-                                Y = (int) (left_circle_y_pos - motionEvent.getY());
-                            }else {
-                                Y = (int) -(left_circle_y_pos -motionEvent.getY());
-                            }
                             left_btn.setTranslationX(-(left_circle_x_pos-X));
-                            left_btn.setTranslationY(Y);
+                            left_btn.setTranslationY(-(left_circle_y_pos -motionEvent.getY()));
                         } else {
-                            if (Y < right_btn.getY()){
-                                Y = (int) (right_circle_y_pos - motionEvent.getY());
-                            }else {
-                                Y = (int) -(right_circle_y_pos -motionEvent.getY());
-                            }
                             right_btn.setTranslationX(-(right_circle_x_pos-X));
-                            right_btn.setTranslationY(Y);
+                            right_btn.setTranslationY(-(right_circle_y_pos - motionEvent.getY()));
                         }
-                        Log.e("ACTION y",Y+"");
+
                     } else {
+                        Log.e("ACTION move left_btn y",left_btn.getY()+"");
+                        Log.e("ACTION move right_btn y",right_btn.getY()+"");
                         if (X < width / 2) {
-                            int YR = 0;
-                            int YL = 0;
-                            if (Y < left_btn.getY()){
-                                YL = (int) (left_circle_y_pos - motionEvent.getY());
-                            }else {
-                                YL = (int) -(left_circle_y_pos -motionEvent.getY());
-                            }
-                            if (motionEvent.getY(1) < right_btn.getY()){
-                                YR = (int) (right_circle_y_pos - motionEvent.getY(1));
-                            }else {
-                                YR = (int) -(right_circle_y_pos -motionEvent.getY(1));
-                            }
-
                             left_btn.setTranslationX(-(left_circle_x_pos-X));
-                            left_btn.setTranslationY(YL);
+                            left_btn.setTranslationY(-(left_circle_y_pos - motionEvent.getY()));
                             right_btn.setTranslationX(-(right_circle_x_pos-motionEvent.getX(1)));
-                            right_btn.setTranslationY(YR);
-                            Log.e("ACTION y",YR+","+YL);
+                            right_btn.setTranslationY(-(right_circle_y_pos -motionEvent.getY(1)));
                         } else {
-
-                            int YR = 0;
-                            int YL = 0;
-                            if (motionEvent.getY(1) < left_btn.getY()){
-                                YL = (int) (left_circle_y_pos - motionEvent.getY(1));
-                            }else {
-                                YL = (int) -(left_circle_y_pos -motionEvent.getY(1));
-                            }
-                            if (Y < right_btn.getY()){
-                                YR = (int) (right_circle_y_pos - motionEvent.getY());
-                            }else {
-                                YR = (int) -(right_circle_y_pos -motionEvent.getY());
-                            }
-
-
                             right_btn.setTranslationX(-(right_circle_x_pos-X));
-                            right_btn.setTranslationY(YR);
+                            right_btn.setTranslationY(-(right_circle_y_pos - motionEvent.getY()));
                             left_btn.setTranslationX(-(left_circle_x_pos-motionEvent.getX(1)));
-                            left_btn.setTranslationY(YL);
-                            Log.e("ACTION y",YR+","+YL);
+                            left_btn.setTranslationY(-((left_circle_y_pos - motionEvent.getY(1))));
                         }
                     }
 
@@ -848,6 +829,15 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    public void tab_icon_setting(int pos, String title, int icon){
+        TextView tabFour = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabFour.setText(title);
+        tabFour.setGravity(Gravity.CENTER);
+        tabFour.setCompoundDrawablesWithIntrinsicBounds(0, icon, 0, 0);
+//        tabFour.setCompoundDrawablePadding(20);
+        drone_menu_tabs.getTabAt(pos).setCustomView(tabFour);
+    }
+
     public int fineTuning(int x) {
         int center = 125;
 
@@ -941,7 +931,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             int percentage = (int) ((level/10.0)*100);
             String macAdd = wifiMan.getConnectionInfo().getBSSID();
             Log.e("linkspeed",linkspeed+"");
-            drone_menu_tabs.getTabAt(5).setText(percentage+"");
+//            drone_menu_tabs.getTabAt(5).setText(percentage+"");
             //debugtext.setText("링크 스피드 : " + linkspeed + " / 신호 감도 : " + percentage + " / 맥어드레스 : " + macAdd );
         }
     };

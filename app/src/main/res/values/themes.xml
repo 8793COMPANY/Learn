@@ -28,6 +28,11 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
 
+    <style name="tabTextSize" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14dp</item>
+
+    </style>
+
     <!--    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">-->
     <!--        <item name="colorAccent">#f78f43</item>-->
     <!--        <item name="android:textColor">#fff7e6</item>-->

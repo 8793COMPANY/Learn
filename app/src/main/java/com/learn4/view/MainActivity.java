@@ -781,7 +781,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                                             Log.e("testtest", "하늘상태");
                                             Log.e("testtest", "하늘상태 : " + DataSetting.getInstance(this).weatherData_list.get(j).getSKY());
                                             serial_write("\n*start*\n");
-                                            serial_write(DataSetting.getInstance(this).weatherData_list.get(j).getSKY()+"*END*");
+                                            serial_write(weatherData.SkyType(DataSetting.getInstance(this).weatherData_list.get(j).getSKY())+"*END*");
                                             break;
                                         case "습도":
                                             Log.e("testtest", "습도");
@@ -822,7 +822,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                                     break;
                                 case "하늘상태":
                                     serial_write("\n*start*\n");
-                                    serial_write(DataSetting.getInstance(this).setting_weather[2]+"*END*");
+                                    serial_write(weatherData.SkyType(DataSetting.getInstance(this).setting_weather[2])+"*END*");
                                     break;
                                 case "습도":
                                     serial_write("\n*start*\n");

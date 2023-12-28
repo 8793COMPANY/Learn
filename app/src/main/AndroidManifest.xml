@@ -32,9 +32,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".DroneControlActivity"
-            android:exported="false" />
+
         <activity
             android:name=".view.simulator.TeachableActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

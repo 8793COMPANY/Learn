@@ -47,6 +47,8 @@ public enum Boards {
     BALANDUINO                  (1, "bala",ChipTypes.M1284P,    UploadProtocols.STK500,  115200, ComProtocols.UART, "Balanduino"),
     POCKETDUINO                 (1, "podu",ChipTypes.M328P,     UploadProtocols.STK500,   57600, ComProtocols.UART, "PocketDuino"),
 
+    ESP_12E                     (1, "esp12e",ChipTypes.M328P,     UploadProtocols.STK500,  115200, ComProtocols.UART, "Arduino ESP 12E"),
+
     // mbed Series
 //    MBED_LPC1768                (0, "mbd1",ChipTypes.MBED_LPC1768,      UploadProtocols.USBMEM,   0, ComProtocols.UART, "mbed LPC1768"),
 //    MBED_LPC11U24               (0, "mbd2",ChipTypes.MBED_LPC11U24,     UploadProtocols.USBMEM,   0, ComProtocols.UART, "mbed LPC11U24"),

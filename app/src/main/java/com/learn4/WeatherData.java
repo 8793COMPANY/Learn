@@ -138,6 +138,9 @@ public class WeatherData {
                     }
 
                 }
+                else   if(data_type.equals("SKY")){
+                        fcstValue = SkyType(fcstValue);
+                }
                     tmperature = fcstValue;
 
             }

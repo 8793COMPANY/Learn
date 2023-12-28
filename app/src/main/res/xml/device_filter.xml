@@ -44,5 +44,9 @@
     <usb-device product-id="8963" vendor-id="1659"/>
 
     <!-- 0x1a86 / 0x7523: Qinheng CH340 -->
-    <usb-device product-id="29987" vendor-id="6790"/>
+    <usb-device product-id="29987" vendor-id="256"/>
+
+
+    <!-- 0x1a86 / 0xEA60: nodemcu -->
+    <usb-device product-id="60000" vendor-id="6790"/>
 </resources>
