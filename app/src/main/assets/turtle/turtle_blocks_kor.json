@@ -1354,6 +1354,17 @@
   },
 
   {
+    "type": "read_stt",
+    "message0": "STT 불러오기",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "String",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
     "type": "type_int",
     "message0" : "숫자 : %1",
     "args0" : [
