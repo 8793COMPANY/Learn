@@ -37,7 +37,7 @@ import java.net.InetAddress;
 
 public class DroneActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    // 최신버전 1.8.1 커밋
 
     public static final String TAG = "Controll";
 
