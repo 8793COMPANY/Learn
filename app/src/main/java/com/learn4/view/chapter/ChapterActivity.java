@@ -61,8 +61,8 @@ public class ChapterActivity extends AppCompatActivity {
         uploadChapter(chapter_id);
         Log.e("chapter_id",chapter_id);
         if (chapter_id.equals("1")) {
-            Application.mediaPlayer = MediaPlayer.create(this, R.raw.led_1);
-            Application.mediaPlayer.start();
+            //Application.mediaPlayer = MediaPlayer.create(this, R.raw.led_1);
+            //Application.mediaPlayer.start();
         }
 
         //id : chapter_id+"_1",
