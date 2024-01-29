@@ -1146,7 +1146,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Toast.makeText(getApplicationContext(), "오류! 업로드 버튼을 눌러주세요!", Toast.LENGTH_SHORT).show();
                 customProgressDialog.dismiss();
             }
-
+            customProgressDialog.dismiss();
         });
 
 //        Map<String,String> Headers = new HashMap<>();
