@@ -178,19 +178,28 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             final int margin = mGridRenderer.getGridSpacing() / 2;
             final int scrollToY = blocksBoundingBox.top - margin;
             if (useRtl) {
+                Log.e("scroll To","scrollable useRtl");
                 scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
             } else {
+                Log.e("scroll To","scrollable not useRtl");
                 scrollTo(blocksBoundingBox.left - margin, -200);
             }
         } else {
+            Log.e("scroll To","not scrollable");
             // Reset top leading corner to 0,0 when
             scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
         }
         // reset view end *
 
         // TODO : 포커스 된 블록 위치로 화면 이동
-        if ( ptp != null ) {
-            scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
+//        if ( ptp != null ) {
+//            scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
+//        }
+
+        if ( ntp != null ) {
+            Log.e("scroll To","ntp not ull");
+            scrollTo( (int)(0 ) , (int)( 0 ));
+            scrollTo( (int)( ntp.x ) , (int)( ntp.y -150 ));
         }
     }
 
@@ -436,13 +445,19 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         // views) being outside the range use by blocks. This matches the computations in
         // computeHorizontalScrollOffset and computeVerticalScrollOffset, respectively.
         Rect blocksBounds = getViewScaledBlockBounds();
+
         int blocksWidth = blocksBounds.width();
         int blocksHeight = blocksBounds.height();
+
+        Log.e("scrollTo blocksBounds", blocksWidth+", "+blocksHeight);
 
         int viewWidth = getMeasuredWidth();
         int halfViewWidth = viewWidth / 2;
         int viewHeight = getMeasuredHeight();
         int halfViewHeight = viewHeight / 2;
+
+        Log.e("scrollTo viewWidth halfViewWidth", viewWidth+", "+halfViewWidth);
+        Log.e("scrollTo viewHeight halfViewHeight", viewHeight+", "+halfViewHeight);
 
         int horzMargin = halfViewWidth; // Default margin is half the scrollable view width.
         if (blocksWidth < halfViewWidth) {
@@ -454,6 +469,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             vertMargin = viewHeight - blocksHeight;
         }
 
+        Log.e("scrollTo horzMargin", horzMargin+"");
+        Log.e("scrollTo vertMargint", vertMargin+"");
+
         final int xMin = blocksBounds.left - horzMargin;
         final int xMax = blocksBounds.right + horzMargin - viewWidth;
         x = clampToRange(x, xMin, xMax);
@@ -462,6 +480,11 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         final int yMax = blocksBounds.bottom + vertMargin - viewHeight;
         y = clampToRange(y, yMin, yMax);
 
+
+        Log.e("scrollTo bounds", blocksBounds.top+","+blocksBounds.bottom+","+blocksBounds.left+","+blocksBounds.right+"");
+        Log.e("scrollTo x", x+"");
+        Log.e("scrollTo y", y+"");
+        Log.e("scrollTo ", mViewScale+"-------------------------------");
         // Update and show scroll bars.
         super.scrollTo(x, y);
 
@@ -765,6 +788,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         mTempRect.right = (int) Math.ceil(mTempRect.right * mViewScale);
         mTempRect.top = (int) Math.floor(mTempRect.top * mViewScale);
         mTempRect.bottom = (int) Math.ceil(mTempRect.bottom * mViewScale);
+
         return mTempRect;
     }
 }

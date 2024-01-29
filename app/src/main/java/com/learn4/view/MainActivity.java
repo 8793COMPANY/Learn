@@ -273,6 +273,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     ConstraintLayout text_view;
 
 
+
     byte[] buffer = new byte[1024];  // buffer store for the stream
 
     int bytes; // bytes returned from read()
@@ -313,6 +314,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     Handler mHandler = new Handler();
     Application application;
+
+    String filename_extension = "uno";
 
 
     public void read_code() {
@@ -543,6 +546,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         Log.e("submittedXml builder2",stringBuilder.substring(stringBuilder.length()/2,stringBuilder.length()));
                         Log.e("submittedXml",stringBuilder.toString());
                         create_file(generatedCode, "code.ino");
+//                        create_file("print('hello')", "code.txt");
                         Log.e("compileCheck",compileCheck+"");
                         //Log.e("!@","nono");
                         if (compileCheck) {
@@ -672,7 +676,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             OpenUSB();
             Log.e("in! upload","before");
             mHandler.sendEmptyMessageDelayed(1,3000);
-            Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+            Application.mPhysicaloid.upload(Boards.ESP_12E, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
             customProgressDialog.dismiss();
@@ -691,7 +695,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         } else {
             Boolean value = OpenUSB();
             if (value) {
-                Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+                Application.mPhysicaloid.upload(Boards.ESP_12E, file);
 
                 Log.e("hello code",(code.length() - code.replace("getWeatherData(","").length())/15+"");
                 customProgressDialog.dismiss();
@@ -911,7 +915,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         if(initial) {
             Log.e("openUsb true","!!");
             initial = false;
-            Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, Constants.upload_package_path+ "code.ino");
+            Application.mPhysicaloid.upload(Boards.ESP_12E, Constants.upload_package_path+ "code.ino");
             return initial;
         }
         else {
@@ -936,7 +940,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             //   mGeneratedErrorTextView.setText(response);
                             Log.e("simpleMultiPartRequest ??","in");
                             Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                            Log.e("check response",response);
+                            Log.e("check response if",response);
                             customProgressDialog.dismiss();
 
 //                            uploadListener.dismiss();
@@ -945,9 +949,29 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             //     mGeneratedErrorTextView.setVisibility(View.GONE);
                             //       mGeneratedErrorTextView.setText("");
 //                            Log.e("2여기다 이놈아",response);
-                            create_file(response, "out.hex");
-                            Log.e("generated", "리모트 안");
-                            upload_code(Constants.upload_package_path+"out.hex");
+                            Log.e("check response else",response);
+                            if (filename_extension.equals("esp")){
+                                try {
+                                    InputStream bin_file = getResources().getAssets().open("hello.ino.nodemcu.bin");
+                                    byte buf[] = new byte[bin_file.available()];
+                                    bin_file.read(buf);
+                                    create_file2(buf,"out.bin");
+
+                                }catch (IOException e){
+                                    Log.e("resource asset open",e.toString());
+                                }
+
+//                                create_file(response, "out.bin");
+                                Log.e("generated", "리모트 안");
+                                upload_code(Constants.upload_package_path+"out.bin");
+                            }else if (filename_extension.equals("uno")){
+                                create_file(response, "out.hex");
+                                Log.e("generated", "리모트 안");
+                                upload_code(Constants.upload_package_path+"out.hex");
+                            }else if (filename_extension.equals("python")){
+                                customProgressDialog.dismiss();
+                            }
+
                             Log.e("upload finish","in!");
 
                         }
@@ -956,7 +980,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }, error -> {
             Log.e("error","in!");
             if (error instanceof TimeoutError) {
-                Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                customProgressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "timeout 서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
             }
             if (error.getMessage() != null) {
                 Log.e("서버 에러", "remotecompile: " + error.getMessage());
@@ -967,7 +992,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
                 else if(error.getMessage().contains("java.net.ConnectException")) {
                     Log.e("Remote error log",error.getMessage());
-                    Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "connect 서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
                     //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
                     //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
@@ -979,6 +1004,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Log.e("error log",error.getMessage());
                     Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
+                customProgressDialog.dismiss();
             }
 
         });
@@ -986,11 +1012,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Map<String,String> Headers = new HashMap<>();
 //        Headers.put("board", "uno");
 //        Headers.put("file", "file:///android_asset/blink.ino");
-        smr.addMultipartParam("board", "Text", "uno");
+//        smr.addMultipartParam("board", "Text", "uno");
+        Log.e("check faster","one "+TARGET_BASE_PATH);
+        filename_extension = "python";
+        smr.addMultipartParam("board", "Text", filename_extension);
         smr.addFile("file", TARGET_BASE_PATH+filename);
         RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mRequestQueue.add(smr);
-
     }
 
   /*  public void get_ports() {
@@ -1016,10 +1044,30 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             byte[] myBytes = fileContents.getBytes();
             fooStream.write(myBytes);
             fooStream.close();
+            Log.e("create file success","!!");
+        } catch (Exception e) {
+            Log.e("create file error",e.toString());
+            e.printStackTrace();
+        }
+    }
+
+
+    public void create_file2(byte[] file, String filename){
+        FileOutputStream outputStream;
+        File f = new File(TARGET_BASE_PATH+filename);
+        try {
+
+//            InputStream is = new FileInputStream(f);
+//            int size = is.available();
+//            Toast.makeText(getApplicationContext(),"size:"+size, Toast.LENGTH_LONG).show();
+            FileOutputStream fooStream = new FileOutputStream(f, false);
+            fooStream.write(file);
+            fooStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
     public void execute_shell(String cmd) throws IOException {
@@ -2726,11 +2774,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 // 포커스 된 블록이 있다면
                 if (categoryData.getNtp() != null) {
                     // 해당 블록을 기준으로 화면을 이동하고
+                    Log.e("normal block check",categoryData.getNtp()+"");
                     controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     // 포커스 된 블록의 좌표값은 초기화
                     categoryData.setRtp(null);
                     categoryData.setPtp(null);
                     categoryData.setNtp(null);
+                }else{
+                    Log.e("hello keyboard","focus null");
                 }
             }
             else {
@@ -3053,7 +3104,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("getCompiler Error",e.toString());
 //        }
         // TODO : 컴파일러 세팅
-        return "http://learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com:5000";
+        return "http://13.209.50.37:5000";
+//        return "http://learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com:5000";
     }
 
 

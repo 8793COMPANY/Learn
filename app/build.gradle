@@ -13,8 +13,8 @@ android {
         applicationId "com.learn4"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 100
-        versionName "1.8.1"
+        versionCode 101
+        versionName "1.8.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -8,5 +8,6 @@
         <domain includeSubdomains="true">st-m-satisfaction.p-e.kr</domain>
         <domain includeSubdomains="true">st-h-satisfaction.p-e.kr</domain>
         <domain includeSubdomains="true">tr-after.p-e.kr</domain>
+        <domain includeSubdomains="true">13.209.50.37</domain>
     </domain-config>
 </network-security-config>

@@ -318,9 +318,9 @@ public class Dragger {
                 }
 
                 if (blockView.getBlock() != null) {
-                    Log.e("block type", "t: " + blockView.getBlock().getType());
-                    Log.e("block coords", "tx: " + blockView.getBlock().getPosition().x);
-                    Log.e("block coords", "ty: " + blockView.getBlock().getPosition().y);
+                    Log.e("normal block type", "t: " + blockView.getBlock().getType());
+                    Log.e("normal block coords", "tx: " + blockView.getBlock().getPosition().x);
+                    Log.e("normal block coords", "ty: " + blockView.getBlock().getPosition().y);
 
                     categoryData.setNtp(blockView.getBlock().getPosition());
                 }
