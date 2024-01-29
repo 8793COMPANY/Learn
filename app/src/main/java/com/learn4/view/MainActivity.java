@@ -980,7 +980,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
-
+            customProgressDialog.dismiss();
         });
 
 //        Map<String,String> Headers = new HashMap<>();

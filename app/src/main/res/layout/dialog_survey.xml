@@ -248,7 +248,7 @@
                 android:gravity="center"
                 android:fontFamily="@font/sb_aggro_l"
                 android:inputType="textMultiLine"
-                android:text="만족도 조사 참여하기 (초등학생)"
+                android:text="만족도 조사 참여하기"
                 android:textColor="#fb9747"
                 android:textSize="13dp"
                 android:lineSpacingExtra="0dp"
@@ -261,48 +261,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey"
                 app:layout_constraintVertical_bias="0" />
 
-            <TextView
-                android:id="@+id/st_satisfaction_survey_middle_write"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/sb_aggro_l"
-                android:inputType="textMultiLine"
-                android:text="만족도 조사 참여하기 (중학생)"
-                android:textColor="#fb9747"
-                android:textSize="13dp"
-                android:lineSpacingExtra="0dp"
-                android:drawableRight="@drawable/survey_go_btn_small_size"
-                android:drawablePadding="7dp"
-                app:layout_constraintWidth_percent="0.85"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/st_after_survey"
-                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_elementary_write"
-                app:layout_constraintVertical_bias="0" />
+<!--            <TextView-->
+<!--                android:id="@+id/st_satisfaction_survey_middle_write"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:fontFamily="@font/sb_aggro_l"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:text="만족도 조사 참여하기 (중학생)"-->
+<!--                android:textColor="#fb9747"-->
+<!--                android:textSize="13dp"-->
+<!--                android:lineSpacingExtra="0dp"-->
+<!--                android:drawableRight="@drawable/survey_go_btn_small_size"-->
+<!--                android:drawablePadding="7dp"-->
+<!--                app:layout_constraintWidth_percent="0.85"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/st_after_survey"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_elementary_write"-->
+<!--                app:layout_constraintVertical_bias="0" />-->
 
 
-            <TextView
-                android:id="@+id/st_satisfaction_survey_high_write"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:drawableRight="@drawable/survey_go_btn_small_size"
-                android:drawablePadding="7dp"
-                android:fontFamily="@font/sb_aggro_l"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:lineSpacingExtra="0dp"
-                android:text="만족도 조사 참여하기 (고등학생)"
-                android:textColor="#fb9747"
-                android:textSize="13dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/st_after_survey"
-                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_middle_write"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintWidth_percent="0.85" />
+<!--            <TextView-->
+<!--                android:id="@+id/st_satisfaction_survey_high_write"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:drawableRight="@drawable/survey_go_btn_small_size"-->
+<!--                android:drawablePadding="7dp"-->
+<!--                android:fontFamily="@font/sb_aggro_l"-->
+<!--                android:gravity="center"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:lineSpacingExtra="0dp"-->
+<!--                android:text="만족도 조사 참여하기 (고등학생)"-->
+<!--                android:textColor="#fb9747"-->
+<!--                android:textSize="13dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/st_after_survey"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_middle_write"-->
+<!--                app:layout_constraintVertical_bias="0.0"-->
+<!--                app:layout_constraintWidth_percent="0.85" />-->
 
             <TextView
                 android:id="@+id/tr_after_survey"
@@ -317,8 +317,8 @@
                 app:layout_constraintVertical_bias="0"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/st_satisfaction_survey_high_write"
-                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_high_write" />
+                app:layout_constraintStart_toStartOf="@+id/st_satisfaction_survey_elementary_write"
+                app:layout_constraintTop_toBottomOf="@+id/st_satisfaction_survey_elementary_write" />
 
             <TextView
                 android:id="@+id/tr_after_survey_write"

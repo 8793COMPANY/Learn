@@ -130,8 +130,8 @@ public class HomeFragment extends Fragment {
             TextView st_after_survey_write = dialog01.findViewById(R.id.st_after_survey_write);
             TextView st_after_survey_write_set = dialog01.findViewById(R.id.st_after_survey_write_set);
             TextView st_satisfaction_survey_elementary_write = dialog01.findViewById(R.id.st_satisfaction_survey_elementary_write);
-            TextView st_satisfaction_survey_middle_write = dialog01.findViewById(R.id.st_satisfaction_survey_middle_write);
-            TextView st_satisfaction_survey_high_write = dialog01.findViewById(R.id.st_satisfaction_survey_high_write);
+//            TextView st_satisfaction_survey_middle_write = dialog01.findViewById(R.id.st_satisfaction_survey_middle_write);
+//            TextView st_satisfaction_survey_high_write = dialog01.findViewById(R.id.st_satisfaction_survey_high_write);
             TextView tr_after_survey_write = dialog01.findViewById(R.id.tr_after_survey_write);
             ScrollView surveys = dialog01.findViewById(R.id.surveys);
 
@@ -159,20 +159,21 @@ public class HomeFragment extends Fragment {
                 startActivity(intentUrl);
             });
 
+            //만족도 조사 초중고 안 나누고 하나로 통합
             st_satisfaction_survey_elementary_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-e-satisfaction.p-e.kr/"));
+                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-satisfaction.p-e.kr/"));
                 startActivity(intentUrl);
             });
 
-            st_satisfaction_survey_middle_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-m-satisfaction.p-e.kr/"));
-                startActivity(intentUrl);
-            });
-
-            st_satisfaction_survey_high_write.setOnClickListener(view -> {
-                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-h-satisfaction.p-e.kr/"));
-                startActivity(intentUrl);
-            });
+//            st_satisfaction_survey_middle_write.setOnClickListener(view -> {
+//                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-m-satisfaction.p-e.kr/"));
+//                startActivity(intentUrl);
+//            });
+//
+//            st_satisfaction_survey_high_write.setOnClickListener(view -> {
+//                Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://st-h-satisfaction.p-e.kr/"));
+//                startActivity(intentUrl);
+//            });
 
             tr_after_survey_write.setOnClickListener(view -> {
                 Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("http://tr-after.p-e.kr/"));
