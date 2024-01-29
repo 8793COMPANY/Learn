@@ -76,6 +76,11 @@
             android:name=".view.contents.ContentsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
+            android:name=".DroneActivity"
+            android:screenOrientation="sensorLandscape"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".view.onboarding.IntroActivity"
             android:exported="true"
             android:label="배울래?"

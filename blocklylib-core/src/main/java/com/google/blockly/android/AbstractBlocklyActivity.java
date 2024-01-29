@@ -560,6 +560,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
 //        mActionBar = getSupportActionBar();
 //        mActionBar.setDisplayShowTitleEnabled(true);
 
+
         // Create and attach content view into content container.  If content is a fragment, content
         // will be null here and the container will be populated during the FragmentTransaction.
         View content = onCreateContentView(R.id.content_container);

@@ -244,6 +244,5 @@ public class ChapterActivity extends AppCompatActivity {
             Application.mediaPlayer.release();
             Application.mediaPlayer = null;
         }
-
     }
 }

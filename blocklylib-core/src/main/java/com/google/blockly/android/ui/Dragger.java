@@ -290,7 +290,13 @@ public class Dragger {
         return new BlockTouchHandler() {
             @Override
             public boolean onTouchBlock(BlockView blockView, MotionEvent motionEvent) {
+                // 블록이 터치만 되었을 때(이벤트가 발생하면 여기가 찍히지 않음)
                 Log.e("onTouchBlock","in!");
+
+                //터치된 블럭의 좌표를 가져옴
+                Log.e("blockblock", blockView.getBlock().getPosition().x+"");
+                Log.e("blockblock", blockView.getBlock().getPosition().y+"");
+
                 return onTouchBlockImpl(DRAG_MODE_SLOPPY, dragHandler, blockView, motionEvent,
                         /* interceptMode */ false);
             }
@@ -300,6 +306,8 @@ public class Dragger {
                 // Intercepted move events might still be handled but the child view, such as
                 // a drop down field.
 
+                // 블록이 터치되었을 때, 터치 후 이벤트가 발생할 때 둘 다 찍힘
+
                 // 포커스 된 블록 좌표
                 if (blockView.getBlock().getRootBlock() != null) {
                     Log.e("block type", "rt: " + blockView.getBlock().getRootBlock().getType());
@@ -307,6 +315,8 @@ public class Dragger {
                     Log.e("block coords", "rty: " + blockView.getBlock().getRootBlock().getPosition().y);
 
                     categoryData.setRtp(blockView.getBlock().getRootBlock().getPosition());
+                } else {
+                    Log.e("testtest", "getRootBlock() null");
                 }
 
                 if (blockView.getBlock().getParentBlock() != null) {
@@ -315,14 +325,19 @@ public class Dragger {
                     Log.e("block coords", "pty: " + blockView.getBlock().getParentBlock().getPosition().y);
 
                     categoryData.setPtp(blockView.getBlock().getParentBlock().getPosition());
+                } else {
+                    Log.e("testtest", "getParentBlock() null");
                 }
 
                 if (blockView.getBlock() != null) {
                     Log.e("block type", "t: " + blockView.getBlock().getType());
+
                     Log.e("block coords", "tx: " + blockView.getBlock().getPosition().x);
                     Log.e("block coords", "ty: " + blockView.getBlock().getPosition().y);
 
                     categoryData.setNtp(blockView.getBlock().getPosition());
+                } else {
+                    Log.e("testtest", "getBlock() null");
                 }
 
                 Log.e("onInterceptTouchEvent","in!");

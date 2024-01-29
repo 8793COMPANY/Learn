@@ -37,6 +37,7 @@ import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
 import com.google.blockly.model.FieldDropdown;
 
+import com.google.blockly.model.WorkspacePoint;
 import com.learn4.WeatherData;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.dto.Weather;
@@ -333,6 +334,10 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     ImageView mic_image;
     Boolean SttCheck = false;
+    RadioGroup radioGroup;
+
+    Boolean touchCheck = false;
+    float testX, testY;
 
 
     public void read_code() {
@@ -808,10 +813,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
-            customProgressDialog.dismiss();
 
             if (!SttCheck) {
+                customProgressDialog.dismiss();
                 uploadListener.show();
+            } else {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    customProgressDialog.dismiss();
+                    }, 1500);
             }
 
             //uploadListener.show();
@@ -832,10 +842,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
 
                 Log.e("hello code",(code.length() - code.replace("getWeatherData(","").length())/15+"");
-                customProgressDialog.dismiss();
 
                 if (!SttCheck) {
+                    customProgressDialog.dismiss();
                     uploadListener.show();
+                } else {
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        customProgressDialog.dismiss();
+                    }, 1500);
                 }
 
                 //uploadListener.show();
@@ -1889,6 +1904,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 시뮬레이터 초기화
 
 
+        // 디스플레이
         Display display2;  // in Activity
         display2 = getWindowManager().getDefaultDisplay();
         /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
@@ -1896,8 +1912,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         display2.getSize(size2); // or getSize(size)
         int width = size2.x;
         int height = size2.y;
+        // 원코드
+        //controller.setCenterXPosition(width);
+        //controller.setCenterYPosition(height);
         controller.setCenterXPosition(width);
         controller.setCenterYPosition(height);
+
+        Log.e("testtest", "width : " + width);
+        Log.e("testtest", "height : " + height);
+
 
 
 
@@ -1906,7 +1929,54 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
 
+        Log.e("testtest", "touch!!!!!");
+
+        testX = ev.getX();
+        testY = ev.getY();
+
+        Log.e("testtest", ev.getX() + " dd");
+        Log.e("testtest", ev.getY() + " dd");
+
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            Log.e("testtest", ev.getX() + "");
+            Log.e("testtest", ev.getY() + "");
+
+            Display display;
+            display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
+
+            if (ev.getY() >= (height/2f)) {
+                Log.e("testtest", "d : " + height);
+                Log.e("testtest", "d/2 : " + height/2);
+                Log.e("testtest", "t : " + ev.getY());
+
+//                controller = getController();
+                //controller.recenterWorkspace();
+
+                //controller.testZoom2();
+                //controller.testZoom();
+                touchCheck = true;
+            } else {
+                touchCheck = false;
+                //controller.testZoom2();
+
+                WorkspacePoint workspacePoint = new WorkspacePoint();
+                workspacePoint.set(testX, testY);
+
+                //controller.zoomToFocusedBlock(workspacePoint, workspacePoint, workspacePoint);
+                //controller.focusedBlock(testX, testY);
+                controller.focusedBlock2(workspacePoint);
+            }
+        }
+
+        return super.dispatchTouchEvent(ev);
+    }
 
     /*@Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -2291,23 +2361,44 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
 
-        RadioGroup radioGroup = blockly_workspace.findViewById(R.id.toggle);
+        radioGroup = blockly_workspace.findViewById(R.id.toggle);
 
         radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
             switch (i){
                 case R.id.text:
+                    stringBuilder.setLength(0);
+                    num = 0;
+
                     chart.setVisibility(View.GONE);
                     text_view.setVisibility(View.VISIBLE);
                     baud_rate.setVisibility(View.VISIBLE);
                     mMonitorHandler.removeMessages(2);
+                    mMonitorHandler.removeMessages(1);
                     mMonitorHandler.sendEmptyMessage(0);
+
+                    input_space.setVisibility(View.VISIBLE);
+                    mic_image.setVisibility(View.GONE);
+                    sttBtn.setVisibility(View.GONE);
                     break;
                 case R.id.graph:
                     chart.setVisibility(View.VISIBLE);
                     text_view.setVisibility(View.GONE);
                     baud_rate.setVisibility(View.GONE);
                     mMonitorHandler.removeMessages(0);
+                    mMonitorHandler.removeMessages(1);
                     mMonitorHandler.sendEmptyMessage(2);
+                    break;
+                case R.id.sttRadioBtn:
+                    chart.setVisibility(View.GONE);
+                    text_view.setVisibility(View.VISIBLE);
+                    baud_rate.setVisibility(View.GONE);
+                    mMonitorHandler.removeMessages(0);
+                    mMonitorHandler.removeMessages(2);
+                    mMonitorHandler.sendEmptyMessage(1);
+
+                    input_space.setVisibility(View.GONE);
+                    mic_image.setVisibility(View.VISIBLE);
+                    sttBtn.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -2390,7 +2481,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 } else {
                     // 권한을 허용한 경우
                     try {
-                        recognizer.startListening(SttIntent);
+                        if (Application.all_check) {
+                            recognizer.startListening(SttIntent);
+                        } else {
+                            UploadFalseDialog uploadFalseDialog = new UploadFalseDialog(MainActivity.this);
+                            uploadFalseDialog.show();
+                        }
                     } catch (SecurityException e) {
                         e.printStackTrace();
                     }
@@ -2785,6 +2881,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         customProgressDialog.setCancelable(false);
 
+        // 디스플레이
         Display display;  // in Activity
         display = getWindowManager().getDefaultDisplay();
         /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
@@ -2916,13 +3013,28 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 // 포커스 된 블록이 있다면
                 if (categoryData.getNtp() != null) {
                     // 해당 블록을 기준으로 화면을 이동하고
+//                    controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     // 포커스 된 블록의 좌표값은 초기화
                     categoryData.setRtp(null);
                     categoryData.setPtp(null);
                     categoryData.setNtp(null);
+                    Log.e("testtest", "줌이 되었어요");
+
+                    //controller.getDragger().categoryData.
+                } else {
+                    Log.e("testtest", "포커스가 안되었어요");
+
+                    // 여기에 좌표 0,0 으로 설정하고 줌을 메인으로 맞추기
+                    //controller.testZoom();
+                    if (touchCheck) { // 화면 절반 아래인 경우(줌 + 0,0)
+                        controller.testZoom2();
+                        controller.testZoom();
+                    } else { // 아닌 경우(줌만)
+                        controller.testZoom2();
+                    }
                 }
-            }
+           }
             else {
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }
@@ -2934,6 +3046,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private RecognitionListener listener = new RecognitionListener() {
         @Override
         public void onReadyForSpeech(Bundle params) {
+            monitor_text.setText("");
             monitor_text.append("onReadyForSpeech..........."+"\r\n");
             mic_image.setBackgroundResource(R.drawable.mic_on);
         }
@@ -2974,10 +3087,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             String[] rs = new String[mResult.size()];
 
             mResult.toArray(rs);
-            monitor_text.append(rs[0]+"\r\n");
+            Log.e("testtestt", "trim : " + rs[0].trim());
 
-            Application.sttString = rs[0];
-            MySharedPreferences.setString(getApplicationContext(), "sttString", rs[0]);
+            String rs_trim = rs[0].replaceAll(" ", "");
+            Log.e("testtestt", "trim2 : " + rs_trim);
+
+            //monitor_text.append(rs[0].trim()+"\r\n");
+            monitor_text.append(rs_trim+"\r\n");
+
+            //Application.sttString = rs[0].trim();
+            Application.sttString = rs_trim;
+//            MySharedPreferences.setString(getApplicationContext(), "sttString", rs[0].trim());
+            MySharedPreferences.setString(getApplicationContext(), "sttString", rs_trim);
 
             Log.e("testtest", Application.sttString);
             //recognizer.startListening(SttIntent);
@@ -2986,6 +3107,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             SttCheck = true;
             // 여기에 컴파일 다시 되도록 하기
             upload_btn(6);
+
         }
 
         @Override
@@ -3527,8 +3649,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_dictionary.setVisibility(View.GONE);
         input_space.setVisibility(View.GONE);
-        sttBtn.setVisibility(View.GONE);
+        radioGroup.setVisibility(View.GONE);
+        baud_rate.setVisibility(View.GONE);
+        chart.setVisibility(View.GONE);
         mic_image.setVisibility(View.GONE);
+        sttBtn.setVisibility(View.GONE);
+        text_view.setVisibility(View.VISIBLE);
+        //sttBtn.setVisibility(View.GONE);
+        //mic_image.setVisibility(View.GONE);
 
         setCloseWindow(pos,"monitor");
 
@@ -3562,20 +3690,61 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("isOpened Serial","" + Application.mPhysicaloid.isOpened());
         block_dictionary.setVisibility(View.GONE);
         setCloseWindow(pos,"monitor");
-        input_space.setVisibility(View.VISIBLE);
-        sttBtn.setVisibility(View.VISIBLE);
-        mic_image.setVisibility(View.VISIBLE);
+        //input_space.setVisibility(View.VISIBLE);
+        //sttBtn.setVisibility(View.VISIBLE);
+        //mic_image.setVisibility(View.VISIBLE);
+        radioGroup.setVisibility(View.VISIBLE);
+        //baud_rate.setVisibility(View.VISIBLE);
+
         Log.e("serial","btn");
 
         stringBuilder.setLength(0);
         num = 0;
-        if (chart.getVisibility() == View.VISIBLE){
-            mMonitorHandler.sendEmptyMessage(2);
-        }else{
+//        if (chart.getVisibility() == View.VISIBLE){
+//            mMonitorHandler.sendEmptyMessage(2);
+//        }else{
+//            mMonitorHandler.sendEmptyMessage(0);
+//        }
+
+        Log.e("testtest", "toggle : " + radioGroup.getCheckedRadioButtonId());
+
+        if (radioGroup.getCheckedRadioButtonId() == R.id.text) {
+            Log.e("testtest", "same");
+            chart.setVisibility(View.GONE);
+            text_view.setVisibility(View.VISIBLE);
+            baud_rate.setVisibility(View.VISIBLE);
+            input_space.setVisibility(View.VISIBLE);
+            mic_image.setVisibility(View.GONE);
+            sttBtn.setVisibility(View.GONE);
+
+            mMonitorHandler.removeMessages(2);
+            mMonitorHandler.removeMessages(1);
             mMonitorHandler.sendEmptyMessage(0);
+
+        } else if (radioGroup.getCheckedRadioButtonId() == R.id.graph){
+            Log.e("testtest", "different");
+            input_space.setVisibility(View.GONE);
+            chart.setVisibility(View.VISIBLE);
+            text_view.setVisibility(View.GONE);
+            baud_rate.setVisibility(View.GONE);
+
+            mMonitorHandler.removeMessages(0);
+            mMonitorHandler.removeMessages(1);
+            mMonitorHandler.sendEmptyMessage(2);
+
+        } else if (radioGroup.getCheckedRadioButtonId() == R.id.sttRadioBtn) {
+            chart.setVisibility(View.GONE);
+            text_view.setVisibility(View.VISIBLE);
+            baud_rate.setVisibility(View.GONE);
+            input_space.setVisibility(View.GONE);
+            mic_image.setVisibility(View.VISIBLE);
+            sttBtn.setVisibility(View.VISIBLE);
+
+            mMonitorHandler.removeMessages(0);
+            mMonitorHandler.removeMessages(2);
+            mMonitorHandler.sendEmptyMessage(1);
+
         }
-
-
     }
 
     public void upload_btn(int pos) {
