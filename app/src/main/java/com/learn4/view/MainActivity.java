@@ -1011,7 +1011,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
                 customProgressDialog.dismiss();
             }
-
+            customProgressDialog.dismiss();
         });
 
 //        Map<String,String> Headers = new HashMap<>();
