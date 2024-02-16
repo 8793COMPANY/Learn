@@ -1748,7 +1748,6 @@
     "colour": "#6CD4DB",
     "tooltip": "Do some statements several times."
   },
-
   {
     "type": "turtle_setup_loop",
     "message0": "setup %1loop %2",
@@ -1764,6 +1763,34 @@
     ],
     "colour": "#EA7373",
     "tooltip": "Setup and Loop block"
+  },
+  {
+    "type": "turtle_python_main",
+    "message0": "main %1",
+    "args0": [
+      {
+        "type": "input_statement",
+        "name": "DO"
+      }
+    ],
+    "colour": "#EA7373",
+    "tooltip": "Setup and Loop block"
+  },
+
+  {
+    "type": "python_print",
+    "message0": "print %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": "",
+    "helpUrl": "https://github.com/google/blockly/wiki/Variables#set"
   },
 
   {

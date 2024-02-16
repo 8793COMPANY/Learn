@@ -1935,6 +1935,16 @@ Blockly.JavaScript['turtle_width'] = function(block) {
   return 'Turtle.penWidth(' + width + ', \'block_id_' + block.id + '\');\n';
 };
 
+  Blockly.JavaScript['python_print'] = function() {
+    var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+        Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+
+
+    var code = "print("+varValue+");\n";
+
+    return code;
+  };
+
 Blockly.JavaScript['turtle_colour'] = function(block) {
   // Generate JavaScript for setting the colour.
   var colour = Blockly.JavaScript.valueToCode(block, 'COLOUR',
@@ -1948,6 +1958,8 @@ Blockly.JavaScript['turtle_colour'] = function(block) {
 Blockly.JavaScript['turtle_repeat_internal'] = Blockly.JavaScript['controls_repeat'];
 
 Blockly.JavaScript['turtle_setup_loop'] = Blockly.JavaScript['setup_loop'];
+
+Blockly.JavaScript['turtle_python_main'] = Blockly.JavaScript['python_main'];
 
 /**
  * The generated code for turtle blocks includes block ID strings.  These are useful for

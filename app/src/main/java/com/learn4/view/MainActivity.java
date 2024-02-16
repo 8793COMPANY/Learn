@@ -217,6 +217,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     TextView monitor_text;
     CategoryData categoryData;
     String TARGET_BASE_PATH;
+    String TARGET_BASE_FILE_PATH;
     UsbDevice bigBoard;
     ProgressDialog customProgressDialog;
     String str ="", submittedXml = "";
@@ -271,6 +272,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     LineChart chart;
     ConstraintLayout text_view;
+
+    Button change_python;
 
 
 
@@ -545,13 +548,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         Log.e("submittedXml builder",stringBuilder.substring(0,stringBuilder.length()/2));
                         Log.e("submittedXml builder2",stringBuilder.substring(stringBuilder.length()/2,stringBuilder.length()));
                         Log.e("submittedXml",stringBuilder.toString());
-                        create_file(generatedCode, "code.ino");
-//                        create_file("print('hello')", "code.txt");
+//                        create_file(generatedCode, "code.ino");
+                        String cut_string = generatedCode.replace("void setup() {\n\n}","").replace("  ","");
+                        Log.e("response cut_string", cut_string);
+                        create_file(cut_string, "code.py");
                         Log.e("compileCheck",compileCheck+"");
                         //Log.e("!@","nono");
                         if (compileCheck) {
                             //Log.e("generated", "컴파컴파");
-                            remotecompile("code.ino", getCompiler());
+                            remotecompile("code.py", getCompiler());
                             Log.e("in!","ok");
                             compileCheck = false;
 //                            customProgressDialog.dismiss();
@@ -956,7 +961,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                                     byte buf[] = new byte[bin_file.available()];
                                     bin_file.read(buf);
                                     create_file2(buf,"out.bin");
-
                                 }catch (IOException e){
                                     Log.e("resource asset open",e.toString());
                                 }
@@ -970,6 +974,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                                 upload_code(Constants.upload_package_path+"out.hex");
                             }else if (filename_extension.equals("python")){
                                 customProgressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             }
 
                             Log.e("upload finish","in!");
@@ -1044,7 +1049,26 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             byte[] myBytes = fileContents.getBytes();
             fooStream.write(myBytes);
             fooStream.close();
-            Log.e("create file success","!!");
+            Log.e("create file success",TARGET_BASE_PATH);
+        } catch (Exception e) {
+            Log.e("create file error",e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void create_file_path(String fileContents, String filename){
+        FileOutputStream outputStream;
+        File f = new File(TARGET_BASE_FILE_PATH+filename);
+        try {
+
+//            InputStream is = new FileInputStream(f);
+//            int size = is.available();
+//            Toast.makeText(getApplicationContext(),"size:"+size, Toast.LENGTH_LONG).show();
+            FileOutputStream fooStream = new FileOutputStream(f, false);
+            byte[] myBytes = fileContents.getBytes();
+            fooStream.write(myBytes);
+            fooStream.close();
+            Log.e("create file success",TARGET_BASE_FILE_PATH);
         } catch (Exception e) {
             Log.e("create file error",e.toString());
             e.printStackTrace();
@@ -1289,6 +1313,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         String[] levelNames = new String[MAX_LEVELS];
         Log.e("path check","/data/data/"+this.getPackageName()+"/");
         TARGET_BASE_PATH = "/data/data/"+this.getPackageName()+"/";
+        TARGET_BASE_FILE_PATH = "/data/data/"+this.getPackageName()+"/files/";
         levelNames[0] = "ArduBasic";
         levelNames[1] = "ArduAdvanced";
 
@@ -2068,6 +2093,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         text_view = blockly_workspace.findViewById(R.id.text_view);
 
+        change_python  = blockly_workspace.findViewById(R.id.change_python);
+
         LinearLayout baud = blockly_workspace.findViewById(R.id.baud);
 
 
@@ -2178,6 +2205,13 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             public void onClick(View v) {
                 //simulatorDialog = new SimulatorDialog(MainActivity.this,code);
                 //simulatorDialog.show();
+            }
+        });
+
+        change_python.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPythonMainBlock();
             }
         });
 
@@ -2816,6 +2850,19 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     void loadSetupBlock(){
         String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                 "  <block type=\"turtle_setup_loop\" x=\"-20.0\" y=\"108.0\" />\n" +
+                "</xml>";
+        InputStream is = new ByteArrayInputStream(str.getBytes());
+
+        try {
+            mBlocklyActivityHelper.loadWorkspaceFromInputStream(is);
+        } catch (BlockLoadingException e1) {
+            Log.e(TAG, "Failed to load default arduino workspace", e1);
+        }
+    }
+
+    void loadPythonMainBlock(){
+        String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "  <block type=\"controls_if\" x=\"-20.0\" y=\"108.0\" />\n" +
                 "</xml>";
         InputStream is = new ByteArrayInputStream(str.getBytes());
 

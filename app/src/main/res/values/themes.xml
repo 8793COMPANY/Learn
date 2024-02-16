@@ -8,6 +8,10 @@
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/teal_200</item>
         <item name="android:imeOptions">actionDone</item>
+
+<!--        <item name="android:fontFamily">@font/pretendard_bold</item>-->
+<!--        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>-->
+<!--        <item name="android:editTextStyle">@style/customTextViewFontStyle</item>-->
     </style>
 
     <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -38,5 +42,9 @@
     <!--        <item name="android:textColor">#fff7e6</item>-->
 
     <!--    </style>-->
+
+    <style name="customTextViewFontStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/sb_aggro_m</item>
+    </style>
 
 </resources>

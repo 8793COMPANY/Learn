@@ -953,6 +953,18 @@ Blockly.defineBlocksWithJsonArray([{
       tooltip: "%{BKY_CONTROLS_REPEAT_TOOLTIP}",
       helpUrl: "%{BKY_CONTROLS_REPEAT_HELPURL}"
   }, {
+           type: "python_main",
+           message0: "%{BKY_CONTROLS_REPEAT_INPUT_DO} %1",
+           args0: [{
+               type: "input_statement",
+               name: "DO"
+           }],
+           previousStatement: null,
+           nextStatement: null,
+           colour: "%{BKY_LOOPS_HUE}",
+           tooltip: "%{BKY_CONTROLS_REPEAT_TOOLTIP}",
+           helpUrl: "%{BKY_CONTROLS_REPEAT_HELPURL}"
+       },{
     type: "controls_whileUntil",
     message0: "%1 %2",
     args0: [{

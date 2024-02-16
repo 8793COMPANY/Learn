@@ -25,7 +25,7 @@
         </block>-->
 
         <block type="turtle_setup_loop"></block>
-
+        <block type="turtle_python_main"></block>
 
 
 
@@ -265,6 +265,14 @@
         </block>
 
         <block type="serial_println2">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
+        </block>
+
+        <block type="python_print">
             <value name="VALUE">
                 <block type="type_string">
                     <field name="STRING_TEXT"></field>

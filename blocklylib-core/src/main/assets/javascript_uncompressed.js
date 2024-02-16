@@ -397,6 +397,13 @@ Blockly.JavaScript.setup_loop = function(a) {
     return a + ("\nvoid loop() {\n" + d + "}\n")
 };
 
+Blockly.JavaScript.python_main = function(a) {
+    var d = Blockly.JavaScript.statementToCode(a, "DO");
+//        d = Blockly.JavaScript.addLoopTrap(d, a.id);
+     a="";
+    return a+("\n" +  d +"\n")
+};
+
 Blockly.JavaScript.controls_repeat = Blockly.JavaScript.controls_repeat_ext;
 Blockly.JavaScript.controls_whileUntil = function(a) {
     var b = "UNTIL" == a.getFieldValue("MODE"),

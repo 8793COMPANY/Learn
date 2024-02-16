@@ -17,8 +17,14 @@ package com.google.blockly.android.ui.fieldview;
 
 import android.content.Context;
 import androidx.appcompat.widget.AppCompatTextView;
-import android.util.AttributeSet;
+import androidx.core.content.res.ResourcesCompat;
 
+import android.graphics.Typeface;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.util.Log;
+
+import com.google.blockly.android.R;
 import com.google.blockly.model.Field;
 import com.google.blockly.model.FieldLabel;
 
@@ -64,7 +70,17 @@ public class BasicFieldLabelView extends AppCompatTextView implements FieldView 
         }
         mLabelField = labelField;
         if (mLabelField != null) {
+
             setText(mLabelField.getText());
+
+
+            Log.e("check type name",mLabelField.getText()+"");
+            Log.e("check type block",mLabelField.getBlock()+"");
+            Log.e("check type connections",mLabelField.getBlock().getAllConnections()+"");
+            if (mLabelField.getBlock().getAllConnections().size() <2){
+                    setTypeface(this.getTypeface(),R.font.gmarket_sans_bold);
+            }
+            Log.e("check type iunputs",mLabelField.getBlock().getInputs()+"");
             mLabelField.registerObserver(mFieldObserver);
         } else {
             setText("");
