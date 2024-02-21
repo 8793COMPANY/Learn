@@ -1963,7 +1963,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 //controller.recenterWorkspace();
 
                 //controller.testZoom2();
-                controller.testZoom();
+                //controller.testZoom();
                 touchCheck = true;
             } else {
                 touchCheck = false;
