@@ -1248,6 +1248,12 @@ public class BlocklyController {
         }
     }
 
+    public void scrollToFocusedBlock(WorkspacePoint ntp) {
+        if (mVirtualWorkspaceView != null) {
+            mVirtualWorkspaceView.testScroll(ntp);
+        }
+    }
+
     public void focusedBlock(float x, float y) {
         if (mVirtualWorkspaceView != null) {
             mVirtualWorkspaceView.testView(x, y);

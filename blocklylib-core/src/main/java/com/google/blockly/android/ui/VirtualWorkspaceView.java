@@ -133,7 +133,16 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     public boolean testZoom() {
 
-        scrollTo(0, 0);
+        final Rect blocksBoundingBox = getViewScaledBlockBounds();
+
+        final int margin = mGridRenderer.getGridSpacing() / 2;
+
+        //scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+        scrollTo((blocksBoundingBox.right - blocksBoundingBox.left)/2 + 200, (blocksBoundingBox.bottom - blocksBoundingBox.top)/2 - 200);
+
+
+
+        //scrollTo(0, 0);
 
         return false;
     }
@@ -174,6 +183,23 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         }
 
         return false;
+    }
+
+    public void testScroll(WorkspacePoint ntp) {
+        if (ntp != null) {
+            Log.e("testtestt", "scroll x : " + ntp.x);
+            Log.e("testtestt", "scroll y : " + ntp.y);
+
+            if (ntp.y > 0f) {
+                scrollBy(0, (int) ntp.y - 100);
+            } else {
+                scrollBy(0, (int) ntp.y + 100);
+            }
+        } else {
+            Log.e("testtestt", "test scroll ntp null");
+        }
+        Log.e("testtestt", "scroll on");
+        //scrollBy();
     }
 
     /**
@@ -257,6 +283,11 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
         // TODO : 포커스 된 블록 위치로 화면 이동
         // ptp가 null이 아닐 때가 아닌 ntp가 null이 아닐때로 해야 될 것 같음
+
+
+        Log.e("testtestt", "ntp x : " + ntp.x);
+        Log.e("testtestt", "ntp y : " + ntp.y);
+
 //        if ( ptp != null ) {
 //            scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
 //        }
@@ -842,6 +873,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     @NonNull
     private Rect getViewScaledBlockBounds() {
+        Log.e("testtest", "mTempRect : " + mTempRect);
+        Log.e("testtest", "mViewScale : " + mViewScale);
+
         mWorkspaceView.getBlocksBoundingBox(mTempRect);
         mTempRect.left = (int) Math.floor(mTempRect.left * mViewScale);
         mTempRect.right = (int) Math.ceil(mTempRect.right * mViewScale);

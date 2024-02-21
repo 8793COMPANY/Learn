@@ -1135,7 +1135,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                    // mGeneratedErrorTextView.setVisibility(View
+                    // .VISIBLE);
                     //  mGeneratedErrorTextView.setText(error.getMessage());
 
                     Log.e("error log",error.getMessage());
@@ -1937,6 +1938,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         testX = ev.getX();
         testY = ev.getY();
 
+        categoryData = CategoryData.getInstance();
+
         Log.e("testtest", ev.getX() + " dd");
         Log.e("testtest", ev.getY() + " dd");
 
@@ -1951,16 +1954,16 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             int width = size.x;
             int height = size.y;
 
-            if (ev.getY() >= (height/2f)) {
+            if (ev.getY() <= (height/4f)) {
                 Log.e("testtest", "d : " + height);
-                Log.e("testtest", "d/2 : " + height/2);
+                Log.e("testtest", "d/4 : " + height/4f);
                 Log.e("testtest", "t : " + ev.getY());
 
 //                controller = getController();
                 //controller.recenterWorkspace();
 
                 //controller.testZoom2();
-                //controller.testZoom();
+                controller.testZoom();
                 touchCheck = true;
             } else {
                 touchCheck = false;
@@ -1969,9 +1972,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 WorkspacePoint workspacePoint = new WorkspacePoint();
                 workspacePoint.set(testX, testY);
 
+//                if (categoryData.getNtp() != null) {
+//                    controller.scrollToFocusedBlock(categoryData.getNtp());
+//                } else {
+//                    Log.e("testtestt", "ntp null");
+//                }
+
                 //controller.zoomToFocusedBlock(workspacePoint, workspacePoint, workspacePoint);
                 //controller.focusedBlock(testX, testY);
-                controller.focusedBlock2(workspacePoint);
+                //controller.focusedBlock2(workspacePoint);
             }
         }
 
@@ -3015,13 +3024,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     // 해당 블록을 기준으로 화면을 이동하고
 //                    controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
+
+                    controller.scrollToFocusedBlock(categoryData.getNtp());
                     // 포커스 된 블록의 좌표값은 초기화
                     categoryData.setRtp(null);
                     categoryData.setPtp(null);
                     categoryData.setNtp(null);
                     Log.e("testtest", "줌이 되었어요");
 
-                    //controller.getDragger().categoryData.
+                    //controller.scrollToFocusedBlock(categoryData.getNtp());
                 } else {
                     Log.e("testtest", "포커스가 안되었어요");
 
