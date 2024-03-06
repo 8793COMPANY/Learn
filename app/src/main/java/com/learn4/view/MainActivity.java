@@ -15,6 +15,7 @@
 
 package com.learn4.view;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -36,6 +37,7 @@ import com.google.blockly.android.ui.fieldview.BasicFieldDropdownView;
 
 import com.google.blockly.model.FieldDropdown;
 
+import com.google.blockly.model.WorkspacePoint;
 import com.learn4.WeatherData;
 import com.learn4.data.dto.SimulatorComponent;
 import com.learn4.data.dto.Weather;
@@ -69,6 +71,7 @@ import com.google.blockly.android.ui.BusProvider;
 import com.google.blockly.android.ui.CategoryData;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 
@@ -85,6 +88,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Display;
@@ -114,6 +120,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -215,6 +223,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     LinearLayout  input_space;
     String code = "", serial_input="";
     TextView monitor_text;
+
+    Button sttBtn;
+
     CategoryData categoryData;
     String TARGET_BASE_PATH;
     String TARGET_BASE_FILE_PATH;
@@ -318,7 +329,23 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     Handler mHandler = new Handler();
     Application application;
 
+
     String filename_extension = "uno";
+
+    // 음성인식용
+    Intent SttIntent;
+    SpeechRecognizer recognizer;
+    String generatedCode2;
+    String xml2;
+    String totalString = "";
+
+    ImageView mic_image;
+    Boolean SttCheck = false;
+    RadioGroup radioGroup;
+
+    Boolean touchCheck = false;
+    float testX, testY;
+
 
 
     public void read_code() {
@@ -497,26 +524,82 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 public void onFinishCodeGeneration(final String generatedCode, String xml) {
                     Log.e("start!","onFinishCodeGeneration");
 
+                    generatedCode2 = generatedCode;
+                    xml2 = xml;
+
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.e("code check codegeneration",generatedCode);
-                            code = generatedCode;
-                            submittedXml = xml;
-//                            updateTextMinWidth();
-                        }
-                    });
+                            Log.e("code check codegeneration",generatedCode2);
 
-                    if(generatedCode.contains("alert")) {
+                            if (generatedCode2.contains("readSTT")) {
+                                Log.e("testtest", "okkkkkk");
+
+                                if (MySharedPreferences.getString(getApplicationContext(), "sttString") == null) {
+                                    generatedCode2 = generatedCode2.replaceAll("readSTT", "초기화 상태");
+                                } else {
+                                    generatedCode2 = generatedCode2.replaceAll("readSTT",
+                                            MySharedPreferences.getString(getApplicationContext(), "sttString"));
+                                }
+
+                                if (xml2.contains("read_stt")) {
+                                    Log.e("testtest", "okkkkkk2");
+
+//                                    xml2 = xml2.replaceAll("<block type=\"read_stt\" id=\"82248771-2dd5-488d-a9f8-005e330083ba\" />",
+//                                            "<block type=\"type_string\" id=\"e79ee5bc-16e2-4451-a718-1f15c08a8462\">\n" +
+//                                                    "<field name=\"STRING_TEXT\">안녕</field>\n" + "</block>");
+                                    // thirdNum 필요 없음, thirdNum2만 필요
+                                    int firstNum = xml2.indexOf("read_stt");
+                                    // first num - 14로 해야함
+                                    int secondNum = xml2.indexOf("<block type=", firstNum - 14);
+                                    int thirdNum = xml2.indexOf("/>", firstNum-14);
+                                    int thirdNum2 = xml2.indexOf("</value>", firstNum-14);
+                                    Log.e("testtest", "first num : " + firstNum);
+                                    Log.e("testtest", "second num : " + secondNum);
+                                    Log.e("testtest", "third num : " + thirdNum);
+                                    Log.e("testtest", "third num2 : " + thirdNum2);
+
+                                    // 변경할 문자열
+                                    String replaceString = "<block type=\"type_string\" id=\"a2cda4ad-9fdd-4963-acaa-a1a47c8b3433\">\n" +
+                                            "<field name=\"STRING_TEXT\">TT</field>\n" + "</block>";
+
+                                    // 1하고 3만 필요
+                                    String testString1 = xml2.substring(0, secondNum);
+                                    String testString2 = xml2.substring(secondNum);
+                                    String testString3 = xml2.substring(thirdNum2);
+                                    Log.e("testtest", "split : " + testString1);
+                                    Log.e("testtest", "split : " + testString2);
+                                    Log.e("testtest", "split : " + testString3);
+
+                                    totalString = testString1 + replaceString + testString3;
+                                    Log.e("testtest", "split : " + totalString);
+                                } else {
+                                    Log.e("testtest", "noooooo2");
+                                }
+                            } else {
+                                Log.e("testtest", "noooooo");
+                                totalString = xml2;
+                            }
+
+                            Log.e("testtest", "chage code : " + generatedCode2);
+
+                            code = generatedCode2;
+                            //submittedXml = xml2;
+                            submittedXml = totalString;
+//                            updateTextMinWidth();
+
+                            //Log.e("testtest", xml2);
+
+                            if(generatedCode2.contains("alert")) {
                         /*
                          js 에서   '!!alert!! ~~'
                          관련 코드를 return하면 여기로 들어옴
                         */
-                        String[] alert = generatedCode.split("!!");
-                        Log.e("in",alert[2]);
+                                String[] alert = generatedCode2.split("!!");
+                                Log.e("in",alert[2]);
 
-                        Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
-                        code = generatedCode;
+                                Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
+                                code = generatedCode2;
 
 //                        customProgressDialog.dismiss();
 //                        Log.e("generated",generatedCode);
@@ -559,94 +642,158 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                             remotecompile("code.py", getCompiler());
                             Log.e("in!","ok");
                             compileCheck = false;
+
 //                            customProgressDialog.dismiss();
+                                }
+                            }
                         }
+                    });
 
-
-//                        try {
-//                            execute_shell("ls");
-//                                                        execute_shell("touch Blink.cpp");
-//                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
+//                    if(generatedCode2.contains("alert")) {
+//                        /*
+//                         js 에서   '!!alert!! ~~'
+//                         관련 코드를 return하면 여기로 들어옴
+//                        */
+//                        String[] alert = generatedCode2.split("!!");
+//                        Log.e("in",alert[2]);
 //
-//                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
-//                            execute_shell("avr-g++");
-//                        }catch (IOException e){
-//                            e.printStackTrace();
+//                        Toast.makeText(getApplicationContext(), alert[2], Toast.LENGTH_LONG).show();
+//                        code = generatedCode2;
+//
+////                        customProgressDialog.dismiss();
+////                        Log.e("generated",generatedCode);
+//                    }
+//                    else {
+//                        Log.e("start!","not generatedCode.contains");
+//
+//                        // Sample callback.
+//                        //Log.i(TAG, "generatedCode:\n" + generatedCode);
+//                        // System.out.println( "generatedCode:\n" + generatedCode);
+//                        //Toast.makeText(getApplicationContext(), generatedCode,Toast.LENGTH_LONG).show();
+//                    /*ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//                    ClipData clip = ClipData.newPlainText("label", generatedCode);
+//                    clipboard.setPrimaryClip(clip);*/
+//                        // Intent launchIntent = getPackageManager().getLaunchIntentForPackage("name.antonsmirnov.android.arduinodroid2");
+//                        //   if (launchIntent != null) {
+//                        // mPhysicaloid.upload(Boards.ARDUINO_UNO, "/storage/emulated/0/code/Blink.hex");
+//                        // try {
+//                        //  get_ports();
+////                        System.out.println(generatedCode);
+////                        Log.e("generated",generatedCode);
+//                        code = generatedCode2;
+////                        submittedXml = xml2;
+////                        stringBuilder.append(xml2);
+//                        submittedXml = totalString;
+//                        stringBuilder.append(totalString);
+//
+//                        Log.e("testtestt", "code : " + code);
+//                        Log.e("testtestt", "submittedXml : " + submittedXml);
+//                        Log.e("testtestt", "generatedCode2 : " + generatedCode2);
+//
+//
+//                        Log.e("stringBuilder",stringBuilder.toString());
+//
+//                        StringBuilder stringBuilder = new StringBuilder();
+//
+//                        Log.e("submittedXml builder",stringBuilder.substring(0,stringBuilder.length()/2));
+//                        Log.e("submittedXml builder2",stringBuilder.substring(stringBuilder.length()/2,stringBuilder.length()));
+//                        Log.e("submittedXml",stringBuilder.toString());
+//                        create_file(generatedCode2, "code.ino");
+//                        Log.e("compileCheck",compileCheck+"");
+//                        //Log.e("!@","nono");
+//                        if (compileCheck) {
+//                            //Log.e("generated", "컴파컴파");
+//                            remotecompile("code.ino", getCompiler());
+//                            Log.e("in!","ok");
+//                            compileCheck = false;
+////                            customProgressDialog.dismiss();
 //                        }
-
-
-
-//                            execute_shell("touch Blink.cpp");
-//                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
 //
-//                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
-//                            execute_shell("avr-g++")
-
-
-                        //--execute_shell("cat Blink1.cpp");
-                        // --execute_shell("/storage/emulated/0/code/hardware/tools/avr/bin/avr-g++");
-                        // --execute_shell("sh -c avr-g++");
-                        // -- execute_shell_2(new String[]{"sh -c", "/data/data/com.google.blockly.demo/hardware/tools/avr/bin/avr-g++"});
-                        //--execute_shell_2(new String[]{"sh", "/storage/emulated/0/code/hardware/tools/avr/bin/avr-g++"});
-                        //  --execute_shell(new String[] {"avr-g++","-x", "c++", "-MMD", "-c", "-mmcu=atmega328p", "-Wall", "-DF_CPU=16000000L", "-DARDUINO=160", "-DARDUINO_ARCH_AVR", "-D__PROG_TYPES_COMPAT__", "-I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino", "-I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard", "-Wall", "-Os", "Blink1.cpp"});
-
-
-
-                        //--execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os Blink1.cpp");
-                        /*  execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_digital.c");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring.c");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_analog.c");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_pulse.c");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_shift.c");
-
-                            //execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/CDC.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/HardwareSerial.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WString.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WMath.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WInterrupts.c");
-                           // execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/USBCore.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Tone.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Stream.cpp");
-
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Print.cpp");
-                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/IPAddress.cpp");
-*/
-                        //  execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/HID.cpp");
-                        // --execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/LiquidCrystal.cpp");
-
-                        //   execute_shell("avr-ar rcs libcore.a wiring.o wiring_digital.o wiring_analog.o wiring_shift.o wiring_pulse.o WMath.o WString.o WInterrupts.o Tone.o Stream.o Print.o IPAddress.o HardwareSerial.o");
-                        //--execute_shell("avr-ar rcs core.a CDC.cpp.o LiquidCrystal.o HardwareSerial.cpp.o HID.cpp.o IPAddress.cpp.o malloc.c.o new.cpp.o main.cpp.o new.cpp.o Print.cpp.o realloc.c.o Stream.cpp.o Tone.cpp.o Tone.cpp.o USBCore.cpp.o WInterrupts.c.o wiring.c.o wiring_analog.c.o wiring_digital.c.o wiring_pulse.c.o wiring_shift.c.o WMath.cpp.o WString.cpp.o");
-                        //--execute_shell("avr-gcc -mmcu=atmega328p -Wl,--gc-sections -Os -o Blink1.elf Blink1.o core.a -lc -lm");
-                        //--execute_shell("avr-objcopy -O ihex -R .eeprom Blink1.elf Blink1.hex");
-                        //--Toast.makeText(getApplicationContext(), "Compilation Success, trying to upload code!!",Toast.LENGTH_LONG).show();
-
-
-                        // execute_shell("chmod -R 700 hardware");
-                        //execute_shell("echo hi");
-                        // execute_shell("rm -rf Blink.cpp");
-                        //} catch (IOException e) {
-                        //   Toast.makeText(getApplicationContext(), "Error Compiling", Toast.LENGTH_LONG).show();
-                        //}
-
-
-
-
-
-                        //  startActivity(launchIntent);//null pointer check in case package name was not found
-                        // }
-                    /*mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            String encoded = "Turtle.execute("
-                                    + JavascriptUtil.makeJsString(generatedCode) + ")";
-                            mTurtleWebview.loadUrl("javascript:" + encoded);
-                        }
-                    });*/
-                    }
+//
+////                        try {
+////                            execute_shell("ls");
+////                                                        execute_shell("touch Blink.cpp");
+////                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
+////
+////                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
+////                            execute_shell("avr-g++");
+////                        }catch (IOException e){
+////                            e.printStackTrace();
+////                        }
+//
+//
+//
+////                            execute_shell("touch Blink.cpp");
+////                            execute_shell("cp hardware/arduino/cores/arduino/main.cpp Blink.cpp");
+////
+////                            execute_shell("sed -i wBlink1.cpp Blink.cpp files/Blink.ino");
+////                            execute_shell("avr-g++")
+//
+//
+//                        //--execute_shell("cat Blink1.cpp");
+//                        // --execute_shell("/storage/emulated/0/code/hardware/tools/avr/bin/avr-g++");
+//                        // --execute_shell("sh -c avr-g++");
+//                        // -- execute_shell_2(new String[]{"sh -c", "/data/data/com.google.blockly.demo/hardware/tools/avr/bin/avr-g++"});
+//                        //--execute_shell_2(new String[]{"sh", "/storage/emulated/0/code/hardware/tools/avr/bin/avr-g++"});
+//                        //  --execute_shell(new String[] {"avr-g++","-x", "c++", "-MMD", "-c", "-mmcu=atmega328p", "-Wall", "-DF_CPU=16000000L", "-DARDUINO=160", "-DARDUINO_ARCH_AVR", "-D__PROG_TYPES_COMPAT__", "-I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino", "-I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard", "-Wall", "-Os", "Blink1.cpp"});
+//
+//
+//
+//                        //--execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os Blink1.cpp");
+//                        /*  execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_digital.c");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring.c");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_analog.c");
+//
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_pulse.c");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/wiring_shift.c");
+//
+//                            //execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/CDC.cpp");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/HardwareSerial.cpp");
+//
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WString.cpp");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WMath.cpp");
+//
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/WInterrupts.c");
+//                           // execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/USBCore.cpp");
+//
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Tone.cpp");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Stream.cpp");
+//
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/Print.cpp");
+//                            execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/IPAddress.cpp");
+//*/
+//                        //  execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/HID.cpp");
+//                        // --execute_shell("avr-g++ -x c++ -MMD -c -mmcu=atmega328p -Wall -DF_CPU=16000000L -DARDUINO=160 -DARDUINO_ARCH_AVR -D__PROG_TYPES_COMPAT__ -I/data/data/com.google.blockly.demo/hardware/arduino/cores/arduino -I/data/data/com.google.blockly.demo/hardware/arduino/variants/standard -Wall -Os /data/data/com.google.blockly.demo/hardware/arduino/cores/arduino/LiquidCrystal.cpp");
+//
+//                        //   execute_shell("avr-ar rcs libcore.a wiring.o wiring_digital.o wiring_analog.o wiring_shift.o wiring_pulse.o WMath.o WString.o WInterrupts.o Tone.o Stream.o Print.o IPAddress.o HardwareSerial.o");
+//                        //--execute_shell("avr-ar rcs core.a CDC.cpp.o LiquidCrystal.o HardwareSerial.cpp.o HID.cpp.o IPAddress.cpp.o malloc.c.o new.cpp.o main.cpp.o new.cpp.o Print.cpp.o realloc.c.o Stream.cpp.o Tone.cpp.o Tone.cpp.o USBCore.cpp.o WInterrupts.c.o wiring.c.o wiring_analog.c.o wiring_digital.c.o wiring_pulse.c.o wiring_shift.c.o WMath.cpp.o WString.cpp.o");
+//                        //--execute_shell("avr-gcc -mmcu=atmega328p -Wl,--gc-sections -Os -o Blink1.elf Blink1.o core.a -lc -lm");
+//                        //--execute_shell("avr-objcopy -O ihex -R .eeprom Blink1.elf Blink1.hex");
+//                        //--Toast.makeText(getApplicationContext(), "Compilation Success, trying to upload code!!",Toast.LENGTH_LONG).show();
+//
+//
+//                        // execute_shell("chmod -R 700 hardware");
+//                        //execute_shell("echo hi");
+//                        // execute_shell("rm -rf Blink.cpp");
+//                        //} catch (IOException e) {
+//                        //   Toast.makeText(getApplicationContext(), "Error Compiling", Toast.LENGTH_LONG).show();
+//                        //}
+//
+//
+//
+//
+//
+//                        //  startActivity(launchIntent);//null pointer check in case package name was not found
+//                        // }
+//                    /*mHandler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            String encoded = "Turtle.execute("
+//                                    + JavascriptUtil.makeJsString(generatedCode) + ")";
+//                            mTurtleWebview.loadUrl("javascript:" + encoded);
+//                        }
+//                    });*/
+//                    }
 
                 }
             };
@@ -684,8 +831,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Application.mPhysicaloid.upload(Boards.ESP_12E, file);
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
-            customProgressDialog.dismiss();
-            uploadListener.show();
+
+            if (!SttCheck) {
+                customProgressDialog.dismiss();
+                uploadListener.show();
+            } else {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    customProgressDialog.dismiss();
+                    }, 1500);
+            }
+
+            //uploadListener.show();
             Log.e("hello code1",code);
             int count = (code.length() - code.replace("getWeatherData(","").length())/15;
             if (code.contains("getWeatherData(")){
@@ -703,8 +860,18 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Application.mPhysicaloid.upload(Boards.ESP_12E, file);
 
                 Log.e("hello code",(code.length() - code.replace("getWeatherData(","").length())/15+"");
-                customProgressDialog.dismiss();
-                uploadListener.show();
+
+                if (!SttCheck) {
+                    customProgressDialog.dismiss();
+                    uploadListener.show();
+                } else {
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        customProgressDialog.dismiss();
+                    }, 1500);
+                }
+
+                //uploadListener.show();
                 int count = (code.length() - code.replace("getWeatherData(","").length())/15;
                 if (code.contains("getWeatherData(")){
                     Log.e("hello","weather");
@@ -715,7 +882,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 }
             }
             else {
-                Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
+                if (SttCheck) {
+                    Toast.makeText(getApplicationContext(),"오류! 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),"한번 더 업로드 버튼을 눌러주세요",Toast.LENGTH_SHORT).show();
+                }
             }
             getFileSize();
         }
@@ -1009,6 +1180,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Log.e("error log",error.getMessage());
                     Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
+
+            } else {
+                Log.e("testtest", "errorrrorororro : " + error);
+                Toast.makeText(getApplicationContext(), "오류! 업로드 버튼을 눌러주세요!", Toast.LENGTH_SHORT).show();
+
                 customProgressDialog.dismiss();
             }
             customProgressDialog.dismiss();
@@ -1811,6 +1987,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         // 시뮬레이터 초기화
 
 
+        // 디스플레이
         Display display2;  // in Activity
         display2 = getWindowManager().getDefaultDisplay();
         /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
@@ -1818,8 +1995,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         display2.getSize(size2); // or getSize(size)
         int width = size2.x;
         int height = size2.y;
+        // 원코드
+        //controller.setCenterXPosition(width);
+        //controller.setCenterYPosition(height);
         controller.setCenterXPosition(width);
         controller.setCenterYPosition(height);
+
+        Log.e("testtest", "width : " + width);
+        Log.e("testtest", "height : " + height);
+
 
 
 
@@ -1828,7 +2012,54 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Log.e("turtle_block",TURTLE_BLOCK_DEFINITIONS.get(6));
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
 
+        Log.e("testtest", "touch!!!!!");
+
+        testX = ev.getX();
+        testY = ev.getY();
+
+        Log.e("testtest", ev.getX() + " dd");
+        Log.e("testtest", ev.getY() + " dd");
+
+        if (ev.getAction() == MotionEvent.ACTION_UP) {
+            Log.e("testtest", ev.getX() + "");
+            Log.e("testtest", ev.getY() + "");
+
+            Display display;
+            display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int width = size.x;
+            int height = size.y;
+
+            if (ev.getY() >= (height/2f)) {
+                Log.e("testtest", "d : " + height);
+                Log.e("testtest", "d/2 : " + height/2);
+                Log.e("testtest", "t : " + ev.getY());
+
+//                controller = getController();
+                //controller.recenterWorkspace();
+
+                //controller.testZoom2();
+                //controller.testZoom();
+                touchCheck = true;
+            } else {
+                touchCheck = false;
+                //controller.testZoom2();
+
+                WorkspacePoint workspacePoint = new WorkspacePoint();
+                workspacePoint.set(testX, testY);
+
+                //controller.zoomToFocusedBlock(workspacePoint, workspacePoint, workspacePoint);
+                //controller.focusedBlock(testX, testY);
+                controller.focusedBlock2(workspacePoint);
+            }
+        }
+
+        return super.dispatchTouchEvent(ev);
+    }
 
     /*@Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -1995,6 +2226,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         super.onDestroy();
         // 봇 메시지 재생 종료
         mediaPlayer.release();
+
+        if(recognizer != null) {
+            recognizer.destroy();
+            recognizer.cancel();
+            recognizer = null;
+        }
     }
 
 
@@ -2216,23 +2453,44 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         });
 
 
-        RadioGroup radioGroup = blockly_workspace.findViewById(R.id.toggle);
+        radioGroup = blockly_workspace.findViewById(R.id.toggle);
 
         radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
             switch (i){
                 case R.id.text:
+                    stringBuilder.setLength(0);
+                    num = 0;
+
                     chart.setVisibility(View.GONE);
                     text_view.setVisibility(View.VISIBLE);
                     baud_rate.setVisibility(View.VISIBLE);
                     mMonitorHandler.removeMessages(2);
+                    mMonitorHandler.removeMessages(1);
                     mMonitorHandler.sendEmptyMessage(0);
+
+                    input_space.setVisibility(View.VISIBLE);
+                    mic_image.setVisibility(View.GONE);
+                    sttBtn.setVisibility(View.GONE);
                     break;
                 case R.id.graph:
                     chart.setVisibility(View.VISIBLE);
                     text_view.setVisibility(View.GONE);
                     baud_rate.setVisibility(View.GONE);
                     mMonitorHandler.removeMessages(0);
+                    mMonitorHandler.removeMessages(1);
                     mMonitorHandler.sendEmptyMessage(2);
+                    break;
+                case R.id.sttRadioBtn:
+                    chart.setVisibility(View.GONE);
+                    text_view.setVisibility(View.VISIBLE);
+                    baud_rate.setVisibility(View.GONE);
+                    mMonitorHandler.removeMessages(0);
+                    mMonitorHandler.removeMessages(2);
+                    mMonitorHandler.sendEmptyMessage(1);
+
+                    input_space.setVisibility(View.GONE);
+                    mic_image.setVisibility(View.VISIBLE);
+                    sttBtn.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -2289,6 +2547,44 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         close_btn = blockly_workspace.findViewById(R.id.close_btn);
 
         simulator_web_view = blockly_workspace.findViewById(R.id.simulator_web_view);
+
+
+        sttBtn = blockly_workspace.findViewById(R.id.sttBtn);
+        mic_image = blockly_workspace.findViewById(R.id.mic_image);
+
+        String LogTT = "[STT]"; // Log name
+
+        // 음성인식
+        SttIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        SttIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getApplicationContext().getPackageName());
+        SttIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR"); // 한국어 사용
+
+        recognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        recognizer.setRecognitionListener(listener);
+
+        sttBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("testtest", "음성인식 시작!");
+
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    // 권한이 허용하지 않은 경우
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+                } else {
+                    // 권한을 허용한 경우
+                    try {
+                        if (Application.all_check) {
+                            recognizer.startListening(SttIntent);
+                        } else {
+                            UploadFalseDialog uploadFalseDialog = new UploadFalseDialog(MainActivity.this);
+                            uploadFalseDialog.show();
+                        }
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
 
 //        block_setup_btn.setSelected(true);
@@ -2677,6 +2973,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         customProgressDialog.setCancelable(false);
 
+        // 디스플레이
         Display display;  // in Activity
         display = getWindowManager().getDefaultDisplay();
         /* getActivity().getWindowManager().getDefaultDisplay() */ // in Fragment
@@ -2808,25 +3105,117 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 // 포커스 된 블록이 있다면
                 if (categoryData.getNtp() != null) {
                     // 해당 블록을 기준으로 화면을 이동하고
-                    Log.e("normal block check",categoryData.getNtp()+"");
+
+//                    controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
+
                     controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     // 포커스 된 블록의 좌표값은 초기화
                     categoryData.setRtp(null);
                     categoryData.setPtp(null);
                     categoryData.setNtp(null);
-                }else{
-                    Log.e("hello keyboard","focus null");
+
+                    Log.e("testtest", "줌이 되었어요");
+
+                    //controller.getDragger().categoryData.
+                } else {
+                    Log.e("testtest", "포커스가 안되었어요");
+
+                    // 여기에 좌표 0,0 으로 설정하고 줌을 메인으로 맞추기
+                    //controller.testZoom();
+                    if (touchCheck) { // 화면 절반 아래인 경우(줌 + 0,0)
+                        controller.testZoom2();
+                        controller.testZoom();
+                    } else { // 아닌 경우(줌만)
+                        controller.testZoom2();
+                    }
+
                 }
-            }
+           }
             else {
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
         return root;
     }
+
+    // 음성인식 리스너
+    private RecognitionListener listener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+            monitor_text.setText("");
+            monitor_text.append("onReadyForSpeech..........."+"\r\n");
+            mic_image.setBackgroundResource(R.drawable.mic_on);
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+            //monitor_text.append("지금부터 말을 해주세요..........."+"\r\n");
+        }
+
+        @Override
+        public void onRmsChanged(float rmsdB) {
+
+        }
+
+        @Override
+        public void onBufferReceived(byte[] buffer) {
+            monitor_text.append("onBufferReceived..........."+"\r\n");
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            monitor_text.append("onEndOfSpeech..........."+"\r\n");
+            mic_image.setBackgroundResource(R.drawable.mic_off);
+        }
+
+        @Override
+
+        public void onError(int error) {
+            monitor_text.append("에러, 다시 누르고 말해 주세요..........."+"\r\n");
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            String key = "";
+            key = SpeechRecognizer.RESULTS_RECOGNITION;
+
+            ArrayList<String> mResult = results.getStringArrayList(key);
+            String[] rs = new String[mResult.size()];
+
+            mResult.toArray(rs);
+            Log.e("testtestt", "trim : " + rs[0].trim());
+
+            String rs_trim = rs[0].replaceAll(" ", "");
+            Log.e("testtestt", "trim2 : " + rs_trim);
+
+            //monitor_text.append(rs[0].trim()+"\r\n");
+            monitor_text.append(rs_trim+"\r\n");
+
+            //Application.sttString = rs[0].trim();
+            Application.sttString = rs_trim;
+//            MySharedPreferences.setString(getApplicationContext(), "sttString", rs[0].trim());
+            MySharedPreferences.setString(getApplicationContext(), "sttString", rs_trim);
+
+            Log.e("testtest", Application.sttString);
+            //recognizer.startListening(SttIntent);
+            Log.e("testtest", MySharedPreferences.getString(getApplicationContext(), "sttString"));
+
+            SttCheck = true;
+            // 여기에 컴파일 다시 되도록 하기
+            upload_btn(6);
+
+        }
+
+        @Override
+        public void onPartialResults(Bundle partialResults) {
+            monitor_text.append("onPartialResults..........."+"\r\n");
+        }
+
+        @Override
+        public void onEvent(int eventType, Bundle params) {
+            monitor_text.append("onEvent..........."+"\r\n");
+        }
+    };
 
     void loadXmlFromWorkspace() {
         if (getController().getWorkspace().hasBlocks()) {
@@ -3370,6 +3759,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
         block_dictionary.setVisibility(View.GONE);
         input_space.setVisibility(View.GONE);
+        radioGroup.setVisibility(View.GONE);
+        baud_rate.setVisibility(View.GONE);
+        chart.setVisibility(View.GONE);
+        mic_image.setVisibility(View.GONE);
+        sttBtn.setVisibility(View.GONE);
+        text_view.setVisibility(View.VISIBLE);
+        //sttBtn.setVisibility(View.GONE);
+        //mic_image.setVisibility(View.GONE);
 
         setCloseWindow(pos,"monitor");
 
@@ -3403,18 +3800,61 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("isOpened Serial","" + Application.mPhysicaloid.isOpened());
         block_dictionary.setVisibility(View.GONE);
         setCloseWindow(pos,"monitor");
-        input_space.setVisibility(View.VISIBLE);
+        //input_space.setVisibility(View.VISIBLE);
+        //sttBtn.setVisibility(View.VISIBLE);
+        //mic_image.setVisibility(View.VISIBLE);
+        radioGroup.setVisibility(View.VISIBLE);
+        //baud_rate.setVisibility(View.VISIBLE);
+
         Log.e("serial","btn");
 
         stringBuilder.setLength(0);
         num = 0;
-        if (chart.getVisibility() == View.VISIBLE){
-            mMonitorHandler.sendEmptyMessage(2);
-        }else{
+//        if (chart.getVisibility() == View.VISIBLE){
+//            mMonitorHandler.sendEmptyMessage(2);
+//        }else{
+//            mMonitorHandler.sendEmptyMessage(0);
+//        }
+
+        Log.e("testtest", "toggle : " + radioGroup.getCheckedRadioButtonId());
+
+        if (radioGroup.getCheckedRadioButtonId() == R.id.text) {
+            Log.e("testtest", "same");
+            chart.setVisibility(View.GONE);
+            text_view.setVisibility(View.VISIBLE);
+            baud_rate.setVisibility(View.VISIBLE);
+            input_space.setVisibility(View.VISIBLE);
+            mic_image.setVisibility(View.GONE);
+            sttBtn.setVisibility(View.GONE);
+
+            mMonitorHandler.removeMessages(2);
+            mMonitorHandler.removeMessages(1);
             mMonitorHandler.sendEmptyMessage(0);
+
+        } else if (radioGroup.getCheckedRadioButtonId() == R.id.graph){
+            Log.e("testtest", "different");
+            input_space.setVisibility(View.GONE);
+            chart.setVisibility(View.VISIBLE);
+            text_view.setVisibility(View.GONE);
+            baud_rate.setVisibility(View.GONE);
+
+            mMonitorHandler.removeMessages(0);
+            mMonitorHandler.removeMessages(1);
+            mMonitorHandler.sendEmptyMessage(2);
+
+        } else if (radioGroup.getCheckedRadioButtonId() == R.id.sttRadioBtn) {
+            chart.setVisibility(View.GONE);
+            text_view.setVisibility(View.VISIBLE);
+            baud_rate.setVisibility(View.GONE);
+            input_space.setVisibility(View.GONE);
+            mic_image.setVisibility(View.VISIBLE);
+            sttBtn.setVisibility(View.VISIBLE);
+
+            mMonitorHandler.removeMessages(0);
+            mMonitorHandler.removeMessages(2);
+            mMonitorHandler.sendEmptyMessage(1);
+
         }
-
-
     }
 
     public void upload_btn(int pos) {
@@ -3426,7 +3866,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             mMonitorHandler.sendEmptyMessage(1);
             customProgressDialog.show();
 
-            blockly_monitor.setVisibility(View.GONE);
+            if (!SttCheck) {
+                blockly_monitor.setVisibility(View.GONE);
+            }
             mBlocklyActivityHelper.getFlyoutController();
             categoryData.setPosition(6);
             current_pos = 6;

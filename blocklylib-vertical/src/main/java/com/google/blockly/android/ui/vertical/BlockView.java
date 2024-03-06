@@ -836,6 +836,7 @@ public class BlockView extends AbstractBlockView<InputView> {
                     : R.drawable.bottom_start_next;
             bottomStartBorderResourceId = R.drawable.bottom_start_next_border;
         } else if (mBlock.getOutputConnection() != null) {
+            //drawable 여기 체크
             bottomStartResourceId = isShadow ? R.drawable.bottom_start_default_square_shadow
                     : R.drawable.bottom_start_default_square;
             bottomStartBorderResourceId = R.drawable.bottom_start_square_border;

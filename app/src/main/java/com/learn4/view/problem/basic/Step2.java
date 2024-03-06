@@ -101,8 +101,8 @@ public class Step2 extends Fragment {
         contentsList = contentsDao.findAll();
 
         if (contents_name.equals("LED 깜박이기") || contents_name.equals("LED 깜빡이는 시간 바꾸기") || contents_name.equals("LED 핀 번호 바꾸기")){
-            Application.mediaPlayer = MediaPlayer.create(getContext(),R.raw.led_4);
-            Application.mediaPlayer.start();
+//            Application.mediaPlayer = MediaPlayer.create(getContext(),R.raw.led_4);
+//            Application.mediaPlayer.start();
         }
 
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 3) {

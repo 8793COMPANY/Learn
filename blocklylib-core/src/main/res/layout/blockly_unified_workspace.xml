@@ -507,7 +507,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="14">
                 </View>
-
             </LinearLayout>
 
             <ScrollView
@@ -531,8 +530,36 @@
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:paddingBottom="10dp"/>
-
             </ScrollView>
+
+            <ImageView
+                android:id="@+id/mic_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:background="@drawable/mic_off"
+                android:layout_marginTop="10dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintHorizontal_bias="0.93"
+                app:layout_constraintTop_toBottomOf="@+id/input_space"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <Button
+                android:id="@+id/sttBtn"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/block_category_btn_on"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:text="음성인식"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintWidth_percent="0.15"
+                app:layout_constraintTop_toBottomOf="@+id/mic_image"
+                app:layout_constraintLeft_toLeftOf="@+id/mic_image"
+                app:layout_constraintRight_toRightOf="@+id/mic_image" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -584,6 +611,7 @@
             android:id="@+id/toggle"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:background="@drawable/serial_switch_outline"
             android:checkedButton="@+id/text"
             android:orientation="horizontal"
@@ -613,7 +641,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="1dp"
-                android:layout_marginEnd="1dp"
                 android:layout_marginTop="1dp"
                 android:layout_weight="1"
                 android:background="@drawable/serial_switch_graph"
@@ -622,6 +649,22 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="그래프"
+                android:textColor="@drawable/switch_text_color" />
+
+            <RadioButton
+                android:id="@+id/sttRadioBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:background="@drawable/serial_switch_graph"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="음성인식"
                 android:textColor="@drawable/switch_text_color" />
         </RadioGroup>
 
@@ -639,6 +682,7 @@
 
             <Spinner
                 android:id="@+id/baud_rate"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
             </Spinner>

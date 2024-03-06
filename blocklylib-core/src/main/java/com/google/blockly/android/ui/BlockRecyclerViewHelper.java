@@ -130,6 +130,7 @@ public class BlockRecyclerViewHelper {
 
                 Block rootBlock = touchedBlockView.getBlock().getRootBlock();
 
+                // root block이 setup loop 블록과 연결되지 않았을때만 복사 사용 가능
                 if (!rootBlock.getType().trim().equals("turtle_setup_loop")){
                     Log.e("block click","in");
 //                    getWorkspaceBlockGroupForTouch(pendingDrag);
@@ -665,10 +666,6 @@ public class BlockRecyclerViewHelper {
                 } else {
                     bg.setTouchHandler(mTouchHandler);
                 }
-
-
-
-
 
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

@@ -189,9 +189,9 @@ public class PendingDrag {
         if (mDragGroup != null) {
             throw new IllegalStateException("Drag group already assigned.");
         }
-        if (!mController.getWorkspace().isRootBlock(dragGroup.getFirstBlock())) {
-            throw new IllegalArgumentException("Drag group must be root block in workspace");
-        }
+//        if (!mController.getWorkspace().isRootBlock(dragGroup.getFirstBlock())) {
+//            throw new IllegalArgumentException("Drag group must be root block in workspace");
+//        }
 
         mDragInitiatorRef = new WeakReference<>(dragInitiator);
         mDragGroup = dragGroup;

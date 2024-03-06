@@ -151,13 +151,13 @@ public class Step5 extends Fragment {
         Log.e("number check",chapter_id);
         if (number[0].equals("3")) {
             if (chapter_id.equals("3-2")) {
-                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_2);
+//                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_2);
             } else if (chapter_id.equals("3-3")) {
-                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_7);
+//                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_7);
             } else if (chapter_id.equals("3-4")) {
-                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_8);
+//                Application.mediaPlayer = MediaPlayer.create(getContext(), R.raw.led_8);
             }
-            Application.mediaPlayer.start();
+//            Application.mediaPlayer.start();
         }
 
         MySharedPreferences.setInt(getContext(), contents_name, 1);

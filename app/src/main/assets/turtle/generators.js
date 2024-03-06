@@ -254,6 +254,12 @@ Blockly.JavaScript['pinMode'] = function (block) {
 };
 
 
+Blockly.JavaScript['read_stt'] = function (block) {
+  var code = '"readSTT"'
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
 Blockly.JavaScript['pluse_sensor'] = function (block) {
    var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
 

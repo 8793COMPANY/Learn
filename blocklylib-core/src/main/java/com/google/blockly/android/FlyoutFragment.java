@@ -165,6 +165,8 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         }
         args.putBoolean(ARG_CLOSEABLE, mCloseable);
         args.putInt(ARG_SCROLL_ORIENTATION, mScrollOrientation);
+
+        Log.e("blockblcok", "ininin");
     }
 
     @Override
@@ -174,6 +176,7 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         readArgumentsFromBundle(getArguments());
         readArgumentsFromBundle(savedInstanceState);
 
+        Log.e("blockblcok", "ininin2");
 
 
         int layout = mScrollOrientation == OrientationHelper.VERTICAL
@@ -196,8 +199,11 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
         int width = size.x;
         //Log.e("width",width+"");
 
-
+        //원 코드
         recyclerView.setPadding(0 ,(int)(width / 1280 * 59),0,0);
+
+        //recyclerView.setPadding(0 ,0,0,0);
+
 //        recyclerView.setPivotX(0.2f);
 //        recyclerView.setPivotY(0.4f);
 //        recyclerView.setScaleX(0.7f);

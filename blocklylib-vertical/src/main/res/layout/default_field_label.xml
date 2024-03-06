@@ -21,6 +21,8 @@
     android:padding="4dip"
     android:saveEnabled="false"
     android:singleLine="true"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:fontFamily="@font/gmarket_sans_medium"
     android:textColor="@color/label_text"
     android:textSize="?blockTextSize"/>

@@ -28,5 +28,7 @@
     android:paddingRight="8dip"
     android:saveEnabled="false"
     android:singleLine="true"
+    android:gravity="center_vertical"
+    android:layout_gravity="center_vertical"
     android:textColor="@color/field_text"
     android:textSize="?blockTextSize"/>

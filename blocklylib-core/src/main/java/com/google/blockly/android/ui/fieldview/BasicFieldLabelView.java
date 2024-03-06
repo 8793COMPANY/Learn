@@ -74,13 +74,13 @@ public class BasicFieldLabelView extends AppCompatTextView implements FieldView 
             setText(mLabelField.getText());
 
 
-            Log.e("check type name",mLabelField.getText()+"");
-            Log.e("check type block",mLabelField.getBlock()+"");
-            Log.e("check type connections",mLabelField.getBlock().getAllConnections()+"");
+//            Log.e("check type name",mLabelField.getText()+"");
+//            Log.e("check type block",mLabelField.getBlock()+"");
+//            Log.e("check type connections",mLabelField.getBlock().getAllConnections()+"");
             if (mLabelField.getBlock().getAllConnections().size() <2){
                     setTypeface(this.getTypeface(),R.font.gmarket_sans_bold);
             }
-            Log.e("check type iunputs",mLabelField.getBlock().getInputs()+"");
+//            Log.e("check type iunputs",mLabelField.getBlock().getInputs()+"");
             mLabelField.registerObserver(mFieldObserver);
         } else {
             setText("");

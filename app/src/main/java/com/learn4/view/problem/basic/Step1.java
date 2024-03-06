@@ -107,8 +107,8 @@ public class Step1 extends Fragment {
         db = AppDatabase.getInstance(requireContext());
 
         if (contents_name.equals("LED 깜박이기") || contents_name.equals("LED 깜빡이는 시간 바꾸기") || contents_name.equals("LED 핀 번호 바꾸기")){
-            Application.mediaPlayer = MediaPlayer.create(getContext(),R.raw.led_3);
-            Application.mediaPlayer.start();
+            //Application.mediaPlayer = MediaPlayer.create(getContext(),R.raw.led_3);
+            //Application.mediaPlayer.start();
         }
 
         contentsDao = db.contentsDao();

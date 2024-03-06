@@ -228,6 +228,7 @@ public class PatchManager {
         mStatementMinHeight =
                 statementTopPatch.getIntrinsicHeight() + statementBottomPatch.getIntrinsicHeight();
 
+        //check here
         final NinePatchDrawable inlineInputPatch = getPatchDrawable(R.drawable.value_input_inline);
         mInlineInputMinimumWidth = inlineInputPatch.getIntrinsicWidth();
         mInlineInputMinimumHeight = inlineInputPatch.getIntrinsicHeight();

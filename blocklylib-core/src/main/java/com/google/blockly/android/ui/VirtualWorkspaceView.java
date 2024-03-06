@@ -131,6 +131,51 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         mResetViewPending = true;
     }
 
+    public boolean testZoom() {
+
+        scrollTo(0, 0);
+
+        return false;
+    }
+
+    public boolean testZoom2() {
+
+        int newScaleIndex = 3;
+
+        if (newScaleIndex != mCurrentZoomScaleIndex) {
+            float oldViewScale = mViewScale;
+            Log.e("old",oldViewScale+"");
+            mCurrentZoomScaleIndex = newScaleIndex;
+            mViewScale = ZOOM_SCALES[mCurrentZoomScaleIndex];
+
+
+
+            // Add offset to current scroll coordinates so the center of the visible workspace area
+            // remains in the same place.
+            float scaleDifference = mViewScale - oldViewScale;
+
+            Log.e("zzz",(scaleDifference * getMeasuredWidth() / 2)+"");
+//            (scaleDifference * getMeasuredHeight() / 2)
+            scrollBy((int)(scaleDifference * getMeasuredWidth() / 2),
+                    (int)(scaleDifference * getMeasuredHeight() / 2));
+
+            Log.e("testtest", "width2 : " + getMeasuredWidth());
+            Log.e("testtest", "height2 : " + getMeasuredHeight());
+
+            if (shouldDrawGrid()) {
+                mGridRenderer.updateGridBitmap(mViewScale);
+            }
+
+            mWorkspaceView.setScaleX(mViewScale);
+            mWorkspaceView.setScaleY(mViewScale);
+            mWorkspaceView.requestLayout();
+        } else {
+            Log.e("blockkkk", "zoom 같음");
+        }
+
+        return false;
+    }
+
     /**
      * Reset the view to the top-left corner of the virtual workspace (with a small margin), and
      * reset zoom to unit scale.
@@ -141,26 +186,44 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     public void resetView() {
         // Reset scrolling state.
         mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
+
+        Log.e("testtest", "start x : " + mPanningStart.x);
+        Log.e("testtest", "start y : " + mPanningStart.y);
+
         mPanningStart.set(0,0);
         mOriginalScrollX = 0;
         mOriginalScrollY = 0;
 
-        updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+        // 원래 코드
+        //updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+        updateScaleStep(2);
 
         final Rect blocksBoundingBox = getViewScaledBlockBounds();
         final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
         if (mScrollable) {
             final int margin = mGridRenderer.getGridSpacing() / 2;
             final int scrollToY = blocksBoundingBox.top - margin;
+            // 여기가 워크 스페이스 좌표 설정하는 곳
             if (useRtl) {
+                // scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
                 scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
             } else {
+                //scrollTo(blocksBoundingBox.left - margin, -200);
                 scrollTo(blocksBoundingBox.left - margin, -200);
             }
         } else {
             // Reset top leading corner to 0,0 when
+            //scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
             scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
         }
+    }
+
+    public void testView(float x, float y) {
+        scrollTo( (int)( x + 50 ) , (int)( y + 200));
+    }
+
+    public void testView2(WorkspacePoint x) {
+        scrollTo( (int)( x.x + 50 ) , (int)( x.y + 200));
     }
 
     public void resetView_2(WorkspacePoint ntp, WorkspacePoint ptp, WorkspacePoint rtp) {
@@ -177,29 +240,32 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         if (mScrollable) {
             final int margin = mGridRenderer.getGridSpacing() / 2;
             final int scrollToY = blocksBoundingBox.top - margin;
+            // 여기도 워크 스페이스 좌표 설정하는 곳
             if (useRtl) {
-                Log.e("scroll To","scrollable useRtl");
-                scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+
+                //scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+                scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -100);
             } else {
-                Log.e("scroll To","scrollable not useRtl");
-                scrollTo(blocksBoundingBox.left - margin, -200);
+                //scrollTo(blocksBoundingBox.left - margin, -200);
+                scrollTo(blocksBoundingBox.left - margin, -100);
+
             }
         } else {
             Log.e("scroll To","not scrollable");
             // Reset top leading corner to 0,0 when
+            //scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
             scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
         }
         // reset view end *
 
         // TODO : 포커스 된 블록 위치로 화면 이동
+        // ptp가 null이 아닐 때가 아닌 ntp가 null이 아닐때로 해야 될 것 같음
 //        if ( ptp != null ) {
 //            scrollTo( (int)( ptp.x ) , (int)( ptp.y ));
 //        }
-
         if ( ntp != null ) {
-            Log.e("scroll To","ntp not ull");
-            scrollTo( (int)(0 ) , (int)( 0 ));
-            scrollTo( (int)( ntp.x ) , (int)( ntp.y -150 ));
+            scrollTo( (int)( ntp.x -50 ) , (int)( ntp.y ) -100);
+
         }
     }
 
@@ -281,7 +347,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     public boolean zoomOut() {
 
         if (mScrollable && mCurrentZoomScaleIndex > 0) {
-            //Log.e("들어오는데","??");
+            Log.e("들어오는데","??");
             Log.e("scale",mCurrentZoomScaleIndex+"");
             updateScaleStep(mCurrentZoomScaleIndex - 1);
             return true;
@@ -304,7 +370,11 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     }
 
     @Override
+    // 워크스페이스 터치시 들어오는 또다른 메소드
     public boolean onTouchEvent(MotionEvent event) {
+
+        Log.e("testtest", "onTouchEvent");
+
         if(mScalable && mScaleGestureDetector != null) {
             mScaleGestureDetector.onTouchEvent(event);
             if (mScaleGestureDetector.isInProgress()) {
@@ -407,6 +477,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             mResetViewPending = false;
         }
 
+        // 워크스페이스 스크롤에 따라 뷰 제어
         // Shift the wrapped view's position to follow scrolling along. The scrolling of view
         // content is controlled by setTranslationX() and setTranslationY() in this.scrollTo()
         // below.
@@ -648,6 +719,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             scrollBy((int)(scaleDifference * getMeasuredWidth() / 2),
                     (int)(scaleDifference * getMeasuredHeight() / 2));
 
+            Log.e("testtest", "width2 : " + getMeasuredWidth());
+            Log.e("testtest", "height2 : " + getMeasuredHeight());
+
             if (shouldDrawGrid()) {
                 mGridRenderer.updateGridBitmap(mViewScale);
             }
@@ -655,6 +729,8 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             mWorkspaceView.setScaleX(mViewScale);
             mWorkspaceView.setScaleY(mViewScale);
             mWorkspaceView.requestLayout();
+        } else {
+            Log.e("blockkkk", "zoom 같음");
         }
     }
 
@@ -766,6 +842,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             final float scaleDifference = mViewScale - mStartScale;
             final int scrollScaleX = (int) (scaleDifference * mStartFocusX);
             final int scrollScaleY = (int) (scaleDifference * mStartFocusY);
+
 
             // Compute scroll offset based on shift of the focus point. This makes sure the view
             // pans along with the focus.

@@ -6,12 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
-import android.net.ConnectivityManager;
-import android.net.Network;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.blockly.android.UploadBtnCheck;
 import com.learn4.R;
 import com.learn4.data.dto.LearningObjective;
 import com.learn4.view.custom.dialog.ProgressDialog;
@@ -52,6 +49,8 @@ public class Application extends android.app.Application  {
     public static boolean translate_check = false;
 
     public static MediaPlayer mediaPlayer;
+
+    public static String sttString="";
 
     public static Application getInstance(Context context){
 //        this.context = context;

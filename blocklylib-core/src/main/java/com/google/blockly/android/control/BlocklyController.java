@@ -210,7 +210,7 @@ public class BlocklyController {
         this.centerY = centerY;
     }
 
-    private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
+    public final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
         @Override
         public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
 
@@ -256,6 +256,14 @@ public class BlocklyController {
             // TODO(#35): Mark block as focused / selected.
             if (mListener != null){
             //Log.e("mlist","not null");
+
+                Log.e("testtest", "block click!!");
+//                Log.e("testtest", "test1 : " + pendingDrag.getTouchedBlockView());
+//                Log.e("testtest", "test2 : " + pendingDrag.getDragGroup());
+//                Log.e("testtest", "test3 : " + pendingDrag.getRootDraggedBlock());
+//                Log.e("testtest", "test4 : " + pendingDrag.getRootDraggedBlockView());
+//                Log.e("testtest", "test5 : " + pendingDrag.getDragInitiator());
+
                 if (System.currentTimeMillis() > delay){
                     delay = System.currentTimeMillis() + 200;
                     return false;
@@ -1215,6 +1223,15 @@ public class BlocklyController {
         return (mVirtualWorkspaceView != null) && mVirtualWorkspaceView.zoomOut();
     }
 
+
+    public boolean testZoom() {
+        return (mVirtualWorkspaceView != null) && mVirtualWorkspaceView.testZoom();
+    }
+
+    public boolean testZoom2() {
+        return (mVirtualWorkspaceView != null) && mVirtualWorkspaceView.testZoom2();
+    }
+
     /**
      * Reset the view to the top-left corner of the virtual workspace (with a small margin), and
      * reset zoom to unit scale.
@@ -1228,6 +1245,18 @@ public class BlocklyController {
     public void zoomToFocusedBlock(WorkspacePoint ntp, WorkspacePoint ptp, WorkspacePoint rtp) {
         if (mVirtualWorkspaceView != null) {
             mVirtualWorkspaceView.resetView_2(ntp, ptp, rtp);
+        }
+    }
+
+    public void focusedBlock(float x, float y) {
+        if (mVirtualWorkspaceView != null) {
+            mVirtualWorkspaceView.testView(x, y);
+        }
+    }
+
+    public void focusedBlock2(WorkspacePoint workspacePoint) {
+        if (mVirtualWorkspaceView != null) {
+            mVirtualWorkspaceView.testView2(workspacePoint);
         }
     }
 
