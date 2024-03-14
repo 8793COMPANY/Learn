@@ -15,7 +15,9 @@
 
 <toolbox>
 
+    <category name="home" colour="330">
 
+    </category>
 
 
     <!-- setup() 카테고리 안에 들어갈 블록   -->
@@ -735,9 +737,7 @@
     <category name="reset" colour="330">
 
     </category>
-    <category name="home" colour="330">
 
-    </category>
 
 
     <category name="dictionary" colour="330">

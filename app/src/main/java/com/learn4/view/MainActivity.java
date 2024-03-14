@@ -192,11 +192,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private TextView mGeneratedErrorTextView;
     private FrameLayout mGeneratedFrameLayout;
 
-    BasicFieldDropdownView basicFieldDropdownView;
-    FieldDropdown fieldDropdown;
     private CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] block_tempTab = {null, null, null,null};
+
+    // tempTab과 tempTabCheck는 순서대로 home, 실제코드, 시리얼모니터, 업로드, 리셋, 코드사전, 티처블 머신 값이 들어감
     View [] tempTab = {null, null, null,null,null,null,null};
     Boolean [] tempTabCheck = {false, false, false,false,false,false,false};
 
@@ -1135,7 +1135,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    // mGeneratedErrorTextView.setVisibility(View.VISIBLE);
+                    // mGeneratedErrorTextView.setVisibility(View
+                    // .VISIBLE);
                     //  mGeneratedErrorTextView.setText(error.getMessage());
 
                     Log.e("error log",error.getMessage());
@@ -1695,7 +1696,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Application.wifi_check = false;
             }
 
-            Application.checkUploadBtn();
+            if (categoryData.getUpload_btn() != null)
+                 Application.checkUploadBtn();
         });
 
 
@@ -1937,6 +1939,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         testX = ev.getX();
         testY = ev.getY();
 
+        categoryData = CategoryData.getInstance();
+
         Log.e("testtest", ev.getX() + " dd");
         Log.e("testtest", ev.getY() + " dd");
 
@@ -1951,9 +1955,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             int width = size.x;
             int height = size.y;
 
-            if (ev.getY() >= (height/2f)) {
+            if (ev.getY() <= (height/4f)) {
                 Log.e("testtest", "d : " + height);
-                Log.e("testtest", "d/2 : " + height/2);
+                Log.e("testtest", "d/4 : " + height/4f);
                 Log.e("testtest", "t : " + ev.getY());
 
 //                controller = getController();
@@ -1969,9 +1973,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 WorkspacePoint workspacePoint = new WorkspacePoint();
                 workspacePoint.set(testX, testY);
 
+//                if (categoryData.getNtp() != null) {
+//                    controller.scrollToFocusedBlock(categoryData.getNtp());
+//                } else {
+//                    Log.e("testtestt", "ntp null");
+//                }
+
                 //controller.zoomToFocusedBlock(workspacePoint, workspacePoint, workspacePoint);
                 //controller.focusedBlock(testX, testY);
-                controller.focusedBlock2(workspacePoint);
+                //controller.focusedBlock2(workspacePoint);
             }
         }
 
@@ -2065,7 +2075,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         dictionary_block_list.clear();
-        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(num).getItems();
+        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(num+1).getItems();
 
         for (BlocklyCategory.CategoryItem item : blocks) {
             String title = "";
@@ -3015,13 +3025,15 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     // 해당 블록을 기준으로 화면을 이동하고
 //                    controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
                     controller.zoomToFocusedBlock(categoryData.getNtp(), categoryData.getPtp(), categoryData.getRtp());
+
+                    controller.scrollToFocusedBlock(categoryData.getNtp());
                     // 포커스 된 블록의 좌표값은 초기화
                     categoryData.setRtp(null);
                     categoryData.setPtp(null);
                     categoryData.setNtp(null);
                     Log.e("testtest", "줌이 되었어요");
 
-                    //controller.getDragger().categoryData.
+                    //controller.scrollToFocusedBlock(categoryData.getNtp());
                 } else {
                     Log.e("testtest", "포커스가 안되었어요");
 
@@ -3249,7 +3261,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         blockly_monitor.setVisibility(View.GONE);
         block_dictionary.setVisibility(View.GONE);
 
-        if (position <4) {
+        if (position >0 && position <5) {
             setCloseWindow(position,"block");
         }
     }
@@ -3260,70 +3272,75 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("current_pos position",position+"");
 
         if (current_pos == position) {
+            Log.e("hello current pos","same position");
             if (view_check[position]){
 
-                if (type.equals("monitor")){
-                    Log.e("monitor", "in!");
-                    blockly_monitor.setVisibility(View.VISIBLE);
+                if (position ==0)
+                    tempTab[0].setSelected(true);
+                else
                     tempTab[position-4].setSelected(true);
+
+                if (type.equals("monitor")){
+                    blockly_monitor.setVisibility(View.VISIBLE);
                 }else if(type.equals("dictionary")){
-                    Log.e("dictionary", "in!");
                     block_dictionary.setVisibility(View.VISIBLE);
                     dictionaryAdapter.notifyDataSetChanged();
-                    tempTab[position - 4].setSelected(true);
-                    if (current_pos <4){
-                        if(block_tempTab[current_pos] != null)
-                            block_tempTab[current_pos].setSelected(false);
+                    if (current_pos >0 && current_pos <5){
+                        if(block_tempTab[current_pos-1] != null)
+                            block_tempTab[current_pos-1].setSelected(false);
                     }
                 }
 
-                if (simulator_check) {
-                    simulator_btn.setVisibility(View.INVISIBLE);
-
-                }
-                block_bot_btn.setVisibility(View.INVISIBLE);
-                trashcan_btn.setVisibility(View.INVISIBLE);
-                translate_btn.setVisibility(View.INVISIBLE);
-
-                view_check[position] = false;
-
             }else {
+
+                if (position ==0)
+                    tempTab[0].setSelected(false);
+                else
+                    tempTab[position-4].setSelected(false);
+
                 if (type.equals("monitor")){
                     Log.e("monitor", "in!");
                     blockly_monitor.setVisibility(View.GONE);
-                    tempTab[position-4].setSelected(false);
                     mMonitorHandler.sendEmptyMessage(1);
                 }else if(type.equals("dictionary")){
                     Log.e("dictionary", "in!");
                     block_dictionary.setVisibility(View.GONE);
                     view_check[position] = true;
-                    tempTab[position - 4].setSelected(false);
                 }
 
-                if (simulator_check) {
-                    simulator_btn.setVisibility(View.VISIBLE);
-
-                }
-                block_bot_btn.setVisibility(View.VISIBLE);
-                trashcan_btn.setVisibility(View.VISIBLE);
-                translate_btn.setVisibility(View.VISIBLE);
-
-                view_check[position] = true;
             }
 
+            if (simulator_check) {
+                simulator_btn.setVisibility((view_check[position] == true) ? View.INVISIBLE: View.VISIBLE);
+
+            }
+            block_bot_btn.setVisibility((view_check[position] == true) ? View.INVISIBLE: View.VISIBLE);
+            trashcan_btn.setVisibility((view_check[position] == true) ? View.INVISIBLE: View.VISIBLE);
+            translate_btn.setVisibility((view_check[position] == true) ? View.INVISIBLE: View.VISIBLE);
+
+            view_check[position] = (view_check[position] == true) ? false: true;
+
         }else{
+            Log.e("hello current pos","not same position");
             if (type.equals("monitor")){
                 Log.e("monitor", "in!");
                 blockly_monitor.setVisibility(View.VISIBLE);
-                tempTab[position-4].setSelected(true);
+                if (position ==0)
+                    tempTab[0].setSelected(true);
+                else
+                    tempTab[position-4].setSelected(true);
+
             }else if(type.equals("dictionary")){
                 Log.e("dictionary", "in!");
                 block_dictionary.setVisibility(View.VISIBLE);
                 dictionaryAdapter.notifyDataSetChanged();
-                tempTab[position - 4].setSelected(true);
-                if (current_pos <4){
-                    if(block_tempTab[current_pos] != null)
-                        block_tempTab[current_pos].setSelected(false);
+                if (position ==0)
+                    tempTab[0].setSelected(true);
+                else
+                    tempTab[position-4].setSelected(true);
+                if (current_pos >0 && current_pos <5){
+                    if(block_tempTab[current_pos-1] != null)
+                        block_tempTab[current_pos-1].setSelected(false);
                 }
             }
             view_check[position] = false;
@@ -3440,45 +3457,51 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("??","onClickTest");
         Log.e("main create",pos+"");
         Log.e("isEnabled onClickTest",v.isSelected()+"");
-        if (pos >= 4) {
-            Log.e("pos",pos+"");
-            tempTab[pos-4] = v;
+        if (pos >= 5 || pos ==0) {
+            // 홈 버튼 : 0번  실제코드 버튼 ~ 티처블 머신 버튼 : 5번 ~ 10번
+            if (pos == 0)
+                tempTab[pos] = v;
+            else
+                tempTab[pos-4] = v;
+
             mBlocklyActivityHelper.getFlyoutController(); // setup() ~ 기타 탭의 블록창이 닫힘
             Log.e("tempTabCheck length",tempTabCheck.length+"");
-            Log.e("before case", tempTabCheck[pos-4] + "");
+//            Log.e("before case", tempTabCheck[pos-4] + "");
             //Log.e("in case", tempTabCheck[pos-4] + "");
         } else {
-            block_tempTab[pos] = v;
+            // setup 버튼 ~ 기타 버튼 : 1번 ~ 4번
+            block_tempTab[pos-1] = v;
             initTabColor();
             initTabCheck();
         }
 
         // TODO : 상단 버튼 대응
         switch (pos) {
+            case 0:
+                Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
+                current_pos = 0;
+                finishListener.show();
+                break;
 
-            case 4: // 실제코드
+            case 5: // 실제코드
                 Log.e("4 in","come");
                 code_btn(pos);
                 break;
-            case 5: // 시리얼 모니터
+            case 6: // 시리얼 모니터
                 Log.e("5 in","come");
                 serial_btn(pos);
                 break;
-            case 6: // 업로드
+            case 7: // 업로드
                 Log.e("6 in","come");
                 upload_btn(pos);
                 break;
 
-            case 7: // 리셋
-                current_pos = 7;
+            case 8: // 리셋
+                current_pos = 8;
                 Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
                 resetListener.show();
                 break;
-            case 8: // 홈
-                Log.e("close check",mBlocklyActivityHelper.getFlyoutController()+"");
-                current_pos = 8;
-                finishListener.show();
-                break;
+
             case 9: // 코드사전
                 Log.e("9 in","come");
                 CategoryData.getInstance().getSetUp_btn().setSelected(false);
@@ -3760,8 +3783,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 blockly_monitor.setVisibility(View.GONE);
             }
             mBlocklyActivityHelper.getFlyoutController();
-            categoryData.setPosition(6);
-            current_pos = 6;
+            categoryData.setPosition(7);
+            current_pos = 7;
 
             compileCheck = true;
 
@@ -3794,7 +3817,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             uploadFalseDialog.show();
         }
 
-        current_pos = 6;
+        current_pos = 7;
     }
 
     @Override
