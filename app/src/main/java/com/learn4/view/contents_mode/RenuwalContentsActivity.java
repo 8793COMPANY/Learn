@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.blockly.android.BlocklySectionsActivity;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
+import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
@@ -59,6 +62,7 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
     private View.OnClickListener jikco_mode_listener;
 
     CategoryView mCategoryView;
+    BlocklyController controller;
 
     int mode = 1;
 
@@ -124,6 +128,7 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         setContentView(R.layout.activity_content);
 
         mCategoryView = mBlocklyActivityHelper.getmCategoryView();
+        controller = getController();
 
         setting = DataSetting.getInstance(getApplicationContext());
         setting.dataCheck();
@@ -221,11 +226,11 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
 
-        Test test1 = new Test();
-        test1.setAnswer("hello");
-
-        subjects.get(0).chapters.add(2,test1);
-        levelAdapter.notifyDataSetChanged();
+//        Test test1 = new Test();
+//        test1.setAnswer("hello");
+//
+//        subjects.get(0).chapters.add(2,test1);
+//        levelAdapter.notifyDataSetChanged();
 
     }
 
@@ -263,21 +268,50 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
 
 
         for (int i =0; i<3; i++){
-            Test test1 = new Test();
-            test1.setAnswer(i+"");
+
             BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) blocks.get(i);
             Block block = blockItem.getBlock();
-            test1.setBlock(block);
+            BlockGroup group = controller.mHelper.getParentBlockGroup(block);
+            Log.e("block check name 1 ", block.getType());
+            if (group != null)
+                Log.e("codedictionary","getParentBlockGroup not null");
+            else {
+                Log.e("codedictionary", "getParentBlockGroup null");
+                group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
+//            controller.addRootBlock(listData.get(position).getBlock());
+            }
+
+            if(group.getParent() != null) {
+                ((ViewGroup)group.getParent()).removeView(group); // <- fix
+            }
+            Test test1 = new Test();
+            test1.setAnswer(block.getType());
+            test1.setBlock(group);
             level.chapters.add(test1);
         }
 
         blocks = mCategoryView.mRootCategory.getSubcategories().get(2).getItems();
         for (int i =0; i<5; i++){
-            Test test2 = new Test();
-            test2.setAnswer(i+"");
+
             BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) blocks.get(i);
             Block block = blockItem.getBlock();
-            test2.setBlock(block);
+            Log.e("block check name 2 ", block.getType());
+            BlockGroup group = controller.mHelper.getParentBlockGroup(block);
+            if (group != null)
+                Log.e("codedictionary","getParentBlockGroup not null");
+            else {
+                Log.e("codedictionary", "getParentBlockGroup null");
+                group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
+//            controller.addRootBlock(listData.get(position).getBlock());
+            }
+
+            if(group.getParent() != null) {
+                ((ViewGroup)group.getParent()).removeView(group); // <- fix
+            }
+
+            Test test2 = new Test();
+            test2.setAnswer(block.getType());
+            test2.setBlock(group);
             level2.chapters.add(test2);
         }
 

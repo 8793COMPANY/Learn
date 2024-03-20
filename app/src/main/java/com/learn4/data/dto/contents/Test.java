@@ -1,18 +1,19 @@
 package com.learn4.data.dto.contents;
 
+import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.model.Block;
 
 public class Test {
     String answer;
-    Block block;
+    BlockGroup block;
 
 
 
-    public Block getBlock() {
+    public BlockGroup getBlock() {
         return block;
     }
 
-    public void setBlock(Block block) {
+    public void setBlock(BlockGroup block) {
         this.block = block;
     }
 

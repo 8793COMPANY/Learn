@@ -14,5 +14,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"></FrameLayout>
 
+    <ImageView
+        android:id="@+id/block_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/blockview"
+        app:layout_constraintBottom_toBottomOf="@+id/blockview"
+        app:layout_constraintLeft_toLeftOf="@+id/blockview"
+        app:layout_constraintRight_toRightOf="@+id/blockview"></ImageView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
