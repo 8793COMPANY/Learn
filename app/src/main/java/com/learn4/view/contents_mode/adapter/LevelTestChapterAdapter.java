@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ public class LevelTestChapterAdapter extends RecyclerView.Adapter<LevelTestChapt
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = inflater.inflate(R.layout.chapter_item_layout, parent, false);
+        view = inflater.inflate(R.layout.level_test_chapter_item_layout, parent, false);
 
         return new CustomViewHolder(view);
     }
@@ -49,10 +50,10 @@ public class LevelTestChapterAdapter extends RecyclerView.Adapter<LevelTestChapt
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 
 
-        ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
-        layoutParams.width = width;
-        layoutParams.height = width;
-        holder.itemView.requestLayout();
+//        ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
+//        layoutParams.width = width;
+//        layoutParams.height = width;
+//        holder.itemView.requestLayout();
 
         if (chapters.get(position).getAnswer().equals("hello")){
             holder.itemView.setBackgroundColor(Color.BLACK);
@@ -62,6 +63,10 @@ public class LevelTestChapterAdapter extends RecyclerView.Adapter<LevelTestChapt
             Log.e("hello","its me");
         });
 
+        chapters.get(position).getBlock()
+
+        holder.frameLayout.addView();
+
     }
 
     @Override
@@ -70,13 +75,12 @@ public class LevelTestChapterAdapter extends RecyclerView.Adapter<LevelTestChapt
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivChapter;
-        public ImageView chapter_background;
+
+        FrameLayout frameLayout;
 
         public CustomViewHolder(View itemView) {
             super(itemView);
-            ivChapter = itemView.findViewById(R.id.chapter);
-            chapter_background = itemView.findViewById(R.id.chapter_background);
+            frameLayout = itemView.findViewById(R.id.blockview);
         }
     }
 }

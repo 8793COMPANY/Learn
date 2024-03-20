@@ -123,6 +123,8 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
 
+        mCategoryView = mBlocklyActivityHelper.getmCategoryView();
+
         setting = DataSetting.getInstance(getApplicationContext());
         setting.dataCheck();
 
@@ -153,7 +155,7 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         back_btn = findViewById(R.id.back_btn);
         contents_mode_select_btn= findViewById(R.id.contents_mode_select_btn);
 
-        mCategoryView = mBlocklyActivityHelper.getmCategoryView();
+
 
         cancel_listener = new View.OnClickListener() {
             public void onClick(View v) {
