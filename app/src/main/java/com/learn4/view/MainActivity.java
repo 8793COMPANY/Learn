@@ -3185,8 +3185,6 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     monitor_text.setText("");
                     break;
 
-
-
                 case 2:
 //                    Log.e("read data check", read_data()+"");
                     Float data = read_data();

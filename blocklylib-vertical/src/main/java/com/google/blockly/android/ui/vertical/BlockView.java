@@ -832,7 +832,7 @@ public class BlockView extends AbstractBlockView<InputView> {
         if (mBlock.getNextConnection() != null) {
             mHelper.setPointMaybeFlip(
                     mNextConnectorOffset, mOutputConnectorMargin, mNextBlockVerticalOffset);
-            bottomStartResourceId = isShadow ? R.drawable.bottom_start_next_shadow
+            bottomStartResourceId = isShadow ? R.drawable.bottom_start_next
                     : R.drawable.bottom_start_next;
             bottomStartBorderResourceId = R.drawable.bottom_start_next_border;
         } else if (mBlock.getOutputConnection() != null) {
