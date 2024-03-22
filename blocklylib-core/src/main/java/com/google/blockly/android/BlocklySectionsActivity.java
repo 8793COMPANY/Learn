@@ -56,6 +56,8 @@ public abstract class BlocklySectionsActivity extends AbstractBlocklyActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        Log.e("testtesttt", "BlocklySectionsActivity onCreate ononononononono");
+
         Log.e("작동","작동");
         SharedPreferences wmbPreference = PreferenceManager.getDefaultSharedPreferences(this);
 

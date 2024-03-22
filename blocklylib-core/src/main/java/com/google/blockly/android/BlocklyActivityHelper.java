@@ -14,7 +14,9 @@
  */
 package com.google.blockly.android;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import androidx.annotation.NonNull;
@@ -50,6 +52,7 @@ import com.google.blockly.model.Mutator;
 import com.google.blockly.model.Workspace;
 import com.google.blockly.utils.BlockLoadingException;
 import com.google.blockly.utils.StringOutputStream;
+import com.google.blockly.utils.TestApplication;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -80,6 +83,10 @@ public class BlocklyActivityHelper {
     private static final String TAG = "BlocklyActivityHelper";
 
     public AppCompatActivity mActivity;
+
+    //??
+    public int mNum = 0;
+
 
     protected WorkspaceHelper mWorkspaceHelper;
     protected BlockViewFactory mBlockViewFactory;
@@ -135,6 +142,14 @@ public class BlocklyActivityHelper {
         return mController.closeFlyouts();
     }
 
+    public int getmNum() {
+        return mNum;
+    }
+
+    public void setmNum(int num) {
+        mNum = num;
+    }
+
 
     /**
      * Creates the activity helper and initializes Blockly. Must be called during
@@ -148,9 +163,21 @@ public class BlocklyActivityHelper {
      * @throws IllegalStateException If error occurs during initialization. Assumes all initial
      *                               compile-time assets are known to be valid.
      */
+
+    // 워크스페이스 설정
     public BlocklyActivityHelper(AppCompatActivity activity, FragmentManager fragmentManager) {
         mActivity = activity;
 
+        //mNum = num;
+        Log.e("testtesttt", "BlocklyActivityHelper fragment : " + fragmentManager);
+
+        Log.e("testtesttt", "fragment onononon");
+
+        Log.e("testtesttt", mActivity+"");
+        Log.e("testtesttt", fragmentManager+"");
+        Log.e("testtesttt", fragmentManager.getFragments().isEmpty()+"");
+
+        // 워크스페이스에 사용되는 프래그먼트 찾기
         onFindFragments(fragmentManager);
         if (mWorkspaceFragment == null) {
             throw new IllegalStateException("mWorkspaceFragment is null");
@@ -208,6 +235,7 @@ public class BlocklyActivityHelper {
      */
     public void saveWorkspaceToAppDir(String filename)
             throws FileNotFoundException, BlocklySerializerException{
+        Log.e("testtesttt", "BlocklyActivityHelper saveWorkspaceToAppDir");
         Workspace workspace = mWorkspaceFragment.getWorkspace();
         workspace.serializeToXml(mActivity.openFileOutput(filename, Context.MODE_PRIVATE));
     }
@@ -218,6 +246,8 @@ public class BlocklyActivityHelper {
      * @return True if the save was successful. Otherwise false.
      */
     public boolean saveWorkspaceToAppDirSafely(String filename) {
+        Log.e("testtesttt", "BlocklyActivityHelper saveWorkspaceToAppDirSafely");
+
         try {
             saveWorkspaceToAppDir(filename);
             Toast.makeText(mActivity, R.string.toast_workspace_saved,
@@ -465,9 +495,67 @@ public class BlocklyActivityHelper {
      * This methods is always called once from the constructor before {@link #mController} is
      * instantiated.
      */
+    @SuppressLint("ResourceType")
     protected void onFindFragments(FragmentManager fragmentManager) {
-        mWorkspaceFragment = (WorkspaceFragment)
-                fragmentManager.findFragmentById(R.id.blockly_workspace);
+        // 워크스페이스를 두 개 이상 만들때 아이디가 다르기 때문에 이 부분을 따로 설정해줘야 함
+
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().get(0).getId());
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().get(0).getChildFragmentManager());
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().get(0).getString(R.id.blockly_workspace));
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().get(0).getString(R.id.blockly_contents_workspace));
+
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().get(0).getHost());
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().isEmpty());
+        Log.e("testtesttt", "fragment : " + fragmentManager.getFragments().get(0).getActivity().getLocalClassName());
+
+        String[] activityName = fragmentManager.getFragments().get(0).getActivity().getLocalClassName().split("\\.");
+        Log.e("testtesttt", "activity name : " + activityName[1]);
+
+        //Log.e("testtesttt", "fragment2 : " + fragmentManager.findFragmentById(R.id.blockly_workspace).);
+
+        //if (fragmentManager.getFragments().get(0).getId() == fragmentManager.findFragmentById(R.id.blockly_contents_workspace).getId())
+        //Log.e("testtesttt", "fragment2 : " + fragmentManager.findFragmentById(R.id.blockly_workspace).getId());
+        //Log.e("testtesttt", "fragment3 : " + fragmentManager.findFragmentById(R.id.blockly_workspace).toString());
+
+        if (activityName[1].equals("MainActivity")) {
+            Log.e("testtesttt", "메인");
+
+            mWorkspaceFragment = (WorkspaceFragment)
+                    fragmentManager.findFragmentById(R.id.blockly_workspace);
+
+            Log.e("testtesttt", "메인 + " + TestApplication.getWorkspace_name());
+
+            TestApplication.setWorkspace_name(activityName[1]);
+
+            Log.e("testtesttt", "메인 ++ " + TestApplication.getWorkspace_name());
+        } else if (activityName[1].equals("ContentsWorkspace")) {
+            Log.e("testtesttt", "콘텐츠");
+
+            mWorkspaceFragment = (WorkspaceFragment)
+                    fragmentManager.findFragmentById(R.id.blockly_contents_workspace);
+
+            Log.e("testtesttt", "콘텐츠 + " + TestApplication.getWorkspace_name());
+
+            TestApplication.setWorkspace_name(activityName[1]);
+
+            Log.e("testtesttt", "콘텐츠 ++ " + TestApplication.getWorkspace_name());
+        } else {
+            Log.e("testtesttt", "워크스페이스를 찾을 수 없습니다.");
+
+            Log.e("testtesttt", "블럭설명사전");
+
+            mWorkspaceFragment = (WorkspaceFragment)
+                    fragmentManager.findFragmentById(R.id.blockly_workspace);
+
+            Log.e("testtesttt", "블럭설명사전 + " + TestApplication.getWorkspace_name());
+
+            TestApplication.setWorkspace_name(activityName[1]);
+
+            Log.e("testtesttt", "블럭설명사전 ++ " + TestApplication.getWorkspace_name());
+        }
+
+//        mWorkspaceFragment = (WorkspaceFragment)
+//                fragmentManager.findFragmentById(R.id.blockly_workspace);
         mToolboxBlockList = (BlockListUI) fragmentManager
                 .findFragmentById(R.id.blockly_toolbox_ui);
         mCategoryFragment = (CategorySelectorFragment) fragmentManager
@@ -693,9 +781,11 @@ public class BlocklyActivityHelper {
         AssetManager assetManager = mActivity.getAssets();
         BlocklyController controller = getController();
         try {
+            Log.e("testtesttt", toolboxContentsXmlPath);
             controller.loadToolboxContents(assetManager.open(toolboxContentsXmlPath));
         } catch (IOException | BlockLoadingException e) {
             // compile time assets such as assets are assumed to be good.
+            Log.e("testtesttt", e+"");
             throw new IllegalStateException("Failed to load toolbox XML.", e);
         }
     }

@@ -10,6 +10,7 @@ import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.learn4.R;
 import com.learn4.data.dto.Level;
+import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.view.recyclerview.HorizonViewHolder;
 import com.learn4.view.recyclerview.RecyclerDecoration;
 
@@ -30,6 +33,8 @@ public class LevelAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     int width = 0;
     public boolean deco_check = true;
 
+    TextView level;
+
     public LevelAdapter(Context context, ArrayList<Level> levels, int width) {
         this.context = context;
         this.levels = levels;
@@ -42,6 +47,9 @@ public class LevelAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         view = inflater.inflate(R.layout.level_item_layout, parent, false);
+
+        level = view.findViewById(R.id.level);
+        level.setTextSize(DisplaySize.font_size_y_20);
 
         return new HorizonViewHolder(view);
     }

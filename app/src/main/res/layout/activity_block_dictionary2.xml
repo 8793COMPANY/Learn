@@ -13,50 +13,75 @@
         android:layout_height="0dp"
         android:background="@drawable/content_back_btn"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintWidth_percent="0.04"
+        app:layout_constraintVertical_bias="0.0575"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintHeight_percent="0.075"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintHorizontal_bias="0.04">
+        app:layout_constraintRight_toRightOf="parent">
     </Button>
 
-    <TextView
-        android:elevation="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="\t블럭설명사전\t"
-        android:textSize="14dp"
-        android:textColor="#f78f43"
-        android:fontFamily="@font/sb_aggro_m"
-        android:includeFontPadding="false"
-        android:padding="8dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.075"
         app:layout_constraintDimensionRatio="200:54"
-        app:layout_constraintWidth_percent="0.1"
-        app:layout_constraintVertical_bias="0.05"
-        app:layout_constraintHorizontal_bias="0.02"
-        android:background="@drawable/no_stroke_round_background"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/back_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </TextView>
+        app:layout_constraintHorizontal_bias="0.017"
+        app:layout_constraintTop_toTopOf="@+id/back_btn"
+        app:layout_constraintBottom_toBottomOf="@id/back_btn"
+        app:layout_constraintLeft_toRightOf="@+id/guide_left"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="2dp">
+
+        <TextView
+            android:id="@+id/block_dictionary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="블럭설명사전"
+            android:textColor="#f78f43"
+            android:fontFamily="@font/sb_aggro_m"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp" />
+
+    </androidx.cardview.widget.CardView>
+
+<!--    <TextView-->
+<!--        android:elevation="5dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="\t블럭설명사전\t"-->
+<!--        android:textSize="14dp"-->
+<!--        android:textColor="#f78f43"-->
+<!--        android:fontFamily="@font/sb_aggro_m"-->
+<!--        android:includeFontPadding="false"-->
+<!--        android:padding="8dp"-->
+<!--        app:layout_constraintDimensionRatio="200:54"-->
+<!--        app:layout_constraintWidth_percent="0.1"-->
+<!--        app:layout_constraintVertical_bias="0.05"-->
+<!--        app:layout_constraintHorizontal_bias="0.02"-->
+<!--        android:background="@drawable/no_stroke_round_background"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/back_btn"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent">-->
+<!--    </TextView>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/category_section"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="182:566"
-        app:layout_constraintWidth_percent="0.135"
-        app:layout_constraintTop_toBottomOf="@+id/back_btn"
-        android:layout_marginTop="14dp"
         android:background="@drawable/corner_round_14dp_background"
         android:backgroundTint="#fcf1de"
-        app:layout_constraintStart_toStartOf="@+id/back_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="182:566"
+        app:layout_constraintHeight_percent="0.786"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintVertical_bias="0.5">
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@+id/guide_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/back_btn"
+        >
 
         <Button
             android:id="@+id/dictionary_setup_btn"
@@ -122,12 +147,29 @@
         android:scrollbarStyle="outsideInset"
         android:scrollbarTrackVertical="@drawable/block_dictionary_scrollbar_track"
         android:scrollbarThumbVertical="@drawable/block_dictionary_scrollbar_thumb"
-        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintWidth_percent="0.74"
+        app:layout_constraintHeight_percent="0.8"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintTop_toTopOf="@+id/category_section"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/category_section"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="1">
+        app:layout_constraintRight_toRightOf="parent">
     </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.09">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.174">
+    </androidx.constraintlayout.widget.Guideline>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

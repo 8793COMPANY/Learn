@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.data.room.entity.Component;
 import com.learn4.data.room.entity.Contents;
 import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.recyclerview.RecyclerDecoration_Width;
@@ -184,16 +186,23 @@ public class Step1 extends Fragment {
         name = view.findViewById(R.id.supplies_name);
         comment = view.findViewById(R.id.supplies_comment);
 
+        name.setTextSize(DisplaySize.font_size_y_30);
+        comment.setTextSize(DisplaySize.font_size_y_24);
+
         /*supplies_list.add(new Supplies(R.drawable.supplies_img1,true));
         supplies_list.add(new Supplies(R.drawable.supplies_img2,false));*/
 //        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
 //        supplies_list.add(new Supplies(R.drawable.supplies_img2,false));
 
-        suppliesAdapter = new SuppliesAdapter(getContext(),supplies_list);
+        DisplayMetrics display = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(display);
+        int width = (int)(display.widthPixels / 4.4);
+
+        suppliesAdapter = new SuppliesAdapter(getContext(),supplies_list, width);
 
         supplies.setAdapter(suppliesAdapter);
 
-        RecyclerDecoration_Width decoration_height = new RecyclerDecoration_Width(70,supplies_list.size());
+        RecyclerDecoration_Width decoration_height = new RecyclerDecoration_Width((int) (Application.standardSize_X / 21.3),supplies_list.size());
         supplies.addItemDecoration(decoration_height);
 
         supplies.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));

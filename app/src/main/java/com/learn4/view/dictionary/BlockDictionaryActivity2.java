@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.google.blockly.android.BlocklySectionsActivity;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
@@ -23,6 +24,8 @@ import com.learn4.data.dto.CodeBlock;
 import com.learn4.data.room.AppDatabase2;
 import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
+import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +46,8 @@ public class BlockDictionaryActivity2 extends BlocklySectionsActivity {
 
     CategoryView mCategoryView;
     BlocklyController controller;
+
+    TextView block_dictionary_text;
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -74,6 +79,10 @@ public class BlockDictionaryActivity2 extends BlocklySectionsActivity {
         dictionary_loop_btn = findViewById(R.id.dictionary_loop_btn);
         dictionary_method_btn = findViewById(R.id.dictionary_method_btn);
         dictionary_etc_btn = findViewById(R.id.dictionary_etc_btn);
+
+        block_dictionary_text = findViewById(R.id.block_dictionary_text);
+        //block_dictionary_text.setTextSize((float) (Application.standardSize_Y / 25.7));
+        block_dictionary_text.setTextSize(DisplaySize.font_size_y_28);
 
         db2 = AppDatabase2.getInstance(getBaseContext());
 
@@ -109,6 +118,19 @@ public class BlockDictionaryActivity2 extends BlocklySectionsActivity {
         dictionary_etc_btn.setOnClickListener(onClickListener);
 
         clickEvent(0);
+
+        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+        int newUiOptions = uiOptions;
+        boolean isImmersiveModeEnabled = ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
+        if (isImmersiveModeEnabled) {
+            Log.i("Is on?", "Turning immersive mode mode off. ");
+        } else {
+            Log.i("Is on?", "Turning immersive mode mode on.");
+        }
+        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
     private void clickEvent(int num) {

@@ -23,6 +23,8 @@ import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.android.ui.BlockView;
 import com.google.blockly.model.Block;
+import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,8 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
     private ArrayList<CodeBlock> listData = new ArrayList<>();
     Context context;
     BlocklyController controller;
+
+    TextView block_name, block_info;
 
     public CodeDictionaryAdapter(Context context, BlocklyController controller, ArrayList<CodeBlock> arrayList){
         listData = arrayList;
@@ -45,6 +49,12 @@ public class CodeDictionaryAdapter extends RecyclerView.Adapter<CodeDictionaryAd
         // return 인자는 ViewHolder 입니다.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_dictionary_itemview, parent, false);
 //        view.getLayoutParams().height = 350;
+
+        block_name = view.findViewById(R.id.block_name);
+        block_info = view.findViewById(R.id.block_info);
+
+        block_name.setTextSize(DisplaySize.font_size_y_29);
+        block_info.setTextSize(DisplaySize.font_size_y_24);
 
         return new ItemViewHolder(view);
     }

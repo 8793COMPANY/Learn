@@ -8,7 +8,7 @@
         android:id="@+id/diagram_img_area"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_top"
         app:layout_constraintBottom_toBottomOf="@id/guide_bottom"
         app:layout_constraintStart_toStartOf="@+id/guide_left"
         app:layout_constraintEnd_toEndOf="@id/guide_right"
@@ -37,8 +37,9 @@
     <RadioGroup
         android:id="@+id/toggle"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.13"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.348"
+        app:layout_constraintDimensionRatio="170:190"
         android:checkedButton="@+id/off"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="@+id/diagram_img_area"
@@ -47,15 +48,15 @@
         app:layout_constraintRight_toRightOf="@+id/diagram_img_area"
         app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintVertical_bias="0.05"
-        android:weightSum="2">
+        android:weightSum="3">
 
         <RadioButton
             android:id="@+id/module_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="1dp"
             android:layout_marginEnd="1dp"
-
             android:layout_weight="1"
             android:background="@drawable/circuit_diagram_btn_selector"
             android:button="@null"
@@ -124,4 +125,13 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.95"></androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.046">
+    </androidx.constraintlayout.widget.Guideline>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

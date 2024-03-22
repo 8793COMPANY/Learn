@@ -259,6 +259,7 @@ public class BlockRecyclerViewHelper {
 
 
 
+
 //                marginLayoutParams.width = getLargeSize(1);
 
 //            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(1240 , ViewGroup.LayoutParams.MATCH_PARENT));

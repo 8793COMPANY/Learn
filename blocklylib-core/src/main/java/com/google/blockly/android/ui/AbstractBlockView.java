@@ -16,6 +16,8 @@
 package com.google.blockly.android.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,21 +25,34 @@ import android.graphics.Paint;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 
+import android.graphics.Typeface;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.elconfidencial.bubbleshowcase.BubbleShowCase;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
+import com.google.blockly.android.BlockClickDialog;
+import com.google.blockly.android.R;
 import com.google.blockly.android.control.ConnectionManager;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.Connection;
 import com.google.blockly.model.Input;
 import com.google.blockly.model.WorkspacePoint;
+import com.google.blockly.utils.TestApplication;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import smartdevelop.ir.eram.showcaseviewlib.GuideView;
+import smartdevelop.ir.eram.showcaseviewlib.config.DismissType;
+import smartdevelop.ir.eram.showcaseviewlib.config.Gravity;
+import smartdevelop.ir.eram.showcaseviewlib.config.PointerType;
 
 /**
  * An optional base class for {@link BlockView}. {@link AbstractBlockView} assumes
@@ -52,6 +67,9 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
     protected final Block mBlock;
     protected final ConnectionManager mConnectionManager;
     protected BlockTouchHandler mTouchHandler;
+
+    Context mContext;
+    View mView;
 
     // Child views for the block inputs and their children.
     protected final ArrayList<InputView> mInputViews;
@@ -111,6 +129,8 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
         mBlock = block;
         mConnectionManager = connectionManager;
         mTouchHandler = touchHandler;
+
+        mContext = context;
 
         setClickable(true);
         setFocusable(true);
@@ -180,6 +200,103 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
         }
     }
 
+    long delay = 0;
+
+    private GestureDetector gestureDetector = new GestureDetector(mContext, new GestureDetector.OnGestureListener() {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            Log.e("testtest", "gestureDetector long press");
+
+            if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                Log.e("testtest", "ContentsWorkspace long press");
+
+                new BubbleShowCaseBuilder((Activity) mContext)
+                        .title("test")
+                        .description("test2")
+                        .arrowPosition(BubbleShowCase.ArrowPosition.LEFT)
+                        .backgroundColor(Color.WHITE)
+                        .textColor(Color.BLACK)
+
+                        .listener(new BubbleShowCaseListener() {
+                            @Override
+                            public void onTargetClick(BubbleShowCase bubbleShowCase) {
+                            }
+
+                            @Override
+                            public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
+                            }
+
+                            @Override
+                            public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
+                                bubbleShowCase.dismiss();
+                            }
+
+                            @Override
+                            public void onBubbleClick(BubbleShowCase bubbleShowCase) {
+                            }
+                        })
+                        .targetView(mView)
+                        .show();
+
+
+                new GuideView.Builder(mContext)
+                        .setTitle("Guide Title Text")
+                        .setContentText("Guide Description Text\n .....Guide Description Text\n .....Guide Description Text .....\n .....Guide Description Text .....")
+                        .setGravity(Gravity.center) //optional
+                        .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
+                        .setTargetView(mView)
+                        .setContentTextSize(24)//optional
+                        .setContentTextColor(Color.parseColor("#3b3938"))
+                        .setTitleTextSize(29)//optional
+                        .setTitleTextColor(mBlock.getColor())
+                        .setIndicatorHeight((float) (TestApplication.standardSize_Y /1.58))
+                        .setIndicatorWidthSize((float) (TestApplication.standardSize_Y /1.58))
+                        .setCircleInnerIndicatorSize((float) (TestApplication.standardSize_Y /1.58))
+                        .setCircleStrokeIndicatorSize((float) (TestApplication.standardSize_Y /1.58))
+                        .setPointerType(PointerType.none)
+                        .build()
+                        .show();
+
+//                BlockDescriptionDialog blockDescriptionDialog;
+//
+//                blockDescriptionDialog = new BlockDescriptionDialog(getContext());
+//                blockDescriptionDialog.show();
+            } else {
+                Log.e("testtest", "no ContentsWorkspace long press");
+//
+//                BlockDescriptionDialog blockDescriptionDialog;
+//
+//                blockDescriptionDialog = new BlockDescriptionDialog(getContext());
+//                blockDescriptionDialog.show();
+            }
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            return false;
+        }
+    });
+
     /**
      * Test whether event hits visible parts of this block and notify {@link WorkspaceView} if it
      * does.
@@ -192,6 +309,32 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.e("event",event.toString());
+        Log.e("testtest", "onTouchEvent~~");
+
+        Log.e("testtest", mBlock + " : onTouchEvent~~");
+        Log.e("testtest", mBlock.getColor() + " : onTouchEvent~~");
+
+        gestureDetector.onTouchEvent(event);
+
+        Log.e("testtest", this+"");
+        mView = this;
+        Log.e("testtest", mView+"");
+
+
+//        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+//            Log.e("testtest", "ContentsWorkspace long press 2");
+//
+//            new GuideView.Builder(mContext)
+//                    .setTitle("Guide Title Text")
+//                    .setContentText("Guide Description Text\n .....Guide Description Text\n .....Guide Description Text .....")
+//                    .setGravity(Gravity.auto) //optional
+//                    .setDismissType(DismissType.anywhere) //optional - default DismissType.targetView
+//                    .setTargetView(this)
+//                    .setContentTextSize(12)//optional
+//                    .setTitleTextSize(14)//optional
+//                    .build()
+//                    .show();
+//        }
 
         //TODO : 블록사전에 있는 블록 드래그를 막기 위해 null 에러 처리를 해주었지만 나중에 다른 방법을 찾아볼 필요는 있음
         try {

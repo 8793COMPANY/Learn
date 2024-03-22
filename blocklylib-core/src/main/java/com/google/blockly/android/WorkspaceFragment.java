@@ -20,6 +20,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -87,6 +88,8 @@ public class WorkspaceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Log.e("testtesttt", "WorkspaceFragment onCreateView on");
         final ViewGroup rootView =
                 (ViewGroup) inflater.inflate(R.layout.fragment_workspace, container, false);
 

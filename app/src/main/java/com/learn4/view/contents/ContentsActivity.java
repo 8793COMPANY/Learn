@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.blockly.android.BlockClickDialog;
@@ -21,6 +22,7 @@ import com.learn4.util.Application;
 import com.learn4.util.DataSetting;
 import com.learn4.data.dto.Chapter;
 import com.learn4.data.dto.Level;
+import com.learn4.util.DisplaySize;
 import com.learn4.view.custom.dialog.ModeSelectDialog;
 
 import java.lang.reflect.Array;
@@ -51,6 +53,9 @@ public class ContentsActivity extends AppCompatActivity {
     private View.OnClickListener jikco_mode_listener;
 
     int mode = 1;
+
+    TextView contents_mode_text;
+
     @Override
     protected void onDestroy() {
         // 웰컴 메시지 재생 종료
@@ -70,10 +75,14 @@ public class ContentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content);
 
+        contents_mode_text = findViewById(R.id.contents_mode_text);
+        contents_mode_text.setTextSize(DisplaySize.font_size_y_28);
+
         setting = DataSetting.getInstance(getApplicationContext());
         setting.printChapter();
 
 //        setting.printChapter();
+
 
 
 
@@ -98,7 +107,9 @@ public class ContentsActivity extends AppCompatActivity {
 
         rvSubject = findViewById(R.id.level_list);
         back_btn = findViewById(R.id.back_btn);
+
         contents_mode_select_btn= findViewById(R.id.contents_mode_select_btn);
+        contents_mode_select_btn.setTextSize(DisplaySize.font_size_y_28);
 
         cancel_listener = new View.OnClickListener() {
             public void onClick(View v) {

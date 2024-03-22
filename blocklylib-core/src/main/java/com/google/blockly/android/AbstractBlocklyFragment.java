@@ -96,6 +96,9 @@ public abstract class AbstractBlocklyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         mRootView = onCreateSubViews(inflater);
+
+        Log.e("testtesttt", "AbstractBlocklyFragment onCreateView");
+
         mBlocklyActivityHelper = onCreateActivityHelper();
 
         if (mBlocklyActivityHelper == null) {
@@ -192,6 +195,7 @@ public abstract class AbstractBlocklyFragment extends Fragment {
         return new BlocklyActivityHelper(
                 (AppCompatActivity) getActivity(), getChildFragmentManager());
     }
+
 
     /** Propagate lifecycle event to BlocklyActivityHelper. */
     @Override
@@ -442,6 +446,7 @@ public abstract class AbstractBlocklyFragment extends Fragment {
      * @return The {@link ViewGroup} constructed. If using a {@link Fragment}, return null.
      */
     protected ViewGroup onCreateSubViews(LayoutInflater inflater) {
+        Log.e("testtesttt", "AbstractBlocklyFragment onCreateSubViews");
         return (ViewGroup) inflater.inflate(R.layout.blockly_unified_workspace, null);
     }
 

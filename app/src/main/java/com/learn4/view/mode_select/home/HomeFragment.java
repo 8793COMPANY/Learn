@@ -23,6 +23,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.learn4.DroneActivity;
 import com.learn4.util.Application;
 import com.learn4.R;
+import com.learn4.util.DisplaySize;
+import com.learn4.view.ContentsWorkspace;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
 import com.learn4.view.dictionary.BlockDictionaryActivity2;
@@ -38,7 +40,7 @@ public class HomeFragment extends Fragment {
     LinearLayout free_mode,content_mode;
     Application myApplication;
     Button free_btn,contents_btn,dictionary_btn,drone_btn;
-    TextView user_name;
+    TextView user_name, mode_select_text;
 
 
 
@@ -55,7 +57,12 @@ public class HomeFragment extends Fragment {
         free_btn = root.findViewById(R.id.free_btn);
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
         drone_btn = root.findViewById(R.id.drone_btn);
+
         user_name = root.findViewById(R.id.user_name);
+        user_name.setTextSize(DisplaySize.font_size_y_27);
+
+        mode_select_text = root.findViewById(R.id.mode_select_text);
+        mode_select_text.setTextSize(DisplaySize.font_size_y_26);
 
 //        new Thread(() -> {
 //                WeatherData weatherData = new WeatherData();
@@ -79,6 +86,12 @@ public class HomeFragment extends Fragment {
             intent.putExtra("id","0");
             myApplication.showLoadingScreen(getContext());
             startActivity(intent);
+
+//            Intent intent = new Intent(getActivity(), ContentsWorkspace.class);
+//            intent.putExtra("contents_name","none");
+//            intent.putExtra("id","0");
+//            myApplication.showLoadingScreen(getContext());
+//            startActivity(intent);
         });
 
         content_mode.setOnClickListener(v->{

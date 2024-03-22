@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.data.room.entity.Contents;
+import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.MainActivity;
@@ -39,7 +41,8 @@ public class ProblemActivity extends AppCompatActivity {
     int pos = 0;
 
     ConstraintLayout background;
-    LinearLayout title_background;
+    //LinearLayout title_background;
+    ConstraintLayout title_background;
     String chapter_step = "default";
     int diagram_img = R.drawable.all_diagram_img;
     String contents_name = "";
@@ -56,6 +59,8 @@ public class ProblemActivity extends AppCompatActivity {
         title_background = findViewById(R.id.problem_title_background);
 
         title = findViewById(R.id.title);
+        title.setTextSize(DisplaySize.font_size_y_36);
+
         title2 = findViewById(R.id.title2);
 
         back_btn = findViewById(R.id.back_btn);

@@ -64,6 +64,8 @@ public class Workspace {
      * @param factory The factory used to build blocks in this workspace.
      */
     public Workspace(Context context, BlocklyController controller, BlockFactory factory) {
+        Log.e("testtesttt", "Workspace");
+
         if (controller == null) {
             throw new IllegalArgumentException("BlocklyController may not be null.");
         }

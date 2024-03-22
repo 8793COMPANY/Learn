@@ -251,6 +251,8 @@ public class BlocklyController {
             };
         }
 
+
+
         @Override
         public boolean onBlockClicked(PendingDrag pendingDrag) {
             // TODO(#35): Mark block as focused / selected.
@@ -258,7 +260,7 @@ public class BlocklyController {
             //Log.e("mlist","not null");
 
                 Log.e("testtest", "block click!!");
-//                Log.e("testtest", "test1 : " + pendingDrag.getTouchedBlockView());
+                Log.e("testtest", "test1 : " + pendingDrag.getTouchedBlockView());
 //                Log.e("testtest", "test2 : " + pendingDrag.getDragGroup());
 //                Log.e("testtest", "test3 : " + pendingDrag.getRootDraggedBlock());
 //                Log.e("testtest", "test4 : " + pendingDrag.getRootDraggedBlockView());

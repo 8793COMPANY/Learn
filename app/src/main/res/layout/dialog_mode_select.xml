@@ -17,14 +17,16 @@
         app:layout_constraintWidth_percent="0.07"
         android:background="@drawable/radio_btn_selector"
         android:button="@null"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.15"></RadioButton>
+        app:layout_constraintVertical_bias="0.2">
+    </RadioButton>
 
     <TextView
+        android:id="@+id/default_mode_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="기본모드"
@@ -48,10 +50,11 @@
         app:layout_constraintTop_toBottomOf="@+id/default_mode"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintVertical_bias="0.07"></RadioButton>
 
     <TextView
+        android:id="@+id/jikco_mode_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="헬스키링"
@@ -98,6 +101,7 @@
         >
 
         <TextView
+            android:id="@+id/cancel_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sb_aggro_l"
@@ -123,6 +127,7 @@
         >
 
         <TextView
+            android:id="@+id/confirm_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/sb_aggro_l"

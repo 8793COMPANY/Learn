@@ -46,6 +46,7 @@ import com.learn4.data.room.dao.BlockDictionaryDao;
 import com.learn4.data.room.entity.BlockDictionary;
 import com.learn4.tutor.TutorCheck;
 import com.learn4.util.DataSetting;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.FileSharedPreferences;
 import com.learn4.util.NetworkConnection;
 import com.learn4.util.Application;
@@ -207,7 +208,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     private EditText editURL;
     EditText serial_input_box;
 
-    Button serial_send_btn, translate_btn, ai_test_btn;
+    Button serial_send_btn, translate_btn, ai_test_btn, change_workspace_btn;
     Button code_save_btn, code_load_btn;
     public Button  close_btn;
 
@@ -1862,6 +1863,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         block_method_btn = findViewById(R.id.block_method_btn);
         block_etc_btn = findViewById(R.id.block_etc_btn);
 
+        block_setup_btn.setTextSize(DisplaySize.font_size_y_25);
+        block_loop_btn.setTextSize(DisplaySize.font_size_y_25);
+        block_method_btn.setTextSize(DisplaySize.font_size_y_25);
+        block_etc_btn.setTextSize(DisplaySize.font_size_y_25);
+
         block_setup_btn.setOnClickListener(onClickListener);
         block_loop_btn.setOnClickListener(onClickListener);
         block_method_btn.setOnClickListener(onClickListener);
@@ -1963,14 +1969,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 //controller.recenterWorkspace();
 
                 //controller.testZoom2();
-                controller.testZoom();
+                //controller.testZoom();
                 touchCheck = true;
             } else {
                 touchCheck = false;
                 //controller.testZoom2();
 
-                WorkspacePoint workspacePoint = new WorkspacePoint();
-                workspacePoint.set(testX, testY);
+                //WorkspacePoint workspacePoint = new WorkspacePoint();
+                //workspacePoint.set(testX, testY);
 
 //                if (categoryData.getNtp() != null) {
 //                    controller.scrollToFocusedBlock(categoryData.getNtp());
@@ -2436,6 +2442,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         monitor_text = blockly_workspace.findViewById(R.id.monitor_text);
         translate_btn = blockly_workspace.findViewById(R.id.translate_btn);
         ai_test_btn = blockly_workspace.findViewById(R.id.ai_test_btn);
+
+        change_workspace_btn = blockly_workspace.findViewById(R.id.change_workspace_btn);
 
         code_load_btn = blockly_workspace.findViewById(R.id.code_load_btn);
         code_save_btn = blockly_workspace.findViewById(R.id.code_save_btn);
@@ -2923,6 +2931,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             serial_write(serial_input);
             imm.hideSoftInputFromWindow ( serial_input_box.getWindowToken (), 0 );
             Toast.makeText(this, "전송", Toast.LENGTH_SHORT).show();
+        });
+
+        change_workspace_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ContentsWorkspace.class);
+                startActivity(intent);
+            }
         });
 
 

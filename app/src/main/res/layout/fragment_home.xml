@@ -25,10 +25,6 @@
         app:layout_constraintRight_toRightOf="@+id/name_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="13dp"
-        android:autoSizeMaxTextSize="20dp"
-        android:autoSizeStepGranularity="2dp"
         app:layout_constraintHorizontal_bias="1">
     </TextView>
 
@@ -312,6 +308,7 @@
         android:background="@drawable/rounding_item_box_white">
 
         <TextView
+            android:id="@+id/mode_select_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

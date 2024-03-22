@@ -25,6 +25,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -104,6 +106,9 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        Log.e("testtesttt", "AbstractBlocklyActivity onCreateOptionsMenu on");
+
         if (mNavigationDrawer == null || !mDrawerLayout.isDrawerOpen(mNavigationDrawer)) {
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
@@ -127,6 +132,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Log.e("testtesttt", "AbstractBlocklyActivity onOptionsItemSelected on");
+
         int id = item.getItemId();
 
         if (id == R.id.action_save) {
@@ -231,6 +238,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         getController().onSaveSnapshot(outState);
+
+        Log.e("testtesttt", "AbstractBlocklyActivity onSaveInstanceState ononononononono");
     }
 
     /**
@@ -269,7 +278,26 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Log.e("test","asdasdasOnCreate");
+        Log.e("testtesttt", "AbstractBlocklyActivity onCreate ononononononono");
+        Log.e("testtesttt", "name : " + this.getSupportFragmentManager());
+        Log.e("testtesttt", "name : " + this.getSupportFragmentManager().findFragmentById(R.id.blockly_contents_workspace));
+        Log.e("testtesttt", "name : " + this.getSupportFragmentManager().findFragmentById(R.id.blockly_workspace));
+
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        Log.e("testtesttt", "AbstractBlocklyActivity : " + this.getSupportFragmentManager().getFragments().isEmpty());
+        Log.e("testtesttt", "AbstractBlocklyActivity : " + this.getSupportFragmentManager().getFragments().size());
+        //Log.e("testtesttt", "AbstractBlocklyActivity : " + this.getSupportFragmentManager().getFragments().get(0));
+
+        Log.e("testtesttt", "AbstractBlocklyActivity : " + fragmentManager);
+        Log.e("testtesttt", "AbstractBlocklyActivity : " + fragmentManager.getFragments().isEmpty());
+
+        //Log.e("testtesttt", "AbstractBlocklyActivity : " + this.getSupportFragmentManager().getFragments().get(0).getActivity().getLocalClassName());
+
+        //String[] activityName = this.getSupportFragmentManager().getFragments().get(0).getActivity().getLocalClassName().split("\\.");
+        //Log.e("testtesttt", "AbstractBlocklyActivity activity name : " + activityName[1]);
+
         onCreateActivityRootView();
+
         mBlocklyActivityHelper = onCreateActivityHelper();
         if (mBlocklyActivityHelper == null) {
             throw new IllegalStateException("BlocklyActivityHelper is null. "
@@ -299,6 +327,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * Create a {@link BlocklyActivityHelper} to use for this Activity.
      */
     public BlocklyActivityHelper onCreateActivityHelper() {
+        Log.e("testtesttt", "AbstractBlocklyActivity onCreateActivityHelper ononononononono!!");
+
         return new BlocklyActivityHelper(this, this.getSupportFragmentManager());
     }
 
@@ -307,6 +337,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mBlocklyActivityHelper.onStart();
+        Log.e("testtesttt", "AbstractBlocklyActivity onStart");
     }
 
     /** Propagate lifecycle event to BlocklyActivityHelper. */
@@ -315,6 +346,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
         super.onPause();
         mBlocklyActivityHelper.onPause();
         onAutosave();
+        Log.e("testtesttt", "AbstractBlocklyActivity onPause");
     }
 
     /** Propagate lifecycle event to BlocklyActivityHelper. */
@@ -333,6 +365,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
                 //mDrawerLayout.openDrawer(mNavigationDrawer);
             }
         }
+        Log.e("testtesttt", "AbstractBlocklyActivity onResume");
     }
 
     /** Propagate lifecycle event to BlocklyActivityHelper. */
@@ -340,6 +373,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mBlocklyActivityHelper.onStop();
+        Log.e("testtesttt", "AbstractBlocklyActivity onStop");
     }
 
     /** Propagate lifecycle event to BlocklyActivityHelper. */
@@ -347,6 +381,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         mBlocklyActivityHelper.onRestart();
+        Log.e("testtesttt", "AbstractBlocklyActivity onRestart");
     }
 
     /**
@@ -371,6 +406,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * {@link #onInitBlankWorkspace()}.
      */
     protected void onLoadInitialWorkspace() {
+        Log.e("testtesttt", "AbstractBlocklyActivity onLoadInitialWorkspace ononononononono");
         onInitBlankWorkspace();
         getController().closeFlyouts();
     }
@@ -553,6 +589,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * {@link #mDrawerLayout}, and adding the view returned by {@link #onCreateContentView}.
      */
     protected void onCreateActivityRootView() {
+        Log.e("testtesttt", "AbstractBlocklyActivity onCreateActivityRootView ononononononono");
+
         setContentView(R.layout.drawers_and_action_bar);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -573,6 +611,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
             } else {
                 content.setLayoutParams(lp);
             }
+            Log.e("testtesttt", "AbstractBlocklyActivity onCreateActivityRootView content null");
         }
 
         mNavigationDrawer = onCreateAppNavigationDrawer();
@@ -589,11 +628,15 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * @return The {@link View} constructed. If using a {@link Fragment}, return null.
      */
     protected View onCreateContentView(int containerId) {
+        Log.e("testtesttt", "AbstractBlocklyActivity onCreateContentView ononononononono");
+        Log.e("testtesttt", "containerId : " + containerId);
+
         View view = getLayoutInflater().inflate(R.layout.blockly_unified_workspace, null);
         return view;
     }
 
     /**
+     *
      * @return The {@link View} to be used for the navigation menu. Otherwise null.
      */
     protected View onCreateAppNavigationDrawer() {
@@ -692,6 +735,7 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
      * Reloads the toolbox contents using the path provided by {@link #getToolboxContentsXmlPath()}.
      */
     protected void reloadToolbox() {
+        Log.e("testtesttt", getToolboxContentsXmlPath());
         mBlocklyActivityHelper.reloadToolbox(getToolboxContentsXmlPath());
     }
 

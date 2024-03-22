@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.learn4.R;
 import com.learn4.data.dto.Subclass;
 import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.MySharedPreferences;
 
 import org.w3c.dom.Text;
@@ -141,8 +142,12 @@ public class Step5 extends Fragment {
         TextView learning_objective = root.findViewById(R.id.learning_objective);
         TextView contents_condition = root.findViewById(R.id.contents_condition);
 
-        String [] number = chapter_id.split("-");
+        title.setTextSize(DisplaySize.font_size_y_38);
+        item_difficulty.setTextSize(DisplaySize.font_size_y_31);
+        learning_objective.setTextSize(DisplaySize.font_size_y_32);
+        contents_condition.setTextSize(DisplaySize.font_size_y_32);
 
+        String [] number = chapter_id.split("-");
 
         if (MySharedPreferences.getInt(getContext(),contents_name+" MAX") < 1) {
             MySharedPreferences.setInt(getContext(), contents_name+" MAX", 1);

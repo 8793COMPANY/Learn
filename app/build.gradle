@@ -114,4 +114,7 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
 
+    //ShowCaseView
+    implementation 'com.github.mreram:showcaseview:1.4.1'
+
 }

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 import com.learn4.view.problem.basic.ProblemActivity;
@@ -46,7 +48,14 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
         // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
         // return 인자는 ViewHolder 입니다.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chapter_content_layout, parent, false);
+
+        Log.e("testwidth", view.getLayoutParams().width+"");
+        Log.e("testwidth", this.width+"");
+
         view.getLayoutParams().width = width;
+
+        Log.e("testwidth", view.getLayoutParams().width+"");
+
         return new ItemViewHolder(view);
     }
 
@@ -115,6 +124,9 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
             problem_group = itemView.findViewById(R.id.problem_group);
             progressBar = itemView.findViewById(R.id.progress);
             lock_check = itemView.findViewById(R.id.lock_check);
+
+            chapter_content_title.setTextSize(DisplaySize.font_size_y_30);
+            percentage.setTextSize(DisplaySize.font_size_y_22);
         }
 
         void onBind(Subject contents) {
@@ -122,7 +134,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ItemView
             chapter_content_title.setText(contents.getTitle());
             percentage.setText(contents.getPercentage()*20+"%");
             chapter_content_img.setBackgroundResource(contents.getImage());
-            problem_group.setBackgroundResource(contents.getGroup());
+            problem_group.setImageResource(contents.getGroup());
             progressBar.setProgress(contents.getPercentage()*20);
             if (contents.open)
                 lock_check.setBackgroundResource(0);

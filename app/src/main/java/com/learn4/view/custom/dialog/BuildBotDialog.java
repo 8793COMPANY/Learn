@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.learn4.R;
+import com.learn4.util.Application;
 
 
 public class BuildBotDialog extends Dialog {
@@ -66,6 +67,11 @@ public class BuildBotDialog extends Dialog {
         code_save_btn = findViewById(R.id.code_save_btn);
         code_load_btn = findViewById(R.id.code_load_btn);
         cancel_btn2 = findViewById(R.id.cancel_text2);
+
+//        learning_goal_btn.setTextSize((float) (Application.standardSize_Y / 24));
+//        exercise_btn.setTextSize((float) (Application.standardSize_Y / 24));
+//        code_save_btn.setTextSize((float) (Application.standardSize_Y / 24));
+//        code_load_btn.setTextSize((float) (Application.standardSize_Y / 24));
 
         //confirm_btn.setOnClickListener(confirm_listener);
         //cancel_btn.setOnClickListener(cancel_listener);

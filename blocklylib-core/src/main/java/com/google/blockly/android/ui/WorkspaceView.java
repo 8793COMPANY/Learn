@@ -58,6 +58,8 @@ public class WorkspaceView extends NonPropagatingViewGroup {
         super(context, attrs, defStyleAttr);
         float touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         mTouchSlop = touchSlop;
+
+        Log.e("testtesttt", "WorkspaceView");
     }
 
     @Override

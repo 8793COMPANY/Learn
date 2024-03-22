@@ -17,6 +17,7 @@ import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.data.room.entity.Contents;
 import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.R;
 
@@ -149,6 +150,11 @@ public class Step2 extends Fragment {
         RadioButton module_btn = view.findViewById(R.id.module_btn);
         RadioButton bigboard_btn = view.findViewById(R.id.bigboard_btn);
         RadioButton zikco_btn = view.findViewById(R.id.zikco_btn);
+
+        module_btn.setTextSize(DisplaySize.font_size_y_27);
+        bigboard_btn.setTextSize(DisplaySize.font_size_y_27);
+        zikco_btn.setTextSize(DisplaySize.font_size_y_27);
+
 //        bigboard_btn.setChecked(true);
         zikco_btn.setChecked(true);
 

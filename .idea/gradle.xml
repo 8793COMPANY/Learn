@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/blocklylib-core" />
             <option value="$PROJECT_DIR$/blocklylib-vertical" />
+            <option value="$PROJECT_DIR$/showcaseviewlib" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -3,8 +3,7 @@ package com.learn4.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class
-MySharedPreferences {
+public class MySharedPreferences {
     public static final String PREFERENCES_NAME = "contents";
 
 

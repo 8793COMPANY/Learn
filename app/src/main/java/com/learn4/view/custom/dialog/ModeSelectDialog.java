@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.learn4.R;
+import com.learn4.util.DisplaySize;
 
 
 public class ModeSelectDialog extends Dialog {
@@ -28,6 +29,8 @@ public class ModeSelectDialog extends Dialog {
 
     public TextView Body;
     public TextView Title;
+
+    TextView default_mode_text, jikco_mode_text, confirm_text, cancel_text;
 
     public RadioButton default_mode, jikco_mode;
 
@@ -59,10 +62,18 @@ public class ModeSelectDialog extends Dialog {
         confirm_btn =findViewById(R.id.confirm);
         cancel_btn = findViewById(R.id.cancel);
 
-
         default_mode = findViewById(R.id.default_mode);
         jikco_mode = findViewById(R.id.jikco_mode);
 
+        default_mode_text = findViewById(R.id.default_mode_text);
+        jikco_mode_text = findViewById(R.id.jikco_mode_text);
+        confirm_text = findViewById(R.id.confirm_text);
+        cancel_text = findViewById(R.id.cancel_text);
+
+        default_mode_text.setTextSize(DisplaySize.font_size_y_29);
+        jikco_mode_text.setTextSize(DisplaySize.font_size_y_29);
+        confirm_text.setTextSize(DisplaySize.font_size_y_28);
+        cancel_text.setTextSize(DisplaySize.font_size_y_28);
 
         if (mode == 1){
             default_mode.setChecked(true);

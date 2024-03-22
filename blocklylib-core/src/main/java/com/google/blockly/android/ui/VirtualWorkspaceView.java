@@ -30,6 +30,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.google.blockly.android.R;
 import com.google.blockly.android.ZoomBehavior;
 import com.google.blockly.model.WorkspacePoint;
+import com.google.blockly.utils.TestApplication;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -101,6 +102,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
+
+        Log.e("testtesttt", "VirtualWorkspaceView onFinishInflate");
+        Log.e("testtesttt", TestApplication.getWorkspace_name());
 
         mWorkspaceView = (WorkspaceView) findViewById(R.id.workspace);
         // Setting the child view's pivot point to (0,0) means scaling leaves top-left corner in
@@ -209,8 +213,11 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
      * This is called when the "reset view" button is clicked, or when
      * {@link #mResetViewPending} is set.
      */
+    // 워크스페이스뷰 초기화
     public void resetView() {
         // Reset scrolling state.
+        Log.e("testtesttt", "resetView");
+
         mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
 
         Log.e("testtest", "start x : " + mPanningStart.x);
@@ -294,6 +301,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         if ( ntp != null ) {
             scrollTo( (int)( ntp.x -50 ) , (int)( ntp.y ) -100);
         }
+
     }
 
     public Bitmap captureView() {
@@ -358,6 +366,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
      *
      * @return True if a zoom was changed, increased. Otherwise false.
      */
+    // 워크스페이스뷰 줌(확대)
     public boolean zoomIn() {
         if (mCurrentZoomScaleIndex < ZOOM_SCALES.length - 1) {
             updateScaleStep(mCurrentZoomScaleIndex + 1);
@@ -371,6 +380,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
      *
      * @return True if a zoom was changed, decreased. Otherwise false.
      */
+    // 워크스페이스뷰 줌(축소)
     public boolean zoomOut() {
 
         if (mScrollable && mCurrentZoomScaleIndex > 0) {
@@ -400,7 +410,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     // 워크스페이스 터치시 들어오는 또다른 메소드
     public boolean onTouchEvent(MotionEvent event) {
 
-        Log.e("testtest", "onTouchEvent");
+        Log.e("testtest", "onTouchEvent!!");
 
         if(mScalable && mScaleGestureDetector != null) {
             mScaleGestureDetector.onTouchEvent(event);
@@ -425,7 +435,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
                             (int) event.getX(pointerIdx),
                             (int) event.getY(pointerIdx));
                     mOriginalScrollX = getScrollX();
-                    mOriginalScrollY = getScrollY();
+                    mOriginalScrollY =  getScrollY();
                 }
                 return true;
             }
@@ -533,6 +543,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
      * @param x The horizontal scroll position in pixel units of this view.
      * @param y The vertical scroll position in pixel units of this view.
      */
+    // 워크스페이스뷰 위치 지정 메소드
     @Override
     public void scrollTo(int x, int y) {
         if (!mScrollable) {
@@ -714,6 +725,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         return getScrollY() - (viewScaledBlockBounds.top - computeVerticalScrollExtent()) / 2;
     }
 
+    // 워크스페이스뷰 줌(스케일 지정)
     private void updateScaleStep(int newScaleIndex) {
         if (newScaleIndex != mCurrentZoomScaleIndex) {
            float oldViewScale = mViewScale;

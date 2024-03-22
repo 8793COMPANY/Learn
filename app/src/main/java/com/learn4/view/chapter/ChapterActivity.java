@@ -11,11 +11,13 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.learn4.data.room.AppDatabase;
 import com.learn4.data.room.dao.ContentsDao;
 import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.util.MySharedPreferences;
 import com.learn4.view.custom.dialog.ContinueDialog;
 import com.learn4.view.recyclerview.RecyclerDecoration_Height;
@@ -42,16 +44,21 @@ public class ChapterActivity extends AppCompatActivity {
 
     String basic_problem = "";
 
+    TextView contents_mode_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chapter);
 
+        contents_mode_text = findViewById(R.id.contents_mode_text);
+        contents_mode_text.setTextSize(DisplaySize.font_size_y_28);
+
         String chapter_id = getIntent().getStringExtra("id");
 
         DisplayMetrics display = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(display);
-        int width = (int)(display.widthPixels / 4);
+        int width = (int)(display.widthPixels / 3.9);
 
         db = AppDatabase.getInstance(this);
         contentsDao = db.contentsDao();
@@ -109,7 +116,8 @@ public class ChapterActivity extends AppCompatActivity {
 
         chapter_list.setAdapter(chapterAdapter);
         chapter_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        RecyclerDecoration_Height decoration_height = new RecyclerDecoration_Height(100);
+//        RecyclerDecoration_Height decoration_height = new RecyclerDecoration_Height(100);
+        RecyclerDecoration_Height decoration_height = new RecyclerDecoration_Height((int) (Application.standardSize_X / 12));
         chapter_list.addItemDecoration(decoration_height);
 
         back_btn = findViewById(R.id.back_btn);

@@ -1,12 +1,15 @@
 package com.learn4.util;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.util.Log;
+import android.view.Display;
 import android.widget.Toast;
 
 import com.learn4.R;
@@ -61,6 +64,9 @@ public class Application extends android.app.Application  {
         return instance;
     }
 
+    public static int standardSize_X, standardSize_Y;
+    public static float density;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -97,8 +103,6 @@ public class Application extends android.app.Application  {
         //log 수집
 //        logHelper = new LogHelper();
 //        Thread.setDefaultUncaughtExceptionHandler(logHelper);
-
-
     }
 
 
@@ -214,6 +218,23 @@ public class Application extends android.app.Application  {
         }
     }
 
+    public static Point getScreenSize(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
 
+        return size;
+    }
+
+    public static void getStandardSize(Activity activity) {
+        Point ScreenSize = getScreenSize(activity);
+        density  = activity.getResources().getDisplayMetrics().density;
+
+        standardSize_X = (int) (ScreenSize.x / density);
+        standardSize_Y = (int) (ScreenSize.y / density);
+
+        Log.e("testtest", "ScreenSize x : " + standardSize_X);
+        Log.e("testtest", "ScreenSize y : " + standardSize_Y);
+    }
 
 }

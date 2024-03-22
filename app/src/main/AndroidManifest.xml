@@ -33,8 +33,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ContentsWorkspace"
-            android:exported="false">
+            android:name=".view.ContentsWorkspace"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

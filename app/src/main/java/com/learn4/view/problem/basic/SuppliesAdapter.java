@@ -23,6 +23,8 @@ public class SuppliesAdapter extends RecyclerView.Adapter<SuppliesAdapter.Custom
     private ArrayList<Supplies> supplies;
     private LayoutInflater inflater;
 
+    private int width = 0;
+
     public interface OnItemClickEventListener {
         void onItemClick(int position, Boolean click);
     }
@@ -33,10 +35,11 @@ public class SuppliesAdapter extends RecyclerView.Adapter<SuppliesAdapter.Custom
         mItemClickListener = a_listener;
     }
 
-    public SuppliesAdapter(Context context, ArrayList<Supplies> supplies) {
+    public SuppliesAdapter(Context context, ArrayList<Supplies> supplies, int width) {
         this.context = context;
         this.supplies = supplies;
         this.inflater = LayoutInflater.from(context);
+        this.width = width;
     }
 
     @NonNull
@@ -45,15 +48,17 @@ public class SuppliesAdapter extends RecyclerView.Adapter<SuppliesAdapter.Custom
         View view;
         view = inflater.inflate(R.layout.supplies_itemview, parent, false);
 
+        view.getLayoutParams().width = width;
+
         return new CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 //        Chapter chapter = chapters.get(position);
-        ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
-        layoutParams.width = 520;
-        holder.itemView.requestLayout();
+//        ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams)holder.itemView.getLayoutParams();
+//        layoutParams.width = 520;
+//        holder.itemView.requestLayout();
 
         holder.aImg.setBackgroundResource(supplies.get(position).getImg());
 

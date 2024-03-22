@@ -33,6 +33,7 @@ import androidx.core.view.ViewCompat;
 import android.util.Log;
 import android.util.Pair;
 import android.view.DragEvent;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -485,6 +486,11 @@ public class Dragger {
     @VisibleForTesting
     boolean onTouchBlockImpl(@DragMode int dragMode, DragHandler dragHandler, BlockView touchedView,
                              MotionEvent event, boolean interceptMode) {
+
+        Log.e("testtest", "touch touch");
+
+
+
         if (mWithinOnTouchBlockImpl) {
             throw new IllegalStateException(
                     "onTouchBlockImpl() called recursively. Make sure OnDragHandler." +
@@ -509,6 +515,10 @@ public class Dragger {
                     + (interceptMode ? " intercept" : " direct")
                     + "\n\t" + event
                     + "\n\tMatches pending? " + matchesPending);
+
+            Log.e("testtest", "long touch");
+
+
 
             mMainHandler.removeCallbacks(mLogPending);  // Only call once per event 'tick'
             mMainHandler.post(mLogPending);
@@ -565,6 +575,8 @@ public class Dragger {
                 if (!mPendingDrag.isDragging()) {
                     if (!interceptMode && mPendingDrag.isClick()) {
                         dragHandler.onBlockClicked(mPendingDrag);
+
+
                     }
                     finishDragging(FINISH_BEHAVIOR_REVERT);
                 }

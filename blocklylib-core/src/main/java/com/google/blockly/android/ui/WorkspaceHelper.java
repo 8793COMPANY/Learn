@@ -113,6 +113,8 @@ public class WorkspaceHelper {
      * @param context The {@link Context} of the fragment or activity this lives in.
      */
     public WorkspaceHelper(Context context) {
+        Log.e("testtesttt", "WorkspaceHelper");
+
         mContext = context;
         mZoomBehavior = ZoomBehavior.loadFromTheme(context);
 
