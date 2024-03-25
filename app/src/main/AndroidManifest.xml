@@ -10,18 +10,15 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="true" />
-
 
     <application
         android:name=".util.Application"
@@ -35,20 +32,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".view.contents_mode.RenuwalContentsActivity"
+        <activity
+            android:name=".view.contents_mode.view.ContentsBasicActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.contents_mode.RenuwalContentsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".view.simulator.TeachableActivity"
-            android:exported="false"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.dictionary.BlockDictionaryActivity2"
@@ -87,16 +90,13 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".DroneActivity"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true">
-        </activity>
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".view.onboarding.IntroActivity"
             android:exported="true"
             android:label="배울래?"
-            android:screenOrientation="sensorLandscape">
-
-        </activity>
+            android:screenOrientation="sensorLandscape"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -111,9 +111,8 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.MainActivity"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true">
-        </activity>
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"></activity>
     </application>
 
 </manifest>

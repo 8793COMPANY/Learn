@@ -1,5 +1,6 @@
 package com.learn4.view.contents_mode;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,7 +34,9 @@ import com.learn4.util.DataSetting;
 import com.learn4.view.MainActivity;
 import com.learn4.view.contents.LevelAdapter;
 import com.learn4.view.contents_mode.adapter.LevelTestAdapter;
+import com.learn4.view.contents_mode.view.ContentsBasicActivity;
 import com.learn4.view.custom.dialog.ModeSelectDialog;
+import com.learn4.view.mode_select.ModeSelect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +51,7 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
     private View decorView;
     private int	uiOption;
 
-    Button back_btn, contents_mode_select_btn;
+    Button back_btn, contents_mode_select_btn, contents_mode_move_btn;
 
     MediaPlayer mediaPlayer;
 
@@ -159,6 +162,16 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         rvSubject = findViewById(R.id.level_list);
         back_btn = findViewById(R.id.back_btn);
         contents_mode_select_btn= findViewById(R.id.contents_mode_select_btn);
+
+        contents_mode_move_btn = findViewById(R.id.contents_mode_move_btn);
+        contents_mode_move_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ContentsBasicActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 

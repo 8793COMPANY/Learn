@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.contents_mode.view.ContentsBasicActivity"
+    android:background="#ffffff">
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/problem_back_btn"
+        app:layout_constraintTop_toTopOf="@+id/guide_top"
+        app:layout_constraintBottom_toBottomOf="@+id/guide_bottom"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@+id/guide_right"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.055"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0">
+    </Button>
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/problem_next_btn"
+        app:layout_constraintTop_toTopOf="@+id/guide_top"
+        app:layout_constraintBottom_toBottomOf="@+id/guide_bottom"
+        app:layout_constraintStart_toStartOf="@+id/guide_left"
+        app:layout_constraintEnd_toEndOf="@+id/guide_right"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.055"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1">
+    </Button>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sb_aggro_m"
+        android:textColor="#af6401"
+        android:text="목표 영상"
+        android:textSize="36sp"
+        android:paddingTop="5dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toTopOf="@id/back_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/back_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/button_group"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintHeight_percent="0.083"
+        app:layout_constraintWidth_percent="0.367"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toTopOf="@+id/back_btn"
+        app:layout_constraintBottom_toBottomOf="@id/back_btn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/guide_right">
+
+        <Button
+            android:id="@+id/upload_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/block_category_btn_on"
+            android:button="@null"
+            android:gravity="center"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textColor="#ffffff"
+            android:textSize="28dp"
+            android:text="업로드" />
+
+        <Button
+            android:id="@+id/end_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/block_category_btn_off"
+            android:button="@null"
+            android:gravity="center"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textColor="#b45611"
+            android:textSize="28dp"
+            android:text="나가기" />
+
+        <Button
+            android:id="@+id/next_level_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:paddingTop="5dp"
+            android:background="@drawable/block_category_btn_off"
+            android:button="@null"
+            android:gravity="center"
+            android:fontFamily="@font/sb_aggro_l"
+            android:textColor="#b45611"
+            android:textSize="28dp"
+            android:text="다음단계" />
+
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.86"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/back_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.03">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.97">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.027">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.96">
+    </androidx.constraintlayout.widget.Guideline>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

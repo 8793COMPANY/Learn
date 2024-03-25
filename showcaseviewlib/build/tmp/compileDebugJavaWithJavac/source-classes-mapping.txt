@@ -1,0 +1,20 @@
+smartdevelop/ir/eram/showcaseviewlib/config/Gravity.java
+ smartdevelop.ir.eram.showcaseviewlib.config.Gravity
+smartdevelop/ir/eram/showcaseviewlib/config/DismissType.java
+ smartdevelop.ir.eram.showcaseviewlib.config.DismissType
+smartdevelop/ir/eram/showcaseviewlib/listener/GuideListener.java
+ smartdevelop.ir.eram.showcaseviewlib.listener.GuideListener
+smartdevelop/ir/eram/showcaseviewlib/config/PointerType.java
+ smartdevelop.ir.eram.showcaseviewlib.config.PointerType
+smartdevelop/ir/eram/showcaseviewlib/Targetable.java
+ smartdevelop.ir.eram.showcaseviewlib.Targetable
+smartdevelop/ir/eram/showcaseviewlib/BuildConfig.java
+ smartdevelop.ir.eram.showcaseviewlib.BuildConfig
+smartdevelop/ir/eram/showcaseviewlib/GuideMessageView.java
+ smartdevelop.ir.eram.showcaseviewlib.GuideMessageView
+smartdevelop/ir/eram/showcaseviewlib/GuideView.java
+ smartdevelop.ir.eram.showcaseviewlib.GuideView
+ smartdevelop.ir.eram.showcaseviewlib.GuideView$1
+ smartdevelop.ir.eram.showcaseviewlib.GuideView$2
+ smartdevelop.ir.eram.showcaseviewlib.GuideView$3
+ smartdevelop.ir.eram.showcaseviewlib.GuideView$Builder
