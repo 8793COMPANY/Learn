@@ -1,3 +1,0 @@
-int anim fade_in 0x0
-int anim fade_out 0x0
-int string app_name 0x0

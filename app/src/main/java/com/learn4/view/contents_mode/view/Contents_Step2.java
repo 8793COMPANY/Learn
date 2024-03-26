@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.learn4.R;
+import com.learn4.util.DisplaySize;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +27,8 @@ public class Contents_Step2 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    TextView title, item_difficulty, learning_objective, contents_condition;
 
     public Contents_Step2() {
         // Required empty public constructor
@@ -61,6 +65,18 @@ public class Contents_Step2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contents__step2, container, false);
+        View view = inflater.inflate(R.layout.fragment_contents__step2, container, false);
+
+        title = view.findViewById(R.id.title);
+        item_difficulty = view.findViewById(R.id.item_difficulty);
+        learning_objective = view.findViewById(R.id.learning_objective);
+        contents_condition = view.findViewById(R.id.contents_condition);
+
+        title.setTextSize(DisplaySize.font_size_y_38);
+        item_difficulty.setTextSize(DisplaySize.font_size_y_31);
+        learning_objective.setTextSize(DisplaySize.font_size_y_32);
+        contents_condition.setTextSize(DisplaySize.font_size_y_32);
+
+        return view;
     }
 }

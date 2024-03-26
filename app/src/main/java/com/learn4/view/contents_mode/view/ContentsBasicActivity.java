@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.learn4.R;
+import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 import com.learn4.view.problem.basic.Step1;
 import com.learn4.view.problem.basic.Step2;
 import com.learn4.view.problem.basic.Step5;
@@ -37,6 +39,14 @@ public class ContentsBasicActivity extends AppCompatActivity {
         end_btn = findViewById(R.id.end_btn);
         next_level_btn = findViewById(R.id.next_level_btn);
         button_group = findViewById(R.id.button_group);
+
+        // 글씨 크기 조정을 위한 기준 조정
+        Application.getStandardSize(this);
+
+        title.setTextSize(DisplaySize.font_size_y_36);
+        upload_btn.setTextSize(DisplaySize.font_size_y_28);
+        end_btn.setTextSize(DisplaySize.font_size_y_28);
+        next_level_btn.setTextSize(DisplaySize.font_size_y_28);
 
         hide_soft_key();
         replaceFragment(pos);

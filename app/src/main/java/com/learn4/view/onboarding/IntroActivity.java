@@ -12,6 +12,7 @@ import android.view.View;
 import com.learn4.R;
 import com.learn4.WeatherData;
 import com.learn4.data.dto.WeatherEx;
+import com.learn4.util.Application;
 import com.learn4.util.DataSetting;
 import com.learn4.view.mode_select.ModeSelect;
 
@@ -30,6 +31,9 @@ public class IntroActivity extends AppCompatActivity {
         Handler handler = new Handler();
 
         Log.e("time check", DataSetting.getInstance(this).getTime());
+
+        // 글씨 크기 조정을 위한 기준 조정
+        Application.getStandardSize(this);
 
 
         // TODO: 날씨블록 체크

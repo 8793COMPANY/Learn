@@ -45,7 +45,6 @@
         android:fontFamily="@font/sb_aggro_m"
         android:textColor="#af6401"
         android:text="목표 영상"
-        android:textSize="36sp"
         android:paddingTop="5dp"
         android:gravity="center_horizontal"
         app:layout_constraintTop_toTopOf="@id/back_btn"
@@ -73,8 +72,9 @@
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:paddingTop="5dp"
-            android:background="@drawable/block_category_btn_on"
+            android:background="@drawable/contents_mode_button_radius_on"
             android:button="@null"
+            android:stateListAnimator="@null"
             android:gravity="center"
             android:fontFamily="@font/sb_aggro_l"
             android:textColor="#ffffff"
@@ -88,8 +88,9 @@
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:paddingTop="5dp"
-            android:background="@drawable/block_category_btn_off"
+            android:background="@drawable/contents_mode_button_radius_off"
             android:button="@null"
+            android:stateListAnimator="@null"
             android:gravity="center"
             android:fontFamily="@font/sb_aggro_l"
             android:textColor="#b45611"
@@ -103,13 +104,14 @@
             android:layout_weight="1"
             android:layout_marginLeft="5dp"
             android:paddingTop="5dp"
-            android:background="@drawable/block_category_btn_off"
+            android:background="@drawable/contents_mode_button_radius_off"
             android:button="@null"
+            android:stateListAnimator="@null"
             android:gravity="center"
             android:fontFamily="@font/sb_aggro_l"
             android:textColor="#b45611"
             android:textSize="28dp"
-            android:text="다음단계" />
+            android:text="다음 단계" />
 
     </LinearLayout>
 
