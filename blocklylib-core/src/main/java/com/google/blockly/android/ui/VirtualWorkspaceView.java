@@ -216,38 +216,67 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     // 워크스페이스뷰 초기화
     public void resetView() {
         // Reset scrolling state.
-        Log.e("testtesttt", "resetView");
+        Log.e("testtesttt", "resetView!!");
+        Log.e("testtesttt", TestApplication.getWorkspace_name());
 
-        mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
+        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+            // Reset scrolling state.
+            Log.e("testtesttt", "resetView_contents");
 
-        Log.e("testtest", "start x : " + mPanningStart.x);
-        Log.e("testtest", "start y : " + mPanningStart.y);
+            // Reset scrolling state.
+            mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
+            mPanningStart.set(0,0);
+            mOriginalScrollX = 0;
+            mOriginalScrollY = 0;
 
-        mPanningStart.set(0,0);
-        mOriginalScrollX = 0;
-        mOriginalScrollY = 0;
+            updateScaleStep(INIT_ZOOM_SCALES_INDEX);
 
-        // 원래 코드
-        //updateScaleStep(INIT_ZOOM_SCALES_INDEX);
-        updateScaleStep(2);
-
-        final Rect blocksBoundingBox = getViewScaledBlockBounds();
-        final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
-        if (mScrollable) {
-            final int margin = mGridRenderer.getGridSpacing() / 2;
-            final int scrollToY = blocksBoundingBox.top - margin;
-            // 여기가 워크 스페이스 좌표 설정하는 곳
-            if (useRtl) {
-                // scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
-                scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+            final Rect blocksBoundingBox = getViewScaledBlockBounds();
+            final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
+            if (mScrollable) {
+                final int margin = mGridRenderer.getGridSpacing() / 2;
+                final int scrollToY = blocksBoundingBox.top - margin;
+                if (useRtl) {
+                    scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, scrollToY);
+                } else {
+                    scrollTo(blocksBoundingBox.left - margin, scrollToY);
+                }
             } else {
-                //scrollTo(blocksBoundingBox.left - margin, -200);
-                scrollTo(blocksBoundingBox.left - margin, -200);
+                // Reset top leading corner to 0,0 when
+                scrollTo(useRtl ? -getMeasuredWidth() : 0, 0);
             }
         } else {
-            // Reset top leading corner to 0,0 when
-            //scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
-            scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
+            mPanningPointerId = MotionEvent.INVALID_POINTER_ID;
+
+            Log.e("testtest", "start x : " + mPanningStart.x);
+            Log.e("testtest", "start y : " + mPanningStart.y);
+
+            mPanningStart.set(0,0);
+            mOriginalScrollX = 0;
+            mOriginalScrollY = 0;
+
+            // 원래 코드
+            //updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+            updateScaleStep(2);
+
+            final Rect blocksBoundingBox = getViewScaledBlockBounds();
+            final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
+            if (mScrollable) {
+                final int margin = mGridRenderer.getGridSpacing() / 2;
+                final int scrollToY = blocksBoundingBox.top - margin;
+                // 여기가 워크 스페이스 좌표 설정하는 곳
+                if (useRtl) {
+                    // scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+                    scrollTo(blocksBoundingBox.right - getMeasuredWidth() + margin, -200);
+                } else {
+                    //scrollTo(blocksBoundingBox.left - margin, -200);
+                    scrollTo(blocksBoundingBox.left - margin, -200);
+                }
+            } else {
+                // Reset top leading corner to 0,0 when
+                //scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
+                scrollTo(useRtl ? -getMeasuredWidth() : 0, -200);
+            }
         }
     }
 
@@ -342,6 +371,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         setHorizontalScrollBarEnabled(mScrollable);
         setVerticalScrollBarEnabled(mScrollable);
         if (!mScrollable) {
+            Log.e("testttest", "setScrollable");
             resetView();
         }
     }

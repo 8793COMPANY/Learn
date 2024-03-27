@@ -81,6 +81,7 @@ import com.google.blockly.model.Workspace;
 import com.google.blockly.model.WorkspacePoint;
 import com.google.blockly.model.mutator.AbstractProcedureMutator;
 import com.google.blockly.utils.BlockLoadingException;
+import com.google.blockly.utils.TestApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

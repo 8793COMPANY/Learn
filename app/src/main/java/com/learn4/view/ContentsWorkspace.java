@@ -64,22 +64,10 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
         Log.e("testtesttt", TestApplication.getWorkspace_name());
 
         // 하단 소프트키 숨기기
-        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
-        int newUiOptions = uiOptions;
-        boolean isImmersiveModeEnabled = ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
-        if (isImmersiveModeEnabled) {
-            Log.i("Is on?", "Turning immersive mode mode off. ");
-        } else {
-            Log.i("Is on?", "Turning immersive mode mode on.");
-        }
-        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
-        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
+        hide_soft_key();
 
         controller = getController();
-
-        controller.recenterWorkspace();
+        //controller.recenterWorkspace();
     }
 
     @Override
@@ -194,6 +182,21 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
 
         standardSize_X = (int) (ScreenSize.x / density);
         standardSize_Y = (int) (ScreenSize.y / density);
+    }
+
+    public void hide_soft_key() {
+        int uiOptions = getWindow().getDecorView().getSystemUiVisibility();
+        int newUiOptions = uiOptions;
+        boolean isImmersiveModeEnabled = ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
+        if (isImmersiveModeEnabled) {
+            Log.i("Is on?", "Turning immersive mode mode off. ");
+        } else {
+            Log.i("Is on?", "Turning immersive mode mode on.");
+        }
+        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
 }

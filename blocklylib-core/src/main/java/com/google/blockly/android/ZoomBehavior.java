@@ -17,6 +17,9 @@ package com.google.blockly.android;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.util.Log;
+
+import com.google.blockly.utils.TestApplication;
 
 /**
  * ZoomBehavior captures the behavior of pan, zoom, and the presence of zoom buttons.
@@ -40,6 +43,8 @@ public final class ZoomBehavior {
 
     private int mBehavior = DEFAULT_BEHAVIOR;
 
+    private static int attrValue;
+
     public static ZoomBehavior loadFromTheme(Context context) {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
@@ -47,8 +52,17 @@ public final class ZoomBehavior {
                 R.styleable.BlocklyWorkspaceTheme,
                 0, 0);
         try {
-            int attrValue =
-                    a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, DEFAULT_BEHAVIOR);
+            Log.e("testtest", "ZoomBehavior");
+
+            if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                attrValue =
+//                        a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, BEHAVIOR_ZOOM_BUTTONS_ONLY);
+                        a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, BEHAVIOR_FIXED);
+            } else {
+                attrValue =
+                        a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, DEFAULT_BEHAVIOR);
+            }
+
             return new ZoomBehavior(attrValue);
         } finally {
             a.recycle();

@@ -230,33 +230,33 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
             if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
                 Log.e("testtest", "ContentsWorkspace long press");
 
-                new BubbleShowCaseBuilder((Activity) mContext)
-                        .title("test")
-                        .description("test2")
-                        .arrowPosition(BubbleShowCase.ArrowPosition.LEFT)
-                        .backgroundColor(Color.WHITE)
-                        .textColor(Color.BLACK)
-
-                        .listener(new BubbleShowCaseListener() {
-                            @Override
-                            public void onTargetClick(BubbleShowCase bubbleShowCase) {
-                            }
-
-                            @Override
-                            public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
-                            }
-
-                            @Override
-                            public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
-                                bubbleShowCase.dismiss();
-                            }
-
-                            @Override
-                            public void onBubbleClick(BubbleShowCase bubbleShowCase) {
-                            }
-                        })
-                        .targetView(mView)
-                        .show();
+//                new BubbleShowCaseBuilder((Activity) mContext)
+//                        .title("test")
+//                        .description("test2")
+//                        .arrowPosition(BubbleShowCase.ArrowPosition.LEFT)
+//                        .backgroundColor(Color.WHITE)
+//                        .textColor(Color.BLACK)
+//
+//                        .listener(new BubbleShowCaseListener() {
+//                            @Override
+//                            public void onTargetClick(BubbleShowCase bubbleShowCase) {
+//                            }
+//
+//                            @Override
+//                            public void onCloseActionImageClick(BubbleShowCase bubbleShowCase) {
+//                            }
+//
+//                            @Override
+//                            public void onBackgroundDimClick(BubbleShowCase bubbleShowCase) {
+//                                bubbleShowCase.dismiss();
+//                            }
+//
+//                            @Override
+//                            public void onBubbleClick(BubbleShowCase bubbleShowCase) {
+//                            }
+//                        })
+//                        .targetView(mView)
+//                        .show();
 
 
                 new GuideView.Builder(mContext)
