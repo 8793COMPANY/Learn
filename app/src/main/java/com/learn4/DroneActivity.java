@@ -1166,6 +1166,18 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                 checkSum ^= 0x01;
             }
             temp[10] = checkSum;
+            Log.e("hello temp 0", temp[0]+"");
+            Log.e("hello temp 1", temp[1]+"");
+            Log.e("hello temp 2", temp[2]+"");
+            Log.e("hello temp 3", temp[3]+"");
+            Log.e("hello temp 4", temp[4]+"");
+            Log.e("hello temp 5", temp[5]+"");
+            Log.e("hello temp 6", temp[6]+"");
+            Log.e("hello temp 7", temp[7]+"");
+            Log.e("hello temp 8", temp[8]+"");
+            Log.e("hello temp 9", temp[9]+"");
+            Log.e("hello temp 10", temp[10]+"");
+            Log.e("hello temp 10", "--------------------------------");
             DatagramPacket packet = new DatagramPacket(temp, temp.length, serverAddr, port);
             socket.send(packet);
         } catch (Exception e) {

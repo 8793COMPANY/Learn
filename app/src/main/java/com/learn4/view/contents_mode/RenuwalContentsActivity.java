@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.DefaultBlocks;
+import com.google.blockly.utils.BlockLoadingException;
+import com.google.blockly.utils.BlocklyXmlHelper;
 import com.learn4.R;
 import com.learn4.data.dto.Chapter;
 import com.learn4.data.dto.Level;
@@ -38,6 +41,8 @@ import com.learn4.view.contents_mode.view.ContentsBasicActivity;
 import com.learn4.view.custom.dialog.ModeSelectDialog;
 import com.learn4.view.mode_select.ModeSelect;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +57,9 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
     private int	uiOption;
 
     Button back_btn, contents_mode_select_btn, contents_mode_move_btn;
+
+    Button digitalwrite_btn_high, pinmode_btn, digitalwrite_btn_low, delay_btn;
+
 
     MediaPlayer mediaPlayer;
 
@@ -86,6 +94,9 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         LEVEL_TOOLBOX[0] = "arduino_basic.xml";
         LEVEL_TOOLBOX[1] = "arduino_advanced.xml";
     }
+
+    String [] answer = {"pinMode","inout_digital_write","base_delay","inout_digital_write","base_delay"};
+    int current_pos =0;
 
     @Override
     protected void onDestroy() {
@@ -128,7 +139,7 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content);
+        setContentView(R.layout.activity_content_test);
 
         mCategoryView = mBlocklyActivityHelper.getmCategoryView();
         controller = getController();
@@ -162,6 +173,117 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         rvSubject = findViewById(R.id.level_list);
         back_btn = findViewById(R.id.back_btn);
         contents_mode_select_btn= findViewById(R.id.contents_mode_select_btn);
+
+
+        digitalwrite_btn_high = findViewById(R.id.digitalwrite_btn_high);
+        pinmode_btn = findViewById(R.id.pinmode_btn);
+        digitalwrite_btn_low = findViewById(R.id.digitalwrite_btn_low);
+        delay_btn = findViewById(R.id.delay_btn);
+
+
+        digitalwrite_btn_high.setOnClickListener(v->{
+
+            if (answer_check("inout_digital_write")) {
+
+
+                String str =
+                        "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                                "  <block type=\"inout_digital_write\">\n" +
+                                "                <value name=\"PIN\">\n" +
+                                "                    <block type=\"base_pins_list\">\n" +
+                                "                        <field name=\"PIN\">8</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "                <value name=\"NUM\">\n" +
+                                "                    <block type=\"base_logic_list\">\n" +
+                                "                        <field name=\"LOGIC\">HIGH</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n"+
+                                "</block>\n"+
+                                "</xml>";
+
+                add_block(str,1,0);
+            }else{
+                Toast.makeText(getApplicationContext(), "틀렸습니다", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+        });
+
+        pinmode_btn.setOnClickListener(v->{
+
+            if (answer_check("pinMode")) {
+                subjects.get(0).chapters.remove(0);
+                String str =
+                        "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                                " <block type=\"pinMode\">\n" +
+                                "                <value name=\"PIN\">\n" +
+                                "                    <block type=\"base_pins_list\">\n" +
+                                "                        <field name=\"PIN\">8</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "                <value name=\"VALUE1\">\n" +
+                                "                    <block type=\"base_output_list\">\n" +
+                                "                        <field name=\"LOGIC\">OUTPUT</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "            </block>\n"+
+                                "</xml>";
+                add_block(str,0,0);
+                Test test1 = new Test();
+                test1.setAnswer("question");
+
+                subjects.get(1).chapters.add(0,test1);
+                levelAdapter.notifyItemChanged(1);
+            }else{
+                Toast.makeText(getApplicationContext(), "틀렸습니다", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        digitalwrite_btn_low.setOnClickListener(v->{
+            if (answer_check("inout_digital_write")) {
+                String str =
+                        "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                                "  <block type=\"inout_digital_write\">\n" +
+                                "                <value name=\"PIN\">\n" +
+                                "                    <block type=\"base_pins_list\">\n" +
+                                "                        <field name=\"PIN\">8</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "                <value name=\"NUM\">\n" +
+                                "                    <block type=\"base_logic_list\">\n" +
+                                "                        <field name=\"LOGIC\">LOW</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "</block>\n" +
+                                "</xml>";
+                add_block(str, 1, 2);
+            }else{
+                Toast.makeText(getApplicationContext(), "틀렸습니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        delay_btn.setOnClickListener(v->{
+            if (answer_check("base_delay")) {
+                String str =
+                        "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                                " <block type=\"base_delay\">\n" +
+                                "                <value name=\"DELAY_TIME\">\n" +
+                                "                    <block type=\"math_number\">\n" +
+                                "                        <field name=\"NUM\">1000</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "            </block>\n" +
+                                "</xml>";
+                add_block(str, 1, 1);
+            }else {
+                Toast.makeText(getApplicationContext(), "틀렸습니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         contents_mode_move_btn = findViewById(R.id.contents_mode_move_btn);
         contents_mode_move_btn.setOnClickListener(new View.OnClickListener() {
@@ -233,19 +355,108 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
         rvSubject.setLayoutManager(manager);
         rvSubject.setAdapter(levelAdapter);
 
-        back_btn.setOnClickListener(v-> finish());
+        back_btn.setOnClickListener(v-> {
+
+            try {
+                String str =
+                        "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                                " <block type=\"base_delay\">\n" +
+                                "                <value name=\"DELAY_TIME\">\n" +
+                                "                    <block type=\"math_number\">\n" +
+                                "                        <field name=\"NUM\">100</field>\n" +
+                                "                    </block>\n" +
+                                "                </value>\n" +
+                                "            </block>\n"+
+                                "</xml>";
+
+                InputStream is = new ByteArrayInputStream(str.getBytes());
+                List<Block> newBlocks = BlocklyXmlHelper.loadFromXml(is, controller.getBlockFactory());
+                Log.e("newBlocks count", newBlocks.size()+"");
+                for (Block item : newBlocks) {
+                    BlockGroup group = controller.mHelper.getParentBlockGroup(item);
+                    Log.e("block check name 1 ", item.getType());
+                    if (group != null)
+                        Log.e("codedictionary", "getParentBlockGroup not null");
+                    else {
+                        Log.e("codedictionary", "getParentBlockGroup null");
+                        group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(item, null, null);
+//            controller.addRootBlock(listData.get(position).getBlock());
+                    }
+
+                    if (group.getParent() != null) {
+                        ((ViewGroup) group.getParent()).removeView(group); // <- fix
+                    }
+                    Test test1 = new Test();
+                    test1.setAnswer("hello");
+                    test1.setBlock(group);
+
+                    subjects.get(1).chapters.add(0,test1);
+//                    levelAdapter.levelTestChapterAdapter.notifyItemChanged(0);
+                    levelAdapter.notifyItemChanged(1);
+                }
+            }catch (BlockLoadingException e){
+                e.printStackTrace();
+            }
+
+
+        });
 
         // 웰컴 메시지 재생 완료
         mediaPlayer.setOnCompletionListener(MediaPlayer::release);
 
+        Test test1 = new Test();
+        test1.setAnswer("question");
 
-//        Test test1 = new Test();
-//        test1.setAnswer("hello");
-//
-//        subjects.get(0).chapters.add(2,test1);
-//        levelAdapter.notifyDataSetChanged();
+
+        subjects.get(0).chapters.add(0,test1);
+
 
     }
+
+    public boolean answer_check(String select_answer){
+        if (answer[current_pos].equals(select_answer)){
+            current_pos++;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public void add_block(String block_code, int section, int position){
+        try {
+
+            InputStream is = new ByteArrayInputStream(block_code.getBytes());
+            List<Block> newBlocks = BlocklyXmlHelper.loadFromXml(is, controller.getBlockFactory());
+            Log.e("newBlocks count", newBlocks.size()+"");
+            for (Block item : newBlocks) {
+                BlockGroup group = controller.mHelper.getParentBlockGroup(item);
+                Log.e("block check name 1 ", item.getType());
+                if (group != null)
+                    Log.e("codedictionary", "getParentBlockGroup not null");
+                else {
+                    Log.e("codedictionary", "getParentBlockGroup null");
+                    group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(item, null, null);
+//            controller.addRootBlock(listData.get(position).getBlock());
+                }
+
+                if (group.getParent() != null) {
+                    ((ViewGroup) group.getParent()).removeView(group); // <- fix
+                }
+                Test test1 = new Test();
+                test1.setAnswer("hello");
+                test1.setBlock(group);
+
+                subjects.get(section).chapters.add(position,test1);
+
+//                    levelAdapter.levelTestChapterAdapter.notifyItemChanged(0);
+                levelAdapter.notifyItemChanged(section);
+            }
+        }catch (BlockLoadingException e){
+            e.printStackTrace();
+        }
+    }
+
+
 
     @NonNull
     @Override
@@ -279,35 +490,91 @@ public class RenuwalContentsActivity extends BlocklySectionsActivity {
 
 
 
+//        try {
+//            String str =
+//                    "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+////                            "  <block type=\"turtle_setup_loop\" x=\"-20.0\" y=\"108.0\" />\n" +
+//                            "            <block type=\"pinMode\">\n" +
+//                            "                <value name=\"PIN\">\n" +
+//                            "                    <block type=\"base_pins_list\">\n" +
+//                            "                        <field name=\"PIN\">8</field>\n" +
+//                            "                    </block>\n" +
+//                            "                </value>\n" +
+//                            "                <value name=\"VALUE1\">\n" +
+//                            "                    <block type=\"base_output_list\">\n" +
+//                            "                        <field name=\"LOGIC\">OUTPUT</field>\n" +
+//                            "                    </block>\n" +
+//                            "                </value>\n" +
+//                            "            </block>\n"+
+//                            " <block type=\"serial_begin\" id=\"94cacbc9-11ad-46ad-a025-fa6d3fdf2216\">\n" +
+//                            "                <value name=\"baud\">\n" +
+//                            "                    <block type=\"serial_begin_list\" id=\"e08bc170-92e6-4871-8ff4-85b856e9ae26\">\n" +
+//                            "                        <field name=\"SB\">9600</field>\n" +
+//                            "                    </block>\n" +
+//                            "                </value>\n" +
+//                            "            </block>\n"+
+//                            "</xml>";
+//
+//            InputStream is = new ByteArrayInputStream(str.getBytes());
+//            List<Block> newBlocks = BlocklyXmlHelper.loadFromXml(is, controller.getBlockFactory());
+//            Log.e("newBlocks count", newBlocks.size()+"");
+//            for (Block item : newBlocks) {
+//                BlockGroup group = controller.mHelper.getParentBlockGroup(item);
+//                Log.e("block check name 1 ", item.getType());
+//                if (group != null)
+//                    Log.e("codedictionary", "getParentBlockGroup not null");
+//                else {
+//                    Log.e("codedictionary", "getParentBlockGroup null");
+//                    group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(item, null, null);
+////            controller.addRootBlock(listData.get(position).getBlock());
+//                }
+//
+//                if (group.getParent() != null) {
+//                    ((ViewGroup) group.getParent()).removeView(group); // <- fix
+//                }
+//                Test test1 = new Test();
+//                test1.setAnswer(item.getType());
+//                test1.setBlock(group);
+//                level.chapters.add(test1);
+//            }
+//        }catch (BlockLoadingException e){
+//            e.printStackTrace();
+//        }
 
-        for (int i =0; i<3; i++){
-
-            BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) blocks.get(i);
-            Block block = blockItem.getBlock();
-            BlockGroup group = controller.mHelper.getParentBlockGroup(block);
-            Log.e("block check name 1 ", block.getType());
-            if (group != null)
-                Log.e("codedictionary","getParentBlockGroup not null");
-            else {
-                Log.e("codedictionary", "getParentBlockGroup null");
-                group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null,null);
-//            controller.addRootBlock(listData.get(position).getBlock());
-            }
-
-            if(group.getParent() != null) {
-                ((ViewGroup)group.getParent()).removeView(group); // <- fix
-            }
-            Test test1 = new Test();
-            test1.setAnswer(block.getType());
-            test1.setBlock(group);
-            level.chapters.add(test1);
-        }
+//        for (int i =0; i<3; i++){
+//
+//            BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) blocks.get(i);
+//            Block block = blockItem.getBlock();
+//            if (block.getType().equals("turtle_setup_loop")){
+//                continue;
+//            }else {
+//                BlockGroup group = controller.mHelper.getParentBlockGroup(block);
+//                Log.e("block check name 1 ", block.getType());
+//                if (group != null)
+//                    Log.e("codedictionary", "getParentBlockGroup not null");
+//                else {
+//                    Log.e("codedictionary", "getParentBlockGroup null");
+//                    group = controller.mHelper.getBlockViewFactory().buildBlockGroupTree(block, null, null);
+////            controller.addRootBlock(listData.get(position).getBlock());
+//                }
+//
+//                if (group.getParent() != null) {
+//                    ((ViewGroup) group.getParent()).removeView(group); // <- fix
+//                }
+//                Test test1 = new Test();
+//                test1.setAnswer(block.getType());
+//                test1.setBlock(group);
+//                level.chapters.add(test1);
+//            }
+//        }
 
         blocks = mCategoryView.mRootCategory.getSubcategories().get(2).getItems();
-        for (int i =0; i<5; i++){
+        for (int i =0; i<0; i++){
+
 
             BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) blocks.get(i);
             Block block = blockItem.getBlock();
+            controller.mHelper.getParentBlockGroup(block);
             Log.e("block check name 2 ", block.getType());
             BlockGroup group = controller.mHelper.getParentBlockGroup(block);
             if (group != null)

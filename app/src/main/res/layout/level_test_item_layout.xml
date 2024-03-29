@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f7f7f7"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <View
+        android:id="@+id/top_section"
+        android:background="@color/setup_loop_block_color"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.1"
+        android:layout_height="7dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/level_contents"
+        app:layout_constraintLeft_toRightOf="@+id/level"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0"></View>
+
+
+
+    <View
+        android:id="@+id/bottom_section"
+        android:background="@color/setup_loop_block_color"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.1"
+        android:layout_height="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/level_contents"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/level"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_bias="0"></View>
+
+
+
+    <TextView
+        android:id="@+id/level"
+        android:text="Level 1"
+        android:textColor="#f7f7f7"
+        android:fontFamily="@font/sb_aggro_l"
+        android:background="@drawable/left_top_corner_rounded"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="18dp"
+        android:paddingTop="15dp"
+        android:paddingLeft="10dp"
+        app:layout_constraintWidth_percent="0.18"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/level_contents"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHeight_percent="1"
+        ></TextView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/level_contents"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="10dp"
+        android:background="#f7f7f7"
+        android:nestedScrollingEnabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/level"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"></androidx.recyclerview.widget.RecyclerView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

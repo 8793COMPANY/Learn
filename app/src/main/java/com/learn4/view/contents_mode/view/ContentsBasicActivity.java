@@ -1,5 +1,6 @@
 package com.learn4.view.contents_mode.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,8 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.google.blockly.android.BlocklySectionsActivity;
+import com.google.blockly.android.codegen.CodeGenerationRequest;
+import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.ui.CategoryView;
+import com.google.blockly.model.DefaultBlocks;
 import com.learn4.R;
 import com.learn4.util.Application;
 import com.learn4.util.DisplaySize;
@@ -18,7 +25,10 @@ import com.learn4.view.problem.basic.Step1;
 import com.learn4.view.problem.basic.Step2;
 import com.learn4.view.problem.basic.Step5;
 
-public class ContentsBasicActivity extends AppCompatActivity {
+import java.util.Arrays;
+import java.util.List;
+
+public class ContentsBasicActivity extends BlocklySectionsActivity {
 
     TextView title;
     Button back_btn, next_btn, upload_btn, end_btn, next_level_btn;
@@ -26,6 +36,32 @@ public class ContentsBasicActivity extends AppCompatActivity {
 
     int pos = 0;
     String [] titles = { "목표 영상", "학습 목표", "한글 알고리즘 코딩", "매칭 설명", "영문 코딩", "실행 영상", "회로도" };
+
+    CategoryView mCategoryView;
+    BlocklyController controller;
+
+    int mode = 1;
+
+    static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
+            DefaultBlocks.COLOR_BLOCKS_PATH,
+            DefaultBlocks.LOGIC_BLOCKS_PATH,
+            DefaultBlocks.LOOP_BLOCKS_PATH,
+            DefaultBlocks.MATH_BLOCKS_PATH,
+            DefaultBlocks.TEXT_BLOCKS_PATH,
+            DefaultBlocks.VARIABLE_BLOCKS_PATH,
+            "turtle/turtle_blocks.json"
+    );
+
+    private static final int MAX_LEVELS = 2;
+    private static final String[] LEVEL_TOOLBOX = new String[MAX_LEVELS];
+
+    static {
+        LEVEL_TOOLBOX[0] = "arduino_basic.xml";
+        LEVEL_TOOLBOX[1] = "arduino_advanced.xml";
+    }
+
+    String [] answer = {"pinMode","inout_digital_write","base_delay","inout_digital_write","base_delay"};
+    int current_pos =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +129,42 @@ public class ContentsBasicActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @NonNull
+    @Override
+    protected ListAdapter onCreateSectionsListAdapter() {
+        return null;
+    }
+
+    @Override
+    protected boolean onSectionChanged(int oldSection, int newSection) {
+        return false;
+    }
+
+    @NonNull
+    @Override
+    protected String getToolboxContentsXmlPath() {
+        return "turtle/" + LEVEL_TOOLBOX[getCurrentSectionIndex()];
+    }
+
+    @NonNull
+    @Override
+    protected List<String> getBlockDefinitionsJsonPaths() {
+        return TURTLE_BLOCK_DEFINITIONS;
+    }
+
+
+    @NonNull
+    @Override
+    protected List<String> getGeneratorsJsPaths() {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    protected CodeGenerationRequest.CodeGeneratorCallback getCodeGenerationCallback() {
+        return null;
     }
 
     // 프래그먼트 전환
