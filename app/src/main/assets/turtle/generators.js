@@ -1809,7 +1809,9 @@ Blockly.JavaScript['serial_begin'] = function(block) {
       var to_num = Blockly.JavaScript.valueToCode(block, "to_num", Blockly.JavaScript.ORDER_ATOMIC);
   //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
       var code = "random("+from_num+","+to_num+");";
-      return code;
+        return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int a, int b) {", "  if (a > b) {", "    // Swap a and b to ensure a is smaller.", "    int c = a;", "    a = b;", "    b = c;", "  }", "  return random(a,b);",
+              "}"
+          ]) + "(" + from_num + ", " + to_num+ ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
     };
 
   Blockly.JavaScript['map_number'] = function(block) {

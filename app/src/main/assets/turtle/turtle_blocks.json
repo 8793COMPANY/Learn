@@ -967,7 +967,7 @@
 
   {
     "type": "random_number",
-    "message0": "random from %1 to %2",
+    "message0": "random integer from %1 to %2",
     "args0": [
       {
         "type": "input_value",
@@ -982,7 +982,7 @@
     ],
 
     "output": "Number",
-    "colour": "#A8D93D",
+    "colour": "230",
     "inputsInline": true,
     "tooltip": ""
   },

@@ -15,9 +15,7 @@
 
 <toolbox>
 
-    <category name="home" colour="330">
 
-    </category>
 
 
     <!-- setup() 카테고리 안에 들어갈 블록   -->
@@ -609,14 +607,28 @@
 
     <!-- 기타 카테고리 안에 들어갈 블록   -->
     <category name="Text" colour="130">
-        <block type="math_random_int">
-            <value name="FROM">
+<!--        <block type="math_random_int">-->
+<!--            <value name="FROM">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+
+<!--            <value name="TO">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">10</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
+        <block type="random_number">
+            <value name="from_num">
                 <block type="math_number">
                     <field name="NUM">0</field>
                 </block>
             </value>
 
-            <value name="TO">
+            <value name="to_num">
                 <block type="math_number">
                     <field name="NUM">10</field>
                 </block>
@@ -738,7 +750,9 @@
 
     </category>
 
+    <category name="home" colour="330">
 
+    </category>
 
     <category name="dictionary" colour="330">
 
