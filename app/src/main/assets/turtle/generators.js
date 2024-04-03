@@ -1804,15 +1804,30 @@ Blockly.JavaScript['serial_begin'] = function(block) {
     return code;
   };*/
 
-   Blockly.JavaScript['random_number'] = function(block) {
-      var from_num = Blockly.JavaScript.valueToCode(block, "from_num", Blockly.JavaScript.ORDER_ATOMIC);
-      var to_num = Blockly.JavaScript.valueToCode(block, "to_num", Blockly.JavaScript.ORDER_ATOMIC);
-  //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
-      var code = "random("+from_num+","+to_num+");";
-        return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int y, int z) {", "  if (y > z) {", "    int x = y;", "    y = z;", "    z = x;", "  }", "  return random(y,z);",
-              "}"
-          ]) + "(" + from_num + ", " + to_num+ ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
-    };
+//   Blockly.JavaScript['random_number'] = function(block) {
+//      var from_num = Blockly.JavaScript.valueToCode(block, "from_num", Blockly.JavaScript.ORDER_ATOMIC);
+//      var to_num = Blockly.JavaScript.valueToCode(block, "to_num", Blockly.JavaScript.ORDER_ATOMIC);
+//  //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
+//      var code = "random("+from_num+","+to_num+");";
+//        return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int y, int z) {", "  if (y > z) {", "    int x = y;", "    y = z;", "    z = x;", "  }", "  return random(y,z);",
+//              "}"
+//          ]) + "(" + from_num + ", " + to_num+ ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
+//    };
+
+       Blockly.JavaScript['random_number'] = function(block) {
+          var from_num = Blockly.JavaScript.valueToCode(block, "from_num", Blockly.JavaScript.ORDER_ATOMIC);
+          var to_num = Blockly.JavaScript.valueToCode(block, "to_num", Blockly.JavaScript.ORDER_ATOMIC);
+      //    Blockly.JavaScript.setups_['setup_serial_print'] = '\n Serial.begin('+value_baud+');';
+      Blockly.JavaScript.definitions_["includelib1"] = "#include <Arduino.h>";
+          var code = "random("+from_num+","+to_num+")";
+    //       var b = Blockly.JavaScript.valueToCode(a, "FROM", Blockly.JavaScript.ORDER_COMMA) || "0" ;
+    //          a = Blockly.JavaScript.valueToCode(a, "TO", Blockly.JavaScript.ORDER_COMMA) || "0";
+              return [Blockly.JavaScript.provideFunction_("mathRandomInt", ["int " + Blockly.JavaScript.FUNCTION_NAME_PLACEHOLDER_ + "(int a, int b) {", "  if (a > b) {", "    // Swap a and b to ensure a is smaller.", "    int c = a;", "    a = b;", "    b = c;", "  }", "  return random(a,b);\n",
+                  "}"
+              ]) + "(" + from_num + ", " + to_num+ ")", Blockly.JavaScript.ORDER_FUNCTION_CALL]
+    //      return [code, Blockly.JavaScript.ORDER_ATOMIC];
+        };
+
 
   Blockly.JavaScript['map_number'] = function(block) {
 
