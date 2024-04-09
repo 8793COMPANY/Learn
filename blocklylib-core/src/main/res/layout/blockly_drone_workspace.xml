@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:blockly="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingDefaultResource">
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/blockly_trash_ui"-->
+    <!--        android:name="com.google.blockly.android.FlyoutFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        blockly:closeable="false"-->
+    <!--        android:visibility="invisible"-->
+    <!--        blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"-->
+    <!--        blockly:layout_constraintEnd_toEndOf="parent"-->
+    <!--        blockly:layout_constraintStart_toStartOf="parent"-->
+    <!--        blockly:scrollOrientation="horizontal"-->
+    <!--        tools:ignore="MissingPrefix" />-->
+
+
+    <fragment
+        android:id="@+id/blockly_workspace"
+        android:name="com.google.blockly.android.WorkspaceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
