@@ -142,12 +142,7 @@ public class BlockRecyclerViewHelper {
 
             }
         });
-
-
-
     }
-
-
 
     /**
      * Reset all the initialized components so this object may be attached to a new
@@ -188,6 +183,8 @@ public class BlockRecyclerViewHelper {
             Log.e("hi","not null");
             mCurrentCategory.setCallback(null);
             categoryData.setClosed(true);
+        } else {
+            Log.e("hi","null");
         }
 
         Log.e("hi","final");
@@ -204,7 +201,6 @@ public class BlockRecyclerViewHelper {
 
 
         try{
-
             RelativeLayout.MarginLayoutParams marginLayoutParams = (RelativeLayout.MarginLayoutParams) mRecyclerView.getLayoutParams();
         if (mCurrentCategory.getCategoryName().equals("Logic") ){
             Log.e("current","logic");
@@ -709,9 +705,12 @@ public class BlockRecyclerViewHelper {
                 }
 
 
+                // turtle_setup_loop 블록과 question_block 블록을 제외하고 리스트 뿌리기
                 if (!block.getType().equals("turtle_setup_loop")) {
-                    holder.mContainer.addView(bg, layoutParams);
-                    holder.mContainer.setForegroundGravity(0);
+                    if (!block.getType().equals("question_block")) {
+                        holder.mContainer.addView(bg, layoutParams);
+                        holder.mContainer.setForegroundGravity(0);
+                    }
                 }
 
 

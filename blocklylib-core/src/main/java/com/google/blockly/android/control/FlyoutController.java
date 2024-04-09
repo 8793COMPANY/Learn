@@ -159,6 +159,10 @@ public class FlyoutController {
         updateToolbox();
     }
 
+    public FlyoutCallback getToolboxCallback() {
+        return mToolboxCallback;
+    }
+
     /**
      * Sets the root of the toolbox tree. This will be used to populate the category and toolbox.
      *

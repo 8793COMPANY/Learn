@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:blockly="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,13 +24,106 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/brown_af6401">
+            android:layout_weight="1">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/category_block"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                app:layout_constraintWidth_default="percent"
+                app:layout_constraintWidth_percent="1"
+                app:layout_constraintHeight_percent="0.138"
+                blockly:labelRotation="start"
+                blockly:layout_constraintEnd_toEndOf="parent"
+                blockly:layout_constraintStart_toStartOf="parent"
+                blockly:layout_constraintTop_toTopOf="parent"
+                blockly:scrollOrientation="horizontal"
+                tools:ignore="MissingPrefix">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <fragment
+                        android:id="@+id/blockly_categories"
+                        android:name="com.google.blockly.android.CategorySelectorFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="542"
+                        android:orientation="horizontal"
+                        android:weightSum="542"
+                        app:layout_constraintDimensionRatio="542:98"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintWidth_default="percent"
+                        app:layout_constraintWidth_percent="0.43"
+                        blockly:layout_constraintBottom_toBottomOf="parent"
+                        blockly:layout_constraintEnd_toEndOf="parent"
+                        blockly:layout_constraintStart_toEndOf="@+id/blockly_categories"
+                        blockly:layout_constraintTop_toTopOf="parent">
+
+                        <Button
+                            android:id="@+id/code_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="181"
+                            android:background="@drawable/code_btn_selector"
+                            android:tag="code">
+                        </Button>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@drawable/new_divider">
+                        </View>
+
+                        <Button
+                            android:id="@+id/serial_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="181"
+                            android:background="@drawable/serial_btn_selector"
+                            android:tag="serial">
+                        </Button>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@drawable/new_divider">
+                        </View>
+
+                        <Button
+                            android:id="@+id/upload_btn"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="182"
+                            android:background="@drawable/upload_btn"
+                            android:tag="upload">
+                        </Button>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="7">
+                        </View>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/testText"
@@ -60,6 +154,19 @@
                 android:text="Test2"
                 android:textColor="@color/black_383838"
                 android:textSize="30dp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff" />
+
+
+            </HorizontalScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

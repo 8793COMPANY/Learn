@@ -4,6 +4,7 @@ public class DisplaySize {
 
     // display y : (720(기준) / dp or sp) 로 계산
     // 글씨 크기
+    public static float font_size_y_15 = (float) (Application.standardSize_Y /48);
     public static float font_size_y_20 = (float) (Application.standardSize_Y /36);
     public static float font_size_y_22 = (float) (Application.standardSize_Y /32.7);
     public static float font_size_y_24 = (float) (Application.standardSize_Y /30);

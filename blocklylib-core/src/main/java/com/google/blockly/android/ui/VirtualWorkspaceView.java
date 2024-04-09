@@ -229,7 +229,9 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
             mOriginalScrollX = 0;
             mOriginalScrollY = 0;
 
-            updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+            //updateScaleStep(INIT_ZOOM_SCALES_INDEX);
+            updateScaleStep(2);
+
 
             final Rect blocksBoundingBox = getViewScaledBlockBounds();
             final boolean useRtl = mWorkspaceView.getWorkspaceHelper().useRtl();
@@ -758,7 +760,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     // 워크스페이스뷰 줌(스케일 지정)
     private void updateScaleStep(int newScaleIndex) {
         if (newScaleIndex != mCurrentZoomScaleIndex) {
-           float oldViewScale = mViewScale;
+            float oldViewScale = mViewScale;
             Log.e("old",oldViewScale+"");
             mCurrentZoomScaleIndex = newScaleIndex;
             mViewScale = ZOOM_SCALES[mCurrentZoomScaleIndex];
@@ -787,6 +789,8 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
         } else {
             Log.e("blockkkk", "zoom 같음");
         }
+
+
     }
 
     private boolean shouldDrawGrid() {
@@ -915,8 +919,8 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     @NonNull
     private Rect getViewScaledBlockBounds() {
-        Log.e("testtest", "mTempRect : " + mTempRect);
-        Log.e("testtest", "mViewScale : " + mViewScale);
+        //Log.e("testtest", "mTempRect : " + mTempRect);
+        //Log.e("testtest", "mViewScale : " + mViewScale);
 
         mWorkspaceView.getBlocksBoundingBox(mTempRect);
         mTempRect.left = (int) Math.floor(mTempRect.left * mViewScale);

@@ -2124,8 +2124,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                 if (check) {
                     dictionary_block_list.add(new CodeBlock("0", title, info, R.drawable.problem_block2, block));
+
                 }
-                //dictionary_block_list.add(new CodeBlock("0","Setup","아두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
+                //dictionary_block_list.add(new CodeBlock("0","Setup","아 두이노에서 무슨 PIN을 어떻게 사용할지 정하는 곳",R.drawable.problem_block2,block));
             }
         }
         dictionaryAdapter = new CodeDictionaryAdapter(getApplicationContext(), controller, dictionary_block_list);

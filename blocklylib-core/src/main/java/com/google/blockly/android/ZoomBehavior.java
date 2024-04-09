@@ -57,7 +57,7 @@ public final class ZoomBehavior {
             if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
                 attrValue =
 //                        a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, BEHAVIOR_ZOOM_BUTTONS_ONLY);
-                        a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, BEHAVIOR_FIXED);
+                        a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, DEFAULT_BEHAVIOR);
             } else {
                 attrValue =
                         a.getInt(R.styleable.BlocklyWorkspaceTheme_zoomBehavior, DEFAULT_BEHAVIOR);

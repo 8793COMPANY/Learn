@@ -26,6 +26,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ import android.view.WindowManager;
 import android.widget.RadioButton;
 
 import com.google.blockly.android.BlockClickDialog;
+import com.google.blockly.android.BlocklyActivityHelper;
 import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.R;
 import com.google.blockly.android.ui.BlockListUI;
@@ -57,6 +59,7 @@ import com.google.blockly.android.ui.BlockGroup;
 import com.google.blockly.android.ui.BlockTouchHandler;
 import com.google.blockly.android.ui.BlockView;
 import com.google.blockly.android.ui.BlockViewFactory;
+import com.google.blockly.android.ui.FlyoutCallback;
 import com.google.blockly.android.ui.InputView;
 import com.google.blockly.android.ui.PendingDrag;
 import com.google.blockly.android.ui.ViewPoint;
@@ -173,6 +176,9 @@ public class BlocklyController {
 
     private int centerX = 0, centerY = 0;
 
+   private BlocklyActivityHelper mBlocklyActivityHelper;
+    private static final String SAVE_FILENAME = "contents_workspace.xml";
+
 
     private List<Block> mTempBlocks = new ArrayList<>();
 
@@ -215,41 +221,88 @@ public class BlocklyController {
         @Override
         public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
 
-            BlockView touchedView = pendingDrag.getTouchedBlockView();;
+            Log.e("testtestt", "block drag");
+            Log.e("testtestt", TestApplication.getWorkspace_name());
 
-            // If a shadow or other undraggable block is touched, and it is attached to a draggable
-            // parent block, drag that block instead.
-            final BlockView activeTouchedView = mHelper.getNearestActiveView(touchedView);
-            if (activeTouchedView == null) {
-                Log.i(TAG, "User touched a stack of blocks that may not be dragged");
-                return null;
-            }
+            // 블럭 드래그 막는 위치
+            if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+//                Log.e("testtestt", "ContentsWorkspace not drag");
+//
+//                return null;
 
+                BlockView touchedView = pendingDrag.getTouchedBlockView();
 
-
-            return new Runnable() {
-                @Override
-                public void run() {
-                    // extractBlockAsRoot() fires MoveEvent immediately.
-                    extractBlockAsRoot(activeTouchedView.getBlock());
-
-                    // Since this block was already on the workspace, the block's position should
-                    // have been assigned correctly during the most recent layout pass.
-                    BlockGroup bg = mHelper.getRootBlockGroup(activeTouchedView);
-                    bg.bringToFront();
-
-                    // Measure and layout the block group to get the correct touch offset.
-                    bg.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-                    bg.layout(0, 0, bg.getMeasuredWidth(), bg.getMeasuredHeight());
-
-                    ViewPoint touchOffset = new ViewPoint(
-                            (int) (activeTouchedView.getX()
-                                    + pendingDrag.getTouchDownViewOffsetX()),
-                            (int) (activeTouchedView.getY()
-                                    + pendingDrag.getTouchDownViewOffsetY()));
-                    pendingDrag.startDrag(mWorkspaceView, bg, touchOffset);
+                // If a shadow or other undraggable block is touched, and it is attached to a draggable
+                // parent block, drag that block instead.
+                final BlockView activeTouchedView = mHelper.getNearestActiveView(touchedView);
+                if (activeTouchedView == null) {
+                    Log.i(TAG, "User touched a stack of blocks that may not be dragged");
+                    return null;
                 }
-            };
+
+
+
+                return new Runnable() {
+                    @Override
+                    public void run() {
+                        // extractBlockAsRoot() fires MoveEvent immediately.
+                        extractBlockAsRoot(activeTouchedView.getBlock());
+
+                        // Since this block was already on the workspace, the block's position should
+                        // have been assigned correctly during the most recent layout pass.
+                        BlockGroup bg = mHelper.getRootBlockGroup(activeTouchedView);
+                        bg.bringToFront();
+
+                        // Measure and layout the block group to get the correct touch offset.
+                        bg.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                        bg.layout(0, 0, bg.getMeasuredWidth(), bg.getMeasuredHeight());
+
+                        ViewPoint touchOffset = new ViewPoint(
+                                (int) (activeTouchedView.getX()
+                                        + pendingDrag.getTouchDownViewOffsetX()),
+                                (int) (activeTouchedView.getY()
+                                        + pendingDrag.getTouchDownViewOffsetY()));
+                        pendingDrag.startDrag(mWorkspaceView, bg, touchOffset);
+                    }
+                };
+
+            } else {
+                BlockView touchedView = pendingDrag.getTouchedBlockView();
+
+                // If a shadow or other undraggable block is touched, and it is attached to a draggable
+                // parent block, drag that block instead.
+                final BlockView activeTouchedView = mHelper.getNearestActiveView(touchedView);
+                if (activeTouchedView == null) {
+                    Log.i(TAG, "User touched a stack of blocks that may not be dragged");
+                    return null;
+                }
+
+
+
+                return new Runnable() {
+                    @Override
+                    public void run() {
+                        // extractBlockAsRoot() fires MoveEvent immediately.
+                        extractBlockAsRoot(activeTouchedView.getBlock());
+
+                        // Since this block was already on the workspace, the block's position should
+                        // have been assigned correctly during the most recent layout pass.
+                        BlockGroup bg = mHelper.getRootBlockGroup(activeTouchedView);
+                        bg.bringToFront();
+
+                        // Measure and layout the block group to get the correct touch offset.
+                        bg.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                        bg.layout(0, 0, bg.getMeasuredWidth(), bg.getMeasuredHeight());
+
+                        ViewPoint touchOffset = new ViewPoint(
+                                (int) (activeTouchedView.getX()
+                                        + pendingDrag.getTouchDownViewOffsetX()),
+                                (int) (activeTouchedView.getY()
+                                        + pendingDrag.getTouchDownViewOffsetY()));
+                        pendingDrag.startDrag(mWorkspaceView, bg, touchOffset);
+                    }
+                };
+            }
         }
 
 
@@ -401,6 +454,26 @@ public class BlocklyController {
         }
     }
 
+    public void setBlocklyActivityHelper(BlocklyActivityHelper blocklyActivityHelper) {
+        mBlocklyActivityHelper = blocklyActivityHelper;
+    }
+
+    public void onSaveWorkspace() {
+        Log.e("in","onSaveWorkspace");
+
+        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+            mBlocklyActivityHelper.saveWorkspaceToAppDirSafely(SAVE_FILENAME);
+        }
+    }
+
+    public void onLoadWorkspace() {
+        Log.e("in!","onLoadWorkspace");
+
+        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+            mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(SAVE_FILENAME);
+        }
+    }
+
 
     /**
      * Connects a WorkspaceFragment to this controller.
@@ -439,6 +512,10 @@ public class BlocklyController {
         }
         mFlyoutController.setToolboxUiComponents(categoryUi, toolbox);
         mFlyoutController.setToolboxRoot(mWorkspace.getToolboxContents());
+    }
+
+    public FlyoutCallback getFlyoutController() {
+        return mFlyoutController.getToolboxCallback();
     }
 
     /**
@@ -785,6 +862,7 @@ public class BlocklyController {
         groupAndFireEvents(new Runnable() {
             @Override
             public void run() {
+                Log.e("block check name 1", "on");
                 extractBlockAsRootImpl(block, false);
             }
         });
@@ -1235,6 +1313,11 @@ public class BlocklyController {
         return (mVirtualWorkspaceView != null) && mVirtualWorkspaceView.testZoom2();
     }
 
+//    //컨트롤러 적용
+//    public void setController(BlocklyController blocklyController) {
+//        TestApplication.blocklyController = blocklyController;
+//    }
+
     /**
      * Reset the view to the top-left corner of the virtual workspace (with a small margin), and
      * reset zoom to unit scale.
@@ -1329,7 +1412,7 @@ public class BlocklyController {
             mFlyoutController.setTrashContents(mWorkspace.getTrashCategory());
         }
 
-        }
+    }
 
 
     /**
@@ -1917,12 +2000,21 @@ public class BlocklyController {
      * @param blockConnection The {@link Connection} on the block being moved.
      * @param otherConnection The target {@link Connection} to connect to.
      */
+
+    int testNum = 0;
+
     private void connectImpl(Connection blockConnection, Connection otherConnection) {
+        // 블록이 연결되는 부분
         if (blockConnection.isConnected()) {
             throw new IllegalArgumentException("The blockConnection was already connected.");
         }
         Block block = blockConnection.getBlock();
         Block newParentBlock = otherConnection.getBlock();
+
+        Log.e("testtest", "connection~ 1 : " + block.getType());
+        Log.e("testtest", "connection~ 2 : " + newParentBlock.getType());
+        Log.e("testtest", "connection~ 3 : " + blockConnection.getType());
+        Log.e("testtest", "connection~ 4 : " + getWorkspace().getRootBlocks());
 
         switch (blockConnection.getType()) {
             case Connection.CONNECTION_TYPE_OUTPUT:
@@ -1930,11 +2022,97 @@ public class BlocklyController {
                 connectAsInput(otherConnection, blockConnection);
                 break;
             case Connection.CONNECTION_TYPE_PREVIOUS:
-                removeRootBlockImpl(block, false);
-                if (otherConnection.isStatementInput()) {
-                    connectToStatementImpl(otherConnection, block);
+                if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                    // 물음표 블록은 여기가 들어옴
+                    removeRootBlockImpl(block, false);
+                    if (otherConnection.isStatementInput()) {
+                        // 셋업루프단과 연결될 경우 실행됨
+                        Log.e("testtest", "connection~ : isStatementInput true");
+
+                        connectToStatementImpl(otherConnection, block);
+
+//                    if (newParentBlock.getAllConnections() != null) {
+//                        Log.e("connection~", "~!~" + newParentBlock.getAllConnections());
+//
+//                        for (int i = 0; i < newParentBlock.getAllConnections().size(); i++) {
+//                            Log.e("connection~", i + " : " + newParentBlock.getAllConnections().get(i).getBlock());
+//                        }
+//
+//                        // turtle_setup_loop 블록에서 setup : get(0), loop : get(1)에 해당
+//                        // connectToStatementImpl(newParentBlock.getAllConnections().get(0), block);
+//                    } else {
+//                        connectToStatementImpl(otherConnection, block);
+//                    }
+                    } else {
+                        Log.e("testtest", "connection~ : isStatementInput false");
+
+                        if (newParentBlock.getType().equals("question_block")) {
+                            // question_block 밑으로 연결 될 때
+                            testNum++;
+
+                            if (testNum == 1) {
+                                // Sequence1 : question_block 위로 드래그한 블록 위치시키기
+                                // newParentBlock 블록의 윗 연결이 turtle_setup_loop 블록일 때
+                                if (newParentBlock.getPreviousBlock().getType().equals("turtle_setup_loop")) {
+                                    connectToStatementImpl(newParentBlock.getParentConnection(), block);
+                                } else { // 아닌 경우
+                                    connectAfter(newParentBlock.getPreviousBlock(), block);
+                                }
+
+                                // Sequence2 : question_block 삭제시키기
+                                removeBlockTree(newParentBlock);
+
+                                // Sequence3 : question_block 추가시키기(loop 단에)
+                                connectToStatementImpl(block.getRootBlock().getAllConnections().get(1), newParentBlock);
+                            } else if (testNum == 5) {
+                                // Sequence1 : question_block 위로 드래그한 블록 위치시키기
+                                connectAfter(newParentBlock.getPreviousBlock(), block);
+
+                                // Sequence2 : question_block 삭제시키기
+                                removeBlockTree(newParentBlock);
+                            } else {
+                                // turtle_setup_loop 블록과 연결되어 있을 때만 실행
+                                if (newParentBlock.getRootBlock().getType().equals("turtle_setup_loop")) {
+
+                                    // newParentBlock 블록의 윗 연결이 turtle_setup_loop 블록일 때
+                                    if (newParentBlock.getPreviousBlock().getType().equals("turtle_setup_loop")) {
+
+                                        // Sequence1 : question_block 위로 드래그한 블록 위치시키기
+                                        connectToStatementImpl(newParentBlock.getParentConnection(), block);
+
+                                        // Sequence2 : question_block 삭제시키기
+                                        //removeBlockTree(newParentBlock);
+                                    } else { // 아닌 경우
+                                        // Sequence1 : question_block 위로 드래그한 블록 위치시키기
+                                        connectAfter(newParentBlock.getPreviousBlock(), block);
+
+                                        // Sequence2 : question_block 삭제시키기
+                                        //removeBlockTree(newParentBlock);
+
+                                        // Sequence3 : question_block 추가시키기(딜레이 주기)
+//                                new Handler().postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        connectAfter(block, newParentBlock);
+//                                    }
+//                                }, 500);
+                                    }
+                                } else {
+                                    connectAfter(newParentBlock, block);
+                                }
+                            }
+                        } else {
+                            connectAfter(newParentBlock, block);
+                        }
+                    }
                 } else {
-                    connectAfter(newParentBlock, block);
+                    // 원코드
+                    removeRootBlockImpl(block, false);
+                    if (otherConnection.isStatementInput()) {
+                        connectToStatementImpl(otherConnection, block);
+                    } else {
+                        connectAfter(newParentBlock, block);
+                    }
                 }
                 break;
             case Connection.CONNECTION_TYPE_NEXT:

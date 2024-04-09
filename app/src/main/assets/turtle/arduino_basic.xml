@@ -267,6 +267,8 @@
             </value>
         </block>
 
+        <block type="question_block"></block>
+
         <block type="serial_println2">
             <value name="VALUE">
                 <block type="type_string">

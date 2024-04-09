@@ -16,11 +16,14 @@
 package com.google.blockly.android.control;
 
 import androidx.annotation.VisibleForTesting;
+
+import android.util.Log;
 import android.util.Pair;
 
 import com.google.blockly.model.Block;
 import com.google.blockly.model.Connection;
 import com.google.blockly.model.WorkspacePoint;
+import com.google.blockly.utils.TestApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,6 +230,9 @@ public class ConnectionManager {
      */
     public Pair<Connection, Connection> findBestConnection(Block block, float radiusConnectionWS) {
         // Find the connection that is closest to any connection on the block.
+
+        // 가장 가까운 블록 찾는 곳
+
         Connection potentialBlockConnection = null;
         Connection potentialCompatibleConnection = null;
         List<Connection> blockConnections = block.getAllConnections();
@@ -249,6 +255,17 @@ public class ConnectionManager {
         if (potentialBlockConnection == null) {
             return null;
         }
+
+        if (TestApplication.drag_state.equals("maybeConnectDragGroup")) {
+            Log.e("connection~", "~~1" + potentialCompatibleConnection.getBlock().getType());
+            Log.e("connection~", "~~2" + potentialCompatibleConnection.getBlock().getPreviousBlock());
+            Log.e("connection~", "~~3" + potentialCompatibleConnection.getBlock().getPreviousConnection());
+
+            Log.e("connection~", "~~4" + potentialBlockConnection.getBlock().getType());
+            Log.e("connection~", "~~5" + potentialBlockConnection.getBlock().getPreviousConnection());
+            Log.e("connection~", "~~6" + potentialBlockConnection.getBlock().getNextConnection());
+        }
+
         return new Pair<>(potentialBlockConnection, potentialCompatibleConnection);
     }
 

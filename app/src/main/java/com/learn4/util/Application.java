@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Display;
 import android.widget.Toast;
 
+import com.google.blockly.model.Block;
 import com.learn4.R;
 import com.learn4.data.dto.LearningObjective;
 import com.learn4.view.custom.dialog.ProgressDialog;
@@ -66,6 +67,8 @@ public class Application extends android.app.Application  {
 
     public static int standardSize_X, standardSize_Y;
     public static float density;
+
+    public static Block basicBlock;
 
     @Override
     public void onCreate() {

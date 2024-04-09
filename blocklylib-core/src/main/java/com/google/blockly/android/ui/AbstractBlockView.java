@@ -64,6 +64,7 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
         extends NonPropagatingViewGroup implements BlockView {
     protected final WorkspaceHelper mHelper;
     protected final BlockViewFactory mFactory;
+    //protected final Block mBlock;
     protected final Block mBlock;
     protected final ConnectionManager mConnectionManager;
     protected BlockTouchHandler mTouchHandler;
@@ -309,7 +310,7 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.e("event",event.toString());
-        Log.e("testtest", "onTouchEvent~~");
+        Log.e("getworkspace~", "onTouchEvent~~");
 
         Log.e("testtest", mBlock + " : onTouchEvent~~");
         Log.e("testtest", mBlock.getColor() + " : onTouchEvent~~");
@@ -423,6 +424,10 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
      */
     @Override
     public void updateConnectorLocations() {
+//        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")){
+//            mBlock = TestApplication.basicBlock;
+//        }
+
         // Ensure we have the right block location before we update the connections.
         updateBlockPosition();
 

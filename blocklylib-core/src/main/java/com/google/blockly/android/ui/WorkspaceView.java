@@ -91,11 +91,11 @@ public class WorkspaceView extends NonPropagatingViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.e("testtest", "ononononon");
+        //Log.e("testtest", "ononononon");
 
         int childCount = getChildCount();
 
-        Log.e("testtest", childCount+"");
+        //Log.e("testtest", childCount+"");
 
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);

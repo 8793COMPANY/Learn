@@ -432,9 +432,13 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
     protected boolean onAutoload() {
         String filePath = getWorkspaceAutosavePath();
         try {
+            Log.e("testtestt", "onAutoload save load");
+
             mBlocklyActivityHelper.loadWorkspaceFromAppDir(filePath);
             return true;
         } catch (FileNotFoundException e) {
+            Log.e("testtestt", "FileNotFoundException");
+
            String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                     "  <block type=\"turtle_setup_loop\" x=\"8.0\" y=\"128.0\" />\n" +
                     "</xml>";
@@ -447,6 +451,8 @@ public abstract class AbstractBlocklyActivity extends AppCompatActivity {
             }
             // No workspace was saved previously.
         } catch (BlockLoadingException | IOException e) {
+            Log.e("testtestt", "BlockLoadingException");
+
             Log.e(TAG, "Failed to load workspace", e);
             mBlocklyActivityHelper.getController().resetWorkspace();
 

@@ -1778,6 +1778,12 @@ Blockly.JavaScript['inout_analog_read'] = function(block) {
      return code;
    };
 
+ Blockly.JavaScript['question_block'] = function() {
+      var code = 'Serial.println("question_block");\n';
+
+      return code;
+ };
+
   Blockly.JavaScript['serial_println2'] = function() {
     var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
         Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';

@@ -49,6 +49,7 @@ import com.google.blockly.model.Block;
 import com.google.blockly.model.Connection;
 import com.google.blockly.model.Workspace;
 import com.google.blockly.model.WorkspacePoint;
+import com.google.blockly.utils.TestApplication;
 
 import java.io.IOException;
 import java.lang.annotation.Retention;
@@ -79,6 +80,8 @@ public class Dragger {
     @IntDef({FINISH_BEHAVIOR_DROP, FINISH_BEHAVIOR_REVERT, FINISH_BEHAVIOR_DELETED})
     public @interface FinishDragBehavior {}
 
+    private static Block oldParentBlock;
+    private static Connection oldParentConnection;
 
     /**
      * Interface for processing a drag behavior.
@@ -379,6 +382,9 @@ public class Dragger {
      * @param event The next drag event to handle, as received by the {@link WorkspaceView}.
      */
     private void continueDragging(DragEvent event) {
+        Log.e("connection~", "continueDragging");
+        TestApplication.drag_state = "continueDragging";
+
         updateBlockPosition(event);
 
         // highlight as we go
@@ -400,18 +406,170 @@ public class Dragger {
     /**
      * Attempts to connect a dropped drag group with nearby connections
      */
+
+    boolean dragBlockCopy = true;
+
     private void maybeConnectDragGroup() {
+        Log.e("connection~", "maybeConnectDragGroup");
+        TestApplication.drag_state = "maybeConnectDragGroup";
+
         Block dragRoot = mPendingDrag.getRootDraggedBlock();
 
         // Maybe snap to connections.
         Pair<Connection, Connection> connectionCandidate = findBestConnection(dragRoot);
+
+        // 드래그 블록이 연결된 경우
         if (connectionCandidate != null) {
-            mController.connect(connectionCandidate.first, connectionCandidate.second);
+            if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                // question_block 블록을 움직이지 못하도록 고정(loop 단으로 연결할 경우) >> 중간 진행인 경우 해결 필요(되돌리기같은 기능)
+                if (dragRoot.getType().equals("question_block")) { // question_block 드래그일 때
+                    //mController.connect(connectionCandidate.first, connectionCandidate.second.getBlock().getAllConnections().get(0));
+
+                    //mController.onLoadWorkspace();
+
+                    if (oldParentBlock != null) {
+                        Log.e("testtest", "oldParentBlock not null");
+                        //mController.connect(connectionCandidate.first, connectionCandidate.second);
+
+                        if (!oldParentBlock.getType().equals("turtle_setup_loop")) {
+                            mController.connect(connectionCandidate.first, oldParentBlock.getNextConnection());
+                        } else {
+                            mController.connect(connectionCandidate.first, oldParentConnection);
+                        }
+
+                        oldParentBlock = null;
+                    } else {
+                        Log.e("testtest", "oldParentBlock null");
+                    }
+                } else { // question_block 드래그 아닐 때
+                    if (oldParentBlock != null) { // 워크스페이스 드래그일 때
+                        // 원상태로 돌려놓기
+                        Log.e("testtest~", "oldParentBlock not null*");
+                        Log.e("testtest~", "oldParentBlock not null* + " + oldParentConnection.getType());
+
+                        Log.e("testtest~", "oldParentBlock not null* " + dragBlockCopy);
+
+                        switch (oldParentConnection.getType()) {
+                            case Connection.CONNECTION_TYPE_PREVIOUS: // PREVIOUS 타입의 블록을 드래그할 때
+                            case Connection.CONNECTION_TYPE_NEXT: // NEXT 타입의 블록을 드래그할 때
+                                if (!oldParentBlock.getType().equals("turtle_setup_loop")) {
+                                    mController.connect(connectionCandidate.first, oldParentBlock.getNextConnection());
+                                } else {
+                                    mController.connect(connectionCandidate.first, oldParentConnection);
+                                }
+                                break;
+                            case Connection.CONNECTION_TYPE_INPUT: // INPUT 타입의 블록을 드래그할 때
+                            case Connection.CONNECTION_TYPE_OUTPUT: // OUTPUT 타입의 블록을 드래그할 때
+                                if (dragBlockCopy) {
+                                    // 블록의 루트 블록이 turtle_setup_loop 일때만 되돌리기 실행
+                                    mController.connect(connectionCandidate.first, oldParentConnection);
+
+                                } else {
+                                    // 블록의 루트 블록이 turtle_setup_loop 아닐 때
+                                    // 연결 블록이 question_block 일 때만 연결시키기
+                                    if (connectionCandidate.second.getBlock().getType().equals("question_block")) {
+                                        mController.connect(connectionCandidate.first, connectionCandidate.second);
+                                    } else { // 연결 블록이 question_block 이 아니면 삭제시키기
+                                        mController.removeBlockTree(dragRoot);
+                                    }
+                                }
+                                break;
+                        }
+
+                        oldParentBlock = null;
+                    } else { // 블록 리스트 드래그일 때
+                        // 해당 블록이 물음표 블록 밑으로 갈 수 있게끔 해야함
+                        // 이를 위해서 워크스페이스에서 물음표 블록 가져와야 함
+
+                        // 해당 블록을 물음표 블록 밑으로 보내기
+                        Log.e("testtest~", "oldParentBlock null");
+
+                        Log.e("testtest~", connectionCandidate.second.getBlock().getType());
+
+                        // 연결 블록이 question_block 일 때만 연결시키기
+                        if (connectionCandidate.second.getBlock().getType().equals("question_block")) {
+                            mController.connect(connectionCandidate.first, connectionCandidate.second);
+                        } else { // 연결 블록이 question_block 이 아니면 삭제시키기
+                            mController.removeBlockTree(dragRoot);
+                        }
+                    }
+
+                    //mController.connect(connectionCandidate.first, connectionCandidate.second);
+                }
+            } else { // 원코드
+                mController.connect(connectionCandidate.first, connectionCandidate.second);
+            }
             // .connect(..) includes bumping block within snap distance of the new location.
-        } else {
+        } else { // 드래그 블록이 연결이 안 된 경우
             // Even if no connection is found, still bump any neighbors within snap distance of the
             // new location.
             mController.bumpNeighbors(dragRoot);
+
+            if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                // question_block 블록을 움직이지 못하도록 고정(turtle_setup_loop 블록 밖으로 드래그할 경우) >> 중간 진행인 경우 해결 필요(되돌리기같은 기능)
+                if (dragRoot.getType().equals("question_block")) {
+//                    Log.e("connection~", dragRoot.getPreviousConnection().getBlock()+"");
+//                    Log.e("connection~", mController.getWorkspace().getRootBlocks()+"");
+//
+//                    for (int i = 0; i < mController.getWorkspace().getRootBlocks().size(); i++) {
+//                        if (mController.getWorkspace().getRootBlocks().get(i).getType().equals("turtle_setup_loop")) {
+//                            mController.connect(dragRoot.getPreviousConnection(), mController.getWorkspace().getRootBlocks().get(i).getAllConnections().get(0));
+//                        }
+//                    }
+
+                    //mController.onLoadWorkspace();
+
+                    if (oldParentBlock != null) {
+                        Log.e("testtest", "oldParentBlock not null");
+                        //mController.connect(connectionCandidate.first, connectionCandidate.second);
+
+                        if (!oldParentBlock.getType().equals("turtle_setup_loop")) {
+                            mController.connect(dragRoot.getPreviousConnection(), oldParentBlock.getNextConnection());
+                        } else {
+                            mController.connect(dragRoot.getPreviousConnection(), oldParentConnection);
+                        }
+
+                        oldParentBlock = null;
+                    } else {
+                        Log.e("testtest", "oldParentBlock null");
+                    }
+                } else {
+                    // X 띄우기(오답 효과)
+
+                    if (oldParentBlock != null) { // 워크스페이스 드래그일 때
+                        Log.e("testtest~", "oldParentBlock not null + " + oldParentConnection.getType());
+                        Log.e("testtest~", "yessssssssssssssssss");
+                        Log.e("testtest~", "oldParentBlock not null + " + dragBlockCopy);
+
+                        switch (oldParentConnection.getType()) {
+                            case Connection.CONNECTION_TYPE_PREVIOUS: // PREVIOUS 타입의 블록을 드래그할 때
+                            case Connection.CONNECTION_TYPE_NEXT: // NEXT 타입의 블록을 드래그할 때
+                                if (!oldParentBlock.getType().equals("turtle_setup_loop")) {
+                                    Log.e("testtest~", dragRoot.getType());
+                                    mController.connect(dragRoot.getPreviousConnection(), oldParentBlock.getNextConnection());
+                                } else {
+                                    mController.connect(dragRoot.getPreviousConnection(), oldParentConnection);
+                                }
+                                break;
+                            case Connection.CONNECTION_TYPE_INPUT: // INPUT 타입의 블록을 드래그할 때
+                            case Connection.CONNECTION_TYPE_OUTPUT: // OUTPUT 타입의 블록을 드래그할 때
+                                if (dragBlockCopy) {
+                                    // 블록의 루트 블록이 turtle_setup_loop 일때만 되돌리기 실행
+                                    mController.connect(dragRoot.getUpwardsConnection(), oldParentConnection);
+                                } else {
+                                    // 블록의 루트 블록이 turtle_setup_loop 아니면 삭제
+                                    mController.removeBlockTree(dragRoot);
+                                }
+                                break;
+                        }
+
+                        oldParentBlock = null;
+                    } else { // 블록 리스트 드래그일 때
+                        Log.e("testtest~", "nooooooooooooooo ");
+                        mController.removeBlockTree(dragRoot);
+                    }
+                }
+            }
         }
     }
 
@@ -487,9 +645,59 @@ public class Dragger {
     boolean onTouchBlockImpl(@DragMode int dragMode, DragHandler dragHandler, BlockView touchedView,
                              MotionEvent event, boolean interceptMode) {
 
+        // 블록을 터치시 무조건 들어오는 곳
         Log.e("testtest", "touch touch");
 
+        // 여기에서 블록 파일 저장(되돌리기 기능을 위해) >> 여기서만 이전 연결 확인 가능
+        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+            // 방법 1 블록 터치시 파일 저장 후 불러오기
+            mController.onSaveWorkspace();
 
+            // 방법 2 블록 터치시 이전 연결 블록 저장 후 불러오기
+            if (touchedView.getBlock().getParentBlock() != null) { // 블록 연결이 된 경우(워크 스페이스에서 드래그하는 경우)
+                Log.e("testtest~", "touch touch!" + touchedView.getBlock().getType());
+                Log.e("testtest~", "touch touch!" + touchedView.getBlock().getParentConnection().getType());
+                //Log.e("testtest~", "touch touch!" + touchedView.getBlock().getOutputConnection().getType());
+                Log.e("testtest~", "touch touch!" + touchedView.getBlock().getParentBlock().getType());
+
+                // 이 부분 코드 정리하기
+                if (touchedView.getBlock().getParentConnection().getType() != Connection.CONNECTION_TYPE_INPUT) {
+                    if (touchedView.getBlock().getParentConnection().getType() != Connection.CONNECTION_TYPE_OUTPUT) {
+                        // 터치한 블록이 CONNECTION_TYPE_INPUT 또는 CONNECTION_TYPE_OUTPUT 이 아닐 경우
+                        if (!touchedView.getBlock().getParentBlock().getType().equals("turtle_setup_loop")) {
+                            Log.e("testtest~", "touch touch!!" + touchedView.getBlock().getParentBlock().getNextConnection().getBlock().getType());
+                            oldParentConnection = touchedView.getBlock().getParentConnection();
+                        } else {
+                            Log.e("testtest~", "touch touch!!!" + touchedView.getBlock().getParentConnection().getBlock().getType());
+                            oldParentConnection = touchedView.getBlock().getParentConnection();
+                        }
+
+                        dragBlockCopy = true;
+
+                        oldParentBlock = touchedView.getBlock().getParentBlock();
+                    } else {
+                        Log.e("testtest~", "touch touch!! CONNECTION_TYPE_OUTPUT");
+
+                        // 블록의 루트 블록이 turtle_setup_loop 일때만 true 반환(되돌리기 기능 위함)
+                        dragBlockCopy = touchedView.getBlock().getRootBlock().getType().equals("turtle_setup_loop");
+
+                        oldParentConnection = touchedView.getBlock().getParentConnection();
+                        oldParentBlock = touchedView.getBlock().getParentBlock();
+                    }
+                } else {
+                    Log.e("testtest~", "touch touch!! CONNECTION_TYPE_INPUT");
+
+                    // 블록의 루트 블록이 turtle_setup_loop 일때만 true 반환(되돌리기 기능 위함)
+                    dragBlockCopy = touchedView.getBlock().getRootBlock().getType().equals("turtle_setup_loop");
+
+                    oldParentConnection = touchedView.getBlock().getParentConnection();
+                    oldParentBlock = touchedView.getBlock().getParentBlock();
+                }
+            } else { // 블록 연결이 안된 경우(블록 리스트에서 가져오는 경우)
+                Log.e("testtest~", "touch touch! null ");
+                dragBlockCopy = false;
+            }
+        }
 
         if (mWithinOnTouchBlockImpl) {
             throw new IllegalStateException(
@@ -524,42 +732,75 @@ public class Dragger {
             mMainHandler.post(mLogPending);
         }
 
+        // 블록 클릭이나 블록 드래그시 생성되는 블록에 대한 컨트롤을 하는 곳
+
         final boolean result;
         Log.e("action 확인",action+"");
 
-
         if (action == MotionEvent.ACTION_DOWN ) {
             if (mPendingDrag == null) {
+                Log.e("action 확인","mPendingDrag == null");
                 mPendingDrag = new PendingDrag(mController, touchedView, event);
                 if (interceptMode) {
                     // Do not handle intercepted down events. Allow child views (particularly
                     // fields) to handle the touch normally.
+                    Log.e("action 확인","mPendingDrag == null result = false");
                     result = false;
                 } else {
                     // The user touched the block directly.
                     if (dragMode == DRAG_MODE_IMMEDIATE) {
-                        result = maybeStartDrag(dragHandler);
+                        Log.e("action 확인","mPendingDrag == null dragMode == DRAG_MODE_IMMEDIATE");
+
+                        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                            // 드래그시에만 블록 생성이 되도록 하기
+                            // 컨텐츠 모드에서는 사용하지 않기
+                            result = true;
+                        } else { // 원래 코드
+                            result = maybeStartDrag(dragHandler);
+                        }
                     } else {
+                        Log.e("action 확인","mPendingDrag == null result = true");
+
                         result = true;
                     }
                 }
             } else if (matchesPending && !interceptMode) {
+                Log.e("action 확인","matchesPending && !interceptMode");
                 // The Pending Drag was created during intercept, but the child did not handle it
                 // and the event has bubbled down to here.
                 if (dragMode == DRAG_MODE_IMMEDIATE) {
-                    result = maybeStartDrag(dragHandler);
+                    Log.e("action 확인","matchesPending && !interceptMode dragMode == DRAG_MODE_IMMEDIATE");
+
+                    // 블록 리스트 클릭이나 드래그시 블록이 생성되는 부분
+                    Log.e("action 확인","Mode : " + TestApplication.getWorkspace_name());
+
+                    if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                        // 드래그시에만 블록 생성이 되도록 하기
+                        // 컨텐츠 모드에서는 사용하지 않기
+                        result = true;
+                    } else { // 원래 코드
+                        result = maybeStartDrag(dragHandler);
+                    }
                 } else {
+                    Log.e("action 확인","matchesPending && !interceptMode result = true");
+
                     result = true;
                 }
             } else {
+                Log.e("action 확인","result = false");
                 result = false; // Pending drag already started with a different view / pointer id.
             }
         } else if (matchesPending) {
+            Log.e("action 확인","matchesPending");
             // This touch is part of the current PendingDrag.
             if (action == MotionEvent.ACTION_MOVE) {
                 if (mPendingDrag.isDragging()) {
+                    Log.e("action 확인","matchesPending result = false");
+
                     result = false;  // We've already cancelled or started dragging.
                 } else {
+                    Log.e("action 확인","matchesPending !mPendingDrag.isDragging()");
+
                     // Mark all direct move events as handled, but only intercepted events if they
                     // initiate a new drag.
                     boolean isDragGesture =
@@ -572,19 +813,27 @@ public class Dragger {
             }
             // Handle the case when the user releases before moving far enough to start a drag.
             else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                Log.e("action 확인","matchesPending action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL");
+
                 if (!mPendingDrag.isDragging()) {
+                    Log.e("action 확인","matchesPending ACTION_UP || ACTION_CANCEL !mPendingDrag.isDragging()");
+
                     if (!interceptMode && mPendingDrag.isClick()) {
+                        Log.e("action 확인","matchesPending ACTION_UP || ACTION_CANCEL !mPendingDrag.isDragging() !interceptMode && mPendingDrag.isClick()");
+
                         dragHandler.onBlockClicked(mPendingDrag);
-
-
                     }
                     finishDragging(FINISH_BEHAVIOR_REVERT);
                 }
+
+                Log.e("action 확인", mWorkspace.getRootBlocks()+"");
+
                 result = !interceptMode;
             } else {
                 result = false; // Unrecognized event action
             }
         } else {
+            Log.e("action 확인","result = false2");
             result = false; // Doesn't match existing drag.
         }
 
@@ -634,6 +883,7 @@ public class Dragger {
     private boolean maybeStartDrag(DragHandler dragHandler) {
         // Check with the pending drag handler to select or create the dragged group.
         final PendingDrag pendingDrag = mPendingDrag;  // Stash for async callback
+        Log.e("getworkspace~", "maybeStartDrag~~");
         final Runnable dragGroupCreator = dragHandler.maybeGetDragGroupCreator(pendingDrag);
         final boolean foundDragGroup = (dragGroupCreator != null);
         if (foundDragGroup) {

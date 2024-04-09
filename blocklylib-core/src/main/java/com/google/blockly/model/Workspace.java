@@ -241,6 +241,10 @@ public class Workspace {
      */
     public void loadWorkspaceContents(InputStream is) throws BlockLoadingException {
         List<Block> newBlocks = BlocklyXmlHelper.loadFromXml(is, mBlockFactory);
+
+        Log.e("testtestt", "Workspace loadWorkspaceContents");
+        Log.e("testtestt", newBlocks.size()+"");
+
         if(newBlocks.isEmpty()){
             String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
                     "  <block type=\"turtle_setup_loop\" x=\"8.0\" y=\"128.0\" />\n" +

@@ -17,6 +17,7 @@ package com.google.blockly.android;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.AttributeSet;
@@ -32,6 +33,7 @@ import com.google.blockly.android.ui.VirtualWorkspaceView;
 import com.google.blockly.android.ui.WorkspaceGridRenderer;
 import com.google.blockly.android.ui.WorkspaceView;
 import com.google.blockly.model.Workspace;
+import com.google.blockly.utils.TestApplication;
 
 /**
  * The {@code WorkspaceFragement} holds the active {@link WorkspaceView} and workspace
@@ -111,7 +113,12 @@ public class WorkspaceFragment extends Fragment {
         virtualWorkspaceView.setGridColor(mGridColor);
         virtualWorkspaceView.setGridSpacing(mGridSpacing);
         virtualWorkspaceView.setGridDotRadius(mGridDotRadius);
-        virtualWorkspaceView.setBackgroundColor(mBackgroundColor);
+
+        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+            virtualWorkspaceView.setBackgroundColor(Color.parseColor("#f7f7f7"));
+        } else {
+            virtualWorkspaceView.setBackgroundColor(mBackgroundColor);
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.learn4.view;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.graphics.Point;
@@ -13,22 +14,30 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.google.blockly.android.BlocklySectionsActivity;
+import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.ui.CategoryView;
+import com.google.blockly.model.Block;
+import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.DefaultBlocks;
+import com.google.blockly.utils.BlockLoadingException;
 import com.google.blockly.utils.TestApplication;
 import com.learn4.R;
 import com.learn4.util.Application;
+import com.learn4.util.DisplaySize;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ContentsWorkspace extends BlocklySectionsActivity {
-
-    private static final int MAX_LEVELS = 2;
-    private static final String[] LEVEL_TOOLBOX = new String[MAX_LEVELS];
+public class ContentsWorkspace extends BlocklySectionsActivity implements OnCloseCheckListener {
 
     String TARGET_BASE_PATH;
+    String TAG = "ContentsWorkspace";
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -44,16 +53,26 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
             "turtle/generators.js"
     );
 
+    private static final int MAX_LEVELS = 2;
+    private static final String[] LEVEL_TOOLBOX = new String[MAX_LEVELS];
+
     static {
         LEVEL_TOOLBOX[0] = "arduino_basic.xml";
         LEVEL_TOOLBOX[1] = "arduino_advanced.xml";
     }
 
-    BlocklyController controller;
-
     int standardSize_X, standardSize_Y;
     float density;
     TextView testText, testText2;
+    RecyclerView recyclerview;
+
+    CategoryView mCategoryView;
+
+    ContentsBlockHelper contentsBlockHelper;
+    List<Block> blockGroups = new ArrayList<>();
+
+    String[] lv3_2 = { "pinMode", "inout_digital_write", "base_delay", "inout_digital_write", "base_delay"/*, "question_block" */};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +85,46 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
         // 하단 소프트키 숨기기
         hide_soft_key();
 
-        controller = getController();
-        //controller.recenterWorkspace();
+        getController().resetWorkspace();
+        loadSetupBlock();
+        getController().recenterWorkspace();
+
+        // mBlocklyActivityHelper 를 BlocklyController 에 저장
+        getController().setBlocklyActivityHelper(mBlocklyActivityHelper);
+
+        mCategoryView = mBlocklyActivityHelper.getmCategoryView();
+
+        // 0 ~ 3 : 셋업, 루프, 함수, 기타 카테고리
+        for (String s : lv3_2) {
+            for (int i = 0; i < 4; i++) {
+                List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(i).getItems();
+
+                for (BlocklyCategory.CategoryItem item : blocks) {
+                    BlocklyCategory.BlockItem blockItem = (BlocklyCategory.BlockItem) item;
+                    Block block = blockItem.getBlock();
+
+                    if (block.getType().equals(s)) {
+                        Log.e("testtesttt", s+"~~");
+                        blockGroups.add(block);
+                    }
+                }
+            }
+        }
+
+        Log.e("testtesttt", blockGroups.size()+"!!");
+
+        contentsBlockHelper = new ContentsBlockHelper(recyclerview, this, getController(), blockGroups);
+        contentsBlockHelper.init(getController(), getController().getFlyoutController());
+
+
+//        String assetFilename = "turtle/demo_workspaces/" + "analog_read_serial.xml";
+//        try {
+//            getController().loadWorkspaceContents(getAssets().open(assetFilename));
+//        } catch (IOException | BlockLoadingException e) {
+//            throw new IllegalStateException(
+//                    "Couldn't load demo workspace from assets: " + assetFilename, e);
+//        }
+//        addDefaultVariables(getController());
     }
 
     @Override
@@ -80,7 +137,7 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
         View blockly_contents_workspace = root.findViewById(R.id.blockly_contents_workspace);
         testText = blockly_contents_workspace.findViewById(R.id.testText);
         testText2 = blockly_contents_workspace.findViewById(R.id.testText2);
-
+        recyclerview = blockly_contents_workspace.findViewById(R.id.recyclerview);
 
         getStandardSize();
 
@@ -90,8 +147,39 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
         testText2.setTextSize((float) (standardSize_Y / 8));
         testText2.setTextSize((float) (Application.standardSize_Y / 5));
 
+        recyclerview.setPadding((int) DisplaySize.font_size_y_15, (int) DisplaySize.font_size_y_15, 0, (int) DisplaySize.font_size_y_15);
+
         //return super.onCreateContentView(containerId);
         return root;
+    }
+
+    static void addDefaultVariables(BlocklyController controller) {
+        // TODO: (#22) Remove this override when variables are supported properly
+        controller.addVariable("item");
+        Log.e("addDefaultVariables","in");
+    }
+
+    //setup loop 블록 workspace에 다시 생성
+    void loadSetupBlock(){
+        String str2 = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "  <block type=\"turtle_setup_loop\" x=\"10.0\" y=\"10.0\" />\n" +
+                "</xml>";
+
+        String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "<block type=\"turtle_setup_loop\" x=\"8.0\" y=\"128.0\">\n" +
+                "<statement name=\"DO\">\n" +
+                "<block type=\"question_block\" />\n" +
+                "</statement>\n" +
+                "</block>\n" +
+                "</xml>";
+
+        InputStream is = new ByteArrayInputStream(str.getBytes());
+
+        try {
+            mBlocklyActivityHelper.loadWorkspaceFromInputStream(is);
+        } catch (BlockLoadingException e1) {
+            Log.e(TAG, "Failed to load default arduino workspace", e1);
+        }
     }
 
     private final CodeGenerationRequest.CodeGeneratorCallback mCodeGeneratorCallback =
@@ -199,4 +287,11 @@ public class ContentsWorkspace extends BlocklySectionsActivity {
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
+    @Override
+    public void onCloseCheck(String msg) {
+    }
+
+    @Override
+    public void onCopyCheck(boolean check) {
+    }
 }

@@ -12,6 +12,24 @@
   },
 
   {
+    "type": "question_block",
+    "message0": "          %1          ",
+    "args0": [
+      {
+        "type": "field_image",
+        "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArwAAABACAYAAAD4daQIAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOrSURBVHhe7d3Bi1VVHAfwezWYEBvKQhHMImrVtAmCEFwlxZCLFrWOoFkUtUrcthAXBummXUH73Aw5IC0CwU3QphCMWkRlVoYYqJSD4vPcuYdh5L73cpxz7pt3+Hzgzfn95g+4fPnxu+fW1QiDweBUOA62HQAATKehgTeE3XPhmGs7AACYXlviuSpOdoVdAACKcFfgDWH3eDisMQAAUIzVlYYQdt8IxxdtBwAAZVgbeAexBACAYqysNMS9XQAAKE4dwu6ecF5oWwAAKEsz4W1eVAMAgCI1E167uwAAFKtzDy8AAJTEhBcgk8WF0TOF1z69HSsAchN4ARIbF3SHEX4B8hJ4ARL5+sO56tof52O3Ps+/9Xm1d9+bsQMgJYEXIIH1TnWHmdn+WDV/4u/YAZCKl9YANihF2G0sX79c3Vq+HjsAUhF4ATaRpfdmYwVAKlYaADbg/6a7w15Iu3XjarX0/sOx69q2Y2/18rFfYgfARpnwAtyn5Wvj921H3b7wwIOzY29m+PfKb7ECIAWBF+A+nT22P1Zd93LVmOvIAPphpQEggbWrDesJsqNWIoRhgHRMeAESaAKqkAqwOQm8AAkJvQCbj8ALAEDRBF6ACUn1wQoAxvO0BZiA//65GKuu+Y//jBUAKQi8AL0bVF8dfjzWXTOzu2IFQAoCL0CPLv94plpc2Bq7Li+9AaTnHl6Anlz8/nT17Sevxq5L2AXIw4QXoAeXfjgzNuy+dOR8rABIzYQXoAfjbmQ4cPSnavvOp2MHQGoCL0Bm48Lu/PG/qpmHdsYOgBysNABk9OW722LV9cwrh4RdgB4IvAAZ3b55I1Zdz77+UawAyEngBZgANzIA9EfgBQCgaAIvAABFE3gBACiaa8kAMrry8zexutuOp16MFQC5CbwAABTNSgMAAEUTeAEAKJrACwBA0ezwAmS0uNCdK/joBEC/THgBMhkWdhuj/g9AHp66ABMg9AL0xxMXIINfz34WKwAmTeAFyOCJ/W/HCoBJE3gBACiawAuQySNPvhCrLjc1APTHtWQAGS1fvVSd/mB37FrCLkC/BF4AAIpmpQEAgKIJvAAAFE3gBQCgaE3gXWpLAAAoT/PS2p5wXmhbAAAoy5a6rn8PpykvAABFqps/ccr7Xfg92vQAAFCKlZfW4pT3naYGAICSrN7SEELvyXCcaDsAACjDykrDWoPB4FQ4DrYdAABMt07gbYTQey4cc20HAADTa+iHJ+q6fi4cbm4AAGDKVdUd037oaJiG8JEAAAAASUVORK5CYII=",
+        "alt": "Image Question Mark"
+      }
+    ],
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FFA548",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
     "type": "Adafruit_SSD1306",
     "message0": "Adafruit SSD1306",
     "args0": [

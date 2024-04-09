@@ -135,6 +135,16 @@ public class BlocklyActivityHelper {
 
 
     public CategoryView getmCategoryView(){
+        //Log.e("testblocks", "main");
+        //Log.e("testblocks", mCategoryFragment.mCategoryView+"");
+
+//        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+//            Log.e("testblocks", "null");
+//        } else {
+//            Log.e("testblocks", "main");
+//            Log.e("testblocks", mCategoryFragment.mCategoryView+"");
+//        }
+
         return mCategoryFragment.mCategoryView;
     }
 
@@ -250,8 +260,12 @@ public class BlocklyActivityHelper {
 
         try {
             saveWorkspaceToAppDir(filename);
-            Toast.makeText(mActivity, R.string.toast_workspace_saved,
-                    Toast.LENGTH_LONG).show();
+
+            if (!TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                Toast.makeText(mActivity, R.string.toast_workspace_saved,
+                        Toast.LENGTH_LONG).show();
+            }
+
             return true;
         } catch (FileNotFoundException | BlocklySerializerException e) {
             Toast.makeText(mActivity, R.string.toast_workspace_not_saved,
@@ -537,6 +551,7 @@ public class BlocklyActivityHelper {
             Log.e("testtesttt", "콘텐츠 + " + TestApplication.getWorkspace_name());
 
             TestApplication.setWorkspace_name(activityName[1]);
+            //TestApplication.setBlock();
 
             Log.e("testtesttt", "콘텐츠 ++ " + TestApplication.getWorkspace_name());
         } else {
