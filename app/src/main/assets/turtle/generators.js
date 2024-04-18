@@ -1927,6 +1927,109 @@ Blockly.JavaScript['turtle_print'] = function(block) {
       block.id + '\');\n';
 };
 
+//drone 관련
+Blockly.JavaScript['arm_start'] = function(block) {
+
+ var code ='arm();\n';
+  return code;
+};
+
+Blockly.JavaScript['disarm_start'] = function(block) {
+
+ var code ='disarm();\n';
+  return code;
+};
+
+Blockly.JavaScript['drone_delay'] = function(block) {
+ var a = parseFloat(block.getFieldValue("NUM"));
+ var code ='delay('+a+');\n';
+    return code;
+};
+
+Blockly.JavaScript['take_off'] = function(block) {
+
+ var code ='take_off();\n';
+  return code;
+};
+
+Blockly.JavaScript['land'] = function(block) {
+
+ var code ='land();\n';
+  return code;
+};
+
+
+Blockly.JavaScript['drone_for'] = function(block) {
+        var c = Blockly.JavaScript.valueToCode(block, "FROM", Blockly.JavaScript.ORDER_ASSIGNMENT) || "0",
+        f = Blockly.JavaScript.statementToCode(block, "DO");
+        f = Blockly.JavaScript.addLoopTrap(f, block.id);
+
+//    var code = "for("+c+");{\n" + f + "}\n");
+    var code = "for("+c+");\n"+f+"for(end);\n";
+
+    return code
+};
+
+Blockly.JavaScript['go'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+
+    var code ='go('+c+');\n';
+    return code;
+};
+
+
+Blockly.JavaScript['back'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+         var code ='back('+c+');\n';
+           return code;
+};
+Blockly.JavaScript['left'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+      var code ='left('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['right'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+      var code ='right('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['up'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='up('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['down'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='down('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['ccw'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='ccw('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['cw'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='cw('+c+');\n';
+        return code;
+};
+
+
+
+
+
+
+
 Blockly.JavaScript['turtle_font'] = function(block) {
   // Generate JavaScript for setting the font.
   return 'Turtle.drawFont(\'' + block.getFieldValue('FONT') + '\',' +
@@ -1971,6 +2074,8 @@ Blockly.JavaScript['turtle_colour'] = function(block) {
 Blockly.JavaScript['turtle_repeat_internal'] = Blockly.JavaScript['controls_repeat'];
 
 Blockly.JavaScript['turtle_setup_loop'] = Blockly.JavaScript['setup_loop'];
+
+Blockly.JavaScript['drone_main'] = Blockly.JavaScript['drone_main'];
 
 /**
  * The generated code for turtle blocks includes block ID strings.  These are useful for

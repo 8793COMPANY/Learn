@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
         free_btn = root.findViewById(R.id.free_btn);
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
         drone_btn = root.findViewById(R.id.drone_btn);
-        user_name = root.findViewById(R.id.user_name);
+//        user_name = root.findViewById(R.id.user_name);
 
 //        new Thread(() -> {
 //                WeatherData weatherData = new WeatherData();

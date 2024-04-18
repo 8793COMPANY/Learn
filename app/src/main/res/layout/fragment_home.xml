@@ -16,21 +16,21 @@
         app:layout_constraintGuide_percent="0.99">
     </androidx.constraintlayout.widget.Guideline>
 
-    <TextView
-        android:id="@+id/user_name"
-        android:text="배울래?"
-        android:textColor="#b45611"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="@+id/name_guideline"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="13dp"
-        android:autoSizeMaxTextSize="20dp"
-        android:autoSizeStepGranularity="2dp"
-        app:layout_constraintHorizontal_bias="1">
-    </TextView>
+<!--    <TextView-->
+<!--        android:id="@+id/user_name"-->
+<!--        android:text="배울래?"-->
+<!--        android:textColor="#b45611"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintRight_toRightOf="@+id/name_guideline"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:autoSizeTextType="uniform"-->
+<!--        android:autoSizeMinTextSize="13dp"-->
+<!--        android:autoSizeMaxTextSize="20dp"-->
+<!--        android:autoSizeStepGranularity="2dp"-->
+<!--        app:layout_constraintHorizontal_bias="1">-->
+<!--    </TextView>-->
 
     <HorizontalScrollView
         android:id="@+id/scroll_view"

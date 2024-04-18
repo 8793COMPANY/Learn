@@ -337,6 +337,56 @@
             <field name="weather">맑음</field>
         </block>
 
+        <block type="arm_start"></block>
+        <block type="disarm_start"></block>
+        <block type="drone_delay">
+            <field name="NUM">1000</field>
+        </block>
+        <block type="take_off"></block>
+        <block type="land"></block>
+
+        <block type="drone_for">
+            <value name="FROM">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="go">
+            <field name="NUM">1000</field>
+        </block>
+
+        <block type="back">
+            <field name="NUM">1000</field>
+        </block>
+
+        <block type="left">
+            <field name="NUM">1000</field>
+        </block>
+
+        <block type="right">
+            <field name="NUM">1000</field>
+        </block>
+
+        <block type="up">
+            <field name="NUM">1000</field>
+        </block>
+
+        <block type="down">
+            <field name="NUM">1000</field>
+        </block>
+
+
+        <block type="ccw">
+            <field name="NUM">1000</field>
+        </block>
+
+        <block type="cw">
+            <field name="NUM">1000</field>
+        </block>
+
+
 
 
     </category>

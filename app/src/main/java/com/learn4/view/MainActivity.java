@@ -300,7 +300,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어"};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지"};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -518,6 +518,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
                     generatedCode2 = generatedCode;
                     xml2 = xml;
+
+                    Log.e("xml check", xml2);
 
                     mHandler.post(new Runnable() {
                         @Override
@@ -1570,7 +1572,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             filename = "keyring_temp.xml";
         }else if(name == "키링-헬스케어"){
             filename = "keyring_healthcare.xml";
+        }else if(name == "자동 신호등"){
+            filename = "auto_trafficlight.xml";
+        }else if(name == "후방 감지"){
+            filename = "rear_detection.xml";
         }
+
 
 
         String assetFilename = "turtle/demo_workspaces/" + filename;

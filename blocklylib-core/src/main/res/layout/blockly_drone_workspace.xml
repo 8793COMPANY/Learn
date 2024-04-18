@@ -32,7 +32,53 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <TextView
+        android:id="@+id/battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"></TextView>
 
+    <Button
+        android:id="@+id/cal_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="센서 보정"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"></Button>
+
+
+    <Button
+        android:id="@+id/load_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="load"
+        app:layout_constraintTop_toBottomOf="@+id/cal_btn"
+        app:layout_constraintRight_toRightOf="parent"></Button>
+
+    <Button
+        android:id="@+id/wifi_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wifi"
+        app:layout_constraintTop_toBottomOf="@+id/load_btn"
+        app:layout_constraintRight_toRightOf="parent"></Button>
+
+    <Button
+        android:id="@+id/arm_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="code"
+        app:layout_constraintTop_toBottomOf="@+id/wifi_btn"
+        app:layout_constraintRight_toRightOf="parent"></Button>
+
+    <Button
+        android:id="@+id/disarm_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="disarm"
+        app:layout_constraintTop_toBottomOf="@+id/arm_btn"
+        app:layout_constraintRight_toRightOf="parent"></Button>
 
 
 
