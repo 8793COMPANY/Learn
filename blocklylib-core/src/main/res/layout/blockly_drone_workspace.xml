@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/orange_f78f43"
     tools:ignore="MissingDefaultResource">
 
     <!--    <fragment-->
@@ -25,8 +26,9 @@
     <fragment
         android:id="@+id/blockly_workspace"
         android:name="com.google.blockly.android.WorkspaceFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteX="0dp"
@@ -79,6 +81,29 @@
         android:text="disarm"
         app:layout_constraintTop_toBottomOf="@+id/arm_btn"
         app:layout_constraintRight_toRightOf="parent"></Button>
+
+<!--    <fragment-->
+<!--        android:id="@+id/blockly_toolbox_ui"-->
+<!--        android:name="com.google.blockly.android.FlyoutFragment"-->
+<!--        android:layout_width="400dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        blockly:closeable="false"-->
+<!--        blockly:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        blockly:scrollOrientation="vertical">-->
+<!--    </fragment>-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/block_list_view"
+        android:layout_width="400dp"
+        android:layout_height="0dp"
+        blockly:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        ></androidx.recyclerview.widget.RecyclerView>
 
 
 

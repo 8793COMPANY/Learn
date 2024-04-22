@@ -46,18 +46,18 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     // TODO(#87): Replace with configuration. Use dp.
     // Default desired width of the view in pixels.
-    private static final int DESIRED_WIDTH = 512;
+    private static final int DESIRED_WIDTH = 800;
     // Default desired height of the view in pixels.
-    private static final int DESIRED_HEIGHT = 512;
+    private static final int DESIRED_HEIGHT = 670;
 
     private static final float MIN_SCALE_TO_DRAW_GRID = 0.5f;
 
     // TODO : Allowed zoom scales. (줌 레벨 설정)
     private static final float[] ZOOM_SCALES = new float[]{0.05f, 0.3f, 0.45f, 0.8f , 1.0f, 2.0f};
-    private static final int INIT_ZOOM_SCALES_INDEX = 2;
+    private static final int INIT_ZOOM_SCALES_INDEX = 4;
 
-    protected boolean mScrollable = true;
-    protected boolean mScalable = true;
+    protected boolean mScrollable = false;
+    protected boolean mScalable = false;
 
     private final ViewPoint mPanningStart = new ViewPoint();
 

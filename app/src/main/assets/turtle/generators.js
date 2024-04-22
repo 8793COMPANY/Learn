@@ -2075,7 +2075,7 @@ Blockly.JavaScript['turtle_repeat_internal'] = Blockly.JavaScript['controls_repe
 
 Blockly.JavaScript['turtle_setup_loop'] = Blockly.JavaScript['setup_loop'];
 
-Blockly.JavaScript['drone_main'] = Blockly.JavaScript['drone_main'];
+Blockly.JavaScript['turtle_drone_main'] = Blockly.JavaScript['drone_main'];
 
 /**
  * The generated code for turtle blocks includes block ID strings.  These are useful for

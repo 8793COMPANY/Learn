@@ -2,6 +2,9 @@ package com.learn4.view.drone;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,10 +17,15 @@ import android.os.Message;
 import android.print.PageRange;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,10 +37,25 @@ import com.google.blockly.android.FlyoutFragment;
 import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.UploadBtnCheck;
+import com.google.blockly.android.WorkspaceFragment;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.control.ConnectionManager;
+import com.google.blockly.android.control.FlyoutController;
+import com.google.blockly.android.ui.BlockGroup;
+import com.google.blockly.android.ui.BlockRecyclerViewHelper;
+import com.google.blockly.android.ui.BlockTouchHandler;
+import com.google.blockly.android.ui.BlockView;
 import com.google.blockly.android.ui.CategoryView;
+import com.google.blockly.android.ui.Dragger;
+import com.google.blockly.android.ui.FlyoutCallback;
+import com.google.blockly.android.ui.PendingDrag;
+import com.google.blockly.android.ui.ViewPoint;
+import com.google.blockly.android.ui.WorkspaceHelper;
+import com.google.blockly.model.Block;
+import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.DefaultBlocks;
+import com.google.blockly.model.WorkspacePoint;
 import com.google.blockly.utils.BlockLoadingException;
 import com.learn4.DroneActivity;
 import com.learn4.R;
@@ -111,10 +134,11 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
     String TARGET_BASE_PATH;
     private FrameLayout mGeneratedFrameLayout;
+    RecyclerView block_list_view;
     BlocklyController controller;
     FlyoutFragment flyoutFragment;
 
-    private CategoryView mCategoryView;
+    CategoryView mCategoryView;
 
     private static String SAVE_FILENAME = "turtle_workspace.xml";
 
@@ -123,6 +147,20 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     TextView battery;
 
     ExampleThread thread;
+
+    WorkspaceHelper mHelper;
+
+    private ConnectionManager mConnectionManager;
+    private FlyoutCallback mCallback;
+    private BlocklyCategory mCurrentCategory;
+    private BlockTouchHandler mTouchHandler;
+    FlyoutController mFlyoutController;
+
+    private final Handler mHandler = new Handler();
+
+    private LayoutInflater mHelium;
+
+    private final WorkspacePoint mTempWorkspacePoint = new WorkspacePoint();
 
 
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
@@ -152,6 +190,20 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        controller = getController();
+        mCategoryView = mBlocklyActivityHelper.getmCategoryView();
+        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+
+        mHelper = controller.getWorkspaceHelper();
+        mConnectionManager = controller.getWorkspace().getConnectionManager();
+        mTouchHandler = controller.getDragger()
+                .buildImmediateDragBlockTouchHandler(new DragHandler());
+
+        mHelium = LayoutInflater.from(this);
+        mFlyoutController = new FlyoutController(controller);
+
 //        controller = getController();
 //        controller.recenterWorkspace();
 //        controller.zoomOut();
@@ -169,6 +221,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         View root = getLayoutInflater().inflate(R.layout.activity_drone_block, null);
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
 
+
+
         Object obj = this;
 
         myHandler = new MyHandler();
@@ -178,6 +232,16 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         Button wifi_button = root.findViewById(R.id.wifi_btn);
         Button arm_btn = root.findViewById(R.id.arm_btn);
         Button disarm_btn = root.findViewById(R.id.disarm_btn);
+
+//        View blockly_toolbox_ui = root.findViewById(blockly_toolbox_ui);
+
+
+
+        block_list_view = root.findViewById(R.id.block_list_view);
+
+        block_list_view.setLayoutManager(new LinearLayoutManager(this));
+        block_list_view.setAdapter(new Adapter());
+
 
         battery = root.findViewById(R.id.battery);
 
@@ -490,9 +554,10 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
     public void loadfor(){
+
         String str =
-                "<block type=\"drone_main\" id=\"8d32874e-b4b2-4f58-bf8f-d5fa928da0ff\" x=\"8.0\" y=\"128.0\">\n" +
-                        "<statement name=\"DO\">\n"+
+//                "<block type=\"turtle_drone_main\" id=\"8d32874e-b4b2-4f58-bf8f-d5fa928da0ff\" x=\"8.0\" y=\"128.0\">\n" +
+//                        "<statement name=\"DO\">\n"+
                 "<block type=\"drone_for\">\n" +
                 "                                <value name=\"FROM\">\n" +
                 "                                    <block type=\"math_number\">\n" +
@@ -507,7 +572,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 "<next>\n"+
                 "  <block type=\"take_off\">\n" +
                 "<next>\n"+
-                "  <block type=\"go\">\n" +
+                "  <block type=\"drone_delay\">\n" +
                 "         <field name=\"NUM\">5</field>\n" +
                 "<next>\n"+
                 "  <block type=\"land\" />\n" +
@@ -520,9 +585,27 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 "</next>\n"+
                 "  </block>\n" +
                 "                                </statement>\n" +
-                "                            </block>\n"+
-        "        </statement>\n" +
-                "    </block>\n";
+                "                            </block>\n";
+//        "        </statement>\n" +
+//                "    </block>\n";
+
+
+//        String str =
+//                "<block type=\"turtle_drone_main\" id=\"8d32874e-b4b2-4f58-bf8f-d5fa928da0ff\" x=\"8.0\" y=\"128.0\">\n" +
+//                        "<statement name=\"DO\">\n"+
+//                        "<block type=\"drone_for\">\n" +
+//                        "                                <value name=\"FROM\">\n" +
+//                        "                                    <block type=\"math_number\">\n" +
+//                        "                                        <field name=\"NUM\">1</field>\n" +
+//                        "                                    </block>\n" +
+//                        "                                </value>\n" +
+//                        "                                <statement name=\"DO\">\n" +
+//                        "  <block type=\"arm_start\" x=\"-20.0\" y=\"108.0\">\n" +
+//                        "  </block>\n" +
+//                        "                                </statement>\n" +
+//                        "                            </block>\n"+
+//                        "        </statement>\n" +
+//                        "    </block>\n";
 
         InputStream is = new ByteArrayInputStream((str).getBytes());
 
@@ -1117,8 +1200,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                     }
 
                     int current_end_pos = 0;
+                    Log.e("dronetest list size", list.size()+"");
                     for (int i = 0; i < list.size(); i++) {
-                        methods[i] = methods[i].replace("(", " ").replace(");", "");
+                        methods[i] = methods[i].replace("(", " ").replace(");", "").trim();
                         String[] params_check3 = methods[i].split(" ");
                         if (methods[i].contains("for") && !methods[i].contains("end")) {
                             Log.e("dronetest hello in ", "first if");
@@ -1218,4 +1302,258 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
             }
         }
     }
+
+    @NonNull
+    private Pair<BlockGroup, ViewPoint> getWorkspaceBlockGroupForTouch(PendingDrag pendingDrag) {
+        Log.e("getworkspace","blockgroupfortouch");
+        BlockView touchedBlockView = pendingDrag.getTouchedBlockView();
+        Block rootBlock = touchedBlockView.getBlock().getRootBlock();
+        Log.e("rootBlock",rootBlock.getType());
+        BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
+        BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
+
+        // Calculate the offset from rootTouchedGroup to touchedBlockView in view
+        // pixels. We are assuming the only transforms between BlockViews are the
+        // child offsets.
+        View view = (View) touchedBlockView;
+//        view.setBackgroundColor(Color.parseColor("#FF007F"));
+
+
+        float offsetX = view.getX() + pendingDrag.getTouchDownViewOffsetX();
+        float offsetY = view.getY() + pendingDrag.getTouchDownViewOffsetY();
+        ViewGroup parent = (ViewGroup) view.getParent();
+        while (parent != rootTouchedGroup) {
+            view = parent;
+            offsetX += view.getX();
+            offsetY += view.getY();
+            parent = (ViewGroup) view.getParent();
+        }
+        ViewPoint touchOffset = new ViewPoint((int) Math.ceil(offsetX),
+                (int) Math.ceil(offsetY));
+
+        // Adjust for RTL, where the block workspace coordinate will be in the top right
+        if (mHelper.useRtl()) {
+            offsetX = rootTouchedGroup.getWidth() - offsetX;
+        }
+
+        // Scale into workspace coordinates.
+        int wsOffsetX = mHelper.virtualViewToWorkspaceUnits(offsetX);
+        int wsOffsetY = mHelper.virtualViewToWorkspaceUnits(offsetY);
+
+        // Offset the workspace coord by the BlockGroup's touch offset.
+        mTempWorkspacePoint.setFrom(
+                pendingDrag.getTouchDownWorkspaceCoordinates());
+        mTempWorkspacePoint.offset(-wsOffsetX, -wsOffsetY);
+
+
+        ;
+//        int itemIndex = getCurrentCategory().indexOf(rootBlock); // Should never be -1
+        int itemIndex =0;
+
+        BlockGroup dragGroup = mCallback.getDraggableBlockGroup(itemIndex, rootBlock,
+                mTempWorkspacePoint);
+        return Pair.create(dragGroup, touchOffset);
+    }
+
+
+    public class Adapter extends RecyclerView.Adapter<BlockViewHolder> {
+
+        @Override
+        public int getItemCount() {
+
+            return mCategoryView.mRootCategory.getSubcategories().get(0).getItems().size();
+        }
+
+        @Override
+        public BlockViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            return new BlockViewHolder(getApplicationContext());
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (mCurrentCategory == null) {
+                return -1;
+            }
+            Log.e("position",position+"");
+
+//
+//            mRecyclerView.setLayoutParams(marginLayoutParams);
+            return mCategoryView.mRootCategory.getSubcategories().get(0).getItems().get(position).getType();
+        }
+
+        @Override
+        public void onBindViewHolder(BlockViewHolder holder, int position) {
+            Log.e("mcurrentcategory",mCurrentCategory.getCategoryName());
+            List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+
+//            holder.mContainer.setBackgroundColor(Color.parseColor("#B5B2FF"));
+
+            BlocklyCategory.CategoryItem item = blocks.get(position);
+            if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BLOCK) {
+                Block block = ((BlocklyCategory.BlockItem) item).getBlock();
+                block.setEditable(true);
+                BlockGroup bg = mHelper.getParentBlockGroup(block);
+
+                if (bg == null) {
+                    bg = mHelper.getBlockViewFactory().buildBlockGroupTree(
+                            block, mConnectionManager, mTouchHandler);
+                } else {
+                    bg.setTouchHandler(mTouchHandler);
+                }
+
+
+
+
+
+
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        (int) (ViewGroup.LayoutParams.WRAP_CONTENT ),
+                        (int) (ViewGroup.LayoutParams.WRAP_CONTENT ));
+
+                layoutParams.rightMargin = 0;
+//                if (block.getType().equals("logic_compare") || block.getType().equals("logic_operation")){
+//                    Log.e("here!!!!!","ok");
+//                    bg.setScaleX(1f);
+//                    bg.setScaleY(1f);
+//                    bg.setPivotX(0);
+//                    bg.setPivotY(0);
+//                    layoutParams.bottomMargin = 40;
+//
+//                }else{
+//                    bg.setScaleX(0.8f);
+//                    bg.setScaleY(0.8f);
+//                    bg.setPivotX(0);
+//                    bg.setPivotY(0);
+//                }
+//
+//
+//                if (block.getType().equals("get_weather")){
+//                    bg.setScaleX(0.8f);
+//                    bg.setScaleY(0.8f);
+//                    bg.setPivotX(0);
+//                    bg.setPivotY(0);
+//                }
+//
+//
+////                bg.setBackgroundColor(Color.parseColor("#B2CCFF"));
+//                //이부분 수정
+//                if(bg.getParent() != null) {
+//                    ((ViewGroup)bg.getParent()).removeView(bg); // <- fix
+//                }
+
+
+                if (!block.getType().equals("turtle_setup_loop")) {
+                    holder.mContainer.addView(bg, layoutParams);
+                    holder.mContainer.setForegroundGravity(0);
+                }
+
+
+
+//                    ViewGroup.LayoutParams params = holder.mContainer.getLayoutParams();
+//                    holder.mContainer.setTouchDelegate(new TouchDelegate(new Rect(holder.mContainer.getWidth(),0,holder.mContainer.getWidth(),holder.mContainer.getHeight()), bg));
+//                holder.mContainer.setScaleX(0.8f);
+//                holder.mContainer.setScaleY(0.8f);
+
+
+//                holder.mContainer.setPivotX(0);
+//                holder.mContainer.setPivotY(0);
+
+
+                holder.bg = bg;
+
+
+
+            } else if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BUTTON) {
+                BlocklyCategory.ButtonItem bItem = (BlocklyCategory.ButtonItem) item;
+                final String action = bItem.getAction();
+                Button button = (Button) mHelium.inflate(com.google.blockly.android.R.layout.simple_button, holder.mContainer,
+                        false);
+                holder.mContainer.addView(button);
+                button.setText(bItem.getText());
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mCallback != null) {
+                            mCallback.onButtonClicked(v, action, mCurrentCategory);
+                        }
+                    }
+                });
+            } else if (item.getType() == BlocklyCategory.CategoryItem.TYPE_LABEL) {
+                BlocklyCategory.LabelItem lItem = (BlocklyCategory.LabelItem) item;
+                TextView label = (TextView) mHelium.inflate(com.google.blockly.android.R.layout.simple_label,
+                        holder.mContainer, false);
+                holder.mContainer.addView(label);
+                label.setText(lItem.getText());
+            } else {
+                Log.e("droneblockactivity", "Tried to bind unknown item type " + item.getType());
+            }
+        }
+
+
+        @Override
+        public void onViewRecycled(BlockViewHolder holder) {
+            // If this was a block item BlockGroup may be reused under a new parent.
+            // Only clear if it is still a child of mContainer.
+            Log.e("recycled","holder");
+            if (holder.bg != null && holder.bg.getParent() == holder.mContainer) {
+                holder.bg.unlinkModel();
+                holder.bg = null;
+                holder.mContainer.removeAllViews();
+            }
+
+            super.onViewRecycled(holder);
+        }
+    }
+
+    private class BlockViewHolder extends RecyclerView.ViewHolder {
+        final FrameLayout mContainer;
+        BlockGroup bg = null;  // Root of the currently attach block views.
+        ImageView imageView;
+        BlockViewHolder(Context context) {
+            super(new FrameLayout(context));
+            mContainer = (FrameLayout) itemView;
+        }
+    }
+
+    /** {@link Dragger.DragHandler} implementation for BlockListViews. */
+    private class DragHandler implements Dragger.DragHandler {
+
+        @Override
+        public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
+            return new Runnable() {
+                @Override
+                public void run() {
+                    // Acquire the draggable BlockGroup on the Workspace from the
+                    // {@link OnDragListBlock}.
+                    Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
+                            getWorkspaceBlockGroupForTouch(pendingDrag);
+                    if (dragGroupAndTouchOffset != null) {
+                        pendingDrag.startDrag(
+                                block_list_view,
+                                dragGroupAndTouchOffset.first,
+                                dragGroupAndTouchOffset.second);
+                        //Log.e("hi~","maybegetdraggroupcreator");
+                    }
+
+                }
+            };
+        }
+
+        @Override
+        public boolean onBlockClicked(final PendingDrag pendingDrag) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // Identify and process the clicked BlockGroup.
+                    getWorkspaceBlockGroupForTouch(pendingDrag);
+                    Log.e("onBlock","clicked");
+                }
+            });
+            return true;
+        }
+    }
+
+
+
 }

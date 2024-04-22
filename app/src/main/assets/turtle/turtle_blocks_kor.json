@@ -207,7 +207,7 @@
   },
 
   {
-    "type": "turtle_python_main",
+    "type": "turtle_drone_main",
     "message0": "main %1",
     "args0": [
       {

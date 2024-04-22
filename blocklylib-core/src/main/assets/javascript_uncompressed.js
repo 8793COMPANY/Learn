@@ -406,6 +406,15 @@ Blockly.JavaScript.controls_whileUntil = function(a) {
     b && (c = "!" + c);
     return "while (" + c + ") {\n" + d + "}\n"
 };
+
+Blockly.JavaScript.drone_main = function(a) {
+    var d = Blockly.JavaScript.statementToCode(a, "DO");
+//        d = Blockly.JavaScript.addLoopTrap(d, a.id);
+     a="";
+    return a+("\n" +  d +"\n")
+};
+
+
 Blockly.JavaScript.controls_for = function(a) {
     var b = Blockly.JavaScript.variableDB_.getName(a.getFieldValue("VAR"), Blockly.Variables.NAME_TYPE),
         c = Blockly.JavaScript.valueToCode(a, "FROM", Blockly.JavaScript.ORDER_ASSIGNMENT) || "0",
