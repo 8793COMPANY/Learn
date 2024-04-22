@@ -55,6 +55,7 @@ import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
 import com.google.blockly.model.DefaultBlocks;
+import com.google.blockly.model.VariableCustomCategory;
 import com.google.blockly.model.WorkspacePoint;
 import com.google.blockly.utils.BlockLoadingException;
 import com.learn4.DroneActivity;
@@ -151,7 +152,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     WorkspaceHelper mHelper;
 
     private ConnectionManager mConnectionManager;
-    private FlyoutCallback mCallback;
+//    private FlyoutCallback mCallback;
     private BlocklyCategory mCurrentCategory;
     private BlockTouchHandler mTouchHandler;
     FlyoutController mFlyoutController;
@@ -190,19 +191,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("hello in","oncreate");
 
 
-        controller = getController();
-        mCategoryView = mBlocklyActivityHelper.getmCategoryView();
-        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
-
-        mHelper = controller.getWorkspaceHelper();
-        mConnectionManager = controller.getWorkspace().getConnectionManager();
-        mTouchHandler = controller.getDragger()
-                .buildImmediateDragBlockTouchHandler(new DragHandler());
-
-        mHelium = LayoutInflater.from(this);
-        mFlyoutController = new FlyoutController(controller);
 
 //        controller = getController();
 //        controller.recenterWorkspace();
@@ -217,10 +208,25 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
     @Override
     protected View onCreateContentView(int containerId) {
+        Log.e("hello in","onCreateContentView");
         getLayoutInflater();
         View root = getLayoutInflater().inflate(R.layout.activity_drone_block, null);
         mGeneratedFrameLayout = root.findViewById(R.id.generated_workspace);
 
+
+
+        controller = getController();
+
+
+//        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+
+        mHelper = controller.getWorkspaceHelper();
+        mConnectionManager = controller.getWorkspace().getConnectionManager();
+        mTouchHandler = controller.getDragger()
+                .buildImmediateDragBlockTouchHandler(new DragHandler());
+
+        mHelium = LayoutInflater.from(this);
+        mFlyoutController = new FlyoutController(controller);
 
 
         Object obj = this;
@@ -1355,6 +1361,28 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         return Pair.create(dragGroup, touchOffset);
     }
 
+    protected FlyoutCallback mCallback = new FlyoutCallback() {
+        @Override
+        public void onButtonClicked(View v, String action, BlocklyCategory category) {
+            if (action == VariableCustomCategory.ACTION_CREATE_VARIABLE && controller != null) {
+
+                controller.requestAddVariable("item");
+            }
+        }
+
+        @Override
+        public BlockGroup getDraggableBlockGroup(int index, Block blockInList,
+                                                 WorkspacePoint initialBlockPosition) {
+            Log.e("in block","drag");
+            Block copy = blockInList.deepCopy();
+            copy.setPosition(initialBlockPosition.x, initialBlockPosition.y);
+            BlockGroup copyView = controller.addRootBlock(copy);
+//            mTrashCategory.removeItem(index);
+//            closeTrash();
+            return copyView;
+        }
+    };
+
 
     public class Adapter extends RecyclerView.Adapter<BlockViewHolder> {
 
@@ -1372,10 +1400,10 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
         @Override
         public int getItemViewType(int position) {
-            if (mCurrentCategory == null) {
-                return -1;
-            }
-            Log.e("position",position+"");
+//            if (mCurrentCategory == null) {
+//                return -1;
+//            }
+//            Log.e("position",position+"");
 
 //
 //            mRecyclerView.setLayoutParams(marginLayoutParams);
@@ -1384,7 +1412,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
         @Override
         public void onBindViewHolder(BlockViewHolder holder, int position) {
-            Log.e("mcurrentcategory",mCurrentCategory.getCategoryName());
+//            Log.e("mcurrentcategory",mCurrentCategory.getCategoryName());
             List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
 
 //            holder.mContainer.setBackgroundColor(Color.parseColor("#B5B2FF"));
@@ -1464,27 +1492,6 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
 
 
-            } else if (item.getType() == BlocklyCategory.CategoryItem.TYPE_BUTTON) {
-                BlocklyCategory.ButtonItem bItem = (BlocklyCategory.ButtonItem) item;
-                final String action = bItem.getAction();
-                Button button = (Button) mHelium.inflate(com.google.blockly.android.R.layout.simple_button, holder.mContainer,
-                        false);
-                holder.mContainer.addView(button);
-                button.setText(bItem.getText());
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mCallback != null) {
-                            mCallback.onButtonClicked(v, action, mCurrentCategory);
-                        }
-                    }
-                });
-            } else if (item.getType() == BlocklyCategory.CategoryItem.TYPE_LABEL) {
-                BlocklyCategory.LabelItem lItem = (BlocklyCategory.LabelItem) item;
-                TextView label = (TextView) mHelium.inflate(com.google.blockly.android.R.layout.simple_label,
-                        holder.mContainer, false);
-                holder.mContainer.addView(label);
-                label.setText(lItem.getText());
             } else {
                 Log.e("droneblockactivity", "Tried to bind unknown item type " + item.getType());
             }
