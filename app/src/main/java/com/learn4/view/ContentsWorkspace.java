@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.ClipDescription;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.DragEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
@@ -17,6 +20,8 @@ import com.google.blockly.android.BlocklySectionsActivity;
 import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.ui.BlockGroup;
+import com.google.blockly.android.ui.BlockView;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
@@ -67,6 +72,8 @@ public class ContentsWorkspace extends BlocklySectionsActivity implements OnClos
     RecyclerView recyclerview;
 
     CategoryView mCategoryView;
+
+    View blockly_contents_workspace;
 
     ContentsBlockHelper contentsBlockHelper;
     List<Block> blockGroups = new ArrayList<>();
@@ -125,6 +132,70 @@ public class ContentsWorkspace extends BlocklySectionsActivity implements OnClos
 //                    "Couldn't load demo workspace from assets: " + assetFilename, e);
 //        }
 //        addDefaultVariables(getController());
+
+//        // 드래그 리스너 설정
+//        View.OnDragListener mDragEventListener = new View.OnDragListener() {
+//
+//            @Override
+//            public boolean onDrag(View v, DragEvent event) {
+//
+//                switch (event.getAction()) {
+//                    case DragEvent.ACTION_DRAG_STARTED:
+//                        Log.e("action 확인!", "ACTION_DRAG_STARTED");
+//
+//                        event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+//                    case DragEvent.ACTION_DRAG_ENTERED:
+//                        Log.e("action 확인!", "ACTION_DRAG_ENTERED");
+//
+//                        return true;
+//                    case DragEvent.ACTION_DRAG_LOCATION:
+//                        Log.e("action 확인!", "ACTION_DRAG_LOCATION");
+//
+//                        return true;
+//                    case DragEvent.ACTION_DRAG_EXITED:
+//                        Log.e("action 확인!", "ACTION_DRAG_EXITED");
+//
+//                        return true;
+//                    case DragEvent.ACTION_DROP:
+//                        Log.e("action 확인!", "ACTION_DROP");
+//
+//                        if (v == blockly_contents_workspace) { // workspace
+//                            Log.e("action 확인!", "workspace");
+//
+//                            View wView = (View) event.getLocalState();
+//
+//                            return true;
+//                        } else if (v == recyclerview) { // recyclerview
+//                            Log.e("action 확인!", "recyclerview");
+//
+//                            View rView = (View) event.getLocalState();
+//
+//                            ((ViewGroup) rView.getParent()).removeView(rView);
+//
+//                            return true;
+//                        } else { // else
+//                            return false;
+//                        }
+//                    case DragEvent.ACTION_DRAG_ENDED:
+//                        Log.e("action 확인!", "ACTION_DRAG_ENDED");
+//
+//                        if (event.getResult()) {
+//                            Log.e("action 확인!", "Success");
+//                        } else {
+//                            Log.e("action 확인!", "Failed");
+//                        }
+//
+//                        return true;
+//                    default:
+//                        break;
+//                }
+//
+//                return false;
+//            }
+//        };
+//
+//        // 드래그리스너 이벤트 연결
+//        recyclerview.setOnDragListener(mDragEventListener);
     }
 
     @Override
@@ -134,7 +205,7 @@ public class ContentsWorkspace extends BlocklySectionsActivity implements OnClos
 
         Log.e("testtesttt", "ContentsWorkspace onCreateContentView");
 
-        View blockly_contents_workspace = root.findViewById(R.id.blockly_contents_workspace);
+        blockly_contents_workspace = root.findViewById(R.id.blockly_contents_workspace);
         testText = blockly_contents_workspace.findViewById(R.id.testText);
         testText2 = blockly_contents_workspace.findViewById(R.id.testText2);
         recyclerview = blockly_contents_workspace.findViewById(R.id.recyclerview);

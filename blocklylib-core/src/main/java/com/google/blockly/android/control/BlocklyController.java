@@ -221,6 +221,7 @@ public class BlocklyController {
         @Override
         public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
 
+            Log.e("action 확인~~!","!$ mWorkspaceDragHandler");
             Log.e("testtestt", "block drag");
             Log.e("testtestt", TestApplication.getWorkspace_name());
 
@@ -239,8 +240,6 @@ public class BlocklyController {
                     Log.i(TAG, "User touched a stack of blocks that may not be dragged");
                     return null;
                 }
-
-
 
                 return new Runnable() {
                     @Override
@@ -276,8 +275,6 @@ public class BlocklyController {
                     Log.i(TAG, "User touched a stack of blocks that may not be dragged");
                     return null;
                 }
-
-
 
                 return new Runnable() {
                     @Override

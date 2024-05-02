@@ -56,6 +56,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller for dragging blocks and groups of blocks within a workspace.
@@ -82,6 +83,8 @@ public class Dragger {
 
     private static Block oldParentBlock;
     private static Connection oldParentConnection;
+
+    long down, move, end;
 
     /**
      * Interface for processing a drag behavior.
@@ -201,6 +204,8 @@ public class Dragger {
                         // The rest of the drag data is already captured in mPendingDrag.
                         // NOTE: This event position does not respect view scale.
 
+                        Log.e("action 확인", "ACTION_DRAG_STARTED");
+
                         BlockView rootDraggedBlockView = mPendingDrag.getRootDraggedBlockView();
                         if (rootDraggedBlockView.getBlock().isMovable()) {
                             BlockGroup dragGroup = mPendingDrag.getDragGroup();
@@ -219,10 +224,16 @@ public class Dragger {
                     case DragEvent.ACTION_DRAG_LOCATION:
                         // If we're still finishing up a previous drag we may have missed the
                         // start of the drag, in which case we shouldn't do anything.
+
+                        Log.e("action 확인", "ACTION_DRAG_LOCATION");
+
                         continueDragging(event);
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
                         // TODO(#202): Cancel pending drag?
+
+                        Log.e("action 확인", "ACTION_DRAG_ENDED");
+
                         if (event.getResult()) {
                             break;
                         }
@@ -231,6 +242,9 @@ public class Dragger {
                         // Finalize dragging and reset dragging state flags.
                         // These state flags are still used in the initial phase of figuring out if
                         // a drag has started.
+
+                        Log.e("action 확인", "ACTION_DROP");
+
                         maybeConnectDragGroup();
                         finishDragging(FINISH_BEHAVIOR_DROP);
                         return true;    // The drop succeeded.
@@ -366,6 +380,44 @@ public class Dragger {
             public boolean onTouchBlock(BlockView blockView, MotionEvent motionEvent) {
                 return onTouchBlockImpl(DRAG_MODE_IMMEDIATE, dragHandler, blockView, motionEvent,
                         /* interceptMode */ false);
+            }
+
+            @Override
+            public boolean onInterceptTouchEvent(BlockView blockView, MotionEvent motionEvent) {
+                return onTouchBlockImpl(DRAG_MODE_IMMEDIATE, dragHandler, blockView, motionEvent,
+                        /* interceptMode */ true);
+            }
+        };
+    };
+
+    Boolean result;
+
+    public BlockTouchHandler buildImmediateDragBlockTouchHandler2(final DragHandler dragHandler) {
+        return new BlockTouchHandler() {
+            @Override
+            public boolean onTouchBlock(BlockView blockView, MotionEvent motionEvent) {
+                // 여기에서 핸들러를 넣어서 좀 늦게 시작할 수 있는 방법이 있을지 확인해보기
+
+                Log.e("action 확인!", "!touch! !onTouchBlock!");
+                Log.e("action 확인!", "!touch! !motionEvent! " + motionEvent);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        result = onTouchBlockImpl(DRAG_MODE_IMMEDIATE, dragHandler, blockView, motionEvent,
+                                /* interceptMode */ false);
+
+                        Log.e("action 확인!", "!touch! !result! 2 " + result);
+                    }
+                }, 1000);
+
+//                return onTouchBlockImpl(DRAG_MODE_IMMEDIATE, dragHandler, blockView, motionEvent,
+//                        /* interceptMode */ false);
+
+                Log.e("action 확인!", "!touch! !result! " + result);
+
+                return result;
             }
 
             @Override
@@ -641,6 +693,15 @@ public class Dragger {
      *
      * @return True if the event was handled by this touch implementation.
      */
+
+    float eventX = 0;
+    float eventY = 0;
+
+    List<Block> checkBlockList = new ArrayList<>();
+
+    boolean longFlag = false;
+    float fromX, fromY;
+
     @VisibleForTesting
     boolean onTouchBlockImpl(@DragMode int dragMode, DragHandler dragHandler, BlockView touchedView,
                              MotionEvent event, boolean interceptMode) {
@@ -726,8 +787,6 @@ public class Dragger {
 
             Log.e("testtest", "long touch");
 
-
-
             mMainHandler.removeCallbacks(mLogPending);  // Only call once per event 'tick'
             mMainHandler.post(mLogPending);
         }
@@ -735,105 +794,291 @@ public class Dragger {
         // 블록 클릭이나 블록 드래그시 생성되는 블록에 대한 컨트롤을 하는 곳
 
         final boolean result;
-        Log.e("action 확인",action+"");
 
+        Log.e("action 확인",action+"");
+        Log.e("action 확인!",event+"");
+
+        Log.e("action 확인!","~!~"+mWorkspace.getRootBlocks());
+        Log.e("action 확인!","~!~"+touchedView);
+
+
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            fromX = event.getX();
+            fromY = event.getY();
+
+            View mView = (View) touchedView;
+
+            mView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    Log.e("action 확인","setOnLongClickListener");
+
+                    longFlag = true;
+
+                    return false;
+                }
+            });
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            longFlag = false;
+        }
+
+        if (longFlag) {
+            Log.e("action 확인","longFlag true");
+
+            if (event.getAction() == MotionEvent.ACTION_MOVE
+
+            ) {
+                // 실행할 내용 넣기
+            }
+        }
+
+        Log.e("action 확인~~!","event getActionMasked : " + event.getActionMasked());
+        //Log.e("action 확인~~!","event dragMode : " + dragMode);
+
+        // 좌표 가져와서 일정 범위 내에 생성되면 막기 >> 드래그가 실행되서 쉐도우가 보이는 경우면 실행되지 않도록 하자
         if (action == MotionEvent.ACTION_DOWN ) {
+            Log.e("action 확인",event.getX()+"!");
+            Log.e("action 확인",event.getY()+"!!");
+
+            Log.e("action 확인~~","event.getDownTime() ACTION_DOWN : " + event.getDownTime());
+            down = System.currentTimeMillis();
+
+            eventX = event.getX();
+            eventY = event.getY();
+
             if (mPendingDrag == null) {
-                Log.e("action 확인","mPendingDrag == null");
+                Log.e("action 확인~~","mPendingDrag == null");
                 mPendingDrag = new PendingDrag(mController, touchedView, event);
                 if (interceptMode) {
                     // Do not handle intercepted down events. Allow child views (particularly
                     // fields) to handle the touch normally.
-                    Log.e("action 확인","mPendingDrag == null result = false");
+
+                    // 그냥 블록 터치했을 때 들어오는 곳(ACTION_DOWN1)
+                    // 블록 드래그했을 때도 들어오는 곳(ACTION_DOWN1)
+                    // 리사이클러뷰에서 블록 터치 및 드래그를 했을 때 들어오는 곳(ACTION_DOWN1) : 메인 워크스페이스
+
+                    Log.e("action 확인~~","mPendingDrag == null result = false");
                     result = false;
                 } else {
                     // The user touched the block directly.
                     if (dragMode == DRAG_MODE_IMMEDIATE) {
-                        Log.e("action 확인","mPendingDrag == null dragMode == DRAG_MODE_IMMEDIATE");
+                        Log.e("action 확인~~","mPendingDrag == null dragMode == DRAG_MODE_IMMEDIATE");
 
                         if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
                             // 드래그시에만 블록 생성이 되도록 하기
                             // 컨텐츠 모드에서는 사용하지 않기
+
                             result = true;
                         } else { // 원래 코드
                             result = maybeStartDrag(dragHandler);
                         }
                     } else {
-                        Log.e("action 확인","mPendingDrag == null result = true");
+                        Log.e("action 확인~~","mPendingDrag == null result = true");
 
                         result = true;
                     }
+
                 }
             } else if (matchesPending && !interceptMode) {
-                Log.e("action 확인","matchesPending && !interceptMode");
+                Log.e("action 확인~~","matchesPending && !interceptMode");
                 // The Pending Drag was created during intercept, but the child did not handle it
                 // and the event has bubbled down to here.
-                if (dragMode == DRAG_MODE_IMMEDIATE) {
-                    Log.e("action 확인","matchesPending && !interceptMode dragMode == DRAG_MODE_IMMEDIATE");
 
+                // 그냥 블록 터치했을 때 두번째로 들어오는 곳(ACTION_DOWN2)
+                // 블록 드래그했을 때도 두번째로 들어오는 곳(ACTION_DOWN2)
+                // 리사이클러뷰에서 블록 터치 및 드래그를 했을 때 두번째로 들어오는 곳(ACTION_DOWN2) : 메인 워크스페이스
+
+                if (dragMode == DRAG_MODE_IMMEDIATE) {
+                    Log.e("action 확인~~","matchesPending && !interceptMode dragMode == DRAG_MODE_IMMEDIATE");
+
+                    // 리사이클러뷰에서 블록 터치 및 드래그를 했을 때 두번째로 들어오는 곳(ACTION_DOWN2-1) : 메인 워크스페이스
                     // 블록 리스트 클릭이나 드래그시 블록이 생성되는 부분
-                    Log.e("action 확인","Mode : " + TestApplication.getWorkspace_name());
+
+                    Log.e("action 확인~~","Mode : " + TestApplication.getWorkspace_name());
 
                     if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
                         // 드래그시에만 블록 생성이 되도록 하기
                         // 컨텐츠 모드에서는 사용하지 않기
-                        result = true;
+
+                        result = maybeStartDrag(dragHandler);
+
+//                        result = true;
                     } else { // 원래 코드
                         result = maybeStartDrag(dragHandler);
                     }
                 } else {
-                    Log.e("action 확인","matchesPending && !interceptMode result = true");
+                    Log.e("action 확인~~","matchesPending && !interceptMode result = true");
+
+                    // 그냥 블록 터치했을 때 두번째로 들어오는 곳(ACTION_DOWN2-1)
+                    // 블록 드래그했을 때도 두번째로 들어오는 곳(ACTION_DOWN2-1)
 
                     result = true;
                 }
             } else {
-                Log.e("action 확인","result = false");
+                Log.e("action 확인~~","result = false");
                 result = false; // Pending drag already started with a different view / pointer id.
             }
         } else if (matchesPending) {
-            Log.e("action 확인","matchesPending");
+            Log.e("action 확인~~","matchesPending");
             // This touch is part of the current PendingDrag.
             if (action == MotionEvent.ACTION_MOVE) {
+
+                // 블록 드래그했을 때도 세번째로 들어오는 곳(ACTION_MOVE)
+
+                Log.e("action 확인~~","event.getDownTime() ACTION_MOVE : " + event.getDownTime());
+
+                move = System.currentTimeMillis();
+
                 if (mPendingDrag.isDragging()) {
-                    Log.e("action 확인","matchesPending result = false");
+                    Log.e("action 확인~~","matchesPending result = false");
 
                     result = false;  // We've already cancelled or started dragging.
                 } else {
-                    Log.e("action 확인","matchesPending !mPendingDrag.isDragging()");
+                    Log.e("action 확인~~","matchesPending !mPendingDrag.isDragging()");
 
-                    // Mark all direct move events as handled, but only intercepted events if they
-                    // initiate a new drag.
-                    boolean isDragGesture =
-                            (!interceptMode && dragMode == DRAG_MODE_IMMEDIATE
-                                    && event.getDownTime() > TAP_TIMEOUT)
-                            || isBeyondSlopThreshold(event);
-                    boolean isNewDrag = isDragGesture && maybeStartDrag(dragHandler);
-                    result = isNewDrag || !interceptMode;
+                    // 블록 드래그했을 때도 세번째로 들어오는 곳(ACTION_MOVE-1)
+
+                    // TAP_TIMEOUT : 터치 이벤트가 탭인지 스크롤인지 확인하기 위해 기다릴 시간, 이 시간 내에서 움직이지 않으면 탭으로 간주
+
+                    if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+                        Log.e("action 확인","event.getDownTime() : " + event.getDownTime());
+                        Log.e("action 확인","event check : " + touchedView.getBlock().getRootBlock());
+
+                        Log.e("action 확인","event check2 : " + touchedView.getX());
+                        Log.e("action 확인","event check2 : " + touchedView.getY());
+
+                        Log.e("action 확인!","event check3 : " + Math.abs(eventX - event.getX()));
+
+                        if (Math.abs(eventX - event.getX()) >= 100) {
+                            TestApplication.drag_check = "yes";
+                        }
+
+                        boolean isDragGesture =
+                                (!interceptMode && dragMode == DRAG_MODE_IMMEDIATE && event.getDownTime() > TAP_TIMEOUT) || isBeyondSlopThreshold(event);
+                        boolean isNewDrag = isDragGesture && maybeStartDrag(dragHandler);
+                        result = isNewDrag || !interceptMode;
+//                        result = true;
+
+                    } else {
+                        // 원래 코드
+                        // Mark all direct move events as handled, but only intercepted events if they
+                        // initiate a new drag.
+
+                        // 블록 드래그했을 때도 세번째로 들어오는 곳(ACTION_MOVE-2) : 메인 워크스페이스
+
+                        boolean isDragGesture =
+                                (!interceptMode && dragMode == DRAG_MODE_IMMEDIATE
+                                        && event.getDownTime() > TAP_TIMEOUT)
+                                        || isBeyondSlopThreshold(event);
+                        boolean isNewDrag = isDragGesture && maybeStartDrag(dragHandler);
+                        result = isNewDrag || !interceptMode;
+                    }
                 }
             }
             // Handle the case when the user releases before moving far enough to start a drag.
+            // 드래그를 시작할 수 있을 정도로 멀리 이동하기 전에 사용자가 해제할 때 케이스 처리
             else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-                Log.e("action 확인","matchesPending action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL");
+                Log.e("action 확인~~","matchesPending action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL");
+
+                Log.e("action 확인","event.getDownTime() ACTION_UP ACTION_CANCEL : " + event.getDownTime());
+                Log.e("action 확인","event.getEventTime() ACTION_UP ACTION_CANCEL : " + event.getEventTime());
+
+                end = System.currentTimeMillis();
+
+                Log.e("action 확인!!","event.getEventTime() ACTION_UP ACTION_CANCEL : " + (end - down));
+
+                // 그냥 블록 터치했을 때 세번째로 들어오는 곳(ACTION_UP 또는 ACTION_CANCEL)
+                // 블록 드래그했을 때도 네번째로 들어오는 곳(ACTION_UP 또는 ACTION_CANCEL) : 메인 워크스페이스
+                // 리사이클러뷰에서 블록 터치 및 드래그를 했을 때 세번째로 들어오는 곳(ACTION_UP 또는 ACTION_CANCEL) : 메인 워크스페이스
 
                 if (!mPendingDrag.isDragging()) {
-                    Log.e("action 확인","matchesPending ACTION_UP || ACTION_CANCEL !mPendingDrag.isDragging()");
+                    Log.e("action 확인~~","matchesPending ACTION_UP || ACTION_CANCEL !mPendingDrag.isDragging()");
+
+                    // 그냥 블록 터치했을 때 세번째로 들어오는 곳(ACTION_UP 또는 ACTION_CANCEL-1)
 
                     if (!interceptMode && mPendingDrag.isClick()) {
-                        Log.e("action 확인","matchesPending ACTION_UP || ACTION_CANCEL !mPendingDrag.isDragging() !interceptMode && mPendingDrag.isClick()");
+                        Log.e("action 확인~~","matchesPending ACTION_UP || ACTION_CANCEL !mPendingDrag.isDragging() !interceptMode && mPendingDrag.isClick()");
+
+                        // 그냥 블록 터치했을 때 세번째로 들어오는 곳(ACTION_UP 또는 ACTION_CANCEL-2)
 
                         dragHandler.onBlockClicked(mPendingDrag);
                     }
                     finishDragging(FINISH_BEHAVIOR_REVERT);
                 }
 
-                Log.e("action 확인", mWorkspace.getRootBlocks()+"");
+                Log.e("action 확인!~~","!$" + TestApplication.block_check);
+
+//                if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+//                    if (action == MotionEvent.ACTION_CANCEL) {
+//                        boolean isDragGesture =
+//                                (!interceptMode && dragMode == DRAG_MODE_IMMEDIATE && event.getDownTime() > TAP_TIMEOUT) || isBeyondSlopThreshold(event);
+//                        boolean isNewDrag = isDragGesture && maybeStartDrag(dragHandler);
+//                        result = isNewDrag || !interceptMode;
+//                    } else {
+//                        result = !interceptMode;
+//                    }
+//                } else {
+//                    result = !interceptMode;
+//                }
+
+//                if (action == MotionEvent.ACTION_CANCEL) {
+//
+//
+//                    boolean isDragGesture =
+//                            (!interceptMode && dragMode == DRAG_MODE_IMMEDIATE && event.getDownTime() > TAP_TIMEOUT) || isBeyondSlopThreshold(event);
+//                    boolean isNewDrag = isDragGesture && maybeStartDrag(dragHandler);
+//                    result = isNewDrag || !interceptMode;
+//                } else {
+//                    result = !interceptMode;
+//                }
+
+                //mController.removeBlockTree(TestApplication.block_check);
+
+//                // 짧은 드래그에서만 여기가 들어오고 아닌 경우에는 안들어옴
+//                if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
+//                    Log.e("action 확인","**"+ eventX);
+//                    Log.e("action 확인","**"+ event.getX());
+//
+//                    if (touchedView.getBlock().getParentBlock() != null) { // 블록 연결이 된 경우(워크 스페이스에서 드래그하는 경우)
+//
+//                    } else { // 블록 연결이 안된 경우(블록 리스트에서 가져오는 경우) : 소블록 클릭시는 연결된 경우로 가기 때문에 따로 해야함
+//                        //mController.removeBlockTree(touchedView.getBlock());
+//
+//                        Log.e("action 확인!","**!!"+ checkBlockList);
+//
+////                        for (int i = 0; i < checkBlockList.size(); i++) {
+////                            Log.e("action 확인","**" + checkBlockList.get(i));
+////                            Log.e("action 확인","**" + touchedView.getBlock());
+////
+////                            if (checkBlockList.get(i) == touchedView.getBlock()) {
+////                                Log.e("action 확인","** yes");
+////
+////                                mWorkspace.removeRootBlock(touchedView.getBlock(), true);
+////                            } else {
+////                                Log.e("action 확인","** no");
+////                            }
+////                        }
+//                    }
+//                }
+
+                // 여기에서 블록 확인하기
+//                Log.e("action 확인", touchedView.getBlock()+"");
+//                if (touchedView.getBlock().getParentBlock() != null) {
+//                    Log.e("action 확인", "~~" + touchedView.getBlock().getParentConnection().getBlock());
+//                }
+//                Log.e("action 확인", "?" + mWorkspace.getRootBlocks().contains(touchedView.getBlock()));
+//                Log.e("action 확인", "?" + mWorkspace.getBlockFactory());
+//                Log.e("action 확인", mWorkspace.getRootBlocks().get(0).getAllConnections()+"");
+//                Log.e("action 확인", mWorkspace.isRootBlock(touchedView.getBlock())+"");
 
                 result = !interceptMode;
             } else {
                 result = false; // Unrecognized event action
             }
         } else {
-            Log.e("action 확인","result = false2");
+            Log.e("action 확인~~","result = false2");
             result = false; // Doesn't match existing drag.
         }
 
@@ -866,10 +1111,10 @@ public class Dragger {
         @Size(2) int[] curScreenLocation = mTempScreenCoord2;
         touchedView.getTouchLocationOnScreen(actionMove, curScreenLocation);
 
-
         final int deltaX = touchDownLocation[0] - curScreenLocation[0];
         final int deltaY = touchDownLocation[1] - curScreenLocation[1];
 
+        // 원래 코드
         // Dragged far enough to start a drag?
         return (deltaX * deltaX + deltaY * deltaY > mTouchSlopSquared);
     }
@@ -893,6 +1138,8 @@ public class Dragger {
                     if (mPendingDrag != null && mPendingDrag.isDragging()) {
                         return; // Ignore.  Probably being handled by a child view.
                     }
+
+                    Log.e("getworkspace~", "maybeStartDrag~~!!");
 
                     dragGroupCreator.run();
                     boolean dragStarted = pendingDrag.isDragging();
@@ -995,6 +1242,11 @@ public class Dragger {
         DragShadowBuilder(PendingDrag pendingDrag, WorkspaceHelper helper) {
             super(pendingDrag.getDragGroup());
             mPendingDrag = pendingDrag;
+
+            Log.e("getworkspace~", "DragShadowBuilder~~");
+            Log.e("getworkspace~", "DragShadowBuilder~~" + pendingDrag.getDragTouchOffset());
+            Log.e("getworkspace~", "DragShadowBuilder~~" + pendingDrag.getTouchDownViewOffsetX());
+            Log.e("getworkspace~", "DragShadowBuilder~~" + pendingDrag.getTouchDownViewOffsetY());
 
             // TODO : 블록 드래그 할때 투명 블록 설정
             // 셋업-루프 블록이거나

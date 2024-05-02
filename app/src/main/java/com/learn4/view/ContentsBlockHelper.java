@@ -1,9 +1,13 @@
 package com.learn4.view;
 
+import android.annotation.SuppressLint;
+import android.content.ClipDescription;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -43,7 +47,7 @@ public class ContentsBlockHelper {
     private FlyoutCallback mCallback;
     private WorkspaceHelper mHelper;
     private ConnectionManager mConnectionManager;
-    private BlockTouchHandler mTouchHandler;
+    private BlockTouchHandler mTouchHandler, mTouchHandler2;
 
     BlocklyController blocklyController;
 
@@ -71,12 +75,17 @@ public class ContentsBlockHelper {
         Log.e("testtest", "!!"+controller);
         Log.e("testtest", "!!"+callback);
 
+        TestApplication.flyoutCallback = callback;
+
         mCallback = callback;
         mHelper = controller.getWorkspaceHelper();
         mConnectionManager = controller.getWorkspace().getConnectionManager();
 
         mTouchHandler = controller.getDragger()
                 .buildImmediateDragBlockTouchHandler(new ContentsBlockHelper.DragHandler());
+
+        mTouchHandler2 = controller.getDragger()
+                .buildImmediateDragBlockTouchHandler2(new ContentsBlockHelper.DragHandler2());
 
         //블록 복사기능
         controller.setOnBlockClickListener(new BlocklyController.OnBlockClickListener() {
@@ -109,6 +118,7 @@ public class ContentsBlockHelper {
             return new ContentsBlockHelper.BlockViewHolder(mContext);
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public void onBindViewHolder(ContentsBlockHelper.BlockViewHolder holder, int position) {
 
@@ -162,6 +172,15 @@ public class ContentsBlockHelper {
             }
 
             holder.bg = bg;
+
+            bg.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.e("action 확인!", "!touch! !touch!");
+
+                    return false;
+                }
+            });
         }
 
         @Override
@@ -180,6 +199,9 @@ public class ContentsBlockHelper {
         }
     }
 
+
+
+    @SuppressLint("ClickableViewAccessibility")
     private class BlockViewHolder extends RecyclerView.ViewHolder {
         final FrameLayout mContainer;
         BlockGroup bg = null;  // Root of the currently attach block views.
@@ -187,6 +209,104 @@ public class ContentsBlockHelper {
         BlockViewHolder(Context context) {
             super(new FrameLayout(context));
             mContainer = (FrameLayout) itemView;
+
+            Log.e("action 확인!", itemView+"!");
+            Log.e("action 확인!", mContainer.findFocus()+"!");
+
+            mContainer.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.e("action 확인!", "!touch!");
+
+                    return false;
+                }
+            });
+
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    Log.e("action 확인!", "!! touch !!");
+
+                    return false;
+                }
+            });
+
+            mContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("action 확인!", "!click!");
+                }
+            });
+
+            // 드래그 리스너 설정
+//            View.OnDragListener mDragEventListener = new View.OnDragListener() {
+//
+//                @Override
+//                public boolean onDrag(View v, DragEvent event) {
+//
+//                    Log.e("action 확인!", "!!" + v.toString());
+//                    Log.e("action 확인!", "!!" + v.getId());
+//
+//                    switch (event.getAction()) {
+//                        case DragEvent.ACTION_DRAG_STARTED:
+//                            Log.e("action 확인!", "ACTION_DRAG_STARTED~");
+//
+//                            event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN);
+//                        case DragEvent.ACTION_DRAG_ENTERED:
+//                            Log.e("action 확인!", "ACTION_DRAG_ENTERED~");
+//
+//                            return true;
+//                        case DragEvent.ACTION_DRAG_LOCATION:
+//                            Log.e("action 확인!", "ACTION_DRAG_LOCATION~");
+//
+//                            return true;
+//                        case DragEvent.ACTION_DRAG_EXITED:
+//                            Log.e("action 확인!", "ACTION_DRAG_EXITED~");
+//
+//                            return true;
+//                        case DragEvent.ACTION_DROP:
+//                            Log.e("action 확인!", "ACTION_DROP~");
+//
+//                            if (v == mRecyclerView) { // recyclerview
+//                                Log.e("action 확인!", "recyclerview~");
+//
+//                                View rView = (View) event.getLocalState();
+//
+//                                ((ViewGroup) rView.getParent()).removeView(rView);
+//
+//                                return true;
+//                            } else { // else
+//                                return false;
+//                            }
+//
+////                            if (v == context.g) { // workspace
+////                                Log.e("action 확인!", "workspace");
+////
+////                                View wView = (View) event.getLocalState();
+////
+////                                return true;
+////                            } else
+//                        case DragEvent.ACTION_DRAG_ENDED:
+//                            Log.e("action 확인!", "ACTION_DRAG_ENDED~");
+//
+//                            if (event.getResult()) {
+//                                Log.e("action 확인!", "Success~");
+//                            } else {
+//                                Log.e("action 확인!", "Failed~");
+//                            }
+//
+//                            return true;
+//                        default:
+//                            break;
+//                    }
+//
+//                    return false;
+//                }
+//            };
+//
+//            // 드래그리스너 이벤트 연결
+//            mRecyclerView.setOnDragListener(mDragEventListener);
         }
     }
 
@@ -201,7 +321,7 @@ public class ContentsBlockHelper {
                     // Acquire the draggable BlockGroup on the Workspace from the
                     // {@link OnDragListBlock}.
                     Log.e("getworkspace","blockgroupfortouch!!!");
-                    Log.e("getworkspace","blockgroupfortouch!!! + " + pendingDrag.isClick());
+//                    Log.e("getworkspace","blockgroupfortouch!!! + " + pendingDrag.isClick());
                     //Log.e("getworkspace","blockgroupfortouch!!! ++ " + pendingDrag.isDragging());
                     //Log.e("getworkspace","blockgroupfortouch!!! +++ " + pendingDrag.isAlive());
 
@@ -210,6 +330,7 @@ public class ContentsBlockHelper {
 
 //                    if (blockDrag) {
 //                        Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
+
 //                                getWorkspaceBlockGroupForTouch(pendingDrag);
 //
 //                        if (dragGroupAndTouchOffset != null) {
@@ -224,21 +345,31 @@ public class ContentsBlockHelper {
 
                     Log.e("getworkspace~", "maybeGetDragGroupCreator~~");
 
-                    if (!pendingDrag.isClick()) {
-                        Log.e("getworkspace","~block drag!!!");
+                    Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
+                            getWorkspaceBlockGroupForTouch(pendingDrag);
 
-                        Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
-                                getWorkspaceBlockGroupForTouch(pendingDrag);
-
-                        if (dragGroupAndTouchOffset != null) {
-                            pendingDrag.startDrag(
-                                    mRecyclerView,
-                                    dragGroupAndTouchOffset.first,
-                                    dragGroupAndTouchOffset.second);
-                        }
-                    } else {
-                        Log.e("getworkspace","~block click!!!");
+                    if (dragGroupAndTouchOffset != null) {
+                        pendingDrag.startDrag(
+                                mRecyclerView,
+                                dragGroupAndTouchOffset.first,
+                                dragGroupAndTouchOffset.second);
                     }
+
+//                    if (!pendingDrag.isClick()) {
+//                        Log.e("getworkspace","~block drag!!!");
+//
+//                        Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
+//                                getWorkspaceBlockGroupForTouch(pendingDrag);
+//
+//                        if (dragGroupAndTouchOffset != null) {
+//                            pendingDrag.startDrag(
+//                                    mRecyclerView,
+//                                    dragGroupAndTouchOffset.first,
+//                                    dragGroupAndTouchOffset.second);
+//                        }
+//                    } else {
+//                        Log.e("getworkspace","~block click!!!");
+//                    }
                 }
             };
         }
@@ -259,6 +390,66 @@ public class ContentsBlockHelper {
             return true;
         }
     }
+
+    /** {@link Dragger.DragHandler} implementation for BlockListViews. */
+    private class DragHandler2 implements Dragger.DragHandler {
+
+        @Override
+        public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
+            return new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("getworkspace","blockgroupfortouch!!!");
+                    //Log.e("getworkspace","blockgroupfortouch!!! + " + pendingDrag.isClick());
+
+                    Log.e("getworkspace~", "maybeGetDragGroupCreator~~");
+
+                    Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
+                            getWorkspaceBlockGroupForTouch(pendingDrag);
+
+                    if (dragGroupAndTouchOffset != null) {
+                        pendingDrag.startDrag(
+                                mRecyclerView,
+                                dragGroupAndTouchOffset.first,
+                                dragGroupAndTouchOffset.second);
+                    }
+
+//                    if (!pendingDrag.isClick()) {
+//                        Log.e("getworkspace","~block drag!!!");
+//
+//                        Pair<BlockGroup, ViewPoint> dragGroupAndTouchOffset =
+//                                getWorkspaceBlockGroupForTouch(pendingDrag);
+//
+//                        if (dragGroupAndTouchOffset != null) {
+//                            pendingDrag.startDrag(
+//                                    mRecyclerView,
+//                                    dragGroupAndTouchOffset.first,
+//                                    dragGroupAndTouchOffset.second);
+//                        }
+//                    } else {
+//                        Log.e("getworkspace","~block click!!!");
+//                    }
+                }
+            };
+        }
+
+        @Override
+        public boolean onBlockClicked(final PendingDrag pendingDrag) {
+            Log.e("getworkspace","blockgroupfortouch~~");
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // Identify and process the clicked BlockGroup.
+                    // getWorkspaceBlockGroupForTouch(pendingDrag);
+                    Log.e("onBlock","clicked");
+
+                    blockDrag = false;
+                }
+            });
+            return true;
+        }
+    }
+
 
     //블록 복사
     @NonNull
@@ -332,6 +523,9 @@ public class ContentsBlockHelper {
         Log.e("rootBlock", rootTouchedBlockView+"");
         BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
 
+        Log.e("action 확인","getWorkspaceBlockGroupForTouch");
+        Log.e("action 확인",rootBlock+"");
+
         // Calculate the offset from rootTouchedGroup to touchedBlockView in view
         // pixels. We are assuming the only transforms between BlockViews are the
         // child offsets.
@@ -363,10 +557,52 @@ public class ContentsBlockHelper {
                 pendingDrag.getTouchDownWorkspaceCoordinates());
         mTempWorkspacePoint.offset(-wsOffsetX, -wsOffsetY);
 
+        Log.e("action 확인",offsetX+"");
+        Log.e("action 확인",offsetY+"");
+
+        Log.e("action 확인",wsOffsetX+"");
+        Log.e("action 확인",wsOffsetY+"");
+
         int itemIndex =0;
 
+        // getDraggableBlockGroup : Workspace 및 WorkspaceView 에 블록을 추가하는 것을 포함하여 드래그 가능한 BlockGroup 의 선택을 처리
         BlockGroup dragGroup = mCallback.getDraggableBlockGroup(itemIndex, rootBlock,
                 mTempWorkspacePoint);
+
+        Log.e("getworkspace~", "~~" + dragGroup);
+        Log.e("getworkspace~", "~~" + touchOffset);
+
+        TestApplication.block_check = dragGroup.getFirstBlock();
+        TestApplication.workspacePoint = mTempWorkspacePoint;
+
+        pendingDrag.getDragTouchOffset();
+
+        int[] location = new int[2];
+        mRecyclerView.getLocationOnScreen(location);
+
+        int[] new_location = new int[2];
+
+        Log.e("getworkspace~", "check" + location[0]);
+        Log.e("getworkspace~", "check" + location[1]);
+
+        if (pendingDrag.getTouchDownViewOffsetX() >= location[0]) {
+            if (pendingDrag.getTouchDownViewOffsetX() <= location[0] + mRecyclerView.getWidth()) {
+                if (pendingDrag.getTouchDownViewOffsetY() >= location[1]) {
+                    if (pendingDrag.getTouchDownViewOffsetY() <= location[1] + mRecyclerView.getHeight()) {
+                        Log.e("getworkspace~", "true");
+                    } else {
+                        Log.e("getworkspace~", "false1");
+                    }
+                } else {
+                    Log.e("getworkspace~", "false2");
+                }
+            } else {
+                Log.e("getworkspace~", "false3");
+            }
+        } else {
+            Log.e("getworkspace~", "false4");
+        }
+
         return Pair.create(dragGroup, touchOffset);
     }
 

@@ -547,6 +547,8 @@ public class BlockRecyclerViewHelper {
         BlockView rootTouchedBlockView = mHelper.getView(rootBlock);
         BlockGroup rootTouchedGroup = rootTouchedBlockView.getParentBlockGroup();
 
+        Log.e("action 확인~~!"," : " + pendingDrag);
+
         // Calculate the offset from rootTouchedGroup to touchedBlockView in view
         // pixels. We are assuming the only transforms between BlockViews are the
         // child offsets.

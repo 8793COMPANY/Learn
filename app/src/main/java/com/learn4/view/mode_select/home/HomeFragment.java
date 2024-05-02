@@ -81,17 +81,17 @@ public class HomeFragment extends Fragment {
 //        user_name.setText(Application.user.getName());
 
         free_btn.setOnClickListener(v->{
-//            Intent intent = new Intent(getActivity(), MainActivity.class);
-//            intent.putExtra("contents_name","none");
-//            intent.putExtra("id","0");
-//            myApplication.showLoadingScreen(getContext());
-//            startActivity(intent);
-
-            Intent intent = new Intent(getActivity(), ContentsWorkspace.class);
+            Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.putExtra("contents_name","none");
             intent.putExtra("id","0");
             myApplication.showLoadingScreen(getContext());
             startActivity(intent);
+
+//            Intent intent = new Intent(getActivity(), ContentsWorkspace.class);
+//            intent.putExtra("contents_name","none");
+//            intent.putExtra("id","0");
+//            myApplication.showLoadingScreen(getContext());
+//            startActivity(intent);
         });
 
         content_mode.setOnClickListener(v->{

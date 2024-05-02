@@ -315,12 +315,22 @@ public abstract class AbstractBlockView<InputView extends com.google.blockly.and
         Log.e("testtest", mBlock + " : onTouchEvent~~");
         Log.e("testtest", mBlock.getColor() + " : onTouchEvent~~");
 
-        gestureDetector.onTouchEvent(event);
+        //gestureDetector.onTouchEvent(event);
 
         Log.e("testtest", this+"");
         mView = this;
         Log.e("testtest", mView+"");
 
+        mView.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.e("action 확인!", "!touch! !mView setOnLongClickListener!");
+
+                return false;
+            }
+        });
+
+        event.getAction();
 
 //        if (TestApplication.getWorkspace_name().equals("ContentsWorkspace")) {
 //            Log.e("testtest", "ContentsWorkspace long press 2");

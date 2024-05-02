@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.Display;
 
 import com.google.blockly.android.control.BlocklyController;
+import com.google.blockly.android.ui.FlyoutCallback;
 import com.google.blockly.model.Block;
+import com.google.blockly.model.WorkspacePoint;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -47,6 +49,12 @@ public class TestApplication {
     public static float density;
 
     public static String drag_state = "none";
+
+    public static String drag_check = "none";
+
+    public static Block block_check;
+    public static FlyoutCallback flyoutCallback;
+    public static WorkspacePoint workspacePoint = new WorkspacePoint();
 
 //    public static Block basicBlock;
 //    public static BlocklyController blocklyController;
