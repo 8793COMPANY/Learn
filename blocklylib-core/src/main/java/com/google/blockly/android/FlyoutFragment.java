@@ -259,14 +259,17 @@ public class FlyoutFragment extends Fragment implements BlockListUI{
      */
     public void setCurrentCategory(@NonNull BlocklyCategory category) {
         //Log.e("gg","setCurrentCategory");
+        Log.e("setCurrentCategory","first in");
         mRecyclerHelper.setCurrentCategory(category);
         updateCategoryColors(category);
         // TODO(#80): Add animation hooks for subclasses.
         if (category == null) {
             mFlyoutView.setVisibility(View.GONE);
+            Log.e("setCurrentCategory","flyoutview gone");
         } else {
             categoryData.setClosed(true);
             mFlyoutView.setVisibility(View.VISIBLE);
+            Log.e("setCurrentCategory","flyoutview visible");
         }
     }
 

@@ -154,6 +154,7 @@ public class ContentsActivity extends AppCompatActivity {
         int devicewidth = (int) (displaymetrics.widthPixels / 4.9);
         levelAdapter = new LevelAdapter(ContentsActivity.this, subjects, devicewidth);
         LinearLayoutManager manager = new LinearLayoutManager(ContentsActivity.this);
+//        LinearLayoutManager manager = new LinearLayoutManager(ContentsActivity.this);
         rvSubject.setLayoutManager(manager);
         rvSubject.setAdapter(levelAdapter);
 
