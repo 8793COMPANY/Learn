@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.learn4.BluetoothActivity;
 import com.learn4.DroneActivity;
 import com.learn4.util.Application;
 import com.learn4.R;
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment {
     Button free_btn,contents_btn,dictionary_btn,drone_btn;
     TextView user_name;
 
-
+    Button bluetoothBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class HomeFragment extends Fragment {
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
         drone_btn = root.findViewById(R.id.drone_btn);
         user_name = root.findViewById(R.id.user_name);
+
+        bluetoothBtn = root.findViewById(R.id.bluetoothBtn);
 
 //        new Thread(() -> {
 //                WeatherData weatherData = new WeatherData();
@@ -102,6 +105,11 @@ public class HomeFragment extends Fragment {
 
         drone_btn.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), DroneActivity.class);
+            startActivity(intent);
+        });
+
+        bluetoothBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), BluetoothActivity.class);
             startActivity(intent);
         });
 
