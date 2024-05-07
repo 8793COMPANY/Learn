@@ -1,4 +1,4 @@
-package com.learn4;
+package com.learn4.view.drone;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.learn4.R;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -251,6 +252,21 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         drawable.setSize(1, 2);
         linearLayout.setDividerPadding(45);
         linearLayout.setDividerDrawable(drawable);
+
+
+        Button go_coding_btn = findViewById(R.id.go_coding_btn);
+
+        go_coding_btn.setOnClickListener(v->{
+            Intent intent = new Intent( DroneActivity.this, DroneBlockActivity.class);
+            overridePendingTransition(0, 0);
+            // 플래그 설정
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent); //현재 액티비티 재실행 실시
+            overridePendingTransition(0, 0);
+            finish(); //현재 액티비티 종료 실시
+        });
+
 
 
 
@@ -1008,8 +1024,8 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                         Log.e("send","rgb in");
                         sendRGB(socket, serverAddr, (byte) 0x8D);
                     } else if (!STOP) {
-//                        Log.e("send","stop in");
-//                        Log.e("send value", roll+","+pitch+","+yaw+","+throttle);
+                        Log.e("send","stop in");
+                        Log.e("send value", roll+","+pitch+","+yaw+","+throttle);
                         sendSignal(socket, serverAddr, roll, pitch, yaw, throttle);
 //                        Log.e(TAG+"sendSignal", Integer.toString(cont_version));
                     }
@@ -1168,6 +1184,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             temp[10] = checkSum;
             DatagramPacket packet = new DatagramPacket(temp, temp.length, serverAddr, port);
             socket.send(packet);
+            Log.e("send ok","finish");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1486,6 +1503,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onStart() {
+        Log.e("activity droneactivity","onstart");
         Log.e("my", "onStart");
         armPosition();
         SW = true;

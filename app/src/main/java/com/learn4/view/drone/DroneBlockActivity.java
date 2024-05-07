@@ -1,8 +1,6 @@
 package com.learn4.view.drone;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +12,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.print.PageRange;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.Pair;
@@ -30,26 +27,25 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.blockly.android.AbstractBlocklyActivity;
-import com.google.blockly.android.BlockDropdownClick;
+import com.google.blockly.Setting;
 import com.google.blockly.android.BlocklySectionsActivity;
 import com.google.blockly.android.FlyoutFragment;
-import com.google.blockly.android.OnCloseCheckListener;
 import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.UploadBtnCheck;
-import com.google.blockly.android.WorkspaceFragment;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.control.ConnectionManager;
 import com.google.blockly.android.control.FlyoutController;
 import com.google.blockly.android.ui.BlockGroup;
-import com.google.blockly.android.ui.BlockRecyclerViewHelper;
 import com.google.blockly.android.ui.BlockTouchHandler;
 import com.google.blockly.android.ui.BlockView;
+import com.google.blockly.android.ui.BusProvider;
+import com.google.blockly.android.ui.CategoryData;
 import com.google.blockly.android.ui.CategoryView;
 import com.google.blockly.android.ui.Dragger;
 import com.google.blockly.android.ui.FlyoutCallback;
 import com.google.blockly.android.ui.PendingDrag;
+import com.google.blockly.android.ui.PushEvent;
 import com.google.blockly.android.ui.ViewPoint;
 import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.Block;
@@ -58,9 +54,8 @@ import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.model.VariableCustomCategory;
 import com.google.blockly.model.WorkspacePoint;
 import com.google.blockly.utils.BlockLoadingException;
-import com.learn4.DroneActivity;
 import com.learn4.R;
-import com.learn4.util.MySharedPreferences;
+import com.squareup.otto.Subscribe;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -72,11 +67,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-public class DroneBlockActivity extends BlocklySectionsActivity implements TabItemClick, OnCloseCheckListener, UploadBtnCheck, BlockDropdownClick {
+public class DroneBlockActivity extends BlocklySectionsActivity implements TabItemClick ,UploadBtnCheck {
 
     MyHandler myHandler;
 
@@ -86,6 +79,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     public static final int RECEIVED = 4;
     public static final int DELAY = 5;
     public static final int DEBUG = 254;
+
+    public static final int UPLOAD_STOP = 100;
 
     int x125 = 1;
 
@@ -101,6 +96,10 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     public boolean SW = true;
     public boolean STOP = false;
     public boolean SAFE_LANDING = false;
+
+    public boolean DRONE_STOP = false;
+
+    String battery_value = "0";
 
     public byte pitch = 0x7d;
     public byte roll = 0x7d;
@@ -126,14 +125,21 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     public boolean debug = false;
 
 
+
+    public boolean start_stop_check= false;
+
+
     UDPClient client;
     DatagramSocket socket;
 
     public int batCount = 0;
     public int debugCount = 0;
 
+    CategoryData categoryData;
 
     String TARGET_BASE_PATH;
+
+    LinearLayout trashcan_btn;
     private FrameLayout mGeneratedFrameLayout;
     RecyclerView block_list_view;
     BlocklyController controller;
@@ -141,7 +147,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
     CategoryView mCategoryView;
 
-    private static String SAVE_FILENAME = "turtle_workspace.xml";
+    private static String SAVE_FILENAME = "drone_workspace.xml";
+
+    private static String AUTOSAVE_FILENAME = "drone_workspace_temp.xml";
 
     String code="", xml = "";
 
@@ -164,6 +172,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     private final WorkspacePoint mTempWorkspacePoint = new WorkspacePoint();
 
 
+
     String [] turtle_files_kor = {"default/logic_blocks_kor.json","default/loop_blocks_kor.json","default/math_blocks_kor.json","default/variable_blocks_kor.json", "turtle/turtle_blocks_kor.json"};
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
@@ -180,18 +189,34 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     static final List<String> TURTLE_BLOCK_GENERATORS = Arrays.asList(
             "turtle/generators.js"
     );
-    private static final int MAX_LEVELS = 2;
+    private static final int MAX_LEVELS = 1;
     private static final String[] LEVEL_TOOLBOX = new String[MAX_LEVELS];
 
     static {
-        LEVEL_TOOLBOX[0] = "arduino_basic.xml";
-        LEVEL_TOOLBOX[1] = "arduino_advanced.xml";
+        LEVEL_TOOLBOX[0] = "drone_basic.xml";
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("hello in","oncreate");
+
+        controller = getController();
+        mHelper = controller.getWorkspaceHelper();
+        mConnectionManager = controller.getWorkspace().getConnectionManager();
+        mTouchHandler = controller.getDragger()
+                .buildImmediateDragBlockTouchHandler(new DragHandler());
+
+        mHelium = LayoutInflater.from(this);
+        mCategoryView = mBlocklyActivityHelper.getmCategoryView();
+//        mHelper = controller.getWorkspaceHelper();
+//
+        mCategoryView.mCategoryTabs.setEnableCheck(this);
+        mCategoryView.setItemClick(this);
+
+//        block_list_view.setAdapter(new Adapter());
+
+
 
 
 
@@ -202,10 +227,37 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //
 //        flyoutFragment = new FlyoutFragment();
 //
-//        this.mCategoryView=mBlocklyActivityHelper.getmCategoryView();
+
+
+        //        block_list_view.setAdapter(new Adapter());
+
+
+//        setContentView(R.layout.blockly_drone_workspace);
+//        mGeneratedFrameLayout = findViewById(R.id.generated_workspace);
+
+
+
+        categoryData = CategoryData.getInstance();
+
+
+//        Application.setSimulatorEnabled(false);
+//        categoryData.setClosed(false);
+        BusProvider.getInstance().register(this);
+//
+//
+////        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
+//
+
+//        mFlyoutController = new FlyoutController(controller);
+
+//        Application.checkUploadBtn();
+
+        mBlocklyActivityHelper.getFlyoutController();
+
+
 
     }
-
+//
     @Override
     protected View onCreateContentView(int containerId) {
         Log.e("hello in","onCreateContentView");
@@ -215,21 +267,6 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
 
 
-        controller = getController();
-
-
-//        List<BlocklyCategory.CategoryItem> blocks = mCategoryView.mRootCategory.getSubcategories().get(0).getItems();
-
-        mHelper = controller.getWorkspaceHelper();
-        mConnectionManager = controller.getWorkspace().getConnectionManager();
-        mTouchHandler = controller.getDragger()
-                .buildImmediateDragBlockTouchHandler(new DragHandler());
-
-        mHelium = LayoutInflater.from(this);
-        mFlyoutController = new FlyoutController(controller);
-
-
-        Object obj = this;
 
         myHandler = new MyHandler();
 
@@ -238,6 +275,20 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         Button wifi_button = root.findViewById(R.id.wifi_btn);
         Button arm_btn = root.findViewById(R.id.arm_btn);
         Button disarm_btn = root.findViewById(R.id.disarm_btn);
+        Button go_drone_btn = root.findViewById(R.id.go_drone_btn);
+
+        go_drone_btn.setOnClickListener(v->{
+            Intent intent = new Intent(DroneBlockActivity.this, DroneActivity.class);
+            overridePendingTransition(0, 0);
+            // 플래그 설정
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent); //현재 액티비티 재실행 실시
+            overridePendingTransition(0, 0);
+            finish(); //현재 액티비티 종료 실시
+        });
+
+        trashcan_btn = root.findViewById(R.id.blockly_overlay_buttons);
 
 //        View blockly_toolbox_ui = root.findViewById(blockly_toolbox_ui);
 
@@ -246,7 +297,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         block_list_view = root.findViewById(R.id.block_list_view);
 
         block_list_view.setLayoutManager(new LinearLayoutManager(this));
-        block_list_view.setAdapter(new Adapter());
+
+
+
 
 
         battery = root.findViewById(R.id.battery);
@@ -260,7 +313,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 }
             }, 500);
             Log.e("touch", "calibration");
-           delay(4000);
+            delay(4000);
         });
 
 
@@ -272,9 +325,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
             String functionName = "funcA";
 //            code = "funcA();\nfuncB(\"hello\");";
 
-            thread = new ExampleThread(code, obj);
-            thread.start();
-            Log.e("thread","start");
+//            thread = new ExampleThread(code, obj);
+//            thread.start();
+//            Log.e("thread","start");
 
         });
 
@@ -306,6 +359,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
 
 
+
+
+
         return root;
     }
 
@@ -323,6 +379,73 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         return int.class;
     }
 
+    public void setLineForOtherCategoryTabs(int position) {
+        //mMonitorHandler.sendEmptyMessage(1);
+        Log.e("??","setLineForOtherCategoryTabs");
+
+    }
+
+    @Subscribe
+    public void FinishLoad(PushEvent mPushEvent) {
+        // 이벤트가 발생한뒤 수행할 작업
+        Log.e("??","finishLoad " + mPushEvent.getPos());
+        setLineForOtherCategoryTabs(mPushEvent.getPos());
+
+
+
+
+        switch (mPushEvent.getPos()) {
+            // 어택땅
+            case 7:
+
+                trashcan_btn.setVisibility(View.VISIBLE);
+                break;
+            default:
+                Log.e("code_btn in","어택땅");
+                if(mPushEvent.getPos() < 1) {
+
+                    break;
+                } else if (mPushEvent.getPos() >= 1 ){
+                    trashcan_btn.setVisibility(View.VISIBLE);
+                    break;
+                }
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e("my", "onStop");
+
+        SW = false;
+        Setting.drone_upload_btn_check = false;
+
+
+        //소켓 함부로 닫지 마라
+//        if (!socket.isClosed()) {
+//            socket.close();
+//        }
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.e("my", "onDestroy");
+        if (!socket.isClosed()) {
+            Log.e("my", "!isClosed()");
+            socket.close();
+            Log.e("my", Boolean.toString(socket.isConnected()));
+            Log.e("my", Boolean.toString(socket.isBound()));
+            Log.e("my", Boolean.toString(socket.isClosed()));
+        }
+
+//        unregisterReceiver(rssiReceiver);
+        super.onDestroy();
+    }
+
+
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -332,6 +455,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
     @Override
     protected void onStart() {
+        Log.e("activity droneblockactivity","onstart");
         SW = true;
         throttle = 0x7d;
         try {
@@ -341,6 +465,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         }
         client = new UDPClient();
         client.start();
+
+//        mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(SAVE_FILENAME);
+
         super.onStart();
     }
 
@@ -384,6 +511,16 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         Log.e("droneTest hello ", "arm");
         arm = true;
     }
+
+    public void thread_stop(){
+        Log.e("droneTest hello ", "arm");
+        throttle = (byte) 125;
+        yaw = (byte) 125;
+        roll = (byte) 125;
+        pitch = (byte) 125;
+        disarm();
+    }
+
 
 
     public void disarm(){
@@ -526,7 +663,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         }
 
         roll = (byte) 125;
-        delay(300);
+        delay(3000);
     }
 
     public void ccw(long cmd_param){
@@ -562,8 +699,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     public void loadfor(){
 
         String str =
-//                "<block type=\"turtle_drone_main\" id=\"8d32874e-b4b2-4f58-bf8f-d5fa928da0ff\" x=\"8.0\" y=\"128.0\">\n" +
-//                        "<statement name=\"DO\">\n"+
+                "<block type=\"turtle_drone_main\" id=\"8d32874e-b4b2-4f58-bf8f-d5fa928da0ff\" x=\"8.0\" y=\"128.0\">\n" +
+                        "<statement name=\"DO\">\n"+
                 "<block type=\"drone_for\">\n" +
                 "                                <value name=\"FROM\">\n" +
                 "                                    <block type=\"math_number\">\n" +
@@ -591,9 +728,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 "</next>\n"+
                 "  </block>\n" +
                 "                                </statement>\n" +
-                "                            </block>\n";
-//        "        </statement>\n" +
-//                "    </block>\n";
+                "                            </block>\n"+
+        "        </statement>\n" +
+                "    </block>\n";
 
 
 //        String str =
@@ -668,8 +805,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         String[] levelNames = new String[MAX_LEVELS];
         Log.e("path check","/data/data/"+this.getPackageName()+"/");
         TARGET_BASE_PATH = "/data/data/"+this.getPackageName()+"/";
-        levelNames[0] = "ArduBasic";
-        levelNames[1] = "ArduAdvanced";
+        levelNames[0] = "DroneBasic";
+
 
         return new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_activated_1,
@@ -718,11 +855,28 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
 
+
+
     @Override
     public void onLoadWorkspace() {
         Log.e("in!","onLoadWorkspace");
         mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(SAVE_FILENAME);
     }
+
+    @Override
+    public void onSaveWorkspace() {
+        Log.e("in","onSaveWorkspace");
+        mBlocklyActivityHelper.saveWorkspaceToAppDirSafely(SAVE_FILENAME);
+    }
+
+    @Override
+    @NonNull
+    protected String getWorkspaceAutosavePath() {
+        Log.e("in!","getWorkspaceAutosavePath");
+
+        return  AUTOSAVE_FILENAME;
+    }
+
 
 
     void loadXmlFromWorkspace() {
@@ -736,28 +890,123 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
     @Override
-    public void onBlockDropdownClick() {
-
-    }
-
-    @Override
-    public void onCloseCheck(String msg) {
-
-    }
-
-    @Override
-    public void onCopyCheck(boolean check) {
+    public void onCheckEnabled() {
 
     }
 
     @Override
     public void onClickTest(View v, int pos) {
+//        mBlocklyActivityHelper.getFlyoutController();
+        if (pos != 0 ){
+            mBlocklyActivityHelper.getFlyoutController();
+            trashcan_btn.setVisibility(View.VISIBLE);
+        }
+        switch (pos){
+            case 0:
+                Log.e("onclicktest", "코딩블록");
+                if (v.isSelected()){
+                    Log.e("onclicktest 코딩블록", "selected");
+                    trashcan_btn.setVisibility(View.INVISIBLE);
+                }else{
+                    Log.e("onclicktest 코딩블록", "not selected");
+                    trashcan_btn.setVisibility(View.VISIBLE);
+                }
 
-    }
+                break;
 
-    @Override
-    public void onCheckEnabled() {
+            case 1:
+                if (getController().getWorkspace().hasBlocks()) {
+                    mBlocklyActivityHelper.requestCodeGeneration(
+                            getBlockGeneratorLanguage(),
+                            getBlockDefinitionsJsonPaths(),
+                            getGeneratorsJsPaths(),
+                            getCodeGenerationCallback());
+                }
+                cal = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        rgbNcal = true; // 됨
+//                        categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                        Log.e("check code", code);
+                    }
+                }, 500);
+                delay(100);
+                break;
 
+            case 2:
+                Log.e("onclicktest", "시리얼모니터");
+                break;
+
+            case 3:
+                if (connected) {
+                    Log.e("drone upload btn ", "in");
+                    try {
+                        if (thread != null) {
+                            if (thread.isAlive()) {
+                                Log.e("onclicktest 업로드", "1");
+                                DRONE_STOP = true;
+                                try {
+                                    thread.setRunningState(false);
+                                    thread_stop();
+                                    categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                                    categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
+                                    categoryData.getDrone_upload_btn().setEnabled(false);
+                                    ExampleThread.sleep(1000);
+
+                                    thread.interrupt();
+                                    ExampleThread.currentThread().interrupt();
+
+
+
+                                    myHandler.sendEmptyMessageDelayed(UPLOAD_STOP, 1000);
+
+                                }catch (InterruptedException e){
+                                    categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
+                                    categoryData.getDrone_upload_btn().setEnabled(true);
+                                    ExampleThread.currentThread().interrupt();
+
+//                                    throw new RuntimeException(e);
+                                }
+
+
+                                break;
+                            }
+                        }
+                    } catch (NullPointerException e) {
+                        Log.e("thread null", "not initialize");
+                    }
+
+
+                    if (getController().getWorkspace().hasBlocks()) {
+                        mBlocklyActivityHelper.requestCodeGeneration(
+                                getBlockGeneratorLanguage(),
+                                getBlockDefinitionsJsonPaths(),
+                                getGeneratorsJsPaths(),
+                                getCodeGenerationCallback());
+                    }
+
+                    Object obj = this;
+
+                    categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_on);
+                    thread = new ExampleThread(code, obj);
+                    thread.setRunningState(true);
+                    thread.start();
+
+                    Log.e("onclicktest", "업로드");
+                    break;
+                }
+                break;
+
+            case 4:
+                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                Log.e("touch", "wifi");
+           break;
+
+            case 5:
+                Toast.makeText(getApplicationContext(), battery_value, Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
 
@@ -792,14 +1041,17 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
             switch (msg.what) {
                 case ARM:
+                    Log.e("myhandler in","arm");
 //                    Log.e(TAG+"ARM", (String)msg.obj);
 //                    armPosition();
                     break;
                 case MSG:
+                    Log.e("myhandler in","msg");
 //                    Log.e(TAG + "MSG", (String) msg.obj);
 //                    Toast.makeText(getApplicationContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
                     break;
                 case BAT:
+                    Log.e("myhandler in","bat");
 //                    Toast.makeText(getApplicationContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
 //                    Log.e(TAG, (String) msg.obj);
 //                    if (msg.arg1 == 2) drone_menu_tabs.getTabAt(4).setText()
@@ -807,8 +1059,11 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                    txt_bat.setText((String) msg.obj);
 
                     battery.setText((String) msg.obj);
+                    battery_value = (String) msg.obj;
+
                     break;
                 case DEBUG:
+                    Log.e("myhandler in","debug");
                     int[] a = (int[]) msg.obj;
                     int[] b = new int[4];
                     for (int i = 0; i < 4; i++) {
@@ -825,17 +1080,27 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                    if (msg.arg1 == 2) txt_bat.setTextColor(Color.RED);
 //                    else txt_bat.setTextColor(Color.WHITE);
 //                    txt_bat.setText((String) msg.obj);
+                    Log.e("myhandler in","receive");
                     IntentFilter rssiFilter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
                     registerReceiver(rssiReceiver, rssiFilter);
                     WifiManager wifiMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                     wifiMan.startScan();
                     battery.setText("Battery:"+(String) msg.obj);
+
+
+
                     break;
 
 
                 case DELAY:
-                    throttle = 0;
+                    throttle = 125;
+                    break;
 
+                case UPLOAD_STOP:
+                    categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                    start_stop_check = true;
+//                    DRONE_STOP = false;
+                    categoryData.getDrone_upload_btn().setEnabled(true);
                     break;
             }
         }
@@ -878,6 +1143,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
         @Override
         public void run() {
+//            categoryData.getDrone_upload_btn().setBackgroundResource();
+
             try {
                 Log.e("UDPClient", "run");
                 while (true) {
@@ -931,22 +1198,32 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                         sendRGB(socket, serverAddr, (byte) 0x8D);
                     } else if (!STOP) {
 //                        Log.e("send",roll+", "+pitch+", "+yaw+", "+throttle);
-                        Log.e("send value", roll+","+pitch+","+yaw+","+throttle);
+//                        Log.e("send value", roll+","+pitch+","+yaw+","+throttle);
                         sendSignal(socket, serverAddr, roll, pitch, yaw, throttle);
 //                        Log.e(TAG+"sendSignal", Integer.toString(cont_version));
                     }
 
                     // bat
                     if (!connected) {
+//                        Log.e("hello",categoryData.getUpload_btn().getBackground()+"");
                         Message msg = myHandler.obtainMessage();
                         msg.what = BAT;
                         msg.arg1 = 2;
                         msg.obj = "not received";
                         myHandler.sendMessage(msg);
+//                        if (categoryData.getDrone_upload_btn().isEnabled()){
+//                            categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn);
+//                            categoryData.getDrone_upload_btn().setEnabled(false);
+//                        }
+//
                     }
                     batCount++;
                     if (batCount % 20 == 0) {
                         if (batCount > 100) {
+                            if (connected){
+                                categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn);
+                                categoryData.getDrone_upload_btn().setEnabled(false);
+                            }
                             batCount = 0;
                             connected = false;
                         }
@@ -1012,6 +1289,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
             }
         }
     }
+
+
+
 
 
 
@@ -1129,7 +1409,14 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                         Message msg = myHandler.obtainMessage();
                         if (p.getData()[4] == (byte) 0xA3) {
                             Log.e("droneblockactivity", "BAT GOT IT");
+                            Log.e("droneblockactivity", connected+"");
                             batCount = 1;
+                            if (categoryData.getDrone_upload_btn() != null && !connected){
+                                categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                                Setting.drone_upload_btn_check = true;
+                                categoryData.getDrone_upload_btn().setEnabled(true);
+                                start_stop_check = true;
+                            }
                             connected = true;
 ////                            Log.e(TAG+"getData", "hi");
                             int a = p.getData()[5];
@@ -1138,6 +1425,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                             msg.arg1 = 1;
                             msg.obj = Integer.toString(a);
                             myHandler.sendMessage(msg);
+
                         } else if (p.getData()[4] == (byte) 0xfe) {
                             msg.what = DEBUG;
                             int[] a = new int[8];
@@ -1150,6 +1438,10 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                            Log.e(TAG + "getData5", Integer.toString(a));
                         } else {
                             batCount = 1;
+                            if (categoryData.getDrone_upload_btn() != null){
+                                categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                                start_stop_check = true;
+                            }
                             connected = true;
                             msg.what = RECEIVED;
                             msg.arg1 = 1;
@@ -1179,6 +1471,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         private static final String TAG = "ExampleThread";
         String code="";
         Object obj;
+        private boolean isRunning;
+
 
         public ExampleThread(String code, Object obj) {
             // 초기화 작업
@@ -1188,80 +1482,106 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
         public void run() {
 
-            try {
-                Log.e("hello class", obj.getClass().getName());
-                Class<?> cls = Class.forName(obj.getClass().getName());
+            while (isRunning) {
+                try {
+                    Log.e("hello class", obj.getClass().getName());
+                    Class<?> cls = Class.forName(obj.getClass().getName());
 
-                String[] methods = code.split("\n");
-                List<String> list = new ArrayList<>(Arrays.asList(methods));
+                    String[] methods = code.split("\n");
+                    List<String> list = new ArrayList<>();
+                    start_stop_check = false;
+                    categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_stop_btn_on);
+                    categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_on);
 
-                if (list.contains("for(end);")) {
-                    Log.e("check for문", "in");
-                    List<Integer> values = new ArrayList<>();
-                    int current = 0;
-                    for (int p = 0; p < methods.length; p++) {
-                        if (methods[p].equals("for(end);")) {
-                            values.add(p);
-                        }
+
+                    for (int i = 0; i < methods.length; i++) {
+                        Log.e("drone hello methods not trim", methods[i]);
+                        methods[i] = methods[i].trim();
+                        list.add(methods[i]);
+                        Log.e("drone hello methods", methods[i]);
+                        Log.e("drone hello methods", list.get(i));
                     }
 
-                    int current_end_pos = 0;
-                    Log.e("dronetest list size", list.size()+"");
-                    for (int i = 0; i < list.size(); i++) {
-                        methods[i] = methods[i].replace("(", " ").replace(");", "").trim();
-                        String[] params_check3 = methods[i].split(" ");
-                        if (methods[i].contains("for") && !methods[i].contains("end")) {
-                            Log.e("dronetest hello in ", "first if");
-                            for (int loop=0; loop < Integer.parseInt(params_check3[1]); loop++){
-                                int count = (i+1);
-                                while (count < values.get(current_end_pos) - i ) {
-                                    Log.e("methods[count]",methods[count]);
-                                    methods[count] = methods[count].trim().replace("(", " ").replace(");", "");
-                                    String[] params_check2 = methods[count].split(" ");
-                                    Log.e("method size", params_check2.length + "");
-                                    if (params_check2.length > 1) {
-                                        Log.e("params check", params_check2[0]);
-                                        Log.e("params check", params_check2[1]);
-                                        Method m = cls.getDeclaredMethod(params_check2[0], long.class);
-                                        if (params_check2[0].equals("delay")){
-                                            params_check2[1] = params_check2[1]+"000";
-                                        }
-                                        m.invoke(obj, Long.parseLong(params_check2[1]));
+                    Log.e("drone hello method size", methods.length + "");
+                    Log.e("drone hello method list size", list.size() + "");
 
-                                    }else{
-                                        Method m = cls.getDeclaredMethod(params_check2[0]);
-                                        m.invoke(obj);
-                                    }
-                                    count++;
-                                }
+                    if (list.contains("for(end);")) {
+                        Log.e("check for문", "in");
+                        List<Integer> values = new ArrayList<>();
+                        int current = 0;
+                        for (int p = 0; p < methods.length; p++) {
+                            if (methods[p].equals("for(end);")) {
+                                values.add(p);
                             }
-                            i = values.get(current_end_pos)+1;
-                            current_end_pos++;
-
-
-                        }else if (!methods[i].contains("for")){
-                            Log.e("dronetest hello in ", "second if");
-                            for (String method : methods) {
-                                Log.e("thread method", method);
-                                method = method.replace("(", " ").replace(");", "");
-                                Log.e("method", method + "");
-                                String[] params_check = method.split(" ");
-                                Log.e("method size", params_check.length + "");
-                                if (params_check.length > 1) {
-                                    Log.e("params check", params_check[0]);
-                                    Log.e("params check", params_check[1]);
-                                    Method m = cls.getDeclaredMethod(params_check[0], long.class);
-                                    if (params_check[0].equals("delay")){
-                                        params_check[1] = params_check[1]+"000";
-                                    }
-                                    m.invoke(obj, Long.parseLong(params_check[1]));
-                                } else {
-                                    Method m = cls.getDeclaredMethod(params_check[0]);
-                                    m.invoke(obj);
-                                }
-                            }
-
                         }
+
+                        Log.e("drone hello ??", "in");
+
+                        int current_end_pos = 0;
+                        Log.e("dronetest list size", list.size() + "");
+                        for (int i = 0; i < list.size(); i++) {
+                            if (list.get(i).trim().equals("")) {
+                                continue;
+                            }
+                            methods[i] = methods[i].replace("(", " ").replace(");", "").trim();
+                            String[] params_check3 = methods[i].split(" ");
+                            Log.e("methods i ", methods[i]);
+                            if (methods[i].contains("for") && !methods[i].contains("end")) {
+                                Log.e("dronetest hello in ", "first if");
+                                for (int loop = 0; loop < Integer.parseInt(params_check3[1]); loop++) {
+
+                                        int count = (i + 1);
+                                        while (count < values.get(current_end_pos) - i) {
+                                            Log.e("methods[count]", methods[count]);
+                                            methods[count] = methods[count].trim().replace("(", " ").replace(");", "");
+                                            String[] params_check2 = methods[count].split(" ");
+                                            Log.e("method size", params_check2.length + "");
+                                            if (params_check2.length > 1) {
+                                                Log.e("params check", params_check2[0]);
+                                                Log.e("params check", params_check2[1]);
+                                                Method m = cls.getDeclaredMethod(params_check2[0], long.class);
+                                                if (params_check2[0].equals("delay")) {
+                                                    params_check2[1] = params_check2[1] + "000";
+                                                }
+                                                m.invoke(obj, Long.parseLong(params_check2[1]));
+
+                                            } else {
+                                                Method m = cls.getDeclaredMethod(params_check2[0]);
+                                                m.invoke(obj);
+                                            }
+                                            count++;
+                                        }
+
+                                }
+                                i = values.get(current_end_pos) + 1;
+                                current_end_pos++;
+
+
+                            } else if (!methods[i].contains("for")) {
+                                Log.e("dronetest hello in ", "second if");
+                                for (String method : methods) {
+
+                                        Log.e("thread method", method);
+                                        method = method.replace("(", " ").replace(");", "");
+                                        Log.e("method", method + "");
+                                        String[] params_check = method.split(" ");
+                                        Log.e("method size", params_check.length + "");
+                                        if (params_check.length > 1) {
+                                            Log.e("params check", params_check[0]);
+                                            Log.e("params check", params_check[1]);
+                                            Method m = cls.getDeclaredMethod(params_check[0], long.class);
+                                            if (params_check[0].equals("delay")) {
+                                                params_check[1] = params_check[1] + "000";
+                                            }
+                                            m.invoke(obj, Long.parseLong(params_check[1]));
+                                        } else {
+                                            Method m = cls.getDeclaredMethod(params_check[0]);
+                                            m.invoke(obj);
+                                        }
+
+                                }
+
+                            }
 //                        if (params_check.length > 1) {
 //                            //파라미터 있을 때
 //                            Log.e("params check", params_check[0]);
@@ -1290,22 +1610,64 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                        }
 
 
+                            Log.e("droneTest", "end");
+                            Log.e("thread", "end");
+                            categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                            categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
+                            start_stop_check = true;
+                        }
+                    } else {
+                        Log.e("dronetest hello in ", "second if");
+                        for (String method : methods) {
+                                Log.e("thread method", method);
+                                method = method.replace("(", " ").replace(");", "");
+                                Log.e("method", method + "");
+                                String[] params_check = method.split(" ");
+                                Log.e("method size", params_check.length + "");
+                                if (params_check.length > 1) {
+                                    Log.e("params check", params_check[0]);
+                                    Log.e("params check", params_check[1]);
+                                    Method m = cls.getDeclaredMethod(params_check[0], long.class);
+                                    if (params_check[0].equals("delay")) {
+                                        params_check[1] = params_check[1] + "000";
+                                    }
+                                    m.invoke(obj, Long.parseLong(params_check[1]));
+                                } else {
+                                    Method m = cls.getDeclaredMethod(params_check[0]);
+                                    m.invoke(obj);
+                                }
+                        }
                         Log.e("droneTest", "end");
                         Log.e("thread", "end");
+                        categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+                        categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
+                        start_stop_check = true;
+
                     }
+
+                    try {
+                        isRunning = false;
+                        ExampleThread.sleep(1000);
+                        ExampleThread.currentThread().interrupt();
+                    } catch (InterruptedException e) {
+                        ExampleThread.currentThread().interrupt();
+                    }
+
+                }catch (ClassNotFoundException e) {
+                    Log.e("ExampleThread class not found error", e.getMessage());
+                } catch (NoSuchMethodException e) {
+                    Log.e("ExampleThread no such method error", e.toString());
+                } catch (InvocationTargetException e) {
+                    Log.e("ExampleThread invocation target error", e.getMessage());
+                } catch (IllegalAccessException e) {
+                    Log.e("ExampleThread illegal access error", e.getMessage());
                 }
-            } catch (ClassNotFoundException e){
-                Log.e("ExampleThread class not found error",e.getMessage());
             }
-            catch (NoSuchMethodException e){
-                Log.e("ExampleThread no such method error",e.toString());
-            }
-            catch (InvocationTargetException e){
-                Log.e("ExampleThread invocation target error",e.getMessage());
-            }
-            catch (IllegalAccessException e){
-                Log.e("ExampleThread illegal access error",e.getMessage());
-            }
+        }
+
+        public void setRunningState(boolean state) {
+
+            isRunning = state;
         }
     }
 

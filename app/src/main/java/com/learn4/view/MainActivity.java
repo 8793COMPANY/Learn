@@ -194,7 +194,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
     BasicFieldDropdownView basicFieldDropdownView;
     FieldDropdown fieldDropdown;
-    private CategoryView mCategoryView;
+    public static CategoryView mCategoryView;
     FlyoutFragment flyoutFragment;
     View [] block_tempTab = {null, null, null,null};
     View [] tempTab = {null, null, null,null,null,null,null};
@@ -1688,7 +1688,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         super.onCreate(savedInstanceState);
         NetworkConnection networkConnection = new NetworkConnection(getApplicationContext());
         networkConnection.observe(this, aBoolean -> {
-
+            Log.e("?? networkconnection in","!!");
             //Toast.makeText(getApplicationContext(), aBoolean+"", Toast.LENGTH_SHORT).show();
             //Toast.makeText(getApplicationContext(), Build.VERSION.SDK_INT+"", Toast.LENGTH_SHORT).show();
             if (aBoolean != null) {
@@ -2193,8 +2193,11 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
         switch (mPushEvent.getPos()) {
+//            case 11:
+//                break;
             // 어택땅
             case 11:
+                Log.e("why click 12", "not in");
                 mMonitorHandler.sendEmptyMessage(1);
                 initTabColor();
                 initTabCheck();

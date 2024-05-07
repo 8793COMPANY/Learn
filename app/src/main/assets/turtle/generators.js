@@ -1715,6 +1715,46 @@ Blockly.JavaScript['inout_analog_write'] = function(block) {
     return code;
   };
 
+
+  Blockly.JavaScript['bluetooth_setup'] = function(block) {
+      var value_pin = Blockly.JavaScript.valueToCode(block, "RXD", Blockly.JavaScript.ORDER_ATOMIC);
+      var value_num = Blockly.JavaScript.valueToCode(block, "TXD", Blockly.JavaScript.ORDER_ATOMIC);
+       if( (value_num < 0 ) || (value_num > 255 )) {
+           return '!!alert!!Pin : analog value should be between 0 and 255!!\n';
+        }
+      //var code = "pinMode("+value_pin+", OUTPUT);\n analogWrite(" + value_pin + ", " + value_num + ");\n";
+      Blockly.JavaScript.definitions_["include_lib_bluetooth"] = "#include <SoftwareSerial.h>";
+      Blockly.JavaScript.definitions_["define_ble_rxd"] = "#define RXD "+value_pin;
+      Blockly.JavaScript.definitions_["define_ble_txd"] = "#define TXD "+value_num;
+      Blockly.JavaScript.definitions_["define_ble_serial"] = "SoftwareSerial bluetooth(RXD, TXD);";
+
+      var code = "";
+      return code;
+    };
+
+    Blockly.JavaScript['bluetooth_begin'] = function(block) {
+        //Blockly.JavaScript.definitions_['define_DHT11_h'] = "#include <DHT.h>\n";
+
+       var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
+       var code = "\nbluetooth.begin("+value_baud+");\n";
+       return code;
+     };
+
+
+    Blockly.JavaScript['bluetooth_available'] = function (block) {
+
+        var code = "bluetooth.available()"
+
+        return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
+    Blockly.JavaScript['bluetooth_read'] = function (block) {
+
+        var code = "bluetooth.read()"
+
+       return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
 Blockly.JavaScript['inout_digital_read'] = function(block) {
   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
 //  Blockly.JavaScript.definitions_['digital_read'] = "int digRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return digitalRead(" + value_pin + ");\n}\n"

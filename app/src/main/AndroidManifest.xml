@@ -16,6 +16,15 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="true" />
@@ -33,14 +42,31 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.bluetooth.BluetoothActivity"
+            android:exported="true"
+            android:screenOrientation="sensorLandscape">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+        </activity>
+
+        <activity
             android:name=".view.drone.DroneBlockActivity"
             android:exported="true"
             android:screenOrientation="sensorLandscape">
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
 
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".view.simulator.TeachableActivity"
@@ -83,19 +109,19 @@
             android:name=".view.contents.ContentsActivity"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".DroneActivity"
+            android:name=".view.drone.DroneActivity"
             android:exported="true"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.onboarding.IntroActivity"
             android:exported="true"
             android:label="배울래?"
             android:screenOrientation="sensorLandscape">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <uses-library
@@ -112,7 +138,7 @@
         <activity
             android:name=".view.MainActivity"
             android:exported="true"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape" />
     </application>
 
 </manifest>

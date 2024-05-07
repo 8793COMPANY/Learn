@@ -266,6 +266,36 @@ public class Workspace {
         mStats.collectStats(newBlocks, true /* recursive */);
     }
 
+
+    public void loadDroneWorkspaceContents(InputStream is) throws BlockLoadingException {
+        List<Block> newBlocks = BlocklyXmlHelper.loadFromXml(is, mBlockFactory);
+        if(newBlocks.isEmpty()){
+            String str = "<xml xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                    "  <block type=\"turtle_drone_main\" x=\"8.0\" y=\"128.0\" />\n" +
+                    "</xml>";
+            InputStream iss = new ByteArrayInputStream(str.getBytes());
+
+            try {
+                loadWorkspaceContents(iss);
+                return;
+            } catch (BlockLoadingException e) {
+                Log.e(TAG, "Failed to load default arduino workspace", e);
+            }
+        }
+
+        // Successfully deserialized.  Update workspace.
+        // TODO: (#22) Add proper variable support.
+        // For now just save and restore the list of variables.
+        Set<String> vars = mVariableNameManager.getUsedNames();
+        mController.resetWorkspace();
+        for (String varName : vars) {
+            mController.addVariable(varName);
+        }
+
+        mRootBlocks.addAll(newBlocks);
+        mStats.collectStats(newBlocks, true /* recursive */);
+    }
+
     /**
      * Reads the workspace in from a XML stream. This will clear the workspace and replace it with
      * the contents of the xml.

@@ -62,6 +62,12 @@
             <flag name="horizontal" value="0"/> <!-- SCROLL_HORIZONTAL. Default. -->
             <flag name="vertical" value="1"/> <!-- SCROLL_VERTICAL. -->
         </attr>
+
+        <attr name="workspaceType">
+            <!-- Same values as LinearLayoutManager constants. -->
+            <flag name="arduino" value="0"/>
+            <flag name="drone" value="1"/>
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="BlocklyCategory" parent="BlocklyFlyout">
@@ -76,6 +82,7 @@
             <flag name="end" value="0x00000011"/> <!-- RTL adaptive clockwise -->
         </attr>
         <attr name="scrollOrientation"/>
+        <attr name="workspaceType"/>
     </declare-styleable>
 
     <declare-styleable name="TrashCanView">

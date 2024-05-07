@@ -213,6 +213,7 @@ public class BlocklyController {
     private final Dragger.DragHandler mWorkspaceDragHandler = new Dragger.DragHandler() {
         @Override
         public Runnable maybeGetDragGroupCreator(final PendingDrag pendingDrag) {
+            Log.e("blocklycontroller", "maybeGetDragGroupCreator");
 
             BlockView touchedView = pendingDrag.getTouchedBlockView();;
 
@@ -229,6 +230,7 @@ public class BlocklyController {
             return new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("blocklycontroller", "maybeGetDragGroupCreator");
                     // extractBlockAsRoot() fires MoveEvent immediately.
                     extractBlockAsRoot(activeTouchedView.getBlock());
 
@@ -541,6 +543,12 @@ public class BlocklyController {
         mWorkspace.loadWorkspaceContents(workspaceXmlStream);
         initBlockViews();
     }
+
+    public void loadDroneWorkspaceContents(InputStream workspaceXmlStream) throws BlockLoadingException {
+        mWorkspace.loadDroneWorkspaceContents(workspaceXmlStream);
+        initBlockViews();
+    }
+
 
     /**
      * Saves a snapshot of current workspace contents to a temporary cache file, and saves the

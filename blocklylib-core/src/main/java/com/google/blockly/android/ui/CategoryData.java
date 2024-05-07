@@ -29,6 +29,72 @@ public class CategoryData {
 
     View reset_btn = null;
 
+
+
+
+
+    //드론 관련
+
+    View drone_coding_btn = null;
+
+    View drone_cali_btn = null;
+
+    View drone_wifi_btn = null;
+
+    public View getDrone_start_btn() {
+        return drone_start_btn;
+    }
+
+    public void setDrone_start_btn(View drone_start_btn) {
+        this.drone_start_btn = drone_start_btn;
+    }
+
+    View drone_start_btn = null;
+
+    public View getDrone_wifi_btn() {
+        return drone_wifi_btn;
+    }
+
+    public void setDrone_wifi_btn(View drone_wifi_btn) {
+        this.drone_wifi_btn = drone_wifi_btn;
+    }
+
+    public View getDrone_battery_btn() {
+        return drone_battery_btn;
+    }
+
+    public void setDrone_battery_btn(View drone_battery_btn) {
+        this.drone_battery_btn = drone_battery_btn;
+    }
+
+    View drone_battery_btn = null;
+
+    public View getDrone_coding_btn() {
+        return drone_coding_btn;
+    }
+
+    public void setDrone_coding_btn(View drone_coding_btn) {
+        this.drone_coding_btn = drone_coding_btn;
+    }
+
+    public View getDrone_cali_btn() {
+        return drone_cali_btn;
+    }
+
+    public void setDrone_cali_btn(View drone_cali_btn) {
+        this.drone_cali_btn = drone_cali_btn;
+    }
+
+    public View getDrone_upload_btn() {
+        return drone_upload_btn;
+    }
+
+    public void setDrone_upload_btn(View drone_upload_btn) {
+        this.drone_upload_btn = drone_upload_btn;
+    }
+
+    View drone_upload_btn = null;
+
     Button simulator_btn = null;
 
     WorkspacePoint rtp, ptp, ntp;

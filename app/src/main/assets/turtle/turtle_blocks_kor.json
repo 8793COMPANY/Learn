@@ -681,6 +681,68 @@
   },
 
   {
+    "type": "bluetooth_setup",
+    "message0": "Bluetooth RXD %1 TXD %2",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "RXD",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "TXD",
+        "check": "Number"
+      }
+
+    ],
+    "colour": "#FDB900",
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "bluetooth_begin",
+    "message0": "Bluetooth Begin baud %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "baud",
+        "check": "Number"
+      }
+    ],
+    "colour": "#A8D93D",
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "bluetooth_available",
+    "message0": "Bluetooth available",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "String",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
+    "type": "bluetooth_read",
+    "message0": "bluetooth read",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "Number",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
     "type": "lcd_I2C",
     "message0": "LCD I2C %1 %2 %3 text %4 line %5 %6 space %7",
     "args0": [

@@ -5,8 +5,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/orange_f78f43"
     tools:ignore="MissingDefaultResource">
+
+    <fragment
+        android:id="@+id/blockly_workspace"
+        android:name="com.google.blockly.android.WorkspaceFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+
+    <fragment
+        android:id="@+id/blockly_categories"
+        android:name="com.google.blockly.android.CategorySelectorFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="5:0.45"
+        blockly:workspaceType="drone"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <!--    <fragment-->
     <!--        android:id="@+id/blockly_trash_ui"-->
@@ -23,18 +42,9 @@
     <!--        tools:ignore="MissingPrefix" />-->
 
 
-    <fragment
-        android:id="@+id/blockly_workspace"
-        android:name="com.google.blockly.android.WorkspaceFragment"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        app:layout_constraintWidth_percent="0.5"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/battery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +52,7 @@
         app:layout_constraintLeft_toLeftOf="parent"></TextView>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/cal_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +62,7 @@
 
 
     <Button
+        android:visibility="gone"
         android:id="@+id/load_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,6 +71,7 @@
         app:layout_constraintRight_toRightOf="parent"></Button>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/wifi_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,6 +80,7 @@
         app:layout_constraintRight_toRightOf="parent"></Button>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/arm_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,6 +89,7 @@
         app:layout_constraintRight_toRightOf="parent"></Button>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/disarm_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,28 +97,81 @@
         app:layout_constraintTop_toBottomOf="@+id/arm_btn"
         app:layout_constraintRight_toRightOf="parent"></Button>
 
-<!--    <fragment-->
-<!--        android:id="@+id/blockly_toolbox_ui"-->
-<!--        android:name="com.google.blockly.android.FlyoutFragment"-->
-<!--        android:layout_width="400dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_alignParentRight="true"-->
-<!--        blockly:closeable="false"-->
-<!--        blockly:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        blockly:scrollOrientation="vertical">-->
-<!--    </fragment>-->
+    <fragment
+        android:visibility="gone"
+        android:id="@+id/blockly_toolbox_ui"
+        android:name="com.google.blockly.android.FlyoutFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:minWidth="500dp"
+        app:layout_constraintWidth_percent="0.4"
+        android:layout_alignParentRight="true"
+        blockly:closeable="true"
+        blockly:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blockly_categories"
+        android:layout_below="@id/blockly_categories"
+        blockly:scrollOrientation="vertical">
+    </fragment>
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/block_list_view"
-        android:layout_width="400dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.5"
         blockly:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blockly_categories"
         ></androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/blockly_overlay_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintDimensionRatio="68:88"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintVertical_bias="0.4"
+        blockly:layout_constraintBottom_toBottomOf="@+id/blockly_workspace"
+        blockly:layout_constraintEnd_toEndOf="parent"
+        blockly:layout_constraintStart_toStartOf="parent">
+
+        <com.google.blockly.android.ui.TrashCanView
+            android:id="@+id/blockly_trash_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/translucent"
+            android:scaleX="1.1"
+            android:scaleY="1.1"
+            android:paddingLeft="50dp"
+            android:paddingBottom="20dp"
+            android:paddingRight="10dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/go_drone_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="드론화면"
+        android:textSize="15dp"
+        android:autoSizeMaxTextSize="20dp"
+        android:autoSizeTextType="uniform"
+        android:textColor="@color/orange_f78f43"
+        android:background="@drawable/corner_rounded_btn_black"
+        app:layout_constraintDimensionRatio="150:56"
+        app:layout_constraintWidth_percent="0.13"
+        app:layout_constraintVertical_bias="0.93"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintTop_toBottomOf="@+id/blockly_categories"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        ></Button>
 
 
 

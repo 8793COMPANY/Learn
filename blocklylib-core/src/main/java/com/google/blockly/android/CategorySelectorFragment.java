@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.blockly.Setting;
 import com.google.blockly.android.codegen.CodeGenerationRequest;
 import com.google.blockly.android.control.BlocklyController;
 import com.google.blockly.android.ui.CategorySelectorUI;
@@ -58,6 +59,7 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
     protected BlocklyController mController;
 
     protected int mScrollOrientation = OrientationHelper.HORIZONTAL;
+    protected int mWorkspaceType = 0;
     protected @Rotation.Enum int mLabelRotation = Rotation.NONE;
 
 
@@ -93,6 +95,9 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
                     mScrollOrientation);
             //noinspection ResourceType
             mLabelRotation = a.getInt(R.styleable.BlocklyCategory_labelRotation, mLabelRotation);
+            mWorkspaceType = a.getInt(R.styleable.BlocklyCategory_workspaceType, mWorkspaceType);
+            Log.e("hello workspacetype", mWorkspaceType+"");
+            Setting.workspace_type = mWorkspaceType;
         } finally {
             a.recycle();
         }
@@ -101,8 +106,15 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        int layout = mScrollOrientation == OrientationHelper.VERTICAL
-                ? R.layout.default_category_start : R.layout.default_category_horizontal;
+        Log.e("category test", "categoryselector oncreateview 0 ");
+        int layout = 0;
+        if (mWorkspaceType == 0){
+            layout = mScrollOrientation == OrientationHelper.VERTICAL
+                    ? R.layout.default_category_start : R.layout.default_category_horizontal;
+        }else {
+            layout = R.layout.drone_category;
+        }
+
         mCategoryView = (CategoryView) inflater.inflate(layout, null);
         mCategoryView.setLabelRotation(Rotation.CLOCKWISE);
 
@@ -114,7 +126,7 @@ public class CategorySelectorFragment extends Fragment implements CategorySelect
 //                TURTLE_BLOCK_GENERATORS,
 //                getCodeGenerationCallback());
 
-
+        Log.e("category test", "categoryselector oncreateview");
         return mCategoryView;
     }
 

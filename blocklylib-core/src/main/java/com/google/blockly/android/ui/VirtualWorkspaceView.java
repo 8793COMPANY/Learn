@@ -27,6 +27,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.blockly.Setting;
 import com.google.blockly.android.R;
 import com.google.blockly.android.ZoomBehavior;
 import com.google.blockly.model.WorkspacePoint;
@@ -776,7 +777,13 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
-            BusProvider.getInstance().post(new PushEvent(11, true, false));
+            int num =0;
+            if (Setting.workspace_type ==0){
+                num = 11;
+            }else{
+                num = 5;
+            }
+            BusProvider.getInstance().post(new PushEvent(num, true, false));
             return callOnClick();
         }
     }
