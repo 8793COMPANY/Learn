@@ -73,13 +73,13 @@
 
     </category>
 
-    <category name="drone_cali" colour="330">
+    <category name="dro_cali" colour="330">
 
     </category>
 
-    <category name="drone_serial" colour="330">
+<!--    <category name="drone_serial" colour="330">-->
 
-    </category>
+<!--    </category>-->
 
 
     <category name="drone_upload" colour="330">

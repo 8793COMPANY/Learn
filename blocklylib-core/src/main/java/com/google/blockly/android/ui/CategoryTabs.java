@@ -75,7 +75,7 @@ public class CategoryTabs extends RecyclerView {
     R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
             , R.drawable.reset_btn,R.drawable.home_btn,  R.drawable.code_dictionary_btn_selector,R.drawable.teachable_machine_btn};
 
-    int [] drone_image = {R.drawable.drone_coding_btn_selector,R.drawable.drone_cali_btn, R.drawable.drone_serial_btn, R.drawable.drone_start_btn, R.drawable.drone_wifi_btn_on, R.drawable.drone_battery_btn_on, R.drawable.drone_start_off};
+    int [] drone_image = {R.drawable.drone_coding_btn_selector,R.drawable.drone_cali_btn, R.drawable.drone_start_btn, R.drawable.drone_wifi_btn_on, R.drawable.drone_battery_btn_on, R.drawable.drone_start_off};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -152,7 +152,7 @@ public class CategoryTabs extends RecyclerView {
         if (mWorkspaceType == 0){
             tab_count = 11;
         }else {
-            tab_count = 7;
+            tab_count = 6;
             oneTapWidth = 0;
         }
         if (Setting.drone_upload_btn_check){
@@ -231,7 +231,7 @@ public class CategoryTabs extends RecyclerView {
         if (mWorkspaceType == 0){
             tab_count = 11;
         }else {
-            tab_count = 7;
+            tab_count = 6;
         }
         mAdapter.notifyDataSetChanged();
     }

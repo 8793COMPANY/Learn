@@ -50,6 +50,7 @@ import com.google.blockly.android.ui.ViewPoint;
 import com.google.blockly.android.ui.WorkspaceHelper;
 import com.google.blockly.model.Block;
 import com.google.blockly.model.BlocklyCategory;
+import com.google.blockly.model.BlocklySerializerException;
 import com.google.blockly.model.DefaultBlocks;
 import com.google.blockly.model.VariableCustomCategory;
 import com.google.blockly.model.WorkspacePoint;
@@ -58,6 +59,8 @@ import com.learn4.R;
 import com.squareup.otto.Subscribe;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -70,7 +73,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DroneBlockActivity extends BlocklySectionsActivity implements TabItemClick ,UploadBtnCheck {
-
+    private static final String TAG = "DroneBlockActivity";
     MyHandler myHandler;
 
     public static final int ARM = 1;
@@ -348,7 +351,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
             Handler handler = new Handler();
             handler.postDelayed(() -> {
 
-                Log.e("droneblockactivity code", code);
+                Log.e(TAG+" code", code);
             }, 500);
 
         });
@@ -413,13 +416,22 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
     }
 
+    protected void onAutosave() {
+        try {
+            mBlocklyActivityHelper.saveWorkspaceToAppDir(getWorkspaceAutosavePath());
+        } catch (FileNotFoundException | BlocklySerializerException e) {
+            Log.e(TAG, "Failed to autosaving workspace.", e);
+        }
+    }
+
+
     @Override
     protected void onStop() {
         Log.e("my", "onStop");
 
         SW = false;
         Setting.drone_upload_btn_check = false;
-
+        onAutosave();
 
         //소켓 함부로 닫지 마라
 //        if (!socket.isClosed()) {
@@ -450,12 +462,12 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     protected void onResume() {
         super.onResume();
 //        loadPythonMainBlock();
-        loadfor();
+        onAutoload();
     }
 
     @Override
     protected void onStart() {
-        Log.e("activity droneblockactivity","onstart");
+        Log.e(TAG,"onstart");
         SW = true;
         throttle = 0x7d;
         try {
@@ -732,24 +744,6 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         "        </statement>\n" +
                 "    </block>\n";
 
-
-//        String str =
-//                "<block type=\"turtle_drone_main\" id=\"8d32874e-b4b2-4f58-bf8f-d5fa928da0ff\" x=\"8.0\" y=\"128.0\">\n" +
-//                        "<statement name=\"DO\">\n"+
-//                        "<block type=\"drone_for\">\n" +
-//                        "                                <value name=\"FROM\">\n" +
-//                        "                                    <block type=\"math_number\">\n" +
-//                        "                                        <field name=\"NUM\">1</field>\n" +
-//                        "                                    </block>\n" +
-//                        "                                </value>\n" +
-//                        "                                <statement name=\"DO\">\n" +
-//                        "  <block type=\"arm_start\" x=\"-20.0\" y=\"108.0\">\n" +
-//                        "  </block>\n" +
-//                        "                                </statement>\n" +
-//                        "                            </block>\n"+
-//                        "        </statement>\n" +
-//                        "    </block>\n";
-
         InputStream is = new ByteArrayInputStream((str).getBytes());
 
         try {
@@ -869,6 +863,26 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         mBlocklyActivityHelper.saveWorkspaceToAppDirSafely(SAVE_FILENAME);
     }
 
+
+    protected boolean onAutoload() {
+        String filePath = getWorkspaceAutosavePath();
+        try {
+            mBlocklyActivityHelper.loadWorkspaceFromAppDir(filePath);
+            return true;
+        } catch (FileNotFoundException e) {
+            loadfor();
+        } catch (BlockLoadingException | IOException e) {
+            Log.e(TAG, "Failed to load workspace", e);
+            mBlocklyActivityHelper.getController().resetWorkspace();
+
+            File file = getFileStreamPath(filePath);
+            if (!file.delete()) {
+                Log.e(TAG, "Failed to delete corrupted autoload workspace: " + filePath);
+            }
+        }
+        return false;
+    }
+
     @Override
     @NonNull
     protected String getWorkspaceAutosavePath() {
@@ -935,10 +949,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 break;
 
             case 2:
-                Log.e("onclicktest", "시리얼모니터");
-                break;
 
-            case 3:
+
                 if (connected) {
                     Log.e("drone upload btn ", "in");
                     try {
@@ -997,13 +1009,12 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                     break;
                 }
                 break;
+            case 3:
 
-            case 4:
                 startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 Log.e("touch", "wifi");
            break;
-
-            case 5:
+            case 4:
                 Toast.makeText(getApplicationContext(), battery_value, Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -1408,8 +1419,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                        text = new String(message, 0, p.getLength()); // x
                         Message msg = myHandler.obtainMessage();
                         if (p.getData()[4] == (byte) 0xA3) {
-                            Log.e("droneblockactivity", "BAT GOT IT");
-                            Log.e("droneblockactivity", connected+"");
+                            Log.e(TAG, "BAT GOT IT");
+                            Log.e(TAG, connected+"");
                             batCount = 1;
                             if (categoryData.getDrone_upload_btn() != null && !connected){
                                 categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
@@ -1447,7 +1458,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                             msg.arg1 = 1;
                             msg.obj = (char) p.getData()[0] + " received";
                             myHandler.sendMessage(msg);
-                            Log.e("droneblockactivity", "GOT IT");
+                            Log.e(TAG, "GOT IT");
                         }
 //                        String bat = Byte.toString(a); // 굳이 스트링 갈 필요 없다.
                         // If you're not using an infinite loop:
@@ -1855,7 +1866,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
 
             } else {
-                Log.e("droneblockactivity", "Tried to bind unknown item type " + item.getType());
+                Log.e(TAG, "Tried to bind unknown item type " + item.getType());
             }
         }
 

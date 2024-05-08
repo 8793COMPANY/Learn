@@ -1,5 +1,6 @@
 package com.learn4.view.bluetooth;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -7,23 +8,29 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.learn4.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 import kotlin.Unit;
 
@@ -35,11 +42,15 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
     ArrayList<String> deviceAddressArray;
     private final static int REQUEST_ENABLE_BT = 1;
 
+    private ConnectedBluetoothThread connectedThread;
     private Thread timeThread = null;
     private Boolean isRunning = true, isLongPress =false;
     TextView stopwatch;
 
     Button start_btn, stop_btn, pause_btn;
+
+    AlertDialog.Builder builder;
+    ListView pair_lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +68,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
         getPermission();
 
-        bluetooth_btn.setOnClickListener(v->{
 
-        });
 //
 //
 //
@@ -72,6 +81,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 //            }
 //        });
 
+        // 클릭, 롱클릭 둘 다 사용해야 돼서 터치리스터 사용
         bluetooth_btn.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
             @Override
@@ -86,11 +96,15 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                         handler.removeCallbacks(longPressRunnable);
                         if (!isLongPress) {
                             // user short pressed
+                            Toast.makeText(BluetoothActivity.this, "Short Press", Toast.LENGTH_SHORT).show();
                             Log.e("bluetooth text check", bluetooth_btn.getText().toString());
+
+                            //블루투스 연결 코드
                             onBT();
 
                             pairing();
-                            Toast.makeText(BluetoothActivity.this, "Short Press", Toast.LENGTH_SHORT).show();
+
+
                         }
                         break;
                 }
@@ -101,16 +115,26 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         });
 
         start_btn.setOnClickListener(v->{
-            timeThread = new Thread(new timeThread());
-            timeThread.start();
+            //타이머 시작
+//            timeThread = new Thread(new timeThread());
+//            timeThread.start();
+
+            //타이머 리셋
+//            timeThread.interrupt();
+
+            //일시정지
+//            isRunning = !isRunning;
         });
 
         stop_btn.setOnClickListener(v->{
-            timeThread.interrupt();
+
+            //데이터 보냄
+            connectedThread.write("B");
         });
 
         pause_btn.setOnClickListener(v->{
-            isRunning = !isRunning;
+
+            connectedThread.write("C");
         });
 
 
@@ -118,6 +142,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
     }
 
+
+    //롱클릭 기능 구현은 여기서
 
     Runnable longPressRunnable = new Runnable() {
         @Override
@@ -128,8 +154,13 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
     };
 
     void pairing() {
-
+        builder = new AlertDialog.Builder(this);
         // show paired devices
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.pairing, null);
+        builder.setView(dialogView);
+
+        pair_lv = dialogView.findViewById(R.id.pair_lv);
         btArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         deviceAddressArray = new ArrayList<>();
 
@@ -160,6 +191,55 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                 deviceAddressArray.add(deviceHardwareAddress);
             }
         }
+
+        pair_lv.setAdapter(btArrayAdapter);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+
+        pair_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),"연결중입니다...",Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+                //Toast.makeText(getApplicationContext(), btArrayAdapter.getItem(position) + " try...", Toast.LENGTH_SHORT).show();
+
+                final String name = btArrayAdapter.getItem(position); // get name
+                final String address = deviceAddressArray.get(position); // get address
+                boolean flag = true;
+
+                BluetoothDevice device = btAdapter.getRemoteDevice(address);
+                BluetoothSocket btSocket = null;
+
+                UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+                // create & connect socket
+                try {
+                    btSocket = device.createRfcommSocketToServiceRecord(uuid);
+                    btSocket.connect();
+                } catch (IOException e) {
+                    flag = false;
+                    Toast.makeText(getApplicationContext(), "connection failed!", Toast.LENGTH_SHORT).show();
+
+                    e.printStackTrace();
+                }catch (SecurityException e){
+                    flag = false;
+                    Toast.makeText(getApplicationContext(), "connection failed!", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+
+                if(flag){
+                    connectedThread = new ConnectedBluetoothThread(btSocket);
+                    connectedThread.start();
+
+                    new Handler().postDelayed(() -> {
+                        //딜레이 후 시작할 코드 작성
+                        Toast.makeText(getApplicationContext(), "connected to " + name, Toast.LENGTH_SHORT).show();
+                    }, 2000);
+                }
+            }
+        });
 
 
     }

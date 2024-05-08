@@ -45,6 +45,7 @@ public class ConnectedBluetoothThread extends Thread {
                     SystemClock.sleep(50);
                     bytes = mmInStream.available();
                     bytes = mmInStream.read(buffer, 0, bytes);
+                    //데이터 받아옴
                     final String incomingMessage = new String(buffer, 0, bytes);
                     Log.i("From Machine P : ", incomingMessage);
                 }
