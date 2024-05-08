@@ -1,12 +1,17 @@
 package com.learn4.util;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.widget.Toast;
 
 import com.learn4.R;
@@ -71,8 +76,6 @@ public class Application extends android.app.Application  {
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_ATTACHED"));
         this.registerReceiver(uploadEventReceiver, new IntentFilter("android.hardware.usb.action.USB_DEVICE_DETACHED"));
 
-
-
 //        Contents contents = new Contents(0,3," 초음파 센서 사용하기",
 //                "초음파 센서로 거리 측정하기","거리에 따라 LED 빠르게 깜빡이기","거리에 따라 피에조 부저 소리 조정하기",
 //                "0, 1, 11, 12","0, 1, 2-1, 11, 12","0, 1, 6, 11, 12");
@@ -88,8 +91,6 @@ public class Application extends android.app.Application  {
 //                        }
 //                );
 
-
-
 //        readComponent();
 //        readContents();
 //        AppDatabase db = AppDatabase.getInstance(context);
@@ -97,7 +98,6 @@ public class Application extends android.app.Application  {
         //log 수집
 //        logHelper = new LogHelper();
 //        Thread.setDefaultUncaughtExceptionHandler(logHelper);
-
 
     }
 
@@ -128,8 +128,6 @@ public class Application extends android.app.Application  {
     }
 
 
-
-
     public void showLoadingScreen(Context context){
         if(context != null){
             loadingDialog = new ProgressDialog(context);
@@ -155,7 +153,6 @@ public class Application extends android.app.Application  {
                 categoryData = CategoryData.getInstance();
 
             //Toast.makeText(getApplicationContext(), "hey", Toast.LENGTH_SHORT).show();
-
 
             if(action.equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
                 // USB was connected
@@ -193,7 +190,6 @@ public class Application extends android.app.Application  {
     };
 
 
-
     public static void checkUploadBtn(){
         if (categoryData == null)
             categoryData = CategoryData.getInstance();
@@ -214,6 +210,43 @@ public class Application extends android.app.Application  {
         }
     }
 
+    public static int standardSize_X, standardSize_Y, displaySize_X, displaySize_Y;
+    public static float density;
 
+    public static Point getScreenSize(Activity activity) {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
 
+        return size;
+    }
+
+    public static void getStandardSize(Activity activity) {
+        Point ScreenSize = getScreenSize(activity);
+        density  = activity.getResources().getDisplayMetrics().density;
+
+        standardSize_X = (int) (ScreenSize.x / density);
+        standardSize_Y = (int) ((ScreenSize.y + getNavigationBarHeight(activity)) / density);
+
+        displaySize_X = (int) ScreenSize.x;
+        displaySize_Y = (int) (ScreenSize.y + getNavigationBarHeight(activity));
+
+        Log.e("testtest", "ScreenSize x : " + standardSize_X);
+        Log.e("testtest", "ScreenSize y : " + standardSize_Y);
+
+        Log.e("testtest", "displaySize x : " + displaySize_X);
+        Log.e("testtest", "displaySize y : " + displaySize_Y);
+    }
+
+    public static int getNavigationBarHeight(Activity activity) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int usableHeight = metrics.heightPixels;
+        activity.getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        int realHeight = metrics.heightPixels;
+        if (realHeight > usableHeight)
+            return realHeight - usableHeight;
+        else
+            return 0;
+    }
 }
