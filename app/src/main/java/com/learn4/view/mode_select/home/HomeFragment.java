@@ -26,6 +26,8 @@ import com.learn4.R;
 import com.learn4.view.contents.ContentsActivity;
 import com.learn4.view.MainActivity;
 import com.learn4.view.dictionary.BlockDictionaryActivity2;
+import com.learn4.view.drone.DroneBlockActivity;
+import com.learn4.view.drone.DroneTestActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +39,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     LinearLayout free_mode,content_mode;
     Application myApplication;
-    Button free_btn,contents_btn,dictionary_btn,drone_btn;
+    Button free_btn,contents_btn,dictionary_btn,drone_btn,drone_block_btn;
     TextView user_name;
 
 
@@ -55,6 +57,7 @@ public class HomeFragment extends Fragment {
         free_btn = root.findViewById(R.id.free_btn);
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
         drone_btn = root.findViewById(R.id.drone_btn);
+        drone_block_btn = root.findViewById(R.id.drone_block_btn);
 //        user_name = root.findViewById(R.id.user_name);
 
 //        new Thread(() -> {
@@ -102,6 +105,12 @@ public class HomeFragment extends Fragment {
 
         drone_btn.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), DroneActivity.class);
+            startActivity(intent);
+        });
+
+        drone_block_btn.setOnClickListener(v->{
+            Log.e("???? why ","dont go droneblockactivity");
+            Intent intent = new Intent(getActivity(), DroneBlockActivity.class);
             startActivity(intent);
         });
 

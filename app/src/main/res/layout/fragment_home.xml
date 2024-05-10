@@ -119,7 +119,7 @@
                 android:background="@drawable/shadow"
                 android:layout_marginRight="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/drone_block_mode"
                 app:layout_constraintDimensionRatio="300:352"
                 app:layout_constraintLeft_toRightOf="@+id/dictionary_mode"
                 app:layout_constraintTop_toTopOf="parent">
@@ -129,6 +129,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/drone_mode_icon">
+                </Button>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/drone_block_mode"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shadow"
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintDimensionRatio="300:352"
+                app:layout_constraintLeft_toRightOf="@+id/drone_mode"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/drone_block_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/drone_coding_mode_icon">
                 </Button>
             </LinearLayout>
 

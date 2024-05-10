@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_controller"
+    tools:context=".view.drone.DroneActivity"
     android:background="@drawable/drone_background">
 
 
@@ -546,24 +548,24 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <Button
-        android:id="@+id/go_coding_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="코딩하기"
-        android:textSize="15dp"
-        android:autoSizeMaxTextSize="20dp"
-        android:autoSizeTextType="uniform"
-        android:textColor="@color/orange_f78f43"
-        android:background="@drawable/corner_rounded_btn_black"
-        app:layout_constraintDimensionRatio="150:56"
-        app:layout_constraintWidth_percent="0.13"
-        app:layout_constraintVertical_bias="0.93"
-        app:layout_constraintHorizontal_bias="0.035"
-        app:layout_constraintTop_toBottomOf="@+id/drone_menu_tabs"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        ></Button>
+<!--    <Button-->
+<!--        android:id="@+id/go_coding_btn"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:text="코딩하기"-->
+<!--        android:textSize="15dp"-->
+<!--        android:autoSizeMaxTextSize="20dp"-->
+<!--        android:autoSizeTextType="uniform"-->
+<!--        android:textColor="@color/orange_f78f43"-->
+<!--        android:background="@drawable/corner_rounded_btn_black"-->
+<!--        app:layout_constraintDimensionRatio="150:56"-->
+<!--        app:layout_constraintWidth_percent="0.13"-->
+<!--        app:layout_constraintVertical_bias="0.93"-->
+<!--        app:layout_constraintHorizontal_bias="0.035"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/drone_menu_tabs"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        ></Button>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

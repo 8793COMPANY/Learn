@@ -2,6 +2,7 @@ package com.google.blockly.android.ui;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.blockly.model.WorkspacePoint;
 
@@ -29,6 +30,14 @@ public class CategoryData {
 
     View reset_btn = null;
 
+    public TextView getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(TextView percentage) {
+        this.percentage = percentage;
+    }
+
 
 
 
@@ -41,6 +50,16 @@ public class CategoryData {
 
     View drone_wifi_btn = null;
 
+    View drone_start_btn = null;
+
+    View drone_battery_btn = null;
+
+    View drone_upload_btn = null;
+
+    TextView percentage= null;
+
+
+
     public View getDrone_start_btn() {
         return drone_start_btn;
     }
@@ -49,7 +68,7 @@ public class CategoryData {
         this.drone_start_btn = drone_start_btn;
     }
 
-    View drone_start_btn = null;
+
 
     public View getDrone_wifi_btn() {
         return drone_wifi_btn;
@@ -67,7 +86,7 @@ public class CategoryData {
         this.drone_battery_btn = drone_battery_btn;
     }
 
-    View drone_battery_btn = null;
+
 
     public View getDrone_coding_btn() {
         return drone_coding_btn;
@@ -93,7 +112,7 @@ public class CategoryData {
         this.drone_upload_btn = drone_upload_btn;
     }
 
-    View drone_upload_btn = null;
+
 
     Button simulator_btn = null;
 

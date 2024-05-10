@@ -278,18 +278,18 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         Button wifi_button = root.findViewById(R.id.wifi_btn);
         Button arm_btn = root.findViewById(R.id.arm_btn);
         Button disarm_btn = root.findViewById(R.id.disarm_btn);
-        Button go_drone_btn = root.findViewById(R.id.go_drone_btn);
+//        Button go_drone_btn = root.findViewById(R.id.go_drone_btn);
 
-        go_drone_btn.setOnClickListener(v->{
-            Intent intent = new Intent(DroneBlockActivity.this, DroneActivity.class);
-            overridePendingTransition(0, 0);
-            // 플래그 설정
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent); //현재 액티비티 재실행 실시
-            overridePendingTransition(0, 0);
-            finish(); //현재 액티비티 종료 실시
-        });
+//        go_drone_btn.setOnClickListener(v->{
+//            Intent intent = new Intent(DroneBlockActivity.this, DroneActivity.class);
+//            overridePendingTransition(0, 0);
+//            // 플래그 설정
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent); //현재 액티비티 재실행 실시
+//            overridePendingTransition(0, 0);
+//            finish(); //현재 액티비티 종료 실시
+//        });
 
         trashcan_btn = root.findViewById(R.id.blockly_overlay_buttons);
 
@@ -463,6 +463,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         super.onResume();
 //        loadPythonMainBlock();
         onAutoload();
+        battery_value="not received";
     }
 
     @Override
@@ -911,12 +912,15 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     @Override
     public void onClickTest(View v, int pos) {
 //        mBlocklyActivityHelper.getFlyoutController();
-        if (pos != 0 ){
+        if (pos != 1 ){
             mBlocklyActivityHelper.getFlyoutController();
             trashcan_btn.setVisibility(View.VISIBLE);
         }
         switch (pos){
             case 0:
+                finish();
+                break;
+            case 1:
                 Log.e("onclicktest", "코딩블록");
                 if (v.isSelected()){
                     Log.e("onclicktest 코딩블록", "selected");
@@ -928,7 +932,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
                 break;
 
-            case 1:
+            case 2:
                 if (getController().getWorkspace().hasBlocks()) {
                     mBlocklyActivityHelper.requestCodeGeneration(
                             getBlockGeneratorLanguage(),
@@ -948,8 +952,8 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 delay(100);
                 break;
 
-            case 2:
 
+            case 3:
 
                 if (connected) {
                     Log.e("drone upload btn ", "in");
@@ -965,7 +969,6 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                                     categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
                                     categoryData.getDrone_upload_btn().setEnabled(false);
                                     ExampleThread.sleep(1000);
-
                                     thread.interrupt();
                                     ExampleThread.currentThread().interrupt();
 
@@ -1009,12 +1012,12 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                     break;
                 }
                 break;
-            case 3:
 
+            case 4:
                 startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 Log.e("touch", "wifi");
            break;
-            case 4:
+            case 5:
                 Toast.makeText(getApplicationContext(), battery_value, Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -1069,8 +1072,16 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                    else txt_bat.setTextColor(Color.WHITE);
 //                    txt_bat.setText((String) msg.obj);
 
-                    battery.setText((String) msg.obj);
-                    battery_value = (String) msg.obj;
+//                    battery.setText((String) msg.obj);
+
+                    String bat_msg = (String) msg.obj;
+                    Log.e("bat_msg", bat_msg);
+                    if (!battery_value.equals(bat_msg) && !bat_msg.equals("not received")){
+                        Log.e("battery text",(String) msg.obj);
+                        battery_value = bat_msg;
+                        battery_image_setting(battery_value);
+                        categoryData.getPercentage().setText(battery_value+"%");
+                    }
 
                     break;
                 case DEBUG:
@@ -1092,10 +1103,10 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 //                    else txt_bat.setTextColor(Color.WHITE);
 //                    txt_bat.setText((String) msg.obj);
                     Log.e("myhandler in","receive");
-                    IntentFilter rssiFilter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-                    registerReceiver(rssiReceiver, rssiFilter);
-                    WifiManager wifiMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    wifiMan.startScan();
+//                    IntentFilter rssiFilter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+//                    registerReceiver(rssiReceiver, rssiFilter);
+//                    WifiManager wifiMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//                    wifiMan.startScan();
                     battery.setText("Battery:"+(String) msg.obj);
 
 
@@ -1115,6 +1126,26 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                     break;
             }
         }
+    }
+
+    void battery_image_setting(String per){
+        int grade = Integer.parseInt(per);
+        Log.e("grade check",grade+"");
+
+        if (grade < 16){
+            categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.battery_1);
+        }else  if (grade >= 16 &&grade < 30){
+            categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.battery_2);
+        }else  if (grade >= 30 &&grade < 45){
+            categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.battery_3);
+        }else  if (grade >= 45 &&grade < 65){
+            categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.battery_4);
+        }else  if (grade >= 65 &&grade < 85){
+            categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.battery_5);
+        }else  if (grade >= 85 ){
+            categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.battery_6);
+        }
+
     }
 
     private BroadcastReceiver rssiReceiver = new BroadcastReceiver() {
@@ -1232,8 +1263,12 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                     if (batCount % 20 == 0) {
                         if (batCount > 100) {
                             if (connected){
+                                Log.e("hello in??","connected in");
                                 categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn);
                                 categoryData.getDrone_upload_btn().setEnabled(false);
+                                categoryData.getDrone_battery_btn().setBackgroundResource(R.drawable.drone_battery_btn_on);
+                                categoryData.getPercentage().setText("");
+
                             }
                             batCount = 0;
                             connected = false;
@@ -1300,6 +1335,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
             }
         }
     }
+
 
 
 
@@ -1422,7 +1458,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                             Log.e(TAG, "BAT GOT IT");
                             Log.e(TAG, connected+"");
                             batCount = 1;
-                            if (categoryData.getDrone_upload_btn() != null && !connected){
+                            if (categoryData.getDrone_upload_btn() != null && !connected && !battery_value.equals("not received")){
                                 categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
                                 Setting.drone_upload_btn_check = true;
                                 categoryData.getDrone_upload_btn().setEnabled(true);

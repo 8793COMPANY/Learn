@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
@@ -39,6 +40,8 @@ import com.google.blockly.android.R;
 import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.UploadBtnCheck;
 import com.google.blockly.model.BlocklyCategory;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +78,7 @@ public class CategoryTabs extends RecyclerView {
     R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
             , R.drawable.reset_btn,R.drawable.home_btn,  R.drawable.code_dictionary_btn_selector,R.drawable.teachable_machine_btn};
 
-    int [] drone_image = {R.drawable.drone_coding_btn_selector,R.drawable.drone_cali_btn, R.drawable.drone_start_btn, R.drawable.drone_wifi_btn_on, R.drawable.drone_battery_btn_on, R.drawable.drone_start_off};
+    int [] drone_image = {R.drawable.home_btn,R.drawable.drone_coding_btn_selector,R.drawable.drone_cali_btn_selector, R.drawable.drone_start_btn, R.drawable.drone_wifi_btn_selector, R.drawable.drone_battery_btn_on, R.drawable.drone_start_off};
 
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
@@ -152,7 +155,7 @@ public class CategoryTabs extends RecyclerView {
         if (mWorkspaceType == 0){
             tab_count = 11;
         }else {
-            tab_count = 6;
+            tab_count = 7;
             oneTapWidth = 0;
         }
         if (Setting.drone_upload_btn_check){
@@ -231,7 +234,7 @@ public class CategoryTabs extends RecyclerView {
         if (mWorkspaceType == 0){
             tab_count = 11;
         }else {
-            tab_count = 6;
+            tab_count = 7;
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -410,6 +413,7 @@ public class CategoryTabs extends RecyclerView {
 
             if (category.getCategoryName().equals("drone_upload")){
                 categoryData.setDrone_upload_btn(holder.mLabel);
+
             }
 
             if (category.getCategoryName().equals("drone_wifi")){
@@ -418,6 +422,8 @@ public class CategoryTabs extends RecyclerView {
 
             if (category.getCategoryName().equals("drone_battery")){
                 categoryData.setDrone_battery_btn(holder.mLabel);
+                categoryData.setPercentage(holder.percentage);
+                holder.percentage.setVisibility(VISIBLE);
             }
 
             if (category.getCategoryName().equals("drone_start")){
@@ -469,7 +475,7 @@ public class CategoryTabs extends RecyclerView {
     protected class DefaultTabsAdapter extends CategoryTabs.LabelAdapter {
         @Override
         public View onCreateLabel() {
-            return (TextView) LayoutInflater.from(getContext())
+            return (ConstraintLayout) LayoutInflater.from(getContext())
                     .inflate(R.layout.default_toolbox_tab, null);
         }
 
@@ -538,6 +544,7 @@ public class CategoryTabs extends RecyclerView {
     private static class TabLabelHolder extends RecyclerView.ViewHolder {
         public final RotatedViewGroup mRotator;
         public final View mLabel;
+        public final TextView percentage;
 
         public BlocklyCategory mCategory;
 
@@ -545,6 +552,7 @@ public class CategoryTabs extends RecyclerView {
             super(new RotatedViewGroup(label.getContext()));
             mRotator = (RotatedViewGroup) itemView;
             mLabel = label;
+            percentage = label.findViewById(R.id.battery_percentage);
             mRotator.addView(mLabel);
         }
     }

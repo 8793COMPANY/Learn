@@ -192,7 +192,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drone_test);
 
-        registerReceiver(rssiReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
+//        registerReceiver(rssiReceiver, new IntentFilter(WifiManager.RSSI_CHANGED_ACTION));
 
         Log.e(TAG, "onCreate");
 
@@ -254,18 +254,18 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         linearLayout.setDividerDrawable(drawable);
 
 
-        Button go_coding_btn = findViewById(R.id.go_coding_btn);
+//        Button go_coding_btn = findViewById(R.id.go_coding_btn);
 
-        go_coding_btn.setOnClickListener(v->{
-            Intent intent = new Intent( DroneActivity.this, DroneBlockActivity.class);
-            overridePendingTransition(0, 0);
-            // 플래그 설정
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent); //현재 액티비티 재실행 실시
-            overridePendingTransition(0, 0);
-            finish(); //현재 액티비티 종료 실시
-        });
+//        go_coding_btn.setOnClickListener(v->{
+//            Intent intent = new Intent( DroneActivity.this, DroneBlockActivity.class);
+//            overridePendingTransition(0, 0);
+//            // 플래그 설정
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent); //현재 액티비티 재실행 실시
+//            overridePendingTransition(0, 0);
+//            finish(); //현재 액티비티 종료 실시
+//        });
 
 
 
@@ -285,6 +285,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                Log.e("touch", "calibration handler");
                                 rgbNcal = true; // 됨
                             }
                         }, 500);
@@ -371,6 +372,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                Log.e("touch", "calibration handler");
                                 rgbNcal = true; // 됨
                             }
                         }, 500);
@@ -917,21 +919,21 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 //                    Log.e("a30", Integer.toString(a[6]));
 //                    Log.e("a31", Integer.toString(a[7]));
 //                    txt_bat.setText((String) msg.obj);
-                    txt_debug_0.setText(Integer.toString(b[0]));
-                    txt_debug_1.setText(Integer.toString(b[1]));
-                    txt_debug_2.setText(Integer.toString(b[2]));
-                    txt_debug_3.setText(Integer.toString(b[3]));
+//                    txt_debug_0.setText(Integer.toString(b[0]));
+//                    txt_debug_1.setText(Integer.toString(b[1]));
+//                    txt_debug_2.setText(Integer.toString(b[2]));
+//                    txt_debug_3.setText(Integer.toString(b[3]));
                     break;
                 case RECEIVED:
 //                    if (msg.arg1 == 2) txt_bat.setTextColor(Color.RED);
 //                    else txt_bat.setTextColor(Color.WHITE);
 //                    txt_bat.setText((String) msg.obj);
-                    IntentFilter rssiFilter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-                    registerReceiver(rssiReceiver, rssiFilter);
-                    WifiManager wifiMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-                    wifiMan.startScan();
-                    drone_menu_tabs.getTabAt(4).setText("Battery:"+(String) msg.obj);
-                    break;
+//                    IntentFilter rssiFilter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+//                    registerReceiver(rssiReceiver, rssiFilter);
+//                    WifiManager wifiMan = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//                    wifiMan.startScan();
+//                    drone_menu_tabs.getTabAt(4).setText("Battery:"+(String) msg.obj);
+//                    break;
             }
         }
     }
@@ -967,6 +969,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e(TAG+"error", "C: Error", e);
             }
         }
 
@@ -1103,6 +1106,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 
             } catch (Exception e) {
                 Log.e("UDP", "C: Error", e);
+                Log.e(TAG+"error", "C: Error", e);
             }
         }
     }
@@ -1148,6 +1152,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             socket.send(packet);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG+"error", "C: Error", e);
         }
     }
 
@@ -1187,6 +1192,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             Log.e("send ok","finish");
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG+"error", "C: Error", e);
         }
     }
 
@@ -1215,6 +1221,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             socket.send(packet);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG+"error", "C: Error", e);
         }
     }
 
@@ -1232,6 +1239,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                 mDataGramSocket = socket;
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e(TAG+"error", "C: Error", e);
             }
         }
 
@@ -1284,10 +1292,12 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
                         // no response received after 1 second. continue sending
 
                         e.printStackTrace();
+                        Log.e(TAG+"error", "C: Error", e);
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e(TAG+"error", "C: Error", e);
             }
 
 
@@ -1511,6 +1521,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             socket = new DatagramSocket();
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG+"error", "C: Error", e);
         }
         client = new UDPClient();
         client.start();
@@ -1555,7 +1566,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
             Log.e("my", Boolean.toString(socket.isBound()));
             Log.e("my", Boolean.toString(socket.isClosed()));
         }
-        unregisterReceiver(rssiReceiver);
+//        unregisterReceiver(rssiReceiver);
         super.onDestroy();
     }
 }

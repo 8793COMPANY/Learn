@@ -1,0 +1,4 @@
+smartdevelop.ir.eram.showcaseviewlib
+anim fade_in
+anim fade_out
+string app_name
