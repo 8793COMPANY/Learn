@@ -20,8 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.learn4.BluetoothActivity;
-import com.learn4.DroneActivity;
+import com.learn4.view.bluetooth.BluetoothActivity;
+import com.learn4.view.drone.DroneActivity;
 import com.learn4.util.Application;
 import com.learn4.R;
 import com.learn4.view.contents.ContentsActivity;
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
         free_btn = root.findViewById(R.id.free_btn);
         dictionary_btn = root.findViewById(R.id.dictionary_btn);
         drone_btn = root.findViewById(R.id.drone_btn);
-        user_name = root.findViewById(R.id.user_name);
+//        user_name = root.findViewById(R.id.user_name);
 
         bluetoothBtn = root.findViewById(R.id.bluetoothBtn);
 

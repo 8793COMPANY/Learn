@@ -238,7 +238,12 @@ public class BlocklyActivityHelper {
      * @throws BlockLoadingException If there is a error with the workspace XML format or blocks.
      */
     public void loadWorkspaceFromAppDir(String filename) throws IOException, BlockLoadingException {
-        mController.loadWorkspaceContents(mActivity.openFileInput(filename));
+        if (filename.contains("drone_workspace")){
+            mController.loadDroneWorkspaceContents(mActivity.openFileInput(filename));
+        }else{
+            mController.loadWorkspaceContents(mActivity.openFileInput(filename));
+        }
+
     }
     public void loadWorkspaceFromInputStream(InputStream stream) throws BlockLoadingException {
         mController.loadWorkspaceContents(stream);
@@ -270,6 +275,10 @@ public class BlocklyActivityHelper {
         }
         return false;
     }
+
+
+
+
 
     /**
      * @return True if the action was handled to close a previously open (and closable) toolbox,

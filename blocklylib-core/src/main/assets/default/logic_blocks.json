@@ -5,8 +5,7 @@
     "args0": [
       {
         "type": "input_value",
-        "name": "IF0",
-        "check": "Boolean"
+        "name": "IF0"
       },
       {
         "type": "input_statement",
@@ -25,8 +24,7 @@
     "args0": [
       {
         "type": "input_value",
-        "name": "IF0",
-        "check": "Boolean"
+        "name": "IF0"
       }
     ],
     "message1": "do %1",

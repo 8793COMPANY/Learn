@@ -1,0 +1,237 @@
+<!--
+  ~  Copyright 2015 Google Inc. All Rights Reserved.
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+
+<toolbox>
+
+    <!-- loop() 카테고리 안에 들어갈 블록   -->
+    <category name="drone_blocks" colour="120">
+
+
+        <block type="arm_start"></block>
+        <block type="disarm_start"></block>
+        <block type="drone_delay">
+            <field name="NUM">5</field>
+        </block>
+        <block type="take_off"></block>
+        <block type="land"></block>
+
+        <block type="drone_for">
+            <value name="FROM">
+                <block type="math_number">
+                    <field name="NUM">1</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="go">
+            <field name="NUM">30</field>
+        </block>
+
+        <block type="back">
+            <field name="NUM">30</field>
+        </block>
+
+        <block type="left">
+            <field name="NUM">30</field>
+        </block>
+
+        <block type="right">
+            <field name="NUM">30</field>
+        </block>
+
+        <block type="up">
+            <field name="NUM">30</field>
+        </block>
+
+        <block type="down">
+            <field name="NUM">30</field>
+        </block>
+
+
+        <block type="ccw">
+            <field name="NUM">30</field>
+        </block>
+
+        <block type="cw">
+            <field name="NUM">30</field>
+        </block>
+
+
+
+
+    </category>
+
+    <category name="dro_cali" colour="330">
+
+    </category>
+
+<!--    <category name="drone_serial" colour="330">-->
+
+<!--    </category>-->
+
+
+    <category name="drone_upload" colour="330">
+
+    </category>
+
+    <category name="drone_wifi" colour="330">
+
+    </category>
+
+    <category name="drone_battery" colour="330">
+
+    </category>
+
+    <category name="drone_start" colour="330">
+
+    </category>
+
+
+
+
+
+
+    <!--    <category name="IO" colour="230">-->
+    <!--        <block type="base_logic_list"></block>-->
+    <!--        <block type="base_pins_list"></block>-->
+    <!--        <block type="inout_digital_write">-->
+    <!--            <value name="PIN">-->
+    <!--                <block type="base_pins_list">-->
+    <!--                    <field name="PIN">0</field>-->
+    <!--                </block>-->
+    <!--            </value>-->
+    <!--            <value name="NUM">-->
+    <!--                <block type="base_logic_list">-->
+    <!--                    <field name="LOGIC">LOW</field>-->
+    <!--                </block>-->
+    <!--            </value>-->
+    <!--        </block>&lt;!&ndash;-->
+    <!--        <block type="inout_digital_read">-->
+    <!--            <value name="PIN">-->
+    <!--                <block type="base_pins_list">-->
+    <!--                    <field name="PIN">0</field>-->
+    <!--                </block>-->
+    <!--            </value>-->
+    <!--        </block>-->
+    <!--        <block type="inout_analog_write">-->
+    <!--            <value name="PIN">-->
+    <!--                <block type="base_pins_list">-->
+    <!--                    <field name="PIN">0</field>-->
+    <!--                </block>-->
+    <!--            </value>-->
+    <!--            <value name="NUM">-->
+    <!--                <block type="math_number">-->
+    <!--                    <field name="NUM">0</field>-->
+    <!--                </block>-->
+    <!--            </value>-->
+    <!--        </block>-->
+    <!--        <block type="inout_analog_read">-->
+    <!--            <value name="PIN">-->
+    <!--                <block type="base_pins_list">-->
+    <!--                    <field name="PIN">0</field>-->
+    <!--                </block>-->
+    <!--            </value>-->
+    <!--        </block>&ndash;&gt;-->
+    <!--    </category>-->
+
+    <!--    <category name="Arduino" colour="160">-->
+    <!--        &lt;!&ndash;-->
+    <!--        <block type="set_leds">-->
+    <!--                    <field name="VALUE1">LOW</field>-->
+    <!--                    <field name="VALUE2">LOW</field>-->
+    <!--                    <field name="VALUE3">LOW</field>-->
+    <!--        </block>-->
+    <!--       &lt;!&ndash; <block type="turtle_print">-->
+    <!--            <value name="TEXT">-->
+    <!--                <shadow type="text">-->
+    <!--                    <field name="TEXT"></field>-->
+    <!--                </shadow>-->
+    <!--            </value>-->
+    <!--        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="dc_motor">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <field name="channel">1</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="speed">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="NUM">255</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;        <block type="bluetooth_sensor">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="baud">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="NUM">115200</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="sonar_sensor">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="trig">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="PIN">11</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="echo">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="PIN">12</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="remote_sensor">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="tsop">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="PIN">15</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="servo">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="channel">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="PIN">1</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="angle">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="math_number" id="116">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="NUM">45</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="inout_tone_pin">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="PIN">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="PIN">A1</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="NUM">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="math_number">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="NUM">440</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="inout_notone_pin">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <value name="PIN">&ndash;&gt;-->
+    <!--&lt;!&ndash;                <block type="base_pins_list">&ndash;&gt;-->
+    <!--&lt;!&ndash;                    <field name="PIN">A1</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;                </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </value>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="turtle_move_internal">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <field name="VALUE">100</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <field name="DIR">moveForward</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <block type="turtle_turn_internal">&ndash;&gt;-->
+    <!--&lt;!&ndash;            <field name="VALUE">90</field>&ndash;&gt;-->
+    <!--&lt;!&ndash;        </block>&ndash;&gt;&ndash;&gt;-->
+    <!--    </category>-->
+</toolbox>

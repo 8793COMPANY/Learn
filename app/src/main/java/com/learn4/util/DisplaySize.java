@@ -17,6 +17,8 @@ public class DisplaySize {
     public static float font_size_y_32 = (float) (Application.standardSize_Y /22.5);
     public static float font_size_y_36 = (float) (Application.standardSize_Y /20);
     public static float font_size_y_38 = (float) (Application.standardSize_Y /18.9);
+    public static float font_size_y_40 = (float) (Application.standardSize_Y /18);
+    public static float font_size_y_45 = (float) (Application.standardSize_Y /16);
     public static float font_size_y_50 = (float) (Application.standardSize_Y /14.4);
 
 

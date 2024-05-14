@@ -110,7 +110,21 @@ Blockly.defineBlocksWithJsonArray([{
     colour: "%{BKY_LISTS_HUE}",
     tooltip: "%{BKY_LISTS_REVERSE_TOOLTIP}",
     helpUrl: "%{BKY_LISTS_REVERSE_HELPURL}"
-}, {
+},
+ {
+            type: "drone_main",
+            message0: "%{BKY_CONTROLS_REPEAT_INPUT_DO} %1",
+            args0: [{
+                type: "input_statement",
+                name: "DO"
+            }],
+            previousStatement: null,
+            nextStatement: null,
+            colour: "%{BKY_LOOPS_HUE}",
+            tooltip: "%{BKY_CONTROLS_REPEAT_TOOLTIP}",
+            helpUrl: "%{BKY_CONTROLS_REPEAT_HELPURL}"
+  },
+ {
     type: "lists_isEmpty",
     message0: "%{BKY_LISTS_ISEMPTY_TITLE}",
     args0: [{

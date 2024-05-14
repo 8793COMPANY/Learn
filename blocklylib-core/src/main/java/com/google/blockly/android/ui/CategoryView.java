@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.google.blockly.Setting;
 import com.google.blockly.android.BlocklyActivityHelper;
 import com.google.blockly.android.R;
 import com.google.blockly.android.TabItemClick;
@@ -62,6 +63,7 @@ public class CategoryView extends RelativeLayout {
     private boolean mCloseable = mPreferCloseable;
     private int mScrollOrientation = OrientationHelper.VERTICAL;
     private @Rotation.Enum int mLabelRotation = Rotation.NONE;
+    private  int mWorkspaceType = 0;
     private CategorySelectorUI.Callback mCallback;
 
     public CategoryView(Context context) {
@@ -82,6 +84,8 @@ public class CategoryView extends RelativeLayout {
         try {
             mPreferCloseable = a.getBoolean(R.styleable.BlocklyFlyout_closeable, mCloseable);
             mCloseable = mPreferCloseable;
+            Log.e("category test hello category","생성자" + Setting.workspace_type);
+
         } finally {
             a.recycle();
         }
@@ -90,6 +94,9 @@ public class CategoryView extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        Log.e("category test", "onfinishinflate");
+
+
         mCategoryTabs = (CategoryTabs) findViewById(R.id.category_tabs);
 
 
@@ -188,6 +195,13 @@ public class CategoryView extends RelativeLayout {
         mLabelRotation = rotation;
         if (mCategoryTabs != null) {
             mCategoryTabs.setLabelRotation(mLabelRotation);
+        }
+    }
+
+    public void setWorkspaceType(int type) {
+        mWorkspaceType = type;
+        if (mCategoryTabs != null) {
+            mCategoryTabs.setWorkspaceType(mWorkspaceType);
         }
     }
 

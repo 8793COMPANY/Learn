@@ -286,6 +286,17 @@ public class BlockRecyclerViewHelper {
             marginLayoutParams.setMargins((int)(width / 1280 * 55), 0, 0, 0);
         }
 
+
+            if (mCurrentCategory.getCategoryName().equals("drone_blocks") ){
+                Log.e("current","logic");
+
+                marginLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                marginLayoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                mRecyclerView.setLayoutParams(marginLayoutParams);
+                marginLayoutParams.setMargins((int)(width / 1280 * 10), 0, 0, 0);
+//            mRecyclerView.setLayoutParams(new RelativeLayout.LayoutParams(991, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
+
 //
 //
             mRecyclerView.setLayoutParams(marginLayoutParams);

@@ -166,6 +166,7 @@ public class Dragger {
     private View.OnDragListener mDragEventListener = new View.OnDragListener() {
         @Override
         public boolean onDrag(View workspaceView, DragEvent event) {
+            Log.e("BlockTouchHandler drag check","!!");
             final int action = event.getAction();
 
             if (LOG_DRAG_EVENTS) {
@@ -291,7 +292,7 @@ public class Dragger {
             @Override
             public boolean onTouchBlock(BlockView blockView, MotionEvent motionEvent) {
                 // 블록이 터치만 되었을 때(이벤트가 발생하면 여기가 찍히지 않음)
-                Log.e("onTouchBlock","in!");
+                Log.e("BlockTouchHandler onTouchBlock","in!");
 
                 //터치된 블럭의 좌표를 가져옴
                 Log.e("blockblock", blockView.getBlock().getPosition().x+"");
@@ -307,6 +308,8 @@ public class Dragger {
                 // a drop down field.
 
                 // 블록이 터치되었을 때, 터치 후 이벤트가 발생할 때 둘 다 찍힘
+
+                Log.e("BlockTouchHandler onInterceptTouchEvent","in!");
 
                 // 포커스 된 블록 좌표
                 if (blockView.getBlock().getRootBlock() != null) {
@@ -485,6 +488,7 @@ public class Dragger {
     @VisibleForTesting
     boolean onTouchBlockImpl(@DragMode int dragMode, DragHandler dragHandler, BlockView touchedView,
                              MotionEvent event, boolean interceptMode) {
+        Log.e("blocklycontroller","onTouchBlockImpl");
         if (mWithinOnTouchBlockImpl) {
             throw new IllegalStateException(
                     "onTouchBlockImpl() called recursively. Make sure OnDragHandler." +
@@ -528,6 +532,7 @@ public class Dragger {
                 } else {
                     // The user touched the block directly.
                     if (dragMode == DRAG_MODE_IMMEDIATE) {
+                        Log.e("blocklycontroller hello", "im in");
                         result = maybeStartDrag(dragHandler);
                     } else {
                         result = true;
@@ -562,6 +567,7 @@ public class Dragger {
             }
             // Handle the case when the user releases before moving far enough to start a drag.
             else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                Log.e("blocklycontroller hello action", "in");
                 if (!mPendingDrag.isDragging()) {
                     if (!interceptMode && mPendingDrag.isClick()) {
                         dragHandler.onBlockClicked(mPendingDrag);
@@ -624,6 +630,7 @@ public class Dragger {
         final PendingDrag pendingDrag = mPendingDrag;  // Stash for async callback
         final Runnable dragGroupCreator = dragHandler.maybeGetDragGroupCreator(pendingDrag);
         final boolean foundDragGroup = (dragGroupCreator != null);
+        Log.e("blocklycontroller maybeStartDrag",dragGroupCreator+","+foundDragGroup);
         if (foundDragGroup) {
             mMainHandler.post(new Runnable() {
                 @Override
@@ -634,6 +641,7 @@ public class Dragger {
 
                     dragGroupCreator.run();
                     boolean dragStarted = pendingDrag.isDragging();
+                    Log.e("blocklycontroller maybeStartDrag run",dragStarted+"");
                     if (dragStarted) {
                         mPendingDrag = pendingDrag;
                         final BlockGroup dragGroup = mPendingDrag.getDragGroup();

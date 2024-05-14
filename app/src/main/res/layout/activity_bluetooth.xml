@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BluetoothActivity">
+    tools:context=".view.bluetooth.BluetoothActivity">
 
     <!-- Read -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,8 +38,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
+            android:scrollbars="vertical"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Anhsdfa"
             android:textColor="#000000"
             android:fontFamily="@font/pretendard_regular"
             app:layout_constraintWidth_percent="0.844"
@@ -231,7 +231,8 @@
             app:layout_constraintLeft_toLeftOf="@id/guide_left_write"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <ImageView
+        <Button
+            android:id="@+id/bluetooth_btn"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_on"
@@ -244,14 +245,14 @@
             app:layout_constraintLeft_toLeftOf="@+id/guide_left_bluetooth"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <EditText
+        <TextView
             android:id="@+id/write_edit_text"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke_edit"
-            android:text="Trades"
             android:textColor="#000000"
             android:fontFamily="@font/pretendard_regular"
+            android:gravity="center_vertical"
             app:layout_constraintWidth_percent="0.641"
             app:layout_constraintHeight_percent="0.095"
             app:layout_constraintHorizontal_bias="0"
@@ -280,11 +281,11 @@
             app:layout_constraintRight_toRightOf="parent"/>
 
         <Button
-            android:id="@+id/Aged"
+            android:id="@+id/ONE"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Aged"
+            android:text="ONE"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
@@ -298,11 +299,11 @@
             app:layout_constraintRight_toRightOf="parent"/>
 
         <Button
-            android:id="@+id/Trades"
+            android:id="@+id/TWO"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Trades"
+            android:text="TWO"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
@@ -311,15 +312,15 @@
             app:layout_constraintVertical_bias="0"
             app:layout_constraintTop_toTopOf="@+id/guide_top_keypad"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/Aged"
-            app:layout_constraintRight_toLeftOf="@+id/qsdd"/>
+            app:layout_constraintLeft_toRightOf="@id/ONE"
+            app:layout_constraintRight_toLeftOf="@+id/THREE"/>
 
         <Button
-            android:id="@+id/qsdd"
+            android:id="@+id/THREE"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="qsdd"
+            android:text="THREE"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
@@ -333,61 +334,61 @@
             app:layout_constraintRight_toRightOf="@+id/send_btn"/>
 
         <Button
-            android:id="@+id/Xfchaer"
+            android:id="@+id/FOUR"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Xfchaer"
+            android:text="FOUR"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
             app:layout_constraintWidth_percent="0.247"
             app:layout_constraintHeight_percent="0.172"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintTop_toBottomOf="@+id/Aged"
-            app:layout_constraintBottom_toTopOf="@+id/Tdsdsd"
+            app:layout_constraintTop_toBottomOf="@+id/ONE"
+            app:layout_constraintBottom_toTopOf="@+id/SEVEN"
             app:layout_constraintLeft_toLeftOf="@id/guide_left_write"
             app:layout_constraintRight_toRightOf="parent"/>
 
         <Button
-            android:id="@+id/Retort"
+            android:id="@+id/FIVE"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Retort"
+            android:text="FIVE"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
             app:layout_constraintWidth_percent="0.247"
             app:layout_constraintHeight_percent="0.172"
-            app:layout_constraintTop_toBottomOf="@+id/Trades"
-            app:layout_constraintBottom_toTopOf="@id/Sjhfds"
-            app:layout_constraintLeft_toRightOf="@id/Xfchaer"
-            app:layout_constraintRight_toLeftOf="@id/Higher"/>
+            app:layout_constraintTop_toBottomOf="@+id/TWO"
+            app:layout_constraintBottom_toTopOf="@id/EIGHT"
+            app:layout_constraintLeft_toRightOf="@id/FOUR"
+            app:layout_constraintRight_toLeftOf="@id/SIX"/>
 
         <Button
-            android:id="@+id/Higher"
+            android:id="@+id/SIX"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Higher"
+            android:text="SIX"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
             app:layout_constraintWidth_percent="0.247"
             app:layout_constraintHeight_percent="0.172"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintTop_toBottomOf="@+id/qsdd"
-            app:layout_constraintBottom_toTopOf="@id/Sdfhdfh"
+            app:layout_constraintTop_toBottomOf="@+id/THREE"
+            app:layout_constraintBottom_toTopOf="@id/NINE"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/send_btn"/>
 
         <Button
-            android:id="@+id/Tdsdsd"
+            android:id="@+id/SEVEN"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Tdsdsd"
+            android:text="SEVEN"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
@@ -401,11 +402,11 @@
             app:layout_constraintRight_toRightOf="parent"/>
 
         <Button
-            android:id="@+id/Sjhfds"
+            android:id="@+id/EIGHT"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Sjhfds"
+            android:text="EIGHT"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"
@@ -414,15 +415,15 @@
             app:layout_constraintVertical_bias="1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/guide_bottom_keypad"
-            app:layout_constraintLeft_toRightOf="@id/Tdsdsd"
-            app:layout_constraintRight_toLeftOf="@+id/Sdfhdfh"/>
+            app:layout_constraintLeft_toRightOf="@id/SEVEN"
+            app:layout_constraintRight_toLeftOf="@+id/NINE"/>
 
         <Button
-            android:id="@+id/Sdfhdfh"
+            android:id="@+id/NINE"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/bluetooth_display_stroke"
-            android:text="Sdfhdfh"
+            android:text="NINE"
             android:textColor="#b45611"
             android:fontFamily="@font/nskr_medium"
             android:textAllCaps="false"

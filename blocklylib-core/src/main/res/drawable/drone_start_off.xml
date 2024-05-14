@@ -1,0 +1,46 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="176dp"
+    android:height="114dp"
+    android:viewportWidth="176"
+    android:viewportHeight="114">
+  <path
+      android:pathData="M0,0h176v114h-176z"
+      android:fillColor="#00FFFFFF"/>
+  <path
+      android:pathData="M74.72,92.19c4.55,0 7.75,-3.7 7.75,-9.55 0,-5.82 -3.2,-9.4 -7.75,-9.4 -4.53,0 -7.72,3.58 -7.72,9.4C67,88.49 70.2,92.19 74.72,92.19ZM74.72,90.36c-3.38,0 -5.6,-3.03 -5.6,-7.72 0,-4.68 2.22,-7.57 5.6,-7.57 3.4,0 5.63,2.9 5.63,7.57C80.35,87.34 78.12,90.36 74.72,90.36ZM85.5,91.86L87.57,91.86L87.57,83.51h7.05L94.62,81.76L87.57,81.76v-6.45L95.9,75.31L95.9,73.56h-10.4ZM98.15,91.86h2.08L100.22,83.51h7.05L107.27,81.76h-7.05v-6.45h8.32L108.55,73.56h-10.4Z"
+      android:fillColor="#fe316c"/>
+  <group>
+    <clip-path
+        android:pathData="M88.09,27L88.09,27A14.09,14.09 0,0 1,102.19 41.09L102.19,41.09A14.09,14.09 0,0 1,88.09 55.19L88.09,55.19A14.09,14.09 0,0 1,74 41.09L74,41.09A14.09,14.09 0,0 1,88.09 27z"/>
+    <path
+        android:pathData="M59.94,42.01l27.25,-29.08l29.08,27.25l-27.25,29.08z">
+      <aapt:attr name="android:fillColor">
+        <gradient 
+            android:centerX="88.11"
+            android:centerY="41.1"
+            android:gradientRadius="28.17"
+            android:type="radial">
+          <item android:offset="0" android:color="#FFFF1D2A"/>
+          <item android:offset="1" android:color="#FFFD419F"/>
+        </gradient>
+      </aapt:attr>
+    </path>
+  </group>
+  <group>
+    <clip-path
+        android:pathData="M84.84,38.19h15.95v15.95h-15.95z"/>
+    <group>
+      <clip-path
+          android:pathData="M100.79,46.17a7.97,7.97 0,1 1,-7.98 -7.98,7.98 7.98,0 0,1 7.98,7.98"/>
+    </group>
+  </group>
+  <group>
+    <clip-path
+        android:pathData="M75.12,36.61a8.49,8.49 0,1 0,8.49 -8.49,8.49 8.49,0 0,0 -8.49,8.49"/>
+  </group>
+  <group>
+    <clip-path
+        android:pathData="M75.33,34.53a6.41,6.41 0,1 0,6.41 -6.41A6.41,6.41 0,0 0,75.33 34.53"/>
+  </group>
+</vector>

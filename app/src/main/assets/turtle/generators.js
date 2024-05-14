@@ -419,7 +419,7 @@ Blockly.JavaScript['servo'] = function (block) {
 
    //define sonar settings
    Blockly.JavaScript.definitions_['define_neo_h'] = "#include <Adafruit_NeoPixel.h>\n";
-   Blockly.JavaScript.definitions_['define_neo_' + value_channel] = "Adafruit_NeoPixel neo"+" = Adafruit_NeoPixel(" + value_channel + ","+value_angle+", NEO_GRB + NEO_KHZ800)"+";\n";
+   Blockly.JavaScript.definitions_['define_neo_' + value_channel] = "Adafruit_NeoPixel neo"+" = Adafruit_NeoPixel(" + value_angle + ","+value_channel+", NEO_GRB + NEO_KHZ800)"+";\n";
 
      var code = "";
      return code;
@@ -479,6 +479,15 @@ Blockly.JavaScript['servo'] = function (block) {
 
            return [code, Blockly.JavaScript.ORDER_ATOMIC];
         };
+
+        Blockly.JavaScript['serial_write'] = function (block) {
+
+              var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+                      Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+              var code = "Serial.write("+varValue+");\n";
+
+              return code;
+        }
 
         Blockly.JavaScript['serial_read_test'] = function (block) {
 
@@ -1715,6 +1724,55 @@ Blockly.JavaScript['inout_analog_write'] = function(block) {
     return code;
   };
 
+
+  Blockly.JavaScript['bluetooth_setup'] = function(block) {
+      var value_pin = Blockly.JavaScript.valueToCode(block, "RXD", Blockly.JavaScript.ORDER_ATOMIC);
+      var value_num = Blockly.JavaScript.valueToCode(block, "TXD", Blockly.JavaScript.ORDER_ATOMIC);
+       if( (value_num < 0 ) || (value_num > 255 )) {
+           return '!!alert!!Pin : analog value should be between 0 and 255!!\n';
+        }
+      //var code = "pinMode("+value_pin+", OUTPUT);\n analogWrite(" + value_pin + ", " + value_num + ");\n";
+      Blockly.JavaScript.definitions_["include_lib_bluetooth"] = "#include <SoftwareSerial.h>";
+      Blockly.JavaScript.definitions_["define_ble_rxd"] = "#define RXD "+value_pin;
+      Blockly.JavaScript.definitions_["define_ble_txd"] = "#define TXD "+value_num;
+      Blockly.JavaScript.definitions_["define_ble_serial"] = "SoftwareSerial bluetooth(RXD, TXD);";
+
+      var code = "";
+      return code;
+    };
+
+    Blockly.JavaScript['bluetooth_begin'] = function(block) {
+        //Blockly.JavaScript.definitions_['define_DHT11_h'] = "#include <DHT.h>\n";
+
+       var value_baud = Blockly.JavaScript.valueToCode(block, "baud", Blockly.JavaScript.ORDER_ATOMIC);
+       var code = "\nbluetooth.begin("+value_baud+");\n";
+       return code;
+     };
+
+
+    Blockly.JavaScript['bluetooth_available'] = function (block) {
+
+        var code = "bluetooth.available()"
+
+        return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
+    Blockly.JavaScript['bluetooth_read'] = function (block) {
+
+        var code = "bluetooth.read()"
+
+       return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
+    Blockly.JavaScript['bluetooth_write'] = function (block) {
+
+      var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+              Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+      var code = "bluetooth.write("+varValue+");\n";
+
+      return code;
+    }
+
 Blockly.JavaScript['inout_digital_read'] = function(block) {
   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
 //  Blockly.JavaScript.definitions_['digital_read'] = "int digRead(int pinNumber)\n{\n pinMode("+value_pin+", INPUT);\n return digitalRead(" + value_pin + ");\n}\n"
@@ -1927,6 +1985,109 @@ Blockly.JavaScript['turtle_print'] = function(block) {
       block.id + '\');\n';
 };
 
+//drone 관련
+Blockly.JavaScript['arm_start'] = function(block) {
+
+ var code ='arm();\n';
+  return code;
+};
+
+Blockly.JavaScript['disarm_start'] = function(block) {
+
+ var code ='disarm();\n';
+  return code;
+};
+
+Blockly.JavaScript['drone_delay'] = function(block) {
+ var a = parseFloat(block.getFieldValue("NUM"));
+ var code ='delay('+a+');\n';
+    return code;
+};
+
+Blockly.JavaScript['take_off'] = function(block) {
+
+ var code ='take_off();\n';
+  return code;
+};
+
+Blockly.JavaScript['land'] = function(block) {
+
+ var code ='land();\n';
+  return code;
+};
+
+
+Blockly.JavaScript['drone_for'] = function(block) {
+        var c = Blockly.JavaScript.valueToCode(block, "FROM", Blockly.JavaScript.ORDER_ASSIGNMENT) || "0",
+        f = Blockly.JavaScript.statementToCode(block, "DO");
+        f = Blockly.JavaScript.addLoopTrap(f, block.id);
+
+//    var code = "for("+c+");{\n" + f + "}\n");
+    var code = "for("+c+");\n"+f+"for(end);\n";
+
+    return code
+};
+
+Blockly.JavaScript['go'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+
+    var code ='go('+c+');\n';
+    return code;
+};
+
+
+Blockly.JavaScript['back'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+         var code ='back('+c+');\n';
+           return code;
+};
+Blockly.JavaScript['left'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+      var code ='left('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['right'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+      var code ='right('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['up'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='up('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['down'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='down('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['ccw'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='ccw('+c+');\n';
+        return code;
+};
+
+
+Blockly.JavaScript['cw'] = function(block) {
+        var c = parseFloat(block.getFieldValue("NUM"));
+        var code ='cw('+c+');\n';
+        return code;
+};
+
+
+
+
+
+
+
 Blockly.JavaScript['turtle_font'] = function(block) {
   // Generate JavaScript for setting the font.
   return 'Turtle.drawFont(\'' + block.getFieldValue('FONT') + '\',' +
@@ -1971,6 +2132,8 @@ Blockly.JavaScript['turtle_colour'] = function(block) {
 Blockly.JavaScript['turtle_repeat_internal'] = Blockly.JavaScript['controls_repeat'];
 
 Blockly.JavaScript['turtle_setup_loop'] = Blockly.JavaScript['setup_loop'];
+
+Blockly.JavaScript['turtle_drone_main'] = Blockly.JavaScript['drone_main'];
 
 /**
  * The generated code for turtle blocks includes block ID strings.  These are useful for

@@ -27,6 +27,7 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.blockly.Setting;
 import com.google.blockly.android.R;
 import com.google.blockly.android.ZoomBehavior;
 import com.google.blockly.model.WorkspacePoint;
@@ -46,18 +47,18 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
 
     // TODO(#87): Replace with configuration. Use dp.
     // Default desired width of the view in pixels.
-    private static final int DESIRED_WIDTH = 512;
+    private static final int DESIRED_WIDTH = 800;
     // Default desired height of the view in pixels.
-    private static final int DESIRED_HEIGHT = 512;
+    private static final int DESIRED_HEIGHT = 670;
 
     private static final float MIN_SCALE_TO_DRAW_GRID = 0.5f;
 
     // TODO : Allowed zoom scales. (줌 레벨 설정)
     private static final float[] ZOOM_SCALES = new float[]{0.05f, 0.3f, 0.45f, 0.8f , 1.0f, 2.0f};
-    private static final int INIT_ZOOM_SCALES_INDEX = 2;
+    private static final int INIT_ZOOM_SCALES_INDEX = 4;
 
-    protected boolean mScrollable = true;
-    protected boolean mScalable = true;
+    protected boolean mScrollable = false;
+    protected boolean mScalable = false;
 
     private final ViewPoint mPanningStart = new ViewPoint();
 
@@ -776,7 +777,13 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
-            BusProvider.getInstance().post(new PushEvent(11, true, false));
+            int num =0;
+            if (Setting.workspace_type ==0){
+                num = 11;
+            }else{
+                num = 5;
+            }
+            BusProvider.getInstance().post(new PushEvent(num, true, false));
             return callOnClick();
         }
     }

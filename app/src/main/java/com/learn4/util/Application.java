@@ -191,22 +191,31 @@ public class Application extends android.app.Application  {
 
 
     public static void checkUploadBtn(){
+        try {
         if (categoryData == null)
             categoryData = CategoryData.getInstance();
 
         if (wifi_check&& usb_check){
             Log.e("checkUploadBtn","true1");
-            categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
-            categoryData.getUpload_btn().setSelected(true);
-            categoryData.getUpload_btn().setEnabled(true);
+            if (categoryData.getUpload_btn() != null) {
+                categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_on);
+                categoryData.getUpload_btn().setSelected(true);
+                categoryData.getUpload_btn().setEnabled(true);
+            }
 
             all_check = true;
         }else{
             Log.e("checkUploadBtn","false1");
-            categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
-            categoryData.getUpload_btn().setSelected(false);
+            if (categoryData.getUpload_btn() != null) {
+                categoryData.getUpload_btn().setBackgroundResource(R.drawable.upload_btn_false);
+                categoryData.getUpload_btn().setSelected(false);
+            }
             //categoryData.getUpload_btn().setEnabled(false);
             all_check = false;
+        }
+
+        }catch (NullPointerException e){
+            Log.e("upload btn","null!");
         }
     }
 

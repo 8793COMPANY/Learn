@@ -127,6 +127,43 @@
         <block type="read_stt">
         </block>
 
+
+        <block type="bluetooth_setup">
+            <value name="RXD">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+            <value name="TXD">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="bluetooth_begin">
+            <value name="baud">
+                <block type="serial_begin_list">
+                    <field name="SB">9600</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="bluetooth_available">
+        </block>
+
+        <block type="bluetooth_read">
+        </block>
+
+        <block type="bluetooth_write">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
+        </block>
+
+
 <!--        <block type="get_weather_variables">-->
 <!--            <value name="DAY">-->
 <!--                <block type="base_day_list">-->
@@ -215,6 +252,14 @@
         </block>
 
         <block type="serial_read">
+        </block>
+
+        <block type="serial_write">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
         </block>
 
         <block type="read_temperature_sensor">
@@ -337,6 +382,56 @@
             <field name="weather">맑음</field>
         </block>
 
+<!--        <block type="arm_start"></block>-->
+<!--        <block type="disarm_start"></block>-->
+<!--        <block type="drone_delay">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+<!--        <block type="take_off"></block>-->
+<!--        <block type="land"></block>-->
+
+<!--        <block type="drone_for">-->
+<!--            <value name="FROM">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">1</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
+
+<!--        <block type="go">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+<!--        <block type="back">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+<!--        <block type="left">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+<!--        <block type="right">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+<!--        <block type="up">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+<!--        <block type="down">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+
+<!--        <block type="ccw">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+<!--        <block type="cw">-->
+<!--            <field name="NUM">1000</field>-->
+<!--        </block>-->
+
+
 
 
     </category>
@@ -453,13 +548,13 @@
         <!--            </value>-->
         <!--        </block>-->
 
-        <!--        <block type="bluetooth_sensor">-->
-        <!--                    <value name="baud">-->
-        <!--                        <block type="math_number">-->
-        <!--                            <field name="NUM">115200</field>-->
-        <!--                        </block>-->
-        <!--                    </value>-->
-        <!--        </block>-->
+                <block type="bluetooth_sensor">
+                            <value name="baud">
+                                <block type="math_number">
+                                    <field name="NUM">115200</field>
+                                </block>
+                            </value>
+                </block>
         <block type="pulseIn">
             <value name="PIN">
                 <block type="base_pins_list">

@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.blockly.Setting;
 import com.google.blockly.android.R;
 import com.google.blockly.android.TabItemClick;
 import com.google.blockly.android.UploadBtnCheck;
@@ -74,8 +75,11 @@ public class CategoryTabs extends RecyclerView {
     R.drawable.etc_btn_selector,R.drawable.code_btn_selector, R.drawable.serial_btn_selector, R.drawable.upload_btn_false
             , R.drawable.reset_btn,R.drawable.home_btn,  R.drawable.code_dictionary_btn_selector,R.drawable.teachable_machine_btn};
 
+    int [] drone_image = {R.drawable.drone_coding_btn_selector,R.drawable.drone_cali_btn, R.drawable.drone_start_btn, R.drawable.drone_wifi_btn_on, R.drawable.drone_battery_btn_on, R.drawable.drone_start_off};
+
     private final LinearLayoutManager mLayoutManager;
     private final CategoryAdapter mAdapter;
+
     protected final List<BlocklyCategory> mCategories = new ArrayList<>();
 
     protected @Rotation.Enum int mLabelRotation = Rotation.ROTATION_DIRECTION_MASK;
@@ -89,6 +93,9 @@ public class CategoryTabs extends RecyclerView {
     private OnItemClickListener mListener = null;
 
     boolean isSelected, check;
+    protected int mWorkspaceType = 0;
+
+    int tab_count =4;
 
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener =listener;
@@ -140,13 +147,29 @@ public class CategoryTabs extends RecyclerView {
 //        Log.e("width",((int)((size.x /1280.0) * 738) /4)+"");
         // TODO : 블록 카테고리-탭스 Width 사이즈 설정
         int oneTapWidth = 900;
-        mAdapter = new CategoryAdapter(realDeviceWidth + oneTapWidth);
+
+        mWorkspaceType = Setting.workspace_type;
+        if (mWorkspaceType == 0){
+            tab_count = 11;
+        }else {
+            tab_count = 6;
+            oneTapWidth = 0;
+        }
+        if (Setting.drone_upload_btn_check){
+            drone_image[3] = R.drawable.drone_start_btn_on;
+        }
+        mAdapter = new CategoryAdapter(realDeviceWidth+oneTapWidth);
 
 //        mAdapter = new CategoryAdapter(((oneTapWidth) * getTabCount()));
 //        Log.e(TAG, "CategoryTabs width 1: " + realDeviceWidth);
 //        Log.e(TAG, "CategoryTabs width 2: " + ((oneTapWidth) * getTabCount()));
+
+
+
+        Log.e("hello size check",mCategories.size()+"");
         setAdapter(mAdapter);
         setLabelAdapter(new DefaultTabsAdapter());
+
 
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
@@ -157,6 +180,8 @@ public class CategoryTabs extends RecyclerView {
             mLabelRotation = a.getInt(R.styleable.BlocklyCategory_labelRotation, mLabelRotation);
             int orientation = a.getInt(R.styleable.BlocklyCategory_scrollOrientation, VERTICAL);
             mLayoutManager.setOrientation(orientation);
+
+
         } finally {
             a.recycle();
         }
@@ -200,6 +225,17 @@ public class CategoryTabs extends RecyclerView {
         mLabelRotation = labelRotation;
         mAdapter.notifyDataSetChanged();
     }
+
+    public void setWorkspaceType(@Rotation.Enum int workspaceType) {
+        mWorkspaceType = workspaceType;
+        if (mWorkspaceType == 0){
+            tab_count = 11;
+        }else {
+            tab_count = 6;
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
 
     /**
      * Sets whether the selected tab will deselect when clicked again.
@@ -272,7 +308,7 @@ public class CategoryTabs extends RecyclerView {
 
     public int getTabCount() {
         // TODO : 블록 카테고리-탭스 항목수 지정, Width 사이즈에서 이 수만큼 나눕니다.
-        return 11;
+        return tab_count;
     }
 
     private void onCategoryClicked(BlocklyCategory category) {
@@ -321,6 +357,7 @@ public class CategoryTabs extends RecyclerView {
         public void onBindViewHolder(final TabLabelHolder holder, final int tabPosition) {
             BusProvider.getInstance().register(this);
             final BlocklyCategory category = mCategories.get(tabPosition);
+            Log.e("hello in????","come in "+tabPosition);
             isSelected = (category == mCurrentCategory);
             //Log.e("tabPosition",tabPosition+"");
 
@@ -334,7 +371,11 @@ public class CategoryTabs extends RecyclerView {
          //   layoutParams.width=100;
          //   holder.itemView.requestLayout();
 
-            holder.mLabel.setBackgroundResource(image[tabPosition]);
+            if (mWorkspaceType == 0) {
+                holder.mLabel.setBackgroundResource(image[tabPosition]);
+            }else{
+                holder.mLabel.setBackgroundResource(drone_image[tabPosition]);
+            }
             if (check)
                 holder.mLabel.setSelected(false);
             //holder.mRotator.setChildRotation(mLabelRotation);
@@ -350,6 +391,7 @@ public class CategoryTabs extends RecyclerView {
             }
 
             if (category.getCategoryName().equals("upload")) {
+                Log.e("hello","upload btn in");
                 categoryData.setUpload_btn(holder.mLabel);
                 btnCheck.onCheckEnabled();
             }else if(category.getCategoryName().equals("reset")){
@@ -357,6 +399,35 @@ public class CategoryTabs extends RecyclerView {
             }else if(category.getCategoryName().equals("home")){
                 categoryData.setHome_btn(holder.mLabel);
             }
+
+            // 드론모드 탭
+            if (category.getCategoryName().equals("drone_blocks")){
+                categoryData.setDrone_coding_btn(holder.mLabel);
+            }
+            if (category.getCategoryName().equals("drone_cali")){
+                categoryData.setDrone_cali_btn(holder.mLabel);
+            }
+
+            if (category.getCategoryName().equals("drone_upload")){
+                categoryData.setDrone_upload_btn(holder.mLabel);
+            }
+
+            if (category.getCategoryName().equals("drone_wifi")){
+                categoryData.setDrone_wifi_btn(holder.mLabel);
+            }
+
+            if (category.getCategoryName().equals("drone_battery")){
+                categoryData.setDrone_battery_btn(holder.mLabel);
+            }
+
+            if (category.getCategoryName().equals("drone_start")){
+                categoryData.setDrone_start_btn(holder.mLabel);
+            }
+
+
+
+
+
             holder.mLabel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View label) {
