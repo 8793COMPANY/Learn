@@ -125,7 +125,16 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
                             //블루투스 연결 코드
                             onBT();
-                            pairing();
+
+                            //블루투스 페어링 연결 확인
+                            PairingBluetoothListState();
+
+                            //블루투스 연결 확인부터
+                            if (!bluetoothCheck) {
+                                pairing();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "이미 연결된 기기가 있습니다.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         break;
                 }
@@ -156,6 +165,9 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         send_btn.setOnClickListener(v -> {
             Log.e("action 확인~~!", "send_btn");
             Log.e("action 확인~~!", write_edit_text.getText().toString());
+
+            //블루투스 페어링 연결 확인
+            PairingBluetoothListState();
 
             //블루투스 연결 확인부터
             if (!bluetoothCheck) {
@@ -508,6 +520,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                                             Toast.makeText(getApplicationContext(), "connected to " + name, Toast.LENGTH_SHORT).show();
                                             bluetoothCheck = true;
 
+                                            Log.e("action 확인~~!", "onon");
+
                                             // 연결 완료시 시리얼 모니터 출력하기
                                             mMonitorHandler.sendEmptyMessage(0);
                                         }, 2000);
@@ -611,9 +625,10 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             for (BluetoothDevice bluetoothDevice : bluetoothDevices) {
                 if (isConnected(bluetoothDevice)) {
                     //TODO : 연결중인상태
-
+                    bluetoothCheck = true;
                 } else {
                     //TODO : 연결중이 아닌상태
+                    bluetoothCheck = false;
                 }
             }
         } catch (NullPointerException e) {
