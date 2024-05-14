@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/word_change_dialog_background">
+
+    <TextView
+        android:id="@+id/word_input_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="변경할 단어를 입력하세요"
+        android:textColor="#af6400"
+        android:fontFamily="@font/sb_aggro_l"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/guide_top_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <EditText
+        android:id="@+id/word_input_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bluetooth_display_stroke"
+        android:text="NMISOIY"
+        android:textColor="#2f2f2f"
+        android:fontFamily="@font/pretendard_regular"
+        app:layout_constraintWidth_percent="0.618"
+        app:layout_constraintHeight_percent="0.32"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/guide_top_input_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/guide_left_input_box"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/confirm_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/buildbot_btn_custom"
+        android:text="확인"
+        android:textColor="#ffffff"
+        android:fontFamily="@font/sb_aggro_l"
+        android:paddingTop="5dp"
+        app:layout_constraintWidth_percent="0.171"
+        app:layout_constraintHeight_percent="0.32"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/guide_top_input_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/guide_left_confirm_btn"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_top_input_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.48">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_left_input_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.091">
+    </androidx.constraintlayout.widget.Guideline>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_left_confirm_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.738">
+    </androidx.constraintlayout.widget.Guideline>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,7 @@
         android:name="android.hardware.usb.host"
         android:required="true" />
 
+
     <application
         android:name=".util.Application"
         android:allowBackup="false"
@@ -70,8 +71,8 @@
         </activity>
         <activity
             android:name=".view.simulator.TeachableActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.dictionary.BlockDictionaryActivity2"
@@ -125,8 +126,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <uses-library
@@ -142,8 +145,9 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.MainActivity"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="sensorLandscape"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

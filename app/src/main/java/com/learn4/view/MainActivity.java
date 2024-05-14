@@ -823,7 +823,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     customProgressDialog.dismiss();
-                    }, 1500);
+                }, 1500);
             }
 
             //uploadListener.show();
@@ -861,7 +861,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     Log.e("hello","weather");
 
                     new Thread(() -> {
-                    call_weather_api(count);
+                        call_weather_api(count);
                     }).start();
                 }
             }
@@ -1233,7 +1233,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         Log.e("in!","onLoadWorkspace");
         mBlocklyActivityHelper.loadWorkspaceFromAppDirSafely(SAVE_FILENAME);
     }
-    
+
 
 
     @Override
@@ -2975,8 +2975,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
             boolean loadWorkspace = false;
             String filename = "";
-                loadWorkspace = true;
-                filename = "android.xml";
+            loadWorkspace = true;
+            filename = "android.xml";
 
 //        else if (id == R.id.action_demo_lacey_curves) {
 //            loadWorkspace = true;
@@ -2986,14 +2986,14 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            filename = "paint_strokes.xml";
 //        }
 
-                String assetFilename = "turtle/demo_workspaces/" + filename;
-                try {
-                    controller.loadWorkspaceContents(getAssets().open(assetFilename));
-                } catch (IOException | BlockLoadingException e) {
-                    throw new IllegalStateException(
-                            "Couldn't load demo workspace from assets: " + assetFilename, e);
-                }
-                addDefaultVariables(controller);
+            String assetFilename = "turtle/demo_workspaces/" + filename;
+            try {
+                controller.loadWorkspaceContents(getAssets().open(assetFilename));
+            } catch (IOException | BlockLoadingException e) {
+                throw new IllegalStateException(
+                        "Couldn't load demo workspace from assets: " + assetFilename, e);
+            }
+            addDefaultVariables(controller);
         });
 
         code_save_btn.setOnClickListener(v -> {
@@ -3055,7 +3055,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                         controller.testZoom2();
                     }
                 }
-           }
+            }
             else {
                 //Toast.makeText(getApplicationContext(), "keyboard hidden", Toast.LENGTH_SHORT).show();
             }

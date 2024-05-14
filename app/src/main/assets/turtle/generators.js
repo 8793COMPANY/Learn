@@ -419,7 +419,7 @@ Blockly.JavaScript['servo'] = function (block) {
 
    //define sonar settings
    Blockly.JavaScript.definitions_['define_neo_h'] = "#include <Adafruit_NeoPixel.h>\n";
-   Blockly.JavaScript.definitions_['define_neo_' + value_channel] = "Adafruit_NeoPixel neo"+" = Adafruit_NeoPixel(" + value_channel + ","+value_angle+", NEO_GRB + NEO_KHZ800)"+";\n";
+   Blockly.JavaScript.definitions_['define_neo_' + value_channel] = "Adafruit_NeoPixel neo"+" = Adafruit_NeoPixel(" + value_angle + ","+value_channel+", NEO_GRB + NEO_KHZ800)"+";\n";
 
      var code = "";
      return code;
@@ -479,6 +479,15 @@ Blockly.JavaScript['servo'] = function (block) {
 
            return [code, Blockly.JavaScript.ORDER_ATOMIC];
         };
+
+        Blockly.JavaScript['serial_write'] = function (block) {
+
+              var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+                      Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+              var code = "Serial.write("+varValue+");\n";
+
+              return code;
+        }
 
         Blockly.JavaScript['serial_read_test'] = function (block) {
 
@@ -1754,6 +1763,15 @@ Blockly.JavaScript['inout_analog_write'] = function(block) {
 
        return [code, Blockly.JavaScript.ORDER_ATOMIC];
     };
+
+    Blockly.JavaScript['bluetooth_write'] = function (block) {
+
+      var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+              Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+      var code = "bluetooth.write("+varValue+");\n";
+
+      return code;
+    }
 
 Blockly.JavaScript['inout_digital_read'] = function(block) {
   var value_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);

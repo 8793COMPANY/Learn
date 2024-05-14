@@ -155,6 +155,14 @@
         <block type="bluetooth_read">
         </block>
 
+        <block type="bluetooth_write">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
+        </block>
+
 
 <!--        <block type="get_weather_variables">-->
 <!--            <value name="DAY">-->
@@ -244,6 +252,14 @@
         </block>
 
         <block type="serial_read">
+        </block>
+
+        <block type="serial_write">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
         </block>
 
         <block type="read_temperature_sensor">

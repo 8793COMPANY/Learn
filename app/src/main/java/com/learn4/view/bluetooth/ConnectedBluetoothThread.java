@@ -13,6 +13,8 @@ public class ConnectedBluetoothThread extends Thread {
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
 
+    byte[] buffer;
+    int bytes;
 
     public ConnectedBluetoothThread(BluetoothSocket socket) {
         mmSocket = socket;
@@ -33,28 +35,35 @@ public class ConnectedBluetoothThread extends Thread {
 
     @Override
     public void run() {
-        byte[] buffer = new byte[1024];
-        int bytes;
+        buffer = new byte[1024];
 
-        while (true) {
-            try {
-                // Read from the InputStream
-                bytes = mmInStream.available();
-                if (bytes != 0) {
-                    buffer = new byte[1024];
-                    SystemClock.sleep(50);
-                    bytes = mmInStream.available();
-                    bytes = mmInStream.read(buffer, 0, bytes);
-                    //데이터 받아옴
-                    final String incomingMessage = new String(buffer, 0, bytes);
-                    Log.i("From Machine P : ", incomingMessage);
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        // Read from the InputStream
+                        bytes = mmInStream.available();
+                        if (bytes != 0) {
+                            buffer = new byte[1024];
+                            SystemClock.sleep(50);
+                            bytes = mmInStream.available();
+                            bytes = mmInStream.read(buffer, 0, bytes);
+                            //데이터 받아옴
+                            final String incomingMessage = new String(buffer, 0, bytes);
+                            Log.e("From Machine P : ", incomingMessage);
+
+                            ((BluetoothActivity)BluetoothActivity.mContext).read_data(incomingMessage);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        break;
+                    }
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-
-                break;
             }
-        }
+        };
+
+        thread.start();
     }
 
     /* Call this from the main activity to send data to the remote device */

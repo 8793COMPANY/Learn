@@ -4,8 +4,14 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="11"
+<<<<<<< HEAD
 6-->C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="30" />
 7-->C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+=======
+6-->C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+7        android:targetSdkVersion="30" />
+7-->C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+>>>>>>> 09514d77b16d194a7ce7bf2a8c39a4573f404372
 8
 9</manifest>
