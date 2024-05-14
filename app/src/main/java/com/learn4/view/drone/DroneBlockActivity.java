@@ -676,7 +676,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         }
 
         roll = (byte) 125;
-        delay(3000);
+        delay(300);
     }
 
     public void ccw(long cmd_param){
