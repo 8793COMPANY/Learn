@@ -418,7 +418,6 @@
       {
         "type": "input_value",
         "name": "IF0",
-        "check": "Boolean"
       },
       {
         "type": "input_statement",
