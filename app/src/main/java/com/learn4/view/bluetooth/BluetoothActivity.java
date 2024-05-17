@@ -47,7 +47,7 @@ import java.util.UUID;
 public class BluetoothActivity extends AppCompatActivity implements View.OnLongClickListener {
 
     TextView read_text, write_text, read_text_display, time_text_display, write_edit_text;
-    Button read_reset_btn, start_btn, stop_btn, reset_btn, send_btn, bluetooth_btn;
+    Button read_reset_btn, start_btn, stop_btn, reset_btn, send_btn, bluetooth_btn, back_btn;
 
     Button[] key_btn = new Button[9];
     Integer[] key_btn_id = {R.id.ONE, R.id.TWO, R.id.THREE, R.id.FOUR, R.id.FIVE,
@@ -79,6 +79,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
     String serial_text = "";
     UsbDevice bigBoard;
     int number;
+
+    BluetoothSocket btSocket;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -179,6 +181,10 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                     connectedThread.write(write_edit_text.getText().toString());
                 }
             }
+        });
+
+        back_btn.setOnClickListener(v->{
+            finish();
         });
     }
 
@@ -478,7 +484,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                             boolean flag = true;
 
                             BluetoothDevice device = btAdapter.getRemoteDevice(address);
-                            BluetoothSocket btSocket = null;
+                            btSocket = null;
 
                             UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -724,6 +730,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         send_btn = findViewById(R.id.send_btn);
 
         bluetooth_btn = findViewById(R.id.bluetooth_btn);
+        back_btn = findViewById(R.id.back_btn);
     }
 
     private void init_variable_key_btn() {
@@ -758,6 +765,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
                     // 다이얼로그 화면 크기 조절
                     Window window = wordChangeDialog.getWindow();
+
                     int x = (int) (Application.displaySize_X * 0.43f);
                     int y = (int) (Application.displaySize_Y * 0.278f);
                     window.setLayout(x, y);
@@ -806,7 +814,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         int newUiOptions = uiOptions;
         boolean isImmersiveModeEnabled = ((uiOptions | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) == uiOptions);
         if (isImmersiveModeEnabled) {
-            Log.i("Is on?", "Turning immersive mode mode off. ");
+            Log.i("Is on?", "Turning immersive mode mode off.");
         } else {
             Log.i("Is on?", "Turning immersive mode mode on.");
         }
@@ -820,5 +828,20 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
     protected void onPause() {
         super.onPause();
         mMonitorHandler.sendEmptyMessage(1);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.e("action 확인~~!", "onStop()");
+
+        try {
+            if (btSocket != null) {
+                btSocket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
