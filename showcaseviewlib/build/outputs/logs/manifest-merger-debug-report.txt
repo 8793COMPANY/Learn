@@ -1,5 +1,30 @@
 -- Merging decision tree log ---
 manifest
+<<<<<<< HEAD
+ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
+	package
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:11-57
+		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
+uses-sdk
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Genie\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+=======
 ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
 INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
 INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml:1:1-60
@@ -23,3 +48,4 @@ INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\
 		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
 		ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\showcaseviewlib\src\main\AndroidManifest.xml
+>>>>>>> 09514d77b16d194a7ce7bf2a8c39a4573f404372

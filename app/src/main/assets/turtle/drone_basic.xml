@@ -15,6 +15,10 @@
 
 <toolbox>
 
+    <category name="drone_home" colour="330">
+
+    </category>
+
     <!-- loop() 카테고리 안에 들어갈 블록   -->
     <category name="drone_blocks" colour="120">
 
@@ -73,7 +77,7 @@
 
     </category>
 
-    <category name="dro_cali" colour="330">
+    <category name="drone_cali" colour="330">
 
     </category>
 

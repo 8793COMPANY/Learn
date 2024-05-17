@@ -93,6 +93,11 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
+
+        <activity
+            android:name=".view.drone.DroneTestActivity"
+            android:screenOrientation="sensorLandscape" />
+
         <activity
             android:name=".view.problem.solve.RightAnswerActivity"
             android:exported="false"
@@ -120,6 +125,7 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
