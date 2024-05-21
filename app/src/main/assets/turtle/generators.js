@@ -1768,7 +1768,20 @@ Blockly.JavaScript['inout_analog_write'] = function(block) {
 
       var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
               Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-      var code = "bluetooth.write("+varValue+");\n";
+      //var code = "bluetooth.write("+varValue+");\n";
+      var str = varValue.toString();
+      var code = "bluetooth.print("+str+");\n";
+
+      return code;
+    }
+
+    Blockly.JavaScript['bluetooth_write2'] = function (block) {
+
+      var varValue = Blockly.JavaScript.valueToCode(this, 'VALUE',
+              Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+      var str = varValue.toString();
+      //var code = "bluetooth.print("+varValue+");\n";
+      var code = "bluetooth.println("+str+");\n";
 
       return code;
     }

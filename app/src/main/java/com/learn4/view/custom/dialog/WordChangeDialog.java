@@ -23,11 +23,13 @@ public class WordChangeDialog extends Dialog {
     Button confirm_btn;
 
     View.OnClickListener confirm_listener;
+    public int num;
 
-    public WordChangeDialog(@NonNull Context context, View.OnClickListener confirm_listener) {
+    public WordChangeDialog(@NonNull Context context, View.OnClickListener confirm_listener, int num) {
         super(context);
 
         this.confirm_listener = confirm_listener;
+        this.num = num;
     }
 
     @Override

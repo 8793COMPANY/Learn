@@ -128,6 +128,22 @@
   },
 
   {
+    "type": "bluetooth_write2",
+    "message0": "Bluetooth write(ln) %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
     "type": "base_day_list",
     "message0": "%1",
     "args0": [
