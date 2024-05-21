@@ -163,6 +163,14 @@
             </value>
         </block>
 
+        <block type="bluetooth_write2">
+            <value name="VALUE">
+                <block type="type_string">
+                    <field name="STRING_TEXT"></field>
+                </block>
+            </value>
+        </block>
+
 
 <!--        <block type="get_weather_variables">-->
 <!--            <value name="DAY">-->

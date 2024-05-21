@@ -49,11 +49,28 @@ public class ConnectedBluetoothThread extends Thread {
                             SystemClock.sleep(50);
                             bytes = mmInStream.available();
                             bytes = mmInStream.read(buffer, 0, bytes);
+
+//                            for (int i = 0; i < buffer.length; i++) {
+//                                if (buffer[i] != 0) {
+//                                    Log.e("From Machine P3 : ", "buffer : " + buffer[i]);
+//                                }
+//                            }
+
                             //데이터 받아옴
                             final String incomingMessage = new String(buffer, 0, bytes);
                             Log.e("From Machine P : ", incomingMessage);
 
                             ((BluetoothActivity)BluetoothActivity.mContext).read_data(incomingMessage);
+                            //((BluetoothActivity)BluetoothActivity.mContext).mBluetoothHandler.obtainMessage(0, bytes, -1, buffer).sendToTarget();
+
+//                            InputStreamReader inputStreamReader = new InputStreamReader(mmInStream);
+//                            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+//                            Log.e("From Machine P2 : ", "bufferedReader : " + bufferedReader);
+//
+//                            byte[] byteArr = new byte[100];
+//                            int readByte = mmInStream.read(byteArr);
+//                            String data = new String(byteArr, 0, readByte, "UTF-8");
+//                            Log.e("From Machine P3 : ", "data : " + data);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

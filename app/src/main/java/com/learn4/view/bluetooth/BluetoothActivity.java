@@ -9,8 +9,10 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
@@ -27,6 +29,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +49,9 @@ import java.util.UUID;
 
 public class BluetoothActivity extends AppCompatActivity implements View.OnLongClickListener {
 
-    TextView read_text, write_text, read_text_display, time_text_display, write_edit_text;
+    TextView read_text, write_text, read_text_display, time_text_display;
     Button read_reset_btn, start_btn, stop_btn, reset_btn, send_btn, bluetooth_btn, back_btn;
+    EditText write_edit_text;
 
     Button[] key_btn = new Button[9];
     Integer[] key_btn_id = {R.id.ONE, R.id.TWO, R.id.THREE, R.id.FOUR, R.id.FIVE,
@@ -104,6 +108,12 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         // 권한 요청
         getPermission();
 
+        // 블루투스 브로드캐스트 리시버(실시간 연결 확인용)
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        registerReceiver(broadcastReceiver, filter);
+
         mContext = this;
 
         Handler handler = new Handler();
@@ -131,6 +141,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                             //블루투스 페어링 연결 확인
                             PairingBluetoothListState();
 
+                            Log.e("action 확인~~!", "bluetoothCheck : " + bluetoothCheck);
+
                             //블루투스 연결 확인부터
                             if (!bluetoothCheck) {
                                 pairing();
@@ -154,14 +166,38 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             stop_watch_start();
         });
 
+        start_btn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                openWordChangeDialog(2);
+                return true;
+            }
+        });
+
         stop_btn.setOnClickListener(v -> {
             //일시정지
             stop_watch_stop();
         });
 
+        stop_btn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                openWordChangeDialog(3);
+                return true;
+            }
+        });
+
         reset_btn.setOnClickListener(v -> {
             //타이머 리셋(초기화)
             stop_watch_reset();
+        });
+
+        reset_btn.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                openWordChangeDialog(4);
+                return true;
+            }
         });
 
         send_btn.setOnClickListener(v -> {
@@ -177,8 +213,10 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             } else {
                 if (write_edit_text.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "전송할 단어를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                } else if (write_edit_text.getText().toString().trim().equals("")) {
+                    Toast.makeText(getApplicationContext(), "전송할 단어를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else {
-                    connectedThread.write(write_edit_text.getText().toString());
+                    connectedThread.write(write_edit_text.getText().toString().trim());
                 }
             }
         });
@@ -195,23 +233,38 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                switch (data) {
-                    case "start":
-                        //타이머 시작
-                        stop_watch_start();
-                        break;
-                    case "stop":
-                        //일시 정지
-                        stop_watch_stop();
-                        break;
-                    case "reset":
-                        //타이머 종료
-                        stop_watch_reset();
-                        break;
-                    default:
-                        Log.e("action 확인~~!", "nope");
-                        break;
+                read_text_display.setText(data);
+
+                if (data.equals(start_btn.getText().toString())) {
+                    //타이머 시작
+                    stop_watch_start();
+                } else if (data.equals(stop_btn.getText().toString())) {
+                    //일시 정지
+                    stop_watch_stop();
+                } else if (data.equals(reset_btn.getText().toString())) {
+                    //타이머 종료(리셋)
+                    stop_watch_reset();
+                } else {
+                    Log.e("action 확인~~!", "nope");
                 }
+
+//                switch (data) {
+//                    case "start":
+//                        //타이머 시작
+//                        stop_watch_start();
+//                        break;
+//                    case "stop":
+//                        //일시 정지
+//                        stop_watch_stop();
+//                        break;
+//                    case "reset":
+//                        //타이머 종료
+//                        stop_watch_reset();
+//                        break;
+//                    default:
+//                        Log.e("action 확인~~!", "nope");
+//                        break;
+//                }
             }
         });
     }
@@ -233,6 +286,25 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             }
         }
     };
+
+//    @SuppressLint("HandlerLeak")
+//    public Handler mBluetoothHandler  = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            Log.e("getHandleMessage", "" + msg.what);
+//
+//            if (msg.what == 0) {
+//                String readMessage = null;
+//                try {
+//                    readMessage = new String((byte[]) msg.obj, "UTF-8");
+//
+//                    Log.e("action 확인~~!", "readMessage : " + readMessage);
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    };
 
     // 시리얼 데이터 출력하기
     private void open_serial_monitor() {
@@ -330,6 +402,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
     private void stop_watch_start() {
         if (start_btn.isEnabled()) {
+            Log.e("action 확인~~!", "start_btn");
+
             //일시 정지 초기화
             if (!isRunning) {
                 isRunning = true;
@@ -356,23 +430,28 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
     private void stop_watch_stop() {
         if (stop_btn.isEnabled()) {
-            //일시정지
-            isRunning = !isRunning;
+            if (!start_btn.isEnabled()) {
+                Log.e("action 확인~~!", "stop_btn");
 
-            //버튼 설정
-            start_btn.setEnabled(false);
-            stop_btn.setEnabled(true);
-            reset_btn.setEnabled(true);
+                //일시정지
+                isRunning = !isRunning;
 
-            start_btn.setVisibility(View.GONE);
-            stop_btn.setVisibility(View.VISIBLE);
-            reset_btn.setVisibility(View.VISIBLE);
+                //버튼 설정
+                start_btn.setEnabled(false);
+                stop_btn.setEnabled(true);
+                reset_btn.setEnabled(true);
 
-            if (stop_btn.getText().toString().equals("중지")) {
-                stop_btn.setText("재시작");
-            } else {
-                stop_btn.setText("중지");
+                start_btn.setVisibility(View.GONE);
+                stop_btn.setVisibility(View.VISIBLE);
+                reset_btn.setVisibility(View.VISIBLE);
             }
+
+//            if (stop_btn.getText().toString().equals("중지")) {
+//                stop_btn.setText("재시작");
+
+//            } else {
+//                stop_btn.setText("중지");
+//            }
 
             //데이터 보냄
             //connectedThread.write("B");
@@ -382,6 +461,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
     private void stop_watch_reset() {
         if (reset_btn.isEnabled()) {
+            Log.e("action 확인~~!", "reset_btn");
+
             //타이머 리셋(초기화)
             timeThread.interrupt();
 
@@ -389,15 +470,18 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             time_text_display.setText("00:00:00:00");
 
             //버튼 설정
+//            start_btn.setEnabled(true);
+//            stop_btn.setEnabled(false);
+//            reset_btn.setEnabled(false);
             start_btn.setEnabled(true);
-            stop_btn.setEnabled(false);
-            reset_btn.setEnabled(false);
+            stop_btn.setEnabled(true);
+            reset_btn.setEnabled(true);
 
             start_btn.setVisibility(View.VISIBLE);
             stop_btn.setVisibility(View.VISIBLE);
             reset_btn.setVisibility(View.VISIBLE);
 
-            stop_btn.setText("중지");
+            //stop_btn.setText("중지");
 
             //데이터 보냄
             //connectedThread.write("C");
@@ -529,8 +613,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                                             Log.e("action 확인~~!", "onon");
 
                                             // 연결 완료시 시리얼 모니터 출력하기
-                                            mMonitorHandler.sendEmptyMessage(0);
-                                        }, 2000);
+                                            //mMonitorHandler.sendEmptyMessage(0);
+                                        }, 1500);
                                     }
                                 });
                             }
@@ -603,6 +687,26 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }
+
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e("action 확인~~!", "broadcastReceiver");
+
+            String action = intent.getAction();
+
+            if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
+                Log.e("action 확인~~!", "연결됨");
+
+                bluetooth_btn.setBackgroundResource(R.drawable.bluetooth_on);
+
+            } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
+                Log.e("action 확인~~!", "연결 끊김");
+
+                bluetooth_btn.setBackgroundResource(R.drawable.bluetooth_off);
+            }
+        }
+    };
 
     // 블루투스 연결 장치 확인 여부
     public boolean isConnected(BluetoothDevice device) {
@@ -721,11 +825,6 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         stop_btn = findViewById(R.id.stop_btn);
         reset_btn = findViewById(R.id.reset_btn);
 
-        //버튼 활성화 초기 설정(시작 버튼만 가능하도록)
-        start_btn.setEnabled(true);
-        stop_btn.setEnabled(false);
-        reset_btn.setEnabled(false);
-
         write_edit_text = findViewById(R.id.write_edit_text);
         send_btn = findViewById(R.id.send_btn);
 
@@ -748,6 +847,17 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
                     // edit text 입력되는 부분
                     write_edit_text.setText(key_btn[finalI].getText());
+                    write_edit_text.setSelection(write_edit_text.getText().length());
+
+                    //블루투스 페어링 연결 확인
+                    PairingBluetoothListState();
+
+                    if (!bluetoothCheck) {
+                        Toast.makeText(getApplicationContext(), "블루투스 연결을 해주세요.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 데이터 전송
+                        connectedThread.write(key_btn[finalI].getText().toString().trim());
+                    }
                 }
             });
 
@@ -760,15 +870,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                     num = finalI;
 
                     // 다이얼로그 실행
-                    wordChangeDialog = new WordChangeDialog(BluetoothActivity.this, word_change_ok_listener);
-                    wordChangeDialog.show();
-
-                    // 다이얼로그 화면 크기 조절
-                    Window window = wordChangeDialog.getWindow();
-
-                    int x = (int) (Application.displaySize_X * 0.43f);
-                    int y = (int) (Application.displaySize_Y * 0.278f);
-                    window.setLayout(x, y);
+                    openWordChangeDialog(1);
 
                     return true;
                 }
@@ -785,12 +887,38 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             if (wordChangeDialog.word_input_box.getText().toString().trim().equals("")) {
                 Toast.makeText(getApplicationContext(), "단어를 입력해주세요.", Toast.LENGTH_SHORT).show();
             } else {
-                key_btn[num].setText(wordChangeDialog.word_input_box.getText().toString().trim());
+                switch (wordChangeDialog.num) {
+                    case 1: // 키패드의 단어를 변경하는 경우
+                        key_btn[num].setText(wordChangeDialog.word_input_box.getText().toString().trim());
+                        break;
+                    case 2: // start 단어를 변경하는 경우
+                        start_btn.setText(wordChangeDialog.word_input_box.getText().toString().trim());
+                        break;
+                    case 3: // stop 단어를 변경하는 경우
+                        stop_btn.setText(wordChangeDialog.word_input_box.getText().toString().trim());
+                        break;
+                    case 4: // reset 단어를 변경하는 경우
+                        reset_btn.setText(wordChangeDialog.word_input_box.getText().toString().trim());
+                        break;
+                }
             }
 
             wordChangeDialog.dismiss();
         }
     };
+
+    private void openWordChangeDialog(int num) {
+        // 다이얼로그 실행
+        wordChangeDialog = new WordChangeDialog(BluetoothActivity.this, word_change_ok_listener, num);
+        wordChangeDialog.show();
+
+        // 다이얼로그 화면 크기 조절
+        Window window = wordChangeDialog.getWindow();
+
+        int x = (int) (Application.displaySize_X * 0.43f);
+        int y = (int) (Application.displaySize_Y * 0.278f);
+        window.setLayout(x, y);
+    }
 
     private void init_size() {
         read_text.setTextSize(DisplaySize.font_size_y_36);
@@ -824,16 +952,15 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mMonitorHandler.sendEmptyMessage(1);
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        mMonitorHandler.sendEmptyMessage(1);
+//    }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         Log.e("action 확인~~!", "onStop()");
 
         try {
@@ -843,5 +970,13 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("action 확인~~!", "onDestroy()");
+
+        unregisterReceiver(broadcastReceiver);
     }
 }
