@@ -473,11 +473,15 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 
         Log.e(TAG, "hi" + Integer.toString(metrics.densityDpi));
 
+        // 조종 버튼, 조종 버튼 백그라운드 크기 설정
         w_left_btn = (int) (width * 0.08);
         w_left_circle = (int) (width * 0.24);
 
+        // 조종 버튼 반지름
         w_left_btn_rad = w_left_btn / 2;
         h_left_btn_rad = h_left_btn / 2;
+
+        // 조종 버튼 백그라운드 반지름
         w_left_circle_rad = w_left_circle / 2;
         h_left_circle_rad = h_left_circle / 2;
 
@@ -501,22 +505,6 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         });
         snackbar.show();
 
-//        //왼쪽 초기 위치 설정
-//        left_btn.setTranslationX(cen_w_left_btn);
-//        if (cont_version == 1) left_btn.setTranslationY(cen_h_left_btn + w_left_circle_rad);
-//        else left_btn.setTranslationY(cen_h_left_btn);
-//        left_circle.setTranslationX(cen_w_left_circle);
-//        left_circle.setTranslationY(cen_h_left_circle);
-//        down_left_X_to_yaw_origin = cen_w_left_btn;
-//        if (cont_version == 2) down_left_Y_to_throttle_origin = cen_h_left_btn;
-//
-//        //오른쪽 초기 위치 설정
-//        right_btn.setTranslationX(100);
-//        right_btn.setTranslationY(100);
-//        right_circle.setTranslationX(cen_w_left_circle + right_locate);
-//        right_circle.setTranslationY(cen_h_left_circle);
-//        down_right_X_to_roll_origin = cen_w_left_btn + right_locate;
-//        down_right_Y_to_pitch_origin = cen_h_left_btn;
 
         tab_icon_setting(0, "Home", R.drawable.drone_home);
         tab_icon_setting(1, "Calibration", R.drawable.drone_calibration);
@@ -526,24 +514,15 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
         tab_icon_setting(5, "WIFI", R.drawable.drone_wifi);
         tab_icon_setting(6, "Setting", R.drawable.drone_setting);
 
-//
-//        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
-//        tabThree.setText("Calibration");
-//        tabThree.setTextSize(15);
-//        tabThree.setGravity(Gravity.CENTER);
-//        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.drone_calibration, 0, 0);
-////        tabThree.setPadding(0,10,0,0);
-//        drone_menu_tabs.getTabAt(1).setCustomView(tabThree);
+
 
         layout_controller.setOnTouchListener((view, motionEvent) -> {
             int pCnt = motionEvent.getPointerCount(); // 1개 닿으면 1, 두 개 닿으면 2
-//                Log.e("onTouch", Integer.toString(pCnt));
+
 
             //getRawX는 무조건 첫 번째로 터치한 손가락만 쫓는다.
             int X = (int) motionEvent.getRawX();
             int Y = (int) motionEvent.getRawY();
-//                Log.e(TAG+"X값", Integer.toString(X));
-//                Log.e(TAG+"Y값", Integer.toString(Y));
 
             //btn과 circle의 원점과 손이 닿은 부분까지의 거리를 빼주어 원의 중심으로 이동
 
