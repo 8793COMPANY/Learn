@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/bluetooth_display_stroke"
-        android:text="NMISOIY"
+        android:hint="단어를 입력해주세요."
         android:textColor="#2f2f2f"
         android:fontFamily="@font/pretendard_regular"
         app:layout_constraintWidth_percent="0.618"
