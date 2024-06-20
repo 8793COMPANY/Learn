@@ -1,0 +1,133 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="bfc0c294-8f03-49de-b4fb-eedf3cb4681a" x="-20.0" y="108.0">
+        <statement name="DO">
+            <block type="pinMode" id="1a0ff211-2114-4955-be82-a22d62fa0dd3">
+                <value name="PIN">
+                    <block type="base_pins_list" id="d5ad72c3-4aa3-4053-a12a-35089d414b79">
+                        <field name="PIN">5</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="ba2f2eee-e74f-4a66-8a01-f99971bcfe83">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="pinMode" id="9dc18c82-db81-4f8f-9074-5104dfa9ab54">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="174ab3e6-2a07-4868-b4d2-76e0184d9e26">
+                                <field name="PIN">A0</field>
+                            </block>
+                        </value>
+                        <value name="VALUE1">
+                            <block type="base_output_list" id="9e60e9d3-2ca6-46f3-a25a-59de8a6a9e77">
+                                <field name="LOGIC">INPUT</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="controls_if" id="0d8d87c7-5035-4b2c-b660-b04a956c4f97">
+                <value name="IF0">
+                    <block type="logic_compare" id="e8a0ec92-2458-4d57-abe1-ea0b507fa448">
+                        <value name="A">
+                            <block type="inout_analog_read" id="b830654e-bda0-4609-8cb2-4bcb0df01724">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="c723404e-61a8-4386-ac53-d0444621dea6">
+                                        <field name="PIN">A0</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </value>
+                        <value name="B">
+                            <block type="math_number" id="2134948b-bec0-4604-b388-2f7f3fa14ea0">
+                                <field name="NUM">300</field>
+                            </block>
+                        </value>
+                        <field name="OP">LTE</field>
+                    </block>
+                </value>
+                <statement name="DO0">
+                    <block type="base_delay" id="80478bd9-e4ed-41a1-af54-af0573d283f5">
+                        <value name="DELAY_TIME">
+                            <block type="math_number" id="26c3ba37-8157-4b87-a1bb-bec089e63bf0">
+                                <field name="NUM">100</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="controls_if" id="1e55d4c0-5224-4060-85fc-c68c960528df">
+                                <value name="IF0">
+                                    <block type="logic_compare" id="c30c7575-9bc7-48e8-9aa8-81122d6f1281">
+                                        <value name="A">
+                                            <block type="inout_analog_read" id="b95c586e-2ab0-4b20-b2c0-bd6778aeb44d">
+                                                <value name="PIN">
+                                                    <block type="base_pins_list" id="ac782a51-2931-43ec-a121-59f86f195b15">
+                                                        <field name="PIN">A0</field>
+                                                    </block>
+                                                </value>
+                                            </block>
+                                        </value>
+                                        <value name="B">
+                                            <block type="math_number" id="b65ad416-3e0b-4b9c-9ef6-8bec21835e4d">
+                                                <field name="NUM">300</field>
+                                            </block>
+                                        </value>
+                                        <field name="OP">GTE</field>
+                                    </block>
+                                </value>
+                                <statement name="DO0">
+                                    <block type="inout_digital_write" id="b1c6a334-1a9b-4b03-b505-957e2ece0d19">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="01115fbd-503d-4365-9670-a17224d04f10">
+                                                <field name="PIN">5</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="base_logic_list" id="98ff27b2-a5eb-494e-9658-56f62993a84b">
+                                                <field name="LOGIC">HIGH</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="base_delay" id="db3f8f72-3da5-43a0-8ea4-de3fb36516e6">
+                                                <value name="DELAY_TIME">
+                                                    <block type="math_number" id="50bf068a-23ad-40cc-a4aa-d798cd58fdb5">
+                                                        <field name="NUM">1000</field>
+                                                    </block>
+                                                </value>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </statement>
+                                <next>
+                                    <block type="inout_digital_write" id="03edd359-63c7-45ac-b217-0784ae0246a8">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="3775e7ff-bc5a-43c9-8415-20131e36c1cf">
+                                                <field name="PIN">5</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="base_logic_list" id="3d5c981d-8212-4b5c-941d-2aa0224b2644">
+                                                <field name="LOGIC">LOW</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </statement>
+                <next>
+                    <block type="base_delay" id="6dd76e95-96e4-47b9-b04e-2e86c89e58be">
+                        <value name="DELAY_TIME">
+                            <block type="math_number" id="051307b5-3a4c-4c38-ab1a-849189f0a834">
+                                <field name="NUM">10</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

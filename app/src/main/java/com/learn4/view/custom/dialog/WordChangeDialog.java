@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -52,4 +53,6 @@ public class WordChangeDialog extends Dialog {
 
         confirm_btn.setOnClickListener(confirm_listener);
     }
+
+
 }

@@ -1,0 +1,300 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="75b8d4ac-5185-40b3-a865-f781f876aafa" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="neo_pixel_setup" id="c6ec2143-d306-42c6-938a-25c0f07db16c">
+                <next>
+                    <block type="neo_pixel" id="c3e3c740-e4c3-4f4a-a0a0-2dbec9a89fc5">
+                        <value name="channel">
+                            <block type="base_pins_list" id="1cf44d82-4c52-4c86-be58-04699c4bf41e">
+                                <field name="PIN">9</field>
+                            </block>
+                        </value>
+                        <value name="angle">
+                            <block type="math_number" id="c6bce5b9-594e-42a0-a922-b015a36b8020">
+                                <field name="NUM">12</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="ultrasonic_sensor_setup" id="93bb52c9-4e68-4238-aa25-992588d48207">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="c16cbb08-dfaa-4d88-9edb-6dd6c76ce51d">
+                                        <field name="PIN">6</field>
+                                    </block>
+                                </value>
+                                <value name="PIN2">
+                                    <block type="base_pins_list" id="9cce91da-d547-43dc-ba9c-37bf3dd0396d">
+                                        <field name="PIN">5</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="bluetooth_setup" id="b9ddae45-61bd-4ff0-877e-a86d1c75d7f7">
+                                        <value name="RXD">
+                                            <block type="base_pins_list" id="65937a49-e95e-4f3f-9de8-05064a57dace">
+                                                <field name="PIN">2</field>
+                                            </block>
+                                        </value>
+                                        <value name="TXD">
+                                            <block type="base_pins_list" id="8f75e5a1-62f4-4924-b2b2-6f45dffc72ee">
+                                                <field name="PIN">3</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="serial_begin" id="fdb67d4d-17a8-4e45-b793-37a67ddc0fd2">
+                                                <value name="baud">
+                                                    <block type="serial_begin_list" id="40bf2a58-7fc7-4edc-9dca-1053e36ceede">
+                                                        <field name="SB">9600</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="bluetooth_begin" id="40cb2dc3-2467-4718-b80d-7493df97751a">
+                                                        <value name="baud">
+                                                            <block type="serial_begin_list" id="12e65ec0-bda8-4e6b-9805-8199469128c3">
+                                                                <field name="SB">9600</field>
+                                                            </block>
+                                                        </value>
+                                                        <next>
+                                                            <block type="variables_set" id="b05e73f3-0dfb-4d13-af35-7e309eb249c0">
+                                                                <field name="VAR">item</field>
+                                                                <value name="VALUE">
+                                                                    <block type="math_number" id="02b9cc56-be98-4066-b9e4-279a979b755c">
+                                                                        <field name="NUM">1</field>
+                                                                    </block>
+                                                                </value>
+                                                                <field name="TYPE">int</field>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="neo_pixel_brightness" id="5d6b5ddf-a980-4150-bc51-e497470f0d97">
+                <value name="angle">
+                    <block type="math_number" id="5dc08067-a177-4904-b79c-5ad103b0d09b">
+                        <field name="NUM">30</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="ultrasonic_sensor" id="139096fe-162c-4843-9794-e1800e47766d">
+                        <next>
+                            <block type="controls_if" id="9e64d598-729a-4648-bff5-48d19a541a9f">
+                                <value name="IF0">
+                                    <block type="logic_compare" id="1ddfb939-8587-4b99-832c-53c817626ce1">
+                                        <value name="A">
+                                            <block type="ultrasonic_sensors_read" id="8d3702a3-7ad3-4ff3-9ea7-4acd834dfb28" />
+                                        </value>
+                                        <value name="B">
+                                            <block type="math_number" id="092f07f7-d3d6-4043-9df0-5879bccf23f4">
+                                                <field name="NUM">8</field>
+                                            </block>
+                                        </value>
+                                        <field name="OP">LTE</field>
+                                    </block>
+                                </value>
+                                <statement name="DO0">
+                                    <block type="controls_if" id="73786362-cc64-4b40-8809-d78ed838b07c">
+                                        <mutation elseif="2" else="0" />
+                                        <value name="IF0">
+                                            <block type="logic_compare" id="545ccc5e-bec8-49e0-ab47-1d247f50eb0f">
+                                                <value name="A">
+                                                    <block type="variables_get" id="b93a7806-0dd1-472c-985f-ce6c878685ab">
+                                                        <field name="VAR">item</field>
+                                                    </block>
+                                                </value>
+                                                <value name="B">
+                                                    <block type="math_number" id="e206efae-a55c-4f6e-9583-1e2d05c66a1b">
+                                                        <field name="NUM">1</field>
+                                                    </block>
+                                                </value>
+                                                <field name="OP">EQ</field>
+                                            </block>
+                                        </value>
+                                        <statement name="DO0">
+                                            <block type="variables_change" id="daedd7c9-0498-4c20-9037-9915d289a5b8">
+                                                <value name="VALUE">
+                                                    <block type="logic_calculation" id="01b40257-0149-4782-8062-c5f9d5a37a23">
+                                                        <value name="A">
+                                                            <block type="variables_get" id="3eb24ec6-7cdb-4767-824e-d97e04a1a68d">
+                                                                <field name="VAR">item</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="B">
+                                                            <block type="math_number" id="80543d4c-fb44-4687-a0ad-913c580ec651">
+                                                                <field name="NUM">1</field>
+                                                            </block>
+                                                        </value>
+                                                        <field name="OP">EQ</field>
+                                                    </block>
+                                                </value>
+                                                <field name="VAR">item</field>
+                                                <next>
+                                                    <block type="turtle_jikco_internal" id="46a5abbf-131b-4cf1-a581-029dc4f674c7">
+                                                        <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                                        <field name="COL">Green</field>
+                                                        <next>
+                                                            <block type="bluetooth_write" id="99086141-fe0a-4755-ba0b-e541ecef91ba">
+                                                                <value name="VALUE">
+                                                                    <block type="type_string" id="9da9d824-bf60-4b41-8019-43b51ea6d31e">
+                                                                        <field name="STRING_TEXT">start</field>
+                                                                    </block>
+                                                                </value>
+                                                                <next>
+                                                                    <block type="base_delay" id="ae7b8210-11f5-4562-80ac-2afee0285bbc">
+                                                                        <value name="DELAY_TIME">
+                                                                            <block type="math_number" id="15ea8f0a-6878-4ba3-ae92-0a71f6ee44c3">
+                                                                                <field name="NUM">500</field>
+                                                                            </block>
+                                                                        </value>
+                                                                    </block>
+                                                                </next>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </statement>
+                                        <value name="IF1">
+                                            <block type="logic_compare" id="5b4c2622-fe6d-447c-aa01-3cf27af35dbb">
+                                                <value name="A">
+                                                    <block type="variables_get" id="e7a17e58-d732-4d60-8b22-b8ab6e0e5d81">
+                                                        <field name="VAR">item</field>
+                                                    </block>
+                                                </value>
+                                                <value name="B">
+                                                    <block type="math_number" id="f2fa844d-6155-494c-abed-f1afb6b64daf">
+                                                        <field name="NUM">2</field>
+                                                    </block>
+                                                </value>
+                                                <field name="OP">EQ</field>
+                                            </block>
+                                        </value>
+                                        <statement name="DO1">
+                                            <block type="variables_change" id="fb0db71a-726e-4407-b26d-2e4c345dd208">
+                                                <value name="VALUE">
+                                                    <block type="logic_calculation" id="876f8fcf-419f-4da2-8911-c9a4e7a8c236">
+                                                        <value name="A">
+                                                            <block type="variables_get" id="33de2edf-51b4-443a-aff0-05bea98edfb0">
+                                                                <field name="VAR">item</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="B">
+                                                            <block type="math_number" id="74d0738b-8056-4177-99ac-d9754b1fe1d4">
+                                                                <field name="NUM">1</field>
+                                                            </block>
+                                                        </value>
+                                                        <field name="OP">EQ</field>
+                                                    </block>
+                                                </value>
+                                                <field name="VAR">item</field>
+                                                <next>
+                                                    <block type="turtle_jikco_internal" id="e8e88aed-b2c4-42d0-90e3-f0b707c9ddc7">
+                                                        <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                                        <field name="COL">Red</field>
+                                                        <next>
+                                                            <block type="bluetooth_write" id="f074431a-abf2-4ff5-98e9-3b3fbf8b5785">
+                                                                <value name="VALUE">
+                                                                    <block type="type_string" id="270b48b3-d1dd-4b73-a804-132ceec8a81c">
+                                                                        <field name="STRING_TEXT">stop</field>
+                                                                    </block>
+                                                                </value>
+                                                                <next>
+                                                                    <block type="base_delay" id="ca85e58b-0103-44aa-99fe-e5aafed7b27f">
+                                                                        <value name="DELAY_TIME">
+                                                                            <block type="math_number" id="94997f76-bca1-494e-854d-25d818b74ce4">
+                                                                                <field name="NUM">500</field>
+                                                                            </block>
+                                                                        </value>
+                                                                    </block>
+                                                                </next>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </statement>
+                                        <value name="IF2">
+                                            <block type="logic_compare" id="28f0e2e1-e06e-4e27-9713-09a61b61a99c">
+                                                <value name="A">
+                                                    <block type="variables_get" id="a67aee11-badb-440e-96fd-f41ef7efb777">
+                                                        <field name="VAR">item</field>
+                                                    </block>
+                                                </value>
+                                                <value name="B">
+                                                    <block type="math_number" id="4be46fe5-b980-4743-92b5-4fe12d3c588c">
+                                                        <field name="NUM">3</field>
+                                                    </block>
+                                                </value>
+                                                <field name="OP">EQ</field>
+                                            </block>
+                                        </value>
+                                        <statement name="DO2">
+                                            <block type="variables_change" id="b2effc89-ac76-40da-88db-1c3560f627ec">
+                                                <value name="VALUE">
+                                                    <block type="logic_calculation" id="9b3c4068-7ef8-4ebb-a77d-5603e67ec589">
+                                                        <value name="A">
+                                                            <block type="variables_get" id="452b5b60-ed86-4871-825f-ecf56420a352">
+                                                                <field name="VAR">item</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="B">
+                                                            <block type="math_number" id="8b561eaa-5b3d-489a-a497-ae9fd406bc63">
+                                                                <field name="NUM">2</field>
+                                                            </block>
+                                                        </value>
+                                                        <field name="OP">LT</field>
+                                                    </block>
+                                                </value>
+                                                <field name="VAR">item</field>
+                                                <next>
+                                                    <block type="turtle_jikco_internal" id="af1ba63a-d004-4950-8450-6f0a5bc4602b">
+                                                        <field name="DIR">1,1,1,1,1,1,1,1,1,1,1,1,0,0</field>
+                                                        <field name="COL">Blue</field>
+                                                        <next>
+                                                            <block type="bluetooth_write" id="59757079-4872-4c4d-8344-e0ac2e4e8a0d">
+                                                                <value name="VALUE">
+                                                                    <block type="type_string" id="47f4d8b1-d0eb-4543-96e1-9a38f16df11a">
+                                                                        <field name="STRING_TEXT">reset</field>
+                                                                    </block>
+                                                                </value>
+                                                                <next>
+                                                                    <block type="base_delay" id="a5a74432-d7b5-4be3-903a-203bb75e9d6f">
+                                                                        <value name="DELAY_TIME">
+                                                                            <block type="math_number" id="9acbfd95-d2cd-4541-baf2-7b047ccbc4f5">
+                                                                                <field name="NUM">500</field>
+                                                                            </block>
+                                                                        </value>
+                                                                    </block>
+                                                                </next>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </statement>
+                                    </block>
+                                </statement>
+                                <next>
+                                    <block type="base_delay" id="eef9934c-528c-491d-8354-bfa1d185dbdb">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="70afbb18-9cd5-4a54-8b77-aafa19b60c1b">
+                                                <field name="NUM">100</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
