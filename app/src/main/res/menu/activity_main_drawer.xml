@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_coupon_register"
-            android:icon="@drawable/menu_coupon_icon"
-            android:title="@string/menu_coupon_register" />
-    </group>
+<!--    <group android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/nav_coupon_register"-->
+<!--            android:icon="@drawable/menu_coupon_icon"-->
+<!--            android:title="@string/menu_coupon_register" />-->
+<!--    </group>-->
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_coupon_cancel"
-            android:icon="@drawable/menu_coupon_icon"
-            android:title="@string/menu_coupon_cancel" />
+<!--    <group android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/nav_coupon_cancel"-->
+<!--            android:icon="@drawable/menu_coupon_icon"-->
+<!--            android:title="@string/menu_coupon_cancel" />-->
 
-    </group>
+<!--    </group>-->
 </menu>

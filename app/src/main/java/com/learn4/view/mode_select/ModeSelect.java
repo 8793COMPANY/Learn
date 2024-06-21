@@ -90,40 +90,40 @@ public class ModeSelect extends AppCompatActivity {
         DataSetting setting = DataSetting.getInstance(getApplicationContext());
         setting.dataCheck();
 
-        nav_view.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.nav_coupon_register:
-                    drawer_layout.closeDrawers();
-                    couponInputDialog = new CouponInputDialog(ModeSelect.this,coupon_input_ok_listener);
-                    couponInputDialog.show();
-
-                    Window window = couponInputDialog.getWindow();
-
-                    int x = (int) (Application.displaySize_X * 0.43f);
-                    int y = (int) (Application.displaySize_Y * 0.278f);
-                    window.setLayout(x, y);
-                    break;
-
-                case R.id.nav_coupon_cancel:
-                    if (MySharedPreferences.getBoolean(ModeSelect.this,"coupon_register_check")){
-                        drawer_layout.closeDrawers();
-                        couponCancelDialog = new CouponCancelDialog(ModeSelect.this,coupon_cancel_ok_listener, coupon_cancel_listener);
-                        couponCancelDialog.show();
-
-                        Window window2 = couponCancelDialog.getWindow();
-
-                        int x2 = (int) (Application.displaySize_X * 0.43f);
-                        int y2 = (int) (Application.displaySize_Y * 0.278f);
-                        window2.setLayout(x2, y2);
-                    }else{
-                        Toast.makeText(getApplicationContext(),"등록된 쿠폰이 없습니다.",Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
-
-
-            return true;
-        });
+//        nav_view.setNavigationItemSelectedListener(item -> {
+//            switch (item.getItemId()){
+//                case R.id.nav_coupon_register:
+//                    drawer_layout.closeDrawers();
+//                    couponInputDialog = new CouponInputDialog(ModeSelect.this,coupon_input_ok_listener);
+//                    couponInputDialog.show();
+//
+//                    Window window = couponInputDialog.getWindow();
+//
+//                    int x = (int) (Application.displaySize_X * 0.43f);
+//                    int y = (int) (Application.displaySize_Y * 0.278f);
+//                    window.setLayout(x, y);
+//                    break;
+//
+//                case R.id.nav_coupon_cancel:
+//                    if (MySharedPreferences.getBoolean(ModeSelect.this,"coupon_register_check")){
+//                        drawer_layout.closeDrawers();
+//                        couponCancelDialog = new CouponCancelDialog(ModeSelect.this,coupon_cancel_ok_listener, coupon_cancel_listener);
+//                        couponCancelDialog.show();
+//
+//                        Window window2 = couponCancelDialog.getWindow();
+//
+//                        int x2 = (int) (Application.displaySize_X * 0.43f);
+//                        int y2 = (int) (Application.displaySize_Y * 0.278f);
+//                        window2.setLayout(x2, y2);
+//                    }else{
+//                        Toast.makeText(getApplicationContext(),"등록된 쿠폰이 없습니다.",Toast.LENGTH_SHORT).show();
+//                    }
+//                    break;
+//            }
+//
+//
+//            return true;
+//        });
 
 
 

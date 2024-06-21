@@ -81,11 +81,11 @@ public class HomeFragment extends Fragment {
 
 //        user_name.setText(Application.user.getName());
 
-        if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
-            changeBtnLock(true);
-        }else{
-            changeBtnLock(false);
-        }
+//        if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
+//            changeBtnLock(true);
+//        }else{
+//            changeBtnLock(false);
+//        }
 
 
 
@@ -100,53 +100,37 @@ public class HomeFragment extends Fragment {
 
         contents_btn.setOnClickListener(v->{
             Log.e("in!","!!");
-            if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
                 Intent intent = new Intent(getActivity(), ContentsActivity.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(getActivity(), "쿠폰을 등록해주세요.", Toast.LENGTH_SHORT).show();
-            }
         });
 
         dictionary_btn.setOnClickListener(v->{
             /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
             continueDialog.show();*/
-            if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
                 Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(getActivity(), "쿠폰을 등록해주세요.", Toast.LENGTH_SHORT).show();
-            }
         });
 
         drone_btn.setOnClickListener(v->{
 
-            if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
                 Intent intent = new Intent(getActivity(), DroneActivity.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(getActivity(), "쿠폰을 등록해주세요.", Toast.LENGTH_SHORT).show();
-            }
+
         });
 
         drone_block_btn.setOnClickListener(v->{
             Log.e("???? why ","dont go droneblockactivity");
-            if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
+
                 Intent intent = new Intent(getActivity(), DroneBlockActivity.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(getActivity(), "쿠폰을 등록해주세요.", Toast.LENGTH_SHORT).show();
-            }
+
 
         });
 
         bluetooth_btn.setOnClickListener(v -> {
-            if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
+
                 Intent intent = new Intent(getActivity(), BluetoothActivity.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(getActivity(), "쿠폰을 등록해주세요.", Toast.LENGTH_SHORT).show();
-            }
 
         });
 
