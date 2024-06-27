@@ -300,7 +300,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지"};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지","양궁게임 표적","양궁게임 활 ver 1","양궁게임 활 ver 2","검도게임","스탑워치",};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -1576,6 +1576,20 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             filename = "auto_trafficlight.xml";
         }else if(name == "후방 감지"){
             filename = "rear_detection.xml";
+        }
+        else if(name == "양궁게임 표적"){
+            filename = "archery_target.xml";
+        }
+        else if(name == "양궁게임 활 ver 1"){
+            filename = "archery_bow_ver1.xml";
+        }
+        else if(name == "양궁게임 활 ver 2"){
+            filename = "archery_bow_ver2.xml";
+        } else if(name == "검도게임"){
+            filename = "kendo.xml";
+        }
+        else if(name == "스탑워치"){
+            filename = "stopwatch.xml";
         }
 
 

@@ -15,11 +15,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.learn4.util.MySharedPreferences;
 import com.learn4.view.bluetooth.BluetoothActivity;
 import com.learn4.view.drone.DroneActivity;
 import com.learn4.util.Application;
@@ -79,6 +81,14 @@ public class HomeFragment extends Fragment {
 
 //        user_name.setText(Application.user.getName());
 
+//        if (MySharedPreferences.getBoolean(getActivity(),"coupon_register_check")){
+//            changeBtnLock(true);
+//        }else{
+//            changeBtnLock(false);
+//        }
+
+
+
         free_btn.setOnClickListener(v->{
             Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.putExtra("contents_name","none");
@@ -87,41 +97,41 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
-        content_mode.setOnClickListener(v->{
-            Log.e("in!","!!");
-
-        });
 
         contents_btn.setOnClickListener(v->{
             Log.e("in!","!!");
-            Intent intent = new Intent(getActivity(), ContentsActivity.class);
-            startActivity(intent);
+                Intent intent = new Intent(getActivity(), ContentsActivity.class);
+                startActivity(intent);
         });
 
         dictionary_btn.setOnClickListener(v->{
             /*ContinueDialog continueDialog = new ContinueDialog(getActivity(), "사전을 만들고 있는 중입니다");
             continueDialog.show();*/
-            Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
-            startActivity(intent);
-
+                Intent intent = new Intent(getActivity(), BlockDictionaryActivity2.class);
+                startActivity(intent);
         });
 
         drone_btn.setOnClickListener(v->{
-            Intent intent = new Intent(getActivity(), DroneActivity.class);
-            startActivity(intent);
-        });
 
+                Intent intent = new Intent(getActivity(), DroneActivity.class);
+                startActivity(intent);
+
+        });
 
         drone_block_btn.setOnClickListener(v->{
             Log.e("???? why ","dont go droneblockactivity");
-            Intent intent = new Intent(getActivity(), DroneBlockActivity.class);
 
-            startActivity(intent);
+                Intent intent = new Intent(getActivity(), DroneBlockActivity.class);
+                startActivity(intent);
+
+
         });
-        bluetooth_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), BluetoothActivity.class);
 
-            startActivity(intent);
+        bluetooth_btn.setOnClickListener(v -> {
+
+                Intent intent = new Intent(getActivity(), BluetoothActivity.class);
+                startActivity(intent);
+
         });
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -227,6 +237,28 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    public void changeBtnLock(boolean check){
+        if (check){
+            contents_btn.setBackgroundResource(R.drawable.content_mode_icon);
+            dictionary_btn.setBackgroundResource(R.drawable.dictionary_mode_icon);
+            drone_btn.setBackgroundResource(R.drawable.drone_mode_icon);
+            drone_block_btn.setBackgroundResource(R.drawable.drone_coding_mode_icon);
+            bluetooth_btn.setBackgroundResource(R.drawable.bluetooth_controller_btn);
+        }else{
+            contents_btn.setBackgroundResource(R.drawable.content_mode_icon_lock);
+            dictionary_btn.setBackgroundResource(R.drawable.dictionary_mode_icon_lock);
+            drone_btn.setBackgroundResource(R.drawable.drone_mode_icon_lock);
+            drone_block_btn.setBackgroundResource(R.drawable.drone_coding_mode_icon_lock);
+            bluetooth_btn.setBackgroundResource(R.drawable.bluetooth_controller_btn_lock);
+        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("hello ~", "zz");
+    }
 
     @Override
     public void onStop() {

@@ -5,9 +5,16 @@
 
 <!--    <group android:checkableBehavior="single">-->
 <!--        <item-->
-<!--            android:id="@+id/nav_home"-->
-<!--            android:icon="@drawable/ic_menu_camera"-->
-<!--            android:title="@string/menu_home" />-->
+<!--            android:id="@+id/nav_coupon_register"-->
+<!--            android:icon="@drawable/menu_coupon_icon"-->
+<!--            android:title="@string/menu_coupon_register" />-->
+<!--    </group>-->
+
+<!--    <group android:checkableBehavior="single">-->
+<!--        <item-->
+<!--            android:id="@+id/nav_coupon_cancel"-->
+<!--            android:icon="@drawable/menu_coupon_icon"-->
+<!--            android:title="@string/menu_coupon_cancel" />-->
 
 <!--    </group>-->
 </menu>
