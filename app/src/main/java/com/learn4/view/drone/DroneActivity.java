@@ -1,5 +1,6 @@
 package com.learn4.view.drone;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -187,6 +188,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
     public int debugCount = 0;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
