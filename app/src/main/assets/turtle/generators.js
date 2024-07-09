@@ -412,6 +412,341 @@ Blockly.JavaScript['servo'] = function (block) {
     return code;
  };
 
+
+ Blockly.JavaScript['dot_matrix_setup'] = function (block) {
+   var din_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+   var clk_pin = Blockly.JavaScript.valueToCode(block, "PIN2", Blockly.JavaScript.ORDER_ATOMIC);
+   var cs_pin = Blockly.JavaScript.valueToCode(block, "PIN3", Blockly.JavaScript.ORDER_ATOMIC);
+
+   Blockly.JavaScript.definitions_['define_led_control_h'] = "#include <LedControl.h>\n";
+   Blockly.JavaScript.definitions_['define_led_control_dm'] = "LedControl dm" + " = LedControl(" + din_pin + ", " + clk_pin + ", " + cs_pin + ", 1)" + ";\n";
+
+   Blockly.JavaScript.setups_['define_led_control_dm_setups'] = 'dm.shutdown(0, false);\ndm.setIntensity(0, 8);\ndm.clearDisplay(0);\n';
+
+   var code = "";
+
+   return code;
+ };
+
+ Blockly.JavaScript['dot_matrix_brightness'] = function (block) {
+   var value_brightness = Blockly.JavaScript.valueToCode(block, 'Brightness', Blockly.JavaScript.ORDER_ATOMIC);
+
+   var code = "dm.setIntensity(0, "+ value_brightness + ");\n"
+
+   return code;
+ };
+
+ Blockly.JavaScript['dot_matrix_clear'] = function (block) {
+   var code = "dm.clearDisplay(0);\n";
+
+   return code;
+ };
+
+ Blockly.JavaScript['dot_matrix_custom'] = function(block) {
+   // Generate JavaScript for moving forward or backwards.
+   var value = block.getFieldValue('DIR');
+
+   var total_code ="";
+   var code ="";
+   var code2 = "";
+
+   if (value == "#ffffff") {
+     total_code = "";
+   } else {
+     const checked = value.split(',');
+
+        for (let i = 0; i < 64; i++) {
+          if (i < 8) {
+            if (i == 0) {
+              code2 = "";
+              code2 += "B";
+            }
+            if (checked[i] == "1") {
+              code2 += "1";
+            } else {
+              code2 += "0";
+            }
+            if (i == 7) {
+              code += "dm.setRow(0, 0, " + code2 + ");\n";
+              total_code = code;
+            }
+          } else if (i < 16) {
+            if (i == 8) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 15) {
+                     code += "dm.setRow(0, 1, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          } else if (i < 24) {
+            if (i == 16) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 23) {
+                     code += "dm.setRow(0, 2, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          } else if (i < 32) {
+            if (i == 24) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 31) {
+                     code += "dm.setRow(0, 3, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          } else if (i < 40) {
+            if (i == 32) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 39) {
+                     code += "dm.setRow(0, 4, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          } else if (i < 48) {
+            if (i == 40) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 47) {
+                     code += "dm.setRow(0, 5, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          } else if (i < 56) {
+            if (i == 48) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 55) {
+                     code += "dm.setRow(0, 6, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          } else if (i < 64) {
+            if (i == 56) {
+                     code2 = "";
+                     code2 += "B";
+                   }
+                   if (checked[i] == "1") {
+                     code2 += "1";
+                   } else {
+                     code2 += "0";
+                   }
+                   if (i == 63) {
+                     code += "dm.setRow(0, 7, " + code2 + ");\n";
+                     total_code = code;
+                   }
+          }
+        }
+   }
+
+   return total_code;
+
+   //total_code = checked.length.toString();
+
+   //     for (let i = 0; i < checked.length; i++) {
+   //          total_code += checked[i];
+   //     }
+
+//   code += checked[0];
+//
+//   if (checked[0] == "1") {
+//     code += "good";
+//   }
+
+//   for (int i = 0; i < 64; i++) {
+//     if (i < 8) {
+//       if (i == 0) {
+//         code2 = "";
+//         code2 += "B";
+//       }
+//       if (checked[i] == "1") {
+//         code2 += "1";
+//       } else {
+//         code2 += "0";
+//       }
+//       if (i == 7) {
+//         code += "dm.setRow(0, 0, " + code2 + ");\n";
+//         total_code = code;
+//       }
+//     } else if (i < 16) {
+//       if (i == 8) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 7) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     } else if (i < 24) {
+//       if (i == 16) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 15) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     } else if (i < 32) {
+//       if (i == 24) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 23) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     } else if (i < 40) {
+//       if (i == 32) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 31) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     } else if (i < 48) {
+//       if (i == 40) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 47) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     } else if (i < 56) {
+//       if (i == 48) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 56) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     } else if (i < 64) {
+//       if (i == 56) {
+//                code2 = "";
+//                code2 += "B";
+//              }
+//              if (checked[i] == "1") {
+//                code2 += "1";
+//              } else {
+//                code2 += "0";
+//              }
+//              if (i == 63) {
+//                code += "dm.setRow(0, 0, " + code2 + ");\n";
+//                total_code = code;
+//              }
+//     }
+//   }
+
+//   var code3 = "hi" + code;
+ };
+
+ Blockly.JavaScript['get_dust'] = function (block) {
+    var led_pin = Blockly.JavaScript.valueToCode(block, "PIN", Blockly.JavaScript.ORDER_ATOMIC);
+    var ao_pin = Blockly.JavaScript.valueToCode(block, "PIN2", Blockly.JavaScript.ORDER_ATOMIC);
+
+    Blockly.JavaScript.definitions_['define_get_dust'] = "int Vo = " + ao_pin + ";\n" +
+                                                         "int V_LED = " + led_pin + ";\n" +
+                                                         "float Vo_value = 0;\n" +
+                                                         "float Voltage = 0;\n" +
+                                                         "float dustDensity = 0;\n";
+
+    Blockly.JavaScript.setups_["define_get_dust_setups"] = "pinMode(V_LED, OUTPUT);\n" +
+                                                           "pinMode(Vo, INPUT);\n" +
+                                                           "Serial.begin(9600);\n";
+
+    var code = "digitalWrite(V_LED,LOW);\n" +
+               "delayMicroseconds(280);\n\n" +
+               "Vo_value = analogRead(Vo);\n" +
+               "delayMicroseconds(40);\n\n" +
+               "digitalWrite(V_LED,HIGH);\n" +
+               "delayMicroseconds(9680);\n\n" +
+               "Voltage = Vo_value * 5.0 / 1023.0;\n" +
+               "dustDensity = (Voltage - 0.3)/0.005;\n";
+//               "Serial.print(" + '"Voltage: "' + ");\n" +
+//               "Serial.println(Voltage);\n\n" +
+//               "Serial.print(" + '" Dust Density: "' + ");\n" +
+//               "Serial.println(dustDensity);\n\n" +
+//               "delay(1000);\n";
+
+    return code;
+ };
+
+ Blockly.JavaScript['get_dust_Voltage'] = function (block) {
+   var code = "Voltage";
+   return [code, Blockly.JavaScript.ORDER_ATOMIC];
+ };
+
+ Blockly.JavaScript['get_dust_dustDensity'] = function (block) {
+    var code = "dustDensity";
+    return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  };
+
+
  Blockly.JavaScript['neo_pixel'] = function (block) {
    var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
    var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);

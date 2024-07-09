@@ -935,6 +935,127 @@
     "tooltip": ""
   },
 
+
+
+  {
+    "type": "dot_matrix_setup",
+    "message0": "도트매트릭스 시작하기 설정 (DIN %1 , CLK %2 , CS %3)",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "PIN2",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "PIN3",
+        "check": "Number"
+      }
+
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "dot_matrix_brightness",
+    "message0": "도트매트릭스 밝기 %1 ",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "Brightness",
+        "check": "Number"
+      }
+
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "dot_matrix_clear",
+    "message0": "도트매트릭스 LED 지우기",
+    "args0": [
+    ],
+    "inputsInline": true,
+    "colour": 220,
+    "tooltip": "",
+    "previousStatement": null,
+    "nextStatement": null
+  },
+
+  {
+    "type": "dot_matrix_custom",
+    "message0": "도드매트릭스 LED 그리기 %1",
+    "args0": [
+      {
+        "type": "field_dotmatrix",
+        "name": "DIR"
+      }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": "Moves the turtle forward or backward by the specified amount."
+  },
+
+  {
+    "type": "get_dust",
+    "message0": "미세먼지센서 (LED pin %1, AO pin %2) 값(㎍/㎥)",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "PIN",
+        "check": "Number"
+      },
+      {
+        "type": "input_value",
+        "name": "PIN2",
+        "check": "Number"
+      }
+    ],
+    "inputsInline": true,
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": "#FDB900",
+    "tooltip": ""
+  },
+
+  {
+    "type": "get_dust_Voltage",
+    "message0": "미세먼지센서 Voltage",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "Number",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+  {
+    "type": "get_dust_dustDensity",
+    "message0": "미세먼지센서 DustDensity",
+    "args0": [
+    ],
+    "colour": "#FDB900",
+    "output": "Number",
+    "tooltip": "",
+    "blockFactoryUrl": "https://blockly-demo.appspot.com/static/demos/blockfactory/index.html#wkz8h4"
+  },
+
+
+
   {
     "type": "neo_pixel",
     "message0": "NeoPixel %1 %2 pin %3 angle %4",

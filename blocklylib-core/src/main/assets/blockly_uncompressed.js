@@ -18787,6 +18787,85 @@ Blockly.FieldColour.widgetDispose_ = function() {
 };
 Blockly.Field.register("field_colour", Blockly.FieldColour);
 
+
+// DotMatrix
+ Blockly.FieldDotmatrix = function(a, b) {
+   Blockly.FieldDotmatrix.superClass_.constructor.call(this, a, b);
+   this.setText(Blockly.Field.NBSP + Blockly.Field.NBSP + Blockly.Field.NBSP)
+ };
+
+ goog.inherits(Blockly.FieldDotmatrix, Blockly.Field);
+ Blockly.FieldDotmatrix.fromJson = function(a) {
+   return new Blockly.FieldDotmatrix(a.dotmatrix)
+ };
+
+ Blockly.FieldDotmatrix.prototype.colours_ = null;
+ Blockly.FieldDotmatrix.prototype.columns_ = 0;
+ Blockly.FieldDotmatrix.prototype.init = function() {
+     Blockly.FieldDotmatrix.superClass_.init.call(this);
+     this.borderRect_.style.fillOpacity = 1;
+     this.setValue(this.getValue())
+ };
+
+ Blockly.FieldDotmatrix.prototype.CURSOR = "default";
+ Blockly.FieldDotmatrix.prototype.dispose = function() {
+     Blockly.WidgetDiv.hideIfOwner(this);
+     Blockly.FieldDotmatrix.superClass_.dispose.call(this)
+ };
+ Blockly.FieldDotmatrix.prototype.getValue = function() {
+     return this.colour_
+ };
+ Blockly.FieldDotmatrix.prototype.setValue = function(a) {
+     this.sourceBlock_ && Blockly.Events.isEnabled() && this.colour_ != a && Blockly.Events.fire(new Blockly.Events.BlockChange(this.sourceBlock_, "field", this.name, this.colour_, a));
+     this.colour_ = a;
+     this.borderRect_ && (this.borderRect_.style.fill = a)
+ };
+ Blockly.FieldDotmatrix.prototype.getText = function() {
+     var a = this.colour_,
+         b = a.match(/^#(.)\1(.)\2(.)\3$/);
+     b && (a = "#" + b[1] + b[2] + b[3]);
+     return a
+ };
+ Blockly.FieldDotmatrix.COLOURS = goog.ui.ColorPicker.SIMPLE_GRID_COLORS;
+ Blockly.FieldDotmatrix.COLUMNS = 7;
+ Blockly.FieldDotmatrix.prototype.setColours = function(a) {
+     this.colours_ = a;
+     return this
+ };
+ Blockly.FieldDotmatrix.prototype.setColumns = function(a) {
+     this.columns_ = a;
+     return this
+ };
+ Blockly.FieldDotmatrix.prototype.showEditor_ = function() {
+     Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL, Blockly.FieldDotmatrix.widgetDispose_);
+     var a = Blockly.utils.getViewportBBox(),
+         b = this.getScaledBBox_(),
+         c = this.createWidget_(),
+         d = goog.style.getSize(c.getElement());
+     Blockly.WidgetDiv.positionWithAnchor(a, b, d, this.sourceBlock_.RTL);
+     var e = this;
+     Blockly.FieldDotmatrix.changeEventKey_ = goog.events.listen(c, goog.ui.ColorPicker.EventType.CHANGE, function(a) {
+         a = a.target.getSelectedColor() || "#000000";
+         Blockly.WidgetDiv.hide();
+         e.sourceBlock_ && (a = e.callValidator(a));
+         null !== a && e.setValue(a)
+     })
+ };
+ Blockly.FieldDotmatrix.prototype.createWidget_ = function() {
+     var a = new goog.ui.ColorPicker;
+     a.setSize(this.columns_ || Blockly.FieldColour.COLUMNS);
+     a.setColors(this.colours_ || Blockly.FieldColour.COLOURS);
+     a.render(Blockly.WidgetDiv.DIV);
+     a.setSelectedColor(this.getValue());
+     return a
+ };
+ Blockly.FieldDotmatrix.widgetDispose_ = function() {
+     Blockly.FieldDotmatrix.changeEventKey_ && goog.events.unlistenByKey(Blockly.FieldColour.changeEventKey_);
+     Blockly.Events.setGroup(!1)
+ };
+ Blockly.Field.register("field_dotmatrix", Blockly.FieldDotmatrix);
+
+
 // start
 
 Blockly.FieldJikco = function(a, b) {

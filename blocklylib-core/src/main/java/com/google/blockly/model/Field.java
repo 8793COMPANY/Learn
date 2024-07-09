@@ -53,9 +53,11 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
 
     public static final int TYPE_DATEE = 11;
 
+    public static final int TYPE_DOTMATRIX = 12;
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TYPE_UNKNOWN, TYPE_LABEL, TYPE_INPUT, TYPE_ANGLE, TYPE_CHECKBOX, TYPE_COLOR,
-            TYPE_DATE, TYPE_VARIABLE, TYPE_DROPDOWN, TYPE_IMAGE, TYPE_NUMBER, TYPE_JIKCO, TYPE_DATEE})
+            TYPE_DATE, TYPE_VARIABLE, TYPE_DROPDOWN, TYPE_IMAGE, TYPE_NUMBER, TYPE_JIKCO, TYPE_DATEE, TYPE_DOTMATRIX})
     public @interface FieldType {}
     // When adding fields, also update stringToFieldType() below.
 
@@ -72,6 +74,8 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
     public static final String TYPE_JIKCO_STRING = "field_jikco";
 
     public static final String TYPE_DATEE_STRING = "field_datee";
+
+    public static final String TYPE_DOTMATRIX_STRING = "field_dotmatrix";
     // Icon fields are not explicitly declared, so they have no string representation
 
     /**
@@ -237,6 +241,10 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
                 Log.e("test field","TYPE_DATEE_STRING");
                 return TYPE_DATEE;
 
+            case TYPE_DOTMATRIX_STRING:
+                Log.e("test field","TYPE_DOTMATRIX_STRING");
+                return TYPE_DOTMATRIX;
+
             default:
                 return TYPE_UNKNOWN;
         }
@@ -256,7 +264,7 @@ public abstract class Field extends Observable<Field.Observer> implements Clonea
             public void run() {
 
                 if (mBlock != null) {
-                    Log.e("when in",oldValueString+","+newValueString);
+                    Log.e("when in!",oldValueString+","+newValueString);
                     mBlock.maybeAddPendingChangeEvent(
                             BlocklyEvent.ELEMENT_FIELD, Field.this, oldValueString, newValueString);
                     mBlock.testDropdown();

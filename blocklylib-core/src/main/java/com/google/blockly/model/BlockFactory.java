@@ -417,6 +417,11 @@ public class BlockFactory {
                 Log.e("datee in", "BlockFactory");
                 field = FieldDatee.fromJson(json);
                 break;
+
+            case Field.TYPE_DOTMATRIX_STRING:
+                field = FieldDotmatrix.fromJson(json);
+                break;
+
             default:
                 Log.w(TAG, "Unknown field type.");
                 break;

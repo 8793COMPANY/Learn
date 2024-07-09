@@ -597,6 +597,60 @@
             </value>
         </block>
 
+
+        <block type="dot_matrix_setup">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">12</field>
+                </block>
+            </value>
+            <value name="PIN2">
+                <block type="base_pins_list">
+                    <field name="PIN">10</field>
+                </block>
+            </value>
+            <value name="PIN3">
+                <block type="base_pins_list">
+                    <field name="PIN">11</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="dot_matrix_brightness">
+            <value name="Brightness">
+                <block type="math_number" id="116">
+                    <field name="NUM">5</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="dot_matrix_clear">
+        </block>
+
+        <block type="dot_matrix_custom">
+            <field name="DIR">#666666</field>
+        </block>
+
+        <block type="get_dust">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">2</field>
+                </block>
+            </value>
+            <value name="PIN2">
+                <block type="base_pins_list">
+                    <field name="PIN">A0</field>
+                </block>
+            </value>
+        </block>
+
+        <block type="get_dust_Voltage">
+        </block>
+
+        <block type="get_dust_dustDensity">
+        </block>
+
+
         <block type="neo_pixel">
             <value name="channel">
                 <block type="base_pins_list">

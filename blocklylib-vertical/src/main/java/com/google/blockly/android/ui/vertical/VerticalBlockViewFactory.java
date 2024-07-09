@@ -281,6 +281,9 @@ public class VerticalBlockViewFactory extends BlockViewFactory<BlockView, InputV
 
             setFieldLayout(Field.TYPE_JIKCO, R.layout.default_field_jikco);
             setFieldLayout(Field.TYPE_DATEE, R.layout.default_field_datee);
+
+            // DotMatrix
+            setFieldLayout(Field.TYPE_DOTMATRIX, R.layout.default_field_dotmatrix);
         } finally {
             styles.recycle();
         }
