@@ -359,6 +359,14 @@ public class CategoryTabs extends RecyclerView {
         @Override
         public void onBindViewHolder(final TabLabelHolder holder, final int tabPosition) {
             BusProvider.getInstance().register(this);
+
+            Log.e("test", tabPosition + "!");
+            Log.e("test", mCategories.size() + "!");
+
+            for (int i = 0; i < mCategories.size(); i++) {
+                Log.e("test", mCategories.get(i).getCategoryName() + "!");
+            }
+
             final BlocklyCategory category = mCategories.get(tabPosition);
             Log.e("hello in????","come in "+tabPosition);
             isSelected = (category == mCurrentCategory);

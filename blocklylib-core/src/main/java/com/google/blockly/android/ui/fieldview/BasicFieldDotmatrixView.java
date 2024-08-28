@@ -203,7 +203,8 @@ public class BasicFieldDotmatrixView extends FrameLayout implements FieldView {
             boolean[] array = new boolean[parts.length];
 
             for (int i = 0; i < parts.length; i++) {
-                mCheckArray[i] = (parts.equals("1") ? true : false);
+                // 여기가 제대로 작성되어야 비트맵이 그려짐
+                mCheckArray[i] = (parts[i].equals("1") ? true : false);
 
                 Log.e("field check " + i, array[i] + "");
             }
