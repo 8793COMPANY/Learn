@@ -748,8 +748,8 @@ Blockly.JavaScript['servo'] = function (block) {
 
 
  Blockly.JavaScript['neo_pixel'] = function (block) {
-   var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
    var value_angle = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
+   var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
 //   var neo_name = Blockly.JavaScript.valueToCode(block, 'angle', Blockly.JavaScript.ORDER_ATOMIC);
 
    //define sonar settings

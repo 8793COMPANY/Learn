@@ -652,14 +652,14 @@
 
 
         <block type="neo_pixel">
-            <value name="channel">
-                <block type="base_pins_list">
-                    <field name="PIN">1</field>
-                </block>
-            </value>
             <value name="angle">
                 <block type="math_number" id="116">
-                    <field name="NUM">10</field>
+                    <field name="NUM">12</field>
+                </block>
+            </value>
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">10</field>
                 </block>
             </value>
         </block>

@@ -4,14 +4,14 @@
             <block type="neo_pixel_setup" id="bf04c60e-b5c3-4f89-ba74-c74e725d8db2">
                 <next>
                     <block type="neo_pixel" id="ceeca774-dc04-42fc-be86-d6b48c02e64c">
-                        <value name="channel">
-                            <block type="base_pins_list" id="b0a7c01c-bb44-4483-8842-242b896adaff">
-                                <field name="PIN">12</field>
+                        <value name="angle">
+                            <block type="math_number" id="8ed81b21-1ce0-4ece-87d3-98feaab8416a">
+                                <field name="NUM">12</field>
                             </block>
                         </value>
-                        <value name="angle">
-                            <block type="math_number" id="ba41ce29-2ff2-4055-9b47-7704094eead3">
-                                <field name="NUM">10</field>
+                        <value name="channel">
+                            <block type="base_pins_list" id="24bfb4d8-b3c3-460d-ad69-85b6b04b3160">
+                                <field name="PIN">10</field>
                             </block>
                         </value>
                     </block>

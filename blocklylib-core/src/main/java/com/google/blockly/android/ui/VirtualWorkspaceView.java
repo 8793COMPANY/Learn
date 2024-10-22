@@ -777,6 +777,7 @@ public class VirtualWorkspaceView extends NonPropagatingViewGroup {
     private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
         public boolean onSingleTapUp(MotionEvent e) {
             Log.e("gg", "onSingleTapUp: " + e);
+            Log.e("gg", "workspace_type: " + Setting.workspace_type);
             int num =0;
             if (Setting.workspace_type ==0){
                 num = 11;

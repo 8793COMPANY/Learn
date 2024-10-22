@@ -1058,7 +1058,7 @@
 
   {
     "type": "neo_pixel",
-    "message0": "NeoPixel %1 %2 pin %3 angle %4",
+    "message0": "NeoPixel %1 %2 angle %3 pin %4",
     "args0": [
       {
         "type": "input_dummy"
@@ -1068,12 +1068,12 @@
       },
       {
         "type": "input_value",
-        "name": "channel",
+        "name": "angle",
         "check": "Number"
       },
       {
         "type": "input_value",
-        "name": "angle",
+        "name": "channel",
         "check": "Number"
       }
 
