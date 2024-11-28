@@ -86,6 +86,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
     BluetoothSocket btSocket;
 
+    String connectedDeviceName = "";
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +208,8 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
             //블루투스 페어링 연결 확인
             PairingBluetoothListState();
+
+            Log.e("action 확인~~!", "onon!! : " + bluetoothCheck);
 
             //블루투스 연결 확인부터
             if (!bluetoothCheck) {
@@ -609,8 +613,10 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
                                             // 딜레이 후 시작할 코드 작성
                                             Toast.makeText(getApplicationContext(), "connected to " + name, Toast.LENGTH_SHORT).show();
                                             bluetoothCheck = true;
+                                            connectedDeviceName = name;
 
                                             Log.e("action 확인~~!", "onon");
+                                            Log.e("action 확인~~!", "onon : " + bluetoothCheck);
 
                                             // 연결 완료시 시리얼 모니터 출력하기
                                             //mMonitorHandler.sendEmptyMessage(0);
@@ -733,12 +739,18 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
             }
             Set<BluetoothDevice> bluetoothDevices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
             for (BluetoothDevice bluetoothDevice : bluetoothDevices) {
-                if (isConnected(bluetoothDevice)) {
-                    //TODO : 연결중인상태
-                    bluetoothCheck = true;
-                } else {
-                    //TODO : 연결중이 아닌상태
-                    bluetoothCheck = false;
+                Log.e("action 확인~~!", "확인! " + bluetoothDevice.getName());
+
+                if (bluetoothDevice.getName().equals(connectedDeviceName)) {
+                    if (isConnected(bluetoothDevice)) {
+                        //TODO : 연결중인상태
+                        bluetoothCheck = true;
+                        Log.e("action 확인~~!", "연결됨!");
+                    } else {
+                        //TODO : 연결중이 아닌상태
+                        bluetoothCheck = false;
+                        Log.e("action 확인~~!", "연결안됨!");
+                    }
                 }
             }
         } catch (NullPointerException e) {
@@ -851,6 +863,7 @@ public class BluetoothActivity extends AppCompatActivity implements View.OnLongC
 
                     //블루투스 페어링 연결 확인
                     PairingBluetoothListState();
+                    Log.e("action 확인~~!", "onon~~ : " + bluetoothCheck);
 
                     if (!bluetoothCheck) {
                         Toast.makeText(getApplicationContext(), "블루투스 연결을 해주세요.", Toast.LENGTH_SHORT).show();

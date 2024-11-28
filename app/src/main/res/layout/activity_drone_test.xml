@@ -156,8 +156,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/controller_section"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/hello"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.constraintlayout.widget.Guideline
@@ -224,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintVertical_bias="0.3"
+                app:layout_constraintVertical_bias="0.4"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/left_circle"
@@ -359,11 +358,11 @@
                 android:background="@drawable/drone_arm_disarm_selector"
                 app:layout_constraintDimensionRatio="210:56"
                 app:layout_constraintWidth_percent="0.14"
-                app:layout_constraintVertical_bias="0.1"
+                app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintTop_toBottomOf="@+id/drone_txt"
                 app:layout_constraintLeft_toRightOf="@+id/left_circle"
                 app:layout_constraintRight_toLeftOf="@+id/right_circle"
-                android:layout_marginTop="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 ></Button>
 
             <Button

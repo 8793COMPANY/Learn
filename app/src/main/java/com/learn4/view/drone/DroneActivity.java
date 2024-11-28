@@ -75,7 +75,7 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
     Button btn_wifi;
     Button btn_setting;
 
-    //tri
+    //trim
     Button btn_trim_forward, btn_trim_left, btn_trim_right, btn_trim_backward;
     Button btn_x12510;
     Button btn_version;
@@ -1520,7 +1520,6 @@ public class DroneActivity extends AppCompatActivity implements View.OnClickList
 //                break;
 //        }
     }
-
 
     @Override
     protected void onStart() {
