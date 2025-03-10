@@ -526,7 +526,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
     public void thread_stop(){
-        Log.e("droneTest hello ", "arm");
+        Log.e("droneTest hello ", "thread_stop");
         throttle = (byte) 125;
         yaw = (byte) 125;
         roll = (byte) 125;
@@ -593,64 +593,107 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
         Log.e("droneTest hello ", "go");
         int counter = 0;
 
+        Log.e("dronettt ", "pitch : " + pitch);
+
         pitch = (byte)170;
+
+        Log.e("dronettt ", "pitch2 : " + pitch);
 
         while (counter <= cmd_param){
             delay(20);
             counter = counter + 1;
         }
 
+        Log.e("dronettt ", "pitch3 : " + pitch);
+
         pitch = (byte) 125;
+
+        Log.e("dronettt ", "pitch4 : " + pitch);
+
         delay(200);
     }
 
     public void back(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "back");
         int counter = 0;
+
+        Log.e("dronettt ", "pitch : " + pitch);
 
         pitch = (byte)80;
 
+        Log.e("dronettt ", "pitch2 : " + pitch);
+
         while (counter <= cmd_param){
             delay(20);
             counter = counter + 1;
         }
 
+        Log.e("dronettt ", "pitch3 : " + pitch);
+
         pitch = (byte) 125;
+
+        Log.e("dronettt ", "pitch4 : " + pitch);
+
         delay(200);
+
+        Log.e("dronettt ", "pitch5 : " + pitch);
     }
 
     public void left(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "left");
         int counter = 0;
+
+        Log.e("dronettt ", "roll : " + roll);
 
         roll = (byte)80;
 
+        Log.e("dronettt ", "roll2 : " + roll);
+
         while (counter <= cmd_param){
             delay(20);
             counter = counter + 1;
         }
 
+        Log.e("dronettt ", "roll3 : " + roll);
+
         roll = (byte) 125;
+
+        Log.e("dronettt ", "roll4 : " + roll);
+
         delay(200);
+
+        Log.e("dronettt ", "roll5 : " + roll);
     }
 
     public void right(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "right");
         int counter = 0;
 
+        Log.e("dronettt ", "roll : " + roll);
+
         roll = (byte)170;
+
+        Log.e("dronettt ", "roll2 : " + roll);
 
         while (counter <= cmd_param){
             delay(20);
             counter = counter + 1;
         }
 
+        Log.e("dronettt ", "roll3 : " + roll);
+
+
         roll = (byte) 125;
+
+        Log.e("dronettt ", "roll4 : " + roll);
+
         delay(300);
+
+        Log.e("dronettt ", "roll5 : " + roll);
     }
 
     public void up(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "up");
         int counter = 0;
 
         throttle = (byte)170;
@@ -665,7 +708,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
     public void down(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "down");
         int counter = 0;
 
         throttle = (byte)80;
@@ -680,7 +723,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
     public void ccw(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "ccw");
         int counter = 0;
 
         yaw = (byte)80;
@@ -695,7 +738,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     }
 
     public void cw(long cmd_param){
-        Log.e("droneTest hello ", "go");
+        Log.e("droneTest hello ", "cw");
         int counter = 0;
 
         yaw = (byte)170;
@@ -912,15 +955,16 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
     @Override
     public void onClickTest(View v, int pos) {
 //        mBlocklyActivityHelper.getFlyoutController();
+        // 카데고리 탭
         if (pos != 1 ){
             mBlocklyActivityHelper.getFlyoutController();
             trashcan_btn.setVisibility(View.VISIBLE);
         }
         switch (pos){
-            case 0:
+            case 0: // 홈버튼
                 finish();
                 break;
-            case 1:
+            case 1: // 코딩블록
                 Log.e("onclicktest", "코딩블록");
                 if (v.isSelected()){
                     Log.e("onclicktest 코딩블록", "selected");
@@ -929,10 +973,9 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                     Log.e("onclicktest 코딩블록", "not selected");
                     trashcan_btn.setVisibility(View.VISIBLE);
                 }
-
                 break;
 
-            case 2:
+            case 2: //캘리브레이션
                 if (getController().getWorkspace().hasBlocks()) {
                     mBlocklyActivityHelper.requestCodeGeneration(
                             getBlockGeneratorLanguage(),
@@ -952,16 +995,14 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                 delay(100);
                 break;
 
-
-            case 3:
-
+            case 3: // 시작
                 if (connected) {
                     Log.e("drone upload btn ", "in");
                     try {
                         if (thread != null) {
                             if (thread.isAlive()) {
                                 Log.e("onclicktest 업로드", "1");
-                                DRONE_STOP = true;
+                                DRONE_STOP = true;  // 사용하지 않고 있는 변수
                                 try {
                                     thread.setRunningState(false);
                                     thread_stop();
@@ -972,26 +1013,20 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                                     thread.interrupt();
                                     ExampleThread.currentThread().interrupt();
 
-
-
                                     myHandler.sendEmptyMessageDelayed(UPLOAD_STOP, 1000);
 
                                 }catch (InterruptedException e){
                                     categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
                                     categoryData.getDrone_upload_btn().setEnabled(true);
                                     ExampleThread.currentThread().interrupt();
-
 //                                    throw new RuntimeException(e);
                                 }
-
-
                                 break;
                             }
                         }
                     } catch (NullPointerException e) {
                         Log.e("thread null", "not initialize");
                     }
-
 
                     if (getController().getWorkspace().hasBlocks()) {
                         mBlocklyActivityHelper.requestCodeGeneration(
@@ -1003,21 +1038,26 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
                     Object obj = this;
 
-                    categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_on);
-                    thread = new ExampleThread(code, obj);
-                    thread.setRunningState(true);
-                    thread.start();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_on);
+                            thread = new ExampleThread(code, obj);
+                            thread.setRunningState(true);
+                            thread.start();
 
-                    Log.e("onclicktest", "업로드");
+                            Log.e("onclicktest", "업로드");
+                        }
+                    }, 1500);
                     break;
                 }
                 break;
 
-            case 4:
+            case 4: // 와이파이
                 startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 Log.e("touch", "wifi");
-           break;
-            case 5:
+                break;
+            case 5: // 배터리
                 Toast.makeText(getApplicationContext(), battery_value, Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -1227,6 +1267,22 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                         sendFunction(socket, serverAddr, (byte) 0x98);
                     } else if (cal) {
                         sendFunction(socket, serverAddr, (byte) 0xcd);
+
+//                        // 캘리브레이션 후 자동으로 시동 걸기 >> 추가된 코드
+//                        new Handler().postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Log.e("handler arm","in2");
+//                                Message msg = myHandler.obtainMessage();
+//                                msg.what = ARM;
+//                                msg.arg1 = 4;
+//                                msg.obj = "hi";
+//
+//                                myHandler.sendMessage(msg);
+//
+//                                sendFunction(socket, serverAddr, (byte) 0x97);
+//                            }
+//                        }, 1000);
                     } else if (trim_forward) {
                         sendFunction(socket, serverAddr, (byte) 0x99);
                     } else if (trim_backward) {
@@ -1240,7 +1296,7 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
                         sendRGB(socket, serverAddr, (byte) 0x8D);
                     } else if (!STOP) {
 //                        Log.e("send",roll+", "+pitch+", "+yaw+", "+throttle);
-//                        Log.e("send value", roll+","+pitch+","+yaw+","+throttle);
+                        Log.e("send value", roll+","+pitch+","+yaw+","+throttle);
                         sendSignal(socket, serverAddr, roll, pitch, yaw, throttle);
 //                        Log.e(TAG+"sendSignal", Integer.toString(cont_version));
                     }
@@ -1529,168 +1585,417 @@ public class DroneBlockActivity extends BlocklySectionsActivity implements TabIt
 
         public void run() {
 
+            Log.e("hohohoo", "run()");
+            Log.e("hohohoo", "inRunning : " + isRunning);
+
+            // while문이 실행되기 전에 코드가 비었는지 확인
+            if (code == null || code.trim().isEmpty()) {
+                Log.e("ExampleThread Error", "code가 비어 있음!");
+            } else {
+                Log.e("ExampleThread code", "code\n" + code);
+            }
+
+
             while (isRunning) {
                 try {
                     Log.e("hello class", obj.getClass().getName());
                     Class<?> cls = Class.forName(obj.getClass().getName());
 
-                    String[] methods = code.split("\n");
+                    String[] split_methods = code.split("\n");
+//                    String[] methods = code.split("\n");
+                    List<String> methods = new ArrayList<>();
+
+                    for (String splitMethod : split_methods) {
+                        if (splitMethod.trim().isEmpty()) continue; // 빈 문자열이면 건너뜀
+
+                        methods.add(splitMethod);
+                    }
+
+                    // methods 배열이 비어 있으면 기본값 추가
+                    if (methods.size() == 0 || (methods.size() == 1 && methods.get(0).trim().isEmpty())) {
+                        Log.e("ExampleThread Error", "methods가 비어 있음!!");
+                    }
+
+                    Log.e("ExampleThread Debug", "methods.length: " + methods.size());
+
+                    if (methods.size() > 0) {
+                        Log.e("ExampleThread Debug", "methods[0]: " + methods.get(0));
+                    }
+
                     List<String> list = new ArrayList<>();
                     start_stop_check = false;
                     categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_stop_btn_on);
                     categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_on);
 
+                    Log.e("hohohoo", obj.getClass().getName());
+                    Log.e("hohohoo", cls+"");
+                    Log.e("hohohoo", methods.toString()+"");
+                    Log.e("hohohoo", methods.size()+"");
 
-                    for (int i = 0; i < methods.length; i++) {
-                        Log.e("drone hello methods not trim", methods[i]);
-                        methods[i] = methods[i].trim();
-                        list.add(methods[i]);
-                        Log.e("drone hello methods", methods[i]);
-                        Log.e("drone hello methods", list.get(i));
-                    }
+                    if (code.contains("for")) { // 전체 코드에서 for문이 들어가있는 경우
+                        Log.e("check code2", "for contain yes");
 
-                    Log.e("drone hello method size", methods.length + "");
-                    Log.e("drone hello method list size", list.size() + "");
+                        String uploading_method = "";
+                        int for_num = 0;
+                        boolean for_check = false;
 
-                    if (list.contains("for(end);")) {
-                        Log.e("check for문", "in");
-                        List<Integer> values = new ArrayList<>();
-                        int current = 0;
-                        for (int p = 0; p < methods.length; p++) {
-                            if (methods[p].equals("for(end);")) {
-                                values.add(p);
-                            }
-                        }
+                        List<String> for_list = new ArrayList<>();
 
-                        Log.e("drone hello ??", "in");
+                        for (int i = 0; i <methods.size(); i++) {
+                            Log.e("drone hello methods not trim", "i :" + i);
+                            Log.e("drone hello methods not trim", methods.get(i));
 
-                        int current_end_pos = 0;
-                        Log.e("dronetest list size", list.size() + "");
-                        for (int i = 0; i < list.size(); i++) {
-                            if (list.get(i).trim().equals("")) {
-                                continue;
-                            }
-                            methods[i] = methods[i].replace("(", " ").replace(");", "").trim();
-                            String[] params_check3 = methods[i].split(" ");
-                            Log.e("methods i ", methods[i]);
-                            if (methods[i].contains("for") && !methods[i].contains("end")) {
-                                Log.e("dronetest hello in ", "first if");
-                                for (int loop = 0; loop < Integer.parseInt(params_check3[1]); loop++) {
+                            list.add(methods.get(i).trim());
+                            Log.e("drone hello methods", list.get(i));
 
-                                        int count = (i + 1);
-                                        while (count < values.get(current_end_pos) - i) {
-                                            Log.e("methods[count]", methods[count]);
-                                            methods[count] = methods[count].trim().replace("(", " ").replace(");", "");
-                                            String[] params_check2 = methods[count].split(" ");
-                                            Log.e("method size", params_check2.length + "");
-                                            if (params_check2.length > 1) {
-                                                Log.e("params check", params_check2[0]);
-                                                Log.e("params check", params_check2[1]);
-                                                Method m = cls.getDeclaredMethod(params_check2[0], long.class);
-                                                if (params_check2[0].equals("delay")) {
-                                                    params_check2[1] = params_check2[1] + "000";
-                                                }
-                                                m.invoke(obj, Long.parseLong(params_check2[1]));
+                            Log.e("dronetest hello in ", "first if!");
+                            Log.e("dronetest hello in ", "methods : " + methods);
+                            Log.e("dronetest hello in ", "methods : " + methods.size());
 
-                                            } else {
-                                                Method m = cls.getDeclaredMethod(params_check2[0]);
-                                                m.invoke(obj);
-                                            }
-                                            count++;
-                                        }
+                            Log.e("drone hello methods trim", methods.get(i));
 
+                            // for( 확인 및 for(end) 확인 필요
+                            if (list.get(i).contains("for(") && !list.get(i).contains("end")) { // for문 시작
+                                uploading_method = list.get(i).replace("for(", "").replace(");", "");
+                                Log.e("drone hello methods", uploading_method);
+
+                                for_check = true;
+
+                                // 입력된 문자가 숫자인지 확인 후 진행
+                                if (uploading_method.matches("\\d+")) {
+                                    for_num = Integer.parseInt(uploading_method);
+                                    Log.e("drone hello methods", for_num+"");
+                                } else {
+                                    Log.e("Error", "Invalid for loop value: " + uploading_method);
                                 }
-                                i = values.get(current_end_pos) + 1;
-                                current_end_pos++;
+                            } else if (list.get(i).contains("for(end)")) { // for문 끝
+                                uploading_method = list.get(i).replace("(", " ").replace(");", "");
+                                Log.e("drone hello methods", uploading_method);
 
+                                // 여기 부분에서 문제가 생기고 있음 확인 필요
+                                for (int j = 0; j < for_num; j++) {
+                                    for (int k = 0; k < for_list.size(); k++) {
+                                        uploading_method = for_list.get(k);
+                                        Log.e("drone hello methods", uploading_method);
 
-                            } else if (!methods[i].contains("for")) {
-                                Log.e("dronetest hello in ", "second if");
-                                for (String method : methods) {
-
-                                        Log.e("thread method", method);
-                                        method = method.replace("(", " ").replace(");", "");
-                                        Log.e("method", method + "");
-                                        String[] params_check = method.split(" ");
+                                        String[] params_check = uploading_method.split(" ");
                                         Log.e("method size", params_check.length + "");
+
                                         if (params_check.length > 1) {
-                                            Log.e("params check", params_check[0]);
-                                            Log.e("params check", params_check[1]);
+                                            Log.e("params check~", params_check[0]);
+                                            Log.e("params check~", params_check[1]);
+
                                             Method m = cls.getDeclaredMethod(params_check[0], long.class);
+
                                             if (params_check[0].equals("delay")) {
                                                 params_check[1] = params_check[1] + "000";
+                                                Log.e("params check[1]~", params_check[1]);
                                             }
+
                                             m.invoke(obj, Long.parseLong(params_check[1]));
                                         } else {
+                                            Log.e("params check~~", params_check[0]);
+
+
                                             Method m = cls.getDeclaredMethod(params_check[0]);
                                             m.invoke(obj);
                                         }
-
+                                    }
                                 }
 
+                                // 반복문이 종료되면 반복문 전용 리스트 변수 비우기
+                                for_list.clear();
+
+
+                                // 반복 비활성화로 변경
+                                for_check = false;
+                            } else { // for문이 아닌 일반 함수
+                                if (for_check) { // for문이 진행중인 경우
+                                    uploading_method = list.get(i).replace("(", " ").replace(");", "");
+                                    Log.e("drone hello methods", uploading_method);
+
+                                    for_list.add(uploading_method);
+                                    Log.e("drone hello methods", for_list+"");
+                                } else { // for문이 진행중이지 않은 경우에만 실행
+                                    uploading_method = list.get(i).replace("(", " ").replace(");", "");
+                                    Log.e("drone hello methods", uploading_method);
+
+                                    String[] params_check = uploading_method.split(" ");
+                                    Log.e("method size", params_check.length + "");
+
+                                    if (params_check.length > 1) {
+                                        Log.e("params check~", params_check[0]);
+                                        Log.e("params check~", params_check[1]);
+
+                                        Method m = cls.getDeclaredMethod(params_check[0], long.class);
+
+                                        if (params_check[0].equals("delay")) {
+                                            params_check[1] = params_check[1] + "000";
+                                            Log.e("params check[1]~", params_check[1]);
+                                        }
+
+                                        m.invoke(obj, Long.parseLong(params_check[1]));
+                                    } else {
+                                        Log.e("params check~~", params_check[0]);
+
+
+                                        Method m = cls.getDeclaredMethod(params_check[0]);
+                                        m.invoke(obj);
+                                    }
+                                }
                             }
-//                        if (params_check.length > 1) {
-//                            //파라미터 있을 때
-//                            Log.e("params check", params_check[0]);
-//                            Log.e("params check", params_check[1]);
+                        }
+                    } else { // 전체 코드에서 for문이 들어가지 않는 경우
+                        Log.e("check code2", "for contain no");
+
+                        for (int i = 0; i < methods.size(); i++) {
+                            Log.e("drone hello methods not trim", "i :" + i);
+                            Log.e("drone hello methods not trim", methods.get(i));
+
+//                        if (methods[i].trim().isEmpty()) continue; // 빈 문자열이면 건너뜀
+
+                            list.add(methods.get(i).trim());
+                            Log.e("drone hello methods", list.get(i));
+
+                            // 추가된 코드
+                            Log.e("dronetest hello in ", "second if!");
+                            Log.e("dronetest hello in ", "methods : " + methods);
+                            Log.e("dronetest hello in ", "methods : " + methods.size());
+
+                            String uploading_method = "";
+
+                            Log.e("drone hello methods trim", methods.get(i));
+
+                            uploading_method = list.get(i).replace("(", " ").replace(");", "");
+                            Log.e("drone hello methods", uploading_method);
+
+                            String[] params_check = uploading_method.split(" ");
+                            Log.e("method size", params_check.length + "");
+
+                            if (params_check.length > 1) {
+                                Log.e("params check~", params_check[0]);
+                                Log.e("params check~", params_check[1]);
+
+                                Method m = cls.getDeclaredMethod(params_check[0], long.class);
+
+                                if (params_check[0].equals("delay")) {
+                                    params_check[1] = params_check[1] + "000";
+                                    Log.e("params check[1]~", params_check[1]);
+                                }
+
+                                m.invoke(obj, Long.parseLong(params_check[1]));
+                            } else {
+                                Log.e("params check~~", params_check[0]);
+
+
+                                Method m = cls.getDeclaredMethod(params_check[0]);
+                                m.invoke(obj);
+                            }
+                        }
+                    }
+
+                    Log.e("drone hello method size", methods.size() + "");
+                    Log.e("drone hello method list size", list.size() + "");
+
+//                    if (list.contains("for(end);")) {
+//                        Log.e("hohohoo", "check for문");
 //
-//                        } else {
-//                            //파라미터 없을 때
-//                            for (String method : methods) {
-//                                Log.e("thread method", method);
-//                                method = method.replace("(", " ").replace(");", "");
-//                                Log.e("method", method + "");
-//                                String[] params_check = method.split(" ");
-//                                Log.e("method size", params_check.length + "");
-//                                if (params_check.length > 1) {
-//                                    Log.e("params check", params_check[0]);
-//                                    Log.e("params check", params_check[1]);
-//                                    Method m = cls.getDeclaredMethod(params_check[0], long.class);
-//                                    m.invoke(obj, Long.parseLong(params_check[1]));
-//                                } else {
-//                                    Method m = cls.getDeclaredMethod(params_check[0]);
-//                                    m.invoke(obj);
-//                                }
-//
-//
+//                        Log.e("check for문", "in");
+//                        List<Integer> values = new ArrayList<>();
+//                        int current = 0;
+//                        for (int p = 0; p < methods.length; p++) {
+//                            if (methods[p].equals("for(end);")) {
+//                                values.add(p);
 //                            }
 //                        }
-
-
-                            Log.e("droneTest", "end");
-                            Log.e("thread", "end");
-                            categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
-                            categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
-                            start_stop_check = true;
-                        }
-                    } else {
-                        Log.e("dronetest hello in ", "second if");
-                        for (String method : methods) {
-                                Log.e("thread method", method);
-                                method = method.replace("(", " ").replace(");", "");
-                                Log.e("method", method + "");
-                                String[] params_check = method.split(" ");
-                                Log.e("method size", params_check.length + "");
-                                if (params_check.length > 1) {
-                                    Log.e("params check", params_check[0]);
-                                    Log.e("params check", params_check[1]);
-                                    Method m = cls.getDeclaredMethod(params_check[0], long.class);
-                                    if (params_check[0].equals("delay")) {
-                                        params_check[1] = params_check[1] + "000";
-                                    }
-                                    m.invoke(obj, Long.parseLong(params_check[1]));
-                                } else {
-                                    Method m = cls.getDeclaredMethod(params_check[0]);
-                                    m.invoke(obj);
-                                }
-                        }
-                        Log.e("droneTest", "end");
-                        Log.e("thread", "end");
-                        categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
-                        categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
-                        start_stop_check = true;
-
-                    }
+//
+//                        Log.e("drone hello ??", "in");
+//
+//                        int current_end_pos = 0;
+//                        Log.e("dronetest list size", list.size() + "");
+//                        for (int i = 0; i < list.size(); i++) {
+//                            if (list.get(i).trim().equals("")) {
+//                                continue;
+//                            }
+//                            methods[i] = methods[i].replace("(", " ").replace(");", "").trim();
+//                            String[] params_check3 = methods[i].split(" ");
+//                            Log.e("methods i ", methods[i]);
+//                            Log.e("hohohoo", "methods i : " + methods[i]);
+//
+//                            if (methods[i].contains("for") && !methods[i].contains("end")) {
+//                                Log.e("dronetest hello in ", "first if");
+//                                Log.e("hohohoo", "first if");
+//
+//                                for (int loop = 0; loop < Integer.parseInt(params_check3[1]); loop++) {
+//
+//                                        int count = (i + 1);
+//
+//                                    Log.e("hohohoo", "count : " + count);
+//                                    Log.e("hohohoo", "current : " + (values.get(current_end_pos) - i));
+//
+//                                        while (count < values.get(current_end_pos) - i) {
+//                                            Log.e("methods[count]", methods[count]);
+//                                            Log.e("hohohoo", "methods[count] : " + methods[count]);
+//
+//                                            methods[count] = methods[count].trim().replace("(", " ").replace(");", "");
+//                                            String[] params_check2 = methods[count].split(" ");
+//                                            Log.e("method size", params_check2.length + "");
+//                                            Log.e("hohohoo", "method size : " + params_check2.length);
+//
+//                                            if (params_check2.length > 1) {
+//                                                Log.e("params check", params_check2[0]);
+//                                                Log.e("params check", params_check2[1]);
+//
+//                                                Log.e("hohohoo", "params check : " + params_check2[0]);
+//                                                Log.e("hohohoo", "params check : " + params_check2[1]);
+//
+//                                                Method m = cls.getDeclaredMethod(params_check2[0], long.class);
+//
+//                                                Log.e("hohohoo", "Method m : " + m);
+//
+//                                                if (params_check2[0].equals("delay")) {
+//                                                    Log.e("hohohoo", "delay on");
+//                                                    params_check2[1] = params_check2[1] + "000";
+//                                                }
+//                                                m.invoke(obj, Long.parseLong(params_check2[1]));
+//
+//                                            } else {
+//                                                Method m = cls.getDeclaredMethod(params_check2[0]);
+//                                                Log.e("hohohoo", "Method m2 : " + m);
+//
+//                                                m.invoke(obj);
+//                                            }
+//                                            count++;
+//                                        }
+//
+//                                }
+//                                i = values.get(current_end_pos) + 1;
+//                                current_end_pos++;
+//
+//
+//                            } else if (!methods[i].contains("for")) {
+//                                Log.e("dronetest hello in ", "second if");
+//                                for (String method : methods) {
+//
+//                                        Log.e("thread method", method);
+//                                        method = method.replace("(", " ").replace(");", "");
+//                                        Log.e("method", method + "");
+//                                        String[] params_check = method.split(" ");
+//                                        Log.e("method size", params_check.length + "");
+//                                        if (params_check.length > 1) {
+//                                            Log.e("params check", params_check[0]);
+//                                            Log.e("params check", params_check[1]);
+//                                            Method m = cls.getDeclaredMethod(params_check[0], long.class);
+//                                            if (params_check[0].equals("delay")) {
+//                                                params_check[1] = params_check[1] + "000";
+//                                            }
+//                                            m.invoke(obj, Long.parseLong(params_check[1]));
+//                                        } else {
+//                                            Method m = cls.getDeclaredMethod(params_check[0]);
+//                                            m.invoke(obj);
+//                                        }
+//
+//                                }
+//
+//                            }
+////                        if (params_check.length > 1) {
+////                            //파라미터 있을 때
+////                            Log.e("params check", params_check[0]);
+////                            Log.e("params check", params_check[1]);
+////
+////                        } else {
+////                            //파라미터 없을 때
+////                            for (String method : methods) {
+////                                Log.e("thread method", method);
+////                                method = method.replace("(", " ").replace(");", "");
+////                                Log.e("method", method + "");
+////                                String[] params_check = method.split(" ");
+////                                Log.e("method size", params_check.length + "");
+////                                if (params_check.length > 1) {
+////                                    Log.e("params check", params_check[0]);
+////                                    Log.e("params check", params_check[1]);
+////                                    Method m = cls.getDeclaredMethod(params_check[0], long.class);
+////                                    m.invoke(obj, Long.parseLong(params_check[1]));
+////                                } else {
+////                                    Method m = cls.getDeclaredMethod(params_check[0]);
+////                                    m.invoke(obj);
+////                                }
+////
+////
+////                            }
+////                        }
+//
+//
+//                            Log.e("droneTest", "end");
+//                            Log.e("thread", "end");
+//                            categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+//                            categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
+//                            start_stop_check = true;
+//                        }
+//                    } else {
+////                        Log.e("dronetest hello in ", "second if!");
+////                        Log.e("dronetest hello in ", "methods : " + methods);
+////                        Log.e("dronetest hello in ", "methods : " + methods.length);
+////
+////                        String uploading_method = "";
+////
+////                        for (int i = 0; i < methods.length; i++) {
+////                            Log.e("drone hello methods trim", methods[i]);
+////
+////                            uploading_method = methods[i].replace("(", " ").replace(");", "");
+////                            Log.e("drone hello methods", uploading_method);
+////
+////                            String[] params_check = uploading_method.split(" ");
+////                            Log.e("method size", params_check.length + "");
+////
+////                            if (params_check.length > 1) {
+////                                Log.e("params check~", params_check[0]);
+////                                Log.e("params check~", params_check[1]);
+////
+////                                Method m = cls.getDeclaredMethod(params_check[0], long.class);
+////
+////                                if (params_check[0].equals("delay")) {
+////                                    params_check[1] = params_check[1] + "000";
+////                                    Log.e("params check[1]~", params_check[1]);
+////                                }
+////
+////                                m.invoke(obj, Long.parseLong(params_check[1]));
+////                            } else {
+////                                Log.e("params check~~", params_check[0]);
+////
+////                                Method m = cls.getDeclaredMethod(params_check[0]);
+////                                m.invoke(obj);
+////                            }
+////                        }
+//                        // 원래 코드
+////                        for (String method : methods) {
+////                                Log.e("thread method", method);
+////                                method = method.replace("(", " ").replace(");", "");
+////                                Log.e("method", method + "");
+////                            Log.e("hohohoo", "thread method : " + method);
+////                                String[] params_check = method.split(" ");
+////                                Log.e("method size", params_check.length + "");
+////                            Log.e("hohohoo", "method size : " + params_check.length);
+////                                if (params_check.length > 1) {
+////                                    Log.e("params check", params_check[0]);
+////                                    Log.e("params check", params_check[1]);
+////                                    Method m = cls.getDeclaredMethod(params_check[0], long.class);
+////                                    if (params_check[0].equals("delay")) {
+////                                        params_check[1] = params_check[1] + "000";
+////                                    }
+////                                    m.invoke(obj, Long.parseLong(params_check[1]));
+////                                } else {
+////                                    Method m = cls.getDeclaredMethod(params_check[0]);
+////                                    m.invoke(obj);
+////                                }
+////                        }
+//                        Log.e("droneTest", "end");
+//                        Log.e("thread", "end");
+//                        categoryData.getDrone_upload_btn().setBackgroundResource(R.drawable.drone_start_btn_on);
+//                        categoryData.getDrone_start_btn().setBackgroundResource(R.drawable.drone_start_off);
+//                        start_stop_check = true;
+//
+//                    }
 
                     try {
                         isRunning = false;
