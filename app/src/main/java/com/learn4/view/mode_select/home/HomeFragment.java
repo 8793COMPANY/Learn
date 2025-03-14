@@ -145,6 +145,8 @@ public class HomeFragment extends Fragment {
 
 
 //        if (!MySharedPreferences.getBoolean(getContext(),"notice_today_check")){
+
+        // 설문지 팝업
             Dialog dialog01;
             dialog01 = new Dialog(getContext());
             dialog01.setCanceledOnTouchOutside(false);
@@ -152,7 +154,7 @@ public class HomeFragment extends Fragment {
             dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog01.setContentView(R.layout.dialog_survey);
 
-            dialog01.show();
+//            dialog01.show();
 
             TextView st_beforehand_survey_write = dialog01.findViewById(R.id.st_beforehand_survey_write);
             TextView st_beforehand_survey_write_set = dialog01.findViewById(R.id.st_beforehand_survey_write_set);
