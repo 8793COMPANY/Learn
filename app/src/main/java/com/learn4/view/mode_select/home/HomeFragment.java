@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -35,7 +36,9 @@ import com.learn4.view.drone.DroneTestActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -146,7 +149,134 @@ public class HomeFragment extends Fragment {
 
 //        if (!MySharedPreferences.getBoolean(getContext(),"notice_today_check")){
 
-        // 설문지 팝업
+        // 2025 디지털 새싹 설문지 팝업
+        Dialog surveyDialog = new Dialog(getContext());
+        surveyDialog.setContentView(R.layout.dialog_survey_select);
+        surveyDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        surveyDialog.setCanceledOnTouchOutside(false);
+        surveyDialog.show();
+        
+        // 레이아웃 요소 참조
+        GridLayout categoryGrid = surveyDialog.findViewById(R.id.categoryGrid);
+        LinearLayout surveyListGroup = surveyDialog.findViewById(R.id.surveyListGroup);
+        GridLayout surveyGrid = surveyDialog.findViewById(R.id.surveyGrid);
+        TextView btnBack = surveyDialog.findViewById(R.id.btn_back);
+        Button btnClose = surveyDialog.findViewById(R.id.close_btn);
+        TextView surveyCategoryTitle = surveyDialog.findViewById(R.id.surveyCategoryTitle);
+        
+        // 설문 링크 정의
+        Map<String, String[]> surveyLinks = new HashMap<>();
+
+        // 일반 학생 대상 설문 링크
+        surveyLinks.put("general", new String[]{
+                "https://walla.my/survey/rfqN5esCwrkC75lpBEV5",
+                "https://walla.my/survey/lZ1yOf5siUZKhck7ZaDD",
+                "https://walla.my/survey/zrYr9JXuWAN0DfW6AtTp",
+                "https://walla.my/survey/bcJmGCNHTWDymeWBvKsg"
+        });
+
+        // 사회적 배려자(다문화) 학생 대상 설문 링크
+        surveyLinks.put("multicultural", new String[]{
+                "https://walla.my/survey/aGexTTdfdmjxTFqvisyH",
+                "https://walla.my/survey/VdH0wmNX7gZt4iZbhr2g",
+                "https://walla.my/survey/dkdM8525mAQsrb5wqFat",
+                "https://walla.my/survey/iSWyFPAH2ZLcCfclHf7u"
+        });
+
+        // 사회적 배려자(도서벽지) 학생 대상 설문 링크
+        surveyLinks.put("remote", new String[]{
+                "https://walla.my/survey/nBSl8e76FvDAcyawS04d",
+                "https://walla.my/survey/4vGxKWJiodbo0Ss4bZyN",
+                "https://walla.my/survey/5joOslh4II4ackOgW7Wq",
+                "https://walla.my/survey/iVhuqrpwokd7RKq1eehq"
+        });
+
+        // 사회적 배려자(특수교육) 학생 대상 설문 링크
+        surveyLinks.put("special", new String[]{
+                "https://walla.my/survey/pXI8aA93KI2wsdafjsQe",
+                "https://walla.my/survey/uml7dlLNLkmgdBFKocF4",
+                "https://walla.my/survey/Z1WfkvnmoBjwo0LckIEg",
+                "https://walla.my/survey/eM7ldHU9rzfTO9aoNqeF"
+        });
+        
+        // 공통 라벨
+        String[] labels = {
+                "초등학생\n사전 설문", "초등학생\n사후 설문",
+                "중 · 고등학생\n사전 설문", "중 · 고등학생\n사후 설문"
+        };
+        
+        // 설문 버튼을 동적으로 그리드에 추가
+        View.OnClickListener categoryClickListener = v -> {
+            String categoryKey = null;
+            String categoryLabel = "";  // 사용자에게 보여줄 이름
+
+            if (v.getId() == R.id.btn_general) {
+                categoryKey = "general";
+                categoryLabel = "일반 학생 대상 설문";
+            } else if (v.getId() == R.id.btn_multicultural) {
+                categoryKey = "multicultural";
+                categoryLabel = "사회적 배려자(다문화) 학생 대상 설문";
+            } else if (v.getId() == R.id.btn_remote) {
+                categoryKey = "remote";
+                categoryLabel = "사회적 배려자(도서벽지) 학생 대상 설문";
+            } else if (v.getId() == R.id.btn_special) {
+                categoryKey = "special";
+                categoryLabel = "사회적 배려자(특수교육) 학생 대상 설문";
+            }
+
+            // 텍스트 뷰 업데이트
+            surveyCategoryTitle.setText(categoryLabel);
+
+            // 화면 전환
+            categoryGrid.setVisibility(View.GONE);
+            surveyListGroup.setVisibility(View.VISIBLE);
+            surveyGrid.removeAllViews();
+
+            String[] links = surveyLinks.get(categoryKey);
+            if (links == null) return;
+
+            for (int i = 0; i < links.length; i++) {
+                Button btn = new Button(getContext());
+                btn.setText(labels[i]);
+                btn.setTextSize(18f);
+                btn.setTextColor(Color.parseColor("#af6400"));
+                btn.setBackgroundResource(R.drawable.tutor_dialog_title_custom);
+                btn.setPadding(16, 16, 16, 16);
+
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width = 0;
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                params.columnSpec = GridLayout.spec(i % 2, 1f);  // 2열 균등 분배
+                params.setMargins(8, 8, 8, 8);
+                btn.setLayoutParams(params);
+
+                String url = links[i];
+                btn.setOnClickListener(linkView -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    getContext().startActivity(intent);
+                });
+
+                surveyGrid.addView(btn);
+            }
+        };
+        
+        // 카테고리 선택 버튼들 리스너 연결
+        surveyDialog.findViewById(R.id.btn_general).setOnClickListener(categoryClickListener);
+        surveyDialog.findViewById(R.id.btn_multicultural).setOnClickListener(categoryClickListener);
+        surveyDialog.findViewById(R.id.btn_remote).setOnClickListener(categoryClickListener);
+        surveyDialog.findViewById(R.id.btn_special).setOnClickListener(categoryClickListener);
+        
+        // 뒤로가기 버튼 동작
+        btnBack.setOnClickListener(v -> {
+            surveyListGroup.setVisibility(View.GONE);
+            categoryGrid.setVisibility(View.VISIBLE);
+        });
+        
+        // 닫기 버튼 동작
+        btnClose.setOnClickListener(v -> surveyDialog.dismiss());
+
+        
+        // 설문지 팝업(이전 디싹)
             Dialog dialog01;
             dialog01 = new Dialog(getContext());
             dialog01.setCanceledOnTouchOutside(false);
@@ -154,6 +284,7 @@ public class HomeFragment extends Fragment {
             dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog01.setContentView(R.layout.dialog_survey);
 
+            // 이 부분 주석해서 다이얼로그를 안보이게 함
 //            dialog01.show();
 
             TextView st_beforehand_survey_write = dialog01.findViewById(R.id.st_beforehand_survey_write);

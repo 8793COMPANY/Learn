@@ -22,7 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import com.android.volley.error.TimeoutError;
+import com.android.volley.TimeoutError;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -128,7 +128,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.request.SimpleMultiPartRequest;
+//import com.android.volley.request.SimpleMultiPartRequest;
+import com.learn4.util.SimpleMultiPartRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.blockly.android.AbstractBlocklyActivity;
 import com.google.blockly.android.BlocklySectionsActivity;
@@ -159,6 +160,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -1124,7 +1126,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             }
             if (error.getMessage() != null) {
                 Log.e("서버 에러", "remotecompile: " + error.getMessage());
-                if(error.toString().equals("com.android.volley.error.ServerError")) {
+                if(error instanceof com.android.volley.ServerError) {
                     Log.e("server error log",error.getMessage());
                     //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
                     //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
@@ -1155,8 +1157,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        Map<String,String> Headers = new HashMap<>();
 //        Headers.put("board", "uno");
 //        Headers.put("file", "file:///android_asset/blink.ino");
-        smr.addMultipartParam("board", "Text", "uno");
-        smr.addFile("file", TARGET_BASE_PATH+filename);
+        // 이전 코드
+//        smr.addMultipartParam("board", "Text", "uno");
+//        smr.addFile("file", TARGET_BASE_PATH+filename);
+
+        smr.addStringParam("board", "uno");
+
+        File file = new File(TARGET_BASE_PATH + filename);
+        byte[] fileData;
+
+        try (FileInputStream fis = new FileInputStream(file)) {
+            fileData = new byte[(int) file.length()];
+            fis.read(fileData);
+        } catch (IOException e) {
+            throw new RuntimeException("파일 읽기 실패: " + e.getMessage(), e);
+        }
+
+        smr.addFile("file", fileData, filename, "text/x-ino"); // 파일 MIME 타입은 필요시 변경
+
         RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mRequestQueue.add(smr);
 
