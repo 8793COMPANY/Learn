@@ -1,0 +1,183 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="4ca6b1b4-2ada-4cc0-836e-2825f87c3859" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="pinMode" id="60c63167-3ae1-486d-a6f7-f1519fd5e1f6">
+                <value name="PIN">
+                    <block type="base_pins_list" id="8b534fe4-c8e8-4243-b218-ec0404a1c13b">
+                        <field name="PIN">5</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="cb4a729a-3861-4f88-8e53-6a74ce7809be">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="pinMode" id="ad39ed05-45c0-45a4-8ebe-3ab82b5209ab">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="0fd8f277-a351-41eb-8abe-a6b40e20fefc">
+                                <field name="PIN">6</field>
+                            </block>
+                        </value>
+                        <value name="VALUE1">
+                            <block type="base_output_list" id="2fe11b58-834d-4a80-9970-d229c3f77ea2">
+                                <field name="LOGIC">OUTPUT</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="ultrasonic_sensor_setup" id="58616e7a-ae02-47b4-b8b2-056423104576">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="1f926ecd-0461-4bf1-92a3-d14b0cf99fbc">
+                                        <field name="PIN">13</field>
+                                    </block>
+                                </value>
+                                <value name="PIN2">
+                                    <block type="base_pins_list" id="239a2069-5bd0-4c47-83b2-ff71670d122b">
+                                        <field name="PIN">12</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="serial_begin" id="6327200b-4dc8-46f8-83af-7059bee1f911">
+                                        <value name="baud">
+                                            <block type="serial_begin_list" id="7227b855-448d-41a4-b830-d0cc2811d72f">
+                                                <field name="SB">9600</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="neo_pixel_setup" id="bf04c60e-b5c3-4f89-ba74-c74e725d8db2">
+                                                <next>
+                                                    <block type="neo_pixel" id="ceeca774-dc04-42fc-be86-d6b48c02e64c">
+                                                        <value name="angle">
+                                                            <block type="math_number" id="8ed81b21-1ce0-4ece-87d3-98feaab8416a">
+                                                                <field name="NUM">4</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="channel">
+                                                            <block type="base_pins_list" id="24bfb4d8-b3c3-460d-ad69-85b6b04b3160">
+                                                                <field name="PIN">7</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="neo_pixel_brightness" id="1f2a1d10-92b1-4fca-bbc2-ef7ad996edcf">
+                <value name="angle">
+                    <block type="math_number" id="75e66e6d-9d25-4293-909a-a1575d1fcaca">
+                        <field name="NUM">50</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="ultrasonic_sensor" id="25734e56-8eef-4bfa-adec-bcf97fe83824">
+                        <next>
+                            <block type="ultrasonic_sensor_serial_println" id="957c1265-c7d0-447b-8715-703a1e98a71f">
+                                <next>
+                                    <block type="controls_if" id="cb5abcd0-1cd4-444e-9990-3e91827c3959">
+                                        <value name="IF0">
+                                            <block type="logic_compare" id="1184d911-2da2-420f-a4a2-c510013db695">
+                                                <value name="A">
+                                                <block type="ultrasonic_sensors_read" id="1585c3bc-1537-4568-9c41-95ec77f27ac0" />
+                                            </value>
+                                                <value name="B">
+                                                    <block type="math_number" id="169a6fc6-d4a0-4527-b472-e60fa15d9392">
+                                                        <field name="NUM">30</field>
+                                                    </block>
+                                                </value>
+                                                <field name="OP">LT</field>
+                                            </block>
+                                        </value>
+                                        <statement name="DO0">
+                                            <block type="inout_digital_write" id="d8e7fcf1-ac1e-496f-bb7b-73b118daa041">
+                                                <value name="PIN">
+                                                    <block type="base_pins_list" id="18e08934-8a76-4300-afbc-6f8ad62a80b7">
+                                                        <field name="PIN">5</field>
+                                                    </block>
+                                                </value>
+                                                <value name="NUM">
+                                                    <block type="base_logic_list" id="4b052517-19ff-4266-8c21-422367d2f542">
+                                                        <field name="LOGIC">HIGH</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="turtle_jikco_internal" id="826403af-f0fa-423b-92ab-082231b399f0">
+                                                        <field name="DIR">1,0,0,0,0,0,1,1,1,0,0,0,0,0</field>
+                                                        <field name="COL">Purple</field>
+                                                        <next>
+                                                            <block type="tone_notone" id="7cb4cb74-3299-4f8e-a397-2464b8f72319">
+                                                                <value name="PIN">
+                                                                    <block type="base_pins_list" id="5f9d83b8-393b-432e-8419-c43aef1aed58">
+                                                                        <field name="PIN">6</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="NUM">
+                                                                    <block type="math_number" id="f0c43503-b3a2-4acc-97ac-4c513fe781c1">
+                                                                        <field name="NUM">784</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="DELAY_TIME">
+                                                                    <block type="math_number" id="f1267da2-14f7-49b7-9893-5db90fd5d9bd">
+                                                                        <field name="NUM">1000</field>
+                                                                    </block>
+                                                                </value>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </statement>
+                                        <next>
+                                            <block type="controls_if" id="400b6fc4-8967-486c-b73f-7270f80918b2">
+                                                <value name="IF0">
+                                                    <block type="logic_compare" id="edf554a9-11b4-4be3-bf0b-cdb1d1131370">
+                                                        <value name="A">
+                                                            <block type="ultrasonic_sensors_read" id="0eba29c7-dc23-42c4-91f3-6dead68e2a00" />
+                                                        </value>
+                                                        <value name="B">
+                                                            <block type="math_number" id="de5b7fcb-30f7-420e-81b5-4c8b2ad3e4cf">
+                                                                <field name="NUM">30</field>
+                                                            </block>
+                                                        </value>
+                                                        <field name="OP">GT</field>
+                                                    </block>
+                                                </value>
+                                                <statement name="DO0">
+                                                    <block type="inout_digital_write" id="ba5341ac-0f80-4450-aa80-60464fef4b3e">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="42458f9c-5f88-4223-8d26-94f9f221d911">
+                                                                <field name="PIN">5</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="base_logic_list" id="71532029-25cc-4ef9-87d1-2a8858bbba56">
+                                                                <field name="LOGIC">LOW</field>
+                                                            </block>
+                                                        </value>
+                                                        <next>
+                                                            <block type="turtle_jikco_internal" id="637ccf45-e772-4541-96b8-ecb1d16aed05">
+                                                                <field name="DIR">1,0,0,0,0,0,1,1,1,0,0,0,0,0</field>
+                                                                <field name="COL">Off</field>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </statement>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
