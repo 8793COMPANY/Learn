@@ -15,20 +15,17 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.usb.host"
         android:required="true" />
-
 
     <application
         android:name=".util.Application"
@@ -43,18 +40,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.bluetooth.BluetoothActivity2"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity
             android:name=".view.bluetooth.BluetoothActivity"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:windowSoftInputMode="adjustNothing">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
-
         <activity
             android:name=".view.drone.DroneBlockActivity"
             android:exported="true"
@@ -72,8 +75,8 @@
         </activity>
         <activity
             android:name=".view.simulator.TeachableActivity"
-            android:exported="false"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.dictionary.BlockDictionaryActivity2"
@@ -94,11 +97,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-
         <activity
             android:name=".view.drone.DroneTestActivity"
             android:screenOrientation="sensorLandscape" />
-
         <activity
             android:name=".view.problem.solve.RightAnswerActivity"
             android:exported="false"
@@ -127,10 +128,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <uses-library
@@ -146,9 +145,8 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".view.MainActivity"
-            android:screenOrientation="sensorLandscape"
-            android:exported="true">
-        </activity>
+            android:exported="true"
+            android:screenOrientation="sensorLandscape"></activity>
     </application>
 
 </manifest>

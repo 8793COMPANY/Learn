@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.bluetooth.BluetoothActivity2">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#3c3c3c"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHeight_percent="0.24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <Button
+            android:id="@+id/home_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bluetooth_home_btn"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHeight_percent="0.529"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guide_left_home_btn"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <Button
+            android:id="@+id/keyboard_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bluetooth_keyboard_btn"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHeight_percent="0.529"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guide_left_keyboard_btn"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <Button
+            android:id="@+id/bluetooth_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bluetooth_bluetooth_off"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHeight_percent="0.529"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/guide_right_bluetooth_btn"/>
+
+        <Button
+            android:id="@+id/serial_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bluetooth_bluetooth_serial"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHeight_percent="0.529"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/guide_right_serial_btn"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/ok_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bluetooth_ok_btn"
+            android:gravity="center"
+            android:text="확인"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="#ffffff"
+            app:layout_constraintWidth_percent="0.234"
+            app:layout_constraintDimensionRatio="30:8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/read_text_display"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bluetooth_serial_stroke"
+            android:gravity="center"
+            android:scrollbars="vertical"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="#ffffff"
+            app:layout_constraintHeight_percent="0.471"
+            app:layout_constraintDimensionRatio="40:8"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_left_home_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.031">
+        </androidx.constraintlayout.widget.Guideline>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_left_keyboard_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.121">
+        </androidx.constraintlayout.widget.Guideline>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_right_bluetooth_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.969">
+        </androidx.constraintlayout.widget.Guideline>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_right_serial_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.879">
+        </androidx.constraintlayout.widget.Guideline>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Left -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#7e7e7e"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toBottomOf="@+id/top_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.547"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guide_left_background"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/bluetooth_left_controller_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bluetooth_controller_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_controller_center"
+                app:layout_constraintWidth_percent="0.206"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/left_top"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_top_off"
+                app:layout_constraintWidth_percent="0.217"
+                app:layout_constraintDimensionRatio="76:64"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toTopOf="@+id/guide_left_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/left_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_bottom_off"
+                app:layout_constraintWidth_percent="0.217"
+                app:layout_constraintDimensionRatio="76:64"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/guide_left_bottom"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/left_left"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_left_off"
+                app:layout_constraintHeight_percent="0.217"
+                app:layout_constraintDimensionRatio="64:76"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/guide_left_left"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/left_right"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_right_off"
+                app:layout_constraintHeight_percent="0.217"
+                app:layout_constraintDimensionRatio="64:76"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/guide_left_right"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_top"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.086">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.914">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_left"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.086">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_right"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.914">
+            </androidx.constraintlayout.widget.Guideline>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_left_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.244">
+        </androidx.constraintlayout.widget.Guideline>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:id="@+id/left_edit_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#7e7e7e"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toBottomOf="@+id/top_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.547"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guide_left_background2"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bluetooth_controller_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_controller_center"
+                app:layout_constraintWidth_percent="0.206"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/ONE"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="A"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toTopOf="@+id/guide_left_top_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/TWO"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="B"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/guide_left_left_edit"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/THREE"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="C"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/guide_left_right_edit"/>
+
+            <EditText
+                android:id="@+id/FOUR"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="D"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/guide_left_bottom_edit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_top_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.071">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_bottom_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.929">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_left_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.071">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_left_right_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.929">
+            </androidx.constraintlayout.widget.Guideline>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_left_background2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.244">
+        </androidx.constraintlayout.widget.Guideline>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Right -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#7e7e7e"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/top_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.547"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/guide_right_background">
+
+            <TextView
+                android:id="@+id/bluetooth_right_controller_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bluetooth_controller_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_controller_center"
+                app:layout_constraintWidth_percent="0.206"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/right_top"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_top_off"
+                app:layout_constraintWidth_percent="0.217"
+                app:layout_constraintDimensionRatio="76:64"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toTopOf="@+id/guide_right_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/right_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_bottom_off"
+                app:layout_constraintWidth_percent="0.217"
+                app:layout_constraintDimensionRatio="76:64"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/guide_right_bottom"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/right_left"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_left_off"
+                app:layout_constraintHeight_percent="0.217"
+                app:layout_constraintDimensionRatio="64:76"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/guide_right_left"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/right_right"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_right_off"
+                app:layout_constraintHeight_percent="0.217"
+                app:layout_constraintDimensionRatio="64:76"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/guide_right_right"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_top"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.086">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.914">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_left"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.086">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_right"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.914">
+            </androidx.constraintlayout.widget.Guideline>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_right_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.756">
+        </androidx.constraintlayout.widget.Guideline>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="gone"
+        android:id="@+id/right_edit_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#7e7e7e"
+        app:layout_constraintWidth_percent="0.5"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/top_header"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintWidth_percent="0.547"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guide_right_background2"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bluetooth_controller_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_controller_center"
+                app:layout_constraintWidth_percent="0.206"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/FIVE"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="E"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintTop_toTopOf="@+id/guide_right_top_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/SIX"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="F"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/guide_right_left_edit"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/SEVEN"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="G"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@+id/guide_right_right_edit"/>
+
+            <EditText
+                android:id="@+id/EIGHT"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/bluetooth_stroke_edit"
+                android:text="H"
+                android:textColor="#916249"
+                android:fontFamily="@font/pretendard_bold"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.24"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/guide_right_bottom_edit"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_top_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.071">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_bottom_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.929">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_left_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.071">
+            </androidx.constraintlayout.widget.Guideline>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_right_right_edit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.929">
+            </androidx.constraintlayout.widget.Guideline>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_right_background2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.244">
+        </androidx.constraintlayout.widget.Guideline>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

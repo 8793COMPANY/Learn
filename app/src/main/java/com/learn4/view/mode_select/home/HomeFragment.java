@@ -24,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.learn4.util.MySharedPreferences;
 import com.learn4.view.bluetooth.BluetoothActivity;
+import com.learn4.view.bluetooth.BluetoothActivity2;
 import com.learn4.view.drone.DroneActivity;
 import com.learn4.util.Application;
 import com.learn4.R;
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment {
     Button free_btn,contents_btn,dictionary_btn,drone_btn,drone_block_btn;
     TextView user_name;
 
-    Button bluetooth_btn;
+    Button bluetooth_btn, bluetooth_btn2;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment {
 //        user_name = root.findViewById(R.id.user_name);
 
         bluetooth_btn = root.findViewById(R.id.bluetooth_btn);
+        bluetooth_btn2 = root.findViewById(R.id.bluetooth_btn2);
 
 //        new Thread(() -> {
 //                WeatherData weatherData = new WeatherData();
@@ -134,6 +136,13 @@ public class HomeFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), BluetoothActivity.class);
                 startActivity(intent);
+
+        });
+
+        bluetooth_btn2.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getActivity(), BluetoothActivity2.class);
+            startActivity(intent);
 
         });
 
@@ -377,12 +386,14 @@ public class HomeFragment extends Fragment {
             drone_btn.setBackgroundResource(R.drawable.drone_mode_icon);
             drone_block_btn.setBackgroundResource(R.drawable.drone_coding_mode_icon);
             bluetooth_btn.setBackgroundResource(R.drawable.bluetooth_controller_btn);
+            bluetooth_btn2.setBackgroundResource(R.drawable.bluetooth_controller2_btn);
         }else{
             contents_btn.setBackgroundResource(R.drawable.content_mode_icon_lock);
             dictionary_btn.setBackgroundResource(R.drawable.dictionary_mode_icon_lock);
             drone_btn.setBackgroundResource(R.drawable.drone_mode_icon_lock);
             drone_block_btn.setBackgroundResource(R.drawable.drone_coding_mode_icon_lock);
             bluetooth_btn.setBackgroundResource(R.drawable.bluetooth_controller_btn_lock);
+            bluetooth_btn2.setBackgroundResource(R.drawable.bluetooth_controller2_btn_lock);
         }
 
     }
