@@ -4,7 +4,7 @@
             <block type="pinMode" id="b2b177e2-ca1f-41cd-bea6-ffdf5b3833ac">
                 <value name="PIN">
                     <block type="base_pins_list" id="c75c9c89-a184-4c3c-a44c-b4d0d3d9974a">
-                        <field name="PIN">3</field>
+                        <field name="PIN">4</field>
                     </block>
                 </value>
                 <value name="VALUE1">
@@ -16,7 +16,7 @@
                     <block type="pinMode" id="0c4825d1-2dfa-4e43-854f-d78c72fd3764">
                         <value name="PIN">
                             <block type="base_pins_list" id="b2fd1718-2a82-4c7a-b62e-0777c76f705b">
-                                <field name="PIN">4</field>
+                                <field name="PIN">5</field>
                             </block>
                         </value>
                         <value name="VALUE1">
@@ -28,7 +28,7 @@
                             <block type="pinMode" id="9ab0cb71-4abd-4234-87fe-1775b3f189af">
                                 <value name="PIN">
                                     <block type="base_pins_list" id="40200f31-a3ca-4b52-9a42-67db0c389da0">
-                                        <field name="PIN">5</field>
+                                        <field name="PIN">6</field>
                                     </block>
                                 </value>
                                 <value name="VALUE1">
@@ -40,7 +40,7 @@
                                     <block type="pinMode" id="677868ce-3d7c-4b9d-93c5-aab87acf99f0">
                                         <value name="PIN">
                                             <block type="base_pins_list" id="5763efa1-d387-43c4-ab32-5a81af31dcf6">
-                                                <field name="PIN">6</field>
+                                                <field name="PIN">9</field>
                                             </block>
                                         </value>
                                         <value name="VALUE1">
@@ -471,7 +471,7 @@
                                                             <block type="servo" id="12439f35-b33e-48cc-b1dd-09376800b7c9">
                                                                 <value name="channel">
                                                                     <block type="base_pins_list" id="e584a2c8-c8f2-4a69-932e-9c5b4d83afd2">
-                                                                        <field name="PIN">3</field>
+                                                                        <field name="PIN">9</field>
                                                                     </block>
                                                                 </value>
                                                                 <value name="angle">
@@ -502,7 +502,7 @@
                                                                     <block type="servo" id="b7a443b9-ddf1-447d-8faa-d1b42e12267f">
                                                                         <value name="channel">
                                                                             <block type="base_pins_list" id="e2bd5bbe-d2f3-444e-a5a1-6e607dd54b40">
-                                                                                <field name="PIN">3</field>
+                                                                                <field name="PIN">9</field>
                                                                             </block>
                                                                         </value>
                                                                         <value name="angle">
@@ -533,7 +533,7 @@
                                                                             <block type="servo" id="145eedb5-769a-4812-8476-6d9ffd18ef28">
                                                                                 <value name="channel">
                                                                                     <block type="base_pins_list" id="afe62fa0-b168-464a-9aee-92c130d02c41">
-                                                                                        <field name="PIN">3</field>
+                                                                                        <field name="PIN">9</field>
                                                                                     </block>
                                                                                 </value>
                                                                                 <value name="angle">

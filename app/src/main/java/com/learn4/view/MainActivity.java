@@ -149,6 +149,8 @@ import com.learn.wp_rest.data.wp.posts.UploadReport;
 import com.learn4.util.Constants;
 import com.learn4.view.simulator.TeachableActivity;
 import com.physicaloid.lib.Boards;
+import com.physicaloid.lib.Physicaloid;
+import com.physicaloid.lib.programmer.avr.UploadErrors;
 import com.squareup.otto.Subscribe;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -815,6 +817,53 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.e("in! upload","before");
             mHandler.sendEmptyMessageDelayed(1,3000);
             Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+//             Application.mPhysicaloid.upload(Boards.ARDUINO_PRO_5V_328, file, new Physicaloid.UploadCallBack() {
+//                 @Override
+//                 public void onPreUpload() {
+//                     Application.mPhysicaloid.setBaudrate(57600);
+//
+//                     Application.mPhysicaloid.setDtrRts(false, false);
+//                     try {
+//                         Thread.sleep(300);
+//                     } catch (InterruptedException e) {
+//                         throw new RuntimeException(e);
+//                     }
+//
+//                     Application.mPhysicaloid.setDtrRts(true, false);
+//                     try {
+//                         Thread.sleep(100);
+//                     } catch (InterruptedException e) {
+//                         throw new RuntimeException(e);
+//                     }
+//
+//                     Application.mPhysicaloid.setDtrRts(false, false);
+//                     try {
+//                         Thread.sleep(500);
+//                     } catch (InterruptedException e) {
+//                         throw new RuntimeException(e);
+//                     }
+//                 }
+//
+//                 @Override
+//                 public void onUploading(int value) {
+//                     Log.d("업로드중", value + "%");
+//                 }
+//
+//                 @Override
+//                 public void onPostUpload(boolean success) {
+//                     Log.d("업로드완료", success ? "성공" : "실패");
+//                 }
+//
+//                 @Override
+//                 public void onCancel() {
+//                     Log.d("업로드", "취소됨");
+//                 }
+//
+//                 @Override
+//                 public void onError(UploadErrors err) {
+//                     Log.e("업로드에러", err.toString());
+//                 }
+//             });
             Log.e("in! upload","finish");
             mHandler.removeMessages(1);
 
@@ -844,6 +893,53 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Boolean value = OpenUSB();
             if (value) {
                 Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, file);
+//                 Application.mPhysicaloid.upload(Boards.ARDUINO_PRO_5V_328, file, new Physicaloid.UploadCallBack() {
+//                     @Override
+//                     public void onPreUpload() {
+//                         Application.mPhysicaloid.setBaudrate(57600);
+//
+//                         Application.mPhysicaloid.setDtrRts(false, false);
+//                         try {
+//                             Thread.sleep(300);
+//                         } catch (InterruptedException e) {
+//                             throw new RuntimeException(e);
+//                         }
+//
+//                         Application.mPhysicaloid.setDtrRts(true, false);
+//                         try {
+//                             Thread.sleep(100);
+//                         } catch (InterruptedException e) {
+//                             throw new RuntimeException(e);
+//                         }
+//
+//                         Application.mPhysicaloid.setDtrRts(false, false);
+//                         try {
+//                             Thread.sleep(500);
+//                         } catch (InterruptedException e) {
+//                             throw new RuntimeException(e);
+//                         }
+//                     }
+//
+//                     @Override
+//                     public void onUploading(int value) {
+//                         Log.d("업로드중", value + "%");
+//                     }
+//
+//                     @Override
+//                     public void onPostUpload(boolean success) {
+//                         Log.d("업로드완료", success ? "성공" : "실패");
+//                     }
+//
+//                     @Override
+//                     public void onCancel() {
+//                         Log.d("업로드", "취소됨");
+//                     }
+//
+//                     @Override
+//                     public void onError(UploadErrors err) {
+//                         Log.e("업로드에러", err.toString());
+//                     }
+//                 });
 
                 Log.e("hello code",(code.length() - code.replace("getWeatherData(","").length())/15+"");
 
@@ -1078,6 +1174,53 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
             Log.e("openUsb true","!!");
             initial = false;
             Application.mPhysicaloid.upload(Boards.ARDUINO_UNO, Constants.upload_package_path+ "code.ino");
+//            Application.mPhysicaloid.upload(Boards.ARDUINO_PRO_5V_328, Constants.upload_package_path + "code.ino", new Physicaloid.UploadCallBack() {
+//                @Override
+//                public void onPreUpload() {
+//                    Application.mPhysicaloid.setBaudrate(57600);
+//
+//                    Application.mPhysicaloid.setDtrRts(false, false);
+//                    try {
+//                        Thread.sleep(300);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                    Application.mPhysicaloid.setDtrRts(true, false);
+//                    try {
+//                        Thread.sleep(100);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                    Application.mPhysicaloid.setDtrRts(false, false);
+//                    try {
+//                        Thread.sleep(500);
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//
+//                @Override
+//                public void onUploading(int value) {
+//                    Log.d("업로드중", value + "%");
+//                }
+//
+//                @Override
+//                public void onPostUpload(boolean success) {
+//                    Log.d("업로드완료", success ? "성공" : "실패");
+//                }
+//
+//                @Override
+//                public void onCancel() {
+//                    Log.d("업로드", "취소됨");
+//                }
+//
+//                @Override
+//                public void onError(UploadErrors err) {
+//                    Log.e("업로드에러", err.toString());
+//                }
+//            });
             return initial;
         }
         else {
@@ -1162,6 +1305,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //        smr.addFile("file", TARGET_BASE_PATH+filename);
 
         smr.addStringParam("board", "uno");
+//        smr.addStringParam("board", "pro:cpu=16MHzatmega328");
 
         File file = new File(TARGET_BASE_PATH + filename);
         byte[] fileData;
