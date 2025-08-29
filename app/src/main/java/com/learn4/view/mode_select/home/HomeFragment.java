@@ -178,34 +178,34 @@ public class HomeFragment extends Fragment {
 
         // 일반 학생 대상 설문 링크
         surveyLinks.put("general", new String[]{
-                "https://walla.my/survey/rfqN5esCwrkC75lpBEV5",
-                "https://walla.my/survey/lZ1yOf5siUZKhck7ZaDD",
-                "https://walla.my/survey/zrYr9JXuWAN0DfW6AtTp",
-                "https://walla.my/survey/bcJmGCNHTWDymeWBvKsg"
+                "https://form.kosac.re.kr/v/8GFHkSBvvGgkmOUUuI7a",
+                "https://form.kosac.re.kr/v/kJn9BEP1v9EFYuO0RPK0",
+                "https://form.kosac.re.kr/v/3yzQ5AMHj88ndqPgVOad",
+                "https://form.kosac.re.kr/v/4pwHhu0dynMno07X6lpu"
         });
 
         // 사회적 배려자(다문화) 학생 대상 설문 링크
         surveyLinks.put("multicultural", new String[]{
-                "https://walla.my/survey/aGexTTdfdmjxTFqvisyH",
-                "https://walla.my/survey/VdH0wmNX7gZt4iZbhr2g",
-                "https://walla.my/survey/dkdM8525mAQsrb5wqFat",
-                "https://walla.my/survey/iSWyFPAH2ZLcCfclHf7u"
+                "https://form.kosac.re.kr/v/neWf7Vlf0s50sp1HmuYF",
+                "https://form.kosac.re.kr/v/8BuMJjSG27BmsBa3iwRb",
+                "https://form.kosac.re.kr/v/aOCneQTXFOMnWn2jjPta",
+                "https://form.kosac.re.kr/v/pRsBA7SF4WAzqpMlnBea"
         });
 
         // 사회적 배려자(도서벽지) 학생 대상 설문 링크
         surveyLinks.put("remote", new String[]{
-                "https://walla.my/survey/nBSl8e76FvDAcyawS04d",
-                "https://walla.my/survey/4vGxKWJiodbo0Ss4bZyN",
-                "https://walla.my/survey/5joOslh4II4ackOgW7Wq",
-                "https://walla.my/survey/iVhuqrpwokd7RKq1eehq"
+                "https://form.kosac.re.kr/v/6a0CMAWByrvvBC80pu5t",
+                "https://form.kosac.re.kr/v/n6IeILrcfFBpprHcTx2A",
+                "https://form.kosac.re.kr/v/dvvhaDShrpPiE0Xusnvv",
+                "https://form.kosac.re.kr/v/Zg0VOAwZnUHXA9SNw7Fx"
         });
 
         // 사회적 배려자(특수교육) 학생 대상 설문 링크
         surveyLinks.put("special", new String[]{
-                "https://walla.my/survey/pXI8aA93KI2wsdafjsQe",
-                "https://walla.my/survey/uml7dlLNLkmgdBFKocF4",
-                "https://walla.my/survey/Z1WfkvnmoBjwo0LckIEg",
-                "https://walla.my/survey/eM7ldHU9rzfTO9aoNqeF"
+                "https://form.kosac.re.kr/v/FeBldKEyBRxqOkhW4KxF",
+                "https://form.kosac.re.kr/v/2lZUJDjG5bDXswXOFvcA",
+                "https://form.kosac.re.kr/v/YTOkEa3ZJ2VXogD70a5x",
+                "https://form.kosac.re.kr/v/LkGvOHCzHnDtLrq3GMOH"
         });
         
         // 공통 라벨
