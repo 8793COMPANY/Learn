@@ -1,12 +1,19 @@
-apply plugin: 'com.android.library'
+// ◾ 권장: plugins DSL 사용 (apply plugin 대신)
+plugins {
+    id 'com.android.library'
+}
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion '30.0.3'
+    // ✅ 반드시 넣어주세요: 이 라이브러리의 AndroidManifest.xml의 package 값을 써야 합니다.
+    //   예) <manifest package="com.google.blockly.android"> 이면 아래도 동일하게
+    namespace "com.google.blockly.android"   // TODO: 실제 매니페스트 package로 바꾸기
+
+    compileSdkVersion 35
+    // buildToolsVersion '30.0.3'   // ❌ 삭제
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
     }
@@ -17,20 +24,39 @@ android {
         }
     }
 
+    // ◾ Gradle 8/AGP 8 문법
     packagingOptions {
-      // Suppress file collision error from hamcrest-core and hamcrest-integration JARs.
-      exclude 'LICENSE.txt'
+        resources {
+            excludes += ["LICENSE.txt"]
+        }
     }
 
+    // ◾ sourceSets 최신 문법
     sourceSets {
-        main.java.srcDirs += 'src/third_party/main/java'
+        main {
+            java.srcDirs += 'src/third_party/main/java'
+            // kotlin.srcDirs += 'src/main/kotlin'   // 코틀린 소스가 있으면 추가
+        }
     }
 
-    lintOptions {
-          abortOnError false
+    buildFeatures {
+        buildConfig = true                   // ← 명시적으로 켜두기
     }
 
-    publishNonDefault false
+    // ◾ 기존 lintOptions → lint
+    lint {
+        abortOnError = false
+    }
+
+    // ◾ publishNonDefault 제거 (폐지됨)
+    // publishNonDefault false   // ❌ 삭제
+
+    // ◾ JDK 17 맞추기
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    // kotlinOptions { jvmTarget = '17' }   // 코틀린 사용시
 }
 
 // ✅ aar 파일 사용
@@ -48,29 +74,109 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    // 더이상 지원하지 않음
-//    implementation 'com.akexorcist:round-corner-progress-bar:2.1.1'
-    // ✅ 로컬 libs/ 안의 .aar 사용
-    implementation(name: 'round-corner-progress-bar-debug', ext: 'aar')
+    // 로컬 libs/ 안의 .aar 사용
+//    implementation(name: 'round-corner-progress-bar-debug', ext: 'aar')
+    implementation files('libs/round-corner-progress-bar-debug.aar')
 
     api 'com.squareup:otto:1.3.7'
 }
 
-task sourcesJar(type: Jar) {
+/**
+ * ◾ Gradle 8에서 Jar task 속성
+ *   classifier → archiveClassifier.set(...)
+ */
+tasks.register("sourcesJar", Jar) {
+    archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+    // 코틀린 소스가 있으면 함께 포함
+    def kotlinDir = file("src/main/kotlin")
+    if (kotlinDir.exists()) from(kotlinDir)
 }
 
-// TODO(#632): Fix JavaDoc compilation, and then update deployment artifacts.
-//task javadoc(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//}
-
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//    // options.encoding = 'UTF-8'
-//}
+/* (참고) javadoc 관련은 일단 비활성 유지. 필요시 최신 문법으로 복구
+tasks.register("javadocJar", Jar) {
+    dependsOn "javadoc"
+    archiveClassifier.set("javadoc")
+    from tasks.named("javadoc").get().destinationDir
+}
+*/
 
 apply from: 'deploy.gradle'
+
+
+//apply plugin: 'com.android.library'
+//
+//android {
+//    compileSdkVersion 31
+//    buildToolsVersion '30.0.3'
+//
+//    defaultConfig {
+//        minSdkVersion 23
+//        targetSdkVersion 31
+//        versionCode 1
+//        versionName "1.0"
+//    }
+//
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//        }
+//    }
+//
+//    packagingOptions {
+//      // Suppress file collision error from hamcrest-core and hamcrest-integration JARs.
+//      exclude 'LICENSE.txt'
+//    }
+//
+//    sourceSets {
+//        main.java.srcDirs += 'src/third_party/main/java'
+//    }
+//
+//    lintOptions {
+//          abortOnError false
+//    }
+//
+//    publishNonDefault false
+//}
+//
+//// ✅ aar 파일 사용
+//repositories {
+//    flatDir {
+//        dirs file("${rootDir}/blocklylib-core/libs")
+//    }
+//}
+//
+//dependencies {
+//    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+//    implementation 'com.google.android.material:material:1.4.0'
+//    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+//    implementation 'androidx.annotation:annotation:1.0.0'
+//    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+//
+//    // 더이상 지원하지 않음
+////    implementation 'com.akexorcist:round-corner-progress-bar:2.1.1'
+//    // ✅ 로컬 libs/ 안의 .aar 사용
+//    implementation(name: 'round-corner-progress-bar-debug', ext: 'aar')
+//
+//    api 'com.squareup:otto:1.3.7'
+//}
+//
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//
+//// TODO(#632): Fix JavaDoc compilation, and then update deployment artifacts.
+////task javadoc(type: Javadoc) {
+////    source = android.sourceSets.main.java.srcDirs
+////    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+////}
+//
+////task javadocJar(type: Jar, dependsOn: javadoc) {
+////    classifier = 'javadoc'
+////    from javadoc.destinationDir
+////    // options.encoding = 'UTF-8'
+////}
+//
+//apply from: 'deploy.gradle'

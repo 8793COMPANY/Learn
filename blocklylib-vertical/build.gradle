@@ -1,47 +1,117 @@
-apply plugin: 'com.android.library'
+// 기존: apply plugin → 새 문법으로
+plugins {
+    id 'com.android.library'
+}
 
 android {
-    compileSdk 31
-    buildToolsVersion '30.0.3'
+    // ★ Manifest의 package와 동일하게 넣기 (예: com.google.blockly.android.vertical)
+    namespace "com.google.blockly.android.ui.vertical"
+
+    compileSdkVersion 35
+    // buildToolsVersion '30.0.3'   // ❌ 삭제
 
     defaultConfig {
-        minSdkVersion 18
-        targetSdkVersion 31
+        minSdk 18
+        targetSdk 35
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
         }
     }
-    lintOptions {
-          abortOnError false
+
+    // 기존 lintOptions → lint 블록
+    lint {
+        abortOnError = false
     }
-    publishNonDefault false
+
+    // publishNonDefault는 폐지됨
+    // publishNonDefault false   // ❌ 삭제
+
+    // JDK 17 맞추기(코틀린 안 쓰더라도 넣어두면 안전)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    // kotlinOptions { jvmTarget = '17' } // 코틀린 소스가 있으면 추가
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'             // 최신 4.x 유지 권장
     implementation 'androidx.appcompat:appcompat:1.0.0'
-    api project(':blocklylib-core')
+    api project(':blocklylib-core')                     // 기존 그대로
 }
 
-task sourcesJar(type: Jar) {
+/**
+ * Gradle 8용 sourcesJar: classifier → archiveClassifier.set(...)
+ */
+tasks.register("sourcesJar", Jar) {
+    archiveClassifier.set("sources")
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+    // 코틀린 소스가 있으면 함께 포함
+    def kotlinDir = file("src/main/kotlin")
+    if (kotlinDir.exists()) from(kotlinDir)
 }
 
-// TODO(#632): Fix JavaDoc compilation, and then update deployment artifacts.
-//task javadoc(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//}
-
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//    // options.encoding = 'UTF-8'
-//}
+/* javadoc 관련은 일단 비활성 유지. 필요 시 최신 문법으로 복구 가능
+tasks.register("javadocJar", Jar) {
+    dependsOn "javadoc"
+    archiveClassifier.set("javadoc")
+    from tasks.named("javadoc").get().destinationDir
+}
+*/
 
 apply from: 'deploy.gradle'
+
+
+
+//apply plugin: 'com.android.library'
+//
+//android {
+//    compileSdk 31
+//    buildToolsVersion '30.0.3'
+//
+//    defaultConfig {
+//        minSdkVersion 18
+//        targetSdkVersion 31
+//        versionCode 1
+//        versionName "1.0"
+//    }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//        }
+//    }
+//    lintOptions {
+//          abortOnError false
+//    }
+//    publishNonDefault false
+//}
+//
+//dependencies {
+//    testImplementation 'junit:junit:4.12'
+//    implementation 'androidx.appcompat:appcompat:1.0.0'
+//    api project(':blocklylib-core')
+//}
+//
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//
+//// TODO(#632): Fix JavaDoc compilation, and then update deployment artifacts.
+////task javadoc(type: Javadoc) {
+////    source = android.sourceSets.main.java.srcDirs
+////    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+////}
+//
+////task javadocJar(type: Jar, dependsOn: javadoc) {
+////    classifier = 'javadoc'
+////    from javadoc.destinationDir
+////    // options.encoding = 'UTF-8'
+////}
+//
+//apply from: 'deploy.gradle'

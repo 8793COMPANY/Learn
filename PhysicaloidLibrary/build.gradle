@@ -1,22 +1,72 @@
-apply plugin: 'com.android.library'
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: '*.jar')
+// ✅ 새 방식: plugins DSL (버전까지 명시하면 더 확실)
+plugins {
+    id 'com.android.library' version '8.6.1'
+    // id 'org.jetbrains.kotlin.android' version '1.9.24' // kotlin 소스가 있으면 주석 해제
 }
 
 android {
-    compileSdk 33
-    buildToolsVersion '30.0.3'
+    // ★ Manifest의 package 값을 그대로 넣으세요
+    //   예: <manifest package="com.your.lib"> → 아래도 동일
+    namespace "com.physicaloid"
+
+    compileSdkVersion 35
+    // buildToolsVersion '30.0.3'   // ❌ 삭제
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 35
     }
 
+    // (옛 디렉터리 레이아웃을 유지하려면 그대로 둬도 됨)
     sourceSets {
         main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
+            manifest.srcFile 'AndroidManifest.xml'  // 모듈 루트에 있다면 유지
+            java.srcDirs = ['src']                  // 자바 소스가 ./src 에 있다면 유지
+            res.srcDirs = ['res']   // 리소스가 있으면
+            // kotlin.srcDirs = ['src']             // 코틀린이면 필요 시 추가
         }
     }
+
+    // Gradle 8 / JDK 17
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    // kotlinOptions { jvmTarget = '17' } // 코틀린이면 주석 해제
+
+    // 안전하게 명시(기본값이 true이지만 혹시 몰라서)
+    buildFeatures {
+        buildConfig = true
+    }
+
+    // lintOptions 옛 문법 대신
+    lint { abortOnError = false }
 }
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+
+//apply plugin: 'com.android.library'
+//
+//dependencies {
+//    implementation fileTree(dir: 'libs', include: '*.jar')
+//}
+//
+//android {
+//    compileSdk 33
+//    buildToolsVersion '30.0.3'
+//
+//    defaultConfig {
+//        minSdkVersion 23
+//        targetSdkVersion 33
+//    }
+//
+//    sourceSets {
+//        main {
+//            manifest.srcFile 'AndroidManifest.xml'
+//            java.srcDirs = ['src']
+//        }
+//    }
+//}

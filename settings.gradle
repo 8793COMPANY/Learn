@@ -1,13 +1,53 @@
-include ':blocklylib-vertical'
-include ':blocklylib-core'
-project(':blocklylib-core').projectDir = new File(rootDir, 'blocklylib-core')
-include ':app'
-include ':PhysicaloidLibrary'
-project(':PhysicaloidLibrary').projectDir = new File(rootDir, 'PhysicaloidLibrary/')
-rootProject.name = "learn4"
-
-dependencyResolutionManagement{
-    repositories{
-        maven { url "https://jitpack.io" }
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    plugins {
+        id "com.android.application" version "8.6.1"
+        id "com.android.library"     version "8.6.1"
+        id "org.jetbrains.kotlin.android" version "1.9.24"
+        id "org.jetbrains.kotlin.kapt"    version "1.9.24"
+        id "com.google.gms.google-services" version "4.4.2"
+        id "com.google.firebase.crashlytics" version "3.0.2"
+        id "com.google.devtools.ksp" version "1.9.24-1.0.20"
     }
 }
+
+// --- 모든 모듈이 사용할 저장소(의존성) ---
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS) // 프로젝트 내부 선언보다 여기 우선
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }   // 필요한 경우 마지막에 배치(우선순위 낮게)
+    }
+}
+
+rootProject.name = "learn4"
+
+// --- 포함 모듈 ---
+include(":app")
+include(":blocklylib-core")
+include(":blocklylib-vertical")
+include(":PhysicaloidLibrary")
+
+// 커스텀 경로 지정(있으면 유지)
+project(":blocklylib-core").projectDir = file("blocklylib-core")
+project(":PhysicaloidLibrary").projectDir = file("PhysicaloidLibrary")
+
+
+//include ':blocklylib-vertical'
+//include ':blocklylib-core'
+//project(':blocklylib-core').projectDir = new File(rootDir, 'blocklylib-core')
+//include ':app'
+//include ':PhysicaloidLibrary'
+//project(':PhysicaloidLibrary').projectDir = new File(rootDir, 'PhysicaloidLibrary/')
+//rootProject.name = "learn4"
+//
+//dependencyResolutionManagement{
+//    repositories{
+//        maven { url "https://jitpack.io" }
+//    }
+//}

@@ -2,10 +2,8 @@
 manifest
 ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-8:12
 INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-8:12
-INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:1:1-8:12
 	package
 		ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:2:5-30
-		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 	android:versionName
 		ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml:4:5-35
@@ -25,13 +23,7 @@ uses-sdk
 INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 	android:targetSdkVersion
 		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
-		ADDED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml
 		INJECTED from C:\Users\ksy\AndroidStudioProjects\Learn\PhysicaloidLibrary\AndroidManifest.xml

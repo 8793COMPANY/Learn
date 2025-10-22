@@ -1,20 +1,25 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
+//    id 'kotlin-android'
+//    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.android'
+//    id 'org.jetbrains.kotlin.kapt'
+    id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
 
 android {
-    compileSdkVersion 34
-    buildToolsVersion '30.0.3'
+    namespace "com.learn4"
+    compileSdkVersion 35
+//    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.learn4"
         minSdkVersion 23
-        targetSdkVersion 34
-        versionCode 126
-        versionName "1.13.0"
+        targetSdkVersion 35
+        versionCode 127
+        versionName "1.14.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,8 +37,18 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // ★ Kotlin도 17로 고정 (kapt 포함)
+    kotlin {
+        jvmToolchain(17)
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     testOptions {
@@ -66,6 +81,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation project(':blocklylib-vertical')
+    implementation project(':blocklylib-core')
 
 //    implementation 'dev.dworks.libs:volleyplus:+'
     // volleyplus가 더이상 지원하지 않음으로 대체
@@ -81,8 +97,8 @@ dependencies {
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC2'
     implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
 
-    implementation "androidx.room:room-runtime:2.4.2"
-    annotationProcessor "androidx.room:room-compiler:2.4.2"
+//    implementation "androidx.room:room-runtime:2.4.2"
+//    annotationProcessor "androidx.room:room-compiler:2.4.2"
 
 
     // kotlin 사용 설정
@@ -90,10 +106,12 @@ dependencies {
 
     // kotlin 버전 통일(프로젝트, 앱, 모듈 모두 통일)
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.20"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
 
-    apply plugin: 'kotlin-kapt'
-    kapt("androidx.room:room-compiler:2.4.2")
+//    apply plugin: 'kotlin-kapt'
+//    kapt("androidx.room:room-compiler:2.4.2")
+    // ✅ Windows에서 Room verifier가 필요한 네이티브를 찾도록 추가
+//    kapt "org.xerial:sqlite-jdbc:3.45.3.0"
 
 
     //RxJava
@@ -101,7 +119,12 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.7'
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
 
-    implementation "androidx.room:room-rxjava3:2.4.2"
+//    implementation "androidx.room:room-rxjava3:2.4.2"
+
+    // Room 최신
+    implementation "androidx.room:room-runtime:2.6.1"
+    implementation "androidx.room:room-rxjava3:2.6.1"
+    ksp          "androidx.room:room-compiler:2.6.1"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
