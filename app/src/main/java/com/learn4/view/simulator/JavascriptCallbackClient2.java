@@ -14,16 +14,22 @@ public class JavascriptCallbackClient2 {
     private Context mContext;
     private WebView webView;
     private Activity activity;
-    private String testString;
+//    private String testString;
 
     String [] send_data = {"a","b","c","d","e","f","g"};
 
-    public JavascriptCallbackClient2(Activity activity, Context context, WebView webView, String stringText) {
+//    public JavascriptCallbackClient2(Activity activity, Context context, WebView webView, String stringText) {
+//        this.mContext = context;
+//        this.webView = webView;
+//
+//        this.testString = stringText;
+//
+//        this.activity = activity;
+//    }
+
+    public JavascriptCallbackClient2(Activity activity, Context context, WebView webView) {
         this.mContext = context;
         this.webView = webView;
-
-        this.testString = stringText;
-
         this.activity = activity;
     }
 
@@ -62,13 +68,28 @@ public class JavascriptCallbackClient2 {
         ((TeachableActivity)activity).testSetting(message, link);
     }
 
+//    @JavascriptInterface
+//    public void callJavaScriptFunction() {
+//        webView.postDelayed(() -> {
+//            webView.evaluateJavascript(publishEvent("javascriptFunction", "\"" + testString + "\""),
+//                    (result) -> {}
+//            );
+//        }, 0);
+//    }
+
     @JavascriptInterface
     public void callJavaScriptFunction() {
-        webView.postDelayed(() -> {
-            webView.evaluateJavascript(publishEvent("javascriptFunction", "\"" + testString + "\""),
-                    (result) -> {}
+        Log.e("JS_BRIDGE", "callJavaScriptFunction 호출됨");
+    }
+
+    // React로 이벤트 보내는 함수
+    public void sendEventToReact(String data) {
+        webView.post(() -> {
+            webView.evaluateJavascript(
+                    publishEvent("javascriptFunction", "\"" + data + "\""),
+                    result -> Log.e("JS_BRIDGE", "evaluateJavascript result = " + result)
             );
-        }, 0);
+        });
     }
 
     //serial.write 기능

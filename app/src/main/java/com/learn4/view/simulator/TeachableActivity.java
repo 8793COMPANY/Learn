@@ -38,13 +38,14 @@ import com.learn4.R;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class TeachableActivity extends AppCompatActivity {
-
     WebView webView;
+    JavascriptCallbackClient2 jsBridge;
 
     public ValueCallback<Uri[]> filePathCallbackLollipop;
     public final static int FILECHOOSER_LOLLIPOP_REQ_CODE = 2002;
@@ -58,6 +59,7 @@ public class TeachableActivity extends AppCompatActivity {
 
     String resultString = "";
     boolean btn_check = false;
+    boolean initialModelSent = false;
 
     HorizontalBarChart predict_view;
     String predict_result = "";
@@ -89,6 +91,19 @@ public class TeachableActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+                if (!initialModelSent) {
+                    boolean first = preferences.getBoolean("isFirstLink", false);
+
+                    if (first) {
+                        String link = preferences.getString("link", "no link");
+                        jsBridge.sendEventToReact("no@@" + link);
+                    } else {
+                        jsBridge.sendEventToReact("no@@");
+                    }
+
+                    initialModelSent = true;
+                }
             }
 
             @Override
@@ -101,29 +116,59 @@ public class TeachableActivity extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        if(first){
-            webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView,
-                    "no" + "@@" + preferences.getString("link", "no link")), "android");
-        } else {
-            webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView, "no" + "@@" +""), "android");
-        }
+//        if(first){
+//            webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView,
+//                    "no" + "@@" + preferences.getString("link", "no link")), "android");
+//        } else {
+//            webView.addJavascriptInterface(new JavascriptCallbackClient2(this, getBaseContext(), webView, "no" + "@@" +""), "android");
+//        }
+
+        jsBridge = new JavascriptCallbackClient2(this, getBaseContext(), webView);
+        webView.addJavascriptInterface(jsBridge, "android");
+
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+
         webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
 //        webView.loadUrl("http://192.168.0.8:3000/");
 
 
+//        webView.setWebChromeClient(new WebChromeClient() {
+//            // For Android 5.0+
+//            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+//                Log.e("UPLOAD_FLOW", "WebView 내부 파일 업로드 버튼 클릭됨");
+//
+//                // Callback 초기화 (중요!)
+//                if (filePathCallbackLollipop != null) {
+//                    filePathCallbackLollipop.onReceiveValue(null);
+//                    filePathCallbackLollipop = null;
+//                }
+//                filePathCallbackLollipop = filePathCallback;
+//
+//                boolean isCapture = fileChooserParams.isCaptureEnabled();
+//
+//                runCamera(isCapture);
+//
+//                return true;
+//            }
+//        });
+
         webView.setWebChromeClient(new WebChromeClient() {
-            // For Android 5.0+
-            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-                // Callback 초기화 (중요!)
-                if (filePathCallbackLollipop != null) {
-                    filePathCallbackLollipop.onReceiveValue(null);
-                    filePathCallbackLollipop = null;
+            @Override
+            public boolean onShowFileChooser(
+                    WebView webView,
+                    ValueCallback<Uri[]> filePathCallback,
+                    FileChooserParams fileChooserParams
+            ) {
+                Log.e("UPLOAD_FLOW", "WebView 내부 업로드 버튼 클릭됨 - Android base64 흐름으로 전환");
+
+                if (filePathCallback != null) {
+                    filePathCallback.onReceiveValue(null);
                 }
-                filePathCallbackLollipop = filePathCallback;
 
-                boolean isCapture = fileChooserParams.isCaptureEnabled();
-
-                runCamera(isCapture);
+                btn_check = true;
+                runCamera(false);
 
                 return true;
             }
@@ -133,14 +178,15 @@ public class TeachableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    runCamera(false);
+                    Log.e("UPLOAD_FLOW", "네이티브 upload_btn 클릭됨");
                     btn_check = true;
+                    runCamera(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView, "yes"), "android");
-                webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+//                webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView, "yes"), "android");
+//                webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
 //                webView.loadUrl("http://192.168.0.8:3000/");
             }
         });
@@ -148,11 +194,30 @@ public class TeachableActivity extends AppCompatActivity {
 
     private String bitmapToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, byteArrayOutputStream);
         bitmap.recycle();
         byte[] byteArray = byteArrayOutputStream.toByteArray();
 
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+//        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+        return Base64.encodeToString(byteArray, Base64.NO_WRAP);
+    }
+
+    private String uriToBase64(Uri uri) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        inputStream.close();
+
+        byte[] bytes = outputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.NO_WRAP);
     }
 
     private void runCamera(boolean _isCapture)
@@ -258,47 +323,93 @@ public class TeachableActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.e("UPLOAD_FLOW", "onActivityResult 들어옴");
+        Log.e("UPLOAD_FLOW", "requestCode=" + requestCode + ", resultCode=" + resultCode + ", btn_check=" + btn_check);
+        Log.e("UPLOAD_FLOW", "data null 여부=" + (data == null));
+
         if (requestCode == FILECHOOSER_LOLLIPOP_REQ_CODE) {//2002
             if (resultCode == RESULT_OK) {
                 if (btn_check) {
-                    Bitmap Dsource = null;
-
                     resultString = "";
 
-                    if (data == null) {
+                    if (data == null || data.getData() == null) {
                         imageUri = cameraImageUri;
                     } else {
                         imageUri = data.getData();
                     }
 
-                    Log.e("속도 체크","1 in");
+                    Log.e("속도 체크", "1 in - imageUri=" + imageUri);
+
+                    if (imageUri == null) {
+                        Log.e("UPLOAD_FLOW", "imageUri가 null입니다!");
+                        return;
+                    }
+
                     try {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                            Dsource = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), imageUri));
-                        } else {
-                            Dsource = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(), imageUri);
-                        }
+                        Thread.sleep(300);
+
+                        resultString = uriToBase64(imageUri);
+
+                        Log.e("속도 체크", "2 in - 원본 bytes base64 변환 완료");
+                        Log.e("속도 체크", "base64 length=" + resultString.length());
+
+                        String encodedImage = URLEncoder.encode(resultString, "UTF-8");
+                        jsBridge.sendEventToReact(encodedImage + "@@");
+
+                        btn_check = false;
+
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.e("UPLOAD_FLOW", "uriToBase64 실패", e);
+                        btn_check = false;
+                    } catch (InterruptedException e) {
+                        Log.e("UPLOAD_FLOW", "Thread.sleep interrupted", e);
+                        btn_check = false;
                     }
-
-                    Log.e("속도 체크","2 in");
-                    if (Dsource != null) {
-
-                        Log.e("속도 체크","3 in");
-                        resultString = bitmapToString(Dsource);
-
-                        Log.e("속도 체크","4 in");
-                        try {
-                            webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView,
-                                    URLEncoder.encode(resultString, "UTF-8") + "@@"), "android");
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-
-                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
-//                        webView.loadUrl("http://192.168.0.8:3000/");
-                    }
+//                    Bitmap Dsource = null;
+//
+//                    resultString = "";
+//
+//                    if (data == null) {
+//                        imageUri = cameraImageUri;
+//                    } else {
+//                        imageUri = data.getData();
+//                    }
+//
+//                    Log.e("속도 체크","1 in");
+//                    try {
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//                            Dsource = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), imageUri));
+//                        } else {
+//                            Dsource = MediaStore.Images.Media.getBitmap(getApplication().getContentResolver(), imageUri);
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    Log.e("속도 체크","2 in");
+//                    if (Dsource != null) {
+//
+//                        Log.e("속도 체크","3 in");
+//                        resultString = bitmapToString(Dsource);
+//
+//                        Log.e("속도 체크","4 in");
+//                        try {
+//                            String encodedImage = URLEncoder.encode(resultString, "UTF-8");
+//                            jsBridge.sendEventToReact(encodedImage + "@@");
+//                            btn_check = false;
+//                        } catch (UnsupportedEncodingException e) {
+//                            e.printStackTrace();
+//                        }
+////                        try {
+////                            webView.addJavascriptInterface(new JavascriptCallbackClient2(getParent(), getBaseContext(), webView,
+////                                    URLEncoder.encode(resultString, "UTF-8") + "@@"), "android");
+////                        } catch (UnsupportedEncodingException e) {
+////                            e.printStackTrace();
+////                        }
+////
+////                        webView.loadUrl("https://main.d3kfr80s8mk4j7.amplifyapp.com/");
+////                        webView.loadUrl("http://192.168.0.8:3000/");
+//                    }
                 } else {
                     if (filePathCallbackLollipop == null) {
                         cameraImageUri = null;
