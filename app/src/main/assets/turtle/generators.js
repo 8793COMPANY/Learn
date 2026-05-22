@@ -997,6 +997,17 @@ Blockly.JavaScript['logic_calculation'] = function(a) {
      return '';
   };
 
+  Blockly.JavaScript['DHT22'] = function (block) {
+     var value_channel = Blockly.JavaScript.valueToCode(block, 'channel', Blockly.JavaScript.ORDER_ATOMIC);
+
+     //define sonar settings
+     Blockly.JavaScript.definitions_['define_dht_h'] = "#include \"DHT.h\"\n";
+     Blockly.JavaScript.definitions_['define_dht_' + value_channel] = "DHT dht(" + value_channel +", DHT22);\n";
+     Blockly.JavaScript.setups_['setup_dht_' + value_channel] =  "\ndht.begin();";
+
+       return '';
+    };
+
    Blockly.JavaScript['read_temp'] = function (block) {
 
   //   Blockly.JavaScript.setups_['define_servo' + value_channel] = '\n servo' + value_channel + '.attach('+value_channel+');\n';

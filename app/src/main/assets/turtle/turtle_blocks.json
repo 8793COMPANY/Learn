@@ -622,7 +622,24 @@
 
   {
     "type": "DHT11",
-    "message0": "DHT INIT %1 ",
+    "message0": "DHT INIT 11 %1 ",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "channel",
+        "check": "Number"
+      }
+
+    ],
+    "colour": 220,
+    "previousStatement": null,
+    "nextStatement": null,
+    "tooltip": ""
+  },
+
+  {
+    "type": "DHT22",
+    "message0": "DHT INIT 22 %1 ",
     "args0": [
       {
         "type": "input_value",

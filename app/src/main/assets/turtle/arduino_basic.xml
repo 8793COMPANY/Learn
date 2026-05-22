@@ -69,6 +69,14 @@
             </value>
         </block>
 
+        <block type="DHT22">
+            <value name="channel">
+                <block type="base_pins_list">
+                    <field name="PIN">1</field>
+                </block>
+            </value>
+        </block>
+
         <block type="ultrasonic_sensor_setup">
             <value name="PIN">
                 <block type="base_pins_list">
