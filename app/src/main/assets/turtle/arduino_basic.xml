@@ -31,8 +31,6 @@
         <block type="turtle_setup_loop"></block>
 
 
-
-
         <block type="pinMode">
             <value name="PIN">
                 <block type="base_pins_list">
@@ -90,12 +88,6 @@
                 </block>
             </value>
         </block>
-
-
-
-
-
-
 
 
         <block type="Adafruit_SSD1306"></block>
@@ -238,36 +230,12 @@
             </value>
         </block>
 
-        <block type="inout_digital_read">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
+        <block type="base_delay">
+            <value name="DELAY_TIME">
+                <block type="math_number" gap="32">
+                    <field name="NUM">1000</field>
                 </block>
             </value>
-        </block>
-
-        <block type="inout_analog_read">
-            <value name="PIN">
-                <block type="base_pins_list">
-                    <field name="PIN">0</field>
-                </block>
-            </value>
-        </block>
-
-        <!--<block type="serial_print">
-            <value name="text">
-                <block type="text">
-                    <field name="TEXT"></field>
-                </block>
-            </value>
-        </block>-->
-
-
-
-        <block type="serial_available">
-        </block>
-
-        <block type="serial_read">
         </block>
 
         <block type="serial_write">
@@ -278,10 +246,11 @@
             </value>
         </block>
 
-        <block type="read_temperature_sensor">
-        </block>
-        <block type="serial_readString">
-        </block>
+<!--        <block type="read_temperature_sensor">-->
+<!--        </block>-->
+<!--        -->
+<!--        <block type="serial_readString">-->
+<!--        </block>-->
 
 <!--        <block type="serial_write">-->
 <!--            <value name="VALUE">-->
@@ -340,33 +309,57 @@
             </value>
         </block>
 
-        <block type="base_delay">
-            <value name="DELAY_TIME">
-                <block type="math_number" gap="32">
-                    <field name="NUM">1000</field>
-                </block>
-            </value>
-        </block>
-
-
-        <block type="temperature_sensor">
-        <value name="PIN">
-            <block type="base_pins_list">
-                <field name="PIN">0</field>
-            </block>
-        </value>
-        <!--<field name="VALUE1">OUTPUT</field>-->
-
-        </block>
-
-        <block type="pluse_sensor">
+        <block type="inout_digital_read">
             <value name="PIN">
                 <block type="base_pins_list">
                     <field name="PIN">0</field>
                 </block>
             </value>
-
         </block>
+
+        <block type="inout_analog_read">
+            <value name="PIN">
+                <block type="base_pins_list">
+                    <field name="PIN">0</field>
+                </block>
+            </value>
+        </block>
+
+        <!--<block type="serial_print">
+            <value name="text">
+                <block type="text">
+                    <field name="TEXT"></field>
+                </block>
+            </value>
+        </block>-->
+
+
+
+        <block type="serial_available">
+        </block>
+
+        <block type="serial_read">
+        </block>
+
+
+<!--        <block type="temperature_sensor">-->
+<!--        <value name="PIN">-->
+<!--            <block type="base_pins_list">-->
+<!--                <field name="PIN">0</field>-->
+<!--            </block>-->
+<!--        </value>-->
+<!--        &lt;!&ndash;<field name="VALUE1">OUTPUT</field>&ndash;&gt;-->
+
+<!--        </block>-->
+
+<!--        <block type="pluse_sensor">-->
+<!--            <value name="PIN">-->
+<!--                <block type="base_pins_list">-->
+<!--                    <field name="PIN">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+
+<!--        </block>-->
 
 <!--        <block type="get_weather">-->
 
@@ -533,6 +526,12 @@
                     <field name="BOOL">TRUE</field>
                 </shadow>
             </value>
+        </block>
+
+        <block type="read_temp">
+        </block>
+
+        <block type="read_humidity">
         </block>
         <!--                <block type="inout_tone_pin">-->
         <!--                    <value name="PIN">-->
@@ -751,11 +750,6 @@
             </value>
         </block>
 
-        <block type="read_temp">
-        </block>
-
-        <block type="read_humidity">
-        </block>
         <!--        <block type="inout_tone_pin">-->
         <!--                    <value name="PIN">-->
         <!--                        <block type="base_pins_list">-->
@@ -785,20 +779,6 @@
 <!--                </block>-->
 <!--            </value>-->
 <!--        </block>-->
-
-        <block type="random_number">
-            <value name="from_num">
-                <block type="math_number">
-                    <field name="NUM">0</field>
-                </block>
-            </value>
-
-            <value name="to_num">
-                <block type="math_number">
-                    <field name="NUM">10</field>
-                </block>
-            </value>
-        </block>
 
         <!--        <block type="neo_pixel_set"></block>-->
         <block type="variables_set"></block>
@@ -843,24 +823,24 @@
             <field name="BOOLEAN_TEXT">true</field>
         </block>
 
-        <block type="lcd">
-            <value name="text">
-                <block type="text">
-                    <field name="TEXT">Hello World</field>
-                </block>
-            </value>
-            <field name="line_number">0</field>
-            <value name="character_number">
-                <block type="math_number">
-                    <field name="NUM">0</field>
-                </block>
-            </value>
-        </block>
+<!--        <block type="lcd">-->
+<!--            <value name="text">-->
+<!--                <block type="text">-->
+<!--                    <field name="TEXT">Hello World</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--            <field name="line_number">0</field>-->
+<!--            <value name="character_number">-->
+<!--                <block type="math_number">-->
+<!--                    <field name="NUM">0</field>-->
+<!--                </block>-->
+<!--            </value>-->
+<!--        </block>-->
 
         <block type="lcd_I2C">
             <value name="text">
                 <block type="text">
-                    <field name="TEXT">hello, jikko</field>
+                    <field name="TEXT">Hello, World</field>
                 </block>
             </value>
             <field name="line_number">0</field>
@@ -880,6 +860,20 @@
         <block type="turtle_jikco_internal">
             <field name="DIR">#f2bc66</field>
             <field name="COL">#ff0000</field>
+        </block>
+
+        <block type="random_number">
+            <value name="from_num">
+                <block type="math_number">
+                    <field name="NUM">0</field>
+                </block>
+            </value>
+
+            <value name="to_num">
+                <block type="math_number">
+                    <field name="NUM">10</field>
+                </block>
+            </value>
         </block>
 
 
