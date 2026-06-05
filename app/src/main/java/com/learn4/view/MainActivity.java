@@ -304,7 +304,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지","양궁게임 표적","양궁게임 활 ver 1","양궁게임 활 ver 2","검도게임","스탑워치","디싹 도시 안전","배틀쉽",};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지","양궁게임 표적","양궁게임 활 ver 1","양궁게임 활 ver 2","검도게임","스탑워치","디싹 도시 안전","배틀쉽","유기동물보호소 강아지",};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -1759,6 +1759,9 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
         else if(name == "배틀쉽") {
             filename = "battleship.xml";
+        }
+        else if(name == "유기동물보호소 강아지") {
+            filename = "animal_shelter_dog.xml";
         }
 
 

@@ -88,9 +88,9 @@
                                         <next>
                                             <block type="inout_digital_write" id="ac87f52c-34f7-4de1-b094-5113c3d2bbe9">
                                                 <value name="PIN">
-                                                    2023-08-01 15:27:16.704 7161-7161/com.learn4 E/code check codegeneration:                           <block type="base_pins_list" id="bf4aac76-4737-49f2-955c-25a59ae2ac17">
-                                                    <field name="PIN">3</field>
-                                                </block>
+                                                    <block type="base_pins_list" id="bf4aac76-4737-49f2-955c-25a59ae2ac17">
+                                                        <field name="PIN">3</field>
+                                                    </block>
                                                 </value>
                                                 <value name="NUM">
                                                     <block type="base_logic_list" id="e7388ba6-cf45-4080-afb6-0440c876fb87">
