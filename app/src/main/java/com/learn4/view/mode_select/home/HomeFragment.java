@@ -159,7 +159,7 @@ public class HomeFragment extends Fragment {
 //        if (!MySharedPreferences.getBoolean(getContext(),"notice_today_check")){
 
         // 디지털 새싹 설문지 팝업
-        // 2025년도에서 2026년도 겨울방학 디지털 새싹 프로그램 설문조사 링크로 변경
+        // 2026년도 겨울방학에서 2026년 상반기 디지털 새싹 프로그램 설문조사 링크로 변경
         Dialog surveyDialog = new Dialog(getContext());
         surveyDialog.setContentView(R.layout.dialog_survey_select);
         surveyDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -179,34 +179,34 @@ public class HomeFragment extends Fragment {
 
         // 일반 학생 대상 설문 링크
         surveyLinks.put("general", new String[]{
-                "https://form.kosac.re.kr/survey/J5JH1ziSNN9DQ6fP8AMq",
-                "https://form.kosac.re.kr/survey/LtRiB5Dqu2oK1fi4VKsI",
-                "https://form.kosac.re.kr/survey/dAFFxTYx7v9lk3twHK0z",
-                "https://form.kosac.re.kr/survey/vB9DLvgGjCnvaZeD7Um6"
+                "https://form.kosac.re.kr/v/I0u6x1TYKMyKEDHYjrQj",
+                "https://form.kosac.re.kr/v/lzdUndWx9ayKge3i3AIC",
+                "https://form.kosac.re.kr/v/ItXeheqZl2ZyLuRUTRtI",
+                "https://form.kosac.re.kr/v/zKytKcBQ7HdphktBfbHh"
         });
 
         // 사회적 배려자(다문화) 학생 대상 설문 링크
         surveyLinks.put("multicultural", new String[]{
-                "https://form.kosac.re.kr/survey/FQs1fkY8FvCzV0ueYjFD",
-                "https://form.kosac.re.kr/survey/fEqTko1mzVNFMlUzAtxu",
-                "https://form.kosac.re.kr/survey/MNH475Tbg4jHYaAwTpK1",
-                "https://form.kosac.re.kr/survey/tKsjGdhZtvMrlnIce9Rw"
+                "https://form.kosac.re.kr/v/5RlcgctXmFCGxtKImgAr",
+                "https://form.kosac.re.kr/v/f2ChW7clyRbcMfgN9LHj",
+                "https://form.kosac.re.kr/v/Y2cdlcTlcKJRQ0V30Nfy",
+                "https://form.kosac.re.kr/v/inhWimGfoCAyhTzW7RAf"
         });
 
         // 사회적 배려자(도서벽지) 학생 대상 설문 링크
         surveyLinks.put("remote", new String[]{
-                "https://form.kosac.re.kr/survey/7vhWdOPoiVfu1pzIrbQ5",
-                "https://form.kosac.re.kr/survey/DXrINVyrKJxB30N6Plc4",
-                "https://form.kosac.re.kr/survey/AKbMIZo3sgJMZ2A5iipR",
-                "https://form.kosac.re.kr/survey/166UdQzyCmkHWYFHkRgJ"
+                "https://form.kosac.re.kr/v/hvg0byvIWV5kBnUOSGJU",
+                "https://form.kosac.re.kr/v/XwlewBh9Aoc785QpoWb4",
+                "https://form.kosac.re.kr/v/sJogRuUI0EolxRkRxx7Q",
+                "https://form.kosac.re.kr/v/laWsMnXjUcPMcsrIos3U"
         });
 
         // 사회적 배려자(특수교육) 학생 대상 설문 링크
         surveyLinks.put("special", new String[]{
-                "https://form.kosac.re.kr/survey/2gzOb1XGANSrPUN5O5L5",
-                "https://form.kosac.re.kr/survey/p9ynM8Iztiev9XLjS492",
-                "https://form.kosac.re.kr/survey/lrZqRrjquPza2Yjd2BWk",
-                "https://form.kosac.re.kr/survey/EqcAHDH0LyHwFcuOk12y"
+                "https://form.kosac.re.kr/v/WIAZ7gsXNGtnPEolIwTa",
+                "https://form.kosac.re.kr/v/SxxjQcmAyzfuC8EujS3g",
+                "https://form.kosac.re.kr/v/NuLYFUaQPENlh0tGZruG",
+                "https://form.kosac.re.kr/v/xFBGFZuD7GjAqM1kBkwD"
         });
         
         // 공통 라벨
