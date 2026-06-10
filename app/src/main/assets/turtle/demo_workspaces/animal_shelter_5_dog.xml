@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="65c76fce-e274-4a4d-afbf-31f8a006801e" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="DHT22" id="bcc96736-8e99-4411-8938-726e7a096235">
+                <value name="channel">
+                    <block type="base_pins_list" id="4db3ad69-4f26-4a28-a7d3-11115c311158">
+                        <field name="PIN">A0</field>
+                    </block>
+                </value>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="lcd_I2C" id="88b81d51-b8ef-40d5-9315-503bd45e3509">
+                <value name="text">
+                    <block type="text" id="0ba2d6ae-be31-4d8f-bdb3-516ca451ecc5">
+                        <field name="TEXT">DOG 21~25C</field>
+                    </block>
+                </value>
+                <field name="line_number">0</field>
+                <value name="character_number">
+                    <block type="math_number" id="d4e5b096-6c47-484b-bce4-ccb3af9ed8d3">
+                        <field name="NUM">0</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="lcd_I2C" id="175f9838-da68-4f78-85c0-2b3ef87b4d60">
+                        <value name="text">
+                            <block type="text" id="1bfdc8bd-d65e-44c4-baf6-5eebcb317036">
+                                <field name="TEXT">TEM</field>
+                            </block>
+                        </value>
+                        <field name="line_number">1</field>
+                        <value name="character_number">
+                            <block type="math_number" id="bf87ed69-fc30-481f-9e26-e712ffa1c013">
+                                <field name="NUM">0</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="lcd_I2C" id="3f191ac5-2838-419d-838a-25027ecfbc93">
+                                <value name="text">
+                                    <block type="read_temp" id="72530cc5-d5de-4f69-91ae-9dc51a3826f0"/>
+                                </value>
+                                <field name="line_number">1</field>
+                                <value name="character_number">
+                                    <block type="math_number" id="05e5497d-5434-4c1b-a502-f5e836b33a09">
+                                        <field name="NUM">5</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="base_delay" id="48bd33ff-124c-4c7a-9a94-87729a7408d1">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="81572f44-654c-4410-bc94-92ea0138d057">
+                                                <field name="NUM">100</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

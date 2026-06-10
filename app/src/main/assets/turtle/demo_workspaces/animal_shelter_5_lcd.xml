@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="fe21db05-e37c-4fb7-93a8-9ff88818d95b" x="8.0" y="128.0">
+        <statement name="DO1">
+            <block type="lcd_I2C" id="452d76c7-0033-4547-bb9f-a28b7b023edc">
+                <value name="text">
+                    <block type="text" id="4f93b2e5-d614-403b-a285-928113b4b1b6">
+                        <field name="TEXT">Hello, World</field>
+                    </block>
+                </value>
+                <field name="line_number">0</field>
+                <value name="character_number">
+                    <block type="math_number" id="2dcf39a2-40e8-49de-8563-bbddc87dd6e4">
+                        <field name="NUM">0</field>
+                    </block>
+                </value>
+            </block>
+        </statement>
+    </block>
+</xml>

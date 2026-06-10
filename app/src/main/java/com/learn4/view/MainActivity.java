@@ -304,7 +304,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
     String [] turtle_files_eng = {"default/logic_blocks.json","default/loop_blocks.json","default/math_blocks.json","default/variable_blocks.json", "turtle/turtle_blocks.json"};
 
 
-    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지","양궁게임 표적","양궁게임 활 ver 1","양궁게임 활 ver 2","검도게임","스탑워치","디싹 도시 안전","배틀쉽","유기동물보호소 강아지",};
+    String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지","양궁게임 표적","양궁게임 활 ver 1","양궁게임 활 ver 2","검도게임","스탑워치","디싹 도시 안전","배틀쉽",
+            "유기동물보호소 2차시 빨간색", "유기동물보호소 4차시 예시동물", "유기동물보호소 5차시 LCD", "유기동물보호소 5차시 온습도", "유기동물보호소 5차시 LCD+온습도", "유기동물보호소 5차시 예시동물", "유기동물보호소 6차시 공통함수", "유기동물보호소 6차시 예시동물", "유기동물보호소 7차시 예시동물", "유기동물보호소 7차시 결과물", };
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -1760,8 +1761,35 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         else if(name == "배틀쉽") {
             filename = "battleship.xml";
         }
-        else if(name == "유기동물보호소 강아지") {
-            filename = "animal_shelter_dog.xml";
+        else if(name == "유기동물보호소 2차시 빨간색") {
+            filename = "animal_shelter_2_red.xml";
+        }
+        else if(name == "유기동물보호소 4차시 예시동물") {
+            filename = "animal_shelter_4_dog.xml";
+        }
+        else if(name == "유기동물보호소 5차시 LCD") {
+            filename = "animal_shelter_5_lcd.xml";
+        }
+        else if(name == "유기동물보호소 5차시 온습도") {
+            filename = "animal_shelter_5_dht.xml";
+        }
+        else if(name == "유기동물보호소 5차시 LCD+온습도") {
+            filename = "animal_shelter_5_lcd_etc.xml";
+        }
+        else if(name == "유기동물보호소 5차시 예시동물") {
+            filename = "animal_shelter_5_dog.xml";
+        }
+        else if(name == "유기동물보호소 6차시 공통함수") {
+            filename = "animal_shelter_6_common.xml";
+        }
+        else if(name == "유기동물보호소 6차시 예시동물") {
+            filename = "animal_shelter_6_dog.xml";
+        }
+        else if(name == "유기동물보호소 7차시 예시동물") {
+            filename = "animal_shelter_7_dog.xml";
+        }
+        else if(name == "유기동물보호소 7차시 결과물") {
+            filename = "animal_shelter_7_result.xml";
         }
 
 
@@ -1838,6 +1866,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            buildbotDialog.exercise_btn.setChecked(false);
 //            buildbotDialog.code_save_btn.setChecked(false);
             buildbotDialog.dismiss();
+
+            // 저장된 파일 목록 로그 출력
+            Log.e("SavedFiles", "저장된 파일 수: " + file_list.size());
+            for (int i = 0; i < file_list.size(); i++) {
+                Log.e("SavedFiles", i + "번째 파일: " + file_list.get(i));
+            }
 
             fileListDialog = new FileListDialog(MainActivity.this,MainActivity.this, file_list, "save_load");
             fileListDialog.show();

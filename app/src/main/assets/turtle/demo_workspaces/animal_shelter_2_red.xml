@@ -1,0 +1,89 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="65c76fce-e274-4a4d-afbf-31f8a006801e" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="pinMode" id="2e9a4747-38d9-4d2f-89d9-de1d8ef6ffda">
+                <value name="PIN">
+                    <block type="base_pins_list" id="3715234f-0ecb-445b-993a-f90bdb78c885">
+                        <field name="PIN">9</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="6395115c-0eef-4b4b-b8bc-95084196b6ce">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="pinMode" id="517474c7-473d-4a01-8ec9-32b746167434">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="ba25c4df-9eec-40a0-b676-8763ef0ea075">
+                                <field name="PIN">10</field>
+                            </block>
+                        </value>
+                        <value name="VALUE1">
+                            <block type="base_output_list" id="3e008e3d-10d6-41d1-8794-9d1c03949c2c">
+                                <field name="LOGIC">OUTPUT</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="pinMode" id="b3c22da7-43c3-46ea-a89e-2b4161ef4337">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="0203a433-079f-4f30-a685-4b1fc4fc489c">
+                                        <field name="PIN">11</field>
+                                    </block>
+                                </value>
+                                <value name="VALUE1">
+                                    <block type="base_output_list" id="c25a4937-85a6-437b-b606-9ec02baf51a8">
+                                        <field name="LOGIC">OUTPUT</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="inout_analog_write" id="e15788be-f951-49ac-bae7-fe2590733e6e">
+                <value name="PIN">
+                    <block type="base_pins_list" id="1a5cbd50-326a-466f-9797-36bc5a4a71cd">
+                        <field name="PIN">9</field>
+                    </block>
+                </value>
+                <value name="NUM">
+                    <block type="math_number" id="6c0941bc-5e87-4977-8f25-a9d0ce350ee5">
+                        <field name="NUM">255</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="inout_analog_write" id="604c5f41-194e-444a-8b23-605877901275">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="4a05c5f3-41e6-4abb-a69b-6605a0b87d86">
+                                <field name="PIN">10</field>
+                            </block>
+                        </value>
+                        <value name="NUM">
+                            <block type="math_number" id="5645827a-4a4b-4700-ac69-35f960e3415b">
+                                <field name="NUM">0</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="inout_analog_write" id="10a627e9-81ec-4254-bd5f-1a57a258aea9">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="ab56f2d5-8d77-422a-8eea-330f21fc79a7">
+                                        <field name="PIN">11</field>
+                                    </block>
+                                </value>
+                                <value name="NUM">
+                                    <block type="math_number" id="61b36a37-7573-4409-bc06-1acf5b04e198">
+                                        <field name="NUM">0</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

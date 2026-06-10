@@ -1,0 +1,162 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="e1a17669-b481-44fa-8ef8-4bfbc35ae27d" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="pinMode" id="503bdc08-7543-44a1-898f-704f7f563c9b">
+                <value name="PIN">
+                    <block type="base_pins_list" id="6a374ed0-71e3-4c5f-9f79-17e5e7f95cf8">
+                        <field name="PIN">5</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="432de945-cc4f-40f3-8de0-715c5996ce1d">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="serial_begin" id="4390f78a-c547-4381-9d53-f31122f09f8f">
+                        <value name="baud">
+                            <block type="serial_begin_list" id="de0c4379-077b-4ab4-904b-09ce63c3e5fd">
+                                <field name="SB">9600</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="DHT22" id="c256e491-1d36-40d0-bc9c-1a7f4777cb82">
+                                <value name="channel">
+                                    <block type="base_pins_list" id="a342dae9-ce20-4a76-867a-85c711e70e93">
+                                        <field name="PIN">A0</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="variables_set" id="d8132302-1fa5-40f8-8cd2-bbb749aecea3">
+                <field name="VAR">ani</field>
+                <value name="VALUE">
+                    <block type="serial_read" id="772ca919-d566-4e57-9f4d-2d4b80546e23"/>
+                </value>
+                <field name="TYPE">char</field>
+                <next>
+                    <block type="controls_if" id="cd34e51d-a00e-4289-9859-baef0cefb444">
+                        <value name="IF0">
+                            <block type="logic_compare" id="58d0f064-36d6-4038-9ec6-2f59aa94eb20">
+                                <value name="A">
+                                    <block type="variables_get" id="5afd8586-8c80-4c23-8516-652865821590">
+                                        <field name="VAR">ani</field>
+                                    </block>
+                                </value>
+                                <value name="B">
+                                    <block type="type_char" id="79fa32e2-0f7a-493a-9af1-eb20bd7f693d">
+                                        <field name="CHAR_TEXT">a</field>
+                                    </block>
+                                </value>
+                                <field name="OP">EQ</field>
+                            </block>
+                        </value>
+                        <statement name="DO0">
+                            <block type="controls_whileUntil" id="4ee0b56e-207e-48ad-9ef5-e898fbcee283">
+                                <value name="BOOL">
+                                    <shadow type="logic_boolean" id="f2bc6d5c-6f4f-41f8-9007-afaa78d4fb84">
+                                        <field name="BOOL">TRUE</field>
+                                    </shadow>
+                                </value>
+                                <field name="MODE">WHILE</field>
+                                <statement name="DO">
+                                    <block type="variables_set" id="99c1819c-bc84-4a2b-b989-15748f2647e3">
+                                        <field name="VAR">tem</field>
+                                        <value name="VALUE">
+                                            <block type="read_temp" id="2a4b2a8f-7d60-44e8-ad26-1485be137562"/>
+                                        </value>
+                                        <field name="TYPE">double</field>
+                                        <next>
+                                            <block type="controls_whileUntil" id="bd43bf37-3057-4d36-8690-877f029c49d9">
+                                                <value name="BOOL">
+                                                    <shadow type="logic_boolean" id="ff16c595-ba9b-47ee-8114-a2f541e27f21">
+                                                        <field name="BOOL">TRUE</field>
+                                                    </shadow>
+                                                    <block type="logic_compare" id="bce579de-588e-4c9e-a972-4cad7fea3cd0">
+                                                        <value name="A">
+                                                            <block type="variables_get" id="64e98068-9619-4dbc-ab3c-11c52e2da684">
+                                                                <field name="VAR">tem</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="B">
+                                                            <block type="math_number" id="25382a20-70bd-4176-8907-a4f786377665">
+                                                                <field name="NUM">25</field>
+                                                            </block>
+                                                        </value>
+                                                        <field name="OP">GTE</field>
+                                                    </block>
+                                                </value>
+                                                <field name="MODE">WHILE</field>
+                                                <statement name="DO">
+                                                    <block type="inout_digital_write" id="0d1fd741-3d1b-4828-8a16-16c3b50a2cc1">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="cddae58d-cdf5-4a81-a0f0-e40bedada6dd">
+                                                                <field name="PIN">5</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="base_logic_list" id="49f26c64-6f82-471c-abc9-1aa7b86d7a73">
+                                                                <field name="LOGIC">HIGH</field>
+                                                            </block>
+                                                        </value>
+                                                        <next>
+                                                            <block type="variables_set" id="bc038d32-f60b-4918-b003-de9ba2d4caf5">
+                                                                <field name="VAR">tem</field>
+                                                                <value name="VALUE">
+                                                                    <block type="read_temp" id="eaa8ba5f-8ad0-41dd-bece-31808fa09bd0"/>
+                                                                </value>
+                                                                <field name="TYPE">double</field>
+                                                                <next>
+                                                                    <block type="base_delay" id="9c032433-ac97-4998-9bbe-5ef366a46f27">
+                                                                        <value name="DELAY_TIME">
+                                                                            <block type="math_number" id="25fa5400-4b88-4363-ba93-23d8d4f65fd4">
+                                                                                <field name="NUM">1000</field>
+                                                                            </block>
+                                                                        </value>
+                                                                    </block>
+                                                                </next>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </statement>
+                                                <next>
+                                                    <block type="inout_digital_write" id="3da69cd6-9bec-4c05-b00b-c6ab796d6778">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="a1f8f12f-0f71-41f8-ab3c-a64d72ed600f">
+                                                                <field name="PIN">5</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="base_logic_list" id="8ad1984d-a632-4864-9ef2-4454fd9eb9ee">
+                                                                <field name="LOGIC">LOW</field>
+                                                            </block>
+                                                        </value>
+                                                        <next>
+                                                            <block type="base_delay" id="9d933f10-d2ab-4d18-9228-a6a0dbd2c345">
+                                                                <value name="DELAY_TIME">
+                                                                    <block type="math_number" id="aa81329a-fd3a-4520-976c-f3f4e582afc6">
+                                                                        <field name="NUM">1000</field>
+                                                                    </block>
+                                                                </value>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </statement>
+                            </block>
+                        </statement>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

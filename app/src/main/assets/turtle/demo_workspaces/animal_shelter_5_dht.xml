@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="d4f94fa0-ebee-4484-a0ce-fbf14df415e9" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="DHT22" id="73871023-a89f-4528-a2b9-34e6c26063b4">
+                <value name="channel">
+                    <block type="base_pins_list" id="bbc1568c-4d7c-42b3-92b6-ef7fcd59c280">
+                        <field name="PIN">A0</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="serial_begin" id="afa1930c-b3d2-4ab7-b13b-e8878a273070">
+                        <value name="baud">
+                            <block type="serial_begin_list" id="f455dc68-d331-4ebb-8f38-837db60bcd21">
+                                <field name="SB">9600</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="serial_println2" id="eeff09c9-f2d5-4faa-a336-740e6137b907">
+                <value name="VALUE">
+                    <block type="read_temp" id="ef040bf5-c853-4d87-a3f7-f1023c373819"/>
+                </value>
+                <next>
+                    <block type="base_delay" id="34abdb23-f015-4cb5-a66c-fe93e5e1b8e2">
+                        <value name="DELAY_TIME">
+                            <block type="math_number" id="fb5d4a9c-032e-4764-8718-6e222ede1055">
+                                <field name="NUM">100</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

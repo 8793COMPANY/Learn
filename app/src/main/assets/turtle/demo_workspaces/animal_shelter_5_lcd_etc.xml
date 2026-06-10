@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="6e39bb84-fa00-4efb-a347-5321493860f4" x="8.0" y="128.0">
+        <statement name="DO">
+            <block type="DHT22" id="73871023-a89f-4528-a2b9-34e6c26063b4">
+                <value name="channel">
+                    <block type="base_pins_list" id="bbc1568c-4d7c-42b3-92b6-ef7fcd59c280">
+                        <field name="PIN">A0</field>
+                    </block>
+                </value>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="lcd_I2C" id="3ba4e0e3-320b-4803-bae2-3e4e9135e2ac">
+                <value name="text">
+                    <block type="text" id="5a28f45a-2da6-4f0b-b7f6-08dd73cdefd9">
+                        <field name="TEXT">TEM</field>
+                    </block>
+                </value>
+                <field name="line_number">0</field>
+                <value name="character_number">
+                    <block type="math_number" id="ca89875b-2f99-44eb-967d-76d91a06fb18">
+                        <field name="NUM">0</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="lcd_I2C" id="8ef50380-1508-4398-b507-f376b4eac80a">
+                        <value name="text">
+                            <block type="read_temp" id="a6261624-543e-4e08-befb-42a712d67714"/>
+                        </value>
+                        <field name="line_number">0</field>
+                        <value name="character_number">
+                            <block type="math_number" id="2ecef6db-040f-43e8-b640-6d75b79c2b4d">
+                                <field name="NUM">5</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="base_delay" id="71c01db7-3636-405c-ae1f-26c04cf94830">
+                                <value name="DELAY_TIME">
+                                    <block type="math_number" id="b39aef01-2d73-452b-8952-df8cc6d7c870">
+                                        <field name="NUM">100</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
