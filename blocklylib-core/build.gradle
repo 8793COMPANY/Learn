@@ -59,12 +59,12 @@ android {
     // kotlinOptions { jvmTarget = '17' }   // 코틀린 사용시
 }
 
-// ✅ aar 파일 사용
-repositories {
-    flatDir {
-        dirs file("${rootDir}/blocklylib-core/libs")
-    }
-}
+// ✅ aar 파일 사용 (files() 직접 참조로 변경됨)
+// repositories {
+//     flatDir {
+//         dirs file("${rootDir}/blocklylib-core/libs")
+//     }
+// }
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -74,9 +74,8 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    // 로컬 libs/ 안의 .aar 사용
-//    implementation(name: 'round-corner-progress-bar-debug', ext: 'aar')
-    implementation files('libs/round-corner-progress-bar-debug.aar')
+    // ✅ 앱 모듈로 이동된 aar를 빌드 시에만 참조
+    compileOnly files('../app/libs/round-corner-progress-bar-debug.aar')
 
     api 'com.squareup:otto:1.3.7'
 }

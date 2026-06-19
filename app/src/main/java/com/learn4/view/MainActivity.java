@@ -22,6 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.TimeoutError;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -1265,36 +1266,24 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
                     }
                 }, error -> {
             Log.e("error","in!");
+            String errorMessage = "서버 통신 오류";
+            
             if (error instanceof TimeoutError) {
-                Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                errorMessage = "서버 응답 시간 초과 (WIFI 상태를 확인해주세요)";
+            } else if (error instanceof com.android.volley.NoConnectionError) {
+                errorMessage = "인터넷에 연결되어 있지 않습니다";
+            } else if (error instanceof com.android.volley.NetworkError) {
+                errorMessage = "네트워크 오류가 발생했습니다";
+            } else if (error instanceof com.android.volley.ServerError) {
+                errorMessage = "컴파일 서버 응답 오류";
             }
-            if (error.getMessage() != null) {
-                Log.e("서버 에러", "remotecompile: " + error.getMessage());
-                if(error instanceof com.android.volley.ServerError) {
-                    Log.e("server error log",error.getMessage());
-                    //       mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //       mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: null reply from compiler");
-                }
-                else if(error.getMessage().contains("java.net.ConnectException")) {
-                    Log.e("Remote error log",error.getMessage());
-                    Toast.makeText(getApplicationContext(), "서버 연결에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                    //    mGeneratedErrorTextView.setVisibility(View.VISIBLE);
-                    //    mGeneratedErrorTextView.setText("Error:\n\t Problem Connecting Remote Compiler: ConnectException");
-                    //                    Toast.makeText(getApplicationContext(), "Error Connecting Remote Compiler", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    // mGeneratedErrorTextView.setVisibility(View
-                    // .VISIBLE);
-                    //  mGeneratedErrorTextView.setText(error.getMessage());
 
-                    Log.e("error log",error.getMessage());
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Log.e("testtest", "errorrrorororro : " + error);
-                Toast.makeText(getApplicationContext(), "오류! 업로드 버튼을 눌러주세요!", Toast.LENGTH_SHORT).show();
-                customProgressDialog.dismiss();
+            if (error.getMessage() != null) {
+                Log.e("서버 에러 상세", "remotecompile: " + error.getMessage());
             }
+            
+            Log.e("testtest", "error type: " + error.getClass().getSimpleName());
+            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             customProgressDialog.dismiss();
         });
 
@@ -1319,6 +1308,12 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
 
         smr.addFile("file", fileData, filename, "text/x-ino"); // 파일 MIME 타입은 필요시 변경
+
+        // ✅ 타임아웃 설정을 10초로 연장하고, 재시도 횟수를 1회로 설정
+        smr.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         mRequestQueue.add(smr);
@@ -3672,7 +3667,7 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 //            Log.e("getCompiler Error",e.toString());
 //        }
         // TODO : 컴파일러 세팅
-        return "http://learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com:5000";
+        return "http://learnserver24-LB-1900786351.ap-northeast-2.elb.amazonaws.com";
     }
 
 

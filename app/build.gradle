@@ -18,8 +18,8 @@ android {
         applicationId "com.learn4"
         minSdkVersion 23
         targetSdkVersion 35
-        versionCode 136
-        versionName "1.15.8"
+        versionCode 137
+        versionName "1.16.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -58,11 +58,11 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs "${rootDir}/blocklylib-core/libs"
-    }
-}
+// repositories {
+//     flatDir {
+//         dirs "${rootDir}/blocklylib-core/libs"
+//     }
+// }
 
 dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
@@ -82,6 +82,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation project(':blocklylib-vertical')
     implementation project(':blocklylib-core')
+
+    // ✅ 외부 라이브러리 직접 참조 (blocklylib-core에서 이동됨)
+    implementation files('libs/round-corner-progress-bar-debug.aar')
 
 //    implementation 'dev.dworks.libs:volleyplus:+'
     // volleyplus가 더이상 지원하지 않음으로 대체
