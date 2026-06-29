@@ -37,6 +37,15 @@
                                         <field name="LOGIC">OUTPUT</field>
                                     </block>
                                 </value>
+                                <next>
+                                    <block type="serial_begin" id="396023c7-9065-4a80-a24c-6a87d1e61888">
+                                        <value name="baud">
+                                            <block type="serial_begin_list" id="8ee54ec5-9d39-44c5-bd40-c4c1c3c32140">
+                                                <field name="SB">9600</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
                             </block>
                         </next>
                     </block>
