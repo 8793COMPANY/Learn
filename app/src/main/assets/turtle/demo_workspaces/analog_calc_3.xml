@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="8d3ead8b-3654-477d-a8cd-496d33ad15b5" x="-345.0" y="-386.0">
+        <statement name="DO1">
+            <block type="servo" id="5bf16c0c-9d2f-4fc4-b248-3947a2fba4fa">
+                <value name="channel">
+                    <block type="base_pins_list" id="6bb751d6-18d1-4fb8-9b36-448437d56dc3">
+                        <field name="PIN">7</field>
+                    </block>
+                </value>
+                <value name="angle">
+                    <block type="math_number" id="83626f41-2869-4cdd-9034-5761e9f31d81">
+                        <field name="NUM">0</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="base_delay" id="97aaa2fd-0b23-4681-94e3-594d8f9e4b83">
+                        <value name="DELAY_TIME">
+                            <block type="math_number" id="c28d807c-0da1-4872-abc2-f8cfd17740a3">
+                                <field name="NUM">1000</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="servo" id="519b435f-4adf-409f-91d1-4aee79d0555d">
+                                <value name="channel">
+                                    <block type="base_pins_list" id="a75d6808-2985-416f-8c33-69fc002c1d57">
+                                        <field name="PIN">7</field>
+                                    </block>
+                                </value>
+                                <value name="angle">
+                                    <block type="math_number" id="4101188f-781f-4dbf-9b09-71b37dee99a6">
+                                        <field name="NUM">90</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="base_delay" id="716a8a79-b026-463f-b9a3-b4ea0446db73">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="215e8d79-ccd2-41c8-8431-f7e225326094">
+                                                <field name="NUM">1000</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="servo" id="e195e77b-3d3d-4d65-ad56-562c1f7db96b">
+                                                <value name="channel">
+                                                    <block type="base_pins_list" id="a0d91053-e9af-47eb-a86a-b90cd59e1228">
+                                                        <field name="PIN">7</field>
+                                                    </block>
+                                                </value>
+                                                <value name="angle">
+                                                    <block type="math_number" id="e7962991-159d-4a6b-b850-220fc7adf1cb">
+                                                        <field name="NUM">180</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="base_delay" id="b3cac070-818d-4696-a560-b3dd95f13f78">
+                                                        <value name="DELAY_TIME">
+                                                            <block type="math_number" id="fac4d146-c9b8-469a-9136-bc394f6c1aa7">
+                                                                <field name="NUM">1000</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

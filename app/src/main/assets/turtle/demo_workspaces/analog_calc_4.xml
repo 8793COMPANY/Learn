@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="0d1f16cf-e178-48b4-a101-79725d9e3439" x="-581.0" y="-374.0">
+        <statement name="DO">
+            <block type="pinMode" id="6a54b959-8c94-4673-8ebd-863dd7e6bf80">
+                <value name="PIN">
+                    <block type="base_pins_list" id="317f647e-85ff-4783-83a8-ba9a21769c25">
+                        <field name="PIN">A0</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="fc217efc-b0fd-4cb7-9eac-6863c27e289e">
+                        <field name="LOGIC">INPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="serial_begin" id="9b605934-73b3-4504-8eb2-9038f1e1ee09">
+                        <value name="baud">
+                            <block type="serial_begin_list" id="3e22fd8e-162b-4573-87d9-241865df0b98">
+                                <field name="SB">9600</field>
+                            </block>
+                        </value>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="variables_set" id="e1d55c1a-4112-4e3a-8c43-5602632d14a8">
+                <field name="VAR">val1</field>
+                <value name="VALUE">
+                    <block type="inout_analog_read" id="04b42e23-7be9-4c00-b9c2-5c2f885964e8">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="aefb3bcb-252d-451a-a3d6-bd2cfc10f4b6">
+                                <field name="PIN">A0</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+                <field name="TYPE">int</field>
+                <next>
+                    <block type="variables_set" id="dbfa6ee4-d9fb-43bf-905e-ff72d3dee8cb">
+                        <field name="VAR">val2</field>
+                        <value name="VALUE">
+                            <block type="logic_calculation" id="f045fabe-2799-486f-9716-e3b048c0c689">
+                                <value name="A">
+                                    <block type="variables_get" id="eee46735-5830-4efd-84f6-ced53092715b">
+                                        <field name="VAR">val1</field>
+                                    </block>
+                                </value>
+                                <value name="B">
+                                    <block type="math_number" id="1a4ce4f4-78f0-4756-9048-dc4fc5cd438b">
+                                        <field name="NUM">4.092</field>
+                                    </block>
+                                </value>
+                                <field name="OP">GTE</field>
+                            </block>
+                        </value>
+                        <field name="TYPE">double</field>
+                        <next>
+                            <block type="variables_set" id="21a31c05-cc31-4333-b22e-5e342435aa56">
+                                <field name="VAR">val3</field>
+                                <value name="VALUE">
+                                    <block type="logic_calculation" id="00b35faf-77cf-4563-af60-74393988ff26">
+                                        <value name="A">
+                                            <block type="variables_get" id="46e083cd-cf9b-45de-92d6-43da73532af2">
+                                                <field name="VAR">val2</field>
+                                            </block>
+                                        </value>
+                                        <value name="B">
+                                            <block type="math_number" id="7e116315-97c5-47aa-a516-e6e0ff9a4f1d">
+                                                <field name="NUM">10</field>
+                                            </block>
+                                        </value>
+                                        <field name="OP">GTE</field>
+                                    </block>
+                                </value>
+                                <field name="TYPE">double</field>
+                                <next>
+                                    <block type="serial_println2" id="530f2d61-b5d1-4939-82a1-d5d82e3f5820">
+                                        <value name="VALUE">
+                                            <block type="variables_get" id="4645d49e-dd57-4e7a-8b6c-aa150648241b">
+                                                <field name="VAR">val3</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="oled_clear" id="4043068f-fb59-4a9f-b80f-0d2b7fc898e6">
+                                                <next>
+                                                    <block type="controls_if" id="8cc5bd75-59f4-4965-b51c-0affdfd3f76c">
+                                                        <mutation elseif="2" else="0"/>
+                                                        <value name="IF0">
+                                                            <block type="logic_compare" id="98859ad0-83bc-49d9-ad97-dc305973dda6">
+                                                                <value name="A">
+                                                                    <block type="variables_get" id="e9019da3-a651-43bf-8088-13f7caa67b4d">
+                                                                        <field name="VAR">val3</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                    <block type="math_number" id="6f0de891-f3ad-40f3-9796-7021d53f038a">
+                                                                        <field name="NUM">3.5</field>
+                                                                    </block>
+                                                                </value>
+                                                                <field name="OP">GT</field>
+                                                            </block>
+                                                        </value>
+                                                        <statement name="DO0">
+                                                            <block type="oled_block" id="38b90ef2-2430-4fb0-91df-aef8a4dd8d98">
+                                                                <field name="weather">&#47569;&#51020;</field>
+                                                            </block>
+                                                        </statement>
+                                                        <value name="IF1">
+                                                            <block type="logic_operation" id="64393511-a9e7-4135-8265-3889501fd4ec">
+                                                                <value name="A">
+                                                                    <block type="logic_compare" id="4dcf457e-f827-4963-9636-256f3cfbeb81">
+                                                                        <value name="A">
+                                                                            <block type="math_number" id="23988b3d-d3df-4f59-a7ca-3b666be132fa">
+                                                                                <field name="NUM">3.5</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <value name="B">
+                                                                            <block type="variables_get" id="868056dd-ba20-4634-824d-d887f5729507">
+                                                                                <field name="VAR">val3</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <field name="OP">GTE</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                    <block type="logic_compare" id="80a70480-9733-4213-958a-4ddf81614039">
+                                                                        <value name="A">
+                                                                            <block type="variables_get" id="e83ec1a8-2b72-4591-9c5f-54af1690d009">
+                                                                                <field name="VAR">val3</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <value name="B">
+                                                                            <block type="math_number" id="92572b62-ba33-46c9-8846-1d43b4edff84">
+                                                                                <field name="NUM">2</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <field name="OP">GT</field>
+                                                                    </block>
+                                                                </value>
+                                                                <field name="OP">AND</field>
+                                                            </block>
+                                                        </value>
+                                                        <statement name="DO1">
+                                                            <block type="oled_block" id="f788a79d-20c7-49b7-8aec-a1591d114277">
+                                                                <field name="weather">&#44396;&#47492;&#47566;&#51020;</field>
+                                                            </block>
+                                                        </statement>
+                                                        <value name="IF2">
+                                                            <block type="logic_operation" id="cc0f13e2-6c3f-4e10-848f-9dc5522f7105">
+                                                                <value name="A">
+                                                                    <block type="logic_compare" id="e9e9e24a-acb3-440c-84f6-29e55582af1d">
+                                                                        <value name="A">
+                                                                            <block type="math_number" id="3807f897-d5ac-4e68-b802-ef3b5b4d99be">
+                                                                                <field name="NUM">2</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <value name="B">
+                                                                            <block type="variables_get" id="930a16a3-a73a-4ecc-8dcc-2a79398a7410">
+                                                                                <field name="VAR">val3</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <field name="OP">GTE</field>
+                                                                    </block>
+                                                                </value>
+                                                                <value name="B">
+                                                                    <block type="logic_compare" id="f3ba7174-aa36-4d50-9f43-e1d6496ae9f0">
+                                                                        <value name="A">
+                                                                            <block type="variables_get" id="d4081e09-5142-4b04-ac53-c7552f645f08">
+                                                                                <field name="VAR">val3</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <value name="B">
+                                                                            <block type="math_number" id="deac291d-db4b-4299-9ff4-36f32e7aaff0">
+                                                                                <field name="NUM">0</field>
+                                                                            </block>
+                                                                        </value>
+                                                                        <field name="OP">GT</field>
+                                                                    </block>
+                                                                </value>
+                                                                <field name="OP">AND</field>
+                                                            </block>
+                                                        </value>
+                                                        <statement name="DO2">
+                                                            <block type="oled_block" id="2e75919c-2a36-418a-9ef4-53988839c912">
+                                                                <field name="weather">&#55136;&#47548;</field>
+                                                            </block>
+                                                        </statement>
+                                                        <next>
+                                                            <block type="base_delay" id="e88d4acc-e8b7-4e09-b7da-a521c3c7157e">
+                                                                <value name="DELAY_TIME">
+                                                                    <block type="math_number" id="715d3375-bc4d-4fb1-b2b3-1a18d55994cf">
+                                                                        <field name="NUM">1000</field>
+                                                                    </block>
+                                                                </value>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

@@ -1,0 +1,250 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="6439c36a-670b-44cc-9908-aeb18a212e58" x="-20.0" y="108.0">
+        <statement name="DO">
+            <block type="pinMode" id="7ff92b62-2af1-4be5-8dc2-fd90a1d4fc70">
+                <value name="PIN">
+                    <block type="base_pins_list" id="0e3d4aa2-ae24-427a-919d-d646a707d354">
+                        <field name="PIN">10</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="85eb7b65-a1a6-4390-8dcf-fdd9898d6968">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="pinMode" id="c2f7763b-1578-4ad1-b3ed-b6e953ecae1b">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="1efb4312-47b9-4d07-a827-74f131cd4da6">
+                                <field name="PIN">11</field>
+                            </block>
+                        </value>
+                        <value name="VALUE1">
+                            <block type="base_output_list" id="428d14b3-cfe2-4163-9944-b9a0de4c2055">
+                                <field name="LOGIC">OUTPUT</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="pinMode" id="cbd8c05c-b78d-4562-b063-167646ba815c">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="9c1db4b6-23f7-4ded-b3db-179c3d8437fa">
+                                        <field name="PIN">12</field>
+                                    </block>
+                                </value>
+                                <value name="VALUE1">
+                                    <block type="base_output_list" id="35ac1a5a-a0dc-4a49-a206-22d5618eabf4">
+                                        <field name="LOGIC">OUTPUT</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="pinMode" id="576f3dbd-0f7b-412d-8b73-078983efae9d">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="a4db4c97-2048-4f40-9bdc-5f355cf6a085">
+                                                <field name="PIN">13</field>
+                                            </block>
+                                        </value>
+                                        <value name="VALUE1">
+                                            <block type="base_output_list" id="5eed4397-5ef6-45e3-aad7-b67fd2ecf779">
+                                                <field name="LOGIC">OUTPUT</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="bluetooth_setup" id="c8b060af-672f-4811-a0d1-32d58f4263be">
+                                                <value name="RXD">
+                                                    <block type="base_pins_list" id="b0b78d30-5343-4fa2-9f77-89a33afc396a">
+                                                        <field name="PIN">8</field>
+                                                    </block>
+                                                </value>
+                                                <value name="TXD">
+                                                    <block type="base_pins_list" id="01b0cd5d-e12c-4023-83ee-2e562e7dc687">
+                                                        <field name="PIN">7</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="bluetooth_begin" id="b208384b-ae5d-444c-9f3e-299e8e3aca8f">
+                                                        <value name="baud">
+                                                            <block type="serial_begin_list" id="9da0de70-31c3-4b6d-8bd6-88b812a4853a">
+                                                                <field name="SB">9600</field>
+                                                            </block>
+                                                        </value>
+                                                        <next>
+                                                            <block type="serial_begin" id="08c6bf19-f538-4697-9358-cecd54069897">
+                                                                <value name="baud">
+                                                                    <block type="serial_begin_list" id="27254ea5-0bbc-463e-9509-5258c844dc57">
+                                                                        <field name="SB">9600</field>
+                                                                    </block>
+                                                                </value>
+                                                            </block>
+                                                        </next>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="controls_if" id="cc982c67-8f75-4a2c-9e4f-adb33e26cf83">
+                <value name="IF0">
+                    <block type="bluetooth_available" id="4fa29db7-ed65-4b3c-96b4-34decc9a87af"/>
+                </value>
+                <statement name="DO0">
+                    <block type="variables_set" id="60cf0aff-58bc-4a7f-a15f-e55a9003399d">
+                        <field name="VAR">item</field>
+                        <value name="VALUE">
+                            <block type="bluetooth_read" id="0a37c2cf-8103-4a07-b210-2eb692865b45"/>
+                        </value>
+                        <field name="TYPE">char</field>
+                    </block>
+                </statement>
+                <next>
+                    <block type="controls_if" id="94c62085-8184-4a42-905b-50d81354ab81">
+                        <mutation elseif="0" else="1"/>
+                        <value name="IF0">
+                            <block type="logic_compare" id="f66605f4-622a-48e8-8ddf-5ed6ee83076f">
+                                <value name="A">
+                                    <block type="variables_get" id="5610837d-6348-4efe-9b38-2704a6367589">
+                                        <field name="VAR">item</field>
+                                    </block>
+                                </value>
+                                <value name="B">
+                                    <block type="type_char" id="3a377a99-d07e-4bf4-beb2-e2d1af08f00c">
+                                        <field name="CHAR_TEXT">A</field>
+                                    </block>
+                                </value>
+                                <field name="OP">EQ</field>
+                            </block>
+                        </value>
+                        <statement name="DO0">
+                            <block type="inout_analog_write" id="865be843-ec2b-4ace-810d-5e38616f6153">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="f55a2795-e001-481b-8832-cdfe83476b9c">
+                                        <field name="PIN">10</field>
+                                    </block>
+                                </value>
+                                <value name="NUM">
+                                    <block type="math_number" id="5a747dab-0945-46b1-bea6-8ef2fbcefb4c">
+                                        <field name="NUM">255</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="inout_analog_write" id="4da95d9a-8796-4d26-b472-c0d0543d3774">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="bc96d964-4101-45ff-8c4f-9ec0b60ee01f">
+                                                <field name="PIN">11</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="math_number" id="4bb369ec-3f69-4d00-9cf9-b3e9f5a7388e">
+                                                <field name="NUM">255</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="inout_digital_write" id="d01bbba3-446c-4579-9f4a-9e1ee8718f52">
+                                                <value name="PIN">
+                                                    <block type="base_pins_list" id="4c93d89c-7261-4c5d-9b5d-a22d1dd97422">
+                                                        <field name="PIN">12</field>
+                                                    </block>
+                                                </value>
+                                                <value name="NUM">
+                                                    <block type="base_logic_list" id="1a19a998-6b35-4f15-bfdf-28a7ec3de4d8">
+                                                        <field name="LOGIC">HIGH</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="inout_digital_write" id="0229b885-c299-46b7-a294-3cbb4ecbda0e">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="ab7813dc-3b94-4ab9-8988-fc6e96e31631">
+                                                                <field name="PIN">13</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="base_logic_list" id="419558f0-f214-4bee-afe1-022d1eb529b7">
+                                                                <field name="LOGIC">LOW</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </statement>
+                        <statement name="ELSE">
+                            <block type="inout_analog_write" id="bc9831d0-055f-4812-8608-d8b21c3f90a1">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="048096c6-f2b7-47a4-b47c-aacdf8df4a38">
+                                        <field name="PIN">10</field>
+                                    </block>
+                                </value>
+                                <value name="NUM">
+                                    <block type="math_number" id="559cf9f0-bcce-4b6f-8060-8574805af024">
+                                        <field name="NUM">0</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="inout_analog_write" id="300b8d97-1d1f-4c49-9d73-983df0114791">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="0bb7ddc2-605e-4ebf-9716-6fe815c7c360">
+                                                <field name="PIN">11</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="math_number" id="417581ec-6603-49ad-b46e-47a3ea319d0d">
+                                                <field name="NUM">0</field>
+                                            </block>
+                                        </value>
+                                        <next>
+                                            <block type="inout_digital_write" id="c103b1fd-c477-4044-9b6a-dd3a9c555261">
+                                                <value name="PIN">
+                                                    <block type="base_pins_list" id="e5ef0cae-32b2-4b45-9ea0-30ee090e84ff">
+                                                        <field name="PIN">12</field>
+                                                    </block>
+                                                </value>
+                                                <value name="NUM">
+                                                    <block type="base_logic_list" id="cb914b8c-309f-4921-bf72-8c69f0e88bab">
+                                                        <field name="LOGIC">LOW</field>
+                                                    </block>
+                                                </value>
+                                                <next>
+                                                    <block type="inout_digital_write" id="33347f21-adcc-4700-9716-ef9b85f566e9">
+                                                        <value name="PIN">
+                                                            <block type="base_pins_list" id="82469e7a-4390-4b6a-ba16-199468b12678">
+                                                                <field name="PIN">13</field>
+                                                            </block>
+                                                        </value>
+                                                        <value name="NUM">
+                                                            <block type="base_logic_list" id="4e9cf0d0-d3c0-4fe2-ae59-54e2255b6bde">
+                                                                <field name="LOGIC">LOW</field>
+                                                            </block>
+                                                        </value>
+                                                    </block>
+                                                </next>
+                                            </block>
+                                        </next>
+                                    </block>
+                                </next>
+                            </block>
+                        </statement>
+                        <next>
+                            <block type="base_delay" id="ccb43c1d-20a2-42c7-a421-5174c8fc262d">
+                                <value name="DELAY_TIME">
+                                    <block type="math_number" id="4e5eb67f-724c-4e21-a6f4-d62a8af2c2ab">
+                                        <field name="NUM">50</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

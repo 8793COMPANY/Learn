@@ -1,0 +1,123 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="24c92234-464f-4b94-bf0e-26b4beba44bc" x="-581.0" y="-374.0">
+        <statement name="DO">
+            <block type="pinMode" id="ea46b8ca-b844-45c0-affc-bdd81a7ab56f">
+                <value name="PIN">
+                    <block type="base_pins_list" id="6c0987e6-71c5-4769-90f1-30b4670e695a">
+                        <field name="PIN">A0</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="4caf9dbd-1775-4550-a841-e048161def53">
+                        <field name="LOGIC">INPUT</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="pinMode" id="2a40faaf-d276-4ed9-baf5-8e84dd698a02">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="376059d4-9465-4476-8d34-ecb85f639315">
+                                <field name="PIN">3</field>
+                            </block>
+                        </value>
+                        <value name="VALUE1">
+                            <block type="base_output_list" id="87d0a728-ec1f-4892-ac15-998891ceeca7">
+                                <field name="LOGIC">OUTPUT</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="serial_begin" id="7427db98-2cb9-4b11-9a74-35cb7fdeaa41">
+                                <value name="baud">
+                                    <block type="serial_begin_list" id="608f5727-b9f3-4b1b-9b58-31ff1c8dd826">
+                                        <field name="SB">9600</field>
+                                    </block>
+                                </value>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="variables_set" id="ccdff21b-294b-4ac6-ae1e-3f0d9ead91f0">
+                <field name="VAR">CDS</field>
+                <value name="VALUE">
+                    <block type="inout_analog_read" id="2a3eac7d-c4e1-41a5-a767-1787cbd037c1">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="f7a9f19e-fbb9-48fb-bd54-d533e4f445b8">
+                                <field name="PIN">A0</field>
+                            </block>
+                        </value>
+                    </block>
+                </value>
+                <field name="TYPE">int</field>
+                <next>
+                    <block type="serial_println2" id="c70cf000-b4ae-452a-a7e2-6e7cf0e7965c">
+                        <value name="VALUE">
+                            <block type="variables_get" id="cb48e814-3ef2-4822-b885-24b99e45a1e5">
+                                <field name="VAR">CDS</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="controls_if" id="12ac9c56-a5e8-4811-a85c-4d6d3f7c2428">
+                                <mutation elseif="0" else="1"/>
+                                <value name="IF0">
+                                    <block type="logic_compare" id="3ab0c818-a796-4967-a39c-2c50b88e3b28">
+                                        <value name="A">
+                                            <block type="variables_get" id="b61528b6-b829-4dfd-87f1-a825c6ed4341">
+                                                <field name="VAR">CDS</field>
+                                            </block>
+                                        </value>
+                                        <value name="B">
+                                            <block type="math_number" id="98e326d2-94e6-4e4c-8f83-48c01cddb75e">
+                                                <field name="NUM">500</field>
+                                            </block>
+                                        </value>
+                                        <field name="OP">GTE</field>
+                                    </block>
+                                </value>
+                                <statement name="DO0">
+                                    <block type="inout_digital_write" id="3de81e2e-3edd-48bd-af91-4315dc546d6b">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="86ef4f76-dfd5-414d-8ec2-474f84f1375e">
+                                                <field name="PIN">3</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="base_logic_list" id="ae74e26b-e01a-4821-b6ae-ff437a77858f">
+                                                <field name="LOGIC">HIGH</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </statement>
+                                <statement name="ELSE">
+                                    <block type="inout_digital_write" id="005a58ff-a506-4cda-9545-2c18519ddfb9">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="9eabb3d4-85eb-447d-8f8d-f3c8413c5e8b">
+                                                <field name="PIN">3</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="base_logic_list" id="a29418c0-2163-40e6-85c3-7c9bb14b19bf">
+                                                <field name="LOGIC">LOW</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </statement>
+                                <next>
+                                    <block type="base_delay" id="606bcfd1-dd07-44dd-8ab2-f9af4cad0c80">
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="e23f20c4-b7b4-49d6-8570-71417bb22035">
+                                                <field name="NUM">1000</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>

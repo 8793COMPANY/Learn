@@ -306,7 +306,8 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
 
 
     String [] example_list_array = {"Blink","AnalogReadSerial","3색 LED 깜박이기","키링반짝","시리얼 통신","스마트팜","키링-온도","키링-심박","키링-티처블","키링-헬스케어","자동 신호등","후방 감지","양궁게임 표적","양궁게임 활 ver 1","양궁게임 활 ver 2","검도게임","스탑워치","디싹 도시 안전","배틀쉽",
-            "유기동물보호소 2차시 빨간색", "유기동물보호소 4차시 예시동물", "유기동물보호소 5차시 LCD", "유기동물보호소 5차시 온습도", "유기동물보호소 5차시 LCD+온습도", "유기동물보호소 5차시 예시동물", "유기동물보호소 6차시 공통함수", "유기동물보호소 6차시 예시동물", "유기동물보호소 7차시 예시동물", "유기동물보호소 7차시 결과물", };
+            "유기동물보호소 2차시 빨간색", "유기동물보호소 4차시 예시동물", "유기동물보호소 5차시 LCD", "유기동물보호소 5차시 온습도", "유기동물보호소 5차시 LCD+온습도", "유기동물보호소 5차시 예시동물", "유기동물보호소 6차시 공통함수", "유기동물보호소 6차시 예시동물", "유기동물보호소 7차시 예시동물", "유기동물보호소 7차시 결과물",
+            "태양광 1", "태양광 2", "태양광 3", "태양광 4", "해양 1", "해양 2", "해양 3", "해양 4", "해양 5",};
 
     static final List<String> TURTLE_BLOCK_DEFINITIONS = Arrays.asList(
             DefaultBlocks.COLOR_BLOCKS_PATH,
@@ -1785,6 +1786,33 @@ public class MainActivity extends BlocklySectionsActivity implements TabItemClic
         }
         else if(name == "유기동물보호소 7차시 결과물") {
             filename = "animal_shelter_7_result.xml";
+        }
+        else if(name == "태양광 1") {
+            filename = "analog_calc_1.xml";
+        }
+        else if(name == "태양광 2") {
+            filename = "analog_calc_2.xml";
+        }
+        else if(name == "태양광 3") {
+            filename = "analog_calc_3.xml";
+        }
+        else if(name == "태양광 4") {
+            filename = "analog_calc_4.xml";
+        }
+        else if(name == "해양 1") {
+            filename = "oled_weather_1.xml";
+        }
+        else if(name == "해양 2") {
+            filename = "oled_weather_2.xml";
+        }
+        else if(name == "해양 3") {
+            filename = "oled_weather_3.xml";
+        }
+        else if(name == "해양 4") {
+            filename = "oled_weather_4.xml";
+        }
+        else if(name == "해양 5") {
+            filename = "oled_weather_5.xml";
         }
 
 

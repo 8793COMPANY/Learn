@@ -391,6 +391,8 @@
             <field name="weather">맑음</field>
         </block>
 
+        <Block type="oled_clear"></Block>
+
 <!--        <block type="arm_start"></block>-->
 <!--        <block type="disarm_start"></block>-->
 <!--        <block type="drone_delay">-->
@@ -875,6 +877,10 @@
                 </block>
             </value>
         </block>
+
+        <block type="solar_tracking"></block>
+        <block type="solar_voltage"></block>
+        <block type="solar_tracker"></block>
 
 
         <!--

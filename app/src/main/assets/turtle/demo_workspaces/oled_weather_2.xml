@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<xml xmlns="http://www.w3.org/1999/xhtml">
+    <block type="turtle_setup_loop" id="fc2be15a-3d73-4e3a-82a5-e4929e112833" x="-20.0" y="108.0">
+        <statement name="DO">
+            <block type="pinMode" id="532a95af-3374-415a-8e0c-2a1a9e952e26">
+                <value name="PIN">
+                    <block type="base_pins_list" id="56428752-b6c2-464b-ac8c-2c53363df08e">
+                        <field name="PIN">4</field>
+                    </block>
+                </value>
+                <value name="VALUE1">
+                    <block type="base_output_list" id="0fecfced-556b-4f77-849e-2610ae229605">
+                        <field name="LOGIC">OUTPUT</field>
+                    </block>
+                </value>
+            </block>
+        </statement>
+        <statement name="DO1">
+            <block type="tone_notone" id="91553fb8-34f4-41a6-9052-6981d98f24a6">
+                <value name="PIN">
+                    <block type="base_pins_list" id="a842f480-9dd3-4356-8c12-869575aed1c8">
+                        <field name="PIN">4</field>
+                    </block>
+                </value>
+                <value name="NUM">
+                    <block type="math_number" id="9c2afe54-c4be-4703-8bb9-564d7ad8b8fe">
+                        <field name="NUM">262</field>
+                    </block>
+                </value>
+                <value name="DELAY_TIME">
+                    <block type="math_number" id="e341529c-f1ab-489d-ae0b-040c0a89c5fb">
+                        <field name="NUM">300</field>
+                    </block>
+                </value>
+                <next>
+                    <block type="tone_notone" id="5260c76a-4d66-403f-ae77-4d49914f4439">
+                        <value name="PIN">
+                            <block type="base_pins_list" id="169b52f3-a060-47b1-bf32-98ed3e50f968">
+                                <field name="PIN">4</field>
+                            </block>
+                        </value>
+                        <value name="NUM">
+                            <block type="math_number" id="a0f13e6b-6846-4997-b762-e377f76c1153">
+                                <field name="NUM">330</field>
+                            </block>
+                        </value>
+                        <value name="DELAY_TIME">
+                            <block type="math_number" id="4885f4f4-2177-4a2b-adcc-95492a142f46">
+                                <field name="NUM">300</field>
+                            </block>
+                        </value>
+                        <next>
+                            <block type="tone_notone" id="26a5cba0-a65c-4c16-bd44-13ae98bd16f7">
+                                <value name="PIN">
+                                    <block type="base_pins_list" id="d5e78d45-2215-49cf-8bc5-7d9808763972">
+                                        <field name="PIN">4</field>
+                                    </block>
+                                </value>
+                                <value name="NUM">
+                                    <block type="math_number" id="31b918a1-6d45-4fdc-8943-6ac05118543b">
+                                        <field name="NUM">392</field>
+                                    </block>
+                                </value>
+                                <value name="DELAY_TIME">
+                                    <block type="math_number" id="3a3276fe-cff3-4d51-ba0a-cec29a75f494">
+                                        <field name="NUM">300</field>
+                                    </block>
+                                </value>
+                                <next>
+                                    <block type="tone_notone" id="8ffada43-859b-4d70-b16f-d5b517b2e4bd">
+                                        <value name="PIN">
+                                            <block type="base_pins_list" id="083cf1a5-392b-4818-bac5-a808b351bec6">
+                                                <field name="PIN">4</field>
+                                            </block>
+                                        </value>
+                                        <value name="NUM">
+                                            <block type="math_number" id="3d780e6f-e3f9-4879-aeb2-02d8f78059ae">
+                                                <field name="NUM">523</field>
+                                            </block>
+                                        </value>
+                                        <value name="DELAY_TIME">
+                                            <block type="math_number" id="add7b2e3-c5c3-44c5-936c-7d66caff0ca9">
+                                                <field name="NUM">300</field>
+                                            </block>
+                                        </value>
+                                    </block>
+                                </next>
+                            </block>
+                        </next>
+                    </block>
+                </next>
+            </block>
+        </statement>
+    </block>
+</xml>
