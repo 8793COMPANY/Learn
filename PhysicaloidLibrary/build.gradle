@@ -1,6 +1,6 @@
 // ✅ 새 방식: plugins DSL (버전까지 명시하면 더 확실)
 plugins {
-    id 'com.android.library' version '8.6.1'
+    id 'com.android.library'
     // id 'org.jetbrains.kotlin.android' version '1.9.24' // kotlin 소스가 있으면 주석 해제
 }
 

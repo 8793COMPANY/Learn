@@ -11,15 +11,15 @@ plugins {
 
 android {
     namespace "com.learn4"
-    compileSdkVersion 35
+    compileSdkVersion 36
 //    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.learn4"
         minSdkVersion 23
-        targetSdkVersion 35
-        versionCode 139
-        versionName "1.16.2"
+        targetSdkVersion 36
+        versionCode 140
+        versionName "1.17.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

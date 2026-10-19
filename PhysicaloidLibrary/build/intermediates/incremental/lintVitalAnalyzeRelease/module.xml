@@ -4,9 +4,9 @@
     name=":PhysicaloidLibrary"
     type="LIBRARY"
     maven="learn4:PhysicaloidLibrary:unspecified"
-    agpVersion="8.6.1"
+    agpVersion="8.9.2"
     buildFolder="build"
-    bootClassPath="C:\Users\ksy\AppData\Local\Android\Sdk\platforms\android-35\android.jar;C:\Users\ksy\AppData\Local\Android\Sdk\build-tools\34.0.0\core-lambda-stubs.jar"
+    bootClassPath="C:\Users\ksy\AppData\Local\Android\Sdk\platforms\android-35\android.jar;C:\Users\ksy\AppData\Local\Android\Sdk\build-tools\35.0.0\core-lambda-stubs.jar"
     javaSourceLevel="17"
     compileTarget="android-35"
     neverShrinking="true">

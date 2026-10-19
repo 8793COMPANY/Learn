@@ -5,7 +5,7 @@
     targetSdkVersion="35"
     mergedManifest="build\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml"
     manifestMergeReport="build\outputs\logs\manifest-merger-release-report.txt"
-    proguardFiles="build\intermediates\default_proguard_files\global\proguard-android.txt-8.6.1"
+    proguardFiles="build\intermediates\default_proguard_files\global\proguard-android.txt-8.9.2"
     partialResultsDir="build\intermediates\lint_partial_results\release\lintAnalyzeRelease\out">
   <buildFeatures
       namespacing="REQUIRED"/>
@@ -26,6 +26,6 @@
       applicationId="com.physicaloid"
       generatedSourceFolders="build\generated\ap_generated_sources\release\out;build\generated\source\buildConfig\release"
       generatedResourceFolders="build\generated\res\resValues\release"
-      desugaredMethodsFiles="C:\Users\ksy\.gradle\caches\transforms-4\c6192cefc9c24e04fcff5a106a4f54ef\transformed\D8BackportedDesugaredMethods.txt">
+      desugaredMethodsFiles="C:\Users\ksy\Desktop\remember-miniman-master\caches\8.11.1\transforms\386dea43da183863010a12139c18d784\transformed\D8BackportedDesugaredMethods.txt">
   </artifact>
 </variant>
